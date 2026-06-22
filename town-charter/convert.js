@@ -75,6 +75,41 @@ function generateToc(markdown) {
   return html;
 }
 
+// --- Breadcrumbs / theming ---------------------------------------------------
+
+// Absolute base path where town-charter is served.
+const SECTION_BASE = '/town-charter/';
+const SEP = '<span class="sep">›</span>';
+
+// Map dest -> short breadcrumb label (pages.json `crumb`, falling back to title).
+const crumbByDest = {};
+for (const p of pages) crumbByDest[p.dest] = p.crumb || p.title;
+
+// Build the breadcrumb markup for a page. Site convention: the section home
+// (index.html) is the dark page and carries a simple inline trail inside the
+// article; every other (light) page gets a dark breadcrumb banner above the
+// article with the full Home › Town Charter › … trail.
+function crumbsFor(page) {
+  if (page.dest === 'index.html') {
+    return `<nav class="crumbs"><a href="/">Home</a>${SEP}<span class="current">${crumbByDest['index.html']}</span></nav>`;
+  }
+  const segs = page.dest.split('/').slice(0, -1); // drop trailing index.html
+  const parts = [
+    '<a href="/">Home</a>',
+    `<a href="${SECTION_BASE}">${crumbByDest['index.html']}</a>`,
+  ];
+  segs.forEach((seg, i) => {
+    const sub = segs.slice(0, i + 1).join('/');
+    const label = crumbByDest[`${sub}/index.html`] || seg;
+    parts.push(
+      i === segs.length - 1
+        ? `<span class="current">${label}</span>`
+        : `<a href="${SECTION_BASE}${sub}/">${label}</a>`
+    );
+  });
+  return `<div class="page-banner">\n  <nav class="page-banner-inner crumbs">${parts.join(SEP)}</nav>\n</div>`;
+}
+
 function buildPage(page) {
   const md = readSource(page.src);
   let body = marked.parse(md, { renderer: makeRenderer(page.dest) });
@@ -94,40 +129,38 @@ function buildPage(page) {
   const depth = page.dest.split('/').length - 1;
   const cssPath = (depth > 0 ? '../'.repeat(depth) : './') + 'style.css';
 
-  return `<!DOCTYPE html>
+  const head = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <title>${page.title}</title>
   <link rel="stylesheet" href="${cssPath}">
-</head>
+</head>`;
+
+  const crumbs = crumbsFor(page);
+
+  // Section home: dark theme, trail inside the article.
+  if (page.dest === 'index.html') {
+    return `${head}
+<body class="dark">
+  <article>
+${crumbs}
+${body}
+  </article>
+</body>
+</html>`;
+  }
+
+  // Guide pages: light theme, dark breadcrumb banner above the article.
+  return `${head}
 <body>
-  <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-    <span class="theme-icon-light">☀︎</span>
-    <span class="theme-icon-dark">☾</span>
-  </button>
+${crumbs}
   <article>
 ${body}
   </article>
-  <script>
-    (function() {
-      var btn = document.getElementById('theme-toggle');
-      var root = document.documentElement;
-      var stored = localStorage.getItem('theme');
-      if (stored) {
-        root.setAttribute('data-theme', stored);
-      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        root.setAttribute('data-theme', 'dark');
-      }
-      btn.addEventListener('click', function() {
-        var current = root.getAttribute('data-theme') || 'light';
-        var next = current === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
-      });
-    })();
-  </script>
 </body>
 </html>`;
 }
