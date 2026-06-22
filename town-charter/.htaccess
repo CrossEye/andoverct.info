@@ -1,0 +1,17 @@
+# Canonicalize the old charter.andoverct.info subdomain onto
+# andoverct.info/town-charter/. This folder is the subdomain's document root
+# AND is served at /town-charter/ on the main site, so the redirect is gated on
+# the hostname: it fires only for charter.andoverct.info, leaving requests that
+# already arrive via andoverct.info/town-charter/ untouched (no loop).
+
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^(www\.)?charter\.andoverct\.info$ [NC]
+RewriteRule ^(.*)$ %{REQUEST_SCHEME}://andoverct.info/town-charter/$1 [R=301,L,QSA]
+
+# Let the document-root /idx directory helper work inside town-charter too.
+# This .htaccess declares its own RewriteEngine, so the root /idx rule is NOT
+# inherited here — re-declare it. The match is relative to /town-charter/, so
+# prefix the dir back with "town-charter/". (The host-gated redirect above
+# fires first for charter.andoverct.info and has [L], so this applies only to
+# andoverct.info/town-charter/ requests.)
+RewriteRule ^(.*/)?idx/?$ /idx.php?dir=town-charter/$1 [L,QSA]

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Board of Selectmen- Special Meeting — June 26, 2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <style>
+    /* Transcript-specific components. Theme, palette, and page chrome
+       (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
+       come from the shared style.css; these just use its variables. */
+    .para { display: flex; gap: 1em; padding: 0.5em 0.75em; border-radius: 6px; }
+    .para:nth-child(4n+1) { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+    .para-gap { font-size: 1px; line-height: 1px; height: 0; overflow: hidden; user-select: text; }
+    .para.speaker { border-top: 1px solid var(--rule-soft); margin-top: 0.6em; padding-top: 1em; }
+    .para.speaker:first-child { border-top: none; margin-top: 0; }
+
+    .timestamp {
+      flex: 0 0 5em; text-align: right;
+      color: var(--ink-mute); font-family: var(--sans);
+      font-size: 0.72rem; font-variant-numeric: tabular-nums; line-height: 1.9;
+      cursor: pointer; white-space: nowrap; padding-top: 0.15em;
+      transition: color 0.15s; user-select: none;
+    }
+    .timestamp:hover, .timestamp.hl { color: var(--accent); font-weight: 600; }
+
+    .text { flex: 1; min-width: 0; }
+    .cue { cursor: pointer; border-radius: 3px; transition: background-color 0.15s; }
+    .cue.hl { background-color: var(--accent-bg); }
+    @keyframes flash-highlight {
+      0%   { background-color: rgba(232, 168, 0, 0.45); }
+      100% { background-color: transparent; }
+    }
+    .cue.flash { animation: flash-highlight 4s ease-out forwards; }
+
+    /* action dialog */
+    #overlay { display: none; position: fixed; inset: 0; background: rgba(8, 22, 40, 0.5); z-index: 100; justify-content: center; align-items: center; }
+    #overlay.visible { display: flex; }
+    .dialog { background: var(--bg-card); border-radius: 10px; padding: 1.6rem 1.8rem; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28); max-width: 28rem; width: 90vw; border-top: 4px solid var(--accent); }
+    .dialog-header { margin-bottom: 1.2em; }
+    .dialog-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); }
+    .dialog-subtitle { font-family: var(--sans); font-size: 0.85rem; color: var(--ink-mute); margin-top: 0.2em; }
+    .dialog .ts-label { color: var(--accent); font-weight: 600; }
+    .dialog .actions { display: flex; flex-direction: column; gap: 0.5em; }
+    .dialog button { display: flex; align-items: center; gap: 0.6em; padding: 0.6em 1em; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--ink); cursor: pointer; font-family: var(--sans); font-size: 0.9rem; text-align: left; width: 100%; transition: background-color 0.12s, border-color 0.12s; }
+    .dialog button:hover { background: var(--accent-bg); border-color: var(--accent); }
+    .dialog button .icon { font-size: 1.1em; flex: 0 0 1.4em; text-align: center; }
+    .dialog button .label { flex: 1; }
+    .dialog button .hint { display: block; color: var(--ink-mute); font-size: 0.78rem; }
+    .dialog .cancel { margin-top: 0.6em; text-align: center; }
+    .dialog .cancel a { color: var(--ink-mute); font-family: var(--sans); font-size: 0.82rem; cursor: pointer; border-bottom: none; }
+    .dialog .cancel a:hover { color: var(--accent); }
+
+    /* toast */
+    #toast { position: fixed; top: 1.5em; left: 50%; transform: translateX(-50%) translateY(-4em); background: var(--accent); color: #15233a; padding: 0.7em 1.6em; border-radius: 8px; font-family: var(--sans); font-size: 0.95rem; font-weight: 600; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease; z-index: 200; pointer-events: none; text-align: center; max-width: 90vw; }
+    #toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    @media (max-width: 480px) { .timestamp { flex-basis: 4em; } }
+  </style>
+</head>
+<body class="bluegold">
+  <div class="page-banner">
+    <nav class="page-banner-inner crumbs">
+      <a href="/">Home</a><span class="sep">›</span><a href="/reference/">Reference</a><span class="sep">›</span><a href="../index.html">Video</a><span class="sep">›</span><span class="current">Board of Selectmen- Special Meeting (6/26/25)</span>
+    </nav>
+  </div>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Meeting transcript</p>
+      <h1 class="title">Board of Selectmen- Special Meeting</h1>
+      <p class="subtitle">June 26, 2025 &middot; <a href="https://www.youtube.com/watch?v=C9v_v6er67g" target="yt-meeting">Watch on YouTube</a> &middot; <a href="../index.html">All meetings</a></p>
+    </header>
+
+    <hr class="rule">
+
+    <div class="transcript">
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:06" data-default-t="6">0:06</div>
+        <div class="text"><span class="cue" id="t6" data-cue="t6" data-t="6" data-label="0:06">Thank you, Eric. Okay, so it's 7 o'clock. I want to call this</span> <span class="cue" id="t10" data-cue="t10" data-t="10" data-label="0:10">town of Andover Board of Selectman</span> <span class="cue" id="t12" data-cue="t12" data-t="12" data-label="0:12">special meeting for Thursday, June 26 to</span> <span class="cue" id="t14" data-cue="t14" data-t="14" data-label="0:14">order at 700 p.m.</span> <span class="cue" id="t18" data-cue="t18" data-t="18" data-label="0:18">Our first order of business is the</span> <span class="cue" id="t20" data-cue="t20" data-t="20" data-label="0:20">pledge of allegiance. I pledge</span> <span class="cue" id="t22" data-cue="t22" data-t="22" data-label="0:22">allegiance to the flag of the United</span> <span class="cue" id="t24" data-cue="t24" data-t="24" data-label="0:24">States of America, to the republic for</span> <span class="cue" id="t27" data-cue="t27" data-t="27" data-label="0:27">which it stands, one nation under God,</span> <span class="cue" id="t30" data-cue="t30" data-t="30" data-label="0:30">indivisible, with liberty, and justice</span> <span class="cue" id="t32" data-cue="t32" data-t="32" data-label="0:32">for all. Okay. item two, public</span> <span class="cue" id="t35" data-cue="t35" data-t="35" data-label="0:35">speak. Valerie Bruno.</span> <span class="cue" id="t39" data-cue="t39" data-t="39" data-label="0:39">Hi. I am just here to support the</span> <span class="cue" id="t42" data-cue="t42" data-t="42" data-label="0:42">amendment so that we get the solar put</span> <span class="cue" id="t44" data-cue="t44" data-t="44" data-label="0:44">in this summer. So,</span> <span class="cue" id="t48" data-cue="t48" data-t="48" data-label="0:48">Kimberly Persan, I'm just listening.</span> <span class="cue" id="t50" data-cue="t50" data-t="50" data-label="0:50">Thank you. Okay. All right. item</span> <span class="cue" id="t54" data-cue="t54" data-t="54" data-label="0:54">three, discuss and possible action on</span> <span class="cue" id="t55" data-cue="t55" data-t="55" data-label="0:55">the new amendment for the AES solar</span> <span class="cue" id="t57" data-cue="t57" data-t="57" data-label="0:57">project. So we received the agreement</span> <span class="cue" id="t63" data-cue="t63" data-t="63" data-label="1:03">last week.</span> <span class="cue" id="t65" data-cue="t65" data-t="65" data-label="1:05">Monday we or I sent it to attorney</span> <span class="cue" id="t69" data-cue="t69" data-t="69" data-label="1:09">Ryan to review. He dealt with the board</span> <span class="cue" id="t73" data-cue="t73" data-t="73" data-label="1:13">of education</span> <span class="cue" id="t75" data-cue="t75" data-t="75" data-label="1:15">attorneys on the amendment which he</span> <span class="cue" id="t78" data-cue="t78" data-t="78" data-label="1:18">had been dealing with before. So,</span> <span class="cue" id="t81" data-cue="t81" data-t="81" data-label="1:21">just the question for you, Attorney</span> <span class="cue" id="t83" data-cue="t83" data-t="83" data-label="1:23">O'Brien. The agreement</span> <span class="cue" id="t85" data-cue="t85" data-t="85" data-label="1:25">matches everything that was discussed at</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="1:27" data-default-t="87">1:27</div>
+        <div class="text"><span class="cue" id="t87" data-cue="t87" data-t="87" data-label="1:27">the Tom meeting and everything that</span> <span class="cue" id="t89" data-cue="t89" data-t="89" data-label="1:29">we've talked about previously. Yeah,</span> <span class="cue" id="t92" data-cue="t92" data-t="92" data-label="1:32">it's legally sound. I I conducted a</span> <span class="cue" id="t94" data-cue="t94" data-t="94" data-label="1:34">very thorough review over the past</span> <span class="cue" id="t97" data-cue="t97" data-t="97" data-label="1:37">several the past week, I guess. Talked</span> <span class="cue" id="t100" data-cue="t100" data-t="100" data-label="1:40">to Eric Anderson about it. talk to</span> <span class="cue" id="t103" data-cue="t103" data-t="103" data-label="1:43">you, talked to u Matt Reelli, the</span> <span class="cue" id="t106" data-cue="t106" data-t="106" data-label="1:46">attorney for the board of education who</span> <span class="cue" id="t108" data-cue="t108" data-t="108" data-label="1:48">specializes in these kinds of</span> <span class="cue" id="t111" data-cue="t111" data-t="111" data-label="1:51">projects. And we had a great discussion</span> <span class="cue" id="t113" data-cue="t113" data-t="113" data-label="1:53">yesterday for an hour and a half or so.</span> <span class="cue" id="t116" data-cue="t116" data-t="116" data-label="1:56">And I've reached the conclusion that</span> <span class="cue" id="t119" data-cue="t119" data-t="119" data-label="1:59">I'm I'm going to urge the board of</span> <span class="cue" id="t122" data-cue="t122" data-t="122" data-label="2:02">selectmen to approve the agreement.</span> <span class="cue" id="t124" data-cue="t124" data-t="124" data-label="2:04">Okay. All right. Thank you. are those</span> <span class="cue" id="t127" data-cue="t127" data-t="127" data-label="2:07">new glasses?</span> <span class="cue" id="t129" data-cue="t129" data-t="129" data-label="2:09">These are these are window frame.</span> <span class="cue" id="t132" data-cue="t132" data-t="132" data-label="2:12">no, they're not window frames. I'm</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="2:14" data-default-t="134">2:14</div>
+        <div class="text"><span class="cue" id="t134" data-cue="t134" data-t="134" data-label="2:14">sorry. They're reading reading glasses.</span> <span class="cue" id="t137" data-cue="t137" data-t="137" data-label="2:17">Glasses. Yeah, they're okay. Some people</span> <span class="cue" id="t139" data-cue="t139" data-t="139" data-label="2:19">call them cheaters. That's all right.</span> <span class="cue" id="t141" data-cue="t141" data-t="141" data-label="2:21">I'm just I'm just joking. so the</span> <span class="cue" id="t144" data-cue="t144" data-t="144" data-label="2:24">only issue that was changed</span> <span class="cue" id="t146" data-cue="t146" data-t="146" data-label="2:26">financially was related to the number of</span> <span class="cue" id="t149" data-cue="t149" data-t="149" data-label="2:29">panels that are being put on the roof.</span> <span class="cue" id="t151" data-cue="t151" data-t="151" data-label="2:31">So, Eric, do you know the total number</span> <span class="cue" id="t153" data-cue="t153" data-t="153" data-label="2:33">of panels that were being reduced by?</span> <span class="cue" id="t158" data-cue="t158" data-t="158" data-label="2:38">well, it's reduced down to 226.</span> <span class="cue" id="t162" data-cue="t162" data-t="162" data-label="2:42">I think it's a loss of around 20 between</span> <span class="cue" id="t166" data-cue="t166" data-t="166" data-label="2:46">20 and 30 panels. I don't have the exact</span> <span class="cue" id="t170" data-cue="t170" data-t="170" data-label="2:50">figure.</span> <span class="cue" id="t171" data-cue="t171" data-t="171" data-label="2:51">Okay. So, somewhere in the range of 10%.</span> <span class="cue" id="t179" data-cue="t179" data-t="179" data-label="2:59">Correct. All right.</span> <span class="cue" id="t189" data-cue="t189" data-t="189" data-label="3:09">Okay. So the only thing that was changed other than the number of panels</span> <span class="cue" id="t192" data-cue="t192" data-t="192" data-label="3:12">was the kilowatt hour to be paid over</span> <span class="cue" id="t195" data-cue="t195" data-t="195" data-label="3:15">the lifetime of the agreement moved from</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="3:17" data-default-t="197">3:17</div>
+        <div class="text"><span class="cue" id="t197" data-cue="t197" data-t="197" data-label="3:17">11.24 cents to 14.85 cents. So</span> <span class="cue" id="t203" data-cue="t203" data-t="203" data-label="3:23">that is a greater percentage of the</span> <span class="cue" id="t207" data-cue="t207" data-t="207" data-label="3:27">of the overall project than the panels,</span> <span class="cue" id="t209" data-cue="t209" data-t="209" data-label="3:29">but is still better than what the</span> <span class="cue" id="t213" data-cue="t213" data-t="213" data-label="3:33">board of education is currently paying.</span> <span class="cue" id="t215" data-cue="t215" data-t="215" data-label="3:35">Is that accurate, Eric? That's correct.</span> <span class="cue" id="t218" data-cue="t218" data-t="218" data-label="3:38">Okay. And so and it holds it holds</span> <span class="cue" id="t221" data-cue="t221" data-t="221" data-label="3:41">steady for 20 years.</span> <span class="cue" id="t224" data-cue="t224" data-t="224" data-label="3:44">Correct. Okay. All right. anybody</span> <span class="cue" id="t228" data-cue="t228" data-t="228" data-label="3:48">else have any other questions or</span> <span class="cue" id="t229" data-cue="t229" data-t="229" data-label="3:49">anything they want to ask to Attorney</span> <span class="cue" id="t231" data-cue="t231" data-t="231" data-label="3:51">O'Brien, to Valerie, to Eric?</span> <span class="cue" id="t241" data-cue="t241" data-t="241" data-label="4:01">Okay. Ann, would you like to make a motion?</span> <span class="cue" id="t243" data-cue="t243" data-t="243" data-label="4:03">I'd like to move that we approve the</span> <span class="cue" id="t247" data-cue="t247" data-t="247" data-label="4:07">second amendment to the solar power and</span> <span class="cue" id="t249" data-cue="t249" data-t="249" data-label="4:09">services agreement that has been</span> <span class="cue" id="t252" data-cue="t252" data-t="252" data-label="4:12">approved already by the board of</span> <span class="cue" id="t254" data-cue="t254" data-t="254" data-label="4:14">education.</span> <span class="cue" id="t262" data-cue="t262" data-t="262" data-label="4:22">You're on mute, Scott, but I'm I'm assuming you wanted to second that.</span> <span class="cue" id="t265" data-cue="t265" data-t="265" data-label="4:25">Second that, Jeff. Okay. Any further</span> <span class="cue" id="t268" data-cue="t268" data-t="268" data-label="4:28">discussion?</span> <span class="cue" id="t276" data-cue="t276" data-t="276" data-label="4:36">Okay. Carol, if you could you can unmute yourself now. We're going to</span> <span class="cue" id="t278" data-cue="t278" data-t="278" data-label="4:38">vote. We need to hear you.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="4:42" data-default-t="282">4:42</div>
+        <div class="text"><span class="cue" id="t282" data-cue="t282" data-t="282" data-label="4:42">Muted now. You're good. Okay. Okay. All</span> <span class="cue" id="t285" data-cue="t285" data-t="285" data-label="4:45">right. All those in favor</span> <span class="cue" id="t288" data-cue="t288" data-t="288" data-label="4:48">I I I</span> <span class="cue" id="t292" data-cue="t292" data-t="292" data-label="4:52">Eric, when this gets transcribed, can</span> <span class="cue" id="t295" data-cue="t295" data-t="295" data-label="4:55">you make sure that the vote was 4?</span> <span class="cue" id="t298" data-cue="t298" data-t="298" data-label="4:58">[Music]</span> <span class="cue" id="t300" data-cue="t300" data-t="300" data-label="5:00">Yep. Thank you. All right.</span> <span class="cue" id="t305" data-cue="t305" data-t="305" data-label="5:05">we have nothing else on the agenda.</span> <span class="cue" id="t306" data-cue="t306" data-t="306" data-label="5:06">We're going to move to public speak.</span> <span class="cue" id="t308" data-cue="t308" data-t="308" data-label="5:08">Valerie Bruno,</span> <span class="cue" id="t310" data-cue="t310" data-t="310" data-label="5:10">thank you. We look forward to the</span> <span class="cue" id="t312" data-cue="t312" data-t="312" data-label="5:12">project. Kimberly Persan. I'm all set.</span> <span class="cue" id="t315" data-cue="t315" data-t="315" data-label="5:15">Thank you. All right. I make a motion</span> <span class="cue" id="t318" data-cue="t318" data-t="318" data-label="5:18">to adjurnn.</span> <span class="cue" id="t320" data-cue="t320" data-t="320" data-label="5:20">Second. Carol seconded. All right. All</span> <span class="cue" id="t322" data-cue="t322" data-t="322" data-label="5:22">those in favor? I. I. All right. It was</span> <span class="cue" id="t326" data-cue="t326" data-t="326" data-label="5:26">four nothing, Eric. All right. Thank you</span> <span class="cue" id="t328" data-cue="t328" data-t="328" data-label="5:28">very much, guys. Have a nice day. Thank</span> <span class="cue" id="t331" data-cue="t331" data-t="331" data-label="5:31">you. Good night. Yep.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+    </div>
+
+    <footer class="colophon">
+      <p><strong>About this transcript.</strong> This transcript was auto-generated by YouTube. Names, numbers, and other details may be inaccurate &mdash; please refer to the video for authoritative content.</p>
+      <p>Part of <code>andoverct.info</code>, an independent civic-reference site &mdash; not an official site of the Town of Andover. Compiled by <a href="mailto:scott@sauyet.com">Scott Sauyet</a>.</p>
+    </footer>
+  </main>
+
+  <div id="overlay">
+    <div class="dialog">
+      <div class="dialog-header">
+        <div class="dialog-title">Board of Selectmen- Special Meeting</div>
+        <div class="dialog-subtitle">June 26, 2025 at <span class="ts-label" id="overlay-ts"></span></div>
+      </div>
+      <div class="actions">
+        <button id="act-yt">
+          <span class="icon">&#9654;</span>
+          <span class="label">Watch on YouTube<br><span class="hint">Opens at this timestamp</span></span>
+        </button>
+        <button id="act-copy-link">
+          <span class="icon">&#128279;</span>
+          <span class="label">Copy YouTube link<br><span class="hint" id="hint-link-url"></span></span>
+        </button>
+        <button id="act-bookmark">
+          <span class="icon">&#128278;</span>
+          <span class="label">Bookmark this spot<br><span class="hint">Copies link &amp; adds to navigation history</span></span>
+        </button>
+      </div>
+      <div class="cancel"><a id="act-cancel">Cancel</a></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>window.TX = { video: "https://www.youtube.com/watch?v=C9v_v6er67g", passcode: "", type: "YouTube" };</script>
+  <script src="https://andoverct.info/reference/video/assets/transcripts.js"></script>
+</body>
+</html>

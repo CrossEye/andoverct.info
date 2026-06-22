@@ -1,0 +1,31 @@
+# the-facts: route non-existent paths through current-edition dispatcher.
+#
+# Real files and subdirectories pass through untouched. This means:
+#   /the-facts/editions/1/index.html  → served directly
+#   /the-facts/editions.json           → served directly
+#   /the-facts/editions.js             → served directly
+#   /the-facts/                        → dispatcher (serves current edition)
+#   /the-facts/foo.png                 → dispatcher (looks up in current edition)
+
+# When /the-facts/ is hit with a trailing slash, serve the dispatcher.
+# (Equivalent to having an index.html that delegates to PHP.)
+DirectoryIndex _dispatch.php
+
+RewriteEngine On
+
+# Pass real files and real subdirectories through untouched.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule .* - [L]
+
+# Let the document-root /idx directory helper work inside the-facts too.
+# This .htaccess declares its own RewriteEngine, so the root /idx rule is NOT
+# inherited here — re-declare it before the dispatcher catch-all below. The
+# match is relative to /the-facts/, so prefix the dir back with "the-facts/".
+# (Also covers editions/, whose .htaccess has no rewrite rules of its own.)
+RewriteRule ^(.*/)?idx/?$ /idx.php?dir=the-facts/$1 [L,QSA]
+
+# Everything else: route through the dispatcher.
+RewriteRule ^(.*)$ _dispatch.php?path=$1 [QSA,L]
+
+

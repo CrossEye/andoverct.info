@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Jeff is Misleading Us — the facts about the May 26 AES budget</title>
+<meta name="description" content="Andover&#39;s First Selectman sent a mailer urging a NO vote on the May 26 AES budget. The numbers in it don&#39;t add up. Here&#39;s what&#39;s actually true.">
+<style>
+  /* ---------- Layout & typography ---------- */
+  :root {
+    /* bluegold palette — var names kept from the original burgundy theme,
+       so the component rules below recolor without edits. */
+    --burgundy: #143862;        /* primary accent: headings, borders, CTA bg */
+    --burgundy-soft: #2f6db5;   /* secondary blue */
+    --gold: #e8a800;            /* accent rules */
+    --gold-soft: #d8c79a;
+    --cream: #f4f6f9;           /* page background */
+    --cream-deep: #eef4fb;      /* callout backgrounds */
+    --ink: #19222e;
+    --ink-soft: #4a566a;
+    --ink-faint: #7a8699;
+    --rule: #e8a800;
+    --navy: #0f2a4a;            /* banner gradient top */
+    --blue: #245c95;            /* links */
+    --blue-hover: #1c4e80;
+    --gold-ink: #9a7400;        /* readable gold for text accents */
+    --confirm-strong: #14532d;  /* "copied" feedback green */
+    --serif: Georgia, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  .page {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  /* ---------- Breadcrumb banner (matches the reports' bluegold banner) ---------- */
+  .tf-pagebanner {
+    background: linear-gradient(180deg, var(--navy), #143862);
+    border-bottom: 3px solid var(--gold);
+    color: #dde8f5;
+    font-family: var(--sans);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  .tf-pagebanner-inner {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 12px 20px;
+  }
+  .crumbs a { color: var(--gold); text-decoration: none; }
+  .crumbs a:hover { color: #fff; text-decoration: underline; }
+  .crumbs .sep { color: #dde8f5; opacity: 0.5; margin: 0 0.45em; }
+  .crumbs .current { color: #fff; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 60px 0 32px;
+    text-align: center;
+    border-bottom: 1px solid var(--gold);
+    margin-bottom: 36px;
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -1px;
+    margin: 0 0 18px 0;
+  }
+
+  .hero h1 .mis { color: var(--ink); }
+  .hero h1 .leading { color: var(--gold-ink); }
+
+  .hero .dek {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 19px;
+    line-height: 1.45;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  /* ---------- Mailer / hero image reproduction ---------- */
+  .mailer {
+    margin: 0 0 36px;
+    text-align: center;
+  }
+
+  .mailer-frame {
+    display: inline-block;
+    position: relative;
+    background: white;
+    border: 1px solid #aaa;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    line-height: 0;
+  }
+
+  .mailer-frame img {
+    display: block;
+    max-width: 100%;
+    width: 480px;
+    height: auto;
+  }
+
+  .mailer-frame .circle {
+    position: absolute;
+    border: 3px solid var(--burgundy);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .mailer-caption {
+    margin-top: 14px;
+    color: var(--ink-soft);
+    font-style: italic;
+    font-size: 14px;
+  }
+
+  .mailer-caption strong {
+    color: var(--burgundy);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  /* ---------- Sections ---------- */
+  section {
+    margin: 0 0 48px 0;
+  }
+
+  section h2 {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--burgundy);
+    margin: 0 0 16px 0;
+    line-height: 1.2;
+  }
+
+  section h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--burgundy);
+    margin: 28px 0 12px;
+    line-height: 1.3;
+  }
+
+  section .lead {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 18px 0;
+    line-height: 1.4;
+  }
+
+  section p {
+    margin: 0 0 16px 0;
+  }
+
+  section a {
+    color: var(--blue);
+    text-decoration: underline;
+    text-decoration-color: rgba(36, 92, 149, 0.4);
+    text-underline-offset: 2px;
+  }
+
+  section a:hover {
+    color: var(--blue-hover);
+    text-decoration-color: var(--blue-hover);
+  }
+
+  /* ---------- Heading permalink anchors (hover-reveal) ---------- */
+  .header-anchor {
+    display: inline-block;
+    margin-left: 0.35em;
+    padding: 0 0.15em;
+    color: var(--ink-faint);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.7em;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+  }
+  h2:hover > .header-anchor,
+  h3:hover > .header-anchor,
+  .header-anchor:focus {
+    opacity: 1;
+  }
+  .header-anchor:hover { color: var(--burgundy); }
+  .header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+  }
+  .header-anchor.copied::after {
+    content: " link copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+  }
+
+  /* Inline figures (e.g. charts) scale to the content column. */
+  section img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 8px auto 12px;
+  }
+
+  /* ---------- Math comparison block ---------- */
+  .math-block {
+    background: var(--cream-deep);
+    border-left: 3px solid var(--burgundy);
+    padding: 18px 22px;
+    margin: 0 0 20px 0;
+    font-family: "Courier New", "Liberation Mono", monospace;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .math-block .label {
+    font-family: var(--serif);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .math-block .wrong-label { color: #b3261e; }
+  .math-block .right-label { color: #14532D; }
+
+  .math-block .equation {
+    padding-left: 6px;
+  }
+
+  .math-block .mark {
+    display: inline-block;
+    font-size: 18pt;
+    font-weight: 900;
+    margin-left: 10px;
+    vertical-align: -2px;
+  }
+  .math-block .mark.x { color: #b3261e; }
+  .math-block .mark.check { color: #14532D; }
+
+  .math-block .row {
+    margin-bottom: 14px;
+  }
+  .math-block .row:last-child { margin-bottom: 0; }
+
+  /* ---------- Data sub-sections ---------- */
+  .data-section {
+    margin: 0 0 28px 0;
+    padding: 18px 22px;
+    background: var(--cream-deep);
+    border-left: 3px solid var(--burgundy);
+  }
+
+  .data-section h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+  }
+
+  .data-section .stat {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--burgundy);
+    margin: 8px 0 4px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .data-section .stat-label {
+    color: var(--ink-soft);
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .data-section p {
+    margin: 6px 0 0 0;
+    font-size: 16px;
+  }
+
+  /* Hide the empty <ul> that may remain after stat extraction */
+  .data-section ul:empty { display: none; }
+
+  /* ---------- Direct quotes ---------- */
+  blockquote {
+    margin: 18px 0;
+    padding: 12px 22px;
+    border-left: 3px solid var(--gold);
+    background: rgba(200, 168, 120, 0.10);
+    font-style: italic;
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  blockquote p { margin: 0 0 8px 0; }
+  blockquote p:last-child { margin-bottom: 0; }
+
+  blockquote .source {
+    display: block;
+    font-style: normal;
+    font-size: 13px;
+    color: var(--ink-faint);
+    margin-top: 8px;
+  }
+
+  /* ---------- ECS visualization ---------- */
+  .ecs-chart {
+    margin: 24px 0 12px;
+  }
+
+  .ecs-chart .scenario {
+    margin: 0 0 24px 0;
+  }
+
+  .ecs-chart .scenario h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--burgundy);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    margin: 0 0 3px 0;
+  }
+
+  .ecs-chart .scenario .subtitle {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin: 0 0 12px 0;
+  }
+
+  .stack {
+    display: table;
+    width: 100%;
+    height: 50px;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin: 0 0 6px 0;
+  }
+
+  .stack > div {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    color: white;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 0 6px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .seg-town { background: #c79a3a; }
+  .seg-aes  { background: #143862; }
+  .seg-rham { background: #2f6db5; }
+
+  .labels {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  .labels > div {
+    display: table-cell;
+    padding: 4px 6px 0 6px;
+    font-size: 11px;
+    color: var(--ink-soft);
+    text-align: center;
+    vertical-align: top;
+    line-height: 1.35;
+  }
+
+  .labels .name {
+    font-weight: 700;
+    color: var(--ink);
+    display: block;
+    font-size: 12px;
+    margin-bottom: 1px;
+  }
+
+  .scenario .total {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--gold);
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+  .scenario .total .label { color: var(--ink-soft); }
+  .scenario .total .amount {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- Placeholder markers (draft only — visible by design) ---------- */
+  .placeholder {
+    background: #fff3a8;
+    color: #5a4a1a;
+    padding: 0 4px;
+    border-radius: 2px;
+    font-family: var(--sans);
+    font-size: 0.92em;
+    font-weight: 600;
+  }
+
+  .placeholder-block {
+    background: #fff3a8;
+    border-left: 4px solid #d4a017;
+    color: #5a4a1a;
+    padding: 12px 18px;
+    margin: 18px 0;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  /* ---------- Call to action ---------- */
+  .cta {
+    background: var(--burgundy);
+    color: white;
+    padding: 28px 30px;
+    text-align: center;
+    margin: 36px 0 24px;
+  }
+
+  .cta h2 {
+    color: white;
+    margin: 0 0 8px;
+    font-size: 28px;
+  }
+
+  .cta p {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  .cta strong { font-weight: 700; }
+
+  /* ---------- Footer references ---------- */
+  .references {
+    margin-top: 60px;
+    padding-top: 28px;
+    border-top: 1px solid var(--gold);
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  .references h2 {
+    font-size: 18px;
+    color: var(--burgundy);
+    margin: 0 0 14px 0;
+  }
+
+  .references ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .references li {
+    margin-bottom: 8px;
+  }
+
+  .references li > p {
+    margin: 0;
+  }
+
+  .references a {
+    color: var(--blue);
+  }
+
+  .colophon {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid var(--gold-soft);
+    font-size: 13px;
+    color: var(--ink-faint);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    .hero h1 { font-size: 40px; }
+    .hero .dek { font-size: 17px; }
+    section h2 { font-size: 22px; }
+    section .lead { font-size: 17px; }
+    .math-block { font-size: 13px; padding: 14px 16px; }
+    .data-section { padding: 14px 16px; }
+    .stack > div, .labels > div { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="tf-pagebanner">
+  <nav class="tf-pagebanner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/the-facts/">The Facts</a><span class="sep">›</span><span class="current">Jeff is MisLEADING Us</span>
+  </nav>
+</div>
+
+<div class="page">
+
+  <div class="hero">
+    <h1>Jeff is <span class="mis">Mis</span><span class="leading">LEADING</span> Us</h1>
+    <p class="dek">Andover&#39;s First Selectman sent a mailer this week urging a NO vote on the May 26 AES budget. The numbers in it don&#39;t add up. Here&#39;s what&#39;s actually true.</p>
+  </div>
+
+  <div class="mailer">
+    <div class="mailer-frame">
+      <img src="maguire-mailer.jpg" alt="Mailer from Jeff Maguire urging NO on the AES budget. The figure $81,833 is circled.">
+      <div class="circle" style="top: 64%; left: 55%; width: 16%; height: 4.5%; transform: rotate(-4deg);"></div>
+    </div>
+    <div class="mailer-caption"><strong>This number is fiction.</strong> Here&#39;s why, in detail.</div>
+  </div>
+<section>
+<h2 id="the-math-doesnt-add-up">The math doesn&#39;t add up<a class="header-anchor" href="#the-math-doesnt-add-up" aria-label="Link to this section">¶</a></h2>
+<p class="lead">The mailer&#39;s headline figure isn&#39;t per-student cost. It&#39;s a number designed
+to sound alarming.</p>
+<p>Mr. Maguire arrives at the $81,833 figure by dividing the three-year AES
+budget increase ($1,224,499) by the three-year change in K-6 enrollment (15
+students). That&#39;s not how per-student cost works.</p>
+<div class="math-block">
+  <div class="row">
+    <div class="label wrong-label">Jeff&#39;s math</div>
+    <div class="equation">$1,224,499 ÷ 15 students = $81,833 <span class="mark x">✗</span></div>
+  </div>
+  <div class="row">
+    <div class="label right-label">The right math</div>
+    <div class="equation">$5,013,651 ÷ 189 students = $26,527 <span class="mark check">✓</span></div>
+  </div>
+</div>
+
+
+
+<p>Per-student cost is the budget divided by the number of students. Not the
+<em>change</em> in budget divided by the <em>change</em> in students. By the same
+arithmetic, a household that got a $30,000 raise over three years and had a
+new baby would conclude the baby costs $30,000 a year.</p>
+<p>Andover&#39;s actual per-student spending under the proposed budget is
+approximately <strong>$26,500</strong>, in line with Connecticut elementary norms.</p>
+</section>
+<section>
+<h2 id="what-the-data-actually-shows">What the data actually shows<a class="header-anchor" href="#what-the-data-actually-shows" aria-label="Link to this section">¶</a></h2>
+<p class="lead">Connecticut&#39;s own data tells the opposite of Mr. Maguire&#39;s story. Three
+independent measures, all pointing the same way.</p>
+<div class="data-section">
+<h3 id="andover-spends-less-per-pupil-than-nearly-all-comparable-elementary-districts">Andover spends less per pupil than nearly all comparable elementary districts.<a class="header-anchor" href="#andover-spends-less-per-pupil-than-nearly-all-comparable-elementary-districts" aria-label="Link to this section">¶</a></h3>
+<p>Connecticut publishes Net Current Expenditures Per Pupil (NCEP) for every
+district every year. For 2024-25:</p>
+<div class="stat">$24,643 &nbsp;<span class="stat-label">Andover</span></div>
+<div class="stat">$27,119 &nbsp;<span class="stat-label">peer-group average</span></div>
+
+<p>Andover spent less per pupil than <strong>16 of 21</strong> elementary-only districts in
+its peer group statewide.</p>
+</div>
+
+
+
+
+
+<div class="data-section">
+<h3 id="andovers-per-pupil-cost-has-been-growing-slower-than-peers">Andover&#39;s per-pupil cost has been growing slower than peers.<a class="header-anchor" href="#andovers-per-pupil-cost-has-been-growing-slower-than-peers" aria-label="Link to this section">¶</a></h3>
+<p>Over the five years from 2020-21 to 2024-25:</p>
+<div class="stat">+9.8% &nbsp;<span class="stat-label">Andover</span></div>
+<div class="stat">+18.3% &nbsp;<span class="stat-label">peer-group average</span></div>
+
+<p>Andover&#39;s per-pupil cost grew at <strong>roughly half</strong> the peer-group average
+rate. AES has been one of the slower-growing elementary districts in its peer
+group, not a runaway-spending district.</p>
+</div>
+
+
+
+
+
+<div class="data-section">
+<h3 id="andovers-total-budget-has-run-far-below-inflation-for-years">Andover&#39;s total budget has run far below inflation for years.<a class="header-anchor" href="#andovers-total-budget-has-run-far-below-inflation-for-years" aria-label="Link to this section">¶</a></h3>
+<p>From FY 2020-21 to FY 2025-26, Andover&#39;s total town budget (General
+Government, AES, and the RHAM levy combined):</p>
+<div class="stat">+2.9% &nbsp;<span class="stat-label">total town budget, 5 years</span></div>
+
+<p>Over that same period, inflation rose <strong>23.1%</strong>, and Social Security
+cost-of-living adjustments rose <strong>28.8%</strong>. A retiree on Social Security saw
+their benefits rise <em>ten times faster</em> than the entire Andover tax burden.</p>
+<p>Even with the proposed FY 2026-27 budget, six-year cumulative growth is about
+<strong>9.2%</strong>, still well under both inflation and COLA.</p>
+</div>
+</section>
+<section>
+<h2 id="the-unsustainable-framing-has-it-backwards">The &quot;unsustainable&quot; framing has it backwards<a class="header-anchor" href="#the-unsustainable-framing-has-it-backwards" aria-label="Link to this section">¶</a></h2>
+<p class="lead">The mailer calls Andover&#39;s budget growth &quot;unreasonable and unsustainable.&quot;
+The opposite is closer to true.</p>
+<p>A town whose total budget rose <strong>2.9% over five years</strong> while inflation rose
+23.1% has been the one absorbing the squeeze, not the one driving it.
+Andover&#39;s per-pupil spending grew at roughly half the peer-group rate. The
+town has been running unusually lean by every measure available.</p>
+<p>The proposed FY 2026-27 AES budget does represent a meaningful single-year
+jump, about <strong>9.8%</strong> over FY 2025-26. That&#39;s the same 9.8% figure that
+appeared above in a different context (Andover&#39;s per-pupil growth over the
+previous five years). Both numbers are real, and the coincidence is just
+that. The point: even with this single-year jump on top of the five-year
+per-pupil trend, the cumulative picture is still well below inflation, which
+rose 23.1% over those same five years. That&#39;s a conversation worth having on
+its merits. The Board of Finance has held public meetings on exactly that
+topic. Mr. Maguire was at those meetings.</p>
+<p>A NO vote doesn&#39;t re-open that conversation. It produces another vote, a few
+weeks later, on essentially the same budget.</p>
+</section>
+<section>
+<h2 id="one-more-thing-about-the-budget-itself">One more thing about the budget itself<a class="header-anchor" href="#one-more-thing-about-the-budget-itself" aria-label="Link to this section">¶</a></h2>
+<p class="lead">Andover&#39;s two ballot questions show what we spend, but not where the revenue
+comes from. That changes how the numbers read.</p>
+<p>When you vote Tuesday, you&#39;ll see three separate budget categories. A town
+budget of $4.36 million covers General Government plus the Capital budget.
+The Board of Education budget is $5.01 million for Andover Elementary
+School. RHAM appears as a $4.15 million levy on the town side. Each looks
+like a stand-alone bill.</p>
+<p>But Andover, like every Connecticut town with public schools, receives an
+<strong>Education Cost Sharing (ECS) grant</strong> from the state, <strong>$2.08 million</strong>
+this year. The grant is calculated using student counts, district
+enrollment, and local property wealth. It exists <em>because</em> Andover has
+schools.</p>
+<p>ECS is legally unrestricted: the state pays it to the town, and the town
+decides how to account for it. There&#39;s no state law requiring towns to
+credit ECS to one budget side or the other. Different towns make different
+choices. Monroe treats ECS as town-side revenue. Manchester pulls it
+explicitly out of the town side to offset the school appropriation. The
+choice is local, and Andover&#39;s was made when the budget was bifurcated by
+charter amendment in November 2022.</p>
+<p>Andover currently records ECS as general town revenue, reducing the
+town-side tax requirement. The schools that generated the revenue see none
+of it on the ballot.</p>
+<p><em>The same $11.45 million in local funding, split two ways:</em></p>
+<div class="ecs-chart">
+  <div class="scenario">
+    <h4 id="how-the-ballot-shows-it">How the ballot shows it<a class="header-anchor" href="#how-the-ballot-shows-it" aria-label="Link to this section">¶</a></h4>
+    <div class="subtitle">$2.08M ECS booked as town-side revenue</div>
+    <div class="stack">
+      <div class="seg-town" style="width: 19.9%;">$2.28M</div>
+      <div class="seg-aes" style="width: 43.8%;">$5.01M</div>
+      <div class="seg-rham" style="width: 36.3%;">$4.15M</div>
+    </div>
+    <div class="labels">
+      <div style="width: 19.9%;"><span class="name">Town</span>(after ECS, Gen Gov&#39;t + Capital)</div>
+      <div style="width: 43.8%;"><span class="name">AES</span>(gross)</div>
+      <div style="width: 36.3%;"><span class="name">RHAM</span>(gross)</div>
+    </div>
+    <div class="total">
+      <span class="label">Local share, total</span>
+      <span class="amount">$11.45M</span>
+    </div>
+  </div>
+  <div class="scenario">
+    <h4 id="if-ecs-were-netted-against-schools">If ECS were netted against schools<a class="header-anchor" href="#if-ecs-were-netted-against-schools" aria-label="Link to this section">¶</a></h4>
+    <div class="subtitle">50/50 split between AES and RHAM</div>
+    <div class="stack">
+      <div class="seg-town" style="width: 38.1%;">$4.36M</div>
+      <div class="seg-aes" style="width: 34.7%;">$3.97M</div>
+      <div class="seg-rham" style="width: 27.2%;">$3.11M</div>
+    </div>
+    <div class="labels">
+      <div style="width: 38.1%;"><span class="name">Town</span>(full cost, no ECS offset)</div>
+      <div style="width: 34.7%;"><span class="name">AES</span>(net of $1.04M ECS share)</div>
+      <div style="width: 27.2%;"><span class="name">RHAM</span>(net of $1.04M ECS share)</div>
+    </div>
+    <div class="total">
+      <span class="label">Local share, total</span>
+      <span class="amount">$11.45M</span>
+    </div>
+  </div>
+</div>
+
+
+
+<p><em>The total tax bill is identical either way. The mill rate doesn&#39;t change.</em>
+This isn&#39;t about whether the town spends too much or too little on schools.
+It&#39;s about how the spending is <em>presented</em> in two separate ballot questions,
+and how that presentation shapes what voters think they&#39;re voting on.</p>
+<p>A nearly identical question was contested in East Hampton in 2018, when most
+of a $700,000 ECS grant was allocated to reduce a general tax increase
+rather than to the schools. Education advocates argued the money belonged
+with the schools. The finance director&#39;s defense, that ECS reduced what the
+schools needed from taxes, was technically accurate, and both descriptions
+were true at the same time. The labeling choice mattered politically because
+each side gets voted on separately.</p>
+<p>State law allows towns to make this allocation either way. It&#39;s worth a
+conversation with the Board of Finance.</p>
+<blockquote>
+<p><em>Note: the 50/50 split between AES and RHAM in the comparison above is an
+approximation. Student counts and per-pupil costs differ between the two,
+so a more precise allocation would shift the numbers somewhat. But the
+broader point, that about $2 million in school-driven state revenue is
+currently invisible on the school side of the ballot, holds.</em></p>
+</blockquote>
+</section>
+<section>
+<h2 id="who-is-making-this-case">Who is making this case<a class="header-anchor" href="#who-is-making-this-case" aria-label="Link to this section">¶</a></h2>
+<p class="lead">The mailer doesn&#39;t say so, but Jeff Maguire is Andover&#39;s First Selectman.
+He participated in the budget process he&#39;s now asking voters to reject.</p>
+<p>Under the town charter, the First Selectman is an ex officio member of every
+board, including Finance and Education. The provision had been mostly
+dormant for years. Mr. Maguire began exercising it this year, attending many
+BOF and BOE meetings and pressing hard on financial discussions.</p>
+<p>He was in the room as this budget was built. He had standing to ask
+questions, request data, and weigh in at every stage. He did all of those
+things. The boards heard him out and produced this budget anyway.</p>
+<p>The mailer is addressed to &quot;Andover Taxpayers.&quot; It is not from one. The
+disclosure at the bottom identifies Mr. Maguire personally, with no mention
+that he is the town&#39;s First Selectman.</p>
+<h3 id="after-the-mailer-drew-an-ethics-complaint">After the mailer drew an ethics complaint<a class="header-anchor" href="#after-the-mailer-drew-an-ethics-complaint" aria-label="Link to this section">¶</a></h3>
+<p>An ethics complaint was filed with the State Board of Ethics regarding the
+mailer. The complaint was dismissed, which is what happens routinely when
+alleged conduct doesn&#39;t fall under state ethics jurisdiction. It tells us
+nothing about whether the mailer was a good-faith effort.</p>
+<p>At the Board of Education meeting on May 13, 2026, Mr. Maguire spoke during
+public comment about the complaint. His own words, from the meeting
+recording:</p>
+<blockquote><p>I look at this as targeting and, you know, you&#39;re attempting to squash
+total dissent. And it&#39;s not going to work on me.</p>
+<span class="source">— Jeff Maguire, BOE meeting, May 13, 2026</span>
+</blockquote>
+<p>Then, in the same address:</p>
+<blockquote><p>I told you, Caitlin, that I didn&#39;t want to file any Freedom of Information
+requests, but I&#39;ve decided to reverse that course. So I&#39;m going to give
+you three requests for information directly to you as the Chairperson…</p>
+<span class="source">— Jeff Maguire, BOE meeting, May 13, 2026</span>
+</blockquote>
+<p>Read those two passages back to back. Mr. Maguire had previously told the
+Chair he wouldn&#39;t file FOIA requests. After the ethics complaint, he changed
+his mind and served three requests on her personally, explicitly framing
+them as a response.</p>
+<p>FOIA is a legitimate tool. Filing FOIAs as announced retaliation against a
+board chair, in public comment, in front of the body she chairs, is a
+different thing. The First Selectman is telling Andover, on the record, that
+pushback against his actions will result in escalation.</p>
+</section>
+<section>
+<h2 id="what-a-no-vote-actually-does">What a NO vote actually does<a class="header-anchor" href="#what-a-no-vote-actually-does" aria-label="Link to this section">¶</a></h2>
+<p class="lead">A NO vote doesn&#39;t produce the scrutiny the mailer says we need. The
+scrutiny already happened.</p>
+<p>The Board of Finance held public meetings on the budget. The Board of
+Education published monthly packets. The audited financial statements are
+public. Mr. Maguire, as ex officio member of both boards, was in those rooms
+raising concerns directly with the people doing the work.</p>
+<p>The BOF and BOE listened, considered, and produced this budget. A NO vote
+doesn&#39;t reopen that process. It produces another vote, weeks later, on
+essentially the same budget, and asks the rest of us to pay for the second
+referendum.</p>
+<p>Last year&#39;s first referendum failed. The BOE came back with a budget
+<strong>$163,694 lower</strong>, about 1.2% of the total. That&#39;s the realistic shape of
+a re-vote.</p>
+<p>If you want real scrutiny, the next BOF meeting is public.</p>
+</section>
+
+
+  <div class="cta">
+    <h2>Vote YES &mdash; Tuesday, May 26</h2>
+    <p>Andover Town Hall &nbsp;&middot;&nbsp; 17 School Road<br>
+    Polls open 6:00 AM &ndash; 8:00 PM</p>
+  </div>
+
+  <div class="references">
+    <h2 id="sources-and-further-reading">Sources and further reading<a class="header-anchor" href="#sources-and-further-reading" aria-label="Link to this section">¶</a></h2>
+    <ul>
+<li><p><strong>Town of Andover FY 2026-27 Proposed Budget</strong> (as of 5/6/26). The figures
+used throughout this page: AES at $5,013,651, RHAM at $4,153,318, town side
+at $4,362,487, ECS at $2,084,974. Official copy at
+<a href="https://www.andoverconnecticut.org/sites/g/files/vyhlif5346/f/uploads/board_budget_proposal_5.6.26_pdf_lj.pdf">andoverconnecticut.org</a>
+(primary). Backup copy at
+<a href="http://andoverct.info/the-facts/board_budget_proposal_5.6.26_pdf_lj.pdf">andoverct.info</a>.</p>
+</li>
+<li><p><strong>Andover budget analysis (civic report).</strong> Detailed analysis of multi-year
+AES, RHAM, and town-side budgets, the NCEP peer comparison, and the 2.9% /
+23.1% / 28.8% inflation comparison.
+<a href="http://andoverct.info/reports/budget/2026/">View the report</a>.</p>
+</li>
+<li><p><strong>Connecticut SDE Net Current Expenditures Per Pupil (NCEP).</strong> The state&#39;s
+official per-pupil cost measure, published annually for every district.
+<a href="https://edsight.ct.gov/SASStoredProcess/guest">EdSight</a> ·
+<a href="https://portal.ct.gov/sde">CT SDE</a>.</p>
+</li>
+<li><p><strong>Andover BOE recording, May 13, 2026.</strong> The meeting at which Mr. Maguire
+announced reversal of his decision not to file FOIA requests, in response
+to the ethics complaint.
+<a href="https://www.andoverelementaryct.org/index.php/boe/agendas-minutes-recordings">All BOE recordings, minutes, and agendas</a>.
+The May 13 recording specifically:
+<a href="https://us02web.zoom.us/rec/share/xEMcie6asJg5f_pS7Z-W-9nkI7o9oRkFLyjwxKr4-AWW9JiVjk2FICMdy1hmmxM.ia0GF9XB1zed3pU7">Zoom recording</a>
+(passcode: <code>X+n+E%e0</code>).</p>
+</li>
+<li><p><strong>Andover preschool funding (civic report).</strong> Detail on how preschool is
+funded entirely through tuition and grants, and is accounted for
+separately from the AES general fund.
+<a href="http://andoverct.info/reports/aes/preschool-funding/">View the report</a>.</p>
+</li>
+<li><p><strong>ECS treatment in bifurcated budgets.</strong> The Connecticut General
+Assembly&#39;s Program Review and Investigations Committee study of the
+state&#39;s public school finance system, which describes the state&#39;s
+education aid grants:
+<a href="https://www.cga.ct.gov/pri/archives/psfs/20011201FINAL_Full.pdf">2001 PRI report (PDF)</a> ·
+<a href="https://cga.ct.gov/pri/archives/2001psreportintro.htm">overview</a>. CT
+Mirror&#39;s overview of how the ECS formula works:
+<a href="https://ctmirror.org/2025/09/01/ct-education-cost-sharing-formula-ecs/">How are CT schools funded?</a>.
+The 2018 East Hampton controversy in which $700K of ECS was allocated to
+reduce a general tax increase rather than the school side:
+<a href="https://www.pressreader.com/usa/the-middletown-press-middletown-ct/20180620/281505046939535">Passage hinges on $700K for schools (Middletown Press)</a>
+and the
+<a href="https://www.pressreader.com/usa/the-middletown-press-middletown-ct/20180614/281479277124022">follow-up</a>.
+State law does not prescribe how a bifurcated budget should attribute ECS
+revenue.</p>
+</li>
+<li><p><strong>U.S. Bureau of Labor Statistics, Consumer Price Index.</strong> The 23.1%
+inflation figure (Jan 2020 to Jan 2026). <a href="https://www.bls.gov/cpi/">CPI data</a>.</p>
+</li>
+<li><p><strong>Social Security Administration, COLA history.</strong> The 28.8% cumulative
+cost-of-living adjustment figure.
+<a href="https://www.ssa.gov/cola/">SSA COLA history</a>.</p>
+</li>
+<li><p><strong>Original Maguire mailer and recreation.</strong> The mailer received by Andover
+households in May 2026:
+<a href="maguire-mailer-photo.jpg">original photograph</a>. The recreation displayed
+on this page was built to match the original faithfully: same typeface,
+same layout, same staggered indents in the financial table, same postal
+headers. Discrepancies present in the original are preserved exactly as
+published — most notably the $81,<strong>6</strong>33 figure in the table vs.
+$81,<strong>8</strong>33 in the body paragraph (one digit different), and the
+misspelled &quot;Jeffery&quot; in the printed disclosure (while the signature line
+above it correctly reads &quot;Jeffrey&quot;). The recreation is also available as
+a <a href="maguire-mailer-recreation.pdf">PDF copy</a> for download. Every reasonable
+effort was made to match the original; the recreation is not a
+photographic facsimile and minor visual differences may exist.</p>
+</li>
+</ul>
+
+    <div class="colophon">
+      Compiled by Scott Sauyet, Andover. Posted at andoverct.info/the-facts. This page is part of an ongoing series; new editions appear at the same URL as the local conversation evolves. Earlier editions remain accessible at their permanent URLs (use the menu to navigate).
+    </div>
+  </div>
+</div>
+
+<script>
+// Click a heading's ¶ anchor to copy its permalink to the clipboard.
+document.addEventListener('click', function (e) {
+  var anchor = e.target.closest('.header-anchor');
+  if (!anchor) return;
+  var id = anchor.parentElement.id;
+  if (!id) return;
+  var url = window.location.origin + window.location.pathname + '#' + id;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(function () {
+      anchor.classList.add('copied');
+      setTimeout(function () { anchor.classList.remove('copied'); }, 1400);
+    }).catch(function () {});
+  }
+});
+</script>
+<script src="/the-facts/editions.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+/* Draft watermark — loaded by the engine when a report's front matter
+ * contains `draft: true`. Adds a large diagonal "DRAFT" stamp behind the
+ * content (screen + print), plus a small persistent badge at the top right
+ * of every page. Selectors are gated on `body[data-draft="true"]` so this
+ * file is also safe to load unconditionally if a future engine variant
+ * decides to inline it.
+ *
+ * Customisation: a theme can override --draft-color, --draft-bg, and
+ * --draft-text by setting them in the theme's :root block.
+ */
+
+:root {
+  --draft-color: rgba(176, 30, 30, 0.10);
+  --draft-bg:    #b01e1e;
+  --draft-text:  #ffffff;
+}
+
+/* Diagonal stamp behind on-screen content. */
+body[data-draft="true"]::before {
+  content: "DRAFT";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  font-family: var(--font-sans);
+  font-weight: 900;
+  font-size: 22vw;
+  letter-spacing: 0.05em;
+  color: var(--draft-color);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* Lift live content above the watermark. */
+body[data-draft="true"] .page-banner,
+body[data-draft="true"] .container,
+body[data-draft="true"] .page-footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Small persistent badge at the top-right corner so the draft flag is
+ * impossible to miss even on dense pages. */
+body[data-draft="true"]::after {
+  content: "DRAFT";
+  position: fixed;
+  top: 8px;
+  right: 12px;
+  background: var(--draft-bg);
+  color: var(--draft-text);
+  padding: 4px 10px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  border-radius: 3px;
+  z-index: 9999;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+  pointer-events: none;
+}
+
+/* Print / PDF rules. WeasyPrint repeats fixed elements on every page, and
+ * honours @page backgrounds, so we get the diagonal band and the corner
+ * badge on every PDF page. */
+@media print {
+  @page {
+    background-image: linear-gradient(
+      -30deg,
+      transparent 38%,
+      var(--draft-color) 38%,
+      var(--draft-color) 62%,
+      transparent 62%
+    );
+  }
+
+  body[data-draft="true"]::before {
+    /* The @page gradient above gives the diagonal band on paper;
+       suppress the duplicate centred stamp so the page isn't muddy. */
+    display: none;
+  }
+
+  body[data-draft="true"]::after {
+    position: fixed;
+    top: 6mm;
+    right: 8mm;
+    font-size: 10pt;
+    padding: 2px 7px;
+  }
+}

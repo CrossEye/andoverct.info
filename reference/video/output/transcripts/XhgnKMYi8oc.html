@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>IWWC Regular Meeting — April 7, 2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <style>
+    /* Transcript-specific components. Theme, palette, and page chrome
+       (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
+       come from the shared style.css; these just use its variables. */
+    .para { display: flex; gap: 1em; padding: 0.5em 0.75em; border-radius: 6px; }
+    .para:nth-child(4n+1) { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+    .para-gap { font-size: 1px; line-height: 1px; height: 0; overflow: hidden; user-select: text; }
+    .para.speaker { border-top: 1px solid var(--rule-soft); margin-top: 0.6em; padding-top: 1em; }
+    .para.speaker:first-child { border-top: none; margin-top: 0; }
+
+    .timestamp {
+      flex: 0 0 5em; text-align: right;
+      color: var(--ink-mute); font-family: var(--sans);
+      font-size: 0.72rem; font-variant-numeric: tabular-nums; line-height: 1.9;
+      cursor: pointer; white-space: nowrap; padding-top: 0.15em;
+      transition: color 0.15s; user-select: none;
+    }
+    .timestamp:hover, .timestamp.hl { color: var(--accent); font-weight: 600; }
+
+    .text { flex: 1; min-width: 0; }
+    .cue { cursor: pointer; border-radius: 3px; transition: background-color 0.15s; }
+    .cue.hl { background-color: var(--accent-bg); }
+    @keyframes flash-highlight {
+      0%   { background-color: rgba(232, 168, 0, 0.45); }
+      100% { background-color: transparent; }
+    }
+    .cue.flash { animation: flash-highlight 4s ease-out forwards; }
+
+    /* action dialog */
+    #overlay { display: none; position: fixed; inset: 0; background: rgba(8, 22, 40, 0.5); z-index: 100; justify-content: center; align-items: center; }
+    #overlay.visible { display: flex; }
+    .dialog { background: var(--bg-card); border-radius: 10px; padding: 1.6rem 1.8rem; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28); max-width: 28rem; width: 90vw; border-top: 4px solid var(--accent); }
+    .dialog-header { margin-bottom: 1.2em; }
+    .dialog-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); }
+    .dialog-subtitle { font-family: var(--sans); font-size: 0.85rem; color: var(--ink-mute); margin-top: 0.2em; }
+    .dialog .ts-label { color: var(--accent); font-weight: 600; }
+    .dialog .actions { display: flex; flex-direction: column; gap: 0.5em; }
+    .dialog button { display: flex; align-items: center; gap: 0.6em; padding: 0.6em 1em; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--ink); cursor: pointer; font-family: var(--sans); font-size: 0.9rem; text-align: left; width: 100%; transition: background-color 0.12s, border-color 0.12s; }
+    .dialog button:hover { background: var(--accent-bg); border-color: var(--accent); }
+    .dialog button .icon { font-size: 1.1em; flex: 0 0 1.4em; text-align: center; }
+    .dialog button .label { flex: 1; }
+    .dialog button .hint { display: block; color: var(--ink-mute); font-size: 0.78rem; }
+    .dialog .cancel { margin-top: 0.6em; text-align: center; }
+    .dialog .cancel a { color: var(--ink-mute); font-family: var(--sans); font-size: 0.82rem; cursor: pointer; border-bottom: none; }
+    .dialog .cancel a:hover { color: var(--accent); }
+
+    /* toast */
+    #toast { position: fixed; top: 1.5em; left: 50%; transform: translateX(-50%) translateY(-4em); background: var(--accent); color: #15233a; padding: 0.7em 1.6em; border-radius: 8px; font-family: var(--sans); font-size: 0.95rem; font-weight: 600; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease; z-index: 200; pointer-events: none; text-align: center; max-width: 90vw; }
+    #toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    @media (max-width: 480px) { .timestamp { flex-basis: 4em; } }
+  </style>
+</head>
+<body class="bluegold">
+  <div class="page-banner">
+    <nav class="page-banner-inner crumbs">
+      <a href="/">Home</a><span class="sep">›</span><a href="/reference/">Reference</a><span class="sep">›</span><a href="../index.html">Video</a><span class="sep">›</span><span class="current">IWWC Regular Meeting (4/7/25)</span>
+    </nav>
+  </div>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Meeting transcript</p>
+      <h1 class="title">IWWC Regular Meeting</h1>
+      <p class="subtitle">April 7, 2025 &middot; <a href="https://www.youtube.com/watch?v=XhgnKMYi8oc" target="yt-meeting">Watch on YouTube</a> &middot; <a href="../index.html">All meetings</a></p>
+    </header>
+
+    <hr class="rule">
+
+    <div class="transcript">
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:19" data-default-t="319">5:19</div>
+        <div class="text"><span class="cue" id="t319" data-cue="t319" data-t="319" data-label="5:19">I'm thinking that this septic here is your standby, your reserve area. Okay.</span> <span class="cue" id="t322" data-cue="t322" data-t="322" data-label="5:22">So, we're we're doing the septic up</span> <span class="cue" id="t325" data-cue="t325" data-t="325" data-label="5:25">there and then these</span> <span class="cue" id="t332" data-cue="t332" data-t="332" data-label="5:32">two areas right here that you're collecting the rain from the</span> <span class="cue" id="t359" data-cue="t359" data-t="359" data-label="5:59">[Music] engineer head</span> <span class="cue" id="t388" data-cue="t388" data-t="388" data-label="6:28">Do you want it going up on a certain area or</span> <span class="cue" id="t390" data-cue="t390" data-t="390" data-label="6:30">Well, so yeah, I'd like to So you need</span> <span class="cue" id="t396" data-cue="t396" data-t="396" data-label="6:36">to see this this and the house site</span> <span class="cue" id="t399" data-cue="t399" data-t="399" data-label="6:39">development. You might be But I could</span> <span class="cue" id="t402" data-cue="t402" data-t="402" data-label="6:42">talk to you here just a little.</span> <span class="cue" id="t404" data-cue="t404" data-t="404" data-label="6:44">So</span> <span class="cue" id="t419" data-cue="t419" data-t="419" data-label="6:59">picturey out there and so I said</span> <span class="cue" id="t422" data-cue="t422" data-t="422" data-label="7:02">[Music]</span> <span class="cue" id="t425" data-cue="t425" data-t="425" data-label="7:05">okay</span> <span class="cue" id="t426" data-cue="t426" data-t="426" data-label="7:06">we</span> <span class="cue" id="t432" data-cue="t432" data-t="432" data-label="7:12">nt I think it was going pretty much up else</span> <span class="cue" id="t438" data-cue="t438" data-t="438" data-label="7:18">Yeah, you know the point of the house on the</span> <span class="cue" id="t444" data-cue="t444" data-t="444" data-label="7:24">left. Okay, I was looking at it. But what we what I didn't see in</span> <span class="cue" id="t463" data-cue="t463" data-t="463" data-label="7:43">that I'm going to start one of my favorite little things</span> <span class="cue" id="t465" data-cue="t465" data-t="465" data-label="7:45">here. Housite development. the limits of</span> <span class="cue" id="t468" data-cue="t468" data-t="468" data-label="7:48">disturbance shall be established in the</span> <span class="cue" id="t470" data-cue="t470" data-t="470" data-label="7:50">field beyond the proposed residential</span> <span class="cue" id="t473" data-cue="t473" data-t="473" data-label="7:53">structure. And so my question is because</span> <span class="cue" id="t477" data-cue="t477" data-t="477" data-label="7:57">when we got down</span> <span class="cue" id="t485" data-cue="t485" data-t="485" data-label="8:05">to the construction schedule, step one is clear trees</span> <span class="cue" id="t489" data-cue="t489" data-t="489" data-label="8:09">and so the question is</span> <span class="cue" id="t492" data-cue="t492" data-t="492" data-label="8:12">is how are we going</span> <span class="cue" id="t495" data-cue="t495" data-t="495" data-label="8:15">to run</span> <span class="cue" id="t568" data-cue="t568" data-t="568" data-label="9:28">Everybody talk [Music]</span> <span class="cue" id="t582" data-cue="t582" data-t="582" data-label="9:42">about graduated.</span> <span class="cue" id="t604" data-cue="t604" data-t="604" data-label="10:04">[Music] Never seen this</span> <span class="cue" id="t606" data-cue="t606" data-t="606" data-label="10:06">before. This is really good.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="10:10" data-default-t="610">10:10</div>
+        <div class="text"><span class="cue" id="t610" data-cue="t610" data-t="610" data-label="10:10">nutrient allocation worksheet right</span> <span class="cue" id="t612" data-cue="t612" data-t="612" data-label="10:12">there on the plan. Holy</span> <span class="cue" id="t654" data-cue="t654" data-t="654" data-label="10:54">[Music] What?</span> <span class="cue" id="t700" data-cue="t700" data-t="700" data-label="11:40">So this this little area here is marked LD which is limit of disturbance and it</span> <span class="cue" id="t705" data-cue="t705" data-t="705" data-label="11:45">goes around the side of the house. This</span> <span class="cue" id="t707" data-cue="t707" data-t="707" data-label="11:47">is the build line which is where he can</span> <span class="cue" id="t710" data-cue="t710" data-t="710" data-label="11:50">build in. He doesn't have to set that.</span> <span class="cue" id="t727" data-cue="t727" data-t="727" data-label="12:07">Oh, okay. So, you think the fence is that could be</span> <span class="cue" id="t729" data-cue="t729" data-t="729" data-label="12:09">Okay.</span> <span class="cue" id="t731" data-cue="t731" data-t="731" data-label="12:11">Yep. Goes up to the house. And then</span> <span class="cue" id="t734" data-cue="t734" data-t="734" data-label="12:14">there's another one that comes over</span> <span class="cue" id="t735" data-cue="t735" data-t="735" data-label="12:15">here.</span> <span class="cue" id="t736" data-cue="t736" data-t="736" data-label="12:16">pro</span> <span class="cue" id="t739" data-cue="t739" data-t="739" data-label="12:19">problem. And actually now that I'm</span> <span class="cue" id="t742" data-cue="t742" data-t="742" data-label="12:22">really close here, I couldn't see it. I</span> <span class="cue" id="t744" data-cue="t744" data-t="744" data-label="12:24">could see this. These might</span> <span class="cue" id="t746" data-cue="t746" data-t="746" data-label="12:26">be the topographic limits on them. So I</span> <span class="cue" id="t751" data-cue="t751" data-t="751" data-label="12:31">just couldn't see them in the register.</span> <span class="cue" id="t755" data-cue="t755" data-t="755" data-label="12:35">Okay.</span> <span class="cue" id="t756" data-cue="t756" data-t="756" data-label="12:36">so if that's the limit of</span> <span class="cue" id="t759" data-cue="t759" data-t="759" data-label="12:39">disturbance,</span> <span class="cue" id="t762" data-cue="t762" data-t="762" data-label="12:42">then good that way.</span> <span class="cue" id="t809" data-cue="t809" data-t="809" data-label="13:29">They can't burn</span> <span class="cue" id="t920" data-cue="t920" data-t="920" data-label="15:20">Yeah. [Music]</span> <span class="cue" id="t1697" data-cue="t1697" data-t="1697" data-label="28:17">That's sort of the actual</span> <span class="cue" id="t1700" data-cue="t1700" data-t="1700" data-label="28:20">the</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="28:23" data-default-t="1703">28:23</div>
+        <div class="text"><span class="cue" id="t1703" data-cue="t1703" data-t="1703" data-label="28:23">actual</span> <span class="cue" id="t1705" data-cue="t1705" data-t="1705" data-label="28:25">word and</span> <span class="cue" id="t1713" data-cue="t1713" data-t="1713" data-label="28:33">how this is</span> <span class="cue" id="t1720" data-cue="t1720" data-t="1720" data-label="28:40">how for example if you look at this</span> <span class="cue" id="t1722" data-cue="t1722" data-t="1722" data-label="28:42">line we already have</span> <span class="cue" id="t1725" data-cue="t1725" data-t="1725" data-label="28:45">list of</span> <span class="cue" id="t1752" data-cue="t1752" data-t="1752" data-label="29:12">special that that will be part of sort of 10ear action</span> <span class="cue" id="t1754" data-cue="t1754" data-t="1754" data-label="29:14">somewhere in that</span> <span class="cue" id="t1756" data-cue="t1756" data-t="1756" data-label="29:16">schedule. where you know we weren't</span> <span class="cue" id="t1759" data-cue="t1759" data-t="1759" data-label="29:19">saying</span> <span class="cue" id="t1779" data-cue="t1779" data-t="1779" data-label="29:39">that our goal is here.</span> <span class="cue" id="t1782" data-cue="t1782" data-t="1782" data-label="29:42">That's</span> <span class="cue" id="t1842" data-cue="t1842" data-t="1842" data-label="30:42">think a lot of times building a lot of that</span> <span class="cue" id="t1851" data-cue="t1851" data-t="1851" data-label="30:51">[Music] know.</span> <span class="cue" id="t3447" data-cue="t3447" data-t="3447" data-label="57:27">There's been a lot of [Music]</span> <span class="cue" id="t3490" data-cue="t3490" data-t="3490" data-label="58:10">Yeah. But I think</span> <span class="cue" id="t3527" data-cue="t3527" data-t="3527" data-label="58:47">I said that I can probably single</span> <span class="cue" id="t3529" data-cue="t3529" data-t="3529" data-label="58:49">one actually.</span> <span class="cue" id="t3593" data-cue="t3593" data-t="3593" data-label="59:53">system and this work I mean I don't want to go</span> <span class="cue" id="t3613" data-cue="t3613" data-t="3613" data-label="1:00:13">where I don't care about [Music]</span> <span class="cue" id="t3650" data-cue="t3650" data-t="3650" data-label="1:00:50">Just be careful. [Music]</span> <span class="cue" id="t3680" data-cue="t3680" data-t="3680" data-label="1:01:20">Don't stop here. can you do it before</span> <span class="cue" id="t3681" data-cue="t3681" data-t="3681" data-label="1:01:21">and all things that they basically say,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="1:01:25" data-default-t="3685">1:01:25</div>
+        <div class="text"><span class="cue" id="t3685" data-cue="t3685" data-t="3685" data-label="1:01:25">well, maybe not.</span> <span class="cue" id="t3689" data-cue="t3689" data-t="3689" data-label="1:01:29">But by</span> <span class="cue" id="t3690" data-cue="t3690" data-t="3690" data-label="1:01:30">having</span> <span class="cue" id="t3692" data-cue="t3692" data-t="3692" data-label="1:01:32">you</span> <span class="cue" id="t3727" data-cue="t3727" data-t="3727" data-label="1:02:07">Yeah. [Music]</span> <span class="cue" id="t3786" data-cue="t3786" data-t="3786" data-label="1:03:06">is. Take it</span> <span class="cue" id="t3789" data-cue="t3789" data-t="3789" data-label="1:03:09">[Music]</span> <span class="cue" id="t3792" data-cue="t3792" data-t="3792" data-label="1:03:12">out. You don't have to have</span> <span class="cue" id="t3869" data-cue="t3869" data-t="3869" data-label="1:04:29">[Music] require</span> <span class="cue" id="t3871" data-cue="t3871" data-t="3871" data-label="1:04:31">[Music]</span> <span class="cue" id="t3872" data-cue="t3872" data-t="3872" data-label="1:04:32">time as long as you have the</span> <span class="cue" id="t3876" data-cue="t3876" data-t="3876" data-label="1:04:36">process.</span> <span class="cue" id="t3878" data-cue="t3878" data-t="3878" data-label="1:04:38">So on top of that goes out and the new</span> <span class="cue" id="t3902" data-cue="t3902" data-t="3902" data-label="1:05:02">again you're going to be and</span> <span class="cue" id="t4049" data-cue="t4049" data-t="4049" data-label="1:07:29">You know what makes sense? You know</span> <span class="cue" id="t4051" data-cue="t4051" data-t="4051" data-label="1:07:31">[Music]</span> <span class="cue" id="t4082" data-cue="t4082" data-t="4082" data-label="1:08:02">on a conversation. What happens is you know part of that</span> <span class="cue" id="t4086" data-cue="t4086" data-t="4086" data-label="1:08:06">process they're probably thinking</span> <span class="cue" id="t4125" data-cue="t4125" data-t="4125" data-label="1:08:45">It's not</span> <span class="cue" id="t4128" data-cue="t4128" data-t="4128" data-label="1:08:48">required.</span> <span class="cue" id="t4131" data-cue="t4131" data-t="4131" data-label="1:08:51">So very</span> <span class="cue" id="t4134" data-cue="t4134" data-t="4134" data-label="1:08:54">simply</span> <span class="cue" id="t4154" data-cue="t4154" data-t="4154" data-label="1:09:14">that's why</span> <span class="cue" id="t4156" data-cue="t4156" data-t="4156" data-label="1:09:16">[Music]</span> <span class="cue" id="t4164" data-cue="t4164" data-t="4164" data-label="1:09:24">I got to market.</span> <span class="cue" id="t4189" data-cue="t4189" data-t="4189" data-label="1:09:49">You know that's why you want to have a single friend. So then those who step in</span> <span class="cue" id="t4194" data-cue="t4194" data-t="4194" data-label="1:09:54">and get to go out to school and look at</span> <span class="cue" id="t4261" data-cue="t4261" data-t="4261" data-label="1:11:01">But that other trail.</span> <span class="cue" id="t4487" data-cue="t4487" data-t="4487" data-label="1:14:47">[Music] It has impact on your</span> <span class="cue" id="t4577" data-cue="t4577" data-t="4577" data-label="1:16:17">process don't have to go. Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+    </div>
+
+    <footer class="colophon">
+      <p><strong>About this transcript.</strong> This transcript was auto-generated by YouTube. Names, numbers, and other details may be inaccurate &mdash; please refer to the video for authoritative content.</p>
+      <p>Part of <code>andoverct.info</code>, an independent civic-reference site &mdash; not an official site of the Town of Andover. Compiled by <a href="mailto:scott@sauyet.com">Scott Sauyet</a>.</p>
+    </footer>
+  </main>
+
+  <div id="overlay">
+    <div class="dialog">
+      <div class="dialog-header">
+        <div class="dialog-title">IWWC Regular Meeting</div>
+        <div class="dialog-subtitle">April 7, 2025 at <span class="ts-label" id="overlay-ts"></span></div>
+      </div>
+      <div class="actions">
+        <button id="act-yt">
+          <span class="icon">&#9654;</span>
+          <span class="label">Watch on YouTube<br><span class="hint">Opens at this timestamp</span></span>
+        </button>
+        <button id="act-copy-link">
+          <span class="icon">&#128279;</span>
+          <span class="label">Copy YouTube link<br><span class="hint" id="hint-link-url"></span></span>
+        </button>
+        <button id="act-bookmark">
+          <span class="icon">&#128278;</span>
+          <span class="label">Bookmark this spot<br><span class="hint">Copies link &amp; adds to navigation history</span></span>
+        </button>
+      </div>
+      <div class="cancel"><a id="act-cancel">Cancel</a></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>window.TX = { video: "https://www.youtube.com/watch?v=XhgnKMYi8oc", passcode: "", type: "YouTube" };</script>
+  <script src="https://andoverct.info/reference/video/assets/transcripts.js"></script>
+</body>
+</html>

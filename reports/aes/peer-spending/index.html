@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Andover's Per-Pupil Spending in Context — Town of Andover, CT</title>
+<style>/* Default civic-report theme.
+ *
+ * A theme is just this set of CSS custom properties. To experiment, copy this
+ * file to _build/themes/<name>.css, change what you like, and point at it from
+ * _build/report.config.json ({"theme":"<name>"}) for all reports, or from a
+ * single report's front matter (theme: <name>). A non-default theme is layered
+ * ON TOP of this one, so it only needs to list the variables it changes.
+ *
+ * Scope: colors, fonts, and small size/width/gap tweaks — not layout changes.
+ */
+:root {
+  /* ---- Palette ---- */
+  --bg:             #fafaf7;   /* page background */
+  --bg-page:        #ffffff;   /* the white content card */
+  --bg-soft:        #f5f3ed;   /* callouts, table headers, inline code */
+  --ink:            #1a1a1a;   /* body text, main headings */
+  --ink-soft:       #333333;   /* blockquote / methodology text */
+  --ink-mute:       #5a5a5a;   /* subtitle, card descriptions */
+  --ink-faint:      #888888;   /* attribution, footer, captions */
+  --rule:           #e0ddd5;   /* hairline borders */
+  --accent:         #b8a878;   /* gold accent rules */
+  --accent-2:       #2c3e50;   /* slate: h3, table-header & code text */
+  --banner-bg:      #2c3e50;   /* top banner background */
+  --banner-ink:     #ecf0f1;   /* top banner text */
+  --crumb-link:       #b9c4cf; /* breadcrumb links in the banner */
+  --crumb-link-hover: #ffffff;
+  --crumb-current:    #ffffff; /* deepest crumb (current page), not a link */
+  --link:           #1a5490;
+  --link-hover:     #0d3a6b;
+  --link-underline: #c5d3e2;
+  --anchor:         #b8b3a4;   /* the ¶ header anchor */
+  --anchor-hover:   #6c7480;
+  --confirm:        #5a8a5a;   /* green ✓ confirmation mark */
+  --confirm-strong: #2e7d32;
+
+  /* ---- Fonts ---- */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:  "SF Mono", Monaco, Menlo, Consolas, monospace;
+
+  /* ---- Sizes (small tweaks only; no layout restructuring) ---- */
+  --base-size:  11pt;    /* body text */
+  --measure:    780px;   /* content column width */
+  --gutter:     30px;    /* horizontal padding / banner & footer gaps */
+  --title-size: 28pt;
+  --h2-size:    18pt;
+  --h3-size:    13pt;
+}
+
+/* bluegold — mirrors the light-mode look of the 55th campaign site
+ * (C:\Users\scott\Dev\Andover\55th, e.g. localhost:8080/reports): cool
+ * blue-gray paper, a dark navy banner with a gold underline, navy serif
+ * headings over a sans body, gold accent rules, and blue links.
+ *
+ * Note the deliberate font swap: base.css uses --font-serif for body text and
+ * --font-sans for headings/labels, so to match the campaign look (sans body,
+ * serif display) we put the SANS stack in --font-serif and the SERIF stack in
+ * --font-sans.
+ *
+ * Layered on default.css. Uses --banner-border (in base.css) for the gold rule
+ * under the banner. */
+:root {
+  /* Palette */
+  --bg:             #f4f6f9;
+  --bg-page:        #ffffff;
+  --bg-soft:        #eef4fb;   /* blue-050 tint for callouts / table headers */
+  --rule:           #e3e8ef;   /* hairlines */
+  --ink:            #19222e;
+  --ink-soft:       #2b3744;
+  --ink-mute:       #5b6775;
+  --ink-faint:      #8a94a1;
+  --accent:         #e8a800;   /* signature gold rules */
+  --accent-2:       #0f2a4a;   /* blue-900: headings, table-header & code text */
+  --banner-bg:      linear-gradient(180deg, #0f2a4a, #143862);
+  --banner-border:  3px solid #e8a800;
+  --banner-ink:     #dde8f5;   /* blue-100 */
+  --crumb-link:       #e8a800; /* gold breadcrumb links */
+  --crumb-link-hover: #ffffff; /* hover to white + underline */
+  --crumb-current:    #ffffff; /* current page, not a link */
+  --link:           #245c95;   /* blue-600 */
+  --link-hover:     #1c4e80;   /* blue-700 */
+  --link-underline: #cfe0f2;
+  --confirm:        #2f8f5b;
+  --confirm-strong: #1f7d49;
+
+  /* Type: sans body + serif display headings (see note above) */
+  --font-serif: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans:  Georgia, "Times New Roman", serif;
+
+  --measure: 860px;
+}
+
+/* Structural base styles for civic reports — theme-independent.
+ * Colors, fonts, and sizes come from the active theme (CSS custom properties
+ * in _build/themes/<name>.css), which is loaded BEFORE this file. */
+
+/* ---- Reset & base ---- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Layout ---- */
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner a { color: inherit; text-decoration: none; }
+.page-banner a:hover { text-decoration: underline; }
+
+/* ---- Breadcrumb (in the banner) ---- */
+.page-banner .crumbs a {
+    color: var(--crumb-link, var(--banner-ink));
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover, #fff);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current {
+    color: var(--crumb-current, #fff);
+}
+
+.container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* ---- Images / figures ---- */
+/* Scale charts and figures to the column (and the printed page box) rather
+   than overflowing at their intrinsic pixel/point size. */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+}
+
+/* ---- Lightbox (screen only; overlay is built at runtime by the viewer
+   script, so it never appears in the PDF). Click a chart to enlarge it. ---- */
+.container img { cursor: zoom-in; }
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vmin;
+    background: rgba(0, 0, 0, 0.85);
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+.lightbox-overlay.open { opacity: 1; }
+.lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    margin: 0;
+    cursor: zoom-out;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+    background: #fff;
+}
+
+/* ---- Title block ---- */
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-attribution {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    color: var(--ink-faint);
+    margin: 0 0 24px 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+.report-attribution a {
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+}
+.report-attribution a:hover {
+    color: var(--link);
+    border-bottom-color: var(--link);
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.methodology-header {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 0 0 36px 0;
+    line-height: 1.55;
+}
+
+/* ---- Section labels (small uppercase tags above h2) ---- */
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 36px 0 4px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+/* ---- Headings ---- */
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+h3 {
+    font-family: var(--font-sans);
+    font-size: var(--h3-size);
+    font-weight: 600;
+    margin: 28px 0 10px 0;
+    color: var(--accent-2);
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+
+/* ---- Header anchor links (HTML only; hidden in print) ---- */
+.header-anchor {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.2em;
+    color: var(--anchor);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.85em;
+    vertical-align: baseline;
+    cursor: pointer;
+    user-select: none;
+}
+h2:hover .header-anchor,
+h3:hover .header-anchor,
+.header-anchor:focus {
+    opacity: 1;
+}
+.header-anchor:hover {
+    color: var(--anchor-hover);
+}
+.header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+}
+.header-anchor.copied::after {
+    content: " copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+}
+@media print {
+    .header-anchor {
+        display: none;
+    }
+}
+
+/* ---- Body text ---- */
+p {
+    margin: 0 0 14px 0;
+    orphans: 3;
+    widows: 3;
+}
+p.intro-table {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+strong { font-weight: 700; color: var(--ink); }
+em { font-style: italic; }
+
+/* ---- Links ---- */
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* ---- Lists ---- */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+li {
+    margin: 0 0 6px 0;
+    line-height: 1.55;
+}
+
+/* ---- Tables ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-before: avoid;
+    break-before: avoid;
+}
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 9.5pt;
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--accent);
+}
+tbody tr:hover { background: var(--bg); }
+
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+tbody tr:last-child td {
+    border-bottom: 2px solid var(--accent);
+}
+
+/* ---- Blockquotes (source notes, verbatim quotes) ---- */
+blockquote {
+    margin: 14px 0 18px 0;
+    padding: 14px 20px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+blockquote p { margin: 0 0 8px 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ol, blockquote ul {
+    margin: 8px 0;
+}
+
+/* ---- HR ---- */
+hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+}
+
+/* ---- Inline code ---- */
+code {
+    font-family: var(--font-mono);
+    font-size: 9.5pt;
+    background: var(--bg-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: var(--accent-2);
+    overflow-wrap: break-word;
+}
+
+/* ---- Other Formats footer ---- */
+.formats-section {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+}
+.format-cards {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.format-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.format-cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media screen and (max-width: 700px) {
+    .format-cards.cols-3,
+    .format-cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+.format-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    padding: 14px;
+    text-align: left;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+.format-card-icon { font-size: 18pt; margin-bottom: 4px; }
+.format-card-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+.format-card-desc { font-size: 9pt; color: var(--ink-mute); line-height: 1.4; }
+.format-card a { display: block; }
+
+/* ---- Footer ---- */
+.page-footer {
+    max-width: var(--measure);
+    margin: 32px auto 60px;
+    padding: 24px var(--gutter);
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 9.5pt;
+    font-family: var(--font-sans);
+    border-top: 1px solid var(--rule);
+}
+
+/* ---- Confirmation glyphs ---- */
+h3 .conf-mark {
+    color: var(--confirm);
+    font-size: 11pt;
+    margin-right: 4px;
+}
+
+/* ---- District columns (Part 1 peer list) ---- */
+.district-columns {
+    column-count: 3;
+    column-gap: 28px;
+    margin: 14px 0 18px;
+    font-size: 10.5pt;
+    line-height: 1.55;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.district-columns ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.district-columns li {
+    padding: 0;
+    margin: 0 0 2px 0;
+    break-inside: avoid;
+}
+@media screen and (max-width: 700px) {
+    .district-columns { column-count: 2; }
+}
+</style>
+</head>
+<body>
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/reports/">Reports</a><span class="sep">›</span><a href="/reports/aes/">Andover Elementary</a><span class="sep">›</span><span class="current">Andover&#39;s Per-Pupil Spending in Context</span>
+  </nav>
+</div>
+<div class="container">
+<h1 class="report-title">Andover's Per-Pupil Spending in Context</h1>
+<p class="report-subtitle">Town of Andover, CT · A Comparison Across 45 Connecticut Small-Town Districts · Per-pupil spending and administrative costs, school year 2024–25</p>
+<p class="report-attribution">A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Not an official town document</p>
+<hr class="report-header-rule">
+<p class="methodology-header">This report compares the Andover Elementary School (AES) district&#8217;s per-pupil
+spending against the 44 other Connecticut public school districts that share its
+structural profile: small-town elementary-only districts (K–6 or K–8, enrollment
+under 2,000) that send middle- and high-school students to a regional district
+or by tuition contract. The Connecticut State Department of Education&#8217;s
+directory shows one additional district matching the basic structural criterion
+— Norwich, with 5,174 students — but it is a city district operating multiple
+schools and serving an urban-poverty population that differs in kind, not just
+degree, from the small-town districts that populate the rest of the peer set. It
+has been excluded with a note in Part 1 explaining the choice. All data is drawn
+directly from the Connecticut State Department of Education&#8217;s EdSight portal —
+specifically the Per Pupil Expenditures by Function (District) report for school
+year 2024–25 — and from the CSDE Education Directory used to identify the peer
+set. The report was prompted by a community discussion about superintendent
+compensation; the available public data does not let that specific question be
+answered cleanly, but it does let the broader question — &#8220;how does Andover&#8217;s
+administrative spending compare to its peers?&#8221; — be answered very cleanly
+indeed. The answer is at the bottom of the rankings on essentially every
+measure.</p>
+<hr>
+<p class="section-label">Introduction</p>
+<h2 id="overview">Overview<a class="header-anchor" href="#overview" aria-label="Link to this section">¶</a></h2>
+<p>A discussion has been underway in Andover about the salary and compensation of
+the AES superintendent, with concerns raised that the new contract represents a
+significant raise. The natural way to evaluate that concern is to compare
+Andover&#8217;s superintendent compensation to that of similarly-structured
+Connecticut districts.</p>
+<p>That comparison turns out to be hard to make from public sources alone.
+Individual superintendent contracts are public records under Connecticut FOIA
+but are not collected in a single state-published dataset. They live, instead,
+on each district&#8217;s website (when posted at all) — sometimes as a current
+contract, sometimes only as a board-meeting agenda item, sometimes as a scanned
+PDF that resists searching. Building a defensible 45-district comparison of
+superintendent compensation from primary sources is a project of weeks, not
+days.</p>
+<p>What <em>is</em> published in a single consistent dataset is district-level expenditure
+data, broken out by function — and what that dataset shows, for Andover, is
+striking enough to be worth establishing up front. The findings at a glance:</p>
+<blockquote>
+<p><strong>A note on these figures.</strong> Unlike per-pupil figures in some other reports —
+including earlier reports on this site — the CT EdSight NCEP convention
+includes preschool pupils in the denominator. Forty-two of the 45 districts
+compared also include preschool; the <em>comparisons</em> are consistent. Part 4
+walks through why this convention, if anything, makes Andover look slightly
+more favorable rather than less.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>How does Andover&#8217;s total per-pupil spending compare to peer districts?</td>
+<td>Andover ranks <strong>#1 of 45</strong> (lowest). $19,009 per pupil vs $25,699 peer median.</td>
+</tr>
+<tr>
+<td>How does Andover&#8217;s spending on the superintendent&#8217;s office compare to peer districts?</td>
+<td>Andover ranks <strong>#10 of 45</strong> (lower spending = lower rank). $727 per pupil vs $1,136 peer median. 80% of peers spend more.</td>
+</tr>
+<tr>
+<td>How does Andover&#8217;s combined administrative spending compare?</td>
+<td>Andover ranks <strong>#4 of 45</strong>. $2,331 per pupil vs $3,417 peer median. 93% of peers spend more.</td>
+</tr>
+<tr>
+<td>What does this say about superintendent compensation specifically?</td>
+<td>It&#8217;s strongly consistent with — though does not by itself prove — superintendent compensation in line with or below peers.</td>
+</tr>
+<tr>
+<td>Does the preschool program distort the comparison?</td>
+<td>No. The program is approximately revenue-neutral to the town; inclusion has a small effect that favors Andover slightly.</td>
+</tr>
+<tr>
+<td>Where is the underlying data published?</td>
+<td>CT EdSight, <a href="http://public-edsight.ct.gov/overview/per-pupil-expenditures-by-function---district">Per Pupil Expenditures by Function (District)</a>, school year 2024–25.</td>
+</tr>
+</tbody></table>
+<p>The rest of the report explains the peer set, walks through the spending
+findings in detail, addresses the most likely methodological objection (the
+preschool question), and is explicit about what the available data can and
+cannot tell us about superintendent compensation specifically.</p>
+<h3 id="the-data-and-the-question">The data and the question<a class="header-anchor" href="#the-data-and-the-question" aria-label="Link to this section">¶</a></h3>
+<p>The Connecticut State Department of Education&#8217;s EdSight portal publishes, for
+every district, per-pupil expenditures across nine standard function categories
+— instruction, support services, administration, transportation, and so on.
+Within &#8220;support services,&#8221; there are three sub-functions that together capture
+essentially all administrative spending: general administration (the
+superintendent&#8217;s office), school-based administration (the principal&#8217;s office),
+and central and other support services (business office, technology, central
+support staff).</p>
+<p>These per-pupil administrative figures are not the same as superintendent
+compensation. They include the salaries and benefits of every administrator the
+district employs, plus office costs, dues, travel, contracted services, and
+similar overhead. But they answer a closely related question: is the district&#8217;s
+administrative footprint, taken as a whole, large or small relative to peer
+districts? If a superintendent&#8217;s compensation were truly out of line with peer
+norms, it would tend to push that district&#8217;s administrative spending upward
+relative to peers. If a district&#8217;s administrative spending sits at or below peer
+norms, that is at least consistent with — though does not by itself prove —
+superintendent compensation that is not out of line with peers either.</p>
+<h3 id="how-this-report-is-organized">How this report is organized<a class="header-anchor" href="#how-this-report-is-organized" aria-label="Link to this section">¶</a></h3>
+<p>This report presents the comparison. It is organized as follows:</p>
+<ol>
+<li><strong>Part 1</strong> describes the peer set: the 44 other Connecticut small-town
+districts that share Andover&#8217;s structural profile.</li>
+<li><strong>Part 2</strong> presents the headline finding on total per-pupil spending —
+Andover ranks lowest of the 45.</li>
+<li><strong>Part 3</strong> focuses on administrative spending specifically, the part of the
+budget most directly relevant to the superintendent-compensation question.</li>
+<li><strong>Part 4</strong> addresses the most likely methodological objection: that Andover&#8217;s
+preschool enrollment is included in the per-pupil count and may distort the
+comparison.</li>
+<li><strong>Part 5</strong> is explicit about what this comparison can and cannot tell us
+about superintendent compensation specifically — and what a fuller follow-up
+analysis would require.</li>
+</ol>
+<hr>
+<p class="section-label before-part">Peer set</p>
+<h2 id="part-1-the-peer-set-45-connecticut-small-town-elementary-only-districts">Part 1 — The peer set: 45 Connecticut small-town elementary-only districts<a class="header-anchor" href="#part-1-the-peer-set-45-connecticut-small-town-elementary-only-districts" aria-label="Link to this section">¶</a></h2>
+<p>The Connecticut State Department of Education&#8217;s Education Directory lists every
+public school in the state, broken out by the grades each school serves.
+Filtering for &#8220;elementary-only&#8221; districts — districts that operate K–6 or K–8
+schools but do not run a high school — yields 46 districts, including Andover.
+One of those districts, Norwich, has been excluded from the peer comparison in
+this report; the reasoning is explained below. The remaining 45 districts (44
+peers plus Andover) form the peer set used throughout the rest of the report.</p>
+<p>All 45 districts share the structural pattern that Andover voters know well: a
+local board of education runs an elementary program through grade 6 or grade 8,
+and middle- and high-school students attend either a regional district (like
+Andover sending to RHAM for grades 7–12) or another town&#8217;s high school by
+tuition contract (like Columbia sending to Windham). The peer set crosses both
+of these arrangements. It excludes K–12 unified town districts (which spread
+administrative overhead across thirteen grade levels rather than seven or nine)
+and excludes unified PreK–12 regional districts (where member towns have no
+separate elementary board of education).</p>
+<h3 id="how-the-peer-set-was-assembled">How the peer set was assembled <span class="conf-mark">✓</span> <em>Confirmed from CSDE Education Directory</em><a class="header-anchor" href="#how-the-peer-set-was-assembled" aria-label="Link to this section">¶</a></h3>
+<p>The peer set was identified from the Connecticut State Department of Education&#8217;s
+Education Directory, a public dataset published on data.ct.gov that lists every
+public school in Connecticut along with the grades each school serves. Districts
+qualifying as peers had to satisfy three criteria:</p>
+<ul>
+<li><strong>Operates an elementary program.</strong> At least one school in the district serves
+kindergarten or grade 1.</li>
+<li><strong>Does not operate a high school.</strong> No school in the district serves grades 9,
+10, 11, or 12.</li>
+<li><strong>Enrollment under 2,000 pupils.</strong> A small-town threshold that excludes
+city-scale districts whose operational reality differs in kind from the rest
+of the peer set.</li>
+</ul>
+<p>The first two criteria were applied programmatically against the full Education
+Directory dataset. The third criterion eliminated one district: Norwich, at
+5,174 pupils. The remaining 45 districts are structurally consistent: every
+district runs only elementary grades locally, every district sends older
+students elsewhere for secondary education, and every district is operating at a
+small-town scale.</p>
+<h3 id="why-norwich-was-excluded">Why Norwich was excluded<a class="header-anchor" href="#why-norwich-was-excluded" aria-label="Link to this section">¶</a></h3>
+<p>Norwich at 5,174 pupils is more than four times the size of the next-largest
+district in the structural set (Orange, at 1,261 pupils), and more than fourteen
+times the size of the median small-town district. It is operationally a city
+district — it runs nine schools, serves a substantially higher-poverty student
+population than the small-town peers, and operates inside a city-budget
+framework that differs from the town-meeting and referendum budget process
+common to the 45 small-town districts. While Norwich does share the basic
+structural feature of the rest of the set (K–8 only, sending high schoolers to
+Norwich Free Academy), including it in a peer comparison would distort both the
+central-tendency statistics and the regression analyses without providing useful
+comparative information for Andover. The underlying EdSight data for Norwich is
+freely accessible to readers who want to include it; this report&#8217;s analysis
+simply uses a tighter peer set.</p>
+<h3 id="the-45-districts">The 45 districts<a class="header-anchor" href="#the-45-districts" aria-label="Link to this section">¶</a></h3>
+<p>The full peer set, formatted as <em>District (grades, enrollment)</em>:</p>
+<div class="district-columns">
+
+<ul>
+<li>Andover (PK–6, 241)</li>
+<li>Ashford (PK–8, 354)</li>
+<li>Barkhamsted (PK–6, 229)</li>
+<li>Bethany (PK–6, 432)</li>
+<li>Bozrah (PK–8, 256)</li>
+<li>Brooklyn (PK–8, 1,161)</li>
+<li>Canaan (K–8, 73)</li>
+<li>Canterbury (PK–8, 672)</li>
+<li>Chaplin (PK–6, 164)</li>
+<li>Chester (PK–6, 215)</li>
+<li>Colebrook (K–6, 66)</li>
+<li>Columbia (PK–8, 618)</li>
+<li>Cornwall (K–8, 89)</li>
+<li>Deep River (PK–6, 219)</li>
+<li>Eastford (PK–8, 221)</li>
+<li>Easton (PK–8, 896)</li>
+<li>Essex (PK–6, 309)</li>
+<li>Franklin (PK–8, 252)</li>
+<li>Hampton (PK–6, 84)</li>
+<li>Hartland (PK–8, 195)</li>
+<li>Hebron (PK–6, 688)</li>
+<li>Kent (PK–8, 181)</li>
+<li>Lisbon (PK–8, 588)</li>
+<li>Mansfield (PK–8, 978)</li>
+<li>Marlborough (PK–6, 465)</li>
+<li>New Hartford (PK–6, 441)</li>
+<li>Norfolk (PK–6, 64)</li>
+<li>North Canaan (PK–8, 249)</li>
+<li>Orange (PK–6, 1,261)</li>
+<li>Pomfret (PK–8, 512)</li>
+<li>Preston (PK–8, 614)</li>
+<li>Redding (PK–8, 858)</li>
+<li>Salem (PK–8, 556)</li>
+<li>Salisbury (PK–8, 289)</li>
+<li>Scotland (PK–6, 103)</li>
+<li>Sharon (PK–8, 102)</li>
+<li>Sherman (PK–8, 344)</li>
+<li>Sprague (PK–8, 387)</li>
+<li>Sterling (PK–8, 451)</li>
+<li>Union (PK–8, 74)</li>
+<li>Voluntown (PK–8, 311)</li>
+<li>Willington (PK–8, 382)</li>
+<li>Winchester (PK–6, 1,104)</li>
+<li>Woodbridge (PK–6, 872)</li>
+<li>Woodstock (PK–8, 1,129)</li>
+</ul>
+</div>
+
+<blockquote>
+<p><strong>Notes:</strong> Enrollment figures are the &#8220;Pupils&#8221; count reported in the CT
+EdSight Per Pupil Expenditures by Function (District) report for school year
+2024–25, basis 1 (enrollment plus outplaced pupils). The 45 districts include
+Andover. The seven smallest districts (Norfolk, Colebrook, Canaan, Union,
+Hampton, Cornwall, and Sharon) each enroll under 110 students and are exposed
+to high per-pupil costs because of the fixed-cost structure of schooling —
+administrative and special-education overhead is largely the same whether
+spread across 60 students or 600. The median peer district enrolls 344
+students; Andover, at 241, is below the median but well above the bottom of
+the range.</p>
+</blockquote>
+<hr>
+<p class="section-label before-part">Total spending</p>
+<h2 id="part-2-total-per-pupil-spending-where-andover-ranks">Part 2 — Total per-pupil spending: where Andover ranks<a class="header-anchor" href="#part-2-total-per-pupil-spending-where-andover-ranks" aria-label="Link to this section">¶</a></h2>
+<p>The headline finding is straightforward: <strong>Andover spends less per pupil than
+any of the other 44 districts in its peer set.</strong> Of all 45 districts, Andover
+ranks first — that is, lowest — on total per-pupil expenditure. The figure is
+$19,009 per pupil in 2024–25. The median peer district spends $25,699 per pupil,
+$6,690 more than Andover.</p>
+<h3 id="total-per-pupil-expenditure-by-district-2024-25">Total per-pupil expenditure by district, 2024-25 <span class="conf-mark">✓</span> <em>Confirmed from CT EdSight</em><a class="header-anchor" href="#total-per-pupil-expenditure-by-district-2024-25" aria-label="Link to this section">¶</a></h3>
+<p>The chart below shows total per-pupil expenditure for all 45 districts, ranked
+from lowest (Andover, at top) to highest (Sharon, at bottom). The peer median is
+shown as a dashed gold line.</p>
+<p><img src="chart_total_ppe.svg" alt="Total per-pupil spending across 45 CT small-town elementary-only districts —
+Andover ranks lowest"></p>
+<blockquote>
+<p><strong>Notes:</strong> Total per-pupil expenditure is the sum of all functional spending
+categories reported to EdSight (instruction, support services, operations and
+maintenance, transportation, food services, and enterprise operations) divided
+by enrollment plus outplaced pupils. The figure excludes certain capital
+spending, debt service, adult education, community services, and state
+contributions to the Teachers&#8217; Retirement System (these exclusions are uniform
+across all 45 districts, so they don&#8217;t affect the ranking). Source: CT
+EdSight, Per Pupil Expenditures by Function (District), school year 2024–25.</p>
+</blockquote>
+<h3 id="where-andover-sits-in-the-distribution">Where Andover sits in the distribution<a class="header-anchor" href="#where-andover-sits-in-the-distribution" aria-label="Link to this section">¶</a></h3>
+<p>A few summary statistics:</p>
+<ul>
+<li><strong>Andover: $19,009 per pupil</strong> (lowest of 45)</li>
+<li><strong>Peer median: $25,699 per pupil</strong> — Andover is $6,690 below</li>
+<li><strong>Peer mean: $26,528 per pupil</strong> — Andover is $7,519 below</li>
+<li><strong>Highest peer: Sharon at $48,747 per pupil</strong> — Andover is $29,738 below</li>
+</ul>
+<p>Multiplying the median gap by Andover&#8217;s 241 students: if Andover spent at the
+peer median rate, the district&#8217;s total spending would be approximately $1.61
+million higher per year than it currently is.</p>
+<p>This finding is robust to several plausible adjustments. Excluding the eight
+smallest districts (those under 110 students, which face the highest per-pupil
+costs because of the fixed-cost structure of schooling) lowers the peer median
+to $23,264 — still $4,255 above Andover&#8217;s $19,009. Andover is the
+lowest-spending district per pupil in its peer set under every reasonable
+filter.</p>
+<h3 id="does-district-size-explain-andover-8217-s-low-spending">Does district size explain Andover&#8217;s low spending?<a class="header-anchor" href="#does-district-size-explain-andover-8217-s-low-spending" aria-label="Link to this section">¶</a></h3>
+<p>A reasonable objection to the ranking above: &#8220;Andover has 241 students, smaller
+than the median peer district. Smaller districts tend to spend more per pupil
+because of fixed costs spread across fewer students. So Andover&#8217;s low spending
+might reflect something specific to its size rather than to anything Andover is
+doing right.&#8221;</p>
+<p>The first half of that objection is correct: across the 45 districts in this
+peer set, smaller districts do tend to spend more per pupil. The Spearman rank
+correlation between enrollment and total per-pupil spending is ρ = −0.63 (and ρ
+= −0.64 for administrative spending specifically) — a strong negative
+relationship. The pattern is clearest in administrative spending — where a
+district must staff a central office, a principal, and basic support functions
+regardless of how many students it serves — and weakest in instruction, where
+teacher counts scale roughly with student counts.</p>
+<p>The second half of the objection doesn&#8217;t hold, because Andover is on the
+<em>smaller</em> end of the peer set. At 241 students, Andover is below the peer median
+of 344. If size were the explanation for Andover&#8217;s low spending, Andover should
+be on the <em>higher</em> end of the spending distribution — not the lowest.</p>
+<p>The chart below plots enrollment against combined administrative spending across
+all 45 districts in the peer set, using a log scale for enrollment to make the
+small-to-large range readable. The dashed gold line is a log-linear regression —
+the smooth shape that best fits the actual data pattern, where per-pupil
+spending falls quickly as district size grows in the smallest ranges and
+flattens out among mid-size and larger districts.</p>
+<p><img src="chart_scatter_size_vs_admin.svg" alt="Scatter plot of enrollment vs. administrative spending per pupil across 45 CT
+small-town elementary-only districts — Andover sits well below the trend
+line"></p>
+<p>The regression predicts that a 241-student district should spend approximately
+$4,140 per pupil on administration. Andover spends $2,331 — roughly $1,800 below
+what its size would predict. Andover isn&#8217;t just lower than the median; it&#8217;s
+substantially lower than what the size-adjusted expectation would be. The
+leanness of Andover&#8217;s administrative spending is not a size effect.</p>
+<hr>
+<p>Part 3 — Administrative spending: the supe-office, principal, and central</p>
+<h2 id="support-lines">support lines<a class="header-anchor" href="#support-lines" aria-label="Link to this section">¶</a></h2>
+<p>Total spending answers the broad question. The narrower question — the one that
+prompted this report — is about administrative spending specifically. The
+EdSight report breaks administrative spending into three function categories:</p>
+<ul>
+<li><strong>Support services — general administration</strong> is the superintendent&#8217;s office.
+It captures the superintendent&#8217;s compensation, the central office secretary,
+board of education expenses, and related overhead.</li>
+<li><strong>Support services — school-based administration</strong> is the principal&#8217;s office:
+principal compensation, assistant principal (where applicable), school
+secretary, and school-specific administrative costs.</li>
+<li><strong>Central and other support services</strong> is a residual category that captures
+business office staff, technology administration, district-wide HR, legal, and
+similar services not assigned to either of the above.</li>
+</ul>
+<p>Each of these is reported by EdSight on both a total-dollar and per-pupil basis.
+The per-pupil basis is the right one for cross-district comparison because it
+normalizes for district size.</p>
+<h3 id="general-administration-the-superintendent-8217-s-office-function">General administration: the superintendent&#8217;s office function <span class="conf-mark">✓</span> <em>Confirmed from CT EdSight</em><a class="header-anchor" href="#general-administration-the-superintendent-8217-s-office-function" aria-label="Link to this section">¶</a></h3>
+<p>Andover spends $727 per pupil on general administration. The peer median is
+$1,136 per pupil. Andover ranks #10 of 45 — meaning 35 of the 44 peer districts
+(80%) spend more per pupil on general administration than Andover does.</p>
+<p><img src="chart_gen_admin_ppe.svg" alt="Per-pupil spending on general administration across 45 CT small-town
+elementary-only districts"></p>
+<blockquote>
+<p><strong>Notes:</strong> General administration is CSDE Function 23XX. It captures spending
+on the superintendent&#8217;s office: superintendent compensation, secretarial and
+clerical support to the superintendent, central board of education expenses,
+district legal services, and similar overhead. It does not include
+school-based administration (principals — see next section) or district-wide
+support services (business office, IT — see following section). For Andover,
+the general administration line is $173,815 in 2024–25; divided by the 239
+enrolled pupils (the denominator basis for support-services functions) yields
+$727 per pupil. Source: CT EdSight, Per Pupil Expenditures by Function
+(District), school year 2024–25.</p>
+</blockquote>
+<h3 id="school-based-administration-the-principal-8217-s-office">School-based administration: the principal&#8217;s office <span class="conf-mark">✓</span> <em>Confirmed from CT EdSight</em><a class="header-anchor" href="#school-based-administration-the-principal-8217-s-office" aria-label="Link to this section">¶</a></h3>
+<p>Andover spends $1,018 per pupil on school-based administration — the principal&#8217;s
+office. The peer median is $1,443. Andover ranks #4 of 45, meaning 40 of the 44
+peer districts (91%) spend more per pupil here than Andover.</p>
+<p>The school-based administration line tends to scale with the number of schools a
+district operates: a district with three elementary buildings will have higher
+school-based administrative spending per pupil than a single-building district
+like Andover. Twenty-nine of the 45 districts in this peer set operate a single
+school, like Andover; the rest operate two or more. Among the single-school
+subset, Andover&#8217;s $1,018 per pupil is still well below the subset median.</p>
+<h3 id="central-and-other-support-services">Central and other support services <span class="conf-mark">✓</span> <em>Confirmed from CT EdSight</em><a class="header-anchor" href="#central-and-other-support-services" aria-label="Link to this section">¶</a></h3>
+<p>Andover spends $586 per pupil on central and other support services. The peer
+median is $672. Andover ranks #18 of 45 — closer to the middle of the
+distribution than on the other two administrative lines, but still on the leaner
+side. Twenty-five of the 44 peers (57%) spend more per pupil here than Andover.</p>
+<h3 id="the-three-administrative-lines-combined">The three administrative lines combined<a class="header-anchor" href="#the-three-administrative-lines-combined" aria-label="Link to this section">¶</a></h3>
+<p class="intro-table">Adding the three administrative lines together gives a total administrative
+footprint per pupil:</p>
+<table>
+<thead>
+<tr>
+<th>Administrative function</th>
+<th align="right" class="num">Andover PPE</th>
+<th align="right" class="num">Peer median PPE</th>
+<th align="right">Rank</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Support services — general administration</td>
+<td align="right" class="num">$727</td>
+<td align="right" class="num">$1,136</td>
+<td align="right">#10 of 45</td>
+</tr>
+<tr>
+<td>Support services — school-based admin</td>
+<td align="right" class="num">$1,018</td>
+<td align="right" class="num">$1,443</td>
+<td align="right">#4 of 45</td>
+</tr>
+<tr>
+<td>Central and other support services</td>
+<td align="right" class="num">$586</td>
+<td align="right" class="num">$672</td>
+<td align="right">#18 of 45</td>
+</tr>
+<tr>
+<td><strong>All three administrative lines combined</strong></td>
+<td align="right" class="num"><strong>$2,331</strong></td>
+<td align="right" class="num"><strong>$3,417</strong></td>
+<td align="right"><strong>#4 of 45</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> Per-pupil expenditures are as reported by CT EdSight for school
+year 2024–25. The &#8220;all three lines combined&#8221; row sums the per-pupil figures
+across the three functions; this corresponds approximately to a district&#8217;s
+total administrative spending per pupil, though it omits a small amount of
+administrative spending classified under other functions (notably benefits,
+which CSDE charges to district-wide accounts rather than to specific
+functions). Rank #4 of 45 means three peer districts spend less per pupil on
+administration than Andover does (Orange, Canterbury, and Lisbon). On
+school-based administration and central support services, one peer district
+reports $0 in each of those specific sub-functions — almost certainly a
+reporting-classification choice rather than truly zero spending; for ranking
+purposes those districts have been treated as the lowest spenders on the
+relevant line. Source: CT EdSight, Per Pupil Expenditures by Function
+(District), school year 2024–25.</p>
+</blockquote>
+<p>The combined administrative spending finding — Andover #4 of 45, with the great
+majority of peers spending more — is the most directly relevant to the original
+concern about superintendent compensation. If a district&#8217;s superintendent
+compensation were significantly out of line with peer norms, the natural place
+for that to show up would be in the general administration line and in the
+combined administrative footprint. Andover&#8217;s administrative footprint is among
+the leanest in the peer set, which is at least consistent with superintendent
+compensation that is in line with — and most likely below — peer norms.</p>
+<hr>
+<p class="section-label before-part">Preschool</p>
+<h2 id="part-4-why-the-preschool-question-doesn-8217-t-change-the-picture">Part 4 — Why the preschool question doesn&#8217;t change the picture<a class="header-anchor" href="#part-4-why-the-preschool-question-doesn-8217-t-change-the-picture" aria-label="Link to this section">¶</a></h2>
+<p>A reader familiar with the AES preschool program may wonder whether the
+preschool inflates the comparison: Andover&#8217;s per-pupil counts include
+preschoolers, and if preschool is unusually well-funded or unusually low-cost,
+the inclusion could distort the picture. The short answer is no: the preschool
+inclusion doesn&#8217;t materially affect the comparison, and to the extent it has any
+effect, it makes Andover&#8217;s position slightly more favorable, not less.</p>
+<p>Three points support this.</p>
+<h3 id="the-preschool-is-in-a-separate-fund-and-is-approximately-revenue-neutral">The preschool is in a separate fund and is approximately revenue-neutral<a class="header-anchor" href="#the-preschool-is-in-a-separate-fund-and-is-approximately-revenue-neutral" aria-label="Link to this section">¶</a></h3>
+<p>The AES preschool program operates from the district&#8217;s School Grants Fund, a
+separate accounting fund from the General Fund that holds K–6 instructional
+spending. The preschool&#8217;s eight staff are paid from the School Grants Fund,
+which is populated by tuition revenue and by two Office of Early Childhood
+grants (Smart Start at $65,000/year and Early Start at $123,000/year). When the
+program&#8217;s revenues and expenditures are netted out, the program is approximately
+revenue-neutral to the town at the program level — the modest residual cost runs
+through district-wide employee benefits accounts that are not
+preschool-specific.</p>
+<p>This is the subject of a detailed companion analysis,
+<a href="http://andoverct.info/reports/aes/preschool-funding/">andoverct.info/reports/aes/preschool-funding/</a>.
+The AES superintendent has reviewed that analysis and noted that the original
+estimates were, if anything, conservative — the program&#8217;s actual financial
+position relative to the town is at least as favorable as the report shows, and
+likely somewhat more so. She is constrained by HIPAA and FERPA from publishing a
+precise total for program-allocated benefits, but has indicated that a
+fully-loaded figure would strengthen rather than weaken the case the companion
+analysis makes. The headline finding from that analysis: the program&#8217;s direct
+net subsidy to the town is approximately $92,000 per year on a fully-loaded
+basis, which is then more than offset by an estimated $200,000 in avoided
+special-education compliance costs (the town would otherwise be required to
+provide preschool special-education services either by outplacing children to
+private programs or by operating a small standalone special-education
+classroom). On net, the program is estimated to save the town approximately
+$108,000 per year rather than to cost it anything.</p>
+<h3 id="most-peer-districts-also-include-preschool-in-their-per-pupil-counts">Most peer districts also include preschool in their per-pupil counts<a class="header-anchor" href="#most-peer-districts-also-include-preschool-in-their-per-pupil-counts" aria-label="Link to this section">¶</a></h3>
+<p>Forty-two of the 45 districts in this peer set operate a preschool program; the
+CSDE Education Directory lists them with &#8220;PK&#8221; as their lowest grade. The CT
+EdSight per-pupil expenditure report counts all pupils — including preschoolers
+— in both numerator and denominator. So the same preschool effect applies to
+nearly every peer in the comparison. The three districts that do not operate
+preschool programs (Canaan, Colebrook, and Cornwall) are all among the smallest
+in the peer set, with enrollments well under 100 pupils, and their inclusion
+does not change the overall pattern. The Andover-to-peer comparison is broadly
+apples-to-apples on the preschool question.</p>
+<h3 id="to-the-extent-preschool-affects-the-comparison-it-favors-andover">To the extent preschool affects the comparison, it favors Andover<a class="header-anchor" href="#to-the-extent-preschool-affects-the-comparison-it-favors-andover" aria-label="Link to this section">¶</a></h3>
+<p>Since the AES preschool program is approximately revenue-neutral to the town —
+that is, tuition and grants cover essentially all of its operating cost —
+including preschool pupils in the denominator while only partially loading their
+cost into the numerator has the effect of <em>lowering</em> Andover&#8217;s per-pupil figure
+relative to a K–6-only comparison. In other words: if we excluded preschool from
+the calculation, Andover&#8217;s per-K-6-pupil spending would be slightly <em>higher</em>
+than the $19,009 figure shown here. Andover would still rank lowest among peers
+(the gap to the next-lowest district, Marlborough at $19,368, is small enough
+that it would persist under most reasonable adjustments), but the dramatic gap
+to the peer median would narrow somewhat.</p>
+<p>This is, importantly, a <em>good</em> fact for Andover, not a bad one. Including
+preschool in the count makes Andover look slightly more efficient than it would
+otherwise; the underlying K–6 spending is, if anything, marginally higher than
+this comparison shows. The preschool inclusion is not padding Andover&#8217;s
+denominator with cheap pupils to make the district look lean; it is correctly
+reflecting a program that is approximately self-funding within the school
+district&#8217;s overall accounts.</p>
+<hr>
+<p>Part 5 — What this comparison can and cannot tell us about superintendent</p>
+<h2 id="compensation">Compensation<a class="header-anchor" href="#compensation" aria-label="Link to this section">¶</a></h2>
+<p>The original concern that prompted this report was about superintendent
+compensation specifically: the AES superintendent&#8217;s new contract represents a
+significant raise, and a discussion has been underway about whether that
+compensation is in line with peer norms. This report does not directly answer
+that question, for a reason worth being explicit about.</p>
+<h3 id="superintendent-compensation-is-public-but-not-centrally-published">Superintendent compensation is public but not centrally published<a class="header-anchor" href="#superintendent-compensation-is-public-but-not-centrally-published" aria-label="Link to this section">¶</a></h3>
+<p>Connecticut superintendent contracts are public records. Under Connecticut FOIA
+(Conn. Gen. Stat. § 1-200 et seq.), any resident can request a copy of the
+superintendent&#8217;s contract from any school district in the state. Most districts
+post the current superintendent&#8217;s contract on the district website voluntarily,
+typically under &#8220;Agreements&#8221; or &#8220;Personnel&#8221; or &#8220;Board of Education&#8221; sections.
+AES does so; so does Hebron; so do many other districts.</p>
+<p>But there is no single state-published dataset that aggregates these contracts
+into a comparable form. The Connecticut Association of Public School
+Superintendents (CAPSS) runs an annual member salary survey, but the full survey
+is for members only; summary statistics are published in aggregate form that may
+not isolate the relevant peer subset. The Connecticut State Department of
+Education collects district financial data through the Education Financial
+System (EFS) that feeds EdSight, but the per-pupil expenditure reports —
+including the report this analysis is based on — aggregate administrator
+compensation into function-level totals, not by individual position.</p>
+<p>Building a defensible 45-district comparison of superintendent compensation
+specifically is therefore a project that requires either reading 45 individual
+contracts (some of which require contacting district offices individually when
+no contract is posted online), or filing a coordinated set of FOIA requests, or
+paying for access to a commercial dataset that may not exist for this specific
+peer set. None of those is a project that fits in the timeframe of this report.</p>
+<h3 id="what-this-report-does-answer">What this report does answer<a class="header-anchor" href="#what-this-report-does-answer" aria-label="Link to this section">¶</a></h3>
+<p>What this report does answer is the broader question: is Andover&#8217;s
+administrative footprint, taken as a whole, large or small relative to its
+peers? The answer is: small. Andover ranks #10 of 45 on general administration
+(the superintendent&#8217;s-office function), #4 of 45 on school-based administration,
+and #4 of 45 on the three administrative lines combined. By every measure the
+state&#8217;s published data supports, Andover spends less per pupil on administration
+than the great majority of its structural peers.</p>
+<p>A superintendent who was being paid significantly more than peer norms would
+tend to push the general administration line upward. Andover&#8217;s general
+administration line is below the peer median by $409 per pupil — substantial in
+percentage terms (36% below the median). That doesn&#8217;t prove the superintendent&#8217;s
+compensation is below peer norms; the general administration line includes other
+spending besides superintendent compensation. But it is strongly consistent with
+that interpretation. It is hard to construct a scenario in which a district
+could rank #10 of 45 on general administration while also having an out-of-line
+superintendent salary.</p>
+<p>A follow-up analysis focused specifically on superintendent compensation across
+the 45-district peer set is in the planning stage. That analysis will require
+collecting individual contracts from each peer district, normalizing for
+full-time-equivalent status (Andover&#8217;s superintendent serves at 0.60 FTE, shared
+with Scotland Public Schools; many peer districts share superintendents through
+similar arrangements that affect the headline salary number), and accounting for
+different conventions in how districts report annuity contributions, performance
+bonuses, and benefits. When that research is complete, it will be published —
+either as an update to this report or as a companion piece, depending on how the
+picture lands.</p>
+<h3 id="what-the-comparison-doesn-8217-t-speak-to">What the comparison doesn&#8217;t speak to<a class="header-anchor" href="#what-the-comparison-doesn-8217-t-speak-to" aria-label="Link to this section">¶</a></h3>
+<p>A few things this report doesn&#8217;t claim:</p>
+<ul>
+<li>It doesn&#8217;t claim that the AES superintendent is paid too little or too much in
+absolute terms. It claims only that the <em>district&#8217;s</em> administrative spending
+is below peer norms.</li>
+<li>It doesn&#8217;t claim that lower spending is necessarily better, or higher spending
+necessarily worse. Districts with higher per-pupil spending may be delivering
+better services; districts with lower per-pupil spending may be
+underinvesting. The point of a peer comparison is to put one district&#8217;s
+choices in the context of what comparable districts are doing, not to declare
+any particular level &#8220;correct.&#8221;</li>
+<li>It doesn&#8217;t address the question of whether the <em>RHAM</em> budget (which Andover
+shares with Hebron and Marlborough for grades 7–12) is in line with peer norms
+— that is a separate analysis, against a different peer set, that this report
+does not undertake.</li>
+</ul>
+<hr>
+<p class="section-label">Analysis</p>
+<h2 id="key-observations">Key Observations<a class="header-anchor" href="#key-observations" aria-label="Link to this section">¶</a></h2>
+<p><strong>Andover is the cheapest district per pupil in its peer set.</strong> Of the 45
+Connecticut small-town elementary-only districts identified by the state&#8217;s own
+classification (after excluding Norwich, which is operationally a city
+district), Andover spends the least per pupil. The figure — $19,009 per pupil in
+2024–25 — is $6,690 below the peer median, a 26% gap. Across the 241 students
+enrolled, this works out to approximately $1.61 million per year less than
+spending at the peer median rate would require.</p>
+<p><strong>Andover&#8217;s administrative spending is consistently among the leanest.</strong> On
+general administration (the superintendent&#8217;s-office function), Andover ranks #10
+of 45 cheapest. On school-based administration (the principal&#8217;s office), the
+rank is #4 of 45. On combined administrative spending across all three
+administrative function lines, #4 of 45. By each of these measures, the great
+majority of peer districts spend more per pupil on administration than Andover.</p>
+<p><strong>The comparison strongly suggests, but does not directly prove, that
+superintendent compensation is in line with or below peer norms.</strong> A district
+whose superintendent was being paid significantly more than peer norms would
+tend to push its general administration line upward. Andover&#8217;s general
+administration spending is 36% below the peer median per pupil. It is
+mathematically difficult to construct a scenario in which a district lands that
+far below the peer median on this measure while also paying its superintendent
+significantly above peer rates.</p>
+<p><strong>The leanness isn&#8217;t a size effect.</strong> Andover at 241 students is on the smaller
+end of the peer set. Smaller districts in this peer set tend to spend more per
+pupil — the rank correlation between enrollment and administrative spending is
+strongly negative (ρ = −0.64). If size were driving Andover&#8217;s low spending,
+Andover should rank near the top, not the bottom. A log-linear regression across
+the 45 districts predicts a 241-pupil district should spend roughly $4,140 per
+pupil on administration; Andover spends $2,331, about $1,800 below the
+regression line. The leanness is real, not a denominator effect.</p>
+<p><strong>The preschool program is not distorting the comparison.</strong> AES preschool
+operates from a separate fund populated by tuition and Office of Early Childhood
+grants. It is approximately revenue-neutral to the town at the program level.
+Most peer districts also include preschool in their per-pupil counts, so the
+comparison is consistent. To the extent preschool inclusion has any effect on
+Andover&#8217;s per-pupil figures relative to peers, it makes Andover look slightly
+<em>more</em> efficient — not less.</p>
+<p><strong>Andover&#8217;s spending position is the result of structural choices, not
+accidents.</strong> The district operates a single elementary school, employs a
+part-time (0.60 FTE) superintendent shared with another district, and has
+consistently produced budgets that grow more slowly than peers (Andover&#8217;s 5-year
+NCEP growth of 9.8% versus the peer-set average of 18.3% — see <a href="http://andoverct.info/reports/budget/2026/">the companion
+report on budget trends</a>). Whether
+one reads this pattern as fiscal discipline or as under-investment depends on
+values, not on the data. What the data does show is that the pattern is
+consistent across years, not a single-year anomaly.</p>
+<p><strong>The original supe-comp question deserves a dedicated follow-up.</strong> This report
+did not directly answer the question that prompted it — whether the AES
+superintendent&#8217;s compensation is in line with peer norms — because that
+comparison requires data not currently centrally published by the state. A
+follow-up analysis is in the planning stage. It will require collecting
+individual contracts from each peer district and normalizing for
+full-time-equivalent status, shared-superintendent arrangements, and varying
+conventions for reporting annuity contributions and benefits. When the research
+is complete, it will be published — either as an update to this report or as a
+companion piece.</p>
+<hr>
+<p class="section-label">Caveats</p>
+<h2 id="what-this-report-does-not-show">What this report does not show<a class="header-anchor" href="#what-this-report-does-not-show" aria-label="Link to this section">¶</a></h2>
+<p>A few caveats worth being explicit about:</p>
+<p>This report does not establish a causal connection between low administrative
+spending and good educational outcomes (or vice versa). It is a description of
+where Andover sits relative to peers on cost measures, not a normative claim
+that lower spending is necessarily better. Districts with higher per-pupil
+spending may be delivering services worth paying for; districts with lower
+per-pupil spending may be underinvesting. The point of a peer comparison is
+context, not judgment.</p>
+<p>This report uses 2024–25 NCEP data — the most recent year for which the state
+has published the full Per Pupil Expenditures by Function report. It therefore
+reflects actual spending in the school year that ended June 30, 2025, not the
+spending that would result from the FY 2026–27 budget on the May 26, 2026
+referendum ballot. Including the proposed budget would push Andover&#8217;s spending
+modestly higher relative to its 2024–25 figure, but the comparison-set figures
+would also move (most peer districts are concurrently raising their budgets).
+The relative position is unlikely to change materially.</p>
+<p>This report does not directly compare superintendent compensation across the
+peer set — it compares total administrative spending. The reasons for that scope
+choice are explained in Part 5: superintendent compensation is public but not
+centrally published in a comparable form, and building a defensible 45-district
+comparison from primary contracts is a project beyond the timeframe of this
+report. The administrative spending comparison is a closely related but not
+identical question.</p>
+<p>This report&#8217;s peer set is built from CSDE&#8217;s Education Directory classification
+narrowed to small-town districts (enrollment under 2,000) for the reasons
+explained in Part 1. A different peer-set definition might yield somewhat
+different medians, but Andover&#8217;s #1 rank on total per-pupil spending is robust:
+even when restricted to the 33 single-school districts in the set (similar to
+Andover&#8217;s single-school structure), the subset median rises to about $26,100,
+leaving Andover&#8217;s gap to the median even larger. The headline finding — Andover
+at the bottom of the spending distribution among its structural peers — is
+robust across reasonable peer-set definitions.</p>
+<p>This report doesn&#8217;t capture every detail in the EdSight dataset. Topics omitted
+from this report include: instruction-line spending; the breakdown of
+student-support services by sub-category; operations and maintenance spending;
+and transportation spending. Readers interested in any of these can pull the
+underlying district report from CT EdSight using the link in the Sources
+section.</p>
+<hr>
+<p class="section-label">Documentation</p>
+<h2 id="sources">Sources<a class="header-anchor" href="#sources" aria-label="Link to this section">¶</a></h2>
+<p><strong>Primary data source:</strong></p>
+<ul>
+<li><strong>Connecticut State Department of Education, EdSight portal, &#8220;Per Pupil
+Expenditures by Function (District)&#8221; report, school year 2024–25.</strong> Available
+at
+<a href="http://public-edsight.ct.gov/overview/per-pupil-expenditures-by-function---district">public-edsight.ct.gov</a>.
+One CSV exported per district; 45 districts in the analysis. The full dataset
+used for this report is available in the accompanying files (see Other
+Formats).</li>
+</ul>
+<p><strong>Peer-set identification:</strong></p>
+<ul>
+<li><strong>Connecticut State Department of Education, Education Directory dataset.</strong>
+Available at
+<a href="https://data.ct.gov/Education/Education-Directory/9k2y-kqxn/about_data">data.ct.gov</a>.
+Used to identify the 46 elementary-only districts (operates K or grade 1, does
+not operate any of grades 9–12), of which 45 met the small-town enrollment
+threshold used in this report.</li>
+</ul>
+<p><strong>Companion reports referenced:</strong></p>
+<ul>
+<li><strong>Andover Elementary School Preschool — Financial Analysis</strong> (Sauyet, May
+2026):
+<a href="http://andoverct.info/reports/aes/preschool-funding/">andoverct.info/reports/aes/preschool-funding/</a>.
+Provides the basis for the Part 4 analysis of how preschool affects this
+comparison.</li>
+<li><strong>AES Preschool Structure: Why Four Classrooms?</strong> (Sauyet, May 2026):
+companion to the preschool funding analysis, transcribing Dr. Bruneau&#8217;s May 7,
+2026 video diagrams.</li>
+<li><strong>Andover&#8217;s Budget in Context</strong> (Sauyet, April 2026):
+<a href="http://andoverct.info/reports/budget/2026/">andoverct.info/reports/budget/2026/</a>.
+Town budget trend analysis FY 2020–21 through FY 2026–27.</li>
+</ul>
+<p><strong>Methodology references:</strong></p>
+<ul>
+<li><strong>Connecticut General Statutes § 1-200 et seq.</strong> (Connecticut FOIA), governing
+public access to superintendent contracts.</li>
+<li><strong>Connecticut Association of Public School Superintendents</strong>
+<a href="http://capss.org/">(CAPSS)</a>, which runs the annual superintendent salary
+survey referenced in Part 5.</li>
+</ul>
+<hr>
+
+<p class="section-label">Download</p>
+<h2 id="other-formats">Other Formats<a class="header-anchor" href="#other-formats" aria-label="Link to this section">¶</a></h2>
+<p>This report is available in four formats, all located alongside this page:</p>
+
+<div class="format-cards cols-4">
+  <div class="format-card">
+    <div class="format-card-icon">🌐</div>
+    <div class="format-card-title"><a href="./">HTML</a></div>
+    <div class="format-card-desc">Interactive version with formatted tables; best for on-screen reading and sharing.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📄</div>
+    <div class="format-card-title"><a href="andover_peer_spending_report.md">Markdown</a></div>
+    <div class="format-card-desc">Plain-text version; readable in any editor, ideal for copying into other documents.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📑</div>
+    <div class="format-card-title"><a href="andover_peer_spending_report.pdf">PDF</a></div>
+    <div class="format-card-desc">Print-ready version with all tables, footnotes, and source citations.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📊</div>
+    <div class="format-card-title"><a href="peer_comparison_2024-25.csv">Data (CSV)</a></div>
+    <div class="format-card-desc">Full dataset: all 46 elementary-only districts with pupils, dollar totals, and every per-pupil functional category.</div>
+  </div>
+</div>
+
+</div>
+<div class="page-footer">
+Personal work of <a href="mailto:scott@sauyet.com">Scott Sauyet</a> · Compiled May 23, 2026<br>Data from CT EdSight and CT SDE. Not an official town document. ·
+<a href="http://andoverct.info/reports/aes/peer-spending/">andoverct.info/reports/aes/peer-spending/</a>
+</div>
+<script>
+document.addEventListener('click', function(e) {
+    const anchor = e.target.closest('.header-anchor');
+    if (!anchor) return;
+    const heading = anchor.parentElement;
+    const id = heading.id;
+    if (!id) return;
+    const url = window.location.origin + window.location.pathname + '#' + id;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function() {
+            anchor.classList.add('copied');
+            setTimeout(function() { anchor.classList.remove('copied'); }, 1400);
+        }).catch(function() {});
+    }
+});
+</script>
+<script>
+(function() {
+    var imgs = document.querySelectorAll('.container img');
+    if (!imgs.length) return;
+    var overlay = null;
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    function close() {
+        if (!overlay) return;
+        var o = overlay;
+        overlay = null;
+        o.classList.remove('open');
+        document.removeEventListener('keydown', onKey);
+        setTimeout(function() { if (o.parentNode) o.parentNode.removeChild(o); }, 200);
+    }
+    function open(src, alt) {
+        overlay = document.createElement('div');
+        overlay.className = 'lightbox-overlay';
+        var big = document.createElement('img');
+        big.src = src;
+        big.alt = alt || '';
+        overlay.appendChild(big);
+        overlay.addEventListener('click', close);
+        document.body.appendChild(overlay);
+        overlay.offsetWidth; // force reflow so the fade-in transition runs
+        overlay.classList.add('open');
+        document.addEventListener('keydown', onKey);
+    }
+    imgs.forEach(function(img) {
+        img.addEventListener('click', function() { open(img.currentSrc || img.src, img.alt); });
+    });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>When Small Numbers Become Names — Town of Andover, CT</title>
+<style>/* Default civic-report theme.
+ *
+ * A theme is just this set of CSS custom properties. To experiment, copy this
+ * file to _build/themes/<name>.css, change what you like, and point at it from
+ * _build/report.config.json ({"theme":"<name>"}) for all reports, or from a
+ * single report's front matter (theme: <name>). A non-default theme is layered
+ * ON TOP of this one, so it only needs to list the variables it changes.
+ *
+ * Scope: colors, fonts, and small size/width/gap tweaks — not layout changes.
+ */
+:root {
+  /* ---- Palette ---- */
+  --bg:             #fafaf7;   /* page background */
+  --bg-page:        #ffffff;   /* the white content card */
+  --bg-soft:        #f5f3ed;   /* callouts, table headers, inline code */
+  --ink:            #1a1a1a;   /* body text, main headings */
+  --ink-soft:       #333333;   /* blockquote / methodology text */
+  --ink-mute:       #5a5a5a;   /* subtitle, card descriptions */
+  --ink-faint:      #888888;   /* attribution, footer, captions */
+  --rule:           #e0ddd5;   /* hairline borders */
+  --accent:         #b8a878;   /* gold accent rules */
+  --accent-2:       #2c3e50;   /* slate: h3, table-header & code text */
+  --banner-bg:      #2c3e50;   /* top banner background */
+  --banner-ink:     #ecf0f1;   /* top banner text */
+  --crumb-link:       #b9c4cf; /* breadcrumb links in the banner */
+  --crumb-link-hover: #ffffff;
+  --crumb-current:    #ffffff; /* deepest crumb (current page), not a link */
+  --link:           #1a5490;
+  --link-hover:     #0d3a6b;
+  --link-underline: #c5d3e2;
+  --anchor:         #b8b3a4;   /* the ¶ header anchor */
+  --anchor-hover:   #6c7480;
+  --confirm:        #5a8a5a;   /* green ✓ confirmation mark */
+  --confirm-strong: #2e7d32;
+
+  /* ---- Fonts ---- */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:  "SF Mono", Monaco, Menlo, Consolas, monospace;
+
+  /* ---- Sizes (small tweaks only; no layout restructuring) ---- */
+  --base-size:  11pt;    /* body text */
+  --measure:    780px;   /* content column width */
+  --gutter:     30px;    /* horizontal padding / banner & footer gaps */
+  --title-size: 28pt;
+  --h2-size:    18pt;
+  --h3-size:    13pt;
+}
+
+/* bluegold — mirrors the light-mode look of the 55th campaign site
+ * (C:\Users\scott\Dev\Andover\55th, e.g. localhost:8080/reports): cool
+ * blue-gray paper, a dark navy banner with a gold underline, navy serif
+ * headings over a sans body, gold accent rules, and blue links.
+ *
+ * Note the deliberate font swap: base.css uses --font-serif for body text and
+ * --font-sans for headings/labels, so to match the campaign look (sans body,
+ * serif display) we put the SANS stack in --font-serif and the SERIF stack in
+ * --font-sans.
+ *
+ * Layered on default.css. Uses --banner-border (in base.css) for the gold rule
+ * under the banner. */
+:root {
+  /* Palette */
+  --bg:             #f4f6f9;
+  --bg-page:        #ffffff;
+  --bg-soft:        #eef4fb;   /* blue-050 tint for callouts / table headers */
+  --rule:           #e3e8ef;   /* hairlines */
+  --ink:            #19222e;
+  --ink-soft:       #2b3744;
+  --ink-mute:       #5b6775;
+  --ink-faint:      #8a94a1;
+  --accent:         #e8a800;   /* signature gold rules */
+  --accent-2:       #0f2a4a;   /* blue-900: headings, table-header & code text */
+  --banner-bg:      linear-gradient(180deg, #0f2a4a, #143862);
+  --banner-border:  3px solid #e8a800;
+  --banner-ink:     #dde8f5;   /* blue-100 */
+  --crumb-link:       #e8a800; /* gold breadcrumb links */
+  --crumb-link-hover: #ffffff; /* hover to white + underline */
+  --crumb-current:    #ffffff; /* current page, not a link */
+  --link:           #245c95;   /* blue-600 */
+  --link-hover:     #1c4e80;   /* blue-700 */
+  --link-underline: #cfe0f2;
+  --confirm:        #2f8f5b;
+  --confirm-strong: #1f7d49;
+
+  /* Type: sans body + serif display headings (see note above) */
+  --font-serif: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans:  Georgia, "Times New Roman", serif;
+
+  --measure: 860px;
+}
+
+/* Structural base styles for civic reports — theme-independent.
+ * Colors, fonts, and sizes come from the active theme (CSS custom properties
+ * in _build/themes/<name>.css), which is loaded BEFORE this file. */
+
+/* ---- Reset & base ---- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Layout ---- */
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner a { color: inherit; text-decoration: none; }
+.page-banner a:hover { text-decoration: underline; }
+
+/* ---- Breadcrumb (in the banner) ---- */
+.page-banner .crumbs a {
+    color: var(--crumb-link, var(--banner-ink));
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover, #fff);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current {
+    color: var(--crumb-current, #fff);
+}
+
+.container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* ---- Images / figures ---- */
+/* Scale charts and figures to the column (and the printed page box) rather
+   than overflowing at their intrinsic pixel/point size. */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+}
+
+/* ---- Lightbox (screen only; overlay is built at runtime by the viewer
+   script, so it never appears in the PDF). Click a chart to enlarge it. ---- */
+.container img { cursor: zoom-in; }
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vmin;
+    background: rgba(0, 0, 0, 0.85);
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+.lightbox-overlay.open { opacity: 1; }
+.lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    margin: 0;
+    cursor: zoom-out;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+    background: #fff;
+}
+
+/* ---- Title block ---- */
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-attribution {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    color: var(--ink-faint);
+    margin: 0 0 24px 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+.report-attribution a {
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+}
+.report-attribution a:hover {
+    color: var(--link);
+    border-bottom-color: var(--link);
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.methodology-header {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 0 0 36px 0;
+    line-height: 1.55;
+}
+
+/* ---- Section labels (small uppercase tags above h2) ---- */
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 36px 0 4px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+/* ---- Headings ---- */
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+h3 {
+    font-family: var(--font-sans);
+    font-size: var(--h3-size);
+    font-weight: 600;
+    margin: 28px 0 10px 0;
+    color: var(--accent-2);
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+
+/* ---- Header anchor links (HTML only; hidden in print) ---- */
+.header-anchor {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.2em;
+    color: var(--anchor);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.85em;
+    vertical-align: baseline;
+    cursor: pointer;
+    user-select: none;
+}
+h2:hover .header-anchor,
+h3:hover .header-anchor,
+.header-anchor:focus {
+    opacity: 1;
+}
+.header-anchor:hover {
+    color: var(--anchor-hover);
+}
+.header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+}
+.header-anchor.copied::after {
+    content: " copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+}
+@media print {
+    .header-anchor {
+        display: none;
+    }
+}
+
+/* ---- Body text ---- */
+p {
+    margin: 0 0 14px 0;
+    orphans: 3;
+    widows: 3;
+}
+p.intro-table {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+strong { font-weight: 700; color: var(--ink); }
+em { font-style: italic; }
+
+/* ---- Links ---- */
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* ---- Lists ---- */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+li {
+    margin: 0 0 6px 0;
+    line-height: 1.55;
+}
+
+/* ---- Tables ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-before: avoid;
+    break-before: avoid;
+}
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 9.5pt;
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--accent);
+}
+tbody tr:hover { background: var(--bg); }
+
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+tbody tr:last-child td {
+    border-bottom: 2px solid var(--accent);
+}
+
+/* ---- Blockquotes (source notes, verbatim quotes) ---- */
+blockquote {
+    margin: 14px 0 18px 0;
+    padding: 14px 20px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+blockquote p { margin: 0 0 8px 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ol, blockquote ul {
+    margin: 8px 0;
+}
+
+/* ---- HR ---- */
+hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+}
+
+/* ---- Inline code ---- */
+code {
+    font-family: var(--font-mono);
+    font-size: 9.5pt;
+    background: var(--bg-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: var(--accent-2);
+    overflow-wrap: break-word;
+}
+
+/* ---- Other Formats footer ---- */
+.formats-section {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+}
+.format-cards {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.format-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.format-cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media screen and (max-width: 700px) {
+    .format-cards.cols-3,
+    .format-cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+.format-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    padding: 14px;
+    text-align: left;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+.format-card-icon { font-size: 18pt; margin-bottom: 4px; }
+.format-card-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+.format-card-desc { font-size: 9pt; color: var(--ink-mute); line-height: 1.4; }
+.format-card a { display: block; }
+
+/* ---- Footer ---- */
+.page-footer {
+    max-width: var(--measure);
+    margin: 32px auto 60px;
+    padding: 24px var(--gutter);
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 9.5pt;
+    font-family: var(--font-sans);
+    border-top: 1px solid var(--rule);
+}
+
+/* ---- Confirmation glyphs ---- */
+h3 .conf-mark {
+    color: var(--confirm);
+    font-size: 11pt;
+    margin-right: 4px;
+}
+</style>
+</head>
+<body>
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/reports/">Reports</a><span class="sep">›</span><a href="/reports/aes/">Andover Elementary</a><span class="sep">›</span><span class="current">When Small Numbers Become Names</span>
+  </nav>
+</div>
+<div class="container">
+<h1 class="report-title">When Small Numbers Become Names</h1>
+<p class="report-subtitle">Town of Andover, CT · Student and staff privacy · Why the disputed preschool benefit figure cannot be released, and why that refusal is the law rather than a stonewall</p>
+<p class="report-attribution">A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Not an official town document</p>
+<hr class="report-header-rule">
+<p class="methodology-header">This report explains, in plain language and then in detail, why a specific
+request, for the aggregate benefit information of the eight preschool staff,
+cannot be filled in detailed form without disclosing private information about
+identifiable individuals, and why the same structural problem, in its clearest
+form, governs certain student data as well. It draws on federal statute and
+regulation (FERPA, the IDEA, and HIPAA), on published guidance from the U.S.
+Department of Education and the U.S. Department of Health and Human Services, on
+Connecticut&#8217;s Freedom of Information Act and the case law interpreting it, and
+on the two collective bargaining agreements that define the benefits at issue.
+It is a civic explainer, not legal advice; the Board of Education&#8217;s counsel
+speaks for the district on these questions, and where this report and that
+advice differ, the advice governs. Compiled June 6, 2026.</p>
+<hr>
+<p class="section-label">Introduction</p>
+<h2 id="overview">Overview<a class="header-anchor" href="#overview" aria-label="Link to this section">¶</a></h2>
+<p>At the June 2, 2026 town meeting, as at several gatherings before it, a familiar
+request came up again: the aggregate benefit information for the preschool
+staff, four teachers and four paraprofessionals, eight people in all. On its
+face it is a reasonable thing to ask. The preschool&#8217;s salaries are covered by
+tuition and state grants rather than the town&#8217;s general fund, but the staff&#8217;s
+benefits are charged to district-wide accounts the general fund does carry, so
+this is the one slice of the program&#8217;s cost that lands on the taxpayer, and
+residents and officials are right to want to know what it comes to. No one
+making the request is asking what health plan any individual chose. Let me say
+that plainly, because the rest of this report depends on it: no one is asking
+for any individual&#8217;s health information.</p>
+<p>The difficulty is arithmetic, not motive. &#8220;Aggregate&#8221; is supposed to protect the
+individuals inside a total: report the sum, and no one can see any single
+person&#8217;s choices. But that protection depends entirely on the group being large
+enough. Shrink the group and the total begins to give the individuals away.
+Picture the extreme case. A benefit total for a single employee is that one
+employee&#8217;s benefit choice with the word &#8220;aggregate&#8221; in front of it. Make it two
+employees, one on a family plan and one who declined coverage, and the total
+together with the published cost-share rates lets a reader work out who did
+which. Once a group is large enough, an aggregate genuinely hides the people
+inside it; the trouble is how few it takes to fall short of that, and these
+groups fall well short.</p>
+<p>For the eight preschool staff, that is not a remote risk, for reasons the
+contracts make concrete (Part 4). There is also an even clearer version of the
+same problem on the student side of the building, where the law is unambiguous:
+the dedicated one-on-one aide (Part 3). That case is worth walking through
+first, because it shows the principle in its sharpest form before we return to
+the staff request that is actually on the table.</p>
+<p>None of this treats the request as a trick, or the people making it as acting in
+bad faith. The transparency interest is real, and for most of the budget the law
+favors disclosure: aggregate spending on large groups is public, and should be.
+The conflict is narrow and specific. It appears only where the group described
+is small enough that a total, combined with what the reader already has in hand,
+becomes a roster. The rest of this report shows where that line falls, which law
+draws it, and why the Superintendent&#8217;s &#8220;I can&#8217;t give you that&#8221; is the law
+speaking rather than a stonewall.</p>
+<p>The argument has five parts:</p>
+<ol>
+<li>The arithmetic of identification — why small groups defeat anonymity.</li>
+<li>Which privacy law applies — and a common, understandable mix-up.</li>
+<li>The one-on-one paraprofessional — the principle in its clearest form.</li>
+<li>The preschool staff benefits — the request actually in dispute.</li>
+<li>Why “I can’t give you that” is the law, not an evasion.</li>
+</ol>
+<hr>
+<p class="section-label before-part">The principle</p>
+<h2 id="part-1-the-arithmetic-of-identification">Part 1 — The arithmetic of identification<a class="header-anchor" href="#part-1-the-arithmetic-of-identification" aria-label="Link to this section">¶</a></h2>
+<p>Privacy law does not protect only names and Social Security numbers. It protects
+any information that can be linked back to a specific person, alone or in
+combination with other things a reader already knows. The federal
+student-privacy regulation defines protected &#8220;personally identifiable
+information&#8221; to include not just direct identifiers but indirect ones, and any
+other information that, alone or combined, is linked or linkable to a specific
+student such that a reasonable person in the school community could identify the
+student with reasonable certainty (34 CFR §99.3).</p>
+<p>Two phrases in that definition do the heavy lifting. &#8220;In combination&#8221; means a
+fact that is harmless by itself can become identifying once it sits next to
+other facts. &#8220;Reasonable person in the school community&#8221; means the test is not
+whether a stranger in another state could identify someone; it is whether a
+neighbor, another parent, or a fellow resident who already knows a little about
+the program could. In a small town, people know a great deal.</p>
+<p>This is why small groups are the crux. Aggregate data is meant to be a shield:
+report the total, hide the individuals inside it. But the shield only works when
+the group is large enough that knowing the total tells you little about any one
+member. Shrink the group and the shield dissolves. The federal Department of
+Education&#8217;s own guidance makes the point directly: aggregate tables with small
+cells can still contain protected information, because it can be possible to
+identify specific individuals from uncommon characteristics, and such tables
+should not be released until disclosure-avoidance steps have been applied.</p>
+<h3 id="connecticut-already-draws-a-line">Connecticut already draws a line<a class="header-anchor" href="#connecticut-already-draws-a-line" aria-label="Link to this section">¶</a></h3>
+<p class="intro-table">Connecticut does not leave &#8220;how small is too small&#8221; to intuition. For public
+reporting of student outcomes, the state sets a minimum subgroup size below
+which it will not publish figures at all.</p>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th class="num">Minimum group size</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Public reporting</td>
+<td class="num">20</td>
+</tr>
+<tr>
+<td>Accountability calculation</td>
+<td class="num">20</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> Connecticut uses the same threshold, 20 students, for both
+reporting and accountability, which is stricter than many states that use a
+lower number for reporting. The national range across approved state plans
+runs roughly 10–30. EdSight, the state&#8217;s accountability dashboard, states
+operationally that the minimum number of students needed to calculate an
+average or a percentage is 20. Source: Connecticut ESSA Consolidated State
+Plan (approved August 4, 2017); CT SDE EdSight.</p>
+</blockquote>
+<p>It is worth being precise about what this number is and is not. The n = 20
+threshold is a reporting and accountability convention; it is not itself a rule
+about answering a records request, and it does not declare every group under 20
+legally secret. It is the state&#8217;s own judgment, applied to its own data, about
+the group size at which published figures begin to expose individuals. The legal
+duty to withhold comes from the privacy statutes covered below; the n = 20 line
+is simply the state&#8217;s own answer to the practical question those statutes raise,
+which is how small is too small. For staff, as Part 4 explains, there is no
+comparable number, and the analysis runs differently.</p>
+<hr>
+<p class="section-label before-part">Which law applies</p>
+<h2 id="part-2-which-privacy-law-applies">Part 2 — Which privacy law applies<a class="header-anchor" href="#part-2-which-privacy-law-applies" aria-label="Link to this section">¶</a></h2>
+<p>There is a near-universal habit of calling any health-related privacy question a
+&#8220;HIPAA&#8221; question. In a school, that habit is usually wrong, and the error is
+worth correcting carefully, because the right answer depends on which statute
+actually governs.</p>
+<p>For records a school maintains about its students, the governing law is almost
+always FERPA, the Family Educational Rights and Privacy Act, not HIPAA. This is
+not an accident. The two laws are written to be mutually exclusive for any given
+record. HIPAA&#8217;s definition of protected health information specifically excludes
+records that FERPA covers, and the stated purpose of that exclusion, in the
+joint federal guidance, is to keep any single student health record under just
+one of the two regimes rather than both.</p>
+<h3 id="what-this-means-in-practice">What this means in practice<a class="header-anchor" href="#what-this-means-in-practice" aria-label="Link to this section">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>The record in question</th>
+<th>Governing law</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A student&#8217;s IEP, services, disability status, school records</td>
+<td>FERPA, plus the IDEA (the federal special-education law); see Part 3</td>
+</tr>
+<tr>
+<td>Health information a school nurse records about a student</td>
+<td>FERPA, as an education record</td>
+</tr>
+<tr>
+<td>A town employee&#8217;s benefit elections, held as employment records</td>
+<td>Not HIPAA; see Part 4</td>
+</tr>
+<tr>
+<td>Records held by an outside clinical provider who bills insurance</td>
+<td>Possibly HIPAA</td>
+</tr>
+</tbody></table>
+<p>A public school can, in narrow circumstances, also meet HIPAA&#8217;s definition of a
+covered entity, for example if it runs a clinic and bills insurance
+electronically. But even then, the federal guidance is explicit that many such
+schools still do not have to comply with HIPAA, because their only health
+records are &#8220;education records&#8221; or &#8220;treatment records&#8221; under FERPA, which HIPAA
+expressly excludes. The practical upshot for the preschool: the students&#8217;
+protected information is a FERPA matter, layered with the additional protections
+of the IDEA discussed next. Calling it &#8220;HIPAA&#8221; is a common shorthand, and the
+people using it have reached the right conclusion. It is simply not the statute
+that governs school records, and this report uses the one that does.</p>
+<hr>
+<p class="section-label before-part">The mechanism</p>
+<h2 id="part-3-the-one-on-one-paraprofessional">Part 3 — The one-on-one paraprofessional<a class="header-anchor" href="#part-3-the-one-on-one-paraprofessional" aria-label="Link to this section">¶</a></h2>
+<p>This is the principle in its clearest form, and it sits on the firmest legal
+ground, which is why it comes before the harder staff question.</p>
+<p>Children with disabilities receive a second layer of privacy protection beyond
+FERPA, under the Individuals with Disabilities Education Act (the IDEA). The
+IDEA incorporates FERPA&#8217;s definition of education records and adds
+confidentiality requirements tailored to the special sensitivity of disability
+information (34 CFR Part 300, Subpart F, §§300.610–300.627). Both laws treat a
+child&#8217;s disability status and the contents of the child&#8217;s IEP as protected. And
+both use the same identifiability test from Part 1: information is protected if
+a child can be identified from it with reasonable certainty.</p>
+<p>Now connect that to staffing. A dedicated one-on-one paraprofessional is, by
+definition, assigned to one particular child because that child&#8217;s IEP requires
+it. The aide&#8217;s position is not a free-floating budget line; it is the
+embodiment, in the staffing plan, of a service written into a specific student&#8217;s
+plan. Federal guidance for paraprofessionals makes the same point from the other
+direction: service logs showing that a student with a disability received
+specific supports can themselves be protected education records.</p>
+<p>So a single fact, &#8220;the preschool employs N dedicated one-on-one aides,&#8221; lives in
+two places at once. It is a line on the personnel and budget ledger, which is
+the side residents legitimately want to see. And it is a fact recorded in N
+identifiable children&#8217;s special-education files, which is the side the law
+protects. The two cannot be separated, because there is no such thing as a
+one-on-one aide without a particular child on the other end of the assignment.</p>
+<p>The preschool itself is not small; it serves about 67 children across four
+classrooms. But the number of children who have a dedicated aide is small, and
+that is the group that matters here. Disclose the aide staffing and you
+disclose, by inference, that specific children carry IEPs significant enough to
+require their own adult. Where the community can observe which child is always
+accompanied by an adult, &#8220;the budget shows two dedicated aides&#8221; closes the loop.
+That is identification with reasonable certainty. It is a disclosure of
+protected information under FERPA and the IDEA, made without parental consent,
+even though no name was ever spoken and no one intended harm.</p>
+<p>And here the report&#8217;s central point is at its plainest: there is no wording of a
+request for one-on-one aide cost or assignment that does not reveal that a
+particular child needs one-on-one support. The disclosure is not in the
+phrasing. The disclosure is the aide&#8217;s existence. A request cannot be reworded
+around a fact.</p>
+<hr>
+<p class="section-label before-part">The request at issue</p>
+<h2 id="part-4-the-preschool-staff-benefits">Part 4 — The preschool staff benefits<a class="header-anchor" href="#part-4-the-preschool-staff-benefits" aria-label="Link to this section">¶</a></h2>
+<p>This is the request actually in dispute: the aggregate benefit information for
+the eight preschool staff. It needs the most careful treatment in this report,
+both because it is the live question and because the law here is harder than on
+the student side. Getting it right means neither overstating the protection nor
+pretending the concern is imaginary.</p>
+<p>Begin with what &#8220;benefits&#8221; actually consists of, because the word hides the
+problem. For these eight employees, a benefit figure is not one neutral number
+apiece. It is the sum of a set of individual elections, and the two collective
+bargaining agreements that govern them, the teachers&#8217; agreement and the
+non-certified staff agreement, show that each election maps onto a private fact:</p>
+<ul>
+<li>The medical plan comes in tiers (single, two-person, family). Which tier a
+person carries reflects household and dependent status.</li>
+<li>An employee can decline town coverage entirely, which ordinarily means they
+are covered elsewhere, typically through a spouse.</li>
+<li>Most pointedly, both agreements offer a Health Reimbursement Arrangement in
+place of the Health Savings Account specifically for an employee precluded
+from the HSA &#8220;because the [employee] received Medicare and/or veterans&#8217;
+benefits.&#8221; Identifying who is on the HRA therefore discloses that a specific
+person receives Medicare or veterans&#8217; benefits, information about age,
+disability, or veteran status that has nothing to do with what the town spends
+in total.</li>
+</ul>
+<p>So a sufficiently detailed benefit breakdown for these eight people is not a
+financial abstraction. It is a set of facts about identifiable individuals&#8217;
+households and health status.</p>
+<p>The group is also smaller than eight in the way that matters. The four teachers
+fall under one agreement; the four paraprofessionals under another, where
+board-subsidized medical coverage depends on job classification and scheduled
+hours. Full-time and certain part-time classifications receive subsidized
+coverage; lower-hour classifications are grandfathered, pay a substantially
+higher share, or may only buy in at their own expense. So the subset of the
+eight for whom a particular subsidized-tier election even exists may be just two
+or three people. The smaller that subset, the more completely a total describes
+each person in it. The small-numbers problem is sharper here, not milder.</p>
+<p>There is one honest limit on the reconstruction. The dollar premiums are not in
+the public contracts: the teachers&#8217; insurance-rate grid is left blank in the
+posted copy, and both agreements state the employee&#8217;s share as a percentage
+rather than a dollar figure. A member of the public working only from the posted
+contracts and salary schedules would know each employee&#8217;s salary and cost-share
+percentage, but not the premium dollars needed to convert a total back into
+individual tiers. The reconstruction is not trivial from those documents alone.</p>
+<p>That limit largely disappears for the people actually making this request.
+Andover&#8217;s employee health coverage is purchased through a pooled inter-municipal
+arrangement of the kind Connecticut authorized in Public Act 10-174 of 2010,
+which lets towns and school boards join together to buy employee health
+benefits. The negotiated rate results of such an arrangement are public records,
+and they are routinely in the hands of the town&#8217;s own financial officials. The
+requesters here include the First Selectman and members of the Board of Finance,
+who can obtain the per-tier premium schedule as a matter of course. For them,
+the aggregate plus the rate sheet plus the public salary and classification data
+is enough to recover the tier mix among a group this small.</p>
+<p>This points to a principle worth stating plainly, and neutrally: the more
+financial detail a requester already holds, the less additional aggregate
+disclosure it takes to reconstruct the individuals inside a total. The privacy
+limit is therefore most binding, not least, for the best-resourced requesters.
+It does not bend because the person asking is an official; if anything it
+tightens.</p>
+<p>Which law draws the line is the last question. Two points commonly get the
+statute wrong.</p>
+<p>First, this is most likely not a HIPAA question. A town is generally not a HIPAA
+covered entity; its group health plan may be, but information the town holds as
+an employer, in payroll and budget records, is treated as employment records,
+which HIPAA&#8217;s own definitions exclude from protected health information. The
+benefit-cost figures in the town&#8217;s budget are, in all likelihood, employment
+records outside HIPAA&#8217;s reach. The claim is not wrong on a technicality; HIPAA
+does not govern these records in the first place.</p>
+<p>Second, there is no fixed minimum group size for staff. The number 20 from Part
+1 belongs to student reporting. HIPAA&#8217;s method for declaring data safe to
+release sets no group-size figure at all; it works by removing a defined list of
+identifiers, or by a documented expert judgment that re-identification risk is
+very small. The neat &#8220;the group is too small under the law&#8221; framing that fits
+the student case does not transfer here.</p>
+<p>The protection that does apply comes from Connecticut&#8217;s Freedom of Information
+Act, which exempts &#8220;personnel or medical files and similar files the disclosure
+of which would constitute an invasion of personal privacy&#8221; (Conn. Gen. Stat.
+§1-210(b)(2)). That exemption is not automatic. Under the controlling state
+Supreme Court test (Perkins v. FOIC, 228 Conn. 158 (1993)), an agency
+withholding such a record must show both that the information does not pertain
+to a legitimate matter of public concern and that disclosure would be highly
+offensive to a reasonable person. The total cost of public employment is a
+legitimate public concern, and Connecticut courts have treated some numerical
+employee data as not private at all. The public-concern prong, in short, favors
+disclosure of the total.</p>
+<p>What it does not favor is disclosure detailed enough to expose the tier mix, the
+decliners, or the HRA participants among eight people. Those are the private
+facts, household composition, coverage held elsewhere, Medicare or veterans&#8217;
+status, and none of them is what &#8220;how much do we spend&#8221; requires.</p>
+<p>The cure, though, is a larger group, not merely a coarser figure for this one.
+It is tempting to say &#8220;give the total for the eight, just with no breakdown,&#8221;
+but among eight people, two or three of them carrying a given tier, the total
+itself, set beside the rate sheet and the public salary and classification data,
+can still be inverted into the individual elections. Removing the line items
+does not help if the bottom line is recoverable. What does help is aggregating
+up to a group large enough to clear the line: the benefit total for all
+certified staff, or for all non-certified staff, or the district-wide benefit
+figure, the kind of number that already appears in the budget. Those answer the
+spending question without singling anyone out. It is the preschool-only slice,
+eight people or the two-or-three within them, that cannot be safely isolated.</p>
+<hr>
+<p class="section-label before-part">Synthesis</p>
+<h2 id="part-5-why-i-can-t-give-you-that-is-the-law-not-an-evasion">Part 5 — Why “I can’t give you that” is the law, not an evasion<a class="header-anchor" href="#part-5-why-i-can-t-give-you-that-is-the-law-not-an-evasion" aria-label="Link to this section">¶</a></h2>
+<p>Pulling the threads together: when the Superintendent says she cannot release
+this information, she is not choosing to withhold an answer she could give. She
+is reporting that the law leaves her no lawful answer to release. The obstacle
+is structural, a property of the data and the size of the group, and it does not
+yield to good intentions on either side.</p>
+<p>It is understandable that a flat “I&#8217;m not allowed to share that” sounds like a
+stonewall. In most budget questions a refusal to produce a number is a choice,
+and pressing harder is the right response. This is the uncommon case where it is
+not a choice. The figure being asked for does not exist in any form she can
+lawfully hand over, because producing it for a group this small would disclose
+facts about identifiable people, an employee&#8217;s coverage tier or HRA status, a
+child&#8217;s need for a dedicated aide, that FERPA, the IDEA, and Connecticut&#8217;s
+privacy law place out of reach. Her “I can&#8217;t” is fidelity to those statutes, not
+opacity. Continuing to read the non-answer as a lack of transparency mislocates
+the cause: it is the law that is saying no, and she is the one obliged to say it
+out loud.</p>
+<p>A useful way to see that the barrier is real, and not a matter of phrasing, is
+to imagine shrinking the group until the point is undeniable. Suppose the
+preschool had exactly one staff member. A request for &#8220;aggregate staff benefit
+cost,&#8221; however carefully it avoids the word &#8220;individual,&#8221; hands over that one
+person&#8217;s health-plan choice. Suppose exactly one child with a one-on-one aide. A
+request for &#8220;the cost of one-on-one support in the preschool,&#8221; however neutrally
+phrased, names that child to anyone who knows the program has one such child. At
+a group of one, everyone sees at once that no phrasing helps. Adding a second or
+a third person does not change the nature of the problem; it only changes how
+much outside knowledge a reader has to supply. The barrier was never in the
+language, so no better wording of the request, and no greater willingness on her
+part, could produce the number without breaking the law.</p>
+<p>None of this forecloses the legitimate interest behind the request. Aggregate
+figures for groups large enough to stay anonymous are public, and the town
+should provide them: a benefit total for all certified staff, or all
+non-certified staff, or the district as a whole, the figures already carried in
+the budget. The line this report describes is narrow on purpose. It is only the
+small groups, the eight preschool staff, the two or three within them who carry
+a given tier, the dedicated aides, that the law puts out of reach, and only
+because at that size a total is recoverable into the people inside it. The
+underlying question, what the town spends, has an available answer. What is not
+available, from her or from anyone, is the preschool-only slice in a form fine
+enough to single people out.</p>
+<hr>
+<p class="section-label">At a glance</p>
+<h2 id="summary-table">Summary table<a class="header-anchor" href="#summary-table" aria-label="Link to this section">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Short answer</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>What is actually being requested?</td>
+<td>The aggregate benefit figures for the eight preschool staff (four teachers, four paraprofessionals).</td>
+</tr>
+<tr>
+<td>Can the town release any benefit totals?</td>
+<td>Yes, at a large enough aggregation (all certified staff, all non-certified staff, or district-wide); those figures already sit in the budget.</td>
+</tr>
+<tr>
+<td>Why not a preschool-only total, then?</td>
+<td>Eight is small enough that the bottom line, set beside the rate sheet, is recoverable into individuals. A coarser figure for a small group is not safe; a larger group is.</td>
+</tr>
+<tr>
+<td>Why not a detailed breakdown?</td>
+<td>Among eight people, the tier, decline, and HRA detail identifies individuals&#8217; household and health status.</td>
+</tr>
+<tr>
+<td>Isn&#8217;t this a HIPAA issue?</td>
+<td>Probably not. Town-held benefit figures are employment records, which HIPAA excludes. The limit comes from CT FOIA.</td>
+</tr>
+<tr>
+<td>Does it matter who is asking?</td>
+<td>Yes, in one direction: requesters who can obtain the premium schedule can reconstruct more from a total, so the limit binds them more.</td>
+</tr>
+<tr>
+<td>What about the students?</td>
+<td>A dedicated one-on-one aide is an IEP service tied to one child; disclosing it identifies the child. That side is FERPA and the IDEA.</td>
+</tr>
+<tr>
+<td>Is the Superintendent&#8217;s refusal a stonewall?</td>
+<td>No. There is no lawful version of the preschool-only figure for her to release; the refusal is compliance with privacy law, not opacity.</td>
+</tr>
+</tbody></table>
+<hr>
+<p class="section-label">Analysis</p>
+<h2 id="key-observations">Key Observations<a class="header-anchor" href="#key-observations" aria-label="Link to this section">¶</a></h2>
+<p><strong>&#8220;Benefits&#8221; for eight people is a set of individual elections, not one
+number.</strong> Plan tier, declining coverage, and the HRA-versus-HSA choice each
+encode a private fact about a person&#8217;s household or health status.</p>
+<p><strong>The HRA election is the sharpest example.</strong> Both agreements offer the HRA only
+to employees who cannot use the HSA because they receive Medicare or veterans&#8217;
+benefits, so identifying HRA participants discloses that protected status.</p>
+<p><strong>The group is effectively smaller than eight.</strong> Subsidized-coverage eligibility
+varies by contract and classification, so the subset for whom a tier election
+even exists may be two or three people, which makes a total more revealing, not
+less.</p>
+<p><strong>Benefit spending is public at a large enough aggregation.</strong> District-wide or
+all-staff benefit totals, the kind already in the budget, answer the spending
+question; it is isolating the eight-person preschool slice that creates the
+problem, and a coarser figure for that small group is not a cure.</p>
+<p><strong>The limit binds well-resourced requesters more, not less.</strong> The more premium
+and rate detail a requester can already obtain, the less additional disclosure
+it takes to recover the individuals inside a total.</p>
+<p><strong>For students, this is FERPA and the IDEA, not HIPAA.</strong> A dedicated aide is an
+IEP service tied to one child, so the staffing line and the protected fact are
+the same fact, and no wording separates them.</p>
+<p><strong>A refusal here is the law operating, not an evasion.</strong> The Superintendent
+cannot release a lawful version of the preschool-only figure, so reading her &#8220;I
+can&#8217;t&#8221; as opacity mislocates the cause; the constraint is the statute, not her
+will.</p>
+<hr>
+<p class="section-label">Caveats</p>
+<h2 id="what-this-report-does-not-show">What this report does not show<a class="header-anchor" href="#what-this-report-does-not-show" aria-label="Link to this section">¶</a></h2>
+<p>This is a civic explainer, not legal advice, and not every question it touches
+is fully settled here.</p>
+<ul>
+<li>It does not substitute for the Board of Education&#8217;s counsel. Where this
+report&#8217;s reading of the law and the district&#8217;s legal advice differ, the legal
+advice governs.</li>
+<li>It does not resolve the staff-benefit question definitively. The Connecticut
+FOIA personnel-privacy exemption turns on a fact-specific balancing test, and
+reasonable people, including lawyers, can disagree about where a particular
+figure falls.</li>
+<li>It does not establish that every preschool staffing or benefit figure is
+private. Most are not. The report describes a narrow line; the bulk of
+aggregate spending sits on the public side of it.</li>
+<li>It does not name the specific health-insurance consortium Andover belongs to.
+That name is a matter of public record (it appears in the town and regional
+budget back-up), but it was not confirmed for this report and is not needed
+for the argument.</li>
+<li>It does not address whether any of the preschool&#8217;s special-education services
+run through Connecticut&#8217;s Birth to Three program or a similar outside
+provider, which could bring HIPAA into play for that provider&#8217;s records. That
+would be worth confirming in any specific case.</li>
+<li>It does not assign motive to anyone. The argument is about the structure of
+the data, and it holds regardless of why any particular request was made.</li>
+</ul>
+<hr>
+<p class="section-label">Documentation</p>
+<h2 id="sources">Sources<a class="header-anchor" href="#sources" aria-label="Link to this section">¶</a></h2>
+<p><strong>Federal statute and regulation</strong></p>
+<ul>
+<li>FERPA, definition of personally identifiable information, 34 CFR §99.3:
+<a href="https://www.ecfr.gov/current/title-34/subtitle-A/part-99">ecfr.gov/&#8230;/part-99</a></li>
+<li>The IDEA, confidentiality of information, 34 CFR Part 300, Subpart F
+(§§300.610–300.627):
+<a href="https://www.ecfr.gov/current/title-34/subtitle-B/chapter-III/part-300">ecfr.gov/&#8230;/part-300</a></li>
+<li>HIPAA, definitions including covered entity and the employment-records
+exclusion, 45 CFR §160.103:
+<a href="https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-C/part-160">ecfr.gov/&#8230;/part-160</a></li>
+<li>HIPAA, plan-sponsor and de-identification provisions, 45 CFR §§164.504(f),
+164.514:
+<a href="https://www.ecfr.gov/current/title-45/part-164">ecfr.gov/&#8230;/part-164</a></li>
+</ul>
+<p><strong>Federal guidance (U.S. Department of Education and U.S. Department of Health
+and Human Services)</strong></p>
+<ul>
+<li>Joint Guidance on the Application of FERPA and HIPAA to Student Health Records
+(December 2019 update):
+<a href="https://www.hhs.gov/sites/default/files/2019-hipaa-ferpa-joint-guidance.pdf">hhs.gov/&#8230;/2019-hipaa-ferpa-joint-guidance.pdf</a></li>
+<li>IDEA and FERPA Confidentiality Provisions FAQ, U.S. Department of Education:
+<a href="https://studentprivacy.ed.gov/sites/default/files/resource_document/file/idea-confidentiality-requirements-faq_0.pdf">studentprivacy.ed.gov/&#8230;/idea-confidentiality-requirements-faq</a></li>
+<li>IDEA and FERPA Crosswalk, Student Privacy Policy Office:
+<a href="https://studentprivacy.ed.gov/sites/default/files/resource_document/file/IDEA-FERPA%20Crosswalk_08242022.pdf">studentprivacy.ed.gov/&#8230;/IDEA-FERPA-Crosswalk</a></li>
+<li>HHS Office for Civil Rights, Guidance on De-identification of Protected Health
+Information:
+<a href="https://www.hhs.gov/hipaa/for-professionals/special-topics/de-identification/index.html">hhs.gov/&#8230;/de-identification</a></li>
+</ul>
+<p><strong>Connecticut sources</strong></p>
+<ul>
+<li>Connecticut Freedom of Information Act, exempt records, Conn. Gen. Stat.
+§1-210(b)(2):
+<a href="https://portal.ct.gov/FOI/Regulations/The-FOI-Act/Sec-1210--Formerly-Sec-119--Access-to-public-records--Exempt-records">portal.ct.gov/&#8230;/Sec-1210</a></li>
+<li>Perkins v. Freedom of Information Commission, 228 Conn. 158 (1993) (the
+controlling two-part test for the personnel/medical-files exemption):
+<a href="https://www.leagle.com/decision/1993386228conn1581374">leagle.com/&#8230;/Perkins-v-FOIC</a></li>
+<li>Notice-and-objection procedure for employee records, Conn. Gen. Stat. §1-214:
+<a href="https://portal.ct.gov/foi/regulations/the-foi-act/sec-1214--formerly-sec-120a--public-employment-contracts-as-public-record--objection-to-disclosure-o">portal.ct.gov/&#8230;/Sec-1214</a></li>
+<li>Connecticut Public Act 10-174 (2010), authorizing municipalities and boards of
+education to pool the purchase of employee health insurance:
+<a href="https://cga.ct.gov/2010/ACT/Pa/pdf/2010PA-00174-R00HB-05424-PA.pdf">cga.ct.gov/&#8230;/2010PA-00174</a></li>
+<li>Connecticut ESSA Consolidated State Plan (approved August 4, 2017), minimum
+subgroup size:
+<a href="https://portal.ct.gov/-/media/SDE/ESSA/august_4_ct_consolidated_state_essa_plan.pdf">portal.ct.gov/&#8230;/ct-consolidated-state-essa-plan</a></li>
+<li>CT SDE EdSight, Next Generation Accountability Dashboard (operational note on
+the minimum of 20):
+<a href="https://public-edsight.ct.gov/overview/next-generation-accountability-dashboard">public-edsight.ct.gov/&#8230;/next-generation-accountability-dashboard</a></li>
+</ul>
+<p><strong>Local documents (public)</strong></p>
+<ul>
+<li>Contract between the Andover Board of Education and the Andover Education
+Association, July 1, 2025 – June 30, 2029 (teacher salaries and insurance
+benefits):
+<a href="https://www.andoverelementaryct.org/images/forms/AEA%20Contract%202025-2029%20C.pdf">andoverelementaryct.org/&#8230;/AEA-Contract-2025-2029</a></li>
+<li>Collective Bargaining Agreement between the Andover Board of Education and
+CSEA, SEIU Local 2001 (non-certified personnel), July 1, 2024 – June 30, 2028
+(classifications, wages, and insurance):
+<a href="https://www.andoverelementaryct.org/images/forms/2024-2028%20CSEA%20Contract%20Final%20Complete%20Doc.pdf">andoverelementaryct.org/&#8230;/2024-2028-CSEA-Contract</a></li>
+</ul>
+<hr>
+
+<p class="section-label">Download</p>
+<h2 id="other-formats">Other Formats<a class="header-anchor" href="#other-formats" aria-label="Link to this section">¶</a></h2>
+<p>This report is available in three formats, all located alongside this page:</p>
+
+<div class="format-cards cols-3">
+  <div class="format-card">
+    <div class="format-card-icon">🌐</div>
+    <div class="format-card-title"><a href="./">HTML</a></div>
+    <div class="format-card-desc">Interactive version with formatted tables; best for on-screen reading and sharing.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📄</div>
+    <div class="format-card-title"><a href="preschool_data_privacy.md">Markdown</a></div>
+    <div class="format-card-desc">Plain-text version; readable in any editor, ideal for copying into other documents.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📑</div>
+    <div class="format-card-title"><a href="preschool_data_privacy.pdf">PDF</a></div>
+    <div class="format-card-desc">Print-ready version with all tables, footnotes, and source citations.</div>
+  </div>
+</div>
+
+</div>
+<div class="page-footer">
+Personal work of <a href="mailto:scott@sauyet.com">Scott Sauyet</a> · Compiled June 6, 2026<br>A civic explainer drawing on federal statute and guidance and Connecticut law. Not legal advice and not an official town document. ·
+<a href="http://andoverct.info/reports/aes/data-privacy/">andoverct.info/reports/aes/data-privacy/</a>
+</div>
+<script>
+document.addEventListener('click', function(e) {
+    const anchor = e.target.closest('.header-anchor');
+    if (!anchor) return;
+    const heading = anchor.parentElement;
+    const id = heading.id;
+    if (!id) return;
+    const url = window.location.origin + window.location.pathname + '#' + id;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function() {
+            anchor.classList.add('copied');
+            setTimeout(function() { anchor.classList.remove('copied'); }, 1400);
+        }).catch(function() {});
+    }
+});
+</script>
+<script>
+(function() {
+    var imgs = document.querySelectorAll('.container img');
+    if (!imgs.length) return;
+    var overlay = null;
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    function close() {
+        if (!overlay) return;
+        var o = overlay;
+        overlay = null;
+        o.classList.remove('open');
+        document.removeEventListener('keydown', onKey);
+        setTimeout(function() { if (o.parentNode) o.parentNode.removeChild(o); }, 200);
+    }
+    function open(src, alt) {
+        overlay = document.createElement('div');
+        overlay.className = 'lightbox-overlay';
+        var big = document.createElement('img');
+        big.src = src;
+        big.alt = alt || '';
+        overlay.appendChild(big);
+        overlay.addEventListener('click', close);
+        document.body.appendChild(overlay);
+        overlay.offsetWidth; // force reflow so the fade-in transition runs
+        overlay.classList.add('open');
+        document.addEventListener('keydown', onKey);
+    }
+    imgs.forEach(function(img) {
+        img.addEventListener('click', function() { open(img.currentSrc || img.src, img.alt); });
+    });
+})();
+</script>
+</body>
+</html>

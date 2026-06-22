@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Board of Finance- Special Budget Workshop  Part 2 — March 5, 2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <style>
+    /* Transcript-specific components. Theme, palette, and page chrome
+       (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
+       come from the shared style.css; these just use its variables. */
+    .para { display: flex; gap: 1em; padding: 0.5em 0.75em; border-radius: 6px; }
+    .para:nth-child(4n+1) { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+    .para-gap { font-size: 1px; line-height: 1px; height: 0; overflow: hidden; user-select: text; }
+    .para.speaker { border-top: 1px solid var(--rule-soft); margin-top: 0.6em; padding-top: 1em; }
+    .para.speaker:first-child { border-top: none; margin-top: 0; }
+
+    .timestamp {
+      flex: 0 0 5em; text-align: right;
+      color: var(--ink-mute); font-family: var(--sans);
+      font-size: 0.72rem; font-variant-numeric: tabular-nums; line-height: 1.9;
+      cursor: pointer; white-space: nowrap; padding-top: 0.15em;
+      transition: color 0.15s; user-select: none;
+    }
+    .timestamp:hover, .timestamp.hl { color: var(--accent); font-weight: 600; }
+
+    .text { flex: 1; min-width: 0; }
+    .cue { cursor: pointer; border-radius: 3px; transition: background-color 0.15s; }
+    .cue.hl { background-color: var(--accent-bg); }
+    @keyframes flash-highlight {
+      0%   { background-color: rgba(232, 168, 0, 0.45); }
+      100% { background-color: transparent; }
+    }
+    .cue.flash { animation: flash-highlight 4s ease-out forwards; }
+
+    /* action dialog */
+    #overlay { display: none; position: fixed; inset: 0; background: rgba(8, 22, 40, 0.5); z-index: 100; justify-content: center; align-items: center; }
+    #overlay.visible { display: flex; }
+    .dialog { background: var(--bg-card); border-radius: 10px; padding: 1.6rem 1.8rem; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28); max-width: 28rem; width: 90vw; border-top: 4px solid var(--accent); }
+    .dialog-header { margin-bottom: 1.2em; }
+    .dialog-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); }
+    .dialog-subtitle { font-family: var(--sans); font-size: 0.85rem; color: var(--ink-mute); margin-top: 0.2em; }
+    .dialog .ts-label { color: var(--accent); font-weight: 600; }
+    .dialog .actions { display: flex; flex-direction: column; gap: 0.5em; }
+    .dialog button { display: flex; align-items: center; gap: 0.6em; padding: 0.6em 1em; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--ink); cursor: pointer; font-family: var(--sans); font-size: 0.9rem; text-align: left; width: 100%; transition: background-color 0.12s, border-color 0.12s; }
+    .dialog button:hover { background: var(--accent-bg); border-color: var(--accent); }
+    .dialog button .icon { font-size: 1.1em; flex: 0 0 1.4em; text-align: center; }
+    .dialog button .label { flex: 1; }
+    .dialog button .hint { display: block; color: var(--ink-mute); font-size: 0.78rem; }
+    .dialog .cancel { margin-top: 0.6em; text-align: center; }
+    .dialog .cancel a { color: var(--ink-mute); font-family: var(--sans); font-size: 0.82rem; cursor: pointer; border-bottom: none; }
+    .dialog .cancel a:hover { color: var(--accent); }
+
+    /* toast */
+    #toast { position: fixed; top: 1.5em; left: 50%; transform: translateX(-50%) translateY(-4em); background: var(--accent); color: #15233a; padding: 0.7em 1.6em; border-radius: 8px; font-family: var(--sans); font-size: 0.95rem; font-weight: 600; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease; z-index: 200; pointer-events: none; text-align: center; max-width: 90vw; }
+    #toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    @media (max-width: 480px) { .timestamp { flex-basis: 4em; } }
+  </style>
+</head>
+<body class="bluegold">
+  <div class="page-banner">
+    <nav class="page-banner-inner crumbs">
+      <a href="/">Home</a><span class="sep">›</span><a href="/reference/">Reference</a><span class="sep">›</span><a href="../index.html">Video</a><span class="sep">›</span><span class="current">Board of Finance- Special Budget Workshop  Part 2 (3/5/25)</span>
+    </nav>
+  </div>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Meeting transcript</p>
+      <h1 class="title">Board of Finance- Special Budget Workshop  Part 2</h1>
+      <p class="subtitle">March 5, 2025 &middot; <a href="https://www.youtube.com/watch?v=VL2gZVc6XfQ" target="yt-meeting">Watch on YouTube</a> &middot; <a href="../index.html">All meetings</a></p>
+    </header>
+
+    <hr class="rule">
+
+    <div class="transcript">
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:03" data-default-t="3">0:03</div>
+        <div class="text"><span class="cue" id="t3" data-cue="t3" data-t="3" data-label="0:03">Let's see if anybody's left. Okay, reporting stopped. Let me just see</span> <span class="cue" id="t5" data-cue="t5" data-t="5" data-label="0:05">whether there's anybody in the waiting</span> <span class="cue" id="t7" data-cue="t7" data-t="7" data-label="0:07">room. Started. Hopefully, they didn't</span> <span class="cue" id="t9" data-cue="t9" data-t="9" data-label="0:09">wait. Those poor people. There does not</span> <span class="cue" id="t12" data-cue="t12" data-t="12" data-label="0:12">seem to be anybody in the waiting room.</span> <span class="cue" id="t14" data-cue="t14" data-t="14" data-label="0:14">So,</span> <span class="cue" id="t17" data-cue="t17" data-t="17" data-label="0:17">we're back to normal. In that case,</span> <span class="cue" id="t20" data-cue="t20" data-t="20" data-label="0:20">can I move to ajourn? Second.</span> <span class="cue" id="t24" data-cue="t24" data-t="24" data-label="0:24">Any discussion?</span> <span class="cue" id="t26" data-cue="t26" data-t="26" data-label="0:26">No, just thank you everybody for for</span> <span class="cue" id="t28" data-cue="t28" data-t="28" data-label="0:28">putting up with it. needed to be</span> <span class="cue" id="t31" data-cue="t31" data-t="31" data-label="0:31">done. I know there's some aggravated</span> <span class="cue" id="t33" data-cue="t33" data-t="33" data-label="0:33">people there and listen, sorry.</span> <span class="cue" id="t36" data-cue="t36" data-t="36" data-label="0:36">That much you got to asking you. Yeah.</span> <span class="cue" id="t39" data-cue="t39" data-t="39" data-label="0:39">No. Well, I understand. Good.</span> <span class="cue" id="t43" data-cue="t43" data-t="43" data-label="0:43">Okay. All those in favor the German say</span> <span class="cue" id="t46" data-cue="t46" data-t="46" data-label="0:46">I. I. I. Any opposed? Any absention?</span> <span class="cue" id="t51" data-cue="t51" data-t="51" data-label="0:51">Hearing none. The meeting is adjourned.</span> <span class="cue" id="t53" data-cue="t53" data-t="53" data-label="0:53">Thank you very much everybody. Thanks</span> <span class="cue" id="t54" data-cue="t54" data-t="54" data-label="0:54">Eric as usual. Have a good vacation,</span> <span class="cue" id="t56" data-cue="t56" data-t="56" data-label="0:56">right? Yeah. Enjoy your enjoy your</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="0:58" data-default-t="58">0:58</div>
+        <div class="text"><span class="cue" id="t58" data-cue="t58" data-t="58" data-label="0:58">vacation, Eric. I'll touch base. We work</span> <span class="cue" id="t60" data-cue="t60" data-t="60" data-label="1:00">out the logistics for the meeting. I I</span> <span class="cue" id="t62" data-cue="t62" data-t="62" data-label="1:02">know I said to be there that week, but I</span> <span class="cue" id="t64" data-cue="t64" data-t="64" data-label="1:04">I think the packet. Yeah, I was going to</span> <span class="cue" id="t65" data-cue="t65" data-t="65" data-label="1:05">bring that up. Do we</span> <span class="cue" id="t72" data-cue="t72" data-t="72" data-label="1:12">miss? Oh, that one the the agenda for that is</span> <span class="cue" id="t76" data-cue="t76" data-t="76" data-label="1:16">already posted. So, there's nothing</span> <span class="cue" id="t77" data-cue="t77" data-t="77" data-label="1:17">really you need to do. The RAM</span> <span class="cue" id="t79" data-cue="t79" data-t="79" data-label="1:19">superintendent is going to present and</span> <span class="cue" id="t81" data-cue="t81" data-t="81" data-label="1:21">Cheryl will cover me for the town. Oh,</span> <span class="cue" id="t84" data-cue="t84" data-t="84" data-label="1:24">Cheryl's gonna take care of it. What?</span> <span class="cue" id="t87" data-cue="t87" data-t="87" data-label="1:27">Well, who's going to run the meeting and</span> <span class="cue" id="t89" data-cue="t89" data-t="89" data-label="1:29">allow people to share and allow people</span> <span class="cue" id="t91" data-cue="t91" data-t="91" data-label="1:31">in the waiting room and all that?</span> <span class="cue" id="t94" data-cue="t94" data-t="94" data-label="1:34">Where? Yeah, that's that's my point</span> <span class="cue" id="t96" data-cue="t96" data-t="96" data-label="1:36">there. Yeah, that would be you, Mark. I</span> <span class="cue" id="t99" data-cue="t99" data-t="99" data-label="1:39">apologize. Where's the packet? Because</span> <span class="cue" id="t100" data-cue="t100" data-t="100" data-label="1:40">I'm looking at the town website and I</span> <span class="cue" id="t102" data-cue="t102" data-t="102" data-label="1:42">don't see it. It's not on It's not on</span> <span class="cue" id="t104" data-cue="t104" data-t="104" data-label="1:44">the agenda website. You have to go to</span> <span class="cue" id="t105" data-cue="t105" data-t="105" data-label="1:45">the calendar. And if you go to the</span> <span class="cue" id="t107" data-cue="t107" data-t="107" data-label="1:47">calendar and click on the meeting, it'll</span> <span class="cue" id="t108" data-cue="t108" data-t="108" data-label="1:48">show you the agenda and the link is</span> <span class="cue" id="t110" data-cue="t110" data-t="110" data-label="1:50">actually in there. The agenda is in</span> <span class="cue" id="t112" data-cue="t112" data-t="112" data-label="1:52">there as is a file. Oh, I've been Yeah,</span> <span class="cue" id="t115" data-cue="t115" data-t="115" data-label="1:55">I look forward the agendas, too. And it</span> <span class="cue" id="t117" data-cue="t117" data-t="117" data-label="1:57">it's not there. So, you really It really</span> <span class="cue" id="t119" data-cue="t119" data-t="119" data-label="1:59">should be both. It's great to have If I</span> <span class="cue" id="t121" data-cue="t121" data-t="121" data-label="2:01">just go to the 12 and there it is. Okay.</span> <span class="cue" id="t125" data-cue="t125" data-t="125" data-label="2:05">Okay. Thank you guys. I appreciate I</span> <span class="cue" id="t127" data-cue="t127" data-t="127" data-label="2:07">apologize. I was so confused.</span> <span class="cue" id="t130" data-cue="t130" data-t="130" data-label="2:10">It's there. Mark, I will send you the</span> <span class="cue" id="t133" data-cue="t133" data-t="133" data-label="2:13">Zoom login</span> <span class="cue" id="t136" data-cue="t136" data-t="136" data-label="2:16">right after this meeting so you can</span> <span class="cue" id="t139" data-cue="t139" data-t="139" data-label="2:19">know what you have to do to log in</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="2:21" data-default-t="141">2:21</div>
+        <div class="text"><span class="cue" id="t141" data-cue="t141" data-t="141" data-label="2:21">for the and run the next one. Basically,</span> <span class="cue" id="t144" data-cue="t144" data-t="144" data-label="2:24">really all you have to do is log in</span> <span class="cue" id="t148" data-cue="t148" data-t="148" data-label="2:28">admit people in from the waiting room,</span> <span class="cue" id="t150" data-cue="t150" data-t="150" data-label="2:30">start the recording, stop the recording,</span> <span class="cue" id="t152" data-cue="t152" data-t="152" data-label="2:32">everything else kind of happens</span> <span class="cue" id="t153" data-cue="t153" data-t="153" data-label="2:33">automatically. Yeah, I've done it one</span> <span class="cue" id="t155" data-cue="t155" data-t="155" data-label="2:35">other time I think when you weren't</span> <span class="cue" id="t156" data-cue="t156" data-t="156" data-label="2:36">available. So, but it's been a while.</span> <span class="cue" id="t158" data-cue="t158" data-t="158" data-label="2:38">I'm familiar with it too, Mark. if you</span> <span class="cue" id="t160" data-cue="t160" data-t="160" data-label="2:40">need help. Don't worry about it. Cool.</span> <span class="cue" id="t163" data-cue="t163" data-t="163" data-label="2:43">Good night all. Thanks. Thank you</span> <span class="cue" id="t165" data-cue="t165" data-t="165" data-label="2:45">everybody. Have a good night. Have a</span> <span class="cue" id="t166" data-cue="t166" data-t="166" data-label="2:46">good week. We'll see you. Cheers.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+    </div>
+
+    <footer class="colophon">
+      <p><strong>About this transcript.</strong> This transcript was auto-generated by YouTube. Names, numbers, and other details may be inaccurate &mdash; please refer to the video for authoritative content.</p>
+      <p>Part of <code>andoverct.info</code>, an independent civic-reference site &mdash; not an official site of the Town of Andover. Compiled by <a href="mailto:scott@sauyet.com">Scott Sauyet</a>.</p>
+    </footer>
+  </main>
+
+  <div id="overlay">
+    <div class="dialog">
+      <div class="dialog-header">
+        <div class="dialog-title">Board of Finance- Special Budget Workshop  Part 2</div>
+        <div class="dialog-subtitle">March 5, 2025 at <span class="ts-label" id="overlay-ts"></span></div>
+      </div>
+      <div class="actions">
+        <button id="act-yt">
+          <span class="icon">&#9654;</span>
+          <span class="label">Watch on YouTube<br><span class="hint">Opens at this timestamp</span></span>
+        </button>
+        <button id="act-copy-link">
+          <span class="icon">&#128279;</span>
+          <span class="label">Copy YouTube link<br><span class="hint" id="hint-link-url"></span></span>
+        </button>
+        <button id="act-bookmark">
+          <span class="icon">&#128278;</span>
+          <span class="label">Bookmark this spot<br><span class="hint">Copies link &amp; adds to navigation history</span></span>
+        </button>
+      </div>
+      <div class="cancel"><a id="act-cancel">Cancel</a></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>window.TX = { video: "https://www.youtube.com/watch?v=VL2gZVc6XfQ", passcode: "", type: "YouTube" };</script>
+  <script src="https://andoverct.info/reference/video/assets/transcripts.js"></script>
+</body>
+</html>

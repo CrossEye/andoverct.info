@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Steve Weir's Hidden Business — Public-Records Analysis</title>
+<style>/* Default civic-report theme.
+ *
+ * A theme is just this set of CSS custom properties. To experiment, copy this
+ * file to _build/themes/<name>.css, change what you like, and point at it from
+ * _build/report.config.json ({"theme":"<name>"}) for all reports, or from a
+ * single report's front matter (theme: <name>). A non-default theme is layered
+ * ON TOP of this one, so it only needs to list the variables it changes.
+ *
+ * Scope: colors, fonts, and small size/width/gap tweaks — not layout changes.
+ */
+:root {
+  /* ---- Palette ---- */
+  --bg:             #fafaf7;   /* page background */
+  --bg-page:        #ffffff;   /* the white content card */
+  --bg-soft:        #f5f3ed;   /* callouts, table headers, inline code */
+  --ink:            #1a1a1a;   /* body text, main headings */
+  --ink-soft:       #333333;   /* blockquote / methodology text */
+  --ink-mute:       #5a5a5a;   /* subtitle, card descriptions */
+  --ink-faint:      #888888;   /* attribution, footer, captions */
+  --rule:           #e0ddd5;   /* hairline borders */
+  --accent:         #b8a878;   /* gold accent rules */
+  --accent-2:       #2c3e50;   /* slate: h3, table-header & code text */
+  --banner-bg:      #2c3e50;   /* top banner background */
+  --banner-ink:     #ecf0f1;   /* top banner text */
+  --crumb-link:       #b9c4cf; /* breadcrumb links in the banner */
+  --crumb-link-hover: #ffffff;
+  --crumb-current:    #ffffff; /* deepest crumb (current page), not a link */
+  --link:           #1a5490;
+  --link-hover:     #0d3a6b;
+  --link-underline: #c5d3e2;
+  --anchor:         #b8b3a4;   /* the ¶ header anchor */
+  --anchor-hover:   #6c7480;
+  --confirm:        #5a8a5a;   /* green ✓ confirmation mark */
+  --confirm-strong: #2e7d32;
+
+  /* ---- Fonts ---- */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:  "SF Mono", Monaco, Menlo, Consolas, monospace;
+
+  /* ---- Sizes (small tweaks only; no layout restructuring) ---- */
+  --base-size:  11pt;    /* body text */
+  --measure:    780px;   /* content column width */
+  --gutter:     30px;    /* horizontal padding / banner & footer gaps */
+  --title-size: 28pt;
+  --h2-size:    18pt;
+  --h3-size:    13pt;
+}
+
+/* bluegold — mirrors the light-mode look of the 55th campaign site
+ * (C:\Users\scott\Dev\Andover\55th, e.g. localhost:8080/reports): cool
+ * blue-gray paper, a dark navy banner with a gold underline, navy serif
+ * headings over a sans body, gold accent rules, and blue links.
+ *
+ * Note the deliberate font swap: base.css uses --font-serif for body text and
+ * --font-sans for headings/labels, so to match the campaign look (sans body,
+ * serif display) we put the SANS stack in --font-serif and the SERIF stack in
+ * --font-sans.
+ *
+ * Layered on default.css. Uses --banner-border (in base.css) for the gold rule
+ * under the banner. */
+:root {
+  /* Palette */
+  --bg:             #f4f6f9;
+  --bg-page:        #ffffff;
+  --bg-soft:        #eef4fb;   /* blue-050 tint for callouts / table headers */
+  --rule:           #e3e8ef;   /* hairlines */
+  --ink:            #19222e;
+  --ink-soft:       #2b3744;
+  --ink-mute:       #5b6775;
+  --ink-faint:      #8a94a1;
+  --accent:         #e8a800;   /* signature gold rules */
+  --accent-2:       #0f2a4a;   /* blue-900: headings, table-header & code text */
+  --banner-bg:      linear-gradient(180deg, #0f2a4a, #143862);
+  --banner-border:  3px solid #e8a800;
+  --banner-ink:     #dde8f5;   /* blue-100 */
+  --crumb-link:       #e8a800; /* gold breadcrumb links */
+  --crumb-link-hover: #ffffff; /* hover to white + underline */
+  --crumb-current:    #ffffff; /* current page, not a link */
+  --link:           #245c95;   /* blue-600 */
+  --link-hover:     #1c4e80;   /* blue-700 */
+  --link-underline: #cfe0f2;
+  --confirm:        #2f8f5b;
+  --confirm-strong: #1f7d49;
+
+  /* Type: sans body + serif display headings (see note above) */
+  --font-serif: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans:  Georgia, "Times New Roman", serif;
+
+  --measure: 860px;
+}
+
+/* Structural base styles for civic reports — theme-independent.
+ * Colors, fonts, and sizes come from the active theme (CSS custom properties
+ * in _build/themes/<name>.css), which is loaded BEFORE this file. */
+
+/* ---- Reset & base ---- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Layout ---- */
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner a { color: inherit; text-decoration: none; }
+.page-banner a:hover { text-decoration: underline; }
+
+/* ---- Breadcrumb (in the banner) ---- */
+.page-banner .crumbs a {
+    color: var(--crumb-link, var(--banner-ink));
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover, #fff);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current {
+    color: var(--crumb-current, #fff);
+}
+
+.container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* ---- Images / figures ---- */
+/* Scale charts and figures to the column (and the printed page box) rather
+   than overflowing at their intrinsic pixel/point size. */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+}
+
+/* ---- Lightbox (screen only; overlay is built at runtime by the viewer
+   script, so it never appears in the PDF). Click a chart to enlarge it. ---- */
+.container img { cursor: zoom-in; }
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vmin;
+    background: rgba(0, 0, 0, 0.85);
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+.lightbox-overlay.open { opacity: 1; }
+.lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    margin: 0;
+    cursor: zoom-out;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+    background: #fff;
+}
+
+/* ---- Title block ---- */
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-attribution {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    color: var(--ink-faint);
+    margin: 0 0 24px 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+.report-attribution a {
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+}
+.report-attribution a:hover {
+    color: var(--link);
+    border-bottom-color: var(--link);
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.methodology-header {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 0 0 36px 0;
+    line-height: 1.55;
+}
+
+/* ---- Section labels (small uppercase tags above h2) ---- */
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 36px 0 4px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+/* ---- Headings ---- */
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+h3 {
+    font-family: var(--font-sans);
+    font-size: var(--h3-size);
+    font-weight: 600;
+    margin: 28px 0 10px 0;
+    color: var(--accent-2);
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+
+/* ---- Header anchor links (HTML only; hidden in print) ---- */
+.header-anchor {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.2em;
+    color: var(--anchor);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.85em;
+    vertical-align: baseline;
+    cursor: pointer;
+    user-select: none;
+}
+h2:hover .header-anchor,
+h3:hover .header-anchor,
+.header-anchor:focus {
+    opacity: 1;
+}
+.header-anchor:hover {
+    color: var(--anchor-hover);
+}
+.header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+}
+.header-anchor.copied::after {
+    content: " copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+}
+@media print {
+    .header-anchor {
+        display: none;
+    }
+}
+
+/* ---- Body text ---- */
+p {
+    margin: 0 0 14px 0;
+    orphans: 3;
+    widows: 3;
+}
+p.intro-table {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+strong { font-weight: 700; color: var(--ink); }
+em { font-style: italic; }
+
+/* ---- Links ---- */
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* ---- Lists ---- */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+li {
+    margin: 0 0 6px 0;
+    line-height: 1.55;
+}
+
+/* ---- Tables ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-before: avoid;
+    break-before: avoid;
+}
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 9.5pt;
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--accent);
+}
+tbody tr:hover { background: var(--bg); }
+
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+tbody tr:last-child td {
+    border-bottom: 2px solid var(--accent);
+}
+
+/* ---- Blockquotes (source notes, verbatim quotes) ---- */
+blockquote {
+    margin: 14px 0 18px 0;
+    padding: 14px 20px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+blockquote p { margin: 0 0 8px 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ol, blockquote ul {
+    margin: 8px 0;
+}
+
+/* ---- HR ---- */
+hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+}
+
+/* ---- Inline code ---- */
+code {
+    font-family: var(--font-mono);
+    font-size: 9.5pt;
+    background: var(--bg-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: var(--accent-2);
+    overflow-wrap: break-word;
+}
+
+/* ---- Other Formats footer ---- */
+.formats-section {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+}
+.format-cards {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.format-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.format-cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media screen and (max-width: 700px) {
+    .format-cards.cols-3,
+    .format-cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+.format-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    padding: 14px;
+    text-align: left;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+.format-card-icon { font-size: 18pt; margin-bottom: 4px; }
+.format-card-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+.format-card-desc { font-size: 9pt; color: var(--ink-mute); line-height: 1.4; }
+.format-card a { display: block; }
+
+/* ---- Footer ---- */
+.page-footer {
+    max-width: var(--measure);
+    margin: 32px auto 60px;
+    padding: 24px var(--gutter);
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 9.5pt;
+    font-family: var(--font-sans);
+    border-top: 1px solid var(--rule);
+}
+
+/* ---- Confirmation glyphs ---- */
+h3 .conf-mark {
+    color: var(--confirm);
+    font-size: 11pt;
+    margin-right: 4px;
+}
+</style>
+</head>
+<body>
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/reports/">Reports</a><span class="sep">›</span><a href="/reports/55th/">55th District</a><span class="sep">›</span><span class="current">Steve Weir&#39;s Hidden Business: What the Public Record Shows</span>
+  </nav>
+</div>
+<div class="container">
+<h1 class="report-title">Steve Weir's Hidden Business: What the Public Record Shows</h1>
+<p class="report-subtitle">State Rep. Steve Weir (R-55) · Connecticut Apartment Association board member · Public-records analysis</p>
+<p class="report-attribution">A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Not an official town document</p>
+<hr class="report-header-rule">
+<p class="methodology-header">This report compiles what is publicly known about the active business holdings
+of Steve Weir, the Republican State Representative for the 55th House District
+(Andover, Bolton, Glastonbury, Hebron, and Marlborough). The data comes from
+Connecticut Secretary of State filings indexed by OpenCorporates, the
+Glastonbury and Hebron assessor databases, the Connecticut Apartment
+Association&#8217;s own member directory, contemporaneous news reporting from CT
+Mirror and NBC Connecticut, and Weir&#8217;s own statements in legislative debate, on
+his official &#8220;About&#8221; page, and to the Glastonbury Patch. The report&#8217;s purpose is
+informational: when a state legislator votes on housing and landlord-tenant
+policy, constituents have an interest in knowing what business interests inform
+that vote. Where a fact is confirmed by a primary source, it is marked ✓. Where
+the report draws an inference from circumstantial evidence, the inference is
+labeled as such.</p>
+<p class="section-label">Introduction</p>
+<h2 id="overview">Overview<a class="header-anchor" href="#overview" aria-label="Link to this section">¶</a></h2>
+<p>On Wednesday, May 6, 2026 — the final day of the legislative session —
+Connecticut House Majority Leader Jason Rojas announced that Senate Bill 274 was
+dead. The bill would have increased penalties for repeated building and fire
+code violations and required non-resident landlords to register identifying
+information with the towns where their properties are located. It had passed the
+Senate 24–10 and cleared the Planning and Development Committee unanimously. It
+died on the House floor because Rep. Steve Weir, R-Hebron, and other Republican
+legislators threatened to run the clock out on debate until midnight.</p>
+<p>The bill was a direct response to the Concierge Apartments crisis in Rocky Hill,
+where thousands of tenants were displaced earlier this year because of safety
+failures and weeks-long hotel stays paid for by emergency funds. The owner of
+Concierge — a Los Angeles-based private equity firm called JRK Property
+Holdings, operating through an entity called Century Hills — eventually paid
+more than $5 million in restitution after Attorney General William Tong opened
+an investigation. SB 274 was designed to give towns a &#8220;bigger stick&#8221; against bad
+actors of that profile, in the words of Rocky Hill Town Councilor Zach van
+Luling.</p>
+<p>In opposing the bill on the floor, Weir described himself, in his own words, as
+&#8220;a service provider to apartments.&#8221; He has previously described himself, in
+legislative committee and on television, as someone who has &#8220;done work for a lot
+of landlords over the years.&#8221; He sits on the board of the Connecticut Apartment
+Association, the trade group representing residential apartment owners. And in a
+2024 candidate questionnaire, he said: &#8220;I currently spend most of my time on my
+commercial real estate property.&#8221;</p>
+<p>This report assembles the public record on what those statements mean.</p>
+<p>It has three parts:</p>
+<ol>
+<li><strong>Part 1</strong> documents the businesses Steve Weir is associated with, based on
+Connecticut Secretary of State filings.</li>
+<li><strong>Part 2</strong> examines the commercial real estate property at 60 Village Place,
+Glastonbury — the property Weir himself identifies as his primary occupation
+outside the legislature.</li>
+<li><strong>Part 3</strong> lays out his connection to the Connecticut Apartment Association
+and his record on landlord-tenant legislation in the General Assembly,
+including the May 6, 2026 vote.</li>
+</ol>
+<p class="section-label before-part">Business entities</p>
+<h2 id="part-1-what-businesses-steve-weir-owns">Part 1 — What businesses Steve Weir owns<a class="header-anchor" href="#part-1-what-businesses-steve-weir-owns" aria-label="Link to this section">¶</a></h2>
+<h3 id="confirmed-entities">Confirmed entities <span class="conf-mark">✓</span> <em>Connecticut Secretary of State filings via OpenCorporates</em><a class="header-anchor" href="#confirmed-entities" aria-label="Link to this section">¶</a></h3>
+<p>The Connecticut Secretary of State maintains a public registry of limited
+liability companies and corporations. The registry is searchable by company name
+through business.ct.gov, but not by officer or member name. The OpenCorporates
+project (opencorporates.com) indexes the same data and supports officer-name
+searches.</p>
+<p class="intro-table">Searches for &#8220;Stephen J Weir,&#8221; &#8220;Stephen Weir,&#8221; &#8220;Steve Weir,&#8221; and &#8220;Allegra Weir&#8221;
+— Weir&#8217;s wife — in the Connecticut jurisdiction return the following nine active
+or recently-active business entities. The &#8220;Confidence&#8221; column reflects how the
+entity is tied to Representative Weir specifically, since &#8220;Steve Weir&#8221; is a
+common name and not every hit is the same person.</p>
+<table>
+<thead>
+<tr>
+<th>Entity</th>
+<th class="num">Formed</th>
+<th>Confidence and basis</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>60 Village Place, LLC</td>
+<td class="num">2009</td>
+<td>✓ Definitive — Allegra Weir is a co-officer</td>
+</tr>
+<tr>
+<td>American Integrity Restoration, LLC</td>
+<td class="num">2005</td>
+<td>✓ Definitive — his publicly disclosed founder business</td>
+</tr>
+<tr>
+<td>Gilead Hill Farm, LLC</td>
+<td class="num">2021</td>
+<td>✓ Definitive — Allegra Weir is a co-officer</td>
+</tr>
+<tr>
+<td>Horizon Aviation, LLC</td>
+<td class="num">2012</td>
+<td>✓ High — matches his disclosed activity as a pilot</td>
+</tr>
+<tr>
+<td>Air Holdings, Inc.</td>
+<td class="num">2022</td>
+<td>✓ High — same officer ID pattern as Horizon Aviation</td>
+</tr>
+<tr>
+<td>Primary Energy, LLC</td>
+<td class="num">2024</td>
+<td>✓ High — his LinkedIn lists him as &#8220;Steve Weir – Primary Energy&#8221;</td>
+</tr>
+<tr>
+<td>Ice New England Enterprises, LLC</td>
+<td class="num">2024</td>
+<td>✓ Definitive — Stephen J. Weir is manager and registered agent</td>
+</tr>
+<tr>
+<td>Steve Weir LLC</td>
+<td class="num">2022</td>
+<td>Possible — solo entity, requires verification</td>
+</tr>
+<tr>
+<td>CT River Valley Chamber of Commerce</td>
+<td class="num">1956</td>
+<td>✓ Confirmed unrelated — he is the chamber board chair</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> The entries marked &#8220;Definitive&#8221; rely on Allegra Weir appearing as a
+co-officer on the same filing. &#8220;Allegra Weir&#8221; is rare enough as a name
+combination that her co-officership effectively guarantees the entity is the
+Representative&#8217;s. The &#8220;High&#8221; entries rely on consistent Connecticut Secretary
+of State officer-ID patterns across multiple known-his entities. &#8220;Steve&#8217;s Auto
+Repair&#8221; and &#8220;Windsor Street Auto, LLC&#8221; also appeared in the searches but are
+excluded above because the names and addresses point to a different Steve
+Weir.</p>
+</blockquote>
+<h3 id="what-each-entity-appears-to-do">What each entity appears to do<a class="header-anchor" href="#what-each-entity-appears-to-do" aria-label="Link to this section">¶</a></h3>
+<p>Where Weir or his family business activity is publicly visible, this report can
+identify what each LLC does. Where it is not, the report says so.</p>
+<p><strong>60 Village Place, LLC</strong> owns the commercial industrial parcel at 60 Village
+Place, Glastonbury. Part 2 documents this in detail.</p>
+<p><strong>American Integrity Restoration, LLC</strong> was Weir&#8217;s disaster restoration
+contracting business, founded in 2005. It was acquired in 2022 by Colorado-based
+BluSky Restoration Contractors, where Weir&#8217;s own LinkedIn subsequently listed
+him as a business development manager. The Connecticut Secretary of State
+records the LLC&#8217;s status as &#8220;domesticated&#8221; — a specific legal term under CGS §
+34-645 meaning the LLC was transferred to another state&#8217;s jurisdiction (rather
+than dissolved). The entity continues to exist with the same EIN and contracts,
+but no longer as a Connecticut LLC. Weir presumably no longer holds an interest
+in it post-acquisition, though that is an inference from the BluSky deal rather
+than a fact disclosed in the Connecticut filings.</p>
+<p><strong>Gilead Hill Farm, LLC</strong> is the family farm operation on the approximately 30
+acres of Gilead Street land Weir and his wife own personally in Hebron. Its
+public Facebook page describes it as a &#8220;local family farm offering fruit,
+vegetables and eggs,&#8221; with deliveries arranged through Weir&#8217;s daughter Meredith.
+The LLC&#8217;s registered address is 888 Gilead Street, Hebron — one of the parcels
+the Weirs personally own. This is a working farm operation, not a real estate
+holding entity.</p>
+<p><strong>Horizon Aviation, LLC</strong> and <strong>Air Holdings, Inc.</strong> are aviation entities. Weir
+is a private pilot. The two entities together are consistent with the typical
+structure for an aircraft owner: an aircraft-holding LLC paired with a separate
+operations entity.</p>
+<p><strong>Primary Energy, LLC</strong> appears to be Weir&#8217;s home heating oil business. NBC
+Connecticut&#8217;s Mike Hydeck introduced him on the <em>Face the Facts</em> program in
+January 2026 as &#8220;a small business owner who was in the construction business,
+and does home heating oil now.&#8221; Weir&#8217;s own LinkedIn profile is titled &#8220;Steve
+Weir — Primary Energy, LLC.&#8221;</p>
+<p><strong>Ice New England Enterprises, LLC</strong> is, per Weir&#8217;s own October 14, 2025 annual
+report filing with the Connecticut Secretary of State, a used car dealership
+(NAICS code 441120). The annual report identifies Stephen J. Weir as both the
+manager and the registered agent, with the principal office at 888 Gilead
+Street, Hebron — the same address as the Weir family residence and Gilead Hill
+Farm LLC. The entity was formed in January 2024; the 2025 annual report was
+Weir&#8217;s first annual filing for it. The name &#8220;Ice New England&#8221; does not obviously
+correspond to a used car dealership, and no public-facing website or business
+presence for this entity has been identified. This may be the &#8220;small business
+start-up&#8221; Weir referenced in his 2024 Glastonbury Patch candidate questionnaire.</p>
+<p><strong>Steve Weir LLC</strong> is a solo entity formed in 2022 with a generic name. The
+purpose is not publicly identifiable from the Secretary of State filing alone.</p>
+<p><strong>CT River Valley Chamber of Commerce, Inc.</strong> is the regional chamber where Weir
+is publicly disclosed as the board chair. It is not a personal business and is
+included here only because it surfaced in the officer-name searches.</p>
+<p class="section-label before-part">The commercial property</p>
+<h2 id="part-2-the-commercial-real-estate-at-60-village-place-glastonbury">Part 2 — The commercial real estate at 60 Village Place, Glastonbury<a class="header-anchor" href="#part-2-the-commercial-real-estate-at-60-village-place-glastonbury" aria-label="Link to this section">¶</a></h2>
+<h3 id="what-weir-told-voters-about-it">What Weir told voters about it <span class="conf-mark">✓</span> <em>2024 Glastonbury Patch candidate questionnaire</em><a class="header-anchor" href="#what-weir-told-voters-about-it" aria-label="Link to this section">¶</a></h3>
+<p>In a 2024 candidate questionnaire from the Glastonbury Patch, Weir was asked
+about his occupation outside the legislature. He answered: &#8220;Other than serving
+in the House of Representatives, I&#8217;m self employed, and operate several small
+businesses. I currently spend most of my time on my commercial real estate
+property, and I&#8217;m working on another small business start-up.&#8221;</p>
+<p>This is one of the few times Weir has publicly identified commercial real estate
+as his primary business activity. It does not appear in his &#8220;About&#8221; page on the
+House Republican website, which describes him as &#8220;Founder of American Integrity
+Restoration (Now BluSky Restoration Contractors)&#8221; and lists his community
+involvements but does not mention the commercial property.</p>
+<h3 id="what-the-glastonbury-assessor-records-show">What the Glastonbury assessor records show <span class="conf-mark">✓</span> <em>Vision Government Solutions, Town of Glastonbury</em><a class="header-anchor" href="#what-the-glastonbury-assessor-records-show" aria-label="Link to this section">¶</a></h3>
+<p class="intro-table">The Glastonbury assessor&#8217;s online property record card for 60 Village Place
+documents the parcel in detail.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Owner</td>
+<td>60 VILLAGE PLACE LLC</td>
+</tr>
+<tr>
+<td>Location</td>
+<td>60 Village Pl, Glastonbury 06033</td>
+</tr>
+<tr>
+<td>Parcel ID (MBLU)</td>
+<td>F4 / 7290 / E0002</td>
+</tr>
+<tr>
+<td>Acres</td>
+<td>5.95</td>
+</tr>
+<tr>
+<td>Zone</td>
+<td>PE (Planned Industrial)</td>
+</tr>
+<tr>
+<td>Land use code</td>
+<td>301 (Industrial)</td>
+</tr>
+<tr>
+<td>Total appraisal (2025)</td>
+<td>$1,689,000</td>
+</tr>
+<tr>
+<td>Total assessment</td>
+<td>$1,182,300</td>
+</tr>
+<tr>
+<td>Land assessment</td>
+<td>$426,300</td>
+</tr>
+<tr>
+<td>Building count</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Acquired by 60 VPL LLC</td>
+<td>April 28, 2009 for $195,000</td>
+</tr>
+<tr>
+<td>Prior owner</td>
+<td>Hanlon Heyde Corporation</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> Connecticut towns assess at 70% of fair market appraisal. &#8220;Total
+appraisal&#8221; is the assessor&#8217;s estimate of fair market value; &#8220;Total assessment&#8221;
+is what gets multiplied by the mill rate for tax purposes. The 2009 sale price
+of $195,000 was for raw land; the two buildings now on the parcel were
+constructed in 2011 and 2014, after Weir&#8217;s LLC took ownership. Deed reference:
+Glastonbury Land Records Book 2647, Page 30. Source: Town of Glastonbury
+Vision Government Solutions assessor portal, accessed May 7, 2026.</p>
+</blockquote>
+<p class="intro-table">The two buildings on the parcel are pre-engineered metal industrial buildings —
+the standard format for warehouse and light-industrial flex space. Building
+details from the assessor card:</p>
+<table>
+<thead>
+<tr>
+<th>Building</th>
+<th class="num">Built</th>
+<th class="num">Floor area</th>
+<th class="num">Replacement cost</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Building 1</td>
+<td class="num">2014</td>
+<td class="num">6,000 sf</td>
+<td class="num">$316,140</td>
+<td>Industrial / Comm.</td>
+</tr>
+<tr>
+<td>Building 2</td>
+<td class="num">2011</td>
+<td class="num">12,000 sf</td>
+<td class="num">$743,790</td>
+<td>Industrial / Comm.</td>
+</tr>
+</tbody></table>
+<p>The combined 18,000 square feet of industrial flex space is currently or
+recently leased to multiple commercial tenants, including a Brazilian jiu-jitsu
+academy (Team Link Glastonbury), a fitness operator (The Apex), Connecticut
+Sports and Fitness, and historically a dance studio, yoga, and virtual golf
+operation. The parcel was listed for lease on LoopNet on November 21, 2024 and
+again on November 18, 2025.</p>
+<p>Public records and Greater New Haven Chamber of Commerce member listings show
+that American Integrity Restoration — Weir&#8217;s restoration business — was itself
+headquartered at 60 Village Place before being sold to BluSky in 2022. So when
+AIR was sold, Weir kept the real estate; the LLC that owns the buildings now
+leases the space to unrelated tenants.</p>
+<p>This is the property Weir told voters he &#8220;currently spend[s] most of [his] time
+on.&#8221;</p>
+<p>Part 3 — The Connecticut Apartment Association connection and the May 6, 2026</p>
+<h2 id="vote">vote<a class="header-anchor" href="#vote" aria-label="Link to this section">¶</a></h2>
+<h3 id="weir-8217-s-ctaa-role">Weir&#8217;s CTAA role <span class="conf-mark">✓</span> <em>Connecticut Apartment Association website and CT Mirror legislator profile</em><a class="header-anchor" href="#weir-8217-s-ctaa-role" aria-label="Link to this section">¶</a></h3>
+<p>The Connecticut Apartment Association (CTAA) is the trade association
+representing apartment owners and operators in the state. CTAA&#8217;s own website
+lists Steve Weir as a &#8220;Business Partner Member.&#8221; Weir is also identified by CT
+Mirror, in its Connecticut Legislative Guide profile, as &#8220;the chair of the
+Governor Relations Committee of the Connecticut Apartment Association.&#8221; His own
+&#8220;About&#8221; page describes him as a &#8220;board member of the Connecticut Apartment
+Association.&#8221;</p>
+<p>CTAA&#8217;s member directory page carries an unambiguous statement of membership
+rules:</p>
+<blockquote>
+<p>&#8220;All memberships are company based and individuals cannot join CTAA.&#8221;</p>
+</blockquote>
+<p>That CTAA rule is consequential. It means Weir&#8217;s CTAA membership implies a
+company affiliation. CTAA&#8217;s website does not publicly disclose which company
+Weir&#8217;s membership represents. The candidate options identified by this report
+are 60 Village Place LLC, Primary Energy LLC, and Ice New England Enterprises
+LLC.</p>
+<h3 id="strong-reason-to-suspect-a-hartford-apartment-connection">Strong reason to suspect a Hartford apartment connection<a class="header-anchor" href="#strong-reason-to-suspect-a-hartford-apartment-connection" aria-label="Link to this section">¶</a></h3>
+<p>Weir has on multiple public occasions indicated direct work experience with
+apartment buildings — not as an owner, in his framing, but as a service
+provider. In the May 6, 2026 floor debate that killed SB 274, CT Mirror reports
+him explaining his opposition to the bill by describing himself this way:</p>
+<blockquote>
+<p>&#8220;Weir, who has been a service provider to apartments, said there is frequent
+turnover of landowners, and the bill does not account for these situations.&#8221;</p>
+</blockquote>
+<p>Eighteen months earlier, on NBC Connecticut&#8217;s <em>Face the Facts</em> program in
+February 2025, Weir explained his opposition to a no-fault eviction restriction
+with this account:</p>
+<blockquote>
+<p>&#8220;I&#8217;ve done work for a lot of landlords over the years whereby, basically the
+whole building, in order to do a major upgrade, whether it&#8217;s HVAC or whatever
+it is, they&#8217;re going to have to empty the building out.&#8221;</p>
+</blockquote>
+<p>A separate report from a 55th District resident, who asked not to be named,
+indicates that protesters appeared at a public Holocaust Remembrance Evening
+event to object to &#8220;Steve Weir&#8217;s actions as a landlord&#8221; — the resident
+understood, but could not document, that Weir owned or had owned apartments in
+Hartford. This report has not been able to corroborate that account in public
+records, and treats it only as a tip warranting further investigation. Hartford
+land records, which are searchable by grantee LLC name, would be the place to
+confirm or rule out apartment ownership tied to any of the entities listed in
+Part 1.</p>
+<p>The relevant point for voters is more modest and is fully documented: Weir has
+positioned himself, repeatedly and on the record, as someone whose professional
+experience is with the apartment-owner side of landlord-tenant transactions. The
+CTAA board seat is part of that positioning. So is the framing of his floor
+debate against SB 274.</p>
+<h3 id="the-may-6-2026-vote-on-sb-274">The May 6, 2026 vote on SB 274 <span class="conf-mark">✓</span> <em>CT Mirror, May 6, 2026</em><a class="header-anchor" href="#the-may-6-2026-vote-on-sb-274" aria-label="Link to this section">¶</a></h3>
+<p>Senate Bill 274 — &#8220;An Act Concerning Repeat Violations of Building or Fire Code
+at Residential Rental Property and Concerning Mandatory Registration of
+Non-Resident Apartment Owners&#8221; — was the legislative response to the Concierge
+Apartments crisis. The bill would have:</p>
+<ul>
+<li>Increased penalties for repeated building and fire code violations</li>
+<li>Required non-resident apartment owners to register identifying information
+with the municipality where their properties are located</li>
+<li>Given towns the authority to fine landlords who failed to register</li>
+</ul>
+<p>The bill passed the Senate on party lines, 24–10, and cleared the Planning and
+Development Committee unanimously.</p>
+<p>On the final day of the 2026 session, Wednesday, May 6, the bill was called for
+House debate. According to CT Mirror, House Majority Leader Jason Rojas
+announced that the bill was dead because Rep. Weir and other Republican
+legislators threatened to extend debate until the end of the legislative night,
+running the clock out before a vote could be called. Weir&#8217;s quoted explanation:</p>
+<blockquote>
+<p>&#8220;They have had all session to get it in the room, and now I find out that
+there&#8217;s been an unwillingness to compromise and kind of take it or leave it
+was what I heard, and that doesn&#8217;t work for me.&#8221;</p>
+</blockquote>
+<p>State Senator Matt Lesser, D-Middletown, who had worked closely with Concierge
+tenants in his district, told CT Mirror: &#8220;We need more tools to help towns
+combat out-of-state irresponsible landlords who are many times owned by faceless
+private equity firms… It&#8217;s disappointing that we&#8217;re not moving forward on
+addressing this issue.&#8221;</p>
+<p>The bill did not get a recorded vote because Weir&#8217;s clock-running tactic
+prevented one. There is no roll-call to point to. But the legislative result —
+no enhanced penalties for repeat building and fire code violators, no
+non-resident landlord registration in Connecticut — is on the record, and CT
+Mirror&#8217;s reporting names Weir as the proximate cause.</p>
+<h3 id="the-broader-pattern-housing-and-tenant-protection-votes-since-2023">The broader pattern: housing and tenant-protection votes since 2023 <span class="conf-mark">✓</span> <em>CT General Assembly roll-call data, 2023–2026 sessions</em><a class="header-anchor" href="#the-broader-pattern-housing-and-tenant-protection-votes-since-2023" aria-label="Link to this section">¶</a></h3>
+<p>The May 6, 2026 SB 274 action is the most consequential single moment in Weir&#8217;s
+housing record, but it is not isolated. A review of his complete CT House
+roll-call record across the 2023, 2024, 2025, and 2026 sessions shows a
+consistent pattern: when legislation expands tenant rights, expands landlord
+accountability, or strengthens enforcement against landlords who violate housing
+or fire codes, Weir generally votes no. When legislation is uncontroversial —
+minor technical revisions, unanimous-vote bills, or items in the
+landlord-favorable direction — he votes with the chamber.</p>
+<p class="intro-table">Selected contested housing-related votes:</p>
+<table>
+<thead>
+<tr>
+<th>Bill</th>
+<th class="num">Year</th>
+<th>Subject</th>
+<th>Weir</th>
+<th>House total</th>
+<th>R caucus</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SB-988</td>
+<td class="num">2023</td>
+<td>Right of mobile home park residents to buy park before outside-investor sale</td>
+<td>N</td>
+<td>112–37</td>
+<td>16–37</td>
+</tr>
+<tr>
+<td>SB-998</td>
+<td class="num">2023</td>
+<td>Tax abatement for conservation easements; housing affordability provisions</td>
+<td>N</td>
+<td>76–70</td>
+<td>1–52</td>
+</tr>
+<tr>
+<td>HB-5419</td>
+<td class="num">2024</td>
+<td>Authority of AG to act on alleged discriminatory housing practices</td>
+<td>N</td>
+<td>117–28</td>
+<td>24–28</td>
+</tr>
+<tr>
+<td>HB-5474</td>
+<td class="num">2024</td>
+<td>Municipal housing approvals; rent-increase notices; short-term rental rules</td>
+<td>N</td>
+<td>99–51</td>
+<td>3–50</td>
+</tr>
+<tr>
+<td>SB-1317</td>
+<td class="num">2025</td>
+<td>Liens for unpaid penalties on housing code violations</td>
+<td>N</td>
+<td>125–22</td>
+<td>27–22</td>
+</tr>
+<tr>
+<td>HB-7035</td>
+<td class="num">2025</td>
+<td>Prohibiting municipal bans on multifamily housing</td>
+<td>mixed</td>
+<td>see notes</td>
+<td>see notes</td>
+</tr>
+<tr>
+<td>SB 274</td>
+<td class="num">2026</td>
+<td>Non-resident landlord registration; fire/building code violation penalties</td>
+<td>killed by clock</td>
+<td>did not reach vote</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> &#8220;Weir&#8221; column shows his recorded vote (Y/N) on the primary
+substantive roll call; for SB 274 the bill never reached a recorded vote
+because of Weir&#8217;s clock-running tactic. SB-1317 is particularly notable: a
+majority of the Republican caucus (27 yea versus 22 nay) voted in favor of the
+housing-code-lien bill, but Weir voted against it, putting him at odds with
+his own party majority on a tenant-side enforcement mechanism. HB-7035 had
+three separate roll calls covering different amendments to the
+multifamily-housing-development bill; Weir voted yes on Republican amendments
+and no on the underlying Democratic legislation, which is consistent with his
+broader pattern.</p>
+</blockquote>
+<p>Three observations about this pattern:</p>
+<p>First, the legislation Weir opposes most consistently is legislation that gives
+towns or tenants tools to act against landlords. HB-5474 (rent- increase notices
+and short-term rental rules) and SB 274 (non-resident landlord registration with
+code-violation penalties) both fit this category. So does SB-988, which would
+have let mobile home park residents buy their park rather than have it sold to
+an outside investor.</p>
+<p>Second, Weir&#8217;s published positions emphasize &#8220;easing regulations&#8221; on housing,
+but the votes show that the regulations he opposes are specifically
+tenant-protective regulations. He votes for technical revisions to housing
+statutes (HB-5155), insurance department recommendations (HB-5373), and bills to
+clarify condominium deposit accounting (HB-7027). He votes against bills that
+would create real consequences for landlords who don&#8217;t maintain code-compliant
+buildings.</p>
+<p>Third, on bills where the entire chamber unanimously agrees — e.g., HB-5394
+(2026), allowing municipalities to lien a landlord&#8217;s property for relocation
+assistance paid to displaced tenants — Weir votes yes. The pattern is not that
+he opposes all housing legislation; it is that he opposes contested
+tenant-protective legislation.</p>
+<p>The voting record provides corroborating evidence for what Weir himself has said
+in floor debate, on television, and in writing: that his framework on housing
+legislation is the framework of someone whose professional and business
+experience is on the apartment-owner side of the relationship.</p>
+<p class="section-label before-part">Ethics-law analysis</p>
+<h2 id="part-4-is-this-a-violation-of-connecticut-ethics-law">Part 4 — Is this a violation of Connecticut ethics law?<a class="header-anchor" href="#part-4-is-this-a-violation-of-connecticut-ethics-law" aria-label="Link to this section">¶</a></h2>
+<h3 id="the-short-answer-almost-certainly-not">The short answer: almost certainly not<a class="header-anchor" href="#the-short-answer-almost-certainly-not" aria-label="Link to this section">¶</a></h3>
+<p>A reasonable reader, after reading Parts 1 through 3, may ask whether
+Connecticut law allows a legislator to vote on a bill regulating an industry in
+which he holds business interests, sits on the trade association board, and
+earns income as a &#8220;service provider.&#8221; The answer, under Connecticut&#8217;s
+deliberately permissive citizen-legislature ethics framework, is yes. He may.</p>
+<h3 id="the-governing-statute">The governing statute <span class="conf-mark">✓</span> <em>CGS § 1-85, &#8220;Interest in conflict with discharge of duties&#8221;</em><a class="header-anchor" href="#the-governing-statute" aria-label="Link to this section">¶</a></h3>
+<p>Connecticut General Statutes § 1-85 is the statute that defines when a
+legislator has a &#8220;substantial conflict of interest&#8221; and is therefore prohibited
+from taking official action. The statute has two parts. Read carefully, both
+matter:</p>
+<blockquote>
+<p>&#8220;A public official, including an elected state official, or state employee has
+an interest which is in substantial conflict&#8230; if he has reason to believe or
+expect that he, his spouse, a dependent child, or a business with which he is
+associated will derive a direct monetary gain or suffer a direct monetary
+loss&#8230; by reason of his official activity.&#8221;</p>
+</blockquote>
+<p>That is the prohibition. Then comes the carve-out:</p>
+<blockquote>
+<p>&#8220;A public official, including an elected state official, or state employee
+does <strong>not</strong> have an interest which is in substantial conflict&#8230; if any
+benefit or detriment accrues to him, his spouse, a dependent child, or a
+business with which he&#8230; is associated as a member of a profession,
+occupation or group <strong>to no greater extent than any other member</strong> of such
+profession, occupation or group.&#8221;</p>
+</blockquote>
+<p>The carve-out is the load-bearing provision for citizen-legislators in
+Connecticut. It says: if every other member of the same industry would gain or
+lose to the same extent, there is no conflict, and the legislator may vote.</p>
+<h3 id="why-sb-274-falls-within-the-carve-out">Why SB 274 falls within the carve-out<a class="header-anchor" href="#why-sb-274-falls-within-the-carve-out" aria-label="Link to this section">¶</a></h3>
+<p>SB 274 would have applied to all non-resident apartment owners and all landlords
+subject to building and fire code violations. Whatever interest Weir has in
+residential rental real estate or in providing services to apartments, every
+other member of those same industries has a comparable interest. The bill did
+not single out 60 Village Place LLC. It did not single out commercial industrial
+landlords in Glastonbury. It did not single out heating oil providers or
+restoration contractors. It was broad-brush industry regulation, and § 1-85&#8217;s
+carve-out exists to permit legislators in the affected industries to vote.</p>
+<p>This is not a marginal interpretation. The Office of State Ethics regulation
+implementing § 1-85 (Conn. Agencies Regs. § 1-81-28) gives explicit examples
+that match Weir&#8217;s situation — including legislators who serve as bank officers
+voting on banking regulation, and legislators who hold real estate interests
+voting on real estate legislation. The regulation is clear: only when the bill
+specifically and uniquely benefits the legislator&#8217;s interest more than others in
+the same profession does a substantial conflict exist.</p>
+<h3 id="what-ct-law-would-prohibit">What CT law would prohibit<a class="header-anchor" href="#what-ct-law-would-prohibit" aria-label="Link to this section">¶</a></h3>
+<p>To be concrete: Weir would have a substantial conflict, and would be prohibited
+from voting, on a bill that:</p>
+<ul>
+<li>Granted a tax abatement specifically to industrial parcels of 5–6 acres in
+Glastonbury (which would single out 60 Village Pl)</li>
+<li>Reduced the mill rate only for properties at 60 Village Place</li>
+<li>Granted a special permit or zoning variance to 60 Village Place LLC by name</li>
+<li>Awarded a state contract to one of his LLCs</li>
+<li>Affected only the specific apartment buildings he provides services to, in a
+way that didn&#8217;t affect other apartment service providers</li>
+</ul>
+<p>He would not have a substantial conflict on:</p>
+<ul>
+<li>Any general housing or landlord-tenant bill, even one that would clearly
+benefit landlords as a class</li>
+<li>Building and fire code legislation that applies industry-wide</li>
+<li>Tax policy affecting commercial real estate generally</li>
+<li>Any bill regulating heating oil providers as a class</li>
+<li>Any bill affecting the apartment industry broadly</li>
+</ul>
+<p>SB 274 falls firmly in the second category. So does virtually every other
+housing bill the General Assembly has considered in his tenure.</p>
+<h3 id="what-the-law-does-require-disclosure">What the law does require: disclosure<a class="header-anchor" href="#what-the-law-does-require-disclosure" aria-label="Link to this section">¶</a></h3>
+<p>Connecticut legislators are required by CGS § 1-83 to file an annual Statement
+of Financial Interests (SFI) with the Office of State Ethics by May 1 each year.
+The SFI must list:</p>
+<ul>
+<li>All sources of income over $1,000 (including rental income)</li>
+<li>All &#8220;businesses with which the legislator is associated&#8221; — defined as any
+business in which the legislator, spouse, or dependent child is a director,
+officer, owner, partner, or holder of 5% or more of stock</li>
+<li>All real property held by the legislator, spouse, or dependent child in
+Connecticut</li>
+</ul>
+<p>If Weir&#8217;s SFI properly lists 60 Village Place LLC, the active LLCs identified in
+Part 1, and the real property at 880 and 888 Gilead Street, Hebron, then his
+disclosure obligation is met. Failing to disclose any of these would itself be a
+violation. Disclosure is the trigger that allows voters to evaluate conduct that
+the substantive ethics law permits.</p>
+<p>This report&#8217;s compilation work — searching the Secretary of State&#8217;s database,
+the assessor records, and OpenCorporates — is in effect what voters and
+journalists must do because the SFIs are not posted on a public web portal in
+browseable form. They are public records under Connecticut FOIA, but accessing
+them requires a records request to the Office of State Ethics.</p>
+<h3 id="the-political-question-vs-the-legal-question">The political question vs. the legal question<a class="header-anchor" href="#the-political-question-vs-the-legal-question" aria-label="Link to this section">¶</a></h3>
+<p>The legal question — &#8220;is Weir breaking Connecticut ethics law?&#8221; — is almost
+certainly answered no, because the law was deliberately written to permit
+citizen-legislators to vote on industry matters in which they have professional
+or business interests, provided those interests are shared by others in the same
+profession.</p>
+<p>The political question — &#8220;should voters in the 55th District think it is
+appropriate for a legislator on the Connecticut Apartment Association board to
+personally kill a bill increasing penalties for non-resident landlords with
+repeated code violations?&#8221; — is for voters, not the ethics code, to answer. This
+report&#8217;s purpose is to give voters the public-records foundation they need to
+answer it.</p>
+<p class="section-label">At a glance</p>
+<h2 id="summary-table">Summary table<a class="header-anchor" href="#summary-table" aria-label="Link to this section">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Does Steve Weir own commercial real estate?</td>
+<td>✓ Yes. 60 Village Place LLC owns a 5.95-acre Glastonbury industrial parcel appraised at $1.69M.</td>
+</tr>
+<tr>
+<td>Does he describe it as his primary work outside the legislature?</td>
+<td>✓ Yes. 2024 Glastonbury Patch questionnaire: &#8220;I currently spend most of my time on&#8221; the property.</td>
+</tr>
+<tr>
+<td>Does he sit on the Connecticut Apartment Association board?</td>
+<td>✓ Yes. CTAA Business Partner Member; CT Mirror identifies him as Governor Relations Committee chair.</td>
+</tr>
+<tr>
+<td>Does CTAA membership require a company affiliation?</td>
+<td>✓ Yes. CTAA&#8217;s own rule: &#8220;All memberships are company based and individuals cannot join.&#8221;</td>
+</tr>
+<tr>
+<td>Has Weir confirmed he does work with apartment landlords?</td>
+<td>✓ Yes, repeatedly. Floor debate May 6, 2026; NBC <em>Face the Facts</em> February 2025.</td>
+</tr>
+<tr>
+<td>Did he act to kill the non-resident landlord registration bill?</td>
+<td>✓ Yes. CT Mirror, May 6, 2026: clock-running threat killed SB 274 on the final day of the session.</td>
+</tr>
+<tr>
+<td>Is the SB 274 vote isolated, or part of a pattern?</td>
+<td>✓ Pattern. Across 2023–2026 sessions, Weir consistently voted against contested tenant-protective housing bills.</td>
+</tr>
+<tr>
+<td>Is killing that bill a violation of Connecticut ethics law?</td>
+<td>Almost certainly no. CGS § 1-85 permits citizen-legislators to vote on industry-wide bills.</td>
+</tr>
+<tr>
+<td>How many CT business entities is he associated with?</td>
+<td>At least 8 entities tied to him personally; a 9th (Steve Weir LLC) is plausibly his.</td>
+</tr>
+<tr>
+<td>Are there Hartford apartment buildings tied to his LLCs?</td>
+<td>Unconfirmed in this report. A constituent tip exists but has not been corroborated.</td>
+</tr>
+</tbody></table>
+<p class="section-label">Analysis</p>
+<h2 id="key-observations">Key Observations<a class="header-anchor" href="#key-observations" aria-label="Link to this section">¶</a></h2>
+<p><strong>Weir told voters less than the full picture in 2024.</strong> In his official &#8220;About&#8221;
+page on the House Republican website, Weir describes himself as &#8220;Founder of
+American Integrity Restoration (Now BluSky Restoration Contractors)&#8221; and lists
+his community involvements — UConn Club, CT River Valley Chamber, Gilead
+Congregational Church, the Connecticut Apartment Association — but does not
+mention that he owns a commercial industrial property he leases to multiple
+tenants. The 2024 Patch questionnaire, in which he did mention the property, was
+the more complete disclosure. Voters reading only his own About page would not
+learn he is a commercial landlord. They would also not learn that, in addition
+to the commercial property, he runs Primary Energy LLC (home heating oil),
+Gilead Hill Farm LLC (a working family farm), and Ice New England Enterprises
+LLC (a used car dealership operated from his Hebron home, per his October 2025
+annual report filing). None of these businesses is disclosed on the official
+biography that voters in the 55th District see when they look him up.</p>
+<p><strong>The Connecticut Apartment Association tie is structurally significant.</strong> A
+trade association exists to lobby for the interests of its members. By CTAA&#8217;s
+own rules, Weir&#8217;s membership implies an affiliated company. He sits not just as
+a member but as chair of the Governor Relations Committee — a role explicitly
+about CTAA&#8217;s legislative agenda. This creates a structural alignment between
+Weir&#8217;s outside business interests and his legislative agenda on housing matters,
+regardless of which specific company underlies his CTAA membership.</p>
+<p><strong>The May 6, 2026 floor action speaks louder than the press releases.</strong> Weir&#8217;s
+published positions on housing emphasize &#8220;easing regulations&#8221; and respecting
+&#8220;property owner rights.&#8221; When a specific bill arrived on the floor that would
+have made it harder for absentee landlords to hide behind shell companies after
+building and fire code violations, the same legislator who has been &#8220;a service
+provider to apartments&#8221; for decades was the one who killed it. The bill&#8217;s author
+was a Senate Democrat; its co-sponsors included Republicans on the Planning and
+Development Committee, where it had passed unanimously.</p>
+<p><strong>Disclosure law has not kept up with the case for transparency here.</strong>
+Connecticut requires legislators to file an annual Statement of Financial
+Interests with the Office of State Ethics, naming associated businesses and real
+property held. Those statements are public under FOIA. They are not, however,
+posted on a public web portal in browseable form, which means voters who want to
+see what their legislator owns have to file a records request and wait. Weir&#8217;s
+SFI filings should list 60 Village Place LLC and the other active entities;
+obtaining those filings is a logical next step for any citizen seeking the
+fullest picture.</p>
+<p class="section-label">Caveats</p>
+<h2 id="what-this-report-does-not-show">What this report does not show<a class="header-anchor" href="#what-this-report-does-not-show" aria-label="Link to this section">¶</a></h2>
+<p>This report does not document specific apartment buildings owned by Steve Weir
+or any of his LLCs. The constituent tip about Hartford apartments could not be
+corroborated in public records using the search methods available to this
+report. A Hartford grantee-name search against the LLC names listed in Part 1
+would either confirm or rule this out, and is recommended as a follow-up.</p>
+<p>This report also does not document the dollar value of Weir&#8217;s CTAA business
+relationships, the rental income he derives from 60 Village Place LLC, or the
+customer base of Primary Energy LLC. None of these figures are required to be
+public under Connecticut law. Weir&#8217;s Statement of Financial Interests, when
+obtained, will list categories of income but not amounts.</p>
+<p>This report does not allege illegal conduct. Owning rental real estate is legal.
+Sitting on a trade association board is legal. Voting against landlord
+regulation as a legislator who works in the apartment industry is not, by
+itself, a violation of state ethics law — Connecticut&#8217;s ethics code permits
+legislators with private business interests to vote on legislation affecting
+those industries, on the theory that the General Assembly is a citizen
+legislature where members necessarily bring outside expertise. The argument of
+this report is that voters in the 55th District should know what Weir&#8217;s business
+interests are when they evaluate his legislative record on housing and landlord-
+tenant matters.</p>
+<p>This report focuses only on Weir&#8217;s business and real estate holdings relevant to
+his housing-policy votes. It does not address his record on other policy areas.
+A separate analysis of his floor voting record across all subjects is available
+at andoverct.info.</p>
+<p class="section-label">Documentation</p>
+<h2 id="sources">Sources<a class="header-anchor" href="#sources" aria-label="Link to this section">¶</a></h2>
+<h3 id="primary-records">Primary records<a class="header-anchor" href="#primary-records" aria-label="Link to this section">¶</a></h3>
+<ul>
+<li>Connecticut Secretary of State business filings, accessed via
+<a href="https://opencorporates.com">opencorporates.com</a> officer searches for &#8220;Stephen
+J Weir,&#8221; &#8220;Stephen Weir,&#8221; &#8220;Steve Weir,&#8221; and &#8220;Allegra Weir&#8221; in the Connecticut
+jurisdiction, May 7, 2026.</li>
+<li>Town of Glastonbury Vision Government Solutions assessor record for 60 Village
+Place (<a href="https://gis.vgsi.com/glastonburyct/">gis.vgsi.com/glastonburyct</a>),
+accessed May 7, 2026. Owner: 60 VILLAGE PLACE LLC; Parcel F4/7290/E0002; deed
+Book 2647 Page 30; sale date April 28, 2009.</li>
+<li>Town of Hebron assessor records via
+<a href="https://www.propertyrecordcards.com/SearchMaster.aspx?towncode=067">propertyrecordcards.com</a>,
+accessed May 7, 2026. Confirms Stephen J & Allegra S Weir personally own the
+18.29-acre parcel at 880 Gilead St (vacant) and the 11.64-acre parcel at 888
+Gilead St (residence + 1 building).</li>
+<li>Connecticut General Assembly House roll-call records, 2023, 2024, 2025, and
+2026 sessions. Compiled from the official roll-call PDFs published at
+<a href="https://www.cga.ct.gov/">cga.ct.gov</a> and indexed by bill number. 1,293 House
+floor votes for Rep. Weir across the four sessions.</li>
+<li>Connecticut Secretary of the State, Annual Report for ICE NEW ENGLAND
+ENTERPRISES, LLC, filing number 0012854627, filed October 14, 2025. Lists
+Stephen J. Weir as manager and registered agent, NAICS code 441120 (Used Car
+Dealers), principal office at 888 Gilead Street, Hebron.</li>
+</ul>
+<h3 id="news-reporting">News reporting<a class="header-anchor" href="#news-reporting" aria-label="Link to this section">¶</a></h3>
+<ul>
+<li>Ginny Monk, &#8220;House kills bill to hold non-resident landlords accountable,&#8221; CT
+Mirror, May 6, 2026.
+<a href="https://ctmirror.org/2026/05/06/house-kills-bill-to-hold-non-resident-landlords-accountable/">ctmirror.org/2026/05/06/house-kills-bill</a></li>
+<li>Mike Hydeck, &#8220;Face the Facts: Need for more affordable housing continues,&#8221; NBC
+Connecticut, February 2025.
+<a href="https://www.nbcconnecticut.com/news/politics/face-the-facts/face-the-facts-need-for-more-affordable-housing/3505052/">nbcconnecticut.com/&#8230;/face-the-facts</a></li>
+<li>Mike Hydeck, &#8220;Face the Facts: Rep. Steve Weir on proposal to limit rent
+increases by out-of-state landlords,&#8221; NBC Connecticut, January 26, 2026.
+<a href="https://www.nbcconnecticut.com/news/politics/face-the-facts/face-the-facts-rep-steve-weir-on-proposal-to-limit-rent-increases-by-out-of-state-landlords/3690987/">nbcconnecticut.com/&#8230;/rep-steve-weir</a></li>
+<li>Jamil Ragland, &#8220;Housing Committee Passes Controversial &#8216;Just Cause&#8217; Eviction
+Bill,&#8221; CT News Junkie, March 1, 2024.
+<a href="https://ctnewsjunkie.com/2024/03/01/housing-committee-passes-controversial-just-cause-eviction-bill/">ctnewsjunkie.com/&#8230;/just-cause-eviction-bill</a></li>
+<li>Ginny Monk, &#8220;CT public hearing on eviction, zoning bills draws nearly 300
+people,&#8221; CT Mirror, February 18, 2025.
+<a href="https://ctmirror.org/2025/02/18/ct-eviction-zoning-public-hearing/">ctmirror.org/2025/02/18/ct-eviction-zoning-public-hearing</a></li>
+</ul>
+<h3 id="weir-8217-s-own-statements">Weir&#8217;s own statements<a class="header-anchor" href="#weir-8217-s-own-statements" aria-label="Link to this section">¶</a></h3>
+<ul>
+<li>2024 Glastonbury Patch candidate questionnaire (&#8220;I currently spend most of my
+time on my commercial real estate property&#8221;):
+<a href="https://patch.com/connecticut/glastonbury/2024-patch-candidate-profiles-steve-weir-state-rep">patch.com/&#8230;/steve-weir-state-rep</a></li>
+<li>Official &#8220;About&#8221; page on House Republican site:
+<a href="https://www.cthousegop.com/weir/about">cthousegop.com/weir/about</a></li>
+<li>Connecticut Apartment Association member listing:
+<a href="https://www.ctaahq.org/contacts/steve-weir">ctaahq.org/contacts/steve-weir</a></li>
+<li>CT Mirror legislative profile:
+<a href="https://ctmirror.org/representative/steve-weir/">ctmirror.org/representative/steve-weir</a></li>
+</ul>
+<h3 id="background">Background<a class="header-anchor" href="#background" aria-label="Link to this section">¶</a></h3>
+<ul>
+<li>Connecticut General Statutes § 1-83 (Statements of Financial Interests filing
+requirement for legislators).
+<a href="https://law.justia.com/codes/connecticut/title-1/chapter-10/section-1-83/">law.justia.com/codes/connecticut/&#8230;/section-1-83</a></li>
+<li>Connecticut General Statutes § 1-85 (Interest in conflict with discharge of
+duties — substantial conflict of interest standard).
+<a href="https://law.justia.com/codes/connecticut/title-1/chapter-10/section-1-85/">law.justia.com/codes/connecticut/&#8230;/section-1-85</a></li>
+<li>Conn. Agencies Regs. § 1-81-28 (Office of State Ethics regulation implementing
+§ 1-85, with examples).
+<a href="https://www.law.cornell.edu/regulations/connecticut/Regs-Conn-State-Agencies-SS-1-81-28">law.cornell.edu/&#8230;/1-81-28</a></li>
+<li>Connecticut State Legislators Guide to the Code of Ethics (Office of State
+Ethics, rev. November 2021).
+<a href="https://portal.ct.gov/-/media/ethics/guides/currently-posted-guides/legislators-guide-to-the-code-of-ethics-rev-november-2021.pdf">portal.ct.gov/&#8230;/legislators-guide-to-the-code-of-ethics</a></li>
+<li>Mark Pazniokas, &#8220;Voting in your employer&#8217;s interest? No conflict in
+Connecticut,&#8221; CT Mirror, May 24, 2017.
+<a href="https://ctmirror.org/2017/05/24/voting-in-your-employers-interest-no-conflict-in-connecticut/">ctmirror.org/2017/05/24/voting-in-your-employers-interest</a></li>
+<li>Connecticut Office of State Ethics:
+<a href="https://portal.ct.gov/Ethics/">portal.ct.gov/ethics</a></li>
+</ul>
+
+<p class="section-label">Download</p>
+<h2 id="other-formats">Other Formats<a class="header-anchor" href="#other-formats" aria-label="Link to this section">¶</a></h2>
+<p>This report is available in three formats, all located alongside this page:</p>
+
+<div class="format-cards cols-3">
+  <div class="format-card">
+    <div class="format-card-icon">🌐</div>
+    <div class="format-card-title"><a href="./">HTML</a></div>
+    <div class="format-card-desc">Interactive version with formatted tables; best for on-screen reading and sharing.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📄</div>
+    <div class="format-card-title"><a href="weir-businesses.md">Markdown</a></div>
+    <div class="format-card-desc">Plain-text version; readable in any editor, ideal for copying into other documents.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📑</div>
+    <div class="format-card-title"><a href="weir-businesses.pdf">PDF</a></div>
+    <div class="format-card-desc">Print-ready version with all tables, footnotes, and source citations.</div>
+  </div>
+</div>
+
+</div>
+<div class="page-footer">
+Personal work of <a href="mailto:scott@sauyet.com">Scott Sauyet</a> · Compiled May 7, 2026<br>Data from CT Secretary of State filings, Glastonbury and Hebron assessor records, CT Mirror and NBC Connecticut reporting, and Weir's own public statements. Not an official town document. ·
+<a href="http://andoverct.info/reports/55th/weir-businesses/">andoverct.info/reports/55th/weir-businesses/</a>
+</div>
+<script>
+document.addEventListener('click', function(e) {
+    const anchor = e.target.closest('.header-anchor');
+    if (!anchor) return;
+    const heading = anchor.parentElement;
+    const id = heading.id;
+    if (!id) return;
+    const url = window.location.origin + window.location.pathname + '#' + id;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function() {
+            anchor.classList.add('copied');
+            setTimeout(function() { anchor.classList.remove('copied'); }, 1400);
+        }).catch(function() {});
+    }
+});
+</script>
+<script>
+(function() {
+    var imgs = document.querySelectorAll('.container img');
+    if (!imgs.length) return;
+    var overlay = null;
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    function close() {
+        if (!overlay) return;
+        var o = overlay;
+        overlay = null;
+        o.classList.remove('open');
+        document.removeEventListener('keydown', onKey);
+        setTimeout(function() { if (o.parentNode) o.parentNode.removeChild(o); }, 200);
+    }
+    function open(src, alt) {
+        overlay = document.createElement('div');
+        overlay.className = 'lightbox-overlay';
+        var big = document.createElement('img');
+        big.src = src;
+        big.alt = alt || '';
+        overlay.appendChild(big);
+        overlay.addEventListener('click', close);
+        document.body.appendChild(overlay);
+        overlay.offsetWidth; // force reflow so the fade-in transition runs
+        overlay.classList.add('open');
+        document.addEventListener('keydown', onKey);
+    }
+    imgs.forEach(function(img) {
+        img.addEventListener('click', function() { open(img.currentSrc || img.src, img.alt); });
+    });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+/* Print-only overrides, appended after the theme + base.css for the PDF build.
+ * The @page margin-box footers stay literal (paged-media margin boxes don't
+ * reliably read CSS variables in WeasyPrint); they are document chrome, not
+ * themed content. __PDF_PAGE_AUTHOR__ / __PDF_PAGE_FOOTER__ are substituted by
+ * the engine. */
+@page {
+    size: Letter;
+    margin: 0.75in 0.75in 0.95in 0.75in;
+
+    @bottom-left {
+        content: "__PDF_PAGE_AUTHOR__";
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        font-size: 8pt;
+        color: #888;
+    }
+    @bottom-center {
+        content: "Page " counter(page) " of " counter(pages);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        font-size: 8.5pt;
+        color: #888;
+    }
+    @bottom-right {
+        content: "__PDF_PAGE_FOOTER__";
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        font-size: 8pt;
+        color: #aaa;
+    }
+}
+@page :first {
+    @bottom-left { content: ""; }
+    @bottom-center { content: ""; }
+    @bottom-right { content: ""; }
+}
+
+@media print {
+    body { background: #fff; font-size: 10.5pt; }
+    .page-banner, .page-footer { display: none; }
+    .container {
+        max-width: none;
+        padding: 0;
+        margin: 0;
+        box-shadow: none;
+    }
+    a { color: var(--link); border-bottom: none; }
+    a[href^="http"]::after {
+        content: " (" attr(href) ")";
+        font-size: 8.5pt;
+        color: #888;
+        word-break: break-all;
+    }
+    .format-cards a::after { content: ""; }
+
+    h2, h3 { page-break-after: avoid; break-after: avoid; }
+    table, blockquote { page-break-inside: avoid; break-inside: avoid; }
+
+    table { font-size: 9.5pt; }
+    th, td { padding: 6px 8px; }
+}

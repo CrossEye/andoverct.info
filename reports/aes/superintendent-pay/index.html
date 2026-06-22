@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Superintendent Pay in Context — Town of Andover, CT</title>
+<style>/* Default civic-report theme.
+ *
+ * A theme is just this set of CSS custom properties. To experiment, copy this
+ * file to _build/themes/<name>.css, change what you like, and point at it from
+ * _build/report.config.json ({"theme":"<name>"}) for all reports, or from a
+ * single report's front matter (theme: <name>). A non-default theme is layered
+ * ON TOP of this one, so it only needs to list the variables it changes.
+ *
+ * Scope: colors, fonts, and small size/width/gap tweaks — not layout changes.
+ */
+:root {
+  /* ---- Palette ---- */
+  --bg:             #fafaf7;   /* page background */
+  --bg-page:        #ffffff;   /* the white content card */
+  --bg-soft:        #f5f3ed;   /* callouts, table headers, inline code */
+  --ink:            #1a1a1a;   /* body text, main headings */
+  --ink-soft:       #333333;   /* blockquote / methodology text */
+  --ink-mute:       #5a5a5a;   /* subtitle, card descriptions */
+  --ink-faint:      #888888;   /* attribution, footer, captions */
+  --rule:           #e0ddd5;   /* hairline borders */
+  --accent:         #b8a878;   /* gold accent rules */
+  --accent-2:       #2c3e50;   /* slate: h3, table-header & code text */
+  --banner-bg:      #2c3e50;   /* top banner background */
+  --banner-ink:     #ecf0f1;   /* top banner text */
+  --crumb-link:       #b9c4cf; /* breadcrumb links in the banner */
+  --crumb-link-hover: #ffffff;
+  --crumb-current:    #ffffff; /* deepest crumb (current page), not a link */
+  --link:           #1a5490;
+  --link-hover:     #0d3a6b;
+  --link-underline: #c5d3e2;
+  --anchor:         #b8b3a4;   /* the ¶ header anchor */
+  --anchor-hover:   #6c7480;
+  --confirm:        #5a8a5a;   /* green ✓ confirmation mark */
+  --confirm-strong: #2e7d32;
+
+  /* ---- Fonts ---- */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:  "SF Mono", Monaco, Menlo, Consolas, monospace;
+
+  /* ---- Sizes (small tweaks only; no layout restructuring) ---- */
+  --base-size:  11pt;    /* body text */
+  --measure:    780px;   /* content column width */
+  --gutter:     30px;    /* horizontal padding / banner & footer gaps */
+  --title-size: 28pt;
+  --h2-size:    18pt;
+  --h3-size:    13pt;
+}
+
+/* bluegold — mirrors the light-mode look of the 55th campaign site
+ * (C:\Users\scott\Dev\Andover\55th, e.g. localhost:8080/reports): cool
+ * blue-gray paper, a dark navy banner with a gold underline, navy serif
+ * headings over a sans body, gold accent rules, and blue links.
+ *
+ * Note the deliberate font swap: base.css uses --font-serif for body text and
+ * --font-sans for headings/labels, so to match the campaign look (sans body,
+ * serif display) we put the SANS stack in --font-serif and the SERIF stack in
+ * --font-sans.
+ *
+ * Layered on default.css. Uses --banner-border (in base.css) for the gold rule
+ * under the banner. */
+:root {
+  /* Palette */
+  --bg:             #f4f6f9;
+  --bg-page:        #ffffff;
+  --bg-soft:        #eef4fb;   /* blue-050 tint for callouts / table headers */
+  --rule:           #e3e8ef;   /* hairlines */
+  --ink:            #19222e;
+  --ink-soft:       #2b3744;
+  --ink-mute:       #5b6775;
+  --ink-faint:      #8a94a1;
+  --accent:         #e8a800;   /* signature gold rules */
+  --accent-2:       #0f2a4a;   /* blue-900: headings, table-header & code text */
+  --banner-bg:      linear-gradient(180deg, #0f2a4a, #143862);
+  --banner-border:  3px solid #e8a800;
+  --banner-ink:     #dde8f5;   /* blue-100 */
+  --crumb-link:       #e8a800; /* gold breadcrumb links */
+  --crumb-link-hover: #ffffff; /* hover to white + underline */
+  --crumb-current:    #ffffff; /* current page, not a link */
+  --link:           #245c95;   /* blue-600 */
+  --link-hover:     #1c4e80;   /* blue-700 */
+  --link-underline: #cfe0f2;
+  --confirm:        #2f8f5b;
+  --confirm-strong: #1f7d49;
+
+  /* Type: sans body + serif display headings (see note above) */
+  --font-serif: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans:  Georgia, "Times New Roman", serif;
+
+  --measure: 860px;
+}
+
+/* Structural base styles for civic reports — theme-independent.
+ * Colors, fonts, and sizes come from the active theme (CSS custom properties
+ * in _build/themes/<name>.css), which is loaded BEFORE this file. */
+
+/* ---- Reset & base ---- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Layout ---- */
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner a { color: inherit; text-decoration: none; }
+.page-banner a:hover { text-decoration: underline; }
+
+/* ---- Breadcrumb (in the banner) ---- */
+.page-banner .crumbs a {
+    color: var(--crumb-link, var(--banner-ink));
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover, #fff);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current {
+    color: var(--crumb-current, #fff);
+}
+
+.container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* ---- Images / figures ---- */
+/* Scale charts and figures to the column (and the printed page box) rather
+   than overflowing at their intrinsic pixel/point size. */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+}
+
+/* ---- Lightbox (screen only; overlay is built at runtime by the viewer
+   script, so it never appears in the PDF). Click a chart to enlarge it. ---- */
+.container img { cursor: zoom-in; }
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vmin;
+    background: rgba(0, 0, 0, 0.85);
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+.lightbox-overlay.open { opacity: 1; }
+.lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    margin: 0;
+    cursor: zoom-out;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+    background: #fff;
+}
+
+/* ---- Title block ---- */
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-attribution {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    color: var(--ink-faint);
+    margin: 0 0 24px 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+.report-attribution a {
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+}
+.report-attribution a:hover {
+    color: var(--link);
+    border-bottom-color: var(--link);
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.methodology-header {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 0 0 36px 0;
+    line-height: 1.55;
+}
+
+/* ---- Section labels (small uppercase tags above h2) ---- */
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 36px 0 4px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+/* ---- Headings ---- */
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+h3 {
+    font-family: var(--font-sans);
+    font-size: var(--h3-size);
+    font-weight: 600;
+    margin: 28px 0 10px 0;
+    color: var(--accent-2);
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+
+/* ---- Header anchor links (HTML only; hidden in print) ---- */
+.header-anchor {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.2em;
+    color: var(--anchor);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.85em;
+    vertical-align: baseline;
+    cursor: pointer;
+    user-select: none;
+}
+h2:hover .header-anchor,
+h3:hover .header-anchor,
+.header-anchor:focus {
+    opacity: 1;
+}
+.header-anchor:hover {
+    color: var(--anchor-hover);
+}
+.header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+}
+.header-anchor.copied::after {
+    content: " copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+}
+@media print {
+    .header-anchor {
+        display: none;
+    }
+}
+
+/* ---- Body text ---- */
+p {
+    margin: 0 0 14px 0;
+    orphans: 3;
+    widows: 3;
+}
+p.intro-table {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+strong { font-weight: 700; color: var(--ink); }
+em { font-style: italic; }
+
+/* ---- Links ---- */
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* ---- Lists ---- */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+li {
+    margin: 0 0 6px 0;
+    line-height: 1.55;
+}
+
+/* ---- Tables ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-before: avoid;
+    break-before: avoid;
+}
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 9.5pt;
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--accent);
+}
+tbody tr:hover { background: var(--bg); }
+
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+tbody tr:last-child td {
+    border-bottom: 2px solid var(--accent);
+}
+
+/* ---- Blockquotes (source notes, verbatim quotes) ---- */
+blockquote {
+    margin: 14px 0 18px 0;
+    padding: 14px 20px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+blockquote p { margin: 0 0 8px 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ol, blockquote ul {
+    margin: 8px 0;
+}
+
+/* ---- HR ---- */
+hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+}
+
+/* ---- Inline code ---- */
+code {
+    font-family: var(--font-mono);
+    font-size: 9.5pt;
+    background: var(--bg-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: var(--accent-2);
+    overflow-wrap: break-word;
+}
+
+/* ---- Other Formats footer ---- */
+.formats-section {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+}
+.format-cards {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.format-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.format-cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media screen and (max-width: 700px) {
+    .format-cards.cols-3,
+    .format-cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+.format-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    padding: 14px;
+    text-align: left;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+.format-card-icon { font-size: 18pt; margin-bottom: 4px; }
+.format-card-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+.format-card-desc { font-size: 9pt; color: var(--ink-mute); line-height: 1.4; }
+.format-card a { display: block; }
+
+/* ---- Footer ---- */
+.page-footer {
+    max-width: var(--measure);
+    margin: 32px auto 60px;
+    padding: 24px var(--gutter);
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 9.5pt;
+    font-family: var(--font-sans);
+    border-top: 1px solid var(--rule);
+}
+
+/* ---- Confirmation glyphs ---- */
+h3 .conf-mark {
+    color: var(--confirm);
+    font-size: 11pt;
+    margin-right: 4px;
+}
+
+/* Draft watermark — loaded by the engine when a report's front matter
+ * contains `draft: true`. Adds a large diagonal "DRAFT" stamp behind the
+ * content (screen + print), plus a small persistent badge at the top right
+ * of every page. Selectors are gated on `body[data-draft="true"]` so this
+ * file is also safe to load unconditionally if a future engine variant
+ * decides to inline it.
+ *
+ * Customisation: a theme can override --draft-color, --draft-bg, and
+ * --draft-text by setting them in the theme's :root block.
+ */
+
+:root {
+  --draft-color: rgba(176, 30, 30, 0.10);
+  --draft-bg:    #b01e1e;
+  --draft-text:  #ffffff;
+}
+
+/* Diagonal stamp behind on-screen content. */
+body[data-draft="true"]::before {
+  content: "DRAFT";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  font-family: var(--font-sans);
+  font-weight: 900;
+  font-size: 22vw;
+  letter-spacing: 0.05em;
+  color: var(--draft-color);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* Lift live content above the watermark. */
+body[data-draft="true"] .page-banner,
+body[data-draft="true"] .container,
+body[data-draft="true"] .page-footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Small persistent badge at the top-right corner so the draft flag is
+ * impossible to miss even on dense pages. */
+body[data-draft="true"]::after {
+  content: "DRAFT";
+  position: fixed;
+  top: 8px;
+  right: 12px;
+  background: var(--draft-bg);
+  color: var(--draft-text);
+  padding: 4px 10px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  border-radius: 3px;
+  z-index: 9999;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+  pointer-events: none;
+}
+
+/* Print / PDF rules. WeasyPrint repeats fixed elements on every page, and
+ * honours @page backgrounds, so we get the diagonal band and the corner
+ * badge on every PDF page. */
+@media print {
+  @page {
+    background-image: linear-gradient(
+      -30deg,
+      transparent 38%,
+      var(--draft-color) 38%,
+      var(--draft-color) 62%,
+      transparent 62%
+    );
+  }
+
+  body[data-draft="true"]::before {
+    /* The @page gradient above gives the diagonal band on paper;
+       suppress the duplicate centred stamp so the page isn't muddy. */
+    display: none;
+  }
+
+  body[data-draft="true"]::after {
+    position: fixed;
+    top: 6mm;
+    right: 8mm;
+    font-size: 10pt;
+    padding: 2px 7px;
+  }
+}
+</style>
+</head>
+<body data-draft="true">
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/reports/">Reports</a><span class="sep">›</span><a href="/reports/aes/">Andover Elementary</a><span class="sep">›</span><span class="current">Superintendent Pay in Context</span>
+  </nav>
+</div>
+<div class="container">
+<h1 class="report-title">Superintendent Pay in Context</h1>
+<p class="report-subtitle">Andover, CT · Dr. Valerie Bruneau and her Connecticut peers · FY 2025–26</p>
+<p class="report-attribution">A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Not an official town document</p>
+<hr class="report-header-rule">
+<p class="methodology-header">Data was assembled by crawling 45 small Connecticut town and school district
+websites, OCR&#8217;ing scanned PDF contracts, and manually reviewing contracts shared
+as Google Drive links. Of the 45 peer districts identified as comparable to
+Andover, 21 districts (16 unique superintendent contracts) have contract data
+in hand; for the remaining 23 a thorough search of public sites did not locate
+a contract, or the contract on disk is awaiting review. All figures are &#8220;cash
+compensation&#8221; — the salary line plus any board-paid 403(b) annuity, longevity
+bonus, fixed transportation allowance, and other lump sums. Health insurance
+value, life insurance face amount, long-term disability, sick-day buyback, and
+IRS-rate mileage reimbursements are excluded. Because Connecticut superintendent
+contracts vary widely in work effort — from 16-hour-per-week part-time
+positions to full-time K-12 regional superintendents — all dollar figures are
+normalized to a hypothetical 1.0-FTE-equivalent (260-day work year) for
+apples-to-apples comparison. Andover&#8217;s portion of Dr. Bruneau&#8217;s compensation is
+reported separately so readers can see both what Andover pays and what her
+market-rate compensation works out to.</p>
+<p class="section-label">Introduction</p>
+<h2 id="overview">Overview<a class="header-anchor" href="#overview" aria-label="Link to this section">¶</a></h2>
+<p>Dr. Valerie Bruneau is Andover&#8217;s Superintendent of Schools. She is also
+Scotland&#8217;s, under a separate contract not yet in hand. Her time is split 60/40
+between the two K-6 districts — 0.6 FTE at Andover and 0.4 FTE at Scotland.
+Andover&#8217;s contract pays her $90,000 cash plus a $10,000 mandatory 403(b)
+deferral for the 2025–26 school year, for an Andover-paid total of $100,000.
+Treating that as the Andover-share of a single full-time job, her implied
+1.0-FTE-equivalent compensation is <strong>$166,667</strong>.</p>
+<p>This report sets that figure in context by comparing it to every other
+Connecticut superintendent contract we could find for the 45 small towns
+identified as peers — towns of similar size, similar grade-level structure, and
+similar regional profile. The contracts vary in age and scope, so the report
+presents three different cuts of the data, each with different inclusion rules.
+Andover sits near the bottom in all three.</p>
+<p class="section-label">Methodology</p>
+<h2 id="a-note-on-methodology-before-the-numbers">A note on methodology before the numbers<a class="header-anchor" href="#a-note-on-methodology-before-the-numbers" aria-label="Link to this section">¶</a></h2>
+<p>Two methodological choices shape every table that follows. Both deserve a line
+of explanation before the numbers appear.</p>
+<p><strong>FTE-equivalent, not raw salary.</strong> Andover is a small K-6 district that shares
+its superintendent with Scotland. Other towns in the peer set are also small
+enough to share — Region 4 (Chester, Deep River, Essex/Centerbrook) has one K-12
+superintendent across four boards; ER9 (Easton, Redding, Region 9) has one
+across three. Comparing Andover&#8217;s $100,000 Andover-paid amount to Region 4&#8217;s
+per-town share isn&#8217;t apples-to-apples because Andover is paying for 60% of a
+person&#8217;s time while Region 4 districts are each paying for 25% of a different
+person&#8217;s time. The FTE-equivalent normalization expresses each contract as &#8220;what
+would this superintendent earn if working a full 260-day work year at this
+district&#8217;s pay rate.&#8221; It is the metric that makes contracts comparable across
+different sharing arrangements.</p>
+<p><strong>By contract, not by district.</strong> When three boards sign one joint contract
+(McKinnon for ER9; White for Region 4), it is one observation, not three. The
+tables in this report dedupe by contract for joint cases (one row for McKinnon,
+listing Easton/Redding; one for White, listing Centerbrook/Chester/Deep River).
+Where two districts share a superintendent under <em>separate</em> contracts, each is
+counted as its own observation when we have both. Bruneau&#8217;s Andover and Scotland
+contracts are an example: she appears here under Andover, and would appear
+again under Scotland once that contract is obtained.</p>
+<p class="section-label before-part">Andover's contract</p>
+<h2 id="part-1-dr-bruneau-8217-s-contract">Part 1 — Dr. Bruneau&#8217;s contract<a class="header-anchor" href="#part-1-dr-bruneau-8217-s-contract" aria-label="Link to this section">¶</a></h2>
+<p>The current Andover contract runs from July 1, 2023 through June 30, 2026.
+Section 2 explicitly defines the role as a 0.60 FTE position. Section 4 defines
+&#8220;annual base salary&#8221; as the sum of (a) a cash component paid biweekly and (b) a
+$10,000 mandatory deferral into a 403(b) annuity. The three contract-year
+figures are:</p>
+<h3 id="andover-8217-s-portion-of-dr-bruneau-8217-s-compensation">Andover&#8217;s portion of Dr. Bruneau&#8217;s compensation <span class="conf-mark">✓</span> <em>Confirmed from contract, Section 4</em><a class="header-anchor" href="#andover-8217-s-portion-of-dr-bruneau-8217-s-compensation" aria-label="Link to this section">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th class="num">Contract year</th>
+<th class="num">Cash component</th>
+<th class="num">403(b) deferral</th>
+<th class="num">Andover-paid total</th>
+</tr>
+</thead>
+<tbody><tr>
+<td class="num">2023–24</td>
+<td class="num">$80,000</td>
+<td class="num">$10,000</td>
+<td class="num">$90,000</td>
+</tr>
+<tr>
+<td class="num">2024–25</td>
+<td class="num">$85,000</td>
+<td class="num">$10,000</td>
+<td class="num">$95,000</td>
+</tr>
+<tr>
+<td class="num">2025–26</td>
+<td class="num">$90,000</td>
+<td class="num">$10,000</td>
+<td class="num">$100,000</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> Source: <a href="https://www.andoverelementaryct.org/images/forms/2023-2026_Superintendents_Contract.pdf">Andover Superintendent Contract
+2023-2026</a>,
+Section 4 (BASE SALARY). The 403(b) amount is technically a &#8220;salary reduction
+agreement&#8221; — the Superintendent elects to defer $10,000 of her base salary
+into a tax-sheltered annuity — but it is part of the total compensation the
+Board is obligated to provide, and the Board reports the full $90K+$10K total
+to the Connecticut State Teachers&#8217; Retirement System.</p>
+</blockquote>
+<p><strong>What &#8220;$166,667&#8221; includes.</strong> The comparison tables in Part 3 sum, for every
+contract, the same cash items: the salary cash component plus the board-paid or
+board-provided 403(b) annuity plus any longevity bonus plus any fixed
+transportation allowance. For Bruneau in 2025–26 that is $90,000 cash + $10,000
+annuity = $100,000 — both lines included, not just the salary cash. Divided by
+Andover&#8217;s 0.6 FTE share gives the 1.0-FTE-equivalent rate of $166,667 used in
+every comparison below. Health insurance value, life insurance face amount,
+long-term disability, sick-day buyback, and IRS-rate mileage reimbursements are
+<em>not</em> included for any contract — see the Methodology italic at the top of the
+report. The treatment is uniform: if a peer contract has its own annuity, it
+is added in the same way.</p>
+<p>The 2026–2029 successor contract — referenced in the FY26/FY27 town budget
+approved February 11, 2026 — proposes a $100,000 cash component for FY 2026–27,
+plus a $15,000 annuity (up from $10,000). Part 4 returns to that figure and
+shows where it would land in the current peer distribution.</p>
+<p class="section-label before-part">Peer cohort</p>
+<h2 id="part-2-the-peer-cohort">Part 2 — The peer cohort<a class="header-anchor" href="#part-2-the-peer-cohort" aria-label="Link to this section">¶</a></h2>
+<p>The original peer list contained 45 small Connecticut towns selected for
+similarity to Andover (small enrollment, small budget, K-6 or K-8 elementary
+structure, sometimes regional secondary). After excluding Norwich (which is
+structurally very different — much larger, much more urban), the working
+comparison set is 44 districts.</p>
+<p>Of those 44, contract data is available for 16 unique superintendent contracts
+covering 21 districts. The remaining 23 districts split into three groups:</p>
+<ul>
+<li><strong>21 districts</strong> — including Scotland, where Bruneau is the other half of the
+shared role — where a thorough search of the town and school district
+websites did not locate a superintendent contract online. CGS § 10-244c
+(Public Act 17-2) directs town clerks to post these contracts on the town
+website, but compliance is uneven. Requesting a copy from the town clerk —
+including via the state&#8217;s Freedom of Information process — is one possible
+mechanism for obtaining a missing contract.</li>
+<li><strong>4 districts</strong> have a contract PDF on disk that has not yet been manually
+reviewed (Chaplin, Columbia, Falls Village, Winsted). All four are pre-2024
+and would likely contribute stale data even after review.</li>
+<li>For four districts in particular (Bethany, Marlborough, Storrs/Mansfield,
+Woodbridge) board meeting minutes specifically reference the superintendent
+contract, but a thorough search of both the town and the school district
+websites did not locate the document itself.</li>
+</ul>
+<p>The full list of pending districts appears in Sources at the end.</p>
+<p class="section-label before-part">Comparison</p>
+<h2 id="part-3-three-views-of-the-comparison">Part 3 — Three views of the comparison<a class="header-anchor" href="#part-3-three-views-of-the-comparison" aria-label="Link to this section">¶</a></h2>
+<p>The same underlying data supports three different views, each with different
+inclusion rules. Each makes a slightly different argument; the picture changes
+from view to view but Andover&#8217;s position never improves.</p>
+<h3 id="view-1-all-contracts-we-can-find-latest-known">View 1 — All contracts we can find, latest known<a class="header-anchor" href="#view-1-all-contracts-we-can-find-latest-known" aria-label="Link to this section">¶</a></h3>
+<p>The most inclusive view. Includes every contract whose dollar figure we have a
+real observation for, regardless of when it was signed. Six contracts in this
+view are stale (data is from 2021–22 or 2023–24 because no newer contract was
+located), and one — the LePage Region 7 contract — covers an HS-only role
+rather than K-6/K-8. Stale rows are flagged with ⚠.</p>
+<p class="intro-table">Andover ranks <strong>13th of 16</strong>. Mean: $199,257. Median: $195,000.</p>
+<table>
+<thead>
+<tr>
+<th class="num">Rank</th>
+<th>Superintendent</th>
+<th class="num">Year</th>
+<th>District(s)</th>
+<th align="right" class="num">FTE-equiv</th>
+</tr>
+</thead>
+<tbody><tr>
+<td class="num">1</td>
+<td>Dr. Jason McKinnon</td>
+<td class="num">2025–26</td>
+<td>Easton, Redding</td>
+<td align="right" class="num">$310,408</td>
+</tr>
+<tr>
+<td class="num">2</td>
+<td>Dr. Frank Olah</td>
+<td class="num">2021–22 ⚠</td>
+<td>Hampton</td>
+<td align="right" class="num">$246,340</td>
+</tr>
+<tr>
+<td class="num">3</td>
+<td>Brian White</td>
+<td class="num">2021–22 ⚠</td>
+<td>Centerbrook, Chester, Deep River</td>
+<td align="right" class="num">$244,378</td>
+</tr>
+<tr>
+<td class="num">4</td>
+<td>Dr. Thomas Baird</td>
+<td class="num">2025–26</td>
+<td>Hebron</td>
+<td align="right" class="num">$223,736</td>
+</tr>
+<tr>
+<td class="num">5</td>
+<td>Immacolata Canelli</td>
+<td class="num">2024–25</td>
+<td>East Hartland</td>
+<td align="right" class="num">$208,880</td>
+</tr>
+<tr>
+<td class="num">6</td>
+<td>Scott Feder</td>
+<td class="num">2025–26</td>
+<td>Voluntown</td>
+<td align="right" class="num">$200,000</td>
+</tr>
+<tr>
+<td class="num">7</td>
+<td>James C. Agostine</td>
+<td class="num">2025–26</td>
+<td>Barkhamsted</td>
+<td align="right" class="num">$196,920</td>
+</tr>
+<tr>
+<td class="num">8</td>
+<td>Steven LePage †</td>
+<td class="num">2023–24 ⚠</td>
+<td>New Hartford</td>
+<td align="right" class="num">$195,000</td>
+</tr>
+<tr>
+<td class="num">9</td>
+<td>Dr. Jack Zamary</td>
+<td class="num">2025–26</td>
+<td>Bozrah</td>
+<td align="right" class="num">$193,063</td>
+</tr>
+<tr>
+<td class="num">10</td>
+<td>Michele Raynor</td>
+<td class="num">2025–26</td>
+<td>Brooklyn</td>
+<td align="right" class="num">$185,000</td>
+</tr>
+<tr>
+<td class="num">11</td>
+<td>Dr. Roy Seitsinger</td>
+<td class="num">2025–26</td>
+<td>Preston</td>
+<td align="right" class="num">$179,307</td>
+</tr>
+<tr>
+<td class="num">12</td>
+<td>Mary Beth Iacobelli</td>
+<td class="num">2024–25</td>
+<td>Norfolk</td>
+<td align="right" class="num">$173,750</td>
+</tr>
+<tr>
+<td class="num"><strong>13</strong></td>
+<td><strong>Valerie Bruneau</strong></td>
+<td class="num"><strong>2025–26</strong></td>
+<td><strong>Andover</strong></td>
+<td align="right" class="num"><strong>$166,667</strong></td>
+</tr>
+<tr>
+<td class="num">14</td>
+<td>Philip &#8220;Phil&#8221; Stevens</td>
+<td class="num">2023–24 ⚠</td>
+<td>West Willington</td>
+<td align="right" class="num">$164,591</td>
+</tr>
+<tr>
+<td class="num">15</td>
+<td>Steven Rioux</td>
+<td class="num">2021–22 ⚠</td>
+<td>Canterbury</td>
+<td align="right" class="num">$153,200</td>
+</tr>
+<tr>
+<td class="num">16</td>
+<td>Donna P. Leake</td>
+<td class="num">2021–22 ⚠</td>
+<td>Eastford</td>
+<td align="right" class="num">$146,866</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> ⚠ flags contracts whose dollar figure is from before 2024–25. †
+Steven LePage&#8217;s Region 7 contract covers high-school-only (grades 7–12), a
+meaningfully different role from the elementary-only superintendents that
+dominate this list. The three contracts ranked below Andover are all stale and
+likely understate current rates after multi-year step-ups; Stevens&#8217; West
+Willington contract, also stale, sits just below.</p>
+</blockquote>
+<h3 id="view-2-k-6-k-8-only-latest-known">View 2 — K-6 / K-8 only, latest known<a class="header-anchor" href="#view-2-k-6-k-8-only-latest-known" aria-label="Link to this section">¶</a></h3>
+<p>Filters out the three K-12 regional superintendent contracts (McKinnon ER9,
+White Region 4) and the HS-only Region 7 contract (LePage), leaving only
+contracts whose scope is comparable to Andover&#8217;s K-6 role. This is the cohort
+that most directly matches Dr. Bruneau&#8217;s role.</p>
+<p class="intro-table">Andover ranks <strong>10th of 13</strong>. Mean: $187,563. Median: $185,000. Andover is
+<strong>−10% below the median</strong> ($166,667 vs $185,000).</p>
+<table>
+<thead>
+<tr>
+<th class="num">Rank</th>
+<th>Superintendent</th>
+<th class="num">Year</th>
+<th>District(s)</th>
+<th align="right" class="num">FTE-equiv</th>
+</tr>
+</thead>
+<tbody><tr>
+<td class="num">1</td>
+<td>Dr. Frank Olah</td>
+<td class="num">2021–22 ⚠</td>
+<td>Hampton</td>
+<td align="right" class="num">$246,340</td>
+</tr>
+<tr>
+<td class="num">2</td>
+<td>Dr. Thomas Baird</td>
+<td class="num">2025–26</td>
+<td>Hebron</td>
+<td align="right" class="num">$223,736</td>
+</tr>
+<tr>
+<td class="num">3</td>
+<td>Immacolata Canelli</td>
+<td class="num">2024–25</td>
+<td>East Hartland</td>
+<td align="right" class="num">$208,880</td>
+</tr>
+<tr>
+<td class="num">4</td>
+<td>Scott Feder</td>
+<td class="num">2025–26</td>
+<td>Voluntown</td>
+<td align="right" class="num">$200,000</td>
+</tr>
+<tr>
+<td class="num">5</td>
+<td>James C. Agostine</td>
+<td class="num">2025–26</td>
+<td>Barkhamsted</td>
+<td align="right" class="num">$196,920</td>
+</tr>
+<tr>
+<td class="num">6</td>
+<td>Dr. Jack Zamary</td>
+<td class="num">2025–26</td>
+<td>Bozrah</td>
+<td align="right" class="num">$193,063</td>
+</tr>
+<tr>
+<td class="num">7</td>
+<td>Michele Raynor</td>
+<td class="num">2025–26</td>
+<td>Brooklyn</td>
+<td align="right" class="num">$185,000</td>
+</tr>
+<tr>
+<td class="num">8</td>
+<td>Dr. Roy Seitsinger</td>
+<td class="num">2025–26</td>
+<td>Preston</td>
+<td align="right" class="num">$179,307</td>
+</tr>
+<tr>
+<td class="num">9</td>
+<td>Mary Beth Iacobelli</td>
+<td class="num">2024–25</td>
+<td>Norfolk</td>
+<td align="right" class="num">$173,750</td>
+</tr>
+<tr>
+<td class="num"><strong>10</strong></td>
+<td><strong>Valerie Bruneau</strong></td>
+<td class="num"><strong>2025–26</strong></td>
+<td><strong>Andover</strong></td>
+<td align="right" class="num"><strong>$166,667</strong></td>
+</tr>
+<tr>
+<td class="num">11</td>
+<td>Philip &#8220;Phil&#8221; Stevens</td>
+<td class="num">2023–24 ⚠</td>
+<td>West Willington</td>
+<td align="right" class="num">$164,591</td>
+</tr>
+<tr>
+<td class="num">12</td>
+<td>Steven Rioux</td>
+<td class="num">2021–22 ⚠</td>
+<td>Canterbury</td>
+<td align="right" class="num">$153,200</td>
+</tr>
+<tr>
+<td class="num">13</td>
+<td>Donna P. Leake</td>
+<td class="num">2021–22 ⚠</td>
+<td>Eastford</td>
+<td align="right" class="num">$146,866</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> Filter: <code>--latest-known --scope k-6,k-8</code>. The three contracts
+ranked below Andover (Stevens, Rioux, Leake) are all stale; Rioux&#8217;s Canterbury
+contract expired June 2023 and Leake&#8217;s Eastford contract expired June 2024, so
+the current Canterbury and Eastford rates are almost certainly higher than the
+stale figures shown. Stevens&#8217; West Willington contract is still running
+through June 2026 but the listed figure is year-1 (2023–24); years 2 and 3
+likely include step-ups.</p>
+</blockquote>
+<h3 id="view-3-k-6-k-8-only-current-contracts-only-strict">View 3 — K-6 / K-8 only, current contracts only (strict)<a class="header-anchor" href="#view-3-k-6-k-8-only-current-contracts-only-strict" aria-label="Link to this section">¶</a></h3>
+<p>The most apples-to-apples view: K-6/K-8 scope, contract data from 2024–25 or
+later, no stale figures. This eliminates uncertainty about whether older
+contracts have been renegotiated since.</p>
+<p class="intro-table">Andover ranks <strong>9th of 9</strong> — last. Mean: $191,925. Median: $193,063. Andover is
+<strong>−14% below the median</strong>.</p>
+<table>
+<thead>
+<tr>
+<th class="num">Rank</th>
+<th>Superintendent</th>
+<th class="num">Year</th>
+<th>District(s)</th>
+<th align="right" class="num">FTE-equiv</th>
+</tr>
+</thead>
+<tbody><tr>
+<td class="num">1</td>
+<td>Dr. Thomas Baird</td>
+<td class="num">2025–26</td>
+<td>Hebron</td>
+<td align="right" class="num">$223,736</td>
+</tr>
+<tr>
+<td class="num">2</td>
+<td>Immacolata Canelli</td>
+<td class="num">2024–25</td>
+<td>East Hartland</td>
+<td align="right" class="num">$208,880</td>
+</tr>
+<tr>
+<td class="num">3</td>
+<td>Scott Feder</td>
+<td class="num">2025–26</td>
+<td>Voluntown</td>
+<td align="right" class="num">$200,000</td>
+</tr>
+<tr>
+<td class="num">4</td>
+<td>James C. Agostine</td>
+<td class="num">2025–26</td>
+<td>Barkhamsted</td>
+<td align="right" class="num">$196,920</td>
+</tr>
+<tr>
+<td class="num">5</td>
+<td>Dr. Jack Zamary</td>
+<td class="num">2025–26</td>
+<td>Bozrah</td>
+<td align="right" class="num">$193,063</td>
+</tr>
+<tr>
+<td class="num">6</td>
+<td>Michele Raynor</td>
+<td class="num">2025–26</td>
+<td>Brooklyn</td>
+<td align="right" class="num">$185,000</td>
+</tr>
+<tr>
+<td class="num">7</td>
+<td>Dr. Roy Seitsinger</td>
+<td class="num">2025–26</td>
+<td>Preston</td>
+<td align="right" class="num">$179,307</td>
+</tr>
+<tr>
+<td class="num">8</td>
+<td>Mary Beth Iacobelli</td>
+<td class="num">2024–25</td>
+<td>Norfolk</td>
+<td align="right" class="num">$173,750</td>
+</tr>
+<tr>
+<td class="num"><strong>9</strong></td>
+<td><strong>Valerie Bruneau</strong></td>
+<td class="num"><strong>2025–26</strong></td>
+<td><strong>Andover</strong></td>
+<td align="right" class="num"><strong>$166,667</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> Filter: <code>--scope k-6,k-8</code> (the default strict rule). <strong>No K-6/K-8
+peer with a current contract pays less than Andover.</strong> The next-lowest peer —
+Norfolk at $173,750 — pays 4% more than Andover does. Scotland is not in this
+table because Bruneau&#8217;s Scotland contract has not yet been obtained; when it
+is, the expected entry would tie Andover at $166,667.</p>
+</blockquote>
+<p class="section-label before-part">FY 2026–27</p>
+<h2 id="part-4-the-fy-2026-27-proposal">Part 4 — The FY 2026–27 proposal<a class="header-anchor" href="#part-4-the-fy-2026-27-proposal" aria-label="Link to this section">¶</a></h2>
+<p>The 2023–2026 Andover contract expires June 30, 2026. The successor contract —
+referenced in the FY26/FY27 town budget approved February 11, 2026 — bumps the
+cash component from $90,000 to $100,000 for FY 2026–27 (a +11.1% increase on the
+cash component) and bumps the 403(b) deferral from $10,000 to $15,000.</p>
+<p>The combined effect: Andover&#8217;s payment goes from $100,000 to $115,000 (+15%). At
+the same 0.6 FTE share, the implied 1.0-FTE-equivalent rate goes from $166,667
+to $191,667.</p>
+<h3 id="where-the-fy27-proposal-would-place-andover-against-current-peer-rates">Where the FY27 proposal would place Andover against current peer rates<a class="header-anchor" href="#where-the-fy27-proposal-would-place-andover-against-current-peer-rates" aria-label="Link to this section">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th class="num">Rank</th>
+<th>Superintendent</th>
+<th class="num">Year</th>
+<th>District(s)</th>
+<th align="right" class="num">FTE-equiv</th>
+</tr>
+</thead>
+<tbody><tr>
+<td class="num">1</td>
+<td>Dr. Thomas Baird</td>
+<td class="num">2025–26</td>
+<td>Hebron</td>
+<td align="right" class="num">$223,736</td>
+</tr>
+<tr>
+<td class="num">2</td>
+<td>Immacolata Canelli</td>
+<td class="num">2024–25</td>
+<td>East Hartland</td>
+<td align="right" class="num">$208,880</td>
+</tr>
+<tr>
+<td class="num">3</td>
+<td>Scott Feder</td>
+<td class="num">2025–26</td>
+<td>Voluntown</td>
+<td align="right" class="num">$200,000</td>
+</tr>
+<tr>
+<td class="num">4</td>
+<td>James C. Agostine</td>
+<td class="num">2025–26</td>
+<td>Barkhamsted</td>
+<td align="right" class="num">$196,920</td>
+</tr>
+<tr>
+<td class="num">5</td>
+<td>Dr. Jack Zamary</td>
+<td class="num">2025–26</td>
+<td>Bozrah</td>
+<td align="right" class="num">$193,063</td>
+</tr>
+<tr>
+<td class="num"><strong>—</strong></td>
+<td><strong>Andover (FY 2026–27 proposed)</strong></td>
+<td class="num"><strong>2026–27</strong></td>
+<td><strong>Andover</strong></td>
+<td align="right" class="num"><strong>$191,667</strong></td>
+</tr>
+<tr>
+<td class="num">6</td>
+<td>Michele Raynor</td>
+<td class="num">2025–26</td>
+<td>Brooklyn</td>
+<td align="right" class="num">$185,000</td>
+</tr>
+<tr>
+<td class="num">7</td>
+<td>Dr. Roy Seitsinger</td>
+<td class="num">2025–26</td>
+<td>Preston</td>
+<td align="right" class="num">$179,307</td>
+</tr>
+<tr>
+<td class="num">8</td>
+<td>Mary Beth Iacobelli</td>
+<td class="num">2024–25</td>
+<td>Norfolk</td>
+<td align="right" class="num">$173,750</td>
+</tr>
+<tr>
+<td class="num">9</td>
+<td>Valerie Bruneau</td>
+<td class="num">2025–26</td>
+<td>Andover (current FY26)</td>
+<td align="right" class="num">$166,667</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> <strong>This is an apples-to-not-quite-apples comparison.</strong> The Andover
+row is FY 2026–27. The peer rows are mostly FY 2025–26. Almost all of those
+peer contracts will themselves step up in FY 2026–27 — and Andover&#8217;s relative
+position will move down again once those FY27 peer figures are negotiated and
+published. So this table is best read as &#8220;where the FY27 Andover number would
+sit <em>if peer pay froze</em>&#8221;, which it won&#8217;t. The FY27 row is interpolated
+between Bozrah ($193,063) and Brooklyn ($185,000) under that &#8220;frozen peer&#8221;
+assumption. The +$10K cash bump that has drawn public attention reflects a
+contractual move from −14% below the current-cohort median to roughly −1%
+below it, in a cohort that itself will likely move up before FY27 begins. The
+403(b) annuity bump from $10K to $15K — less remarked upon — is a structural
+change worth noting separately.</p>
+</blockquote>
+<p>The successor contract has not yet been published in full as of this report&#8217;s
+compilation date. When it is, the FY28 and FY29 figures (cash components of
+$105K and $110K respectively, per the budget document, plus the $15K annuity)
+can be added.</p>
+<p class="section-label">At a glance</p>
+<h2 id="summary-table">Summary table<a class="header-anchor" href="#summary-table" aria-label="Link to this section">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>What does Andover pay Dr. Bruneau for FY 2025–26?</td>
+<td>$90,000 cash + $10,000 403(b) = <strong>$100,000</strong> total</td>
+</tr>
+<tr>
+<td>What&#8217;s the 1.0-FTE-equivalent rate that implies?</td>
+<td><strong>$166,667</strong> (Andover&#8217;s share is 60% of a full-time position)</td>
+</tr>
+<tr>
+<td>Where does that rank against peer Connecticut superintendents?</td>
+<td>Bottom 4 of 16 in the broadest view; last of 9 in the strictest</td>
+</tr>
+<tr>
+<td>How far below the K-6/K-8 peer median is Andover?</td>
+<td>$18,333 (−10%) below the latest-known median of $185,000; $26,396 (−14%) below the strict median of $193,063</td>
+</tr>
+<tr>
+<td>Does any K-6/K-8 peer with a 2024-or-newer contract pay less?</td>
+<td><strong>No.</strong> Andover is the bottom of every current-data peer cohort.</td>
+</tr>
+<tr>
+<td>What would FY 2026–27 do to Andover&#8217;s ranking against current peer rates?</td>
+<td>Move from last among 9 to roughly the middle of the pack (≈1% below current median). Peer rates will themselves rise in FY27, so the actual FY27-vs-FY27 picture will likely shift back toward the current gap.</td>
+</tr>
+<tr>
+<td>What is &#8220;cash compensation&#8221; in this report?</td>
+<td>Base salary + board-contributed 403(b) + longevity bonuses + fixed transportation allowances</td>
+</tr>
+<tr>
+<td>What&#8217;s excluded?</td>
+<td>Health insurance value, life insurance face amount, LTD, IRS-rate mileage, sick-day buyback</td>
+</tr>
+</tbody></table>
+<p class="section-label">Analysis</p>
+<h2 id="key-observations">Key Observations<a class="header-anchor" href="#key-observations" aria-label="Link to this section">¶</a></h2>
+<p><strong>Andover&#8217;s superintendent rate is unambiguously below peer rates across every
+cut of the data we can run.</strong> The bottom-of-the-distribution finding is not an
+artifact of one inclusion rule. Whether you use the broadest view (every
+contract we can find, including stale ones, all scopes) or the strictest
+(K-6/K-8 only, no stale data), Andover sits at or near the bottom.</p>
+<p><strong>The strict K-6/K-8 view is the cleanest comparison.</strong> It eliminates two
+confounders — scope mismatch (K-12 regional supes earn more because their role
+is bigger) and stale data (older contracts almost certainly have step-ups not
+visible from the dollar figures we have). In that view, Andover is rank 9 of 9 —
+last — and no K-6/K-8 peer with a current contract pays less than Andover does.</p>
+<p><strong>The three contracts ranked below Andover in the broader views are likely
+understated.</strong> Canterbury (Rioux, $153,200) is from a 2020–2023 contract that
+expired three years ago; the current Canterbury figure is presumably higher
+after intervening step-ups. Same logic applies to Eastford (Leake) and West
+Willington (Stevens). If those updated figures came in higher than today&#8217;s
+listed numbers, Andover would sit lower still in the broader views.</p>
+<p><strong>The FY 2026–27 proposal would move Andover from rank 9/9 to roughly rank 6/9
+in the strict view against <em>current</em> peer rates</strong> — and that&#8217;s the important
+qualifier. The peer contracts shown are mostly FY 2025–26. Most of them will
+themselves step up in FY 2026–27. So while Andover&#8217;s FY27 number would
+substantially close the gap if peer pay stood still, peer pay won&#8217;t stand
+still, and the actual FY27-vs-FY27 picture will likely shift back toward the
+current gap. The +$10K cash bump moves Andover closer to the current-cohort
+median; whether it moves Andover closer to the FY27 median is a different
+question that this report can&#8217;t yet answer.</p>
+<p><strong>The 403(b) bump from $10K to $15K is a structural change worth noting
+separately.</strong> The cash-component bump from $90K → $100K is what the FY26/FY27
+budget document spotlights, but the 403(b) component is going up by half (50%)
+at the same time. Both are tax-advantaged compensation to the supe; both raise
+Andover&#8217;s total cost.</p>
+<p><strong>Twenty-three peer districts are not in this analysis.</strong> A thorough search of
+public sites did not locate a current contract for 21 of them; four more have a
+contract PDF on disk that has not been manually reviewed. Adding those would
+change the median, but in which direction is hard to predict — the missing
+districts skew toward very small, very rural Connecticut towns where part-time
+superintendent arrangements are common, and whether their part-time rates
+would land above or below Andover&#8217;s FTE-equivalent is genuinely unknown.</p>
+<p class="section-label">Caveats</p>
+<h2 id="what-this-report-does-not-show">What this report does not show<a class="header-anchor" href="#what-this-report-does-not-show" aria-label="Link to this section">¶</a></h2>
+<ul>
+<li><strong>Total compensation</strong> including health insurance value, life insurance face
+amount, long-term disability, sick-day buyback, and IRS-rate mileage. These
+items vary widely across districts and a fair comparison would require valuing
+each district&#8217;s specific health plan; the cash-only comparison sidesteps that.</li>
+<li><strong>Years of experience or tenure.</strong> A first-year superintendent at $200,000 is
+a different observation from a 20-year veteran at $200,000. This report treats
+every contract uniformly regardless of the superintendent&#8217;s experience.</li>
+<li><strong>Cost of living adjustments.</strong> Fairfield County districts (Easton, Redding)
+have higher local costs than the eastern Connecticut towns that dominate the
+lower end of this distribution. The FTE-equivalent figures are nominal, not
+cost-of-living-adjusted.</li>
+<li><strong>Per-pupil or per-budget normalization.</strong> A larger district legitimately
+needs a more senior superintendent, and some peers manage two or three times
+Andover&#8217;s enrollment. This report normalizes by FTE, not by enrollment or
+budget size.</li>
+<li><strong>The missing peers.</strong> The 21 districts where a thorough search did not
+locate a current contract, plus the four with PDFs on disk awaiting review,
+may have rates above or below the current cohort.</li>
+<li><strong>A causal claim about appropriateness.</strong> This report describes where Andover
+sits in the peer distribution. It does not argue that being below median is
+good or bad, or that any particular pay rate is the &#8220;right&#8221; one. That is a
+judgment for residents.</li>
+</ul>
+<p class="section-label">Documentation</p>
+<h2 id="sources">Sources<a class="header-anchor" href="#sources" aria-label="Link to this section">¶</a></h2>
+<h3 id="andover-specific-documents">Andover-specific documents<a class="header-anchor" href="#andover-specific-documents" aria-label="Link to this section">¶</a></h3>
+<ul>
+<li><strong>Andover Superintendent Contract 2023-2026</strong> —
+<a href="https://www.andoverelementaryct.org/images/forms/2023-2026_Superintendents_Contract.pdf">andoverelementaryct.org/&#8230;/2023-2026_Superintendents_Contract.pdf</a>
+(scanned PDF, OCR&#8217;d)</li>
+<li><strong>Andover FY26/FY27 Town Budget</strong> — approved at the February 11, 2026 Town
+Meeting; provides FY27 proposed figures</li>
+</ul>
+<h3 id="peer-district-contracts-in-the-analysis-16">Peer-district contracts in the analysis (16)<a class="header-anchor" href="#peer-district-contracts-in-the-analysis-16" aria-label="Link to this section">¶</a></h3>
+<p>In FTE-equivalent rank order:</p>
+<ul>
+<li>McKinnon (ER9: Easton, Redding) — direct PDF, 2024-2027</li>
+<li>Olah (Hampton) — direct PDF, 2021-2022 ⚠</li>
+<li>White (Region 4: Centerbrook, Chester, Deep River) —
+<a href="https://www.essexct.gov/DocumentCenter/View/362/contract_-_supt_-_white_b_2021-24_signedpdf-PDF">essexct.gov/&#8230;/contract_-<em>supt</em>-_white_b_2021-24_signedpdf-PDF</a>,
+2021-2024 ⚠</li>
+<li>Baird (Hebron) —
+<a href="https://www.hebron.k12.ct.us/common/pages/GetFile.ashx?key=2CGfAbjf">hebron.k12.ct.us/&#8230;/GetFile.ashx</a>,
+2025-2028</li>
+<li>Canelli (East Hartland / Hartland) — crawled, 2024-2027</li>
+<li>Feder (Voluntown) —
+<a href="https://www.voluntown.gov/DocumentCenter/View/489/Superintendent-PDF">voluntown.gov/&#8230;/Superintendent-PDF</a>,
+2025-2026</li>
+<li>Agostine (Barkhamsted) — crawled, 2023-2026 (FY26 estimated from year-1 +
+teacher-scale increases)</li>
+<li>LePage (New Hartford, Region 7 HS-only) —
+<a href="https://www.newhartfordct.gov/sites/g/files/vyhlif961/f/pages/reg_7_superintendents_contract_2023-2026.pdf">newhartfordct.gov/&#8230;/reg_7_superintendents_contract_2023-2026.pdf</a>
+⚠</li>
+<li>Zamary (Bozrah) — Google Drive copy supplied by district, 2025-2028</li>
+<li>Raynor (Brooklyn) — crawled, 2024-2027</li>
+<li>Seitsinger (Preston) — crawled, 2025-2028</li>
+<li>Iacobelli (Norfolk) — crawled, 2022-2025 (year-3 figure used)</li>
+<li>Bruneau (Andover) — Andover scanned PDF OCR&#8217;d, 2023-2026</li>
+<li>Stevens (West Willington) — crawled, 2023-2026 ⚠</li>
+<li>Rioux (Canterbury) — Canterbury CMS
+<a href="https://www.canterburyct.org/media/3811">media/3811</a>, 2020-2023 ⚠</li>
+<li>Leake (Eastford) —
+<a href="https://www.eastfordct.org/wp-content/uploads/2023/06/Superintendent-Contract-2022.pdf">eastfordct.org/&#8230;/Superintendent-Contract-2022.pdf</a>,
+2021-2024 ⚠</li>
+</ul>
+<h3 id="pending-contract-not-located-in-public-search-21">Pending — contract not located in public search (21)<a class="header-anchor" href="#pending-contract-not-located-in-public-search-21" aria-label="Link to this section">¶</a></h3>
+<p>A thorough search of the town and school district websites did not locate a
+superintendent contract for these districts; one possible mechanism for
+obtaining a missing contract is a request to the town clerk under the state&#8217;s
+Freedom of Information process.</p>
+<p>Ashford, Baltic, Bethany, Colebrook, Kent, Lakeville (Salisbury), Marlborough,
+New Hartford (K-6, separate from Region 7), North Canaan, North Franklin
+(Franklin), Pomfret Center, Salem, <strong>Scotland</strong> (Bruneau&#8217;s other contract),
+Sharon, Sherman, Sterling, Storrs (Mansfield), Union, West Cornwall (Cornwall),
+Woodbridge, Woodstock.</p>
+<h3 id="pending-review-pdf-on-disk-not-yet-manually-verified">Pending review — PDF on disk, not yet manually verified<a class="header-anchor" href="#pending-review-pdf-on-disk-not-yet-manually-verified" aria-label="Link to this section">¶</a></h3>
+<p>Chaplin, Columbia, Falls Village, Winsted.</p>
+<h3 id="excluded">Excluded<a class="header-anchor" href="#excluded" aria-label="Link to this section">¶</a></h3>
+<p>Norwich (too dissimilar in size and structure to be a useful peer).</p>
+<h3 id="statutory-basis">Statutory basis<a class="header-anchor" href="#statutory-basis" aria-label="Link to this section">¶</a></h3>
+<ul>
+<li>CT Public Act 17-2 § 157 / CGS § 10-244c (requirement to post superintendent
+contracts on town websites)</li>
+</ul>
+<h3 id="methodology-and-tooling">Methodology and tooling<a class="header-anchor" href="#methodology-and-tooling" aria-label="Link to this section">¶</a></h3>
+<p>The full data pipeline, including the web scraper, OCR pipeline, comparison
+script, and <code>compensation.json</code> data file lives in a separate working
+repository. The corrections log inside that data file documents seven instances
+where automated attribution was wrong and was corrected during OCR — including
+the largest, which was that an early Region 1 contract attribution was actually
+a New Canaan contract incorrectly hosted under a &#8220;/canaan&#8221; CMS subdomain.</p>
+
+<p class="section-label">Download</p>
+<h2 id="other-formats">Other Formats<a class="header-anchor" href="#other-formats" aria-label="Link to this section">¶</a></h2>
+<p>This report is available in three formats, all located alongside this page:</p>
+
+<div class="format-cards cols-3">
+  <div class="format-card">
+    <div class="format-card-icon">🌐</div>
+    <div class="format-card-title"><a href="./">HTML</a></div>
+    <div class="format-card-desc">Interactive version with formatted tables; best for on-screen reading and sharing.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📄</div>
+    <div class="format-card-title"><a href="report.md">Markdown</a></div>
+    <div class="format-card-desc">Plain-text version; readable in any editor, ideal for copying into other documents.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📑</div>
+    <div class="format-card-title"><a href="report.pdf">PDF</a></div>
+    <div class="format-card-desc">Print-ready version with all tables, footnotes, and source citations.</div>
+  </div>
+</div>
+
+</div>
+<div class="page-footer">
+Personal work of <a href="mailto:scott@sauyet.com">Scott Sauyet</a> · Compiled May 25, 2026<br>Data from public CT town and school district websites, OCR'd scanned PDFs, and contracts shared via Google Drive. Not an official town document. ·
+<a href="http://andoverct.info/reports/aes/superintendent-pay/">andoverct.info/reports/aes/superintendent-pay/</a>
+</div>
+<script>
+document.addEventListener('click', function(e) {
+    const anchor = e.target.closest('.header-anchor');
+    if (!anchor) return;
+    const heading = anchor.parentElement;
+    const id = heading.id;
+    if (!id) return;
+    const url = window.location.origin + window.location.pathname + '#' + id;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function() {
+            anchor.classList.add('copied');
+            setTimeout(function() { anchor.classList.remove('copied'); }, 1400);
+        }).catch(function() {});
+    }
+});
+</script>
+<script>
+(function() {
+    var imgs = document.querySelectorAll('.container img');
+    if (!imgs.length) return;
+    var overlay = null;
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    function close() {
+        if (!overlay) return;
+        var o = overlay;
+        overlay = null;
+        o.classList.remove('open');
+        document.removeEventListener('keydown', onKey);
+        setTimeout(function() { if (o.parentNode) o.parentNode.removeChild(o); }, 200);
+    }
+    function open(src, alt) {
+        overlay = document.createElement('div');
+        overlay.className = 'lightbox-overlay';
+        var big = document.createElement('img');
+        big.src = src;
+        big.alt = alt || '';
+        overlay.appendChild(big);
+        overlay.addEventListener('click', close);
+        document.body.appendChild(overlay);
+        overlay.offsetWidth; // force reflow so the fade-in transition runs
+        overlay.classList.add('open');
+        document.addEventListener('keydown', onKey);
+    }
+    imgs.forEach(function(img) {
+        img.addEventListener('click', function() { open(img.currentSrc || img.src, img.alt); });
+    });
+})();
+</script>
+</body>
+</html>

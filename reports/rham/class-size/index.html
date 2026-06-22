@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>RHAM Class Size in Context — Regional School District 8</title>
+<style>/* Default civic-report theme.
+ *
+ * A theme is just this set of CSS custom properties. To experiment, copy this
+ * file to _build/themes/<name>.css, change what you like, and point at it from
+ * _build/report.config.json ({"theme":"<name>"}) for all reports, or from a
+ * single report's front matter (theme: <name>). A non-default theme is layered
+ * ON TOP of this one, so it only needs to list the variables it changes.
+ *
+ * Scope: colors, fonts, and small size/width/gap tweaks — not layout changes.
+ */
+:root {
+  /* ---- Palette ---- */
+  --bg:             #fafaf7;   /* page background */
+  --bg-page:        #ffffff;   /* the white content card */
+  --bg-soft:        #f5f3ed;   /* callouts, table headers, inline code */
+  --ink:            #1a1a1a;   /* body text, main headings */
+  --ink-soft:       #333333;   /* blockquote / methodology text */
+  --ink-mute:       #5a5a5a;   /* subtitle, card descriptions */
+  --ink-faint:      #888888;   /* attribution, footer, captions */
+  --rule:           #e0ddd5;   /* hairline borders */
+  --accent:         #b8a878;   /* gold accent rules */
+  --accent-2:       #2c3e50;   /* slate: h3, table-header & code text */
+  --banner-bg:      #2c3e50;   /* top banner background */
+  --banner-ink:     #ecf0f1;   /* top banner text */
+  --crumb-link:       #b9c4cf; /* breadcrumb links in the banner */
+  --crumb-link-hover: #ffffff;
+  --crumb-current:    #ffffff; /* deepest crumb (current page), not a link */
+  --link:           #1a5490;
+  --link-hover:     #0d3a6b;
+  --link-underline: #c5d3e2;
+  --anchor:         #b8b3a4;   /* the ¶ header anchor */
+  --anchor-hover:   #6c7480;
+  --confirm:        #5a8a5a;   /* green ✓ confirmation mark */
+  --confirm-strong: #2e7d32;
+
+  /* ---- Fonts ---- */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:  "SF Mono", Monaco, Menlo, Consolas, monospace;
+
+  /* ---- Sizes (small tweaks only; no layout restructuring) ---- */
+  --base-size:  11pt;    /* body text */
+  --measure:    780px;   /* content column width */
+  --gutter:     30px;    /* horizontal padding / banner & footer gaps */
+  --title-size: 28pt;
+  --h2-size:    18pt;
+  --h3-size:    13pt;
+}
+
+/* bluegold — mirrors the light-mode look of the 55th campaign site
+ * (C:\Users\scott\Dev\Andover\55th, e.g. localhost:8080/reports): cool
+ * blue-gray paper, a dark navy banner with a gold underline, navy serif
+ * headings over a sans body, gold accent rules, and blue links.
+ *
+ * Note the deliberate font swap: base.css uses --font-serif for body text and
+ * --font-sans for headings/labels, so to match the campaign look (sans body,
+ * serif display) we put the SANS stack in --font-serif and the SERIF stack in
+ * --font-sans.
+ *
+ * Layered on default.css. Uses --banner-border (in base.css) for the gold rule
+ * under the banner. */
+:root {
+  /* Palette */
+  --bg:             #f4f6f9;
+  --bg-page:        #ffffff;
+  --bg-soft:        #eef4fb;   /* blue-050 tint for callouts / table headers */
+  --rule:           #e3e8ef;   /* hairlines */
+  --ink:            #19222e;
+  --ink-soft:       #2b3744;
+  --ink-mute:       #5b6775;
+  --ink-faint:      #8a94a1;
+  --accent:         #e8a800;   /* signature gold rules */
+  --accent-2:       #0f2a4a;   /* blue-900: headings, table-header & code text */
+  --banner-bg:      linear-gradient(180deg, #0f2a4a, #143862);
+  --banner-border:  3px solid #e8a800;
+  --banner-ink:     #dde8f5;   /* blue-100 */
+  --crumb-link:       #e8a800; /* gold breadcrumb links */
+  --crumb-link-hover: #ffffff; /* hover to white + underline */
+  --crumb-current:    #ffffff; /* current page, not a link */
+  --link:           #245c95;   /* blue-600 */
+  --link-hover:     #1c4e80;   /* blue-700 */
+  --link-underline: #cfe0f2;
+  --confirm:        #2f8f5b;
+  --confirm-strong: #1f7d49;
+
+  /* Type: sans body + serif display headings (see note above) */
+  --font-serif: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans:  Georgia, "Times New Roman", serif;
+
+  --measure: 860px;
+}
+
+/* Structural base styles for civic reports — theme-independent.
+ * Colors, fonts, and sizes come from the active theme (CSS custom properties
+ * in _build/themes/<name>.css), which is loaded BEFORE this file. */
+
+/* ---- Reset & base ---- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Layout ---- */
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner a { color: inherit; text-decoration: none; }
+.page-banner a:hover { text-decoration: underline; }
+
+/* ---- Breadcrumb (in the banner) ---- */
+.page-banner .crumbs a {
+    color: var(--crumb-link, var(--banner-ink));
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover, #fff);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current {
+    color: var(--crumb-current, #fff);
+}
+
+.container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* ---- Images / figures ---- */
+/* Scale charts and figures to the column (and the printed page box) rather
+   than overflowing at their intrinsic pixel/point size. */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+}
+
+/* ---- Lightbox (screen only; overlay is built at runtime by the viewer
+   script, so it never appears in the PDF). Click a chart to enlarge it. ---- */
+.container img { cursor: zoom-in; }
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vmin;
+    background: rgba(0, 0, 0, 0.85);
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+.lightbox-overlay.open { opacity: 1; }
+.lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    margin: 0;
+    cursor: zoom-out;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+    background: #fff;
+}
+
+/* ---- Title block ---- */
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-attribution {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    color: var(--ink-faint);
+    margin: 0 0 24px 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+.report-attribution a {
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+}
+.report-attribution a:hover {
+    color: var(--link);
+    border-bottom-color: var(--link);
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.methodology-header {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 0 0 36px 0;
+    line-height: 1.55;
+}
+
+/* ---- Section labels (small uppercase tags above h2) ---- */
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 36px 0 4px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+/* ---- Headings ---- */
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+h3 {
+    font-family: var(--font-sans);
+    font-size: var(--h3-size);
+    font-weight: 600;
+    margin: 28px 0 10px 0;
+    color: var(--accent-2);
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+
+/* ---- Header anchor links (HTML only; hidden in print) ---- */
+.header-anchor {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.2em;
+    color: var(--anchor);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.85em;
+    vertical-align: baseline;
+    cursor: pointer;
+    user-select: none;
+}
+h2:hover .header-anchor,
+h3:hover .header-anchor,
+.header-anchor:focus {
+    opacity: 1;
+}
+.header-anchor:hover {
+    color: var(--anchor-hover);
+}
+.header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+}
+.header-anchor.copied::after {
+    content: " copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+}
+@media print {
+    .header-anchor {
+        display: none;
+    }
+}
+
+/* ---- Body text ---- */
+p {
+    margin: 0 0 14px 0;
+    orphans: 3;
+    widows: 3;
+}
+p.intro-table {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+strong { font-weight: 700; color: var(--ink); }
+em { font-style: italic; }
+
+/* ---- Links ---- */
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* ---- Lists ---- */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+li {
+    margin: 0 0 6px 0;
+    line-height: 1.55;
+}
+
+/* ---- Tables ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-before: avoid;
+    break-before: avoid;
+}
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 9.5pt;
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--accent);
+}
+tbody tr:hover { background: var(--bg); }
+
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+tbody tr:last-child td {
+    border-bottom: 2px solid var(--accent);
+}
+
+/* ---- Blockquotes (source notes, verbatim quotes) ---- */
+blockquote {
+    margin: 14px 0 18px 0;
+    padding: 14px 20px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+blockquote p { margin: 0 0 8px 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ol, blockquote ul {
+    margin: 8px 0;
+}
+
+/* ---- HR ---- */
+hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+}
+
+/* ---- Inline code ---- */
+code {
+    font-family: var(--font-mono);
+    font-size: 9.5pt;
+    background: var(--bg-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: var(--accent-2);
+    overflow-wrap: break-word;
+}
+
+/* ---- Other Formats footer ---- */
+.formats-section {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+}
+.format-cards {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.format-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.format-cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media screen and (max-width: 700px) {
+    .format-cards.cols-3,
+    .format-cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+.format-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    padding: 14px;
+    text-align: left;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+.format-card-icon { font-size: 18pt; margin-bottom: 4px; }
+.format-card-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+.format-card-desc { font-size: 9pt; color: var(--ink-mute); line-height: 1.4; }
+.format-card a { display: block; }
+
+/* ---- Footer ---- */
+.page-footer {
+    max-width: var(--measure);
+    margin: 32px auto 60px;
+    padding: 24px var(--gutter);
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 9.5pt;
+    font-family: var(--font-sans);
+    border-top: 1px solid var(--rule);
+}
+
+/* ---- Confirmation glyphs ---- */
+h3 .conf-mark {
+    color: var(--confirm);
+    font-size: 11pt;
+    margin-right: 4px;
+}
+</style>
+</head>
+<body>
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/reports/">Reports</a><span class="sep">›</span><a href="/reports/rham/">RHAM</a><span class="sep">›</span><span class="current">RHAM Class Size in Context</span>
+  </nav>
+</div>
+<div class="container">
+<h1 class="report-title">RHAM Class Size in Context</h1>
+<p class="report-subtitle">Regional School District 8 · Direct measurements, peer comparison, and trajectory</p>
+<p class="report-attribution">A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Not an official Region 8 document</p>
+<hr class="report-header-rule">
+<p class="methodology-header">Report compiled April 27, 2026, for use in deliberations on the FY 2026–27
+Region 8 budget. High school and middle school class-size figures for 2025–26
+are computed directly from RHAM master schedule extracts dated February 15, 2026
+(HS, 607 rostered sections) and the 2025–26 Middle School Team and Unified Arts
+schedule. Peer-district figures are drawn from the Connecticut Mirror
+&#8220;YourSchool&#8221; 2012–13 dataset (the most recent year with comparable, publicly
+available per-school class-size data) and from the National Center for Education
+Statistics Common Core of Data 2024–25 release for current student/teacher
+ratios. RHAM historical staffing figures come from the Region 8 FY 2018–19
+Superintendent&#8217;s Budget Proposal and the FY 2025–26 Administrative Budget
+Presentation. All figures are presented as found; methodology, caveats, and
+known data gaps are described below.</p>
+<hr>
+<p class="section-label">Introduction</p>
+<h2 id="why-this-report-exists">Why this report exists<a class="header-anchor" href="#why-this-report-exists" aria-label="Link to this section">¶</a></h2>
+<p>A recurring claim in this year&#8217;s budget conversation is that RHAM&#8217;s class sizes
+have become &#8220;stunningly low&#8221; relative to peer districts and historical norms,
+and that the difference represents an opportunity for cost reduction without
+instructional harm. That claim is partly right and partly wrong, and it matters
+which part is which.</p>
+<p>This report tries to answer three questions, in order:</p>
+<ol>
+<li>What are RHAM&#8217;s actual class sizes today, measured directly from the master
+schedule?</li>
+<li>How do those compare to peer Connecticut secondary regional districts — both
+historically and today?</li>
+<li>How did RHAM get here from its 2012–13 baseline?</li>
+</ol>
+<p>The short version of the answer: yes, RHAM&#8217;s classes are smaller than they used
+to be, and yes, RHAM is on the richer end of staffing among its peer group — but
+only modestly. The &#8220;stunningly low&#8221; framing relies almost entirely on a single
+misleading number (a teacher-eye, all-classes-included average of 9.82
+students); when measured the same way other districts measure their own class
+sizes, RHAM&#8217;s typical core-academic classroom holds about 13 students from a
+teacher&#8217;s perspective and about 14 from a student&#8217;s. The bigger story — and the
+one the data supports cleanly — is that RHAM&#8217;s enrollment fell 36% over thirteen
+years while staffing fell only about 25%, and that this gap, rather than any
+deliberate decision to enrich staffing, is what produced today&#8217;s small classes.</p>
+<hr>
+<p class="section-label">Reading the numbers</p>
+<h2 id="a-note-on-methodology-before-the-numbers">A note on methodology before the numbers<a class="header-anchor" href="#a-note-on-methodology-before-the-numbers" aria-label="Link to this section">¶</a></h2>
+<p>There are three honest ways to count class size, and they give very different
+answers. All three appear in this report.</p>
+<p><strong>View A — All classrooms.</strong> Every section that meets in the master schedule,
+including &#8220;Math Lab,&#8221; &#8220;Writing Lab,&#8221; &#8220;Tutorial,&#8221; study halls, and one-on-one
+specialized supports. This is the broadest possible denominator and produces the
+smallest average. It is also the number most often quoted in casual
+conversation, because it is the simplest to compute: total enrolled seats
+divided by total sections. RHAM HS at View A in 2025–26 is <strong>9.82 students per
+section.</strong></p>
+<p><strong>View B — Excluding support and intervention periods.</strong> This removes the 130
+sections at the high school that exist specifically because a small group of
+students needs targeted help (Math Lab serving 1–3 students, for instance, is
+doing exactly what it&#8217;s funded to do). What remains is the population of &#8220;real&#8221;
+classrooms a typical student would sit in. RHAM HS at View B is <strong>12.16 students
+per section.</strong></p>
+<p><strong>View C — Core academic only.</strong> English, math, science, social studies, and
+world languages — the courses every student takes and the courses most directly
+comparable across districts. RHAM HS at View C is <strong>12.75 students per
+section.</strong></p>
+<p>A second methodological wrinkle is the difference between <em>teacher-eye</em> and
+<em>student-eye</em> averages. A teacher-eye average is the simple mean of section
+sizes: add up all the section sizes and divide by the number of sections. A
+student-eye average is size-weighted — it asks, &#8220;what is the average class size
+<em>experienced by a student</em>?&#8221; — and is computed as the sum of (size × size)
+divided by the sum of sizes. Because larger classes contain proportionally more
+students, the student-eye average is always at least as large as the teacher-eye
+average, and the gap between the two is itself a useful measure of how unevenly
+classes are distributed. RHAM HS in core academic subjects has a teacher-eye
+mean of 12.75 and a student-eye mean of 14.28: a typical student sits in classes
+averaging about 14, while a typical teacher teaches sections averaging about 13.</p>
+<p>The Connecticut Mirror data from 2012–13, which is the only year offering
+apples-to-apples per-school class-size figures across the state, uses something
+close to View B teacher-eye for its &#8220;average class size.&#8221; That is the metric
+used for all peer comparisons below. Section counts and student headcounts are
+taken directly from RHAM&#8217;s PowerSchool extracts, so the within-RHAM figures are
+direct measurements rather than estimates.</p>
+<hr>
+<p class="section-label before-part">Direct measurement</p>
+<h2 id="part-1-rham-today-by-direct-measurement">Part 1 — RHAM today, by direct measurement<a class="header-anchor" href="#part-1-rham-today-by-direct-measurement" aria-label="Link to this section">¶</a></h2>
+<h3 id="rham-high-school-2025-26">RHAM High School, 2025–26 <span class="conf-mark">✓</span> <em>Confirmed from master schedule, 2/15/26</em><a class="header-anchor" href="#rham-high-school-2025-26" aria-label="Link to this section">¶</a></h3>
+<p class="intro-table">The high school&#8217;s PowerSchool roster on February 15, 2026 contained 607
+sections. After consolidating 35 concurrent groups (where one teacher teaches
+multiple course numbers in the same room at the same time — Latin I and Latin II
+together, for instance, or three small CTE sections sharing a shop), the actual
+number of distinct classroom-meetings is 564.</p>
+<table>
+<thead>
+<tr>
+<th>View</th>
+<th class="num">Sections</th>
+<th class="num">Teacher-eye mean</th>
+<th class="num">Student-eye mean</th>
+<th class="num">Median</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>A — All classrooms</strong></td>
+<td class="num">564</td>
+<td class="num">9.82</td>
+<td class="num">13.88</td>
+<td class="num">10</td>
+</tr>
+<tr>
+<td><strong>B — Excluding support/intervention</strong></td>
+<td class="num">434</td>
+<td class="num">12.16</td>
+<td class="num">14.37</td>
+<td class="num">12</td>
+</tr>
+<tr>
+<td><strong>C — Core academic only</strong></td>
+<td class="num">247</td>
+<td class="num">12.75</td>
+<td class="num">14.28</td>
+<td class="num">13</td>
+</tr>
+</tbody></table>
+<p>The gap between View A and View B is large because RHAM runs 130 support
+sections — Math Lab, Writing Lab, Tutorial, Resource periods, and one-on-one
+specialized instruction — that are deliberately tiny, often serving 1 to 3
+students. These are not lightly attended electives; they are intentional
+small-group interventions for students who need them, funded as part of the
+special education and Title-style support framework. Including them in the mean
+produces View A&#8217;s 9.82, but anyone using that figure to argue that the typical
+RHAM classroom holds ten students is making an arithmetic mistake. The typical
+core-academic classroom holds about 13 students from a teacher&#8217;s perspective and
+about 14 from a student&#8217;s.</p>
+<p class="intro-table">Within the core academic subjects, the per-department breakdown looks like this:</p>
+<table>
+<thead>
+<tr>
+<th>Department</th>
+<th class="num">Sections (Core)</th>
+<th class="num">Teacher-eye</th>
+<th class="num">Student-eye</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>English</td>
+<td class="num">42</td>
+<td class="num">13.21</td>
+<td class="num">14.21</td>
+</tr>
+<tr>
+<td>Math</td>
+<td class="num">52</td>
+<td class="num">12.27</td>
+<td class="num">13.59</td>
+</tr>
+<tr>
+<td>Science</td>
+<td class="num">75</td>
+<td class="num">10.99</td>
+<td class="num">12.39</td>
+</tr>
+<tr>
+<td>Social Studies</td>
+<td class="num">54</td>
+<td class="num">15.06</td>
+<td class="num">16.60</td>
+</tr>
+<tr>
+<td>World Language</td>
+<td class="num">24</td>
+<td class="num">13.29</td>
+<td class="num">14.72</td>
+</tr>
+</tbody></table>
+<p>Social studies is consistently the largest department in average section size,
+at over 16 students per class from the student perspective. Science is the
+smallest, reflecting both physical lab-room constraints and a wide range of
+advanced-level offerings (AP Physics, AP Biology, anatomy electives) that draw
+small enrollments.</p>
+<h3 id="rham-middle-school-2025-26">RHAM Middle School, 2025–26 <span class="conf-mark">✓</span> <em>Confirmed from master schedule</em><a class="header-anchor" href="#rham-middle-school-2025-26" aria-label="Link to this section">¶</a></h3>
+<p class="intro-table">The middle school schedule contains 293 classroom-meetings. The top-line views
+are:</p>
+<table>
+<thead>
+<tr>
+<th>View</th>
+<th class="num">Sections</th>
+<th class="num">Teacher-eye mean</th>
+<th class="num">Student-eye mean</th>
+<th class="num">Median</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>A — All classrooms</strong></td>
+<td class="num">293</td>
+<td class="num">13.20</td>
+<td class="num">16.73</td>
+<td class="num">13</td>
+</tr>
+<tr>
+<td><strong>B — Excluding support/intervention</strong></td>
+<td class="num">274</td>
+<td class="num">13.54</td>
+<td class="num">16.96</td>
+<td class="num">13</td>
+</tr>
+<tr>
+<td><strong>C — Core academic only</strong></td>
+<td class="num">114</td>
+<td class="num">13.14</td>
+<td class="num">13.96</td>
+<td class="num">13</td>
+</tr>
+<tr>
+<td><strong>C+ — Core plus world language</strong></td>
+<td class="num">134</td>
+<td class="num">13.33</td>
+<td class="num">14.34</td>
+<td class="num">13</td>
+</tr>
+</tbody></table>
+<p>The middle school&#8217;s View A student-eye mean of 16.73 is materially inflated by
+two outlier ensembles — chorus (88 students in one section) and band (48
+students in one section). Both meet daily and are scheduled as single sections
+by design. They pull the all-classes student-eye mean upward while having
+essentially no effect on what the median student experiences in their core
+academic classes, which is a class of about 14.</p>
+<p class="intro-table">Per-subject breakdown in the middle school&#8217;s core:</p>
+<table>
+<thead>
+<tr>
+<th>Subject</th>
+<th class="num">Sections</th>
+<th class="num">Teacher-eye</th>
+<th class="num">Student-eye</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>English</td>
+<td class="num">25</td>
+<td class="num">13.48</td>
+<td class="num">14.07</td>
+</tr>
+<tr>
+<td>Reading</td>
+<td class="num">10</td>
+<td class="num">11.30</td>
+<td class="num">11.50</td>
+</tr>
+<tr>
+<td>Math</td>
+<td class="num">29</td>
+<td class="num">12.07</td>
+<td class="num">13.24</td>
+</tr>
+<tr>
+<td>Science</td>
+<td class="num">25</td>
+<td class="num">14.04</td>
+<td class="num">14.72</td>
+</tr>
+<tr>
+<td>Social Studies</td>
+<td class="num">25</td>
+<td class="num">13.88</td>
+<td class="num">14.60</td>
+</tr>
+<tr>
+<td>World Language</td>
+<td class="num">20</td>
+<td class="num">14.40</td>
+<td class="num">16.31</td>
+</tr>
+</tbody></table>
+<p>Math at the middle school has the widest range of any core subject — section
+sizes from 5 to 24 — reflecting both the sheltered &#8220;Reading&#8221; small-group
+sections and the larger heterogeneous-grouped 8th-grade math sections.</p>
+<p><strong>The convergence to note:</strong> in core academic subjects, the high school
+student-eye mean is 14.28 and the middle school student-eye mean is 13.96. Both
+schools land at roughly fourteen students per class for the typical student in
+their typical academic classroom. That is the honest answer to &#8220;what is RHAM&#8217;s
+class size?&#8221;</p>
+<hr>
+<p class="section-label before-part">Peer comparison</p>
+<h2 id="part-2-peer-comparison">Part 2 — Peer comparison<a class="header-anchor" href="#part-2-peer-comparison" aria-label="Link to this section">¶</a></h2>
+<h3 id="the-2012-13-baseline">The 2012–13 baseline <span class="conf-mark">✓</span> <em>Confirmed for 8 of 9 peers</em><a class="header-anchor" href="#the-2012-13-baseline" aria-label="Link to this section">¶</a></h3>
+<p>Connecticut Mirror&#8217;s &#8220;YourSchool&#8221; project, published in 2014, captured a
+per-school class-size figure for nearly every Connecticut high school for the
+2012–13 school year. It is, as best I can determine, the last year for which a
+single, publicly available, methodologically consistent snapshot of high school
+class sizes exists across all of Connecticut&#8217;s secondary regional districts. CT
+Mirror&#8217;s &#8220;average class size&#8221; appears to correspond closely to View B
+(teacher-eye mean, excluding most support periods) — that is, the same
+measurement school administrators typically use when discussing class size
+internally.</p>
+<p class="intro-table">The peer group used here is every Connecticut secondary regional school district
+that operates a high school: nine districts in total. Eight of the nine have
+2012–13 figures published; Lyme-Old Lyme High School&#8217;s data was apparently not
+collected or not published, and CT Mirror&#8217;s page for the LOL HS has the
+class-size field empty. The other eight, sorted from smallest to largest 2012–13
+average class size:</p>
+<table>
+<thead>
+<tr>
+<th class="num">Rank</th>
+<th>District</th>
+<th>School</th>
+<th class="num">2012–13 avg class size</th>
+</tr>
+</thead>
+<tbody><tr>
+<td class="num">1</td>
+<td>RSD 11</td>
+<td>Parish Hill HS (7–12)</td>
+<td class="num">14.7</td>
+</tr>
+<tr>
+<td class="num">2</td>
+<td>RSD 1</td>
+<td>Housatonic Valley Regional HS</td>
+<td class="num">15.4</td>
+</tr>
+<tr>
+<td class="num">3</td>
+<td>RSD 19</td>
+<td>E.O. Smith HS</td>
+<td class="num">16.2</td>
+</tr>
+<tr>
+<td class="num">4</td>
+<td>RSD 7</td>
+<td>Northwestern Regional HS</td>
+<td class="num">17.3</td>
+</tr>
+<tr>
+<td class="num"><strong>5</strong></td>
+<td><strong>RSD 8</strong></td>
+<td><strong>RHAM HS</strong></td>
+<td class="num"><strong>18.0</strong></td>
+</tr>
+<tr>
+<td class="num">6</td>
+<td>RSD 4</td>
+<td>Valley Regional HS</td>
+<td class="num">18.4</td>
+</tr>
+<tr>
+<td class="num">7</td>
+<td>RSD 5</td>
+<td>Amity Regional HS</td>
+<td class="num">19.1</td>
+</tr>
+<tr>
+<td class="num">8</td>
+<td>RSD 9</td>
+<td>Joel Barlow HS</td>
+<td class="num">20.9</td>
+</tr>
+</tbody></table>
+<p><strong>Peer median: 17.6 students. Peer mean: 17.5 students. Range: 14.7 to 20.9.</strong></p>
+<p>In 2012–13, RHAM ranked fifth of eight reporting peers — essentially at the
+median. RHAM was very slightly above the peer median (18.0 versus 17.6) but well
+within the cluster of similar districts. Anyone arguing that RHAM has
+historically run unusually small classes is contradicted by this data: thirteen
+years ago, RHAM&#8217;s classes were average for its peer group, slightly <em>larger</em>
+than half of the schools it is most often compared to.</p>
+<p class="intro-table">The 2012–13 Connecticut Mirror data also captures middle school grade 7 average
+class size for districts that operate a separately-housed middle school. The
+peer set here is smaller (since some regional districts combine 7–12 in one
+building), and the comparison is RHAM Middle School against five peer middle
+schools:</p>
+<table>
+<thead>
+<tr>
+<th>District</th>
+<th>School</th>
+<th class="num">2012–13 grade 7 avg</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RSD 7</td>
+<td>Northwestern Regional MS</td>
+<td class="num">16.7</td>
+</tr>
+<tr>
+<td>RSD 5</td>
+<td>Amity MS Bethany</td>
+<td class="num">17.1</td>
+</tr>
+<tr>
+<td>RSD 5</td>
+<td>Amity MS Orange</td>
+<td class="num">18.9</td>
+</tr>
+<tr>
+<td>RSD 18</td>
+<td>Lyme-Old Lyme MS (gr 6–8)</td>
+<td class="num">19.1</td>
+</tr>
+<tr>
+<td><strong>RSD 8</strong></td>
+<td><strong>RHAM MS</strong></td>
+<td class="num"><strong>21.6</strong></td>
+</tr>
+<tr>
+<td>RSD 4</td>
+<td>John Winthrop MS</td>
+<td class="num">23.6</td>
+</tr>
+</tbody></table>
+<p>In 2012–13 RHAM Middle School had the <em>second-largest</em> average class size in
+this peer group. Only John Winthrop MS in Region 4 was running larger classes.
+The 21.6 figure is worth holding in mind as the report turns to today&#8217;s middle
+school class size of about 14: this represents a roughly 35% drop, the largest
+decline in any of the metrics in this report.</p>
+<h3 id="today-8217-s-staffing-ratios-nces-common-core-of-data-2024-25">Today&#8217;s staffing ratios — NCES Common Core of Data, 2024–25 <span class="conf-mark">✓</span> <em>Confirmed</em><a class="header-anchor" href="#today-8217-s-staffing-ratios-nces-common-core-of-data-2024-25" aria-label="Link to this section">¶</a></h3>
+<p>The 2012–13 class-size data has not been recollected at the same level of
+granularity for any subsequent year, so a direct apples-to-apples comparison of
+today&#8217;s class sizes across all peer districts is not possible. What is
+available, and what the peer districts themselves report to the federal
+government every year, is the student/teacher ratio: total enrollment divided by
+classroom teacher FTE.</p>
+<p class="intro-table">Student/teacher ratio is a coarser measure than class size, because it counts
+every classroom teacher (including the ones who staff small support sections)
+against every student. A district that staffs heavy intervention support will
+report a lower student/teacher ratio without that necessarily reflecting smaller
+core-academic classes. But the ratio is consistently reported and consistently
+audited, and over a peer group it is a reasonable proxy.</p>
+<table>
+<thead>
+<tr>
+<th>District</th>
+<th>School</th>
+<th class="num">Enrollment</th>
+<th class="num">Teacher FTE</th>
+<th class="num">Ratio</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RSD 11</td>
+<td>Parish Hill HS (7–12)</td>
+<td class="num">184</td>
+<td class="num">24.6</td>
+<td class="num">7.48</td>
+</tr>
+<tr>
+<td>RSD 1</td>
+<td>Housatonic Valley Reg HS</td>
+<td class="num">308</td>
+<td class="num">36.0</td>
+<td class="num">8.55</td>
+</tr>
+<tr>
+<td><strong>RSD 8</strong></td>
+<td><strong>RHAM HS</strong></td>
+<td class="num"><strong>714</strong></td>
+<td class="num"><strong>76.7</strong></td>
+<td class="num"><strong>9.31</strong></td>
+</tr>
+<tr>
+<td>RSD 4</td>
+<td>Valley Regional HS</td>
+<td class="num">429</td>
+<td class="num">46.0</td>
+<td class="num">9.33</td>
+</tr>
+<tr>
+<td>RSD 18</td>
+<td>Lyme-Old Lyme HS</td>
+<td class="num">367</td>
+<td class="num">38.2</td>
+<td class="num">9.61</td>
+</tr>
+<tr>
+<td>RSD 7</td>
+<td>Northwestern Regional HS</td>
+<td class="num">536</td>
+<td class="num">55.3</td>
+<td class="num">9.69</td>
+</tr>
+<tr>
+<td>RSD 9</td>
+<td>Joel Barlow HS</td>
+<td class="num">698</td>
+<td class="num">63.1</td>
+<td class="num">11.07</td>
+</tr>
+<tr>
+<td>RSD 5</td>
+<td>Amity Regional HS</td>
+<td class="num">1,347</td>
+<td class="num">121.6</td>
+<td class="num">11.08</td>
+</tr>
+<tr>
+<td>RSD 19</td>
+<td>E.O. Smith HS</td>
+<td class="num">1,010</td>
+<td class="num">85.9</td>
+<td class="num">11.76</td>
+</tr>
+</tbody></table>
+<p><strong>Peer median: 9.61. Peer mean: 9.76. RHAM: 9.31.</strong> Connecticut statewide HS
+ratio: 12.3.</p>
+<p>RHAM ranks third from the bottom (most richly staffed) of nine peer districts on
+this measure today. The two schools with richer ratios are Parish Hill (a very
+small 7–12 building where staffing minimums dominate) and Housatonic Valley (a
+small rural high school in the northwest corner of the state). Among peers of
+comparable size, RHAM is staffed marginally more richly than the median, by
+about 0.3 students per FTE. To put that gap in concrete terms: at RHAM&#8217;s current
+enrollment of 714, the difference between RHAM&#8217;s ratio of 9.31 and the peer
+median of 9.61 is approximately 2.4 teacher FTE.</p>
+<h3 id="what-three-peer-districts-say-publicly-today">What three peer districts say publicly today<a class="header-anchor" href="#what-three-peer-districts-say-publicly-today" aria-label="Link to this section">¶</a></h3>
+<p>Three of the nine peer districts make affirmative public statements about their
+current class sizes on their own websites:</p>
+<ul>
+<li><p><strong>Housatonic Valley Regional HS:</strong> &#8220;Our classes average 15.&#8221; Their 2012–13
+figure was 15.4. Their stated class size today is essentially unchanged from
+thirteen years ago, even though their enrollment fell 28% over the same period
+(428 students in 2013–14 to 308 today). HVRHS is the cleanest demonstration in
+this dataset of a district that absorbed enrollment loss by reducing staffing
+proportionally.</p>
+</li>
+<li><p><strong>Lyme-Old Lyme HS:</strong> &#8220;Average 12 to 15 per class.&#8221; This is a range, not a
+point, and LOL is the one peer for which I was unable to locate 2012–13
+class-size data, so I cannot compare directly. The midpoint of 13.5 is below
+RHAM&#8217;s current 12.75 teacher-eye core-academic mean — though only barely, and
+the comparison is complicated by the fact that LOL&#8217;s enrollment has also
+fallen (16% over five years, while their teacher count has actually grown 5%
+over the same period — a more aggressive version of the same dynamic that
+produced RHAM&#8217;s small classes today).</p>
+</li>
+<li><p><strong>Northwestern Regional HS:</strong> &#8220;Average class size in academic program is 20.&#8221;
+Their 2012–13 figure was 17.3. This is the only peer in the data that appears
+to have meaningfully <em>grown</em> its class size over the period, presumably by
+cutting staff faster than its enrollment fell.</p>
+</li>
+</ul>
+<p>These three points give us a reasonable bracket: the peer schools that talk
+publicly about class size today report numbers ranging from 12–15 (LOL) up to 20
+(NWR), with the most directly comparable case (HVRHS — small rural CT regional
+HS that lost a lot of enrollment) sitting at 15. RHAM&#8217;s 14 student-eye core mean
+is inside that bracket, on the low end of it but not an outlier.</p>
+<hr>
+<p class="section-label before-part">Trajectory</p>
+<h2 id="part-3-how-rham-got-here-enrollment-staffing-and-the-gap-between-them">Part 3 — How RHAM got here: enrollment, staffing, and the gap between them<a class="header-anchor" href="#part-3-how-rham-got-here-enrollment-staffing-and-the-gap-between-them" aria-label="Link to this section">¶</a></h2>
+<h3 id="enrollment">Enrollment <span class="conf-mark">✓</span> <em>Confirmed from RHAM 2018–19 budget book and NCES</em><a class="header-anchor" href="#enrollment" aria-label="Link to this section">¶</a></h3>
+<p class="intro-table">The RHAM FY 2018–19 Superintendent&#8217;s Budget Proposal contains a full enrollment
+history compiled from NESDEC (New England School Development Council)
+projections and October 1 head counts. The relevant rows for the high school and
+middle school are:</p>
+<table>
+<thead>
+<tr>
+<th class="num">Year</th>
+<th class="num">RHAM HS (9–12)</th>
+<th class="num">RHAM MS (7–8)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td class="num">2007–08</td>
+<td class="num">1,021</td>
+<td class="num">644</td>
+</tr>
+<tr>
+<td class="num">2010–11</td>
+<td class="num">1,172 (peak)</td>
+<td class="num">616</td>
+</tr>
+<tr>
+<td class="num">2012–13</td>
+<td class="num">1,145</td>
+<td class="num">627</td>
+</tr>
+<tr>
+<td class="num">2013–14</td>
+<td class="num">1,129</td>
+<td class="num">607</td>
+</tr>
+<tr>
+<td class="num">2017–18</td>
+<td class="num">1,038</td>
+<td class="num">469</td>
+</tr>
+<tr>
+<td class="num">2018–19 (projected)</td>
+<td class="num">954</td>
+<td class="num">470</td>
+</tr>
+<tr>
+<td class="num">2024–25 (NCES, actual)</td>
+<td class="num">714</td>
+<td class="num">352</td>
+</tr>
+<tr>
+<td class="num">2025–26 (Oct 2024 count)</td>
+<td class="num">724</td>
+<td class="num">354</td>
+</tr>
+</tbody></table>
+<p>The high school has lost approximately 36% of its enrollment from the 2012–13
+baseline (1,145 to ~720) and approximately 39% from its 2010–11 peak (1,172 to
+~720). The middle school has lost roughly 44% from its 2012–13 figure (627 to
+354). These are large declines by any standard, and they happened without major
+district-level disruption — neither school closed, course offerings have stayed
+broadly intact, and the 7–12 building footprint is unchanged.</p>
+<h3 id="staffing">Staffing <span class="conf-mark">✓</span> <em>Confirmed from 2018–19 budget book and 2025–26 budget presentation</em><a class="header-anchor" href="#staffing" aria-label="Link to this section">¶</a></h3>
+<p class="intro-table">RHAM&#8217;s own budget documents make the staffing trajectory unusually traceable.
+The FY 2018–19 budget book breaks out FTE positions in detail; the FY 2025–26
+budget presentation summarizes the year&#8217;s net staffing changes. Combining those
+with current NCES counts gives the picture below.</p>
+<table>
+<thead>
+<tr>
+<th class="num"></th>
+<th>HS Total FTE</th>
+<th>HS Certified Teachers</th>
+<th class="num">MS Total FTE</th>
+<th class="num">MS Certified Teachers</th>
+<th>District Total</th>
+</tr>
+</thead>
+<tbody><tr>
+<td class="num">2015–16 (implied, from 18-19 book narrative)</td>
+<td>—</td>
+<td>—</td>
+<td class="num">—</td>
+<td class="num">—</td>
+<td>~265</td>
+</tr>
+<tr>
+<td class="num">2017–18</td>
+<td>148.80</td>
+<td>104.80</td>
+<td class="num">76.50</td>
+<td class="num">55.50</td>
+<td>255.30</td>
+</tr>
+<tr>
+<td class="num">2018–19 (proposed)</td>
+<td>141.30</td>
+<td>97.80</td>
+<td class="num">72.00</td>
+<td class="num">51.00</td>
+<td>243.30</td>
+</tr>
+<tr>
+<td class="num">2024–25 (NCES, classroom teachers only)</td>
+<td>—</td>
+<td>76.70</td>
+<td class="num">—</td>
+<td class="num">40.90</td>
+<td>—</td>
+</tr>
+<tr>
+<td class="num">2025–26 (proposed change)</td>
+<td>net 0</td>
+<td>net change includes -1 math, -1 WL</td>
+<td class="num">—</td>
+<td class="num">—</td>
+<td>+3 safety, +1 trainer, -1 math, -1 WL, -2 SPED para</td>
+</tr>
+</tbody></table>
+<p>The 2018–19 budget book narrative is explicit: <em>&#8220;In response to declining
+enrollment, over the past two years the district has reduced the number of FTEs
+by 9.0 plus a 1.0 administrative assistant at the middle school.&#8221;</em> That places
+the district at roughly 265 total FTE in 2015–16 and roughly 255 in 2017–18 — a
+reduction of about 10 positions across two years against an enrollment that was
+still falling.</p>
+<p>The same budget book proposed cutting another 12 FTE in 2018–19, bringing the
+district from 255 to 243. The high school certified teaching staff alone fell
+from 104.8 to 97.8 in that single year (a reduction of 7.0 FTE), achieved
+through retirements and elimination of &#8220;sixth assignments&#8221; — the practice of
+asking some teachers to teach a sixth period beyond the contractual five.</p>
+<p>Today RHAM HS reports 76.7 classroom teachers to NCES. The NCES &#8220;classroom
+teachers&#8221; definition is narrower than the budget book&#8217;s &#8220;certified positions&#8221;
+line — it excludes school counselors, psychologists, social workers,
+speech/language pathologists, and media specialists, all of whom appear in the
+budget book. The roughly 21 FTE difference between the budget-book &#8220;certified
+positions&#8221; line in 2017–18 (104.8) and the current NCES classroom-teacher count
+(76.7) is partly that definitional difference and partly real reduction. A
+direct year-over-year comparison within the budget-book definition is not
+available without subsequent budget books, but the implied trajectory is clear:
+the high school&#8217;s actual classroom-teaching staff has fallen meaningfully since
+2018, just not as fast as enrollment.</p>
+<h3 id="the-gap">The gap<a class="header-anchor" href="#the-gap" aria-label="Link to this section">¶</a></h3>
+<p class="intro-table">Combining the enrollment and staffing numbers tells the central story of this
+report:</p>
+<table>
+<thead>
+<tr>
+<th>Period</th>
+<th>Enrollment change</th>
+<th>HS classroom teacher change</th>
+<th>Class size change</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2012–13 → 2025–26 (HS)</td>
+<td>1,145 → 714, <strong>-37.6%</strong></td>
+<td>2012–13 not directly available; 2017–18 = ~95 NCES-equivalent → 76.7 today, roughly <strong>-19% to -25%</strong></td>
+<td>18.0 → 12.16 (View B), <strong>-32.4%</strong></td>
+</tr>
+</tbody></table>
+<p>The arithmetic: if RHAM had cut classroom teachers exactly proportionally to
+enrollment loss, today&#8217;s classes would average roughly the same size as in
+2012–13 — about 18 students. They average 12 because staffing fell more slowly
+than enrollment did. That gap — approximately 12 to 17 percentage points between
+enrollment decline and teacher-FTE decline — is the entire mechanism producing
+today&#8217;s smaller classes.</p>
+<p>This is not a story about deliberate enrichment of staffing. It is a story about
+a district that responded to a sustained enrollment decline by cutting some
+staff every year, but at a slower rate than enrollment. The result was smaller
+classes, but the smaller classes were a byproduct of the trajectory rather than
+an explicit choice.</p>
+<p>The 2025–26 budget continues the same pattern. The proposed personnel changes
+for next year are: +3 Safety/Security Officers, +1 Athletic Trainer, -1 World
+Language Teacher, -2 Special Education Paraeducators, -1 Math Teacher. The net
+change in headcount is zero. The net change in <em>teaching</em> headcount is -2.
+Enrollment is projected to continue declining. Without any policy change, the
+same dynamic — staffing falling slower than enrollment — will reproduce itself,
+and class sizes will drift slightly smaller again.</p>
+<hr>
+<p class="section-label">At a glance</p>
+<h2 id="summary-table">Summary table<a class="header-anchor" href="#summary-table" aria-label="Link to this section">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+<th>Caveat</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>What is RHAM HS&#8217;s &#8220;average class size&#8221; today?</td>
+<td>12.75 (teacher-eye) / 14.28 (student-eye) in core academic</td>
+<td>View A&#8217;s 9.82 includes 130 small-group support sections and is misleading as a measure of typical classroom experience</td>
+</tr>
+<tr>
+<td>Was RHAM HS&#8217;s class size &#8220;stunningly low&#8221; in 2012–13?</td>
+<td>No. RHAM was at 18.0; peer median was 17.6. RHAM ranked 5th of 8 — at the median.</td>
+<td>LOL HS class size was not published for 2012–13</td>
+</tr>
+<tr>
+<td>Is RHAM HS staffed more richly than peers today?</td>
+<td>Yes, slightly. RHAM ratio 9.31 vs. peer median 9.61 — a small gap.</td>
+<td>NCES ratio is a coarser metric than CT Mirror&#8217;s 2012–13 class-size measure; not a direct apples-to-apples</td>
+</tr>
+<tr>
+<td>How did class sizes get smaller at RHAM?</td>
+<td>Enrollment fell 36–37% since 2012–13; teaching staff fell roughly 20–25%. The gap between those two rates is the entire mechanism.</td>
+<td>Exact teaching-staff trajectory is partly inferred; budget book confirms 9 FTE district-wide reduction over 2015–17 and 12 FTE proposed for 2018–19</td>
+</tr>
+<tr>
+<td>Is RHAM MS unusually small today?</td>
+<td>Yes — at 13.96 student-eye in core academic, RHAM MS has fallen the most of any data point in this report. RHAM MS in 2012–13 was 21.6 (2nd-largest in peer group).</td>
+<td>The MS trajectory is more dramatic than the HS trajectory and may warrant separate analysis</td>
+</tr>
+</tbody></table>
+<hr>
+<p class="section-label">Analysis</p>
+<h2 id="key-observations">Key Observations<a class="header-anchor" href="#key-observations" aria-label="Link to this section">¶</a></h2>
+<p>The peer comparison data does not support the strongest version of the
+&#8220;stunningly low class sizes&#8221; claim. RHAM&#8217;s high school was at the peer median in
+2012–13 and is moderately richer than the peer median today, by a small margin
+in student/teacher ratio. The figure most often cited — the 9.82 teacher-eye
+View A average — overstates the gap because it gives equal weight to one-on-one
+tutoring sections and full classroom-teaching sections.</p>
+<p>The honest version of the claim is more modest: RHAM has slightly more teachers
+per student than the median peer secondary regional district, by a margin that
+has grown gradually over thirteen years as enrollment fell faster than staffing
+did. That gap is real and worth discussing in budget conversations — but it is
+small, and it sits well inside the year-to-year variation that any district
+experiences as positions are added or eliminated through retirement and
+attrition.</p>
+<p>The middle school has changed more than the high school. RHAM MS in 2012–13 ran
+the second-largest classes in its peer group; today it runs classes about a
+third smaller. If there is a place in the district where the
+staffing-to-enrollment trajectory has produced an outlier worth examining
+specifically, it is the middle school rather than the high school.</p>
+<p>The 2025–26 proposed budget continues the long-running pattern: enrollment
+declining, total FTE roughly flat, classroom-teacher FTE declining slightly. The
+proposed personnel changes net to zero on headcount but represent a substitution
+of non-instructional positions (safety officers, athletic trainer) for
+instructional ones (math teacher, world language teacher, two SPED paras).
+Whether that substitution is the right call is a judgment about district
+priorities; what it is <em>not</em> is a structural reduction in district staffing
+relative to enrollment. Without policy change, current trends will continue to
+produce slowly shrinking classes.</p>
+<p>A final honest framing: small classes are not free, and they are not
+unambiguously good or bad. Smaller classes are a real instructional benefit,
+particularly for struggling students; they are also a real recurring cost to
+taxpayers in three towns. The case for adjusting staffing toward the peer median
+is a budget case, not an instructional case. The case for holding current
+staffing is an instructional case, not a budget case. Both are legitimate; the
+data above should help the conversation be specific about which case is being
+made.</p>
+<hr>
+<p class="section-label">Caveats</p>
+<h2 id="what-this-report-does-not-show">What this report does not show<a class="header-anchor" href="#what-this-report-does-not-show" aria-label="Link to this section">¶</a></h2>
+<p>A few caveats are worth being explicit about:</p>
+<p>This report does not include Lyme-Old Lyme HS class-size data for 2012–13
+because that data was not published by Connecticut Mirror. The peer set for the
+2012–13 baseline is therefore eight schools rather than nine. LOL&#8217;s class size
+today is self-reported as &#8220;12 to 15 per class&#8221; on the district&#8217;s website, but
+that is a range and is not directly comparable to the CT Mirror methodology.</p>
+<p>This report does not have year-by-year RHAM staffing FTE counts for 2013-14
+through 2016-17 or for 2019-20 through 2023-24. The 2018–19 budget book gives a
+precise snapshot for 2017–18 and 2018–19 with narrative reference to a 2015–16
+baseline; the 2025–26 budget presentation gives a current snapshot. The
+intervening years would have to be reconstructed from individual annual budget
+books, which were not available within the time frame of this report.</p>
+<p>This report uses NCES &#8220;classroom teachers&#8221; FTE for current staffing comparisons.
+This excludes school counselors, school psychologists, school nurses, library
+media specialists, and other certified positions that appear in the RHAM budget
+book&#8217;s &#8220;certified positions&#8221; line. The ratio comparisons between districts are
+valid because all districts use the same NCES definition; comparisons between
+current NCES counts and historical RHAM budget-book counts are not directly
+valid.</p>
+<hr>
+<p class="section-label">Documentation</p>
+<h2 id="sources">Sources<a class="header-anchor" href="#sources" aria-label="Link to this section">¶</a></h2>
+<p><strong>RHAM master schedule data (2025–26):</strong></p>
+<ul>
+<li>HS Enrollment Section Details Report, 2/15/26 (607 sections, RHAM
+PowerSchool):
+<a href="HS_Enrollment_Section_Details_Report-_2-15-26.pdf">HS_Enrollment_Section_Details_Report-_2-15-26.pdf</a></li>
+<li>Master Schedule List Report — ART concurrent groups, 2025–26:
+<a href="Master_Schedule_List_Report_-_ART_Concurrent_25-26.pdf">Master_Schedule_List_Report_-_ART_Concurrent_25-26.pdf</a></li>
+<li>Master Schedule List Report — CTE concurrent groups:
+<a href="Master_Schedule_List_Report_-_CTE_Concurrent.pdf">Master_Schedule_List_Report_-_CTE_Concurrent.pdf</a></li>
+<li>Master Schedule List Report — MUSIC concurrent groups, 2025–26:
+<a href="Master_Schedule_List_Report_-_MUSIC_Concurrent_25-26.pdf">Master_Schedule_List_Report_-_MUSIC_Concurrent_25-26.pdf</a></li>
+<li>Master Schedule List Report — PE concurrent groups, 2025–26:
+<a href="Master_Schedule_List_Report_-_PE_Concurrent_25-26.pdf">Master_Schedule_List_Report_-_PE_Concurrent_25-26.pdf</a></li>
+<li>RHAM Middle School Team and Unified Arts class schedules, 2025–26:
+<a href="RHAM_Middle_School_Team_and_UA_class__s_2025-2026.pdf">RHAM_Middle_School_Team_and_UA_class__s_2025-2026.pdf</a></li>
+</ul>
+<p><strong>RHAM budget documents:</strong></p>
+<ul>
+<li>FY 2018–19 Region 8 Superintendent&#8217;s Budget Proposal, revised 3/7/2018:
+<a href="https://hebronct.com/uploads/2014/03/March-7-2018-revised-RHAM-2018-2019-budget-book.docx-1.pdf">hebronct.com/&#8230;/March-7-2018-revised-RHAM-2018-2019-budget-book.docx-1.pdf</a></li>
+<li>FY 2025–26 Region 8 Proposed Administrative Budget Presentation, 3/18/2025:
+<a href="https://hebronct.com/budget-information/budget-presentation-for-hebron-bof_bos-march-2025/">hebronct.com/&#8230;/budget-presentation-for-hebron-bof_bos-march-2025</a></li>
+</ul>
+<p><strong>Connecticut Mirror &#8220;YourSchool&#8221; (2012–13 baseline):</strong></p>
+<ul>
+<li>RHAM HS: <a href="https://projects.ctmirror.org/yourschool/school/208/61.html">projects.ctmirror.org/&#8230;/61.html</a></li>
+<li>RHAM MS: <a href="https://projects.ctmirror.org/yourschool/school/208/51.html">projects.ctmirror.org/&#8230;/51.html</a></li>
+<li>HVRHS (RSD 1): <a href="https://projects.ctmirror.org/yourschool/school/201/61.html">projects.ctmirror.org/&#8230;/61.html</a></li>
+<li>Valley Regional HS (RSD 4):
+<a href="https://projects.ctmirror.org/yourschool/school/204/61.html">projects.ctmirror.org/&#8230;/61.html</a></li>
+<li>Amity Regional HS (RSD 5): (and Amity MS Bethany at /205/51, MS Orange at
+/205/52)</li>
+<li>Northwestern Regional HS (RSD 7):
+<a href="https://projects.ctmirror.org/yourschool/school/207/61.html">projects.ctmirror.org/&#8230;/61.html</a></li>
+<li>Joel Barlow HS (RSD 9):
+<a href="https://projects.ctmirror.org/yourschool/school/209/61.html">projects.ctmirror.org/&#8230;/61.html</a></li>
+<li>Parish Hill HS (RSD 11):
+<a href="https://projects.ctmirror.org/yourschool/school/211/61.html">projects.ctmirror.org/&#8230;/61.html</a></li>
+<li>Lyme-Old Lyme MS (RSD 18):
+<a href="https://projects.ctmirror.org/yourschool/school/218/51.html">projects.ctmirror.org/&#8230;/51.html</a> (HS class-size
+field empty in source data)</li>
+<li>E.O. Smith HS (RSD 19):
+<a href="https://projects.ctmirror.org/yourschool/school/219/61.html">projects.ctmirror.org/&#8230;/61.html</a></li>
+<li>John Winthrop MS (RSD 4):
+<a href="https://projects.ctmirror.org/yourschool/school/204/51.html">projects.ctmirror.org/&#8230;/51.html</a></li>
+</ul>
+<p><strong>National Center for Education Statistics, Common Core of Data, 2024–25
+release:</strong></p>
+<ul>
+<li>RHAM HS:
+<a href="https://nces.ed.gov/ccd/schoolsearch/school_detail.asp?ID=090375000772">nces.ed.gov/&#8230;/school_detail.asp</a></li>
+<li>RHAM MS:
+<a href="https://nces.ed.gov/ccd/schoolsearch/school_detail.asp?ID=090375001210">nces.ed.gov/&#8230;/school_detail.asp</a></li>
+<li>LOL HS: <a href="https://nces.ed.gov/ccd/schoolsearch/school_detail.asp?ID=090354000763">nces.ed.gov/&#8230;/school_detail.asp</a></li>
+<li>Other peer schools accessible from the NCES public school detail pages by
+school name</li>
+</ul>
+<p><strong>Peer district class-size statements (current):</strong></p>
+<ul>
+<li>HVRHS: <a href="https://www.hvrhs.org/new-this-is-us/">hvrhs.org/new-this-is-us</a> (&#8220;Our classes average 15&#8221;)</li>
+<li>Lyme-Old Lyme: <a href="https://www.region18.org/about-us">region18.org/about-us</a> (&#8220;average 12 to 15 per
+class&#8221;)</li>
+<li>Northwestern Regional: <a href="https://www.nwr7.com/district">nwr7.com/district</a> (&#8220;academic program 20&#8221;)</li>
+</ul>
+<hr>
+<p class="section-label">Technical notes</p>
+<h2 id="methodology-notes">Methodology notes<a class="header-anchor" href="#methodology-notes" aria-label="Link to this section">¶</a></h2>
+<p><strong>Concurrent group consolidation.</strong> The PowerSchool extract reports each
+course-section combination as a separate row, which double-counts
+classroom-meetings where one teacher teaches multiple course numbers in the same
+room at the same time. I identified 35 such concurrent groups in the HS extract
+(with assistance from the supplied Master Schedule List reports for ART, CTE,
+MUSIC, and PE) and consolidated them, reducing 607 rostered sections to 564
+distinct classroom-meetings. The middle school extract was structured
+differently and required less consolidation.</p>
+<p><strong>View definitions.</strong> View A includes every classroom-meeting in the
+consolidated extract. View B excludes sections explicitly named as Lab,
+Tutorial, Resource, Workshop, Study, or Support, and excludes one-on-one
+specialized instructional sections. View C limits to the standard core academic
+departments (English, Math, Science, Social Studies, World Language). Subject
+categorizations follow the RHAM department coding in the master schedule.</p>
+<p><strong>Teacher-eye vs. student-eye means.</strong> Teacher-eye = sum(section_size) /
+count(sections). Student-eye = sum(section_size²) / sum(section_size). The
+student-eye measure is the size-weighted mean class size from the perspective of
+a randomly selected student, and is what most parents intuitively mean when they
+ask about class size. Both are reported throughout because both are legitimate —
+they answer different questions.</p>
+
+<p class="section-label">Download</p>
+<h2 id="other-formats">Other Formats<a class="header-anchor" href="#other-formats" aria-label="Link to this section">¶</a></h2>
+<p>This report is available in four formats, all located alongside this page:</p>
+
+<div class="format-cards cols-4">
+  <div class="format-card">
+    <div class="format-card-icon">🌐</div>
+    <div class="format-card-title"><a href="./">HTML</a></div>
+    <div class="format-card-desc">Interactive version with formatted tables; best for on-screen reading and sharing.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📄</div>
+    <div class="format-card-title"><a href="rham_class_size_report.md">Markdown</a></div>
+    <div class="format-card-desc">Plain-text version; readable in any editor, ideal for copying into other documents.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📑</div>
+    <div class="format-card-title"><a href="rham_class_size_report.pdf">PDF</a></div>
+    <div class="format-card-desc">Print-ready version with all tables, footnotes, and source citations.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📊</div>
+    <div class="format-card-title"><a href="rham_class_size_data.xlsx">Excel data</a></div>
+    <div class="format-card-desc">Ten-sheet workbook with the raw classroom-by-classroom data, peer comparisons, and trajectory tables. Every figure in the report is computed via formula from the underlying data.</div>
+  </div>
+</div>
+
+</div>
+<div class="page-footer">
+Personal work of <a href="mailto:scott@sauyet.com">Scott Sauyet</a> · Compiled April 27, 2026<br> Data from RHAM master schedule, RHAM budget documents, CT Mirror, and NCES. Not an official Region 8 document. ·
+<a href="http://andoverct.info/reports/rham/class-size/">andoverct.info/reports/rham/class-size/</a>
+</div>
+<script>
+document.addEventListener('click', function(e) {
+    const anchor = e.target.closest('.header-anchor');
+    if (!anchor) return;
+    const heading = anchor.parentElement;
+    const id = heading.id;
+    if (!id) return;
+    const url = window.location.origin + window.location.pathname + '#' + id;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function() {
+            anchor.classList.add('copied');
+            setTimeout(function() { anchor.classList.remove('copied'); }, 1400);
+        }).catch(function() {});
+    }
+});
+</script>
+<script>
+(function() {
+    var imgs = document.querySelectorAll('.container img');
+    if (!imgs.length) return;
+    var overlay = null;
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    function close() {
+        if (!overlay) return;
+        var o = overlay;
+        overlay = null;
+        o.classList.remove('open');
+        document.removeEventListener('keydown', onKey);
+        setTimeout(function() { if (o.parentNode) o.parentNode.removeChild(o); }, 200);
+    }
+    function open(src, alt) {
+        overlay = document.createElement('div');
+        overlay.className = 'lightbox-overlay';
+        var big = document.createElement('img');
+        big.src = src;
+        big.alt = alt || '';
+        overlay.appendChild(big);
+        overlay.addEventListener('click', close);
+        document.body.appendChild(overlay);
+        overlay.offsetWidth; // force reflow so the fade-in transition runs
+        overlay.classList.add('open');
+        document.addEventListener('keydown', onKey);
+    }
+    imgs.forEach(function(img) {
+        img.addEventListener('click', function() { open(img.currentSrc || img.src, img.alt); });
+    });
+})();
+</script>
+</body>
+</html>

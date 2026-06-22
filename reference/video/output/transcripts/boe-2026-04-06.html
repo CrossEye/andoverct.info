@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Special BOE Meeting — April 6, 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <style>
+    /* Transcript-specific components. Theme, palette, and page chrome
+       (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
+       come from the shared style.css; these just use its variables. */
+    .para { display: flex; gap: 1em; padding: 0.5em 0.75em; border-radius: 6px; }
+    .para:nth-child(4n+1) { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+    .para-gap { font-size: 1px; line-height: 1px; height: 0; overflow: hidden; user-select: text; }
+    .para.speaker { border-top: 1px solid var(--rule-soft); margin-top: 0.6em; padding-top: 1em; }
+    .para.speaker:first-child { border-top: none; margin-top: 0; }
+
+    .timestamp {
+      flex: 0 0 5em; text-align: right;
+      color: var(--ink-mute); font-family: var(--sans);
+      font-size: 0.72rem; font-variant-numeric: tabular-nums; line-height: 1.9;
+      cursor: pointer; white-space: nowrap; padding-top: 0.15em;
+      transition: color 0.15s; user-select: none;
+    }
+    .timestamp:hover, .timestamp.hl { color: var(--accent); font-weight: 600; }
+
+    .text { flex: 1; min-width: 0; }
+    .cue { cursor: pointer; border-radius: 3px; transition: background-color 0.15s; }
+    .cue.hl { background-color: var(--accent-bg); }
+    @keyframes flash-highlight {
+      0%   { background-color: rgba(232, 168, 0, 0.45); }
+      100% { background-color: transparent; }
+    }
+    .cue.flash { animation: flash-highlight 4s ease-out forwards; }
+
+    /* action dialog */
+    #overlay { display: none; position: fixed; inset: 0; background: rgba(8, 22, 40, 0.5); z-index: 100; justify-content: center; align-items: center; }
+    #overlay.visible { display: flex; }
+    .dialog { background: var(--bg-card); border-radius: 10px; padding: 1.6rem 1.8rem; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28); max-width: 28rem; width: 90vw; border-top: 4px solid var(--accent); }
+    .dialog-header { margin-bottom: 1.2em; }
+    .dialog-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); }
+    .dialog-subtitle { font-family: var(--sans); font-size: 0.85rem; color: var(--ink-mute); margin-top: 0.2em; }
+    .dialog .ts-label { color: var(--accent); font-weight: 600; }
+    .dialog .actions { display: flex; flex-direction: column; gap: 0.5em; }
+    .dialog button { display: flex; align-items: center; gap: 0.6em; padding: 0.6em 1em; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--ink); cursor: pointer; font-family: var(--sans); font-size: 0.9rem; text-align: left; width: 100%; transition: background-color 0.12s, border-color 0.12s; }
+    .dialog button:hover { background: var(--accent-bg); border-color: var(--accent); }
+    .dialog button .icon { font-size: 1.1em; flex: 0 0 1.4em; text-align: center; }
+    .dialog button .label { flex: 1; }
+    .dialog button .hint { display: block; color: var(--ink-mute); font-size: 0.78rem; }
+    .dialog .cancel { margin-top: 0.6em; text-align: center; }
+    .dialog .cancel a { color: var(--ink-mute); font-family: var(--sans); font-size: 0.82rem; cursor: pointer; border-bottom: none; }
+    .dialog .cancel a:hover { color: var(--accent); }
+
+    /* toast */
+    #toast { position: fixed; top: 1.5em; left: 50%; transform: translateX(-50%) translateY(-4em); background: var(--accent); color: #15233a; padding: 0.7em 1.6em; border-radius: 8px; font-family: var(--sans); font-size: 0.95rem; font-weight: 600; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease; z-index: 200; pointer-events: none; text-align: center; max-width: 90vw; }
+    #toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    @media (max-width: 480px) { .timestamp { flex-basis: 4em; } }
+  </style>
+</head>
+<body class="bluegold">
+  <div class="page-banner">
+    <nav class="page-banner-inner crumbs">
+      <a href="/">Home</a><span class="sep">›</span><a href="/reference/">Reference</a><span class="sep">›</span><a href="../index.html">Video</a><span class="sep">›</span><span class="current">Special BOE Meeting (4/6/26)</span>
+    </nav>
+  </div>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Meeting transcript</p>
+      <h1 class="title">Special BOE Meeting</h1>
+      <p class="subtitle">April 6, 2026 &middot; <a href="https://us02web.zoom.us/rec/share/qQ-trm-P7wOZ7qWhCQxOCwinso6cEGbob67tJ1mTMZ23SQvBx0WPCyK4xkrG9F2h.JGcWzU19SDNq4CJF" target="_blank">Watch on Zoom</a> &middot; <a href="../index.html">All meetings</a></p>
+    </header>
+
+    <hr class="rule">
+
+    <div class="transcript">
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:02" data-default-t="2">0:02</div>
+        <div class="text"><span class="cue" id="t2" data-cue="t2" data-t="2" data-label="0:02">Okay. It is 07:02PM</span> <span class="cue" id="t5" data-cue="t5" data-t="5" data-label="0:05">on</span> <span class="cue" id="t8" data-cue="t8" data-t="8" data-label="0:08">Monday.</span> <span class="cue" id="t10" data-cue="t10" data-t="10" data-label="0:10">What is the date today anyway? The seventh?</span> <span class="cue" id="t13" data-cue="t13" data-t="13" data-label="0:13">April 6. April 6. I'm sorry, guys. I've had a day.</span> <span class="cue" id="t17" data-cue="t17" data-t="17" data-label="0:17">And we're gonna call to order a special meeting of the Innova board of education.</span> <span class="cue" id="t23" data-cue="t23" data-t="23" data-label="0:23">If everyone could say the pledge of allegiance together.</span> <span class="cue" id="t27" data-cue="t27" data-t="27" data-label="0:27">I pledge allegiance to the flag of</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:30" data-default-t="30">0:30</div>
+        <div class="text"><span class="cue" id="t30" data-cue="t30" data-t="30" data-label="0:30">The United States Of America to the republic for which it stands.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:34" data-default-t="34">0:34</div>
+        <div class="text"><span class="cue" id="t34" data-cue="t34" data-t="34" data-label="0:34">One nation under god, indivisible,</span> <span class="cue" id="t37" data-cue="t37" data-t="37" data-label="0:37">with liberty and justice for all.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:41" data-default-t="41">0:41</div>
+        <div class="text"><span class="cue" id="t41" data-cue="t41" data-t="41" data-label="0:41">So this meeting is very short.</span> <span class="cue" id="t44" data-cue="t44" data-t="44" data-label="0:44">Terms of an opening statement, we intentionally made this meeting</span> <span class="cue" id="t48" data-cue="t48" data-t="48" data-label="0:48">not part of our regularly</span> <span class="cue" id="t50" data-cue="t50" data-t="50" data-label="0:50">scheduled school meeting.</span> <span class="cue" id="t52" data-cue="t52" data-t="52" data-label="0:52">We are here only to discuss</span> <span class="cue" id="t56" data-cue="t56" data-t="56" data-label="0:56">one thing,</span> <span class="cue" id="t57" data-cue="t57" data-t="57" data-label="0:57">and that has to do with</span> <span class="cue" id="t59" data-cue="t59" data-t="59" data-label="0:59">whether or not we need to establish a committee</span> <span class="cue" id="t62" data-cue="t62" data-t="62" data-label="1:02">to investigate allegation</span> <span class="cue" id="t64" data-cue="t64" data-t="64" data-label="1:04">of improper conduct by a board member.</span> <span class="cue" id="t69" data-cue="t69" data-t="69" data-label="1:09">So</span> <span class="cue" id="t70" data-cue="t70" data-t="70" data-label="1:10">in terms of communications,</span> <span class="cue" id="t72" data-cue="t72" data-t="72" data-label="1:12">I have received</span> <span class="cue" id="t73" data-cue="t73" data-t="73" data-label="1:13">at least three communications from members of our community</span> <span class="cue" id="t77" data-cue="t77" data-t="77" data-label="1:17">who all happen to be on the Republican town council</span> <span class="cue" id="t82" data-cue="t82" data-t="82" data-label="1:22">about</span> <span class="cue" id="t83" data-cue="t83" data-t="83" data-label="1:23">specifically in regards to an email that was sent as well as other continued</span> <span class="cue" id="t89" data-cue="t89" data-t="89" data-label="1:29">allegations.</span> <span class="cue" id="t91" data-cue="t91" data-t="91" data-label="1:31">And so we're going to</span> <span class="cue" id="t94" data-cue="t94" data-t="94" data-label="1:34">bring this up for a discussion</span> <span class="cue" id="t98" data-cue="t98" data-t="98" data-label="1:38">and action.</span> <span class="cue" id="t100" data-cue="t100" data-t="100" data-label="1:40">So</span> <span class="cue" id="t101" data-cue="t101" data-t="101" data-label="1:41">just so that everyone on our board is aware,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="1:45" data-default-t="105">1:45</div>
+        <div class="text"><span class="cue" id="t105" data-cue="t105" data-t="105" data-label="1:45">the main reason for having this meeting</span> <span class="cue" id="t108" data-cue="t108" data-t="108" data-label="1:48">is due to the risk of litigation</span> <span class="cue" id="t110" data-cue="t110" data-t="110" data-label="1:50">of the school board by our sole employee who is the superintendent.</span> <span class="cue" id="t115" data-cue="t115" data-t="115" data-label="1:55">We've already had meeting in regards to this, so everyone should be aware of that.</span> <span class="cue" id="t122" data-cue="t122" data-t="122" data-label="2:02">So</span> <span class="cue" id="t124" data-cue="t124" data-t="124" data-label="2:04">in discussing with our</span> <span class="cue" id="t126" data-cue="t126" data-t="126" data-label="2:06">lawyer in consultation,</span> <span class="cue" id="t128" data-cue="t128" data-t="128" data-label="2:08">we need to protect the school board as itself</span> <span class="cue" id="t133" data-cue="t133" data-t="133" data-label="2:13">from</span> <span class="cue" id="t134" data-cue="t134" data-t="134" data-label="2:14">threat of litigation.</span> <span class="cue" id="t138" data-cue="t138" data-t="138" data-label="2:18">So I would like to have some discussion</span> <span class="cue" id="t141" data-cue="t141" data-t="141" data-label="2:21">regarding</span> <span class="cue" id="t143" data-cue="t143" data-t="143" data-label="2:23">whether or not we need to establish a committee</span> <span class="cue" id="t146" data-cue="t146" data-t="146" data-label="2:26">to go forward and and further</span> <span class="cue" id="t148" data-cue="t148" data-t="148" data-label="2:28">investigate these allegations that have come forward and have been presented by members of our community.</span> <span class="cue" id="t155" data-cue="t155" data-t="155" data-label="2:35">I don't know if anyone else</span> <span class="cue" id="t157" data-cue="t157" data-t="157" data-label="2:37">has anything to say on the matter.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:42" data-default-t="162">2:42</div>
+        <div class="text"><span class="cue" id="t162" data-cue="t162" data-t="162" data-label="2:42">As far as I'm concerned, we definitely need to proceed</span> <span class="cue" id="t165" data-cue="t165" data-t="165" data-label="2:45">and prepared</span> <span class="cue" id="t166" data-cue="t166" data-t="166" data-label="2:46">to put forward motions,</span> <span class="cue" id="t169" data-cue="t169" data-t="169" data-label="2:49">but wanted to allow us to discuss anything that we needed to prior to my doing that.</span> <span class="cue" id="t174" data-cue="t174" data-t="174" data-label="2:54">But based on everything that I've read,</span> <span class="cue" id="t177" data-cue="t177" data-t="177" data-label="2:57">we absolutely need to protect ourselves</span> <span class="cue" id="t181" data-cue="t181" data-t="181" data-label="3:01">and take action as a board.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="3:11" data-default-t="191">3:11</div>
+        <div class="text"><span class="cue" id="t191" data-cue="t191" data-t="191" data-label="3:11">Does anyone else have anything that they'd like to bring up in terms of discussion or questions about the process</span> <span class="cue" id="t198" data-cue="t198" data-t="198" data-label="3:18">in terms of protecting our board?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="3:24" data-default-t="204">3:24</div>
+        <div class="text"><span class="cue" id="t204" data-cue="t204" data-t="204" data-label="3:24">No. I think it deserves an investigation 100%.</span> <span class="cue" id="t207" data-cue="t207" data-t="207" data-label="3:27">So I don't know that there's a ton to discuss before</span> <span class="cue" id="t211" data-cue="t211" data-t="211" data-label="3:31">we move forward and and and investigate</span> <span class="cue" id="t213" data-cue="t213" data-t="213" data-label="3:33">and get some more information that we can share with everybody.</span> <span class="cue" id="t217" data-cue="t217" data-t="217" data-label="3:37">K.</span> <span class="cue" id="t219" data-cue="t219" data-t="219" data-label="3:39">There's risk of litigation?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="3:42" data-default-t="222">3:42</div>
+        <div class="text"><span class="cue" id="t222" data-cue="t222" data-t="222" data-label="3:42">Yes. There's risk of litigation,</span> <span class="cue" id="t224" data-cue="t224" data-t="224" data-label="3:44">from our sole employee, the superintendent, towards the board of education for risk of a hostile work environment.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="3:51" data-default-t="231">3:51</div>
+        <div class="text"><span class="cue" id="t231" data-cue="t231" data-t="231" data-label="3:51">Oh, so she would not hesitate to, sue the school and take funds away?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="3:58" data-default-t="238">3:58</div>
+        <div class="text"><span class="cue" id="t238" data-cue="t238" data-t="238" data-label="3:58">No. Not sue the school. Sue the board of education.</span> <span class="cue" id="t241" data-cue="t241" data-t="241" data-label="4:01">We are her bosses. She is our only employee.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="4:20" data-default-t="260">4:20</div>
+        <div class="text"><span class="cue" id="t260" data-cue="t260" data-t="260" data-label="4:20">What are the specifics of something that was done wrong?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="4:26" data-default-t="266">4:26</div>
+        <div class="text"><span class="cue" id="t266" data-cue="t266" data-t="266" data-label="4:26">From what was brought to my attention, it was specifically emails</span> <span class="cue" id="t269" data-cue="t269" data-t="269" data-label="4:29">that you wrote, Marcy, directing people to</span> <span class="cue" id="t274" data-cue="t274" data-t="274" data-label="4:34">continue to spread misinformation,</span> <span class="cue" id="t277" data-cue="t277" data-t="277" data-label="4:37">specifically about the school board budget</span> <span class="cue" id="t280" data-cue="t280" data-t="280" data-label="4:40">and and things</span> <span class="cue" id="t282" data-cue="t282" data-t="282" data-label="4:42">contained within it that was then distributed to the entire Republican</span> <span class="cue" id="t287" data-cue="t287" data-t="287" data-label="4:47">town people.</span> <span class="cue" id="t290" data-cue="t290" data-t="290" data-label="4:50">Again, I'm not I'm not on that, so I don't have the true specifics. I just know what was given to me by the people who brought it forward.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:02" data-default-t="302">5:02</div>
+        <div class="text"><span class="cue" id="t302" data-cue="t302" data-t="302" data-label="5:02">Well, I guess I'll proceed.</span> <span class="cue" id="t305" data-cue="t305" data-t="305" data-label="5:05">My understanding is that we need to form a special committee to investigate this before we can take any action.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:11" data-default-t="311">5:11</div>
+        <div class="text"><span class="cue" id="t311" data-cue="t311" data-t="311" data-label="5:11">According to Robert's rules. Yes. Yep. According to Robert's rules.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:15" data-default-t="315">5:15</div>
+        <div class="text"><span class="cue" id="t315" data-cue="t315" data-t="315" data-label="5:15">So I will make a three pronged motion. Would want to,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:20" data-default-t="320">5:20</div>
+        <div class="text"><span class="cue" id="t320" data-cue="t320" data-t="320" data-label="5:20">talk</span> <span class="cue" id="t321" data-cue="t321" data-t="321" data-label="5:21">talk</span> <span class="cue" id="t322" data-cue="t322" data-t="322" data-label="5:22">privately</span> <span class="cue" id="t322-1" data-cue="t322-1" data-t="322" data-label="5:22">or even in person about</span> <span class="cue" id="t325" data-cue="t325" data-t="325" data-label="5:25">in public about, you know, what is wrong and</span> <span class="cue" id="t329" data-cue="t329" data-t="329" data-label="5:29">and,</span> <span class="cue" id="t330" data-cue="t330" data-t="330" data-label="5:30">you're trying to silence me because you don't want any dissension?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:35" data-default-t="335">5:35</div>
+        <div class="text"><span class="cue" id="t335" data-cue="t335" data-t="335" data-label="5:35">No.</span> <span class="cue" id="t336" data-cue="t336" data-t="336" data-label="5:36">What happened, Marcy, is that we need to investigate whether or not you have</span> <span class="cue" id="t341" data-cue="t341" data-t="341" data-label="5:41">violated</span> <span class="cue" id="t342" data-cue="t342" data-t="342" data-label="5:42">the code of conduct and the policy of the board of education.</span> <span class="cue" id="t347" data-cue="t347" data-t="347" data-label="5:47">And after an investigation,</span> <span class="cue" id="t350" data-cue="t350" data-t="350" data-label="5:50">to make a recommendation by the committee to see if that would then revolve result in a trial and censure</span> <span class="cue" id="t357" data-cue="t357" data-t="357" data-label="5:57">of you as a Board of Education member.</span> <span class="cue" id="t359" data-cue="t359" data-t="359" data-label="5:59">We are not trying to silence you.</span> <span class="cue" id="t362" data-cue="t362" data-t="362" data-label="6:02">You have been given</span> <span class="cue" id="t364" data-cue="t364" data-t="364" data-label="6:04">numerous</span> <span class="cue" id="t365" data-cue="t365" data-t="365" data-label="6:05">requests</span> <span class="cue" id="t366" data-cue="t366" data-t="366" data-label="6:06">to stop your actions,</span> <span class="cue" id="t368" data-cue="t368" data-t="368" data-label="6:08">and the most recent one of which I'm aware,</span> <span class="cue" id="t372" data-cue="t372" data-t="372" data-label="6:12">that resulted in an email to the entire Republican town committee</span> <span class="cue" id="t379" data-cue="t379" data-t="379" data-label="6:19">absolutely flies in the face of your responsibility as a board of education member.</span> <span class="cue" id="t384" data-cue="t384" data-t="384" data-label="6:24">It makes us susceptible to litigation</span> <span class="cue" id="t387" data-cue="t387" data-t="387" data-label="6:27">from superintendent</span> <span class="cue" id="t389" data-cue="t389" data-t="389" data-label="6:29">Bruno,</span> <span class="cue" id="t390" data-cue="t390" data-t="390" data-label="6:30">and we can't continue</span> <span class="cue" id="t392" data-cue="t392" data-t="392" data-label="6:32">to have that susceptibility.</span> <span class="cue" id="t395" data-cue="t395" data-t="395" data-label="6:35">She would have every right to sue us. Our board.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="6:38" data-default-t="398">6:38</div>
+        <div class="text"><span class="cue" id="t398" data-cue="t398" data-t="398" data-label="6:38">Right. It's to protect our board. These things are are public information. This is the things that are not untrue.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="6:47" data-default-t="407">6:47</div>
+        <div class="text"><span class="cue" id="t407" data-cue="t407" data-t="407" data-label="6:47">So you just And then we need to investigate. Investigation will uncover that. The purpose of the purpose of tonight is to decide</span> <span class="cue" id="t414" data-cue="t414" data-t="414" data-label="6:54">if we need to investigate this further. It's not to have a discussion about</span> <span class="cue" id="t419" data-cue="t419" data-t="419" data-label="6:59">what has actually</span> <span class="cue" id="t421" data-cue="t421" data-t="421" data-label="7:01">or what has supposedly occurred. It's to decide if we want to investigate it as a board.</span> <span class="cue" id="t426" data-cue="t426" data-t="426" data-label="7:06">Again, you're just trying to silence me. That's all. I don't think anyone is trying to silence you. My my sole objective right now and the objective of what our board should be is to protect our board</span> <span class="cue" id="t438" data-cue="t438" data-t="438" data-label="7:18">and protect the integrity that we have within the board of education.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="7:24" data-default-t="444">7:24</div>
+        <div class="text"><span class="cue" id="t444" data-cue="t444" data-t="444" data-label="7:24">So as I started to say, I'm gonna make a three part motion.</span> <span class="cue" id="t448" data-cue="t448" data-t="448" data-label="7:28">One is that a special committee be established</span> <span class="cue" id="t451" data-cue="t451" data-t="451" data-label="7:31">to involve investigate allegations of improper conduct by Marci Minor.</span> <span class="cue" id="t457" data-cue="t457" data-t="457" data-label="7:37">Number two</span> <span class="cue" id="t458" data-cue="t458" data-t="458" data-label="7:38">is that the chair of the Andover Board of Education</span> <span class="cue" id="t462" data-cue="t462" data-t="462" data-label="7:42">be authorized to appoint members of the committee and a committee chair.</span> <span class="cue" id="t467" data-cue="t467" data-t="467" data-label="7:47">And number three is that the committee be tasked with, one, conducting an investigation</span> <span class="cue" id="t472" data-cue="t472" data-t="472" data-label="7:52">of allegations of improper conduct by Marci Minor.</span> <span class="cue" id="t476" data-cue="t476" data-t="476" data-label="7:56">And two,</span> <span class="cue" id="t477" data-cue="t477" data-t="477" data-label="7:57">making a report to the entire board of education</span> <span class="cue" id="t481" data-cue="t481" data-t="481" data-label="8:01">either exonerating</span> <span class="cue" id="t482" data-cue="t482" data-t="482" data-label="8:02">Marcy</span> <span class="cue" id="t483" data-cue="t483" data-t="483" data-label="8:03">or listing the charges and the recommendation for a trial.</span> <span class="cue" id="t489" data-cue="t489" data-t="489" data-label="8:09">Is there a second? You guys are funny.</span> <span class="cue" id="t492" data-cue="t492" data-t="492" data-label="8:12">Yeah. It's just ridiculous that you Marcy, you're not you're out of order. There's a motion pending.</span> <span class="cue" id="t498" data-cue="t498" data-t="498" data-label="8:18">There's been a second. Now we can have discussion.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="8:23" data-default-t="503">8:23</div>
+        <div class="text"><span class="cue" id="t503" data-cue="t503" data-t="503" data-label="8:23">Well, we're discussing it. Why am I out of order?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="8:26" data-default-t="506">8:26</div>
+        <div class="text"><span class="cue" id="t506" data-cue="t506" data-t="506" data-label="8:26">Because there was a second room to occur before we could discuss it.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="8:32" data-default-t="512">8:32</div>
+        <div class="text"><span class="cue" id="t512" data-cue="t512" data-t="512" data-label="8:32">Go ahead. You're just trying to silence me. That's all there is. You're trying to get me to resign, and this is just ridiculous. You're you're starting a witch hunt that is is just ridiculous.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="8:43" data-default-t="523">8:43</div>
+        <div class="text"><span class="cue" id="t523" data-cue="t523" data-t="523" data-label="8:43">You know what? You're worried for me to silence you. But, unfortunately,</span> <span class="cue" id="t527" data-cue="t527" data-t="527" data-label="8:47">when you're a member of a board within a town, you have</span> <span class="cue" id="t532" data-cue="t532" data-t="532" data-label="8:52">certain responsibilities</span> <span class="cue" id="t534" data-cue="t534" data-t="534" data-label="8:54">that you have to abide by. And some of those,</span> <span class="cue" id="t538" data-cue="t538" data-t="538" data-label="8:58">you know, have to do with sometimes we vote on things and we don't all agree. And at the end of the day, we need to still support the board that we were elected to be on</span> <span class="cue" id="t547" data-cue="t547" data-t="547" data-label="9:07">with what that board votes to at the end of the day. And there have been things that I have voted against or voted for that didn't pass.</span> <span class="cue" id="t554" data-cue="t554" data-t="554" data-label="9:14">And at the end of the day, we are all still on this board,</span> <span class="cue" id="t558" data-cue="t558" data-t="558" data-label="9:18">to represent the in the best interest of the school.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="9:22" data-default-t="562">9:22</div>
+        <div class="text"><span class="cue" id="t562" data-cue="t562" data-t="562" data-label="9:22">Marcy, if you read</span> <span class="cue" id="t564" data-cue="t564" data-t="564" data-label="9:24">then what Marcy, let me just talk for one second. If you read any,</span> <span class="cue" id="t569" data-cue="t569" data-t="569" data-label="9:29">if not all, of the policies</span> <span class="cue" id="t571" data-cue="t571" data-t="571" data-label="9:31">that are in the series nine thousands that we have been discussing for the last couple months,</span> <span class="cue" id="t577" data-cue="t577" data-t="577" data-label="9:37">you would know</span> <span class="cue" id="t578" data-cue="t578" data-t="578" data-label="9:38">that your alleged misconduct</span> <span class="cue" id="t582" data-cue="t582" data-t="582" data-label="9:42">has in fact violated</span> <span class="cue" id="t584" data-cue="t584" data-t="584" data-label="9:44">our our code of conduct.</span> <span class="cue" id="t585" data-cue="t585" data-t="585" data-label="9:45">If what I understand</span> <span class="cue" id="t587" data-cue="t587" data-t="587" data-label="9:47">has occurred,</span> <span class="cue" id="t588" data-cue="t588" data-t="588" data-label="9:48">in fact, is determined by the committee to have occurred,</span> <span class="cue" id="t592" data-cue="t592" data-t="592" data-label="9:52">you have violated our code of conduct,</span> <span class="cue" id="t594" data-cue="t594" data-t="594" data-label="9:54">thereby making the board of education liable</span> <span class="cue" id="t598" data-cue="t598" data-t="598" data-label="9:58">for your actions as</span> <span class="cue" id="t600" data-cue="t600" data-t="600" data-label="10:00">a board.</span> <span class="cue" id="t603" data-cue="t603" data-t="603" data-label="10:03">That's why we have to establish a committee</span> <span class="cue" id="t605" data-cue="t605" data-t="605" data-label="10:05">to do an investigation</span> <span class="cue" id="t608" data-cue="t608" data-t="608" data-label="10:08">to determine whether or not you have in fact violated</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="10:12" data-default-t="612">10:12</div>
+        <div class="text"><span class="cue" id="t612" data-cue="t612" data-t="612" data-label="10:12">the board of education's policies.</span> <span class="cue" id="t614" data-cue="t614" data-t="614" data-label="10:14">And if so,</span> <span class="cue" id="t616" data-cue="t616" data-t="616" data-label="10:16">then you get your due process.</span> <span class="cue" id="t618" data-cue="t618" data-t="618" data-label="10:18">But first, the first thing that needs to happen according to Robert's rules is that we need to have an investigation.</span> <span class="cue" id="t625" data-cue="t625" data-t="625" data-label="10:25">We are not trying to silence you.</span> <span class="cue" id="t627" data-cue="t627" data-t="627" data-label="10:27">We are simply trying to protect ourselves</span> <span class="cue" id="t630" data-cue="t630" data-t="630" data-label="10:30">because</span> <span class="cue" id="t631" data-cue="t631" data-t="631" data-label="10:31">your actions, as far as the current allegations,</span> <span class="cue" id="t634" data-cue="t634" data-t="634" data-label="10:34">have made us susceptible to being sued.</span> <span class="cue" id="t637" data-cue="t637" data-t="637" data-label="10:37">And that is absolutely something that cannot occur.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="10:41" data-default-t="641">10:41</div>
+        <div class="text"><span class="cue" id="t641" data-cue="t641" data-t="641" data-label="10:41">No.</span> <span class="cue" id="t642" data-cue="t642" data-t="642" data-label="10:42">I'm there's some things that were shared about personal people</span> <span class="cue" id="t646" data-cue="t646" data-t="646" data-label="10:46">that,</span> <span class="cue" id="t647" data-cue="t647" data-t="647" data-label="10:47">that</span> <span class="cue" id="t648" data-cue="t648" data-t="648" data-label="10:48">could subject the superintendent to be ensued.</span> <span class="cue" id="t653" data-cue="t653" data-t="653" data-label="10:53">Nobody's saying anything about that.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="10:57" data-default-t="657">10:57</div>
+        <div class="text"><span class="cue" id="t657" data-cue="t657" data-t="657" data-label="10:57">Right now This meeting is to establish a a committee, Marcy. If you have if you have allegations in that regard,</span> <span class="cue" id="t664" data-cue="t664" data-t="664" data-label="11:04">that is your your right to bring up at a board meeting. Although,</span> <span class="cue" id="t669" data-cue="t669" data-t="669" data-label="11:09">if you bring up allegations that are in fact untrue</span> <span class="cue" id="t672" data-cue="t672" data-t="672" data-label="11:12">or ill informed,</span> <span class="cue" id="t674" data-cue="t674" data-t="674" data-label="11:14">you're gonna further create</span> <span class="cue" id="t676" data-cue="t676" data-t="676" data-label="11:16">a possibility of liability for our being sued by our superintendent.</span> <span class="cue" id="t681" data-cue="t681" data-t="681" data-label="11:21">So we really need to go forward based on facts. And</span> <span class="cue" id="t686" data-cue="t686" data-t="686" data-label="11:26">a lot of what was contained in the email that I saw was absolutely not factual.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="11:32" data-default-t="692">11:32</div>
+        <div class="text"><span class="cue" id="t692" data-cue="t692" data-t="692" data-label="11:32">Well, we can talk about that another time, but, there's also that in the investigative committee.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="11:38" data-default-t="698">11:38</div>
+        <div class="text"><span class="cue" id="t698" data-cue="t698" data-t="698" data-label="11:38">Think I think right now, unless there's further discussion that's warranted, we need to vote on the motion that's on the floor, which is whether or not we establish the committee.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="11:47" data-default-t="707">11:47</div>
+        <div class="text"><span class="cue" id="t707" data-cue="t707" data-t="707" data-label="11:47">There's also what about this meeting? You didn't inform</span> <span class="cue" id="t711" data-cue="t711" data-t="711" data-label="11:51">me of this meeting.</span> <span class="cue" id="t713" data-cue="t713" data-t="713" data-label="11:53">And there's also when what about the letter that went sent to the board of it board of finance?</span> <span class="cue" id="t720" data-cue="t720" data-t="720" data-label="12:00">One person act acted as an individual</span> <span class="cue" id="t723" data-cue="t723" data-t="723" data-label="12:03">without the authority of the board. That's a policy.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:06" data-default-t="726">12:06</div>
+        <div class="text"><span class="cue" id="t726" data-cue="t726" data-t="726" data-label="12:06">That was violated. No. The board chair is allowed to act on behalf of the board. That's the only person that's allowed to act on the behalf of the board.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:15" data-default-t="735">12:15</div>
+        <div class="text"><span class="cue" id="t735" data-cue="t735" data-t="735" data-label="12:15">Marcy, did you Marcy Marcy,</span> <span class="cue" id="t738" data-cue="t738" data-t="738" data-label="12:18">did you inform all of us that you were gonna write a letter to humiliate us saying that we pretty much are lying to back up the superintendent's</span> <span class="cue" id="t745" data-cue="t745" data-t="745" data-label="12:25">lies?</span> <span class="cue" id="t746" data-cue="t746" data-t="746" data-label="12:26">Did you inform us of that?</span> <span class="cue" id="t747" data-cue="t747" data-t="747" data-label="12:27">Because I didn't get the memo.</span> <span class="cue" id="t750" data-cue="t750" data-t="750" data-label="12:30">Because you pretty much were accusing all of us on the board of just backing up lies.</span> <span class="cue" id="t755" data-cue="t755" data-t="755" data-label="12:35">Well, these</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:36" data-default-t="756">12:36</div>
+        <div class="text"><span class="cue" id="t756" data-cue="t756" data-t="756" data-label="12:36">what what I said, these are not lies. So we can, you know, we'll we can investigate it. So I think I think it's pretty I think it's pretty clear, though, that several members of our board are not happy with what has occurred thus far, and then an investigation needs to proceed.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:52" data-default-t="772">12:52</div>
+        <div class="text"><span class="cue" id="t772" data-cue="t772" data-t="772" data-label="12:52">Fine.</span> <span class="cue" id="t775" data-cue="t775" data-t="775" data-label="12:55">Just make sure it's not a witch hunt. Make sure it's</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:59" data-default-t="779">12:59</div>
+        <div class="text"><span class="cue" id="t779" data-cue="t779" data-t="779" data-label="12:59">Marcy, you're the first person Marcy, you're the first person to call other boards to let people know when they speak out and they speak in the wrong. So maybe you should filter yourself before you send letters.</span> <span class="cue" id="t792" data-cue="t792" data-t="792" data-label="13:12">Anyway, I move the question. Yeah.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="13:15" data-default-t="795">13:15</div>
+        <div class="text"><span class="cue" id="t795" data-cue="t795" data-t="795" data-label="13:15">Okay.</span> <span class="cue" id="t797" data-cue="t797" data-t="797" data-label="13:17">We're gonna do a roll call vote, so I'm gonna call you guys one by one. K? Brie?</span> <span class="cue" id="t803" data-cue="t803" data-t="803" data-label="13:23">Aye.</span> <span class="cue" id="t805" data-cue="t805" data-t="805" data-label="13:25">Sharon?</span> <span class="cue" id="t806" data-cue="t806" data-t="806" data-label="13:26">Aye.</span> <span class="cue" id="t807" data-cue="t807" data-t="807" data-label="13:27">Jerry?</span> <span class="cue" id="t809" data-cue="t809" data-t="809" data-label="13:29">Aye.</span> <span class="cue" id="t811" data-cue="t811" data-t="811" data-label="13:31">Shannon?</span> <span class="cue" id="t812" data-cue="t812" data-t="812" data-label="13:32">Aye.</span> <span class="cue" id="t814" data-cue="t814" data-t="814" data-label="13:34">Alisha?</span> <span class="cue" id="t815" data-cue="t815" data-t="815" data-label="13:35">Aye.</span> <span class="cue" id="t816" data-cue="t816" data-t="816" data-label="13:36">Marcy?</span> <span class="cue" id="t818" data-cue="t818" data-t="818" data-label="13:38">Hey. Go for it.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="13:40" data-default-t="820">13:40</div>
+        <div class="text"><span class="cue" id="t820" data-cue="t820" data-t="820" data-label="13:40">Hi. And I will vote in favor of establishing a committee as well.</span> <span class="cue" id="t826" data-cue="t826" data-t="826" data-label="13:46">Okay.</span> <span class="cue" id="t827" data-cue="t827" data-t="827" data-label="13:47">So if we're going to establish this committee,</span> <span class="cue" id="t831" data-cue="t831" data-t="831" data-label="13:51">I would now ask, is there anyone that would like to be appointed to the committee that would volunteer to I would. Should. Okay. Shannon happy as well. Sharon?</span> <span class="cue" id="t843" data-cue="t843" data-t="843" data-label="14:03">Anyone else?</span> <span class="cue" id="t847" data-cue="t847" data-t="847" data-label="14:07">Okay.</span> <span class="cue" id="t849" data-cue="t849" data-t="849" data-label="14:09">If you guys are okay with it, then I would like to appoint Shannon and Sharon to the committee to investigate</span> <span class="cue" id="t858" data-cue="t858" data-t="858" data-label="14:18">allegations of improper conduct,</span> <span class="cue" id="t861" data-cue="t861" data-t="861" data-label="14:21">specifically in regards to Mercy Minor.</span> <span class="cue" id="t864" data-cue="t864" data-t="864" data-label="14:24">And then you guys will conduct an investigation.</span> <span class="cue" id="t867" data-cue="t867" data-t="867" data-label="14:27">And then with the findings of that, we will then establish likely another special meeting to move forward. K? I would I would like specifically to keep this out of our normal board meetings. Okay? Does everyone understand that?</span> <span class="cue" id="t883" data-cue="t883" data-t="883" data-label="14:43">Okay. Understood.</span> <span class="cue" id="t884" data-cue="t884" data-t="884" data-label="14:44">Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="14:46" data-default-t="886">14:46</div>
+        <div class="text"><span class="cue" id="t886" data-cue="t886" data-t="886" data-label="14:46">We do</span> <span class="cue" id="t887" data-cue="t887" data-t="887" data-label="14:47">have comments from the public on agenda items</span> <span class="cue" id="t891" data-cue="t891" data-t="891" data-label="14:51">on there for tonight. So unless anyone has further discussion on the matter that we're talking about, I'd like to move forward with that, and then we'll we'll</span> <span class="cue" id="t899" data-cue="t899" data-t="899" data-label="14:59">Can move forward. Ask one question?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="15:02" data-default-t="902">15:02</div>
+        <div class="text"><span class="cue" id="t902" data-cue="t902" data-t="902" data-label="15:02">Yeah.</span> <span class="cue" id="t903" data-cue="t903" data-t="903" data-label="15:03">I don't obviously,</span> <span class="cue" id="t905" data-cue="t905" data-t="905" data-label="15:05">not been involved in this in the past, but do we ever extend</span> <span class="cue" id="t909" data-cue="t909" data-t="909" data-label="15:09">this committee beyond the board of ed?</span> <span class="cue" id="t912" data-cue="t912" data-t="912" data-label="15:12">No. No?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="15:16" data-default-t="916">15:16</div>
+        <div class="text"><span class="cue" id="t916" data-cue="t916" data-t="916" data-label="15:16">And and just as an aside, our board does not have a policy</span> <span class="cue" id="t921" data-cue="t921" data-t="921" data-label="15:21">on centering a member of our board. There is a suggested policy that is out there by Cave, but we don't have one. So we're following what Robert's rule says.</span> <span class="cue" id="t931" data-cue="t931" data-t="931" data-label="15:31">It would be potentially a policy for us to consider,</span> <span class="cue" id="t934" data-cue="t934" data-t="934" data-label="15:34">creating in the future, but we don't currently have one. So In the September.</span> <span class="cue" id="t939" data-cue="t939" data-t="939" data-label="15:39">Yep. That's where it would go.</span> <span class="cue" id="t942" data-cue="t942" data-t="942" data-label="15:42">Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="15:43" data-default-t="943">15:43</div>
+        <div class="text"><span class="cue" id="t943" data-cue="t943" data-t="943" data-label="15:43">No.</span> <span class="cue" id="t944" data-cue="t944" data-t="944" data-label="15:44">No. It it's only,</span> <span class="cue" id="t945" data-cue="t945" data-t="945" data-label="15:45">from the board of education.</span> <span class="cue" id="t947" data-cue="t947" data-t="947" data-label="15:47">And after the investigation occurs,</span> <span class="cue" id="t950" data-cue="t950" data-t="950" data-label="15:50">as I said in my motion, a report comes back to the entire board with a recommendation on what action to take.</span> <span class="cue" id="t958" data-cue="t958" data-t="958" data-label="15:58">And then whether or not, if there's a recommendation for a trial,</span> <span class="cue" id="t963" data-cue="t963" data-t="963" data-label="16:03">then, there would be a trial, so to speak. A hearing about the alleged misconduct and the result of that hearing,</span> <span class="cue" id="t970" data-cue="t970" data-t="970" data-label="16:10">the only,</span> <span class="cue" id="t971" data-cue="t971" data-t="971" data-label="16:11">result of which can be Accenture.</span> <span class="cue" id="t973" data-cue="t973" data-t="973" data-label="16:13">Right. There's no right that we have of,</span> <span class="cue" id="t977" data-cue="t977" data-t="977" data-label="16:17">doing anything other than centering</span> <span class="cue" id="t980" data-cue="t980" data-t="980" data-label="16:20">a member for, improper conduct.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="16:23" data-default-t="983">16:23</div>
+        <div class="text"><span class="cue" id="t983" data-cue="t983" data-t="983" data-label="16:23">And just so that we're clear, the act of centering basically just formally shows that the board does not support the actions and and speaking of that particular board member so as to protect our board from future litigation.</span> <span class="cue" id="t996" data-cue="t996" data-t="996" data-label="16:36">From liability. Yep. Yep.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="16:40" data-default-t="1000">16:40</div>
+        <div class="text"><span class="cue" id="t1000" data-cue="t1000" data-t="1000" data-label="16:40">Okay. Does anyone have any further questions before we go to public comment?</span> <span class="cue" id="t1005" data-cue="t1005" data-t="1005" data-label="16:45">Nope. Okay.</span> <span class="cue" id="t1007" data-cue="t1007" data-t="1007" data-label="16:47">Louise Goodwin?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="16:49" data-default-t="1009">16:49</div>
+        <div class="text"><span class="cue" id="t1009" data-cue="t1009" data-t="1009" data-label="16:49">Yes.</span> <span class="cue" id="t1011" data-cue="t1011" data-t="1011" data-label="16:51">I have no</span> <span class="cue" id="t1013" data-cue="t1013" data-t="1013" data-label="16:53">understanding or I have not heard of this at all. This is the first I'm hearing of this. Is there any way we could,</span> <span class="cue" id="t1021" data-cue="t1021" data-t="1021" data-label="17:01">the public can receive copies of the letter, so called letters that were</span> <span class="cue" id="t1026" data-cue="t1026" data-t="1026" data-label="17:06">sent stating</span> <span class="cue" id="t1028" data-cue="t1028" data-t="1028" data-label="17:08">this information?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="17:12" data-default-t="1032">17:12</div>
+        <div class="text"><span class="cue" id="t1032" data-cue="t1032" data-t="1032" data-label="17:12">K. I believe that will be addressed, when we have the results of the investigation,</span> <span class="cue" id="t1036" data-cue="t1036" data-t="1036" data-label="17:16">which will be another,</span> <span class="cue" id="t1038" data-cue="t1038" data-t="1038" data-label="17:18">meeting that can be attended by the public. K. Bob, the I'm</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="17:22" data-default-t="1042">17:22</div>
+        <div class="text"><span class="cue" id="t1042" data-cue="t1042" data-t="1042" data-label="17:22">I'm not done yet. Excuse me. So the public I mean,</span> <span class="cue" id="t1047" data-cue="t1047" data-t="1047" data-label="17:27">it doesn't make sense for some people to receive this letter and others not receiving it.</span> <span class="cue" id="t1053" data-cue="t1053" data-t="1053" data-label="17:33">So we don't know. A lot of the public doesn't know what's going on here.</span> <span class="cue" id="t1057" data-cue="t1057" data-t="1057" data-label="17:37">And that doesn't it's it's not a clear</span> <span class="cue" id="t1060" data-cue="t1060" data-t="1060" data-label="17:40">mean, that's not really fair for the public not to know what's going on. We if it's actually misconduct,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="17:47" data-default-t="1067">17:47</div>
+        <div class="text"><span class="cue" id="t1067" data-cue="t1067" data-t="1067" data-label="17:47">our actually broadcasting that and publishing that would further the misconduct.</span> <span class="cue" id="t1073" data-cue="t1073" data-t="1073" data-label="17:53">So we can't be responsible as a board for</span> <span class="cue" id="t1077" data-cue="t1077" data-t="1077" data-label="17:57">furthering alleged misconduct,</span> <span class="cue" id="t1079" data-cue="t1079" data-t="1079" data-label="17:59">which is why we have to have an investigation</span> <span class="cue" id="t1081" data-cue="t1081" data-t="1081" data-label="18:01">to determine if there was misconduct.</span> <span class="cue" id="t1085" data-cue="t1085" data-t="1085" data-label="18:05">And as a part, I would imagine of any part at that point of a trial,</span> <span class="cue" id="t1090" data-cue="t1090" data-t="1090" data-label="18:10">obviously, the alleged misconduct</span> <span class="cue" id="t1092" data-cue="t1092" data-t="1092" data-label="18:12">and probably as evidence,</span> <span class="cue" id="t1095" data-cue="t1095" data-t="1095" data-label="18:15">whatever was said in that email would then come in</span> <span class="cue" id="t1099" data-cue="t1099" data-t="1099" data-label="18:19">for consideration.</span> <span class="cue" id="t1100" data-cue="t1100" data-t="1100" data-label="18:20">But right now, if we did anything to further publish</span> <span class="cue" id="t1105" data-cue="t1105" data-t="1105" data-label="18:25">what we</span> <span class="cue" id="t1106" data-cue="t1106" data-t="1106" data-label="18:26">have believed is alleged misconduct,</span> <span class="cue" id="t1109" data-cue="t1109" data-t="1109" data-label="18:29">that would further make us susceptible to liability,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="18:32" data-default-t="1112">18:32</div>
+        <div class="text"><span class="cue" id="t1112" data-cue="t1112" data-t="1112" data-label="18:32">which is what we're trying to avoid. Correct. That's why we have to follow this process.</span> <span class="cue" id="t1116" data-cue="t1116" data-t="1116" data-label="18:36">Understood.</span> <span class="cue" id="t1118" data-cue="t1118" data-t="1118" data-label="18:38">K.</span> <span class="cue" id="t1119" data-cue="t1119" data-t="1119" data-label="18:39">Bob Hamburger?</span> <span class="cue" id="t1123" data-cue="t1123" data-t="1123" data-label="18:43">We can't hear you, just so you know.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="18:48" data-default-t="1128">18:48</div>
+        <div class="text"><span class="cue" id="t1128" data-cue="t1128" data-t="1128" data-label="18:48">Can you hear me now? Yeah. You're good. Okay.</span> <span class="cue" id="t1132" data-cue="t1132" data-t="1132" data-label="18:52">First,</span> <span class="cue" id="t1133" data-cue="t1133" data-t="1133" data-label="18:53">a lot has been said about impaneling</span> <span class="cue" id="t1136" data-cue="t1136" data-t="1136" data-label="18:56">this</span> <span class="cue" id="t1136-1" data-cue="t1136-1" data-t="1136" data-label="18:56">this panel,</span> <span class="cue" id="t1138" data-cue="t1138" data-t="1138" data-label="18:58">to do this investigation</span> <span class="cue" id="t1140" data-cue="t1140" data-t="1140" data-label="19:00">for the purpose of protecting</span> <span class="cue" id="t1143" data-cue="t1143" data-t="1143" data-label="19:03">the board of ed against potential litigation</span> <span class="cue" id="t1146" data-cue="t1146" data-t="1146" data-label="19:06">from,</span> <span class="cue" id="t1148" data-cue="t1148" data-t="1148" data-label="19:08">the superintendent.</span> <span class="cue" id="t1149" data-cue="t1149" data-t="1149" data-label="19:09">I would hope that the</span> <span class="cue" id="t1152" data-cue="t1152" data-t="1152" data-label="19:12">stated</span> <span class="cue" id="t1152-1" data-cue="t1152-1" data-t="1152" data-label="19:12">purpose</span> <span class="cue" id="t1153" data-cue="t1153" data-t="1153" data-label="19:13">of this panel</span> <span class="cue" id="t1155" data-cue="t1155" data-t="1155" data-label="19:15">is not protection,</span> <span class="cue" id="t1157" data-cue="t1157" data-t="1157" data-label="19:17">but investigation.</span> <span class="cue" id="t1158" data-cue="t1158" data-t="1158" data-label="19:18">That is the purpose of it is to uncover the truth.</span> <span class="cue" id="t1162" data-cue="t1162" data-t="1162" data-label="19:22">And</span> <span class="cue" id="t1163" data-cue="t1163" data-t="1163" data-label="19:23">whichever way that goes</span> <span class="cue" id="t1165" data-cue="t1165" data-t="1165" data-label="19:25">is what's gonna happen in terms of your liability.</span> <span class="cue" id="t1169" data-cue="t1169" data-t="1169" data-label="19:29">But to state at the outset that the purpose of the panel is to protect the board</span> <span class="cue" id="t1176" data-cue="t1176" data-t="1176" data-label="19:36">sounds prejudicial,</span> <span class="cue" id="t1178" data-cue="t1178" data-t="1178" data-label="19:38">and I would hope that you would correct that, that that's not really</span> <span class="cue" id="t1182" data-cue="t1182" data-t="1182" data-label="19:42">the the the the public face that you want this panel to have. Because it means that right from the outset,</span> <span class="cue" id="t1189" data-cue="t1189" data-t="1189" data-label="19:49">you have a bias,</span> <span class="cue" id="t1191" data-cue="t1191" data-t="1191" data-label="19:51">and there shouldn't be a bias. This should be as fair</span> <span class="cue" id="t1195" data-cue="t1195" data-t="1195" data-label="19:55">and impartial in an investigation as possible. So that's the first thing.</span> <span class="cue" id="t1200" data-cue="t1200" data-t="1200" data-label="20:00">The second</span> <span class="cue" id="t1201" data-cue="t1201" data-t="1201" data-label="20:01">is</span> <span class="cue" id="t1202" data-cue="t1202" data-t="1202" data-label="20:02">if this</span> <span class="cue" id="t1204" data-cue="t1204" data-t="1204" data-label="20:04">investigation</span> <span class="cue" id="t1205" data-cue="t1205" data-t="1205" data-label="20:05">uncovers</span> <span class="cue" id="t1206" data-cue="t1206" data-t="1206" data-label="20:06">evidence,</span> <span class="cue" id="t1208" data-cue="t1208" data-t="1208" data-label="20:08">then certainly</span> <span class="cue" id="t1209" data-cue="t1209" data-t="1209" data-label="20:09">you can point to or refer</span> <span class="cue" id="t1212" data-cue="t1212" data-t="1212" data-label="20:12">to the evidence because it's already been made public.</span> <span class="cue" id="t1216" data-cue="t1216" data-t="1216" data-label="20:16">Okay? Now</span> <span class="cue" id="t1218" data-cue="t1218" data-t="1218" data-label="20:18">I would agree, you can't publish it again</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="20:21" data-default-t="1221">20:21</div>
+        <div class="text"><span class="cue" id="t1221" data-cue="t1221" data-t="1221" data-label="20:21">because that would be a repetition</span> <span class="cue" id="t1224" data-cue="t1224" data-t="1224" data-label="20:24">and would represent potential further injury,</span> <span class="cue" id="t1228" data-cue="t1228" data-t="1228" data-label="20:28">if if the information is indeed injurious</span> <span class="cue" id="t1230" data-cue="t1230" data-t="1230" data-label="20:30">to the superintendent.</span> <span class="cue" id="t1232" data-cue="t1232" data-t="1232" data-label="20:32">But certainly</span> <span class="cue" id="t1233" data-cue="t1233" data-t="1233" data-label="20:33">saying to the public,</span> <span class="cue" id="t1235" data-cue="t1235" data-t="1235" data-label="20:35">this was said in this forum on this date,</span> <span class="cue" id="t1239" data-cue="t1239" data-t="1239" data-label="20:39">allows the public to look up information that's already</span> <span class="cue" id="t1244" data-cue="t1244" data-t="1244" data-label="20:44">public publicly published.</span> <span class="cue" id="t1246" data-cue="t1246" data-t="1246" data-label="20:46">Again,</span> <span class="cue" id="t1247" data-cue="t1247" data-t="1247" data-label="20:47">you can't be operating this under some sort of cloak and dagger. You know?</span> <span class="cue" id="t1252" data-cue="t1252" data-t="1252" data-label="20:52">You have to obviously walk the fine line between</span> <span class="cue" id="t1256" data-cue="t1256" data-t="1256" data-label="20:56">not saying,</span> <span class="cue" id="t1258" data-cue="t1258" data-t="1258" data-label="20:58">injurious things again,</span> <span class="cue" id="t1260" data-cue="t1260" data-t="1260" data-label="21:00">but this is this is public</span> <span class="cue" id="t1264" data-cue="t1264" data-t="1264" data-label="21:04">information that you're talking about. So you can't really It's not public information.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="21:08" data-default-t="1268">21:08</div>
+        <div class="text"><span class="cue" id="t1268" data-cue="t1268" data-t="1268" data-label="21:08">It's not publicly been published.</span> <span class="cue" id="t1270" data-cue="t1270" data-t="1270" data-label="21:10">It's only been sent via email to a specific number of people</span> <span class="cue" id="t1274" data-cue="t1274" data-t="1274" data-label="21:14">and came to our attention because some of those people</span> <span class="cue" id="t1279" data-cue="t1279" data-t="1279" data-label="21:19">are related to people on the board of education, for example. So it has not been made public,</span> <span class="cue" id="t1284" data-cue="t1284" data-t="1284" data-label="21:24">which is why we're not now making it public. Well, I got the impre because it I see something. That has occurred during a meeting, which would require different,</span> <span class="cue" id="t1294" data-cue="t1294" data-t="1294" data-label="21:34">different responsibilities on our part. So it's not been a public statement or a or a statement during a meeting. It's not publicly published.</span> <span class="cue" id="t1303" data-cue="t1303" data-t="1303" data-label="21:43">Well And as I said in my motion,</span> <span class="cue" id="t1305" data-cue="t1305" data-t="1305" data-label="21:45">the committee has been established to investigate.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="21:48" data-default-t="1308">21:48</div>
+        <div class="text"><span class="cue" id="t1308" data-cue="t1308" data-t="1308" data-label="21:48">Yeah.</span> <span class="cue" id="t1309" data-cue="t1309" data-t="1309" data-label="21:49">Okay. Obviously. So</span> <span class="cue" id="t1311" data-cue="t1311" data-t="1311" data-label="21:51">the evidence has has to be uncovered.</span> <span class="cue" id="t1314" data-cue="t1314" data-t="1314" data-label="21:54">But</span> <span class="cue" id="t1315" data-cue="t1315" data-t="1315" data-label="21:55">Yeah. Let let let me just let me just back up and and correct.</span> <span class="cue" id="t1319" data-cue="t1319" data-t="1319" data-label="21:59">If some of this information is already in the public domain,</span> <span class="cue" id="t1323" data-cue="t1323" data-t="1323" data-label="22:03">then</span> <span class="cue" id="t1324" data-cue="t1324" data-t="1324" data-label="22:04">the laypeople</span> <span class="cue" id="t1325" data-cue="t1325" data-t="1325" data-label="22:05">have a right to to access that. If it has been privately communicated,</span> <span class="cue" id="t1329" data-cue="t1329" data-t="1329" data-label="22:09">that's entirely a different story.</span> <span class="cue" id="t1331" data-cue="t1331" data-t="1331" data-label="22:11">Okay.</span> <span class="cue" id="t1333" data-cue="t1333" data-t="1333" data-label="22:13">I think that's all I had. Thanks.</span> <span class="cue" id="t1335" data-cue="t1335" data-t="1335" data-label="22:15">Thank you.</span> <span class="cue" id="t1336" data-cue="t1336" data-t="1336" data-label="22:16">Christina Fraser?</span> <span class="cue" id="t1339" data-cue="t1339" data-t="1339" data-label="22:19">All set. Thank you. Yeah. Done with Goldrick? Nope.</span> <span class="cue" id="t1344" data-cue="t1344" data-t="1344" data-label="22:24">I'm all set. Thanks.</span> <span class="cue" id="t1348" data-cue="t1348" data-t="1348" data-label="22:28">Liz Lodzak?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="22:32" data-default-t="1352">22:32</div>
+        <div class="text"><span class="cue" id="t1352" data-cue="t1352" data-t="1352" data-label="22:32">I'm kinda speechless right here, right now.</span> <span class="cue" id="t1358" data-cue="t1358" data-t="1358" data-label="22:38">My personal feeling is that people have a right to free speech,</span> <span class="cue" id="t1363" data-cue="t1363" data-t="1363" data-label="22:43">and I'm</span> <span class="cue" id="t1364" data-cue="t1364" data-t="1364" data-label="22:44">I'm just afraid that this is a witch hunt.</span> <span class="cue" id="t1368" data-cue="t1368" data-t="1368" data-label="22:48">My opinion.</span> <span class="cue" id="t1372" data-cue="t1372" data-t="1372" data-label="22:52">Diane Grineer?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="22:56" data-default-t="1376">22:56</div>
+        <div class="text"><span class="cue" id="t1376" data-cue="t1376" data-t="1376" data-label="22:56">Wow.</span> <span class="cue" id="t1379" data-cue="t1379" data-t="1379" data-label="22:59">The this is sad. This this is a a sad situation.</span> <span class="cue" id="t1386" data-cue="t1386" data-t="1386" data-label="23:06">I I I guess that's basically what I have to say.</span> <span class="cue" id="t1390" data-cue="t1390" data-t="1390" data-label="23:10">Not not being in the public, not knowing all the details,</span> <span class="cue" id="t1394" data-cue="t1394" data-t="1394" data-label="23:14">it does sound</span> <span class="cue" id="t1397" data-cue="t1397" data-t="1397" data-label="23:17">a lot like some sort of a a witch hunt or a vendetta.</span> <span class="cue" id="t1402" data-cue="t1402" data-t="1402" data-label="23:22">I I'm looking forward to the investigation to to clear this and</span> <span class="cue" id="t1410" data-cue="t1410" data-t="1410" data-label="23:30">yeah. Just wow. This is very sad. I'm sorry that this is happening.</span> <span class="cue" id="t1416" data-cue="t1416" data-t="1416" data-label="23:36">Thank you.</span> <span class="cue" id="t1418" data-cue="t1418" data-t="1418" data-label="23:38">Kim Persson?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="23:43" data-default-t="1423">23:43</div>
+        <div class="text"><span class="cue" id="t1423" data-cue="t1423" data-t="1423" data-label="23:43">I I think I'm gonna say the same thing as Diane did. I</span> <span class="cue" id="t1427" data-cue="t1427" data-t="1427" data-label="23:47">it it this is awkward.</span> <span class="cue" id="t1429" data-cue="t1429" data-t="1429" data-label="23:49">I feel like maybe you guys could have just had a private conversation with Marcy explaining the 9,000</span> <span class="cue" id="t1436" data-cue="t1436" data-t="1436" data-label="23:56">policies</span> <span class="cue" id="t1438" data-cue="t1438" data-t="1438" data-label="23:58">and</span> <span class="cue" id="t1440" data-cue="t1440" data-t="1440" data-label="24:00">maybe just,</span> <span class="cue" id="t1441" data-cue="t1441" data-t="1441" data-label="24:01">you know, had a whatever, spoke to her about this and and not carried it to this level. I'm hearing words,</span> <span class="cue" id="t1448" data-cue="t1448" data-t="1448" data-label="24:08">you know, trial</span> <span class="cue" id="t1450" data-cue="t1450" data-t="1450" data-label="24:10">investigation,</span> <span class="cue" id="t1451" data-cue="t1451" data-t="1451" data-label="24:11">and I don't know. It's</span> <span class="cue" id="t1454" data-cue="t1454" data-t="1454" data-label="24:14">to me, this seems very awkward.</span> <span class="cue" id="t1456" data-cue="t1456" data-t="1456" data-label="24:16">Thank you.</span> <span class="cue" id="t1458" data-cue="t1458" data-t="1458" data-label="24:18">Yeah.</span> <span class="cue" id="t1459" data-cue="t1459" data-t="1459" data-label="24:19">Ron?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="24:23" data-default-t="1463">24:23</div>
+        <div class="text"><span class="cue" id="t1463" data-cue="t1463" data-t="1463" data-label="24:23">Yeah.</span> <span class="cue" id="t1465" data-cue="t1465" data-t="1465" data-label="24:25">Joined a meeting to see what was going on</span> <span class="cue" id="t1468" data-cue="t1468" data-t="1468" data-label="24:28">with the board of finance and the board of education and everything. Just listening in as part of the public.</span> <span class="cue" id="t1475" data-cue="t1475" data-t="1475" data-label="24:35">And I'm gonna say like him and the other say, it's disturbing to hear what's going on in a meeting like this.</span> <span class="cue" id="t1481" data-cue="t1481" data-t="1481" data-label="24:41">I think more of this should have been conducted privately with the person on your board.</span> <span class="cue" id="t1486" data-cue="t1486" data-t="1486" data-label="24:46">The board of finance, the board of education,</span> <span class="cue" id="t1489" data-cue="t1489" data-t="1489" data-label="24:49">everything should be public knowledge anyway. We are paying for this as the people of this town.</span> <span class="cue" id="t1495" data-cue="t1495" data-t="1495" data-label="24:55">And</span> <span class="cue" id="t1496" data-cue="t1496" data-t="1496" data-label="24:56">right now, the from what I understand and have been understanding at some of the meetings I've attended, you folks are asking for one of the highest</span> <span class="cue" id="t1504" data-cue="t1504" data-t="1504" data-label="25:04">percentages</span> <span class="cue" id="t1505" data-cue="t1505" data-t="1505" data-label="25:05">of the budget.</span> <span class="cue" id="t1507" data-cue="t1507" data-t="1507" data-label="25:07">And I just was curious of, you know, was there something about the budget that was gonna be on here? So, again, I mean,</span> <span class="cue" id="t1513" data-cue="t1513" data-t="1513" data-label="25:13">interesting to hear what the outcome is in this.</span> <span class="cue" id="t1516" data-cue="t1516" data-t="1516" data-label="25:16">Thank you.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="25:18" data-default-t="1518">25:18</div>
+        <div class="text"><span class="cue" id="t1518" data-cue="t1518" data-t="1518" data-label="25:18">Yep. Did I miss anyone there for public speak?</span> <span class="cue" id="t1525" data-cue="t1525" data-t="1525" data-label="25:25">Okay.</span> <span class="cue" id="t1527" data-cue="t1527" data-t="1527" data-label="25:27">So</span> <span class="cue" id="t1528" data-cue="t1528" data-t="1528" data-label="25:28">our next regular board meeting is this Wednesday,</span> <span class="cue" id="t1531" data-cue="t1531" data-t="1531" data-label="25:31">the eighth at 7PM.</span> <span class="cue" id="t1534" data-cue="t1534" data-t="1534" data-label="25:34">And then for those that are interested,</span> <span class="cue" id="t1536" data-cue="t1536" data-t="1536" data-label="25:36">the town meeting is on the ninth.</span> <span class="cue" id="t1538" data-cue="t1538" data-t="1538" data-label="25:38">There will be a board of education,</span> <span class="cue" id="t1540" data-cue="t1540" data-t="1540" data-label="25:40">information session for questions,</span> <span class="cue" id="t1542" data-cue="t1542" data-t="1542" data-label="25:42">half an hour prior to the town meeting at 06:30PM.</span> <span class="cue" id="t1546" data-cue="t1546" data-t="1546" data-label="25:46">No?</span> <span class="cue" id="t1549" data-cue="t1549" data-t="1549" data-label="25:49">Can't hear you. So</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="25:54" data-default-t="1554">25:54</div>
+        <div class="text"><span class="cue" id="t1554" data-cue="t1554" data-t="1554" data-label="25:54">I believe we're we're speaking as well as the town speaking a half an hour before the town meeting. Is that correct?</span> <span class="cue" id="t1561" data-cue="t1561" data-t="1561" data-label="26:01">Thought it was gonna occur during the town meeting and not before the town meeting.</span> <span class="cue" id="t1565" data-cue="t1565" data-t="1565" data-label="26:05">That's what I had heard from the board of finance.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="26:08" data-default-t="1568">26:08</div>
+        <div class="text"><span class="cue" id="t1568" data-cue="t1568" data-t="1568" data-label="26:08">Okay. No one has corrected me otherwise. I thought that we were supposed to have a meeting a half an hour prior because the board of education is not actually part of the town meeting. So that was what we had decided to try to do for this year. So I I guess I'll have to clarify that, and, yes, we'll keep people posted.</span> <span class="cue" id="t1586" data-cue="t1586" data-t="1586" data-label="26:26">But</span> <span class="cue" id="t1587" data-cue="t1587" data-t="1587" data-label="26:27">we'll we'll touch base again on Wednesday night.</span> <span class="cue" id="t1591" data-cue="t1591" data-t="1591" data-label="26:31">Okay?</span> <span class="cue" id="t1592" data-cue="t1592" data-t="1592" data-label="26:32">Would anyone like to move to adjourn?</span> <span class="cue" id="t1594" data-cue="t1594" data-t="1594" data-label="26:34">Motion to adjourn.</span> <span class="cue" id="t1596" data-cue="t1596" data-t="1596" data-label="26:36">Second. 7729.</span> <span class="cue" id="t1598" data-cue="t1598" data-t="1598" data-label="26:38">Okay. Thank you.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+    </div>
+
+    <footer class="colophon">
+      <p><strong>About this transcript.</strong> This transcript was generated by OpenAI Whisper from a Zoom recording. Names, numbers, and other details may be inaccurate &mdash; please refer to the recording for authoritative content.</p>
+      <p>Part of <code>andoverct.info</code>, an independent civic-reference site &mdash; not an official site of the Town of Andover. Compiled by <a href="mailto:scott@sauyet.com">Scott Sauyet</a>.</p>
+    </footer>
+  </main>
+
+  <div id="overlay">
+    <div class="dialog">
+      <div class="dialog-header">
+        <div class="dialog-title">Special BOE Meeting</div>
+        <div class="dialog-subtitle">April 6, 2026 at <span class="ts-label" id="overlay-ts"></span></div>
+      </div>
+      <div class="actions">
+        <button id="act-watch-zoom">
+          <span class="icon">&#127909;</span>
+          <span class="label">Watch on Zoom<br><span class="hint">Copies passcode to clipboard, then opens recording</span></span>
+        </button>
+        <button id="act-copy-link">
+          <span class="icon">&#128279;</span>
+          <span class="label">Copy recording link<br><span class="hint" id="hint-link-url"></span></span>
+        </button>
+        <button id="act-bookmark">
+          <span class="icon">&#128278;</span>
+          <span class="label">Bookmark this spot<br><span class="hint">Copies link &amp; adds to navigation history</span></span>
+        </button>
+      </div>
+      <div class="cancel"><a id="act-cancel">Cancel</a></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>window.TX = { video: "https://us02web.zoom.us/rec/share/qQ-trm-P7wOZ7qWhCQxOCwinso6cEGbob67tJ1mTMZ23SQvBx0WPCyK4xkrG9F2h.JGcWzU19SDNq4CJF", passcode: "KfMFJ4X?", type: "Zoom" };</script>
+  <script src="https://andoverct.info/reference/video/assets/transcripts.js"></script>
+</body>
+</html>

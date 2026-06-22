@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>BOE Meeting — May 31, 2023</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <style>
+    /* Transcript-specific components. Theme, palette, and page chrome
+       (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
+       come from the shared style.css; these just use its variables. */
+    .para { display: flex; gap: 1em; padding: 0.5em 0.75em; border-radius: 6px; }
+    .para:nth-child(4n+1) { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+    .para-gap { font-size: 1px; line-height: 1px; height: 0; overflow: hidden; user-select: text; }
+    .para.speaker { border-top: 1px solid var(--rule-soft); margin-top: 0.6em; padding-top: 1em; }
+    .para.speaker:first-child { border-top: none; margin-top: 0; }
+
+    .timestamp {
+      flex: 0 0 5em; text-align: right;
+      color: var(--ink-mute); font-family: var(--sans);
+      font-size: 0.72rem; font-variant-numeric: tabular-nums; line-height: 1.9;
+      cursor: pointer; white-space: nowrap; padding-top: 0.15em;
+      transition: color 0.15s; user-select: none;
+    }
+    .timestamp:hover, .timestamp.hl { color: var(--accent); font-weight: 600; }
+
+    .text { flex: 1; min-width: 0; }
+    .cue { cursor: pointer; border-radius: 3px; transition: background-color 0.15s; }
+    .cue.hl { background-color: var(--accent-bg); }
+    @keyframes flash-highlight {
+      0%   { background-color: rgba(232, 168, 0, 0.45); }
+      100% { background-color: transparent; }
+    }
+    .cue.flash { animation: flash-highlight 4s ease-out forwards; }
+
+    /* action dialog */
+    #overlay { display: none; position: fixed; inset: 0; background: rgba(8, 22, 40, 0.5); z-index: 100; justify-content: center; align-items: center; }
+    #overlay.visible { display: flex; }
+    .dialog { background: var(--bg-card); border-radius: 10px; padding: 1.6rem 1.8rem; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28); max-width: 28rem; width: 90vw; border-top: 4px solid var(--accent); }
+    .dialog-header { margin-bottom: 1.2em; }
+    .dialog-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); }
+    .dialog-subtitle { font-family: var(--sans); font-size: 0.85rem; color: var(--ink-mute); margin-top: 0.2em; }
+    .dialog .ts-label { color: var(--accent); font-weight: 600; }
+    .dialog .actions { display: flex; flex-direction: column; gap: 0.5em; }
+    .dialog button { display: flex; align-items: center; gap: 0.6em; padding: 0.6em 1em; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--ink); cursor: pointer; font-family: var(--sans); font-size: 0.9rem; text-align: left; width: 100%; transition: background-color 0.12s, border-color 0.12s; }
+    .dialog button:hover { background: var(--accent-bg); border-color: var(--accent); }
+    .dialog button .icon { font-size: 1.1em; flex: 0 0 1.4em; text-align: center; }
+    .dialog button .label { flex: 1; }
+    .dialog button .hint { display: block; color: var(--ink-mute); font-size: 0.78rem; }
+    .dialog .cancel { margin-top: 0.6em; text-align: center; }
+    .dialog .cancel a { color: var(--ink-mute); font-family: var(--sans); font-size: 0.82rem; cursor: pointer; border-bottom: none; }
+    .dialog .cancel a:hover { color: var(--accent); }
+
+    /* toast */
+    #toast { position: fixed; top: 1.5em; left: 50%; transform: translateX(-50%) translateY(-4em); background: var(--accent); color: #15233a; padding: 0.7em 1.6em; border-radius: 8px; font-family: var(--sans); font-size: 0.95rem; font-weight: 600; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease; z-index: 200; pointer-events: none; text-align: center; max-width: 90vw; }
+    #toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    @media (max-width: 480px) { .timestamp { flex-basis: 4em; } }
+  </style>
+</head>
+<body class="bluegold">
+  <div class="page-banner">
+    <nav class="page-banner-inner crumbs">
+      <a href="/">Home</a><span class="sep">›</span><a href="/reference/">Reference</a><span class="sep">›</span><a href="../index.html">Video</a><span class="sep">›</span><span class="current">BOE Meeting (5/31/23)</span>
+    </nav>
+  </div>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Meeting transcript</p>
+      <h1 class="title">BOE Meeting</h1>
+      <p class="subtitle">May 31, 2023 &middot; <a href="https://us02web.zoom.us/rec/share/dqOt3AVCrP9TNoMLoC-x08LVaktbb1YcuNV_pSrydc4GaouYsP5Xk6qL0Y0GhZTG.h4Dsw8LsxixH5AGd" target="_blank">Watch on Zoom</a> &middot; <a href="../index.html">All meetings</a></p>
+    </header>
+
+    <hr class="rule">
+
+    <div class="transcript">
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:00" data-default-t="0">0:00</div>
+        <div class="text"><span class="cue" id="t0" data-cue="t0" data-t="0" data-label="0:00">Right.</span> <span class="cue" id="t5" data-cue="t5" data-t="5" data-label="0:05">You're little bit stable? You can't. Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:08" data-default-t="8">0:08</div>
+        <div class="text"><span class="cue" id="t8" data-cue="t8" data-t="8" data-label="0:08">I'm gonna get you on a call. Hi, everyone. It's 07:00 on the May</span> <span class="cue" id="t12" data-cue="t12" data-t="12" data-label="0:12">24.</span> <span class="cue" id="t14" data-cue="t14" data-t="14" data-label="0:14">Special meeting of the end of the board of education.</span> <span class="cue" id="t17" data-cue="t17" data-t="17" data-label="0:17">My thanks to everyone in attendance to be here.</span> <span class="cue" id="t20" data-cue="t20" data-t="20" data-label="0:20">Thank you, board of education members, for volunteering your time and being here. Celeste, would you like to pledge? Absolutely.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:28" data-default-t="28">0:28</div>
+        <div class="text"><span class="cue" id="t28" data-cue="t28" data-t="28" data-label="0:28">Right</span> <span class="cue" id="t29" data-cue="t29" data-t="29" data-label="0:29">there. Oh, well, thank you. I pledge allegiance to the flag of The United States Of America.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:43" data-default-t="43">0:43</div>
+        <div class="text"><span class="cue" id="t43" data-cue="t43" data-t="43" data-label="0:43">Thanks a lot. You're welcome, Jerry. No. What comments would you like</span> <span class="cue" id="t49" data-cue="t49" data-t="49" data-label="0:49">it? Communication.</span> <span class="cue" id="t50" data-cue="t50" data-t="50" data-label="0:50">Does anyone have any communication from chair?</span> <span class="cue" id="t54" data-cue="t54" data-t="54" data-label="0:54">No. Seeing there are none,</span> <span class="cue" id="t56" data-cue="t56" data-t="56" data-label="0:56">I made a motion to go into executive session. Valerie, you're invited.</span> <span class="cue" id="t61" data-cue="t61" data-t="61" data-label="1:01">Anybody want a second motion?</span> <span class="cue" id="t64" data-cue="t64" data-t="64" data-label="1:04">So ask.</span> <span class="cue" id="t65" data-cue="t65" data-t="65" data-label="1:05">Okay.</span> <span class="cue" id="t66" data-cue="t66" data-t="66" data-label="1:06">All in favor, say aye. Aye. Nay.</span> <span class="cue" id="t71" data-cue="t71" data-t="71" data-label="1:11">In executive session, Valerie, you're with us? Hang on one second.</span> <span class="cue" id="t77" data-cue="t77" data-t="77" data-label="1:17">Okay. This whole thing doesn't work.</span> <span class="cue" id="t80" data-cue="t80" data-t="80" data-label="1:20">Five six.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:22" data-default-t="82">1:22</div>
+        <div class="text"><span class="cue" id="t82" data-cue="t82" data-t="82" data-label="1:22">Okay. So Out of executive session, I motion to allow Valerie to engage with the board of education attorney</span> <span class="cue" id="t88" data-cue="t88" data-t="88" data-label="1:28">to create an MOU to present to the board of selectmen in an effort to move forward collaboratively</span> <span class="cue" id="t94" data-cue="t94" data-t="94" data-label="1:34">toward development of the community center.</span> <span class="cue" id="t98" data-cue="t98" data-t="98" data-label="1:38">I second.</span> <span class="cue" id="t100" data-cue="t100" data-t="100" data-label="1:40">Thank you, Chris. Any discussion?</span> <span class="cue" id="t103" data-cue="t103" data-t="103" data-label="1:43">All in favor, aye. Aye. Aye.</span> <span class="cue" id="t108" data-cue="t108" data-t="108" data-label="1:48">The opposed?</span> <span class="cue" id="t109" data-cue="t109" data-t="109" data-label="1:49">Any abstentions?</span> <span class="cue" id="t111" data-cue="t111" data-t="111" data-label="1:51">Passes</span> <span class="cue" id="t112" data-cue="t112" data-t="112" data-label="1:52">six zero zero.</span> <span class="cue" id="t114" data-cue="t114" data-t="114" data-label="1:54">Jerry, can I have that one? Sure.</span> <span class="cue" id="t116" data-cue="t116" data-t="116" data-label="1:56">Here you go. Absolutely.</span> <span class="cue" id="t117" data-cue="t117" data-t="117" data-label="1:57">Bye. Bye, Shannon. Have a good evening.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:01" data-default-t="121">2:01</div>
+        <div class="text"><span class="cue" id="t121" data-cue="t121" data-t="121" data-label="2:01">Okay.</span> <span class="cue" id="t122" data-cue="t122" data-t="122" data-label="2:02">So just to be clear,</span> <span class="cue" id="t124" data-cue="t124" data-t="124" data-label="2:04">the things that we want to potentially</span> <span class="cue" id="t127" data-cue="t127" data-t="127" data-label="2:07">have in this</span> <span class="cue" id="t130" data-cue="t130" data-t="130" data-label="2:10">MOU would include</span> <span class="cue" id="t134" data-cue="t134" data-t="134" data-label="2:14">parking parking lot maintenance,</span> <span class="cue" id="t136" data-cue="t136" data-t="136" data-label="2:16">the turnaround,</span> <span class="cue" id="t140" data-cue="t140" data-t="140" data-label="2:20">addressing that smoking ban for all guests,</span> <span class="cue" id="t143" data-cue="t143" data-t="143" data-label="2:23">getting prior approval with a timeline and a staging plan,</span> <span class="cue" id="t149" data-cue="t149" data-t="149" data-label="2:29">meeting and speaking to collaborate on all the safety procedures, particularly the emergency vehicle routes</span> <span class="cue" id="t156" data-cue="t156" data-t="156" data-label="2:36">and jurisdiction going forward.</span> <span class="cue" id="t159" data-cue="t159" data-t="159" data-label="2:39">Mhmm. Yeah. Got it. Yep.</span> <span class="cue" id="t161" data-cue="t161" data-t="161" data-label="2:41">Chris, did I miss anything?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:43" data-default-t="163">2:43</div>
+        <div class="text"><span class="cue" id="t163" data-cue="t163" data-t="163" data-label="2:43">I don't think so.</span> <span class="cue" id="t164" data-cue="t164" data-t="164" data-label="2:44">You said parking and parking lot maintenance as separate. That's two separate things. Right. Yep. Did you wanna actually, did you wanna add add in Caitlin's suggestion about the the traffic restrictions, or is that in one of the ones you mentioned? So turnaround.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:56" data-default-t="176">2:56</div>
+        <div class="text"><span class="cue" id="t176" data-cue="t176" data-t="176" data-label="2:56">The stuff with the turnaround.</span> <span class="cue" id="t178" data-cue="t178" data-t="178" data-label="2:58">So and how it affects the school day. Traffic flow. Yep. K. Yeah.</span> <span class="cue" id="t184" data-cue="t184" data-t="184" data-label="3:04">Okay.</span> <span class="cue" id="t185" data-cue="t185" data-t="185" data-label="3:05">And</span> <span class="cue" id="t186" data-cue="t186" data-t="186" data-label="3:06">then one other thing did we wanna talk about,</span> <span class="cue" id="t189" data-cue="t189" data-t="189" data-label="3:09">also,</span> <span class="cue" id="t191" data-cue="t191" data-t="191" data-label="3:11">the one that, you know, I I had some concerns about with was the loading dock</span> <span class="cue" id="t195" data-cue="t195" data-t="195" data-label="3:15">because they put a waiver in.</span> <span class="cue" id="t197" data-cue="t197" data-t="197" data-label="3:17">And I'm just concerned that if there's loading and unloading on</span> <span class="cue" id="t202" data-cue="t202" data-t="202" data-label="3:22">their turnaround of supplies during drop off and pickup that it's endangerment.</span> <span class="cue" id="t207" data-cue="t207" data-t="207" data-label="3:27">Right. Yeah. So so time time frame.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="3:31" data-default-t="211">3:31</div>
+        <div class="text"><span class="cue" id="t211" data-cue="t211" data-t="211" data-label="3:31">So, yeah, traffic flow Traffic flow and time frame. Specifically, they're loading and unloading because they asked for a waiver for Yeah. Yes. Okay. Yes. Alright. Great. Thanks, Val. Anything else?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="3:44" data-default-t="224">3:44</div>
+        <div class="text"><span class="cue" id="t224" data-cue="t224" data-t="224" data-label="3:44">I think it is very straightforward. Mhmm. It should be easy for them to get the first to sign in.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="3:51" data-default-t="231">3:51</div>
+        <div class="text"><span class="cue" id="t231" data-cue="t231" data-t="231" data-label="3:51">Yeah.</span> <span class="cue" id="t232" data-cue="t232" data-t="232" data-label="3:52">Yeah. All done. All the work is done. And I think I think the only other really important thing to to write in there is that, like, we feel like this is important to have in place because the hope is that with this new facility, we will increase the amount of usage by residents. Like, that's the hope and goal. Absolutely. Right? Is that we do have more traffic. Right. Right. And that we have more events. Absolutely.</span> <span class="cue" id="t254" data-cue="t254" data-t="254" data-label="4:14">Okay.</span> <span class="cue" id="t257" data-cue="t257" data-t="257" data-label="4:17">Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="4:18" data-default-t="258">4:18</div>
+        <div class="text"><span class="cue" id="t258" data-cue="t258" data-t="258" data-label="4:18">We want this to have a positive impact on our community. Yeah. Absolutely. That'll be great. Yeah.</span> <span class="cue" id="t267" data-cue="t267" data-t="267" data-label="4:27">That's it. Anything else, Jerry?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="4:31" data-default-t="271">4:31</div>
+        <div class="text"><span class="cue" id="t271" data-cue="t271" data-t="271" data-label="4:31">Nope. Now we did that. And now all we need is comments from the public. Is there any are there any public people? Nope. It's Chris. It's Chris.</span> <span class="cue" id="t278" data-cue="t278" data-t="278" data-label="4:38">He's not public. No. Okay. Upcoming meeting, regular meeting is 06/14/2023.</span> <span class="cue" id="t284" data-cue="t284" data-t="284" data-label="4:44">K. We're gonna have the</span> <span class="cue" id="t286" data-cue="t286" data-t="286" data-label="4:46">public hearings for the planning and zoning on</span> <span class="cue" id="t289" data-cue="t289" data-t="289" data-label="4:49">June 7 at 07:00,</span> <span class="cue" id="t293" data-cue="t293" data-t="293" data-label="4:53">and that's gonna be in the town hall. And</span> <span class="cue" id="t295" data-cue="t295" data-t="295" data-label="4:55">Valerie is gonna do the presentation for us. Yep. Yes.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:00" data-default-t="300">5:00</div>
+        <div class="text"><span class="cue" id="t300" data-cue="t300" data-t="300" data-label="5:00">You all set? Great. Thank you. Thank you. To adjourn. I'll make a motion to adjourn.</span> <span class="cue" id="t306" data-cue="t306" data-t="306" data-label="5:06">Second.</span> <span class="cue" id="t307" data-cue="t307" data-t="307" data-label="5:07">Chris. Chris. Chris seconds.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:09" data-default-t="309">5:09</div>
+        <div class="text"><span class="cue" id="t309" data-cue="t309" data-t="309" data-label="5:09">Okay. All in favor, say aye. Aye.</span> <span class="cue" id="t313" data-cue="t313" data-t="313" data-label="5:13">Five six. Any opposed?</span> <span class="cue" id="t315" data-cue="t315" data-t="315" data-label="5:15">Any abstentions?</span> <span class="cue" id="t316" data-cue="t316" data-t="316" data-label="5:16">Hearing none, passes 500.</span> <span class="cue" id="t320" data-cue="t320" data-t="320" data-label="5:20">Shannon is logged off. Correct? Mhmm.</span> <span class="cue" id="t324" data-cue="t324" data-t="324" data-label="5:24">Thank you.</span> <span class="cue" id="t326" data-cue="t326" data-t="326" data-label="5:26">No. Thank</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+    </div>
+
+    <footer class="colophon">
+      <p><strong>About this transcript.</strong> This transcript was generated by OpenAI Whisper from a Zoom recording. Names, numbers, and other details may be inaccurate &mdash; please refer to the recording for authoritative content.</p>
+      <p>Part of <code>andoverct.info</code>, an independent civic-reference site &mdash; not an official site of the Town of Andover. Compiled by <a href="mailto:scott@sauyet.com">Scott Sauyet</a>.</p>
+    </footer>
+  </main>
+
+  <div id="overlay">
+    <div class="dialog">
+      <div class="dialog-header">
+        <div class="dialog-title">BOE Meeting</div>
+        <div class="dialog-subtitle">May 31, 2023 at <span class="ts-label" id="overlay-ts"></span></div>
+      </div>
+      <div class="actions">
+        <button id="act-watch-zoom">
+          <span class="icon">&#127909;</span>
+          <span class="label">Watch on Zoom<br><span class="hint">Copies passcode to clipboard, then opens recording</span></span>
+        </button>
+        <button id="act-copy-link">
+          <span class="icon">&#128279;</span>
+          <span class="label">Copy recording link<br><span class="hint" id="hint-link-url"></span></span>
+        </button>
+        <button id="act-bookmark">
+          <span class="icon">&#128278;</span>
+          <span class="label">Bookmark this spot<br><span class="hint">Copies link &amp; adds to navigation history</span></span>
+        </button>
+      </div>
+      <div class="cancel"><a id="act-cancel">Cancel</a></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>window.TX = { video: "https://us02web.zoom.us/rec/share/dqOt3AVCrP9TNoMLoC-x08LVaktbb1YcuNV_pSrydc4GaouYsP5Xk6qL0Y0GhZTG.h4Dsw8LsxixH5AGd", passcode: "cF.k62.a", type: "Zoom" };</script>
+  <script src="https://andoverct.info/reference/video/assets/transcripts.js"></script>
+</body>
+</html>

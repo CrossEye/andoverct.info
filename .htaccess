@@ -1,0 +1,11 @@
+# ---------------------------------------------------------------------------
+# andoverct.info — document-root .htaccess
+# ---------------------------------------------------------------------------
+
+# Route /<anything>/idx through the directory-index helper.
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*/)?idx/?$ /idx.php?dir=$1 [L,QSA]
+
+

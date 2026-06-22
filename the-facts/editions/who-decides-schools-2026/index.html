@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Who Decides How the Schools Are Run — the facts</title>
+<meta name="description" content="Explaining the legal relationship between the Boards of Education and Finance: who does what?">
+<style>
+  /* ---------- Layout & typography ---------- */
+  :root {
+    /* bluegold palette — var names kept from the original burgundy theme,
+       so the component rules below recolor without edits. */
+    --burgundy: #143862;        /* primary accent: headings, borders, CTA bg */
+    --burgundy-soft: #2f6db5;   /* secondary blue */
+    --gold: #e8a800;            /* accent rules */
+    --gold-soft: #d8c79a;
+    --cream: #f4f6f9;           /* page background */
+    --cream-deep: #eef4fb;      /* callout backgrounds */
+    --ink: #19222e;
+    --ink-soft: #4a566a;
+    --ink-faint: #7a8699;
+    --rule: #e8a800;
+    --navy: #0f2a4a;            /* banner gradient top */
+    --blue: #245c95;            /* links */
+    --blue-hover: #1c4e80;
+    --gold-ink: #9a7400;        /* readable gold for text accents */
+    --confirm-strong: #14532d;  /* "copied" feedback green */
+    --serif: Georgia, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  .page {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  /* ---------- Breadcrumb banner (matches the reports' bluegold banner) ---------- */
+  .tf-pagebanner {
+    background: linear-gradient(180deg, var(--navy), #143862);
+    border-bottom: 3px solid var(--gold);
+    color: #dde8f5;
+    font-family: var(--sans);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  .tf-pagebanner-inner {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 12px 20px;
+  }
+  .crumbs a { color: var(--gold); text-decoration: none; }
+  .crumbs a:hover { color: #fff; text-decoration: underline; }
+  .crumbs .sep { color: #dde8f5; opacity: 0.5; margin: 0 0.45em; }
+  .crumbs .current { color: #fff; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 60px 0 32px;
+    text-align: center;
+    border-bottom: 1px solid var(--gold);
+    margin-bottom: 36px;
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -1px;
+    margin: 0 0 18px 0;
+  }
+
+  .hero h1 .mis { color: var(--ink); }
+  .hero h1 .leading { color: var(--gold-ink); }
+
+  .hero .dek {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 19px;
+    line-height: 1.45;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  /* ---------- Mailer / hero image reproduction ---------- */
+  .mailer {
+    margin: 0 0 36px;
+    text-align: center;
+  }
+
+  .mailer-frame {
+    display: inline-block;
+    position: relative;
+    background: white;
+    border: 1px solid #aaa;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    line-height: 0;
+  }
+
+  .mailer-frame img {
+    display: block;
+    max-width: 100%;
+    width: 480px;
+    height: auto;
+  }
+
+  .mailer-frame .circle {
+    position: absolute;
+    border: 3px solid var(--burgundy);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .mailer-caption {
+    margin-top: 14px;
+    color: var(--ink-soft);
+    font-style: italic;
+    font-size: 14px;
+  }
+
+  .mailer-caption strong {
+    color: var(--burgundy);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  /* ---------- Sections ---------- */
+  section {
+    margin: 0 0 48px 0;
+  }
+
+  section h2 {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--burgundy);
+    margin: 0 0 16px 0;
+    line-height: 1.2;
+  }
+
+  section h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--burgundy);
+    margin: 28px 0 12px;
+    line-height: 1.3;
+  }
+
+  section .lead {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 18px 0;
+    line-height: 1.4;
+  }
+
+  section p {
+    margin: 0 0 16px 0;
+  }
+
+  section a {
+    color: var(--blue);
+    text-decoration: underline;
+    text-decoration-color: rgba(36, 92, 149, 0.4);
+    text-underline-offset: 2px;
+  }
+
+  section a:hover {
+    color: var(--blue-hover);
+    text-decoration-color: var(--blue-hover);
+  }
+
+  /* ---------- Heading permalink anchors (hover-reveal) ---------- */
+  .header-anchor {
+    display: inline-block;
+    margin-left: 0.35em;
+    padding: 0 0.15em;
+    color: var(--ink-faint);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.7em;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+  }
+  h2:hover > .header-anchor,
+  h3:hover > .header-anchor,
+  .header-anchor:focus {
+    opacity: 1;
+  }
+  .header-anchor:hover { color: var(--burgundy); }
+  .header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+  }
+  .header-anchor.copied::after {
+    content: " link copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+  }
+
+  /* Inline figures (e.g. charts) scale to the content column. */
+  section img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 8px auto 12px;
+  }
+
+  /* ---------- Math comparison block ---------- */
+  .math-block {
+    background: var(--cream-deep);
+    border-left: 3px solid var(--burgundy);
+    padding: 18px 22px;
+    margin: 0 0 20px 0;
+    font-family: "Courier New", "Liberation Mono", monospace;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .math-block .label {
+    font-family: var(--serif);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .math-block .wrong-label { color: #b3261e; }
+  .math-block .right-label { color: #14532D; }
+
+  .math-block .equation {
+    padding-left: 6px;
+  }
+
+  .math-block .mark {
+    display: inline-block;
+    font-size: 18pt;
+    font-weight: 900;
+    margin-left: 10px;
+    vertical-align: -2px;
+  }
+  .math-block .mark.x { color: #b3261e; }
+  .math-block .mark.check { color: #14532D; }
+
+  .math-block .row {
+    margin-bottom: 14px;
+  }
+  .math-block .row:last-child { margin-bottom: 0; }
+
+  /* ---------- Data sub-sections ---------- */
+  .data-section {
+    margin: 0 0 28px 0;
+    padding: 18px 22px;
+    background: var(--cream-deep);
+    border-left: 3px solid var(--burgundy);
+  }
+
+  .data-section h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+  }
+
+  .data-section .stat {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--burgundy);
+    margin: 8px 0 4px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .data-section .stat-label {
+    color: var(--ink-soft);
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .data-section p {
+    margin: 6px 0 0 0;
+    font-size: 16px;
+  }
+
+  /* Hide the empty <ul> that may remain after stat extraction */
+  .data-section ul:empty { display: none; }
+
+  /* ---------- Direct quotes ---------- */
+  blockquote {
+    margin: 18px 0;
+    padding: 12px 22px;
+    border-left: 3px solid var(--gold);
+    background: rgba(200, 168, 120, 0.10);
+    font-style: italic;
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  blockquote p { margin: 0 0 8px 0; }
+  blockquote p:last-child { margin-bottom: 0; }
+
+  blockquote .source {
+    display: block;
+    font-style: normal;
+    font-size: 13px;
+    color: var(--ink-faint);
+    margin-top: 8px;
+  }
+
+  /* ---------- ECS visualization ---------- */
+  .ecs-chart {
+    margin: 24px 0 12px;
+  }
+
+  .ecs-chart .scenario {
+    margin: 0 0 24px 0;
+  }
+
+  .ecs-chart .scenario h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--burgundy);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    margin: 0 0 3px 0;
+  }
+
+  .ecs-chart .scenario .subtitle {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin: 0 0 12px 0;
+  }
+
+  .stack {
+    display: table;
+    width: 100%;
+    height: 50px;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin: 0 0 6px 0;
+  }
+
+  .stack > div {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    color: white;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 0 6px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .seg-town { background: #c79a3a; }
+  .seg-aes  { background: #143862; }
+  .seg-rham { background: #2f6db5; }
+
+  .labels {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  .labels > div {
+    display: table-cell;
+    padding: 4px 6px 0 6px;
+    font-size: 11px;
+    color: var(--ink-soft);
+    text-align: center;
+    vertical-align: top;
+    line-height: 1.35;
+  }
+
+  .labels .name {
+    font-weight: 700;
+    color: var(--ink);
+    display: block;
+    font-size: 12px;
+    margin-bottom: 1px;
+  }
+
+  .scenario .total {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--gold);
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+  .scenario .total .label { color: var(--ink-soft); }
+  .scenario .total .amount {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- Placeholder markers (draft only — visible by design) ---------- */
+  .placeholder {
+    background: #fff3a8;
+    color: #5a4a1a;
+    padding: 0 4px;
+    border-radius: 2px;
+    font-family: var(--sans);
+    font-size: 0.92em;
+    font-weight: 600;
+  }
+
+  .placeholder-block {
+    background: #fff3a8;
+    border-left: 4px solid #d4a017;
+    color: #5a4a1a;
+    padding: 12px 18px;
+    margin: 18px 0;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  /* ---------- Call to action ---------- */
+  .cta {
+    background: var(--burgundy);
+    color: white;
+    padding: 28px 30px;
+    text-align: center;
+    margin: 36px 0 24px;
+  }
+
+  .cta h2 {
+    color: white;
+    margin: 0 0 8px;
+    font-size: 28px;
+  }
+
+  .cta p {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  .cta strong { font-weight: 700; }
+
+  /* ---------- Footer references ---------- */
+  .references {
+    margin-top: 60px;
+    padding-top: 28px;
+    border-top: 1px solid var(--gold);
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  .references h2 {
+    font-size: 18px;
+    color: var(--burgundy);
+    margin: 0 0 14px 0;
+  }
+
+  .references ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .references li {
+    margin-bottom: 8px;
+  }
+
+  .references li > p {
+    margin: 0;
+  }
+
+  .references a {
+    color: var(--blue);
+  }
+
+  .colophon {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid var(--gold-soft);
+    font-size: 13px;
+    color: var(--ink-faint);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    .hero h1 { font-size: 40px; }
+    .hero .dek { font-size: 17px; }
+    section h2 { font-size: 22px; }
+    section .lead { font-size: 17px; }
+    .math-block { font-size: 13px; padding: 14px 16px; }
+    .data-section { padding: 14px 16px; }
+    .stack > div, .labels > div { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="tf-pagebanner">
+  <nav class="tf-pagebanner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/the-facts/">The Facts</a><span class="sep">›</span><span class="current">Who Decides How the Schools Are Run</span>
+  </nav>
+</div>
+
+<div class="page">
+
+  <div class="hero">
+    <h1>Who Decides How the Schools Are Run</h1>
+    <p class="dek"></p>
+  </div>
+
+<section>
+<h1 id="who-decides-how-the-schools-are-run">Who Decides How the Schools Are Run<a class="header-anchor" href="#who-decides-how-the-schools-are-run" aria-label="Link to this section">¶</a></h1>
+</section>
+<section>
+<h2 id="a-note-on-the-roles-of-the-board-of-finance-and-the-board-of-education">A note on the roles of the Board of Finance and the Board of Education<a class="header-anchor" href="#a-note-on-the-roles-of-the-board-of-finance-and-the-board-of-education" aria-label="Link to this section">¶</a></h2>
+<p>At a recent Board of Finance meeting, while setting a new school budget
+figure after the failed referendum, a member offered an explanation for
+why the town finds itself in another budget cycle. The gist was this:
+last year the Board of Finance cut the school budget, the Board of
+Education hired the staff it wanted anyway, and now the town is dealing
+with the consequences.</p>
+<blockquote>
+<p>&quot;Last year their budget was cut and they completely disregarded that
+cut and hired those people anyway. So they locked in those new
+contracts for three new hires. And now we&#39;re having to deal with it...
+there&#39;s got to be some give and take, and for them to just disregard
+the budget that we gave them and say, &#39;We&#39;ll, hire these people. We&#39;ll
+figure it out next year.&#39; And that&#39;s what happened.&quot;</p>
+<p>--- Andover Board of Finance meeting, May 27, 2026,
+<a href="https://www.youtube.com/watch?v=__FmjwHH69o&t=2787s">at 46:27</a>.</p>
+</blockquote>
+<p>It is worth being precise about this, because the statement rests on a
+misunderstanding of what each board is actually empowered to do. And it
+is not an obscure point of trivia. It is the basic division of
+authority that governs every school budget in Connecticut, written into
+both state law and our own town charter.</p>
+<h3 id="what-the-board-of-finance-controls">What the Board of Finance controls<a class="header-anchor" href="#what-the-board-of-finance-controls" aria-label="Link to this section">¶</a></h3>
+<p>The Board of Finance controls one number: the bottom line. It decides
+the total dollar amount the town appropriates for the schools. That is
+a real and significant power, and no one disputes it.</p>
+<p>Under Connecticut General Statutes <a href="https://www.cga.ct.gov/current/pub/chap_170.htm#sec_10-222">Section
+10-222</a>,
+the local Board of Education prepares an itemized estimate of what it
+expects to spend and submits it to the Board of Finance. The Board of
+Finance may then reduce that estimate. It may set the total lower than
+the schools requested. What it may <strong>not</strong> do is tell the schools which
+line items to cut, which positions to fund, or how to allocate the
+money it appropriates.</p>
+<p>The statute also gives the Board of Finance a formal channel to
+<em>recommend</em>. Within ten days of receiving the estimate, the appropriating
+authority may make spending recommendations and suggestions about
+consolidating noneducational services and finding efficiencies. The
+Board of Education may accept or reject those suggestions, and must
+provide a written explanation if it rejects them. Note the words the
+legislature chose: recommendations, suggestions, accept or reject. The
+Board of Finance advises. It does not direct.</p>
+<p>Our town charter follows the same structure. Under <a href="https://charter2024.andoverct.info/#Section802E">Section
+802E</a>, the Board of
+Finance may &quot;add to, delete from, or eliminate&quot; the requests of most
+town departments, but for the local Board of Education it &quot;may only
+comment and make recommendations.&quot; That is not an accident of drafting.
+It mirrors the line state law draws.</p>
+<h3 id="what-the-board-of-education-controls">What the Board of Education controls<a class="header-anchor" href="#what-the-board-of-education-controls" aria-label="Link to this section">¶</a></h3>
+<p>Everything else.</p>
+<p>Connecticut law could hardly be more direct on this point. Under Section
+10-222, the money appropriated by the town for the maintenance of public
+schools is spent &quot;by and in the discretion of the board of education.&quot;
+The Board of Education may transfer any unexpended portion of any
+appropriation to any other item in its budget, at its own discretion,
+without asking the Board of Finance for permission. The only hard limit
+is the total: the schools may not spend more than the town appropriated.</p>
+<p>The Connecticut courts settled this nearly a century ago. The
+foundational case is <em>Groton and Stonington Traction Co. v. Groton</em>,
+115 Conn. 151 (1932), and the line of decisions that followed it. The
+Office of Legislative Research, summarizing that case law, puts it
+plainly: the Board of Finance controls the total amount of the school
+budget and must exercise that control reasonably, but the appropriation,
+once set, is spent by the Board of Education, which controls expenditures
+within the limits of the total. The same summary notes that the Board of
+Finance &quot;has no authority to refuse to transfer and transmit to the
+board of education amounts expended as long as these amounts do not
+exceed the total appropriation approved by the town.&quot;</p>
+<p>So consider the claim that the schools &quot;hired the staff anyway.&quot;</p>
+<p>If the Board of Education staffed those positions while staying within
+the total the town appropriated, it did exactly what the law authorizes
+it to do. The Board of Finance set a bottom line. The Board of Education
+decided how to spend within it. That is not defiance. That is the system
+working as designed, in our charter and in state statute alike.</p>
+<p>The frustration is understandable on a human level. The Board of Finance
+recommended fewer positions, the schools funded them anyway, and from a
+seat on the Board of Finance that can feel like being ignored. But &quot;they
+didn&#39;t take our advice&quot; and &quot;they broke the rules&quot; are very different
+claims, and only the first one is true. The remedy for advice not taken
+is not in the charter. It is at the next budget, where the Board of
+Finance can again set the total it believes is right.</p>
+<h3 id="why-the-line-is-drawn-where-it-is">Why the line is drawn where it is<a class="header-anchor" href="#why-the-line-is-drawn-where-it-is" aria-label="Link to this section">¶</a></h3>
+<p>This is not a quirk of Connecticut law. It reflects a deliberate choice
+about who is accountable for educational outcomes.</p>
+<p>The people charged with educating our children are the professional
+educators the Board of Education hires, starting with the
+Superintendent. They are the ones with the training to decide how many
+teachers a grade needs, which programs to run, and how to deploy the
+resources the town provides. A board of finance, by design, is not an
+educational body. It is a fiscal one. The law gives the Board of Finance
+control over the total. It deliberately withholds control over the
+spending. Splitting authority that way keeps budgeting in the hands of
+the budget experts and education in the hands of the education experts.</p>
+<p>The First Selectman, under charter <a href="https://charter2024.andoverct.info/#Section701D">Section
+701D(12)</a>, is even
+barred from purchasing for the Board of Education except to the extent
+that board authorizes it. The charter protects the schools&#39; control over
+their own operations at every turn.</p>
+<h3 id="and-here-is-what-that-structure-has-produced">And here is what that structure has produced<a class="header-anchor" href="#and-here-is-what-that-structure-has-produced" aria-label="Link to this section">¶</a></h3>
+<p>On the 2024-25 Next Generation Accountability report, the state&#39;s
+official scorecard for districts, Andover outperforms the Connecticut
+state average on every indicator. The English Language Arts Performance
+Index is 73.1, against a state average of 64.7. Math is 68.7, against
+61.1. Science is 76.5, against 62.6, and above Connecticut&#39;s ultimate
+target of 75. Academic growth in both subjects also runs above the state
+average. And on chronic absenteeism, students missing 10% or more of
+school days, Andover stands at 5.6% against a state rate of 17.2%, in
+the top tier not only of Connecticut as a whole but of the 45 small-town
+elementary-only districts that share Andover&#39;s structural profile.</p>
+<p>On the cost side, a <a href="http://andoverct.info/reports/aes/peer-spending/">companion analysis on this
+site</a> compares
+Andover&#39;s per-pupil spending against those same 44 peer districts using
+the Connecticut State Department of Education&#39;s published data. Andover
+spends $19,009 per pupil, the lowest of all 45 districts in the peer
+set. The peer median is $25,699, which means a median peer district
+spends $6,690 more per pupil than Andover does. Andover&#39;s administrative
+spending sits at fourth-lowest of the 45 on the combined administrative
+lines, and the leanness is not explained by district size; a regression
+across the peer set predicts a 241-student district should spend
+substantially more than Andover does.</p>
+<p>That is what it looks like when the professionals charged with educating
+our children are given room to do the job the law assigns them, with the
+resources the town provides. Andover delivers above-state-average
+outcomes on every measured indicator, on the leanest budget of any
+comparable district in the state.</p>
+<p>The Board of Education did not put the town in a difficult budget
+position by exercising the authority state law and the charter give it.
+It used that authority to deliver results. The conversation worth having
+is not whether the schools should have &quot;listened.&quot; It is how a district
+doing this much with this little deserves to be funded going forward.</p>
+<h3 id="sources">Sources<a class="header-anchor" href="#sources" aria-label="Link to this section">¶</a></h3>
+<ul>
+<li>Andover Town Charter (2024), <a href="https://charter2024.andoverct.info/#Section802E">Section
+802E</a> (Board of
+Finance may only comment and make recommendations on the local Board
+of Education budget).</li>
+<li>Andover Town Charter (2024), <a href="https://charter2024.andoverct.info/#Section701D">Section
+701D(12)</a>.</li>
+<li>Conn. Gen. Stat. <a href="https://www.cga.ct.gov/current/pub/chap_170.htm#sec_10-222">Section
+10-222</a>
+(appropriation spent &quot;by and in the discretion of the board of
+education&quot;; transfer authority; recommendation-and-suggestion process).</li>
+<li>Connecticut Office of Legislative Research, <a href="https://www.cga.ct.gov/2003/rpt/2003-R-0178.htm">Report
+2003-R-0178</a>,
+&quot;School Board Financial Responsibility and Shared Staff,&quot; summarizing
+<em>Groton and Stonington Traction Co. v. Groton</em> and related case law
+on the division of authority.</li>
+<li>Connecticut State Department of Education, <a href="https://edsight.ct.gov/Output/District/NonHighSchool/0010011_202425.pdf">EdSight District Profile
+and Performance Report for Andover School District,
+2024-25</a>
+(PDF). <a href="https://public-edsight.ct.gov/overview/profile-and-performance-reports">EdSight PPR
+index</a>
+for other districts. Source for the Next Generation Accountability
+indicators cited above.</li>
+<li>Connecticut State Department of Education, <a href="https://public-edsight.ct.gov/overview/per-pupil-expenditures-by-function---district">EdSight, Per Pupil
+Expenditures by Function
+(District)</a>,
+2024-25, as consolidated in <a href="http://andoverct.info/reports/aes/peer-spending/">Scott Sauyet, &quot;Andover&#39;s Per-Pupil
+Spending in Context&quot;</a>,
+May 2026. Source for the 45-district peer-set spending comparison.</li>
+</ul>
+</section>
+
+
+
+</div>
+
+<script>
+// Click a heading's ¶ anchor to copy its permalink to the clipboard.
+document.addEventListener('click', function (e) {
+  var anchor = e.target.closest('.header-anchor');
+  if (!anchor) return;
+  var id = anchor.parentElement.id;
+  if (!id) return;
+  var url = window.location.origin + window.location.pathname + '#' + id;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(function () {
+      anchor.classList.add('copied');
+      setTimeout(function () { anchor.classList.remove('copied'); }, 1400);
+    }).catch(function () {});
+  }
+});
+</script>
+<script src="/the-facts/editions.js"></script>
+</body>
+</html>

@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Andover Elementary School Preschool — Financial Analysis</title>
+<style>
+/* ---- Reset & base ---- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 11pt;
+    line-height: 1.55;
+    color: #1a1a1a;
+    background: #fafaf7;
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Layout ---- */
+.page-banner {
+    background: #2c3e50;
+    color: #ecf0f1;
+    padding: 14px 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.page-banner a { color: inherit; text-decoration: none; }
+.page-banner a:hover { text-decoration: underline; }
+
+.container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 40px 30px 60px;
+    background: #fff;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* ---- Title block ---- */
+.report-title {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 28pt;
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: #1a1a1a;
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 13pt;
+    color: #5a5a5a;
+    margin: 0 0 24px 0;
+    font-weight: 400;
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid #1a1a1a;
+    margin: 0 0 24px 0;
+}
+.methodology-header {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: #444;
+    background: #f5f3ed;
+    border-left: 3px solid #b8a878;
+    padding: 16px 20px;
+    margin: 0 0 36px 0;
+    line-height: 1.55;
+}
+
+/* ---- Section labels (small uppercase tags above h2) ---- */
+.section-label {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #888;
+    margin: 36px 0 4px 0;
+    padding-top: 16px;
+    border-top: 1px solid #e0ddd5;
+}
+
+/* ---- Headings ---- */
+h2 {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 18pt;
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: #1a1a1a;
+    line-height: 1.25;
+    page-break-after: avoid;
+    break-after: avoid;
+}
+h3 {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 13pt;
+    font-weight: 600;
+    margin: 28px 0 10px 0;
+    color: #2c3e50;
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+/* ---- Body text ---- */
+p {
+    margin: 0 0 14px 0;
+    orphans: 3;
+    widows: 3;
+}
+strong { font-weight: 700; color: #1a1a1a; }
+em { font-style: italic; }
+
+/* ---- Links ---- */
+a {
+    color: #1a5490;
+    text-decoration: none;
+    border-bottom: 1px solid #c5d3e2;
+    word-break: break-word;
+}
+a:hover {
+    color: #0d3a6b;
+    border-bottom-color: #0d3a6b;
+}
+
+/* ---- Lists ---- */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+li {
+    margin: 0 0 6px 0;
+    line-height: 1.55;
+}
+
+/* ---- Tables ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid #e0ddd5;
+    vertical-align: top;
+}
+th {
+    background: #f5f3ed;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    font-size: 9.5pt;
+    color: #2c3e50;
+    border-bottom: 2px solid #b8a878;
+}
+tbody tr:hover { background: #fafaf7; }
+
+/* Numeric-looking columns (cells that are pure numbers/currency) get
+   right-aligned via data attribute set by post-processor; falls back to
+   left-align if not applied. */
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Last-row totals styling */
+tbody tr:last-child td {
+    border-bottom: 2px solid #b8a878;
+}
+
+/* ---- Blockquotes (used for source notes and verbatim policy quotes) ---- */
+blockquote {
+    margin: 14px 0 18px 0;
+    padding: 14px 20px;
+    background: #f5f3ed;
+    border-left: 3px solid #b8a878;
+    font-size: 10.5pt;
+    color: #333;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+blockquote p { margin: 0 0 8px 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ol, blockquote ul {
+    margin: 8px 0;
+}
+
+/* ---- HR ---- */
+hr {
+    border: 0;
+    border-top: 1px solid #e0ddd5;
+    margin: 32px 0;
+}
+
+/* ---- Inline code ---- */
+code {
+    font-family: "SF Mono", Monaco, Menlo, Consolas, monospace;
+    font-size: 9.5pt;
+    background: #f5f3ed;
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: #2c3e50;
+    word-break: break-word;
+}
+
+/* ---- Other Formats footer ---- */
+.formats-section {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid #1a1a1a;
+}
+.format-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 18px 0;
+}
+.format-card {
+    border: 1px solid #e0ddd5;
+    background: #fafaf7;
+    padding: 14px;
+    text-align: left;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+.format-card-icon { font-size: 18pt; margin-bottom: 4px; }
+.format-card-title {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+.format-card-desc { font-size: 9pt; color: #5a5a5a; line-height: 1.4; }
+.format-card a { display: block; }
+
+/* ---- Footer ---- */
+.page-footer {
+    max-width: 780px;
+    margin: 32px auto 60px;
+    padding: 24px 30px;
+    text-align: center;
+    color: #888;
+    font-size: 9.5pt;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    border-top: 1px solid #e0ddd5;
+}
+
+/* ---- Confirmation glyphs ---- */
+h3 .conf-mark {
+    color: #5a8a5a;
+    font-size: 11pt;
+    margin-right: 4px;
+}
+</style>
+</head>
+<body>
+<div class="page-banner">
+  <div class="page-banner-inner">
+    <span><a href="http://andoverct.info/">Town of Andover, CT</a> · Public Reports</span>
+    <span>AES Preschool · Financial Analysis</span>
+  </div>
+</div>
+<div class="container">
+<h1 class="report-title">Andover Elementary School Preschool</h1>
+<p class="report-subtitle">Financial Analysis · FY 2024–25</p>
+<hr class="report-header-rule">
+<p class="methodology-header">Report compiled May 2, 2026, for use in town deliberations on the financial role of the Andover Elementary School preschool program. Revenue figures are drawn directly from the FY 2024–25 Andover audit (filed with the Connecticut Office of Policy and Management on EARS, document ID 13598) and from the Connecticut Comptroller&rsquo;s OpenCheckbook for the same fiscal year. Personnel cost estimates are computed from the AEA Contract 2025–2029 and the CSEA Contract 2024–2028, both posted publicly on the Andover Elementary School website. Staff counts and enrollment policy come from the school&rsquo;s own published &ldquo;About Pre-K&rdquo; page and 2025–26 Preschool Registration Packet. All figures are presented as found; methodology, caveats, and known data gaps are described below.</p>
+
+<hr />
+<p class="section-label">Introduction</p>
+<h2>Why this report exists</h2>
+<p>The Andover Elementary School preschool program has been the subject of recurring discussion in town budget conversations, focused on two questions: what does the program actually cost the town, and to what extent does it serve out-of-town families. Both questions have answers that can be assembled from public sources — the town&rsquo;s annual audit, the Connecticut Comptroller&rsquo;s payment records, the published collective bargaining agreements, and the school&rsquo;s own enrollment policies — but assembling the answer takes some work. This report does that work and presents what is determinable. A closing section sketches what a recurring summary report from the Board of Education might look like, which would make this information available without requiring residents to assemble it themselves.</p>
+<p>The short version of the answer to the first question: the preschool program is approximately self-funding when measured by the costs it actually adds to the town. State and federal grants plus family tuition together cover approximately $434,000 per year. The directly attributable staff cost — four preschool teachers, four classroom assistants, their benefits, substitutes, and supplies — is approximately $483,000 per year. The net town subsidy is approximately $50,000 per year, or about $36 per Andover household.</p>
+<p>The short version of the answer to the second question: the preschool&rsquo;s published enrollment policy gives Andover residents priority at every step. Out-of-town students fill seats only after Andover demand has been satisfied. Because the marginal cost of one additional enrolled student in an existing classroom is essentially zero (the teacher is already paid, the classroom is already running), every dollar of tuition from an out-of-town family is incremental revenue that helps fund the program. Out-of-town students do not subsidize their tuition with town money — they contribute revenue that helps subsidize income-eligible Andover residents.</p>
+<hr />
+<p class="section-label">Methodology</p>
+<h2>A note on methodology before the numbers</h2>
+<p>There are two methodologically distinct ways to attribute cost to a school program, and the choice between them changes the answer by an order of magnitude. This report uses the <strong>marginal cost</strong> framing throughout and discusses the alternative <strong>average cost</strong> framing in a single subsection (under Part 3). The key distinction in brief: marginal cost asks what costs would not be incurred if the program did not exist; average cost asks what proportional share of the school&rsquo;s total expenditure should be assigned to the program for accounting purposes. Both are honest and answer different questions. For budget-deliberation purposes the marginal framing is the relevant one, because the costs that would not actually disappear if the program were eliminated should not be counted against the program when weighing it.</p>
+<p>A second methodological note: this report estimates personnel costs from the published collective bargaining agreements rather than from individual staff salaries, which would require either a Freedom of Information request or cooperation from the Superintendent&rsquo;s office. Each estimate is bracketed by a low (junior staff) and high (senior staff) scenario; the reported mid-estimate uses the mean of the relevant salary schedule. If actual staff-by-staff figures become available, the estimates can be refined.</p>
+<hr />
+<p class="section-label before-part">Revenue</p>
+<h2>Part 1 — Revenue: what the preschool brings in</h2>
+<h3>State grants from the Office of Early Childhood <span class="conf-mark">✓</span> <em>Confirmed from FY 2024–25 audit</em></h3>
+<p>The Andover FY 2024–25 audit, filed by the town&rsquo;s independent auditor and accepted by the Connecticut Office of Policy and Management, reports the following state grants in its Schedule of Expenditures of State Financial Assistance (page 13). All three flow from the Connecticut Office of Early Childhood and are restricted to preschool program use:</p>
+<table>
+<thead>
+<tr>
+<th>Grant</th>
+<th>Core-CT identifier</th>
+<th>FY 2024–25 amount</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Early Care and Education</td>
+<td>11000-OEC64845-16274</td>
+<td class="num">$123,300</td>
+</tr>
+<tr>
+<td>Smart Start</td>
+<td>11000-OEC64845-16279</td>
+<td class="num">$65,000</td>
+</tr>
+<tr>
+<td>School Readiness Quality Enhancement</td>
+<td>11000-OEC64845-16158</td>
+<td class="num">$3,881</td>
+</tr>
+<tr>
+<td><strong>Total OEC state grants</strong></td>
+<td></td>
+<td class="num"><strong>$192,181</strong></td>
+</tr>
+</tbody>
+</table>
+<p>A few notes on these line items.</p>
+<p><strong>Early Care and Education</strong> is the line that historically appeared as &ldquo;School Readiness.&rdquo; Effective July 1, 2025 — the day after this audit&rsquo;s fiscal year ended — the state combined three prior programs (Child Day Care Contracts, School Readiness Grants, and State Head Start Supplement Grants) into a single new program called Early Start CT. Andover&rsquo;s funding under the new program name will appear in the FY 2025–26 audit. The FY 2024–25 figure shown above represents the final year of the program under its old name.</p>
+<p><strong>Smart Start</strong> has been awarded to Andover at exactly $65,000 every year since the original 2017 award (Governor Malloy press release, February 2017: 1 classroom, 13 children, $65,000 operations + $75,000 capital). The amount has not been increased in eight years despite Smart Start&rsquo;s statutory cap rising to $5,000 per child or $75,000 per classroom. As Andover has expanded the program from one classroom to four, the Smart Start award has remained level — meaning incremental classrooms have been funded primarily through the Early Care and Education / School Readiness line and through tuition rather than through additional Smart Start applications.</p>
+<p><strong>School Readiness Quality Enhancement</strong> (also called &ldquo;Child Care Quality Enhancement&rdquo; in Comptroller records) is a small supplemental grant tied to program quality benchmarks.</p>
+<h3>Federal preschool grants <span class="conf-mark">✓</span> <em>Confirmed from FY 2024–25 audit</em></h3>
+<p>The same audit&rsquo;s Schedule of Expenditures of Federal Awards reports two federal grants directly attributable to the preschool program:</p>
+<table>
+<thead>
+<tr>
+<th>Grant</th>
+<th>CFDA / Core-CT identifier</th>
+<th>FY 2024–25 amount</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Special Education Preschool Grants — 2024 (IDEA §619)</td>
+<td>84.173 / 12060-SDE64370-20983</td>
+<td class="num">$3,213</td>
+</tr>
+<tr>
+<td>COVID-19 CSLFRF — School Readiness Competitive Enrollment-Based — 2023</td>
+<td>21.027 / 12060-OEC64845-28227</td>
+<td class="num">$2,232</td>
+</tr>
+<tr>
+<td><strong>Total federal preschool grants</strong></td>
+<td></td>
+<td class="num"><strong>$5,445</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The IDEA Section 619 grant is the federal preschool special-education funding stream. It is small because Section 619 allocations are formula-based on counts of identified preschoolers with IEPs, and Andover&rsquo;s small preschool enrollment produces a correspondingly small federal allocation. The CSLFRF School Readiness pass-through is a one-time COVID-era residual; this is likely the last year it appears.</p>
+<p>A larger federal grant — the IDEA Part B Special Education Cluster, totaling $59,593 in FY 2024–25 — covers special education services for ages 3 through 21. Some unknown portion of this serves preschoolers with IEPs, but the audit does not break the figure out by grade level. For purposes of this report I treat only the explicitly preschool-coded $3,213 as preschool revenue. The remainder is district-wide special education funding that would be received with or without the preschool program (because the district would still have K–6 students on IEPs).</p>
+<h3>Family tuition <span class="conf-mark">✓</span> <em>Confirmed from FY 2024–25 audit</em></h3>
+<p>The Andover preschool charges $600 per month, or $6,000 per year, for full-pay families, with sliding-fee reductions for families that qualify under the OEC income eligibility scale. Tuition revenue does not flow through the General Fund; it is recorded in the <strong>School Grants Fund</strong>, a Special Revenue Fund that also receives the OEC grants.</p>
+<p>The FY 2024–25 audit reports the following revenues for the School Grants Fund (page 76 of the audit, in the combining statement of revenues, expenditures, and changes in fund balances):</p>
+<table>
+<thead>
+<tr>
+<th>School Grants Fund — FY 2024–25</th>
+<th>Amount</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Intergovernmental revenue (federal/state grants)</td>
+<td class="num">$372,182</td>
+</tr>
+<tr>
+<td><strong>Charges for services (preschool tuition)</strong></td>
+<td class="num"><strong>$235,917</strong></td>
+</tr>
+<tr>
+<td>Total revenues</td>
+<td class="num">$608,099</td>
+</tr>
+<tr>
+<td>Education expenditures</td>
+<td class="num">$615,845</td>
+</tr>
+<tr>
+<td><strong>Net change in fund balance</strong></td>
+<td><strong>−$7,746</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The audit&rsquo;s Management&rsquo;s Discussion and Analysis section states explicitly that the year-over-year increase in town-wide charges-for-services revenue (from $366,367 in FY 2023–24 to $613,807 in FY 2024–25, a 67.5% jump) &ldquo;is primarily due to an increase in preschool tuition recognized during the fiscal year.&rdquo; This is consistent with the program expanding from 3 to 4 classrooms during FY 2024–25, which increased both the headcount paying tuition and the total tuition base.</p>
+<p>The intergovernmental line of $372,182 includes the OEC grants ($192,181) and the IDEA Section 619 grant ($3,213) identified above, plus approximately $176,800 of other federal pass-throughs (CSLFRF, possibly Title I or ARPA preschool funds) that flow through the same fund. The audit does not provide a complete grant-by-grant breakdown for this line.</p>
+<h3>Cross-validation against the Connecticut Comptroller <span class="conf-mark">✓</span> <em>Confirmed</em></h3>
+<p>The Connecticut Office of the State Comptroller publishes every state payment to every vendor at the invoice level via OpenCheckbook (https://opencheckbook.ct.gov/). For FY 2024–25, the Comptroller recorded 18 individual payments to &ldquo;TOWN OF ANDOVER TOWN TREASURER&rdquo; coded to the Office of Early Childhood:</p>
+<table>
+<thead>
+<tr>
+<th>OEC Program (Comptroller)</th>
+<th>Payments</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Smart Start</td>
+<td class="num">8</td>
+<td class="num">$65,000.00</td>
+</tr>
+<tr>
+<td>Early Care and Education</td>
+<td class="num">8</td>
+<td class="num">$123,300.00</td>
+</tr>
+<tr>
+<td>Child Care Quality Enhancement</td>
+<td class="num">2</td>
+<td class="num">$3,881.00</td>
+</tr>
+<tr>
+<td><strong>Total OEC payments</strong></td>
+<td class="num"><strong>18</strong></td>
+<td class="num"><strong>$192,181.00</strong></td>
+</tr>
+</tbody>
+</table>
+<p>This figure ties to the audit&rsquo;s OEC subtotal <strong>to the dollar</strong>. Two independent state systems — the Comptroller&rsquo;s accounts payable ledger and the auditor&rsquo;s compliance schedule prepared by an outside CPA firm — report identical figures. This is the strongest possible cross-validation available for a municipal grant figure.</p>
+<h3>Total preschool revenue, FY 2024–25</h3>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Amount</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OEC state grants (Smart Start + Early Care &amp; Education + Quality Enhancement)</td>
+<td class="num">$192,181</td>
+</tr>
+<tr>
+<td>Federal IDEA Section 619 Preschool Grant</td>
+<td class="num">$3,213</td>
+</tr>
+<tr>
+<td>Federal CSLFRF School Readiness pass-through</td>
+<td class="num">$2,232</td>
+</tr>
+<tr>
+<td>Family tuition (School Grants Fund charges for services)</td>
+<td class="num">$235,917</td>
+</tr>
+<tr>
+<td><strong>Total identified preschool revenue</strong></td>
+<td class="num"><strong>$433,543</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Tuition alone (~$236K) is the largest single revenue source, accounting for about 54% of total preschool revenue. State and federal grants together account for the remaining 46%. This is worth noting because the preschool is sometimes characterized in budget discussions as primarily grant-funded; in fact, families pay slightly more than the state and federal government combined.</p>
+<hr />
+<p class="section-label before-part">Cost</p>
+<h2>Part 2 — Marginal cost: what the program actually costs the town</h2>
+<h3>Staff complement <span class="conf-mark">✓</span> <em>Confirmed from school website</em></h3>
+<p>The Andover Elementary School &ldquo;About Pre-K&rdquo; page (https://www.andoverelementaryct.org/index.php/pre-k/about-pre-k) describes the program staffing as: <em>&ldquo;At Andover Elementary Pre-School, we maintain a low student-to-teacher ratio, with four highly trained educators and four dedicated assistants.&rdquo;</em></p>
+<p>The marginal staff complement is therefore:</p>
+<ul>
+<li>4 certified preschool teachers (members of the Andover Education Association bargaining unit)</li>
+<li>4 preschool classroom assistants (members of the CSEA SEIU Local 2001 bargaining unit, classified as Paraeducators)</li>
+</ul>
+<p>Andover does not have a separate preschool teacher salary track — preschool teachers are paid on the same Appendix B salary schedule as K–6 teachers, with the same step and lane structure. Appendix D of the AEA contract acknowledges a &ldquo;Preschool/School Readiness Teacher&rdquo; extra-duty stipend for required evening meetings ($50/hour, up to five meetings per year), but base salary is identical to K–6.</p>
+<h3>Teacher salaries <span class="conf-mark">✓</span> <em>Confirmed from AEA Contract 2025–2029</em></h3>
+<p>The Andover Education Association collective bargaining agreement, executed July 2025 covering July 1, 2025 through June 30, 2029, is posted on the school&rsquo;s own website. Article 4 (Teacher Salaries) sets compensation by Appendix B. The relevant 2025–26 schedule (the year for which we have complete data on both contracts):</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>BA</th>
+<th>BA+15</th>
+<th>MA</th>
+<th>MA+15</th>
+<th>6th Year</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="num">1</td>
+<td class="num">$52,084</td>
+<td class="num">$53,517</td>
+<td class="num">$58,000</td>
+<td class="num">$59,365</td>
+<td class="num">$60,738</td>
+</tr>
+<tr>
+<td class="num">2</td>
+<td class="num">$54,006</td>
+<td class="num">$55,464</td>
+<td class="num">$59,862</td>
+<td class="num">$61,243</td>
+<td class="num">$62,630</td>
+</tr>
+<tr>
+<td class="num">3</td>
+<td class="num">$56,193</td>
+<td class="num">$57,655</td>
+<td class="num">$61,978</td>
+<td class="num">$63,371</td>
+<td class="num">$64,775</td>
+</tr>
+<tr>
+<td class="num">4</td>
+<td class="num">$58,417</td>
+<td class="num">$59,899</td>
+<td class="num">$64,122</td>
+<td class="num">$65,539</td>
+<td class="num">$66,945</td>
+</tr>
+<tr>
+<td class="num">5</td>
+<td class="num">$60,667</td>
+<td class="num">$62,174</td>
+<td class="num">$66,308</td>
+<td class="num">$67,734</td>
+<td class="num">$69,160</td>
+</tr>
+<tr>
+<td class="num">6</td>
+<td class="num">$62,174</td>
+<td class="num">$66,834</td>
+<td class="num">$70,786</td>
+<td class="num">$72,239</td>
+<td class="num">$73,697</td>
+</tr>
+<tr>
+<td class="num">7</td>
+<td class="num">$67,686</td>
+<td class="num">$69,219</td>
+<td class="num">$73,089</td>
+<td class="num">$74,547</td>
+<td class="num">$76,025</td>
+</tr>
+<tr>
+<td class="num">8</td>
+<td class="num">$70,978</td>
+<td class="num">$72,553</td>
+<td class="num">$76,313</td>
+<td class="num">$77,796</td>
+<td class="num">$79,306</td>
+</tr>
+<tr>
+<td class="num">9</td>
+<td class="num">$75,321</td>
+<td class="num">$76,986</td>
+<td class="num">$81,970</td>
+<td class="num">$83,541</td>
+<td class="num">$85,141</td>
+</tr>
+<tr>
+<td class="num">10</td>
+<td class="num">$85,198</td>
+<td class="num">$87,078</td>
+<td class="num">$93,719</td>
+<td class="num">$95,493</td>
+<td class="num">$97,298</td>
+</tr>
+</tbody>
+</table>
+<p>The work year is 186 days at 7.5 hours per day (Article 4, Section A). Step movement occurs annually for eligible employees per Appendix B; the contract structure assumes most teachers progress one step per year of service through Step 10.</p>
+<p>Without knowing each specific preschool teacher&rsquo;s step and lane placement (which would require either FOIA or cooperation from the district), the cost of the four preschool teachers brackets as follows for FY 2025–26:</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>4 teachers&rsquo; total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Floor (all at Step 1, BA — no preschool teacher on this contract is likely actually here)</td>
+<td class="num">$208,336</td>
+</tr>
+<tr>
+<td>Mid-estimate (all at Step 5, MA — typical mid-career credentials)</td>
+<td class="num">$265,232</td>
+</tr>
+<tr>
+<td>Average across all step/lane combinations</td>
+<td class="num">$277,347</td>
+</tr>
+<tr>
+<td>Ceiling (all at Step 10, 6th Year — uniform top of every scale, unrealistic)</td>
+<td class="num">$389,192</td>
+</tr>
+</tbody>
+</table>
+<p>The mid-estimate of approximately <strong>$265,000–$280,000</strong> is the most defensible point estimate for four preschool teachers in FY 2025–26, given typical staffing patterns. A direct cross-check is available: the FY 2026–27 BOE Approved Budget shows the &ldquo;Teachers&rdquo; account line at $1,490,000, covering all certified classroom teachers in the school. With approximately 18 total classroom teachers (4 preschool + roughly 14 K–6), the implied per-teacher average is about $83,000 — consistent with the AEA salary schedule&rsquo;s mid-range. At that average, four preschool teachers would represent approximately $331,000, or 22.2% of the Teachers line. The mid-estimate band above straddles this cross-check.</p>
+<h3>Classroom assistant wages <span class="conf-mark">✓</span> <em>Confirmed from CSEA Contract 2024–2028</em></h3>
+<p>The Connecticut State Employees Association SEIU Local 2001 contract for non-certified personnel was executed December 11, 2024, covering July 1, 2024 through June 30, 2028. It is also posted on the school&rsquo;s own website. Article XXVII (Wages) refers to the salary schedules contained in the Addendum on Compensation. The Paraeducator Pay Scale from that Addendum:</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>2024–25</th>
+<th>2025–26</th>
+<th>2026–27</th>
+<th>2027–28</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="num">1</td>
+<td class="num">$19.26</td>
+<td class="num">$19.84</td>
+<td class="num">$20.43</td>
+<td class="num">$21.05</td>
+</tr>
+<tr>
+<td class="num">2</td>
+<td class="num">$20.18</td>
+<td class="num">$20.78</td>
+<td class="num">$21.41</td>
+<td class="num">$22.05</td>
+</tr>
+<tr>
+<td class="num">3</td>
+<td class="num">$21.16</td>
+<td class="num">$21.79</td>
+<td class="num">$22.44</td>
+<td class="num">$23.12</td>
+</tr>
+<tr>
+<td class="num">4</td>
+<td class="num">$22.18</td>
+<td class="num">$22.84</td>
+<td class="num">$23.53</td>
+<td class="num">$24.23</td>
+</tr>
+<tr>
+<td class="num">5</td>
+<td class="num">$22.40</td>
+<td class="num">$23.07</td>
+<td class="num">$23.77</td>
+<td class="num">$24.48</td>
+</tr>
+<tr>
+<td class="num">6</td>
+<td class="num">$22.66</td>
+<td class="num">$23.34</td>
+<td class="num">$24.04</td>
+<td class="num">$24.76</td>
+</tr>
+<tr>
+<td class="num">7</td>
+<td class="num">$22.87</td>
+<td class="num">$23.55</td>
+<td class="num">$24.26</td>
+<td class="num">$24.99</td>
+</tr>
+<tr>
+<td class="num">8</td>
+<td class="num">$23.18</td>
+<td class="num">$23.87</td>
+<td class="num">$24.59</td>
+<td class="num">$25.32</td>
+</tr>
+<tr>
+<td class="num">9</td>
+<td class="num">$23.33</td>
+<td class="num">$24.03</td>
+<td class="num">$24.75</td>
+<td class="num">$25.49</td>
+</tr>
+</tbody>
+</table>
+<p><em>All figures are hourly rates. Step movement occurs each July 1 for employees who have completed 90 days of employment (Addendum). Step advancement was negotiated for years 2024–25, 2025–26, and 2026–27 only; there is no step advancement in the final contract year, 2027–28.</em></p>
+<p>Article II of the CSEA contract classifies non-certified employees by hours and months of work. A typical preschool classroom assistant is most likely Class D (part-time, 10-month, 20–30 hours per week) or Class E (part-time, 10-month, 10–20 hours per week). An assistant who works the full preschool school day alongside a classroom teacher would be Class D.</p>
+<p>Annual cost depends on hours worked. At the FY 2025–26 mid-step rate (Step 4 = $22.84/hr) and 1,196 hours per year (roughly 6.5 hours per day × 184 school days, a typical Class D pattern):</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>4 assistants&rsquo; total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Class E (low: 720 hrs/yr × Step 4 rate)</td>
+<td class="num">$65,779</td>
+</tr>
+<tr>
+<td>Class D mid (900 hrs/yr)</td>
+<td class="num">$82,224</td>
+</tr>
+<tr>
+<td>Class D high (1,196 hrs/yr — full preschool day)</td>
+<td class="num">$109,260</td>
+</tr>
+<tr>
+<td>Full school day (1,302 hrs/yr × Step 4 rate)</td>
+<td class="num">$118,953</td>
+</tr>
+</tbody>
+</table>
+<p>The mid-estimate of approximately <strong>$108,000</strong> for four assistants reflects Class D staffing at typical hours.</p>
+<p>A direct cross-check on the assistant figure is harder than on the teacher figure, because the BOE budget&rsquo;s only explicitly &ldquo;Instruction Asst.&rdquo; line item is for special-education paras (FY 2026 budget = $113,894). That line covers a different staffing function — SPED paras assigned to specific students — not preschool classroom assistants. The latter are likely embedded in a different budget account that is not separately broken out, or are partly grant-funded through the OEC awards. The contract-rate × hours-worked calculation is the cleanest available estimate.</p>
+<h3>Benefits loading</h3>
+<p>Connecticut public school benefits have an unusual feature: the teachers&rsquo; pension is administered and paid by the state through the Connecticut Teachers&rsquo; Retirement System, not by the town. The town&rsquo;s actual benefits cost is therefore lower than the gross &ldquo;30–35% of salary&rdquo; rule of thumb that applies in states where the district pays into pension. For Andover, the town pays:</p>
+<ul>
+<li>Health insurance (employee premium share is 16.25% in FY 2025–26 per AEA Article 8; town pays the rest)</li>
+<li>Deductible funding (50/50 split per Article 8)</li>
+<li>FICA/Medicare (7.65% of wages, town side only — teacher side is also 7.65%)</li>
+<li>Other Post-Employment Benefits (OPEB) accrual</li>
+<li>Group life insurance ($75,000 term policy per Article 8)</li>
+<li>Long-term disability insurance</li>
+</ul>
+<p>This report estimates teacher benefits loading at <strong>30%</strong> of salary and assistant benefits loading at <strong>20%</strong> of wages. The lower assistant figure reflects: smaller life insurance policy ($10,000 vs. $75,000 per CSEA Article 15.02), higher employee premium share for assistants hired after July 1, 2021 (28% per CSEA Article 15), and proportionally lower base for FICA. These rates are best estimates absent staff-specific benefits enrollment data.</p>
+<h3>Total marginal cost, FY 2025–26 (mid-estimate)</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Mid-estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4 preschool teachers (Step 5, MA mid-career)</td>
+<td class="num">$265,232</td>
+</tr>
+<tr>
+<td>4 preschool assistants (Class D, ~1,196 hrs/yr at mid-step)</td>
+<td class="num">$108,884</td>
+</tr>
+<tr>
+<td>Teacher benefits loading (~30% — town side only)</td>
+<td class="num">$79,570</td>
+</tr>
+<tr>
+<td>Assistant benefits loading (~20%)</td>
+<td class="num">$21,777</td>
+</tr>
+<tr>
+<td>Substitute coverage (estimate based on BOE budget context)</td>
+<td class="num">$5,000</td>
+</tr>
+<tr>
+<td>Preschool-specific instructional supplies (estimate)</td>
+<td class="num">$3,000</td>
+</tr>
+<tr>
+<td><strong>Total marginal cost</strong></td>
+<td class="num"><strong>~$483,463</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The same calculation under a low-cost (junior staff) and high-cost (senior staff) scenario:</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Marginal cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Low (all teachers at Step 1 BA, all assistants at Class E low)</td>
+<td class="num">~$348,000</td>
+</tr>
+<tr>
+<td><strong>Mid (typical mid-career staffing)</strong></td>
+<td class="num"><strong>~$483,000</strong></td>
+</tr>
+<tr>
+<td>High (all teachers at Step 10 6th Year, all assistants at Class D top)</td>
+<td class="num">~$670,000</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p class="section-label before-part">Net Impact</p>
+<h2>Part 3 — Net financial impact</h2>
+<h3>The bottom line</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>FY 2025–26 (mid-estimate)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total marginal preschool cost</td>
+<td class="num">~$483,000</td>
+</tr>
+<tr>
+<td>Total identified preschool revenue</td>
+<td class="num">~$434,000</td>
+</tr>
+<tr>
+<td><strong>Net town subsidy</strong></td>
+<td><strong>~$50,000/year</strong></td>
+</tr>
+</tbody>
+</table>
+<p>At Andover&rsquo;s approximately 1,400 households, this is <strong>~$36 per household per year, or ~$3 per household per month</strong>.</p>
+<h3>Sensitivity to staffing assumptions</h3>
+<p>The net-subsidy figure is sensitive primarily to teacher salary placement, which is the largest single component and the one we cannot pin down precisely without staff-by-staff data:</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Marginal cost</th>
+<th>Net subsidy</th>
+<th>$/household/month</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Low (all junior staff, low hours)</td>
+<td class="num">~$348,000</td>
+<td><strong>−$86,000 (revenue exceeds cost)</strong></td>
+<td>−$5.09</td>
+</tr>
+<tr>
+<td>Mid (typical mid-career staffing)</td>
+<td class="num">~$483,000</td>
+<td class="num">$50,000</td>
+<td class="num">$2.97</td>
+</tr>
+<tr>
+<td>High (all senior staff, top hours)</td>
+<td class="num">~$670,000</td>
+<td class="num">$237,000</td>
+<td class="num">$14.08</td>
+</tr>
+</tbody>
+</table>
+<p>Even the high-cost scenario — in which every preschool teacher is at the maximum step with a sixth-year degree, and every assistant is at the top of the Class D scale working full school days — produces a net subsidy of about $14 per household per month. This scenario is unrealistic; no staff is uniformly at the top of every scale. The mid-estimate of ~$3 per household per month is the most defensible point figure.</p>
+<h3>What the marginal-cost framing excludes (the average-cost view)</h3>
+<p>The figure above deliberately excludes a category of costs that an average-cost calculation would include — costs that the school incurs whether or not the preschool exists. These costs do not scale with the presence or absence of the preschool program, so they do not belong in a calculation of what the town would save by eliminating the program.</p>
+<table>
+<thead>
+<tr>
+<th>Cost category</th>
+<th>Annual amount (estimate)</th>
+<th>Why excluded from marginal cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Building utilities (heat, electricity, water)</td>
+<td class="num">~$185,000</td>
+<td>Building runs regardless of preschool&rsquo;s presence</td>
+</tr>
+<tr>
+<td>Custodial salaries</td>
+<td class="num">~$148,000</td>
+<td>Same custodial complement is required for K–6 alone</td>
+</tr>
+<tr>
+<td>Principal, superintendent, financial services</td>
+<td class="num">~$303,000</td>
+<td>Administrative overhead is not preschool-driven</td>
+</tr>
+<tr>
+<td>Library, nurse, music/art/PE specialists</td>
+<td class="num">~$280,000</td>
+<td>These positions exist for K–6 students regardless</td>
+</tr>
+<tr>
+<td>Special education infrastructure (SPED teacher, OT, PT, psych)</td>
+<td class="num">~$310,000</td>
+<td>Required for K–6 IEP students regardless</td>
+</tr>
+<tr>
+<td>Insurance, audit, legal</td>
+<td class="num">~$165,000</td>
+<td>Fixed school-level costs</td>
+</tr>
+</tbody>
+</table>
+<p>If these costs were allocated proportionally to preschool&rsquo;s share of total enrollment (about 22%), the average-cost calculation would add roughly $1.0 million to the marginal cost figure, producing an average cost of approximately $1.5 million per year. The choice of framing changes the apparent net cost by about $1.0 million.</p>
+<p>The choice of framing depends on the policy question being asked. If the question is <em>what does the program cost on a fully-loaded per-student basis</em> — a natural question for benchmarking — average cost is the right framing, and the answer is roughly $1.5 million per year. If the question is <em>what would the town save if the program were eliminated</em> — the question relevant to budget deliberation — marginal cost is the right framing, and the answer is roughly $50,000 per year. Both numbers are honest; they answer different questions. Conflating them produces apparent contradictions where there are none.</p>
+<h3>Trajectory and forward look</h3>
+<p>The preschool&rsquo;s net financial position has likely improved over time, not deteriorated. The program expanded from 2 classrooms to 3 in 2024–25 and to 4 in 2025–26. Each additional classroom brings additional tuition revenue and additional grant funding (the new Early Start CT program effective July 1, 2025 may also expand the funding base). Marginal cost grows roughly linearly with classrooms (one teacher + one assistant per classroom), but tuition revenue scales with total enrollment in the classrooms. The preschool&rsquo;s revenue line in the audit grew by roughly two-thirds in FY 2024–25 alone, attributable primarily to preschool tuition expansion.</p>
+<p>The proper forward-looking question is therefore not whether the preschool is a financial drain on the town — by every available measurement it is approximately self-funding — but rather what the program should look like as Early Start CT funding rules take effect, and how the town might optimize its OEC grant draw, particularly the Smart Start allocation that has been frozen at $65,000 since 2017.</p>
+<hr />
+<p class="section-label before-part">Out-of-Town Enrollment</p>
+<h2>Part 4 — On the question of out-of-town enrollment</h2>
+<p>A second recurring concern in town discussions is that the preschool serves children from outside Andover, and that this somehow comes at Andover residents&rsquo; expense. The published enrollment policy and the financial structure together show that this concern is not supported by the evidence available — and that the actual financial flow runs in the opposite direction.</p>
+<h3>The published enrollment priority order <span class="conf-mark">✓</span> <em>Confirmed from 2025–26 Preschool Registration Packet</em></h3>
+<p>The 2025–26 Preschool Registration Packet, signed by Preschool Administrator Taylor Parker and posted on the school&rsquo;s website, sets out a five-step enrollment priority order for the program. Quoting directly from the packet&rsquo;s Enrollment Guidelines section:</p>
+<blockquote>
+<ol>
+<li>Preschool grant slots will be available first to four year old <strong>resident</strong> students whose families meet the income eligibility guidelines.</li>
+<li>Preschool grant slots will then be available to three year old <strong>resident</strong> students whose families meet the income eligibility guidelines.</li>
+<li>If any income eligibility School Readiness grant slots remain, they will be open to <strong>out of town residents who meet the income eligibility requirements</strong>.</li>
+<li><strong>40% of the School Readiness and Smart Start slots will be available to Andover residents who will pay full tuition.</strong></li>
+<li>If any of the 40% full time School Readiness slots remain, they will be available to <strong>out of town residents who will pay full tuition</strong>.</li>
+</ol>
+</blockquote>
+<p>The structure is unambiguous: at every step, Andover residents have priority over non-residents. An out-of-town family — whether income-eligible or full-pay — can enroll only after Andover demand at the corresponding eligibility level has been satisfied. No out-of-town student displaces any Andover resident, by published policy.</p>
+<p>The packet also confirms that <strong>Smart Start slots are restricted to Andover residents</strong> under state rules: <em>&ldquo;Children enrolled in the Smart Start program must be residents of Andover. Families must provide written proof of residency.&rdquo;</em> Only the larger School Readiness program (now Early Care and Education / Early Start CT) is open to non-residents.</p>
+<h3>Why out-of-town enrollment is financially favorable to Andover</h3>
+<p>The marginal cost of one additional enrolled student in an existing classroom is essentially zero. The teachers are paid the same regardless of whether a classroom holds 13 students or 17. The classroom is heated and cleaned regardless. The classroom assistant works the same hours regardless. The only marginal costs that scale with one additional student are trivial: a slightly higher draw on instructional supplies, an additional snack.</p>
+<p>This means that every dollar of tuition from an out-of-town family is essentially incremental revenue. If the seat would have sat empty without the out-of-town student, the program is unambiguously financially better off for having filled it. There is no Andover resident displaced, and there is real cash on the revenue side of the ledger.</p>
+<p>The arithmetic cuts in the same direction even for income-eligible non-residents who pay reduced tuition through the OEC sliding fee scale. Reduced tuition is still positive tuition; a sliding-scale family paying $200 per month is contributing $2,000 per year that the program would otherwise not receive. Combined with the state grant funding that follows the income-eligible enrollment, the net contribution per income-eligible non-resident student to the program&rsquo;s revenue is positive.</p>
+<p>The financial consequence is that <strong>out-of-town enrollment helps fund the program&rsquo;s ability to serve Andover residents</strong>, not the other way around. Without out-of-town tuition, the revenue figure in Part 1 would be lower; with it, the program more nearly covers its marginal cost.</p>
+<h3>What this report cannot determine without additional data</h3>
+<p>A precise financial accounting of the out-of-town subsidy would require data not currently published:</p>
+<ul>
+<li>The exact count of out-of-town students enrolled in the program</li>
+<li>The split between out-of-town students paying full tuition (Step 5) and those paying reduced tuition under the OEC sliding scale (Step 3)</li>
+<li>Whether any of the out-of-town students are children of Andover Public Schools employees, and whether such families pay full tuition (the AEA and CSEA contracts contain no formal tuition-reduction provision for staff children, so the default presumption is that they pay the standard rate)</li>
+<li>The total tuition revenue broken out by these categories</li>
+</ul>
+<p>These figures are aggregate counts and dollar totals — none would identify any individual family or violate FERPA or HIPAA. They are the kind of data the Board of Education could publish in an annual summary report (see Part 5). Until they are published, the financial argument that out-of-town enrollment is favorable to Andover residents must rest on the structural argument above (resident priority + zero marginal cost per added student) rather than on a worked-out dollar calculation.</p>
+<p>What can be said with confidence: the <em>direction</em> of the financial flow is unambiguous. Whether the magnitude is small or large, out-of-town enrollment contributes net positive revenue to the program. There is no plausible accounting in which out-of-town students cost Andover residents money.</p>
+<hr />
+<p class="section-label before-part">BOE Summary Proposal</p>
+<h2>Part 5 — What a recurring BOE summary report could include</h2>
+<p>Most of the figures in this report were assembled from public documents that are not designed for this purpose: a 114-page audit, a 107-line Comptroller payment extract, two collective bargaining agreements totaling about 60 pages, and several school website pages. Any resident who wants to understand the preschool&rsquo;s financial picture in this level of detail must do roughly the work that went into this report. That is more than most residents will reasonably do, and the result is that informed conversation about the program becomes harder than it needs to be.</p>
+<p>This is something the Board of Education could fix at modest cost. A short annual summary report — one or two pages — could present the same financial picture in a form that requires no assembly. The summary would not need to disclose any individually identifiable information about students, families, or staff; FERPA and HIPAA protect <em>individual</em> records, not aggregate counts and dollar totals. A reasonable annual summary might include the following.</p>
+<p><strong>Personnel costs</strong> (aggregated, no individuals named):</p>
+<ul>
+<li>Total preschool teacher salaries (4 FTEs combined)</li>
+<li>Total preschool teacher benefits (combined)</li>
+<li>Total preschool classroom assistant wages (4 FTEs combined)</li>
+<li>Total preschool classroom assistant benefits (combined)</li>
+<li>Substitute coverage costs allocated to preschool</li>
+</ul>
+<p><strong>Each grant received:</strong></p>
+<ul>
+<li>State OEC grants by program, with award and expenditure amounts (Smart Start, Early Start CT / former Early Care and Education / former School Readiness, Quality Enhancement)</li>
+<li>Federal preschool grants (IDEA Section 619 and any others)</li>
+<li>Federal pass-throughs allocable to preschool</li>
+</ul>
+<p><strong>Tuition revenue breakdown:</strong></p>
+<ul>
+<li>Total tuition collected</li>
+<li>Number of children at full tuition</li>
+<li>Number of children at reduced tuition (with average reduction percentage in aggregate, not individual amounts)</li>
+<li>Subtotals by Andover resident vs. out-of-town</li>
+<li>Within out-of-town, the count whose parent is an Andover Public Schools employee vs. other out-of-town families</li>
+</ul>
+<p><strong>Enrollment by category:</strong></p>
+<ul>
+<li>Total enrollment (currently published)</li>
+<li>Resident vs. non-resident counts</li>
+<li>Income-eligible vs. full-tuition counts</li>
+<li>Special education vs. general education counts (aggregated)</li>
+</ul>
+<p><strong>Operating non-personnel costs allocable to preschool:</strong></p>
+<ul>
+<li>Preschool-specific instructional supplies</li>
+<li>Field trip costs</li>
+<li>Any other line items uniquely preschool-attributable</li>
+</ul>
+<p><strong>Net financial picture:</strong></p>
+<ul>
+<li>Total preschool revenue</li>
+<li>Total preschool marginal cost</li>
+<li>Net subsidy or surplus</li>
+</ul>
+<p>A summary along these lines, published annually alongside the audit acceptance (typically May or June), would address the financial transparency questions raised by residents without imposing significant additional administrative burden on the BOE or the Superintendent&rsquo;s office. It would also let residents see year-over-year trends as the preschool continues to evolve under the new Early Start CT program and as enrollment patterns settle.</p>
+<hr />
+<p class="section-label">At a Glance</p>
+<h2>Summary table</h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+<th>Caveat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What is the preschool&rsquo;s revenue?</td>
+<td>~$434,000/year (FY 2024–25): $192K state grants, $5K federal, $236K tuition</td>
+<td>Tuition figure inferred from audit MD&A; no separate &ldquo;preschool tuition&rdquo; line item exists</td>
+</tr>
+<tr>
+<td>What is the preschool&rsquo;s marginal cost?</td>
+<td>~$483,000/year (mid-estimate): 4 teachers, 4 assistants, benefits, subs, supplies</td>
+<td>Salary placements estimated from contract schedules; actual staff steps not publicly disclosed</td>
+</tr>
+<tr>
+<td>What is the net town subsidy?</td>
+<td>~$50,000/year, or ~$3/household/month</td>
+<td>Sensitivity range: revenue-positive in low scenario to ~$237K subsidy in high scenario</td>
+</tr>
+<tr>
+<td>Does the average-cost figure of $1.5M+ represent real town spending on preschool?</td>
+<td>No — that figure includes building, administrative, and SPED costs that exist regardless of the preschool</td>
+<td>Average cost is appropriate for per-student comparisons but not for &ldquo;what would we save&rdquo; questions</td>
+</tr>
+<tr>
+<td>Does out-of-town enrollment cost Andover residents money?</td>
+<td>No. Andover residents have priority at every step of the published enrollment policy; out-of-town tuition is incremental revenue</td>
+<td>A precise dollar figure for the out-of-town contribution would require enrollment data not currently published</td>
+</tr>
+<tr>
+<td>Did Andover&rsquo;s audit and the State Comptroller&rsquo;s records reconcile?</td>
+<td>Yes, to the dollar — both report $192,181 in OEC state grants for FY 2024–25</td>
+<td>This is the strongest possible cross-validation available for a municipal grant figure</td>
+</tr>
+<tr>
+<td>Is the Smart Start grant amount competitive?</td>
+<td>No — it has been frozen at $65,000 since 2017 despite the statutory cap rising</td>
+<td>Smart Start funds operations of one classroom; Andover added three more without seeking additional Smart Start awards</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p class="section-label">Analysis</p>
+<h2>Key Observations</h2>
+<p>The preschool is approximately self-funding when measured by the costs it actually adds to the town&rsquo;s expenditure. State and federal grants plus family tuition (~$434K) cover most of the marginal cost (~$483K) of operating four preschool classrooms. The net subsidy of approximately $50,000 per year is small in the context of an Andover Elementary budget of $4.6M and a total town budget approaching $13M.</p>
+<p>The framing of the question matters more than the underlying arithmetic. Anyone asserting that the preschool costs the town $1.5 million per year is using an average-cost calculation that allocates a share of building, administrative, and special-education costs that would exist regardless. Those costs are not zero, but they are not preschool-driven either. They would be incurred by an Andover Elementary that ran K–6 only.</p>
+<p>Family tuition is the largest single revenue source. Approximately 54% of preschool revenue comes from families paying tuition, not from state or federal grants. This is occasionally surprising in budget discussions where the program is characterized as primarily grant-funded.</p>
+<p>The published enrollment policy gives Andover residents priority at every step. The five-step priority order from the school&rsquo;s own registration packet is unambiguous: Andover residents (income-eligible first, then full-tuition) come before any out-of-town family at the corresponding eligibility level. No out-of-town student displaces an Andover resident; out-of-town students fill seats that would otherwise be empty. The financial consequence is that out-of-town tuition is incremental revenue that helps fund the program — it does not cost Andover residents money.</p>
+<p>The Smart Start grant has not kept pace with program growth. Andover received a Smart Start award of $65,000 in 2017 (one classroom, 13 children) and has continued to receive exactly the same dollar amount every year since. The state&rsquo;s statutory cap has risen to $5,000 per child or $75,000 per classroom, and the program has expanded from 1 to 4 classrooms. Whether additional Smart Start funding is available, whether application would be successful, and whether the town has actively pursued expansion of its Smart Start allocation are questions worth asking.</p>
+<p>The audit and the Comptroller agree to the dollar. The Andover FY 2024–25 audit&rsquo;s Office of Early Childhood subtotal of $192,181 reconciles exactly to the Connecticut Comptroller&rsquo;s payment ledger over the same fiscal year. This level of precision — two independent state systems reporting identical figures from different angles — is the strongest validation available for a municipal grant figure.</p>
+<p>A short annual summary from the BOE would address most of the transparency questions raised in town. The figures in this report are all assembled from public sources, but assembling them takes work. A one-or-two-page annual summary report from the Board of Education, published alongside the audit, could present the same picture without violating any privacy laws and without requiring residents to do this assembly themselves.</p>
+<hr />
+<p class="section-label">Caveats</p>
+<h2>What this report does not show</h2>
+<p>A few caveats are worth being explicit about:</p>
+<p>This report does not have staff-by-staff salary data for the four preschool teachers. The salary-band estimates use the published AEA contract schedule, which is the best publicly available source. The Superintendent&rsquo;s office could provide staff-by-staff figures (which would not require disclosing names — only step and lane placements), and a future revision of this report could substitute those figures for the contract-schedule estimates. Until then, the mid-estimate of ~$265,000 for four teachers&rsquo; base salary should be understood as a reasonable point figure with a defensible range of approximately ±$60,000.</p>
+<p>This report does not have staff-by-staff hours data for the four preschool classroom assistants. The CSEA contract specifies four classification tiers (B2, C, D, E) but does not specify which classification each preschool assistant falls under. The mid-estimate assumes Class D (part-time, 10-month, 20–30 hours/week) at approximately 1,196 hours per year, which corresponds to a 6.5-hour preschool day across 184 school days. Actual hours could be higher (full school day) or lower (half-day program model).</p>
+<p>This report does not have the actual count of out-of-town students or the breakdown of tuition revenue between residents and non-residents, full-tuition and reduced-tuition, or staff-children and other out-of-town. The out-of-town financial argument in Part 4 is structural (it follows from the published enrollment priority order combined with the near-zero marginal cost per added student in an existing classroom) rather than worked out in dollar terms. A more precise figure would require the data described in Part 5.</p>
+<p>This report does not break out the federal pass-through revenue in the School Grants Fund into individual grants. The audit shows $372,182 in intergovernmental revenue for the fund, of which the OEC grants ($192,181) and IDEA Section 619 ($3,213) are explicitly identified. The remaining approximately $176,800 is likely a mix of federal pass-throughs (Title I, ARPA preschool funds, additional CSLFRF) but the audit does not provide a complete breakdown. This report counts only the explicitly identified federal preschool-coded revenue.</p>
+<p>This report does not include a portion of the IDEA Part B Cluster ($59,593 total) that may serve preschool special-education students. The audit shows this Cluster as a single district-wide line item without a grade-level breakdown. The IDEA Section 619 grant ($3,213) is the only line that is explicitly preschool-coded, so this report uses only that figure. If a grade-level breakdown of IDEA Part B were available, the preschool revenue figure could rise modestly.</p>
+<p>This report does not address capital costs. Andover received a one-time $75,000 Smart Start capital grant in 2017 to convert space for the original classroom, and presumably some incremental capital was needed for each subsequent expansion. None of those costs are recurring, and none would be recovered if the preschool were eliminated, so they do not affect the marginal-cost analysis.</p>
+<p>This report does not address the educational case for or against the preschool. Whether early childhood education produces measurable long-term outcomes for participating children, whether Andover&rsquo;s particular program design serves families well, and whether the program affects subsequent K–6 readiness are all important questions that this report does not answer. The financial analysis presented here is intended to support — not substitute for — those instructional and policy conversations.</p>
+<hr />
+<p class="section-label">Documentation</p>
+<h2>Sources</h2>
+<p><strong>Andover audit and state grant data:</strong></p>
+<ul>
+<li><strong>Town of Andover, Connecticut, Annual Financial Report for Fiscal Year Ended June 30, 2025</strong> (prepared by independent CPAs, dated April 22, 2026; filed with CT Office of Policy and Management on the Electronic Audit Reporting System, document ID 13598 for the municipality of Andover). EARS public access: https://ears.opm.ct.gov/Public/Report.aspx (note: EARS uses ASP.NET postback navigation that does not produce stable per-document URLs; document ID 13598 is the EARS reference for Andover&rsquo;s 2025 audit). A PDF copy of this audit is also posted alongside this report at <a href="2025_ANDOVER__Audit_Report_.pdf">2025_ANDOVER__Audit_Report_.pdf</a>.</li>
+<li><strong>Connecticut Office of the State Comptroller — OpenCheckbook</strong>: https://opencheckbook.ct.gov/ — payment-level state expenditure data, updated nightly from Core-CT. The vendor view filtered to &ldquo;TOWN OF ANDOVER TOWN TREASURER&rdquo; for FY 2024–25 reconciles exactly to the audit&rsquo;s OEC subtotal.</li>
+</ul>
+<p><strong>Collective bargaining agreements (current):</strong></p>
+<ul>
+<li><strong>Andover Education Association (AEA) Contract, July 1, 2025 – June 30, 2029</strong>: https://www.andoverelementaryct.org/images/forms/AEA%20Contract%202025-2029%20C.pdf</li>
+<li><strong>CSEA SEIU Local 2001 (Non-Certified Personnel) Contract, July 1, 2024 – June 30, 2028</strong>: https://www.andoverelementaryct.org/images/forms/2024-2028%20CSEA%20Contract%20Final%20Complete%20Doc.pdf</li>
+</ul>
+<p><strong>Preschool program details:</strong></p>
+<ul>
+<li><strong>Andover Elementary School &ldquo;About Pre-K&rdquo;</strong>: https://www.andoverelementaryct.org/index.php/pre-k/about-pre-k — confirms staff complement of &ldquo;four highly trained educators and four dedicated assistants&rdquo;</li>
+<li><strong>Andover Elementary School 2025–26 Preschool Registration Packet</strong>: https://www.andoverelementaryct.org/images/forms/prekregistration2526.pdf — confirms tuition rate ($600/month or $6,000/year); the OEC sliding fee scale eligibility thresholds; the five-step enrollment priority order; and the rule that Smart Start enrollment is restricted to Andover residents</li>
+<li><strong>Andover Elementary School &ldquo;Expenses, Eligibility &amp; Registration&rdquo;</strong>: https://www.andoverelementaryct.org/index.php/pre-k/expenses-eligibility-registration — confirms tuition rate and the residency rules in summary form</li>
+<li><strong>Board of Education Approved Budget FY 2025–2026</strong>: https://www.andoverelementaryct.org/images/boe/budgets/FY26_BOE_Approved_Budget_06112025.pdf — line-item budget used as cross-check on teacher and assistant cost estimates</li>
+</ul>
+<p><strong>Connecticut Office of Early Childhood — preschool grant program documentation:</strong></p>
+<ul>
+<li><strong>Smart Start program</strong>: https://www.ctoec.org/smart-start/ — confirms statutory caps of $5,000/child and $75,000/classroom, and program rules</li>
+<li><strong>Early Start CT program</strong> (effective July 1, 2025, combining School Readiness, Child Day Care Contracts, and State Head Start Supplement Grants): https://www.ctoec.org/early-start-ct/ — confirms transition timeline</li>
+<li><strong>State-Funded Early Care and Education Programs</strong>: https://www.ctoec.org/state-funded-early-care-and-education-programs/ — confirms eligibility rules including 60% income-eligibility requirement at ≤75% State Median Income</li>
+<li><strong>Office of the Governor press release, February 2017</strong> — original Smart Start award announcement listing Andover as recipient: https://portal.ct.gov/malloy-archive/press-room/press-releases/2017/02-2017/gov-malloy-announces-nine-towns-awarded-funding-to-create-146-new-preschool-slots</li>
+</ul>
+<p><strong>State Single Audit Act and EARS documentation:</strong></p>
+<ul>
+<li><strong>CT General Statutes Sections 4-230 through 4-236</strong> — State Single Audit Act establishing audit requirements</li>
+<li><strong>CT Office of Policy and Management — Audit Reporting Requirements</strong>: https://portal.ct.gov/OPM/IGP-MUNFINS/Municipal-Financial-Services/Audit-Reporting-Requirements</li>
+<li><strong>OPM Municipal Finance Services contact</strong>: William Plummer, bill.plummer@ct.gov, (860) 418-6367</li>
+</ul>
+<hr />
+
+<p class="section-label">Download</p>
+<h2>Other Formats</h2>
+<p>This report is available in three formats, all located at <code>http://andoverct.info/reports/aes/preschool-funding/</code>:</p>
+
+<div class="format-cards">
+  <div class="format-card">
+    <div class="format-card-icon">🌐</div>
+    <div class="format-card-title"><a href="http://andoverct.info/reports/aes/preschool-funding/">HTML</a></div>
+    <div class="format-card-desc">Interactive version with formatted tables; best for on-screen reading and sharing.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📄</div>
+    <div class="format-card-title"><a href="http://andoverct.info/reports/aes/preschool-funding/andover_ct_preschool_report.md">Markdown</a></div>
+    <div class="format-card-desc">Plain-text version; readable in any editor, ideal for copying into other documents.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📑</div>
+    <div class="format-card-title"><a href="http://andoverct.info/reports/aes/preschool-funding/andover_ct_preschool_report.md.pdf">PDF</a></div>
+    <div class="format-card-desc">Print-ready version with all tables, footnotes, and source citations.</div>
+  </div>
+</div>
+
+<p>The Andover FY 2024–25 audit referenced throughout this report is also posted alongside it: <a href="http://andoverct.info/reports/aes/preschool-funding/2025_ANDOVER__Audit_Report_.pdf"><code>2025_ANDOVER__Audit_Report_.pdf</code></a>. The same document is filed with the Connecticut Office of Policy and Management on <a href="https://ears.opm.ct.gov/Public/Report.aspx">EARS</a> as document ID 13598 for the municipality of Andover.</p>
+
+</div>
+<div class="page-footer">
+Town of Andover, CT · AES Preschool Financial Analysis · Compiled May 2, 2026<br>
+Data from official town and state sources. Not an official town document. ·
+<a href="http://andoverct.info/reports/aes/preschool-funding/">andoverct.info/reports/aes/preschool-funding/</a>
+</div>
+</body>
+</html>

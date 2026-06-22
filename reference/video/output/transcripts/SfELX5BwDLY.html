@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Board of Selectmen- Special Meeting  Part 3 — September 2, 2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <style>
+    /* Transcript-specific components. Theme, palette, and page chrome
+       (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
+       come from the shared style.css; these just use its variables. */
+    .para { display: flex; gap: 1em; padding: 0.5em 0.75em; border-radius: 6px; }
+    .para:nth-child(4n+1) { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+    .para-gap { font-size: 1px; line-height: 1px; height: 0; overflow: hidden; user-select: text; }
+    .para.speaker { border-top: 1px solid var(--rule-soft); margin-top: 0.6em; padding-top: 1em; }
+    .para.speaker:first-child { border-top: none; margin-top: 0; }
+
+    .timestamp {
+      flex: 0 0 5em; text-align: right;
+      color: var(--ink-mute); font-family: var(--sans);
+      font-size: 0.72rem; font-variant-numeric: tabular-nums; line-height: 1.9;
+      cursor: pointer; white-space: nowrap; padding-top: 0.15em;
+      transition: color 0.15s; user-select: none;
+    }
+    .timestamp:hover, .timestamp.hl { color: var(--accent); font-weight: 600; }
+
+    .text { flex: 1; min-width: 0; }
+    .cue { cursor: pointer; border-radius: 3px; transition: background-color 0.15s; }
+    .cue.hl { background-color: var(--accent-bg); }
+    @keyframes flash-highlight {
+      0%   { background-color: rgba(232, 168, 0, 0.45); }
+      100% { background-color: transparent; }
+    }
+    .cue.flash { animation: flash-highlight 4s ease-out forwards; }
+
+    /* action dialog */
+    #overlay { display: none; position: fixed; inset: 0; background: rgba(8, 22, 40, 0.5); z-index: 100; justify-content: center; align-items: center; }
+    #overlay.visible { display: flex; }
+    .dialog { background: var(--bg-card); border-radius: 10px; padding: 1.6rem 1.8rem; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28); max-width: 28rem; width: 90vw; border-top: 4px solid var(--accent); }
+    .dialog-header { margin-bottom: 1.2em; }
+    .dialog-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); }
+    .dialog-subtitle { font-family: var(--sans); font-size: 0.85rem; color: var(--ink-mute); margin-top: 0.2em; }
+    .dialog .ts-label { color: var(--accent); font-weight: 600; }
+    .dialog .actions { display: flex; flex-direction: column; gap: 0.5em; }
+    .dialog button { display: flex; align-items: center; gap: 0.6em; padding: 0.6em 1em; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--ink); cursor: pointer; font-family: var(--sans); font-size: 0.9rem; text-align: left; width: 100%; transition: background-color 0.12s, border-color 0.12s; }
+    .dialog button:hover { background: var(--accent-bg); border-color: var(--accent); }
+    .dialog button .icon { font-size: 1.1em; flex: 0 0 1.4em; text-align: center; }
+    .dialog button .label { flex: 1; }
+    .dialog button .hint { display: block; color: var(--ink-mute); font-size: 0.78rem; }
+    .dialog .cancel { margin-top: 0.6em; text-align: center; }
+    .dialog .cancel a { color: var(--ink-mute); font-family: var(--sans); font-size: 0.82rem; cursor: pointer; border-bottom: none; }
+    .dialog .cancel a:hover { color: var(--accent); }
+
+    /* toast */
+    #toast { position: fixed; top: 1.5em; left: 50%; transform: translateX(-50%) translateY(-4em); background: var(--accent); color: #15233a; padding: 0.7em 1.6em; border-radius: 8px; font-family: var(--sans); font-size: 0.95rem; font-weight: 600; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease; z-index: 200; pointer-events: none; text-align: center; max-width: 90vw; }
+    #toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    @media (max-width: 480px) { .timestamp { flex-basis: 4em; } }
+  </style>
+</head>
+<body class="bluegold">
+  <div class="page-banner">
+    <nav class="page-banner-inner crumbs">
+      <a href="/">Home</a><span class="sep">›</span><a href="/reference/">Reference</a><span class="sep">›</span><a href="../index.html">Video</a><span class="sep">›</span><span class="current">Board of Selectmen- Special Meeting  Part 3 (9/2/25)</span>
+    </nav>
+  </div>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Meeting transcript</p>
+      <h1 class="title">Board of Selectmen- Special Meeting  Part 3</h1>
+      <p class="subtitle">September 2, 2025 &middot; <a href="https://www.youtube.com/watch?v=SfELX5BwDLY" target="yt-meeting">Watch on YouTube</a> &middot; <a href="../index.html">All meetings</a></p>
+    </header>
+
+    <hr class="rule">
+
+    <div class="transcript">
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:12" data-default-t="12">0:12</div>
+        <div class="text"><span class="cue" id="t12" data-cue="t12" data-t="12" data-label="0:12">[Music] We're recording.</span> <span class="cue" id="t27" data-cue="t27" data-t="27" data-label="0:27">So the board is out of executive session.</span> <span class="cue" id="t28" data-cue="t28" data-t="28" data-label="0:28">public session and I believe there is a</span> <span class="cue" id="t31" data-cue="t31" data-t="31" data-label="0:31">motion to be put on the table.</span> <span class="cue" id="t35" data-cue="t35" data-t="35" data-label="0:35">I'd like to make the motion to reinstate</span> <span class="cue" id="t38" data-cue="t38" data-t="38" data-label="0:38">unconditionally test grouse to the</span> <span class="cue" id="t40" data-cue="t40" data-t="40" data-label="0:40">position of community and senior center</span> <span class="cue" id="t42" data-cue="t42" data-t="42" data-label="0:42">director</span> <span class="cue" id="t43" data-cue="t43" data-t="43" data-label="0:43">me with full back pay for lost salary</span> <span class="cue" id="t46" data-cue="t46" data-t="46" data-label="0:46">since she was dismissed on April 24th</span> <span class="cue" id="t48" data-cue="t48" data-t="48" data-label="0:48">2025 less any in payments made by the</span> <span class="cue" id="t51" data-cue="t51" data-t="51" data-label="0:51">town of Andover to Mrs.</span> <span class="cue" id="t83" data-cue="t83" data-t="83" data-label="1:23">Okay, Jeff, you can send me down a copy of the written motion</span> <span class="cue" id="t85" data-cue="t85" data-t="85" data-label="1:25">and</span> <span class="cue" id="t87" data-cue="t87" data-t="87" data-label="1:27">get the vote. Let's vote for</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:32" data-default-t="92">1:32</div>
+        <div class="text"><span class="cue" id="t92" data-cue="t92" data-t="92" data-label="1:32">Carol Lee.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:32" data-default-t="92">1:32</div>
+        <div class="text"><span class="cue" id="t92-1" data-cue="t92-1" data-t="92" data-label="1:32">Hi.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:36" data-default-t="96">1:36</div>
+        <div class="text"><span class="cue" id="t96" data-cue="t96" data-t="96" data-label="1:36">Jeff Murray Scott.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:36" data-default-t="96">1:36</div>
+        <div class="text"><span class="cue" id="t96-1" data-cue="t96-1" data-t="96" data-label="1:36">Jeff McGuire.</span> <span class="cue" id="t106" data-cue="t106" data-t="106" data-label="1:46">motion passes. Tess has been reinstated to her</span> <span class="cue" id="t108" data-cue="t108" data-t="108" data-label="1:48">position. We'll deal with back pay</span> <span class="cue" id="t111" data-cue="t111" data-t="111" data-label="1:51">issues and everything else. Tess, if you</span> <span class="cue" id="t114" data-cue="t114" data-t="114" data-label="1:54">could communicate with Eric tomorrow and</span> <span class="cue" id="t117" data-cue="t117" data-t="117" data-label="1:57">we'll sit there and get you started.</span> <span class="cue" id="t128" data-cue="t128" data-t="128" data-label="2:08">Is there anything we want to deal with? Motion to motion to by Jeff Murray,</span> <span class="cue" id="t131" data-cue="t131" data-t="131" data-label="2:11">seconded by Jeff McGuire.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:21" data-default-t="141">2:21</div>
+        <div class="text"><span class="cue" id="t141" data-cue="t141" data-t="141" data-label="2:21">Hi Scott. Hi Jeff.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:23" data-default-t="143">2:23</div>
+        <div class="text"><span class="cue" id="t143" data-cue="t143" data-t="143" data-label="2:23">Hi.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:24" data-default-t="144">2:24</div>
+        <div class="text"><span class="cue" id="t144" data-cue="t144" data-t="144" data-label="2:24">Thank you.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:24" data-default-t="144">2:24</div>
+        <div class="text"><span class="cue" id="t144-1" data-cue="t144-1" data-t="144" data-label="2:24">Thank you very much.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+    </div>
+
+    <footer class="colophon">
+      <p><strong>About this transcript.</strong> This transcript was auto-generated by YouTube. Names, numbers, and other details may be inaccurate &mdash; please refer to the video for authoritative content.</p>
+      <p>Part of <code>andoverct.info</code>, an independent civic-reference site &mdash; not an official site of the Town of Andover. Compiled by <a href="mailto:scott@sauyet.com">Scott Sauyet</a>.</p>
+    </footer>
+  </main>
+
+  <div id="overlay">
+    <div class="dialog">
+      <div class="dialog-header">
+        <div class="dialog-title">Board of Selectmen- Special Meeting  Part 3</div>
+        <div class="dialog-subtitle">September 2, 2025 at <span class="ts-label" id="overlay-ts"></span></div>
+      </div>
+      <div class="actions">
+        <button id="act-yt">
+          <span class="icon">&#9654;</span>
+          <span class="label">Watch on YouTube<br><span class="hint">Opens at this timestamp</span></span>
+        </button>
+        <button id="act-copy-link">
+          <span class="icon">&#128279;</span>
+          <span class="label">Copy YouTube link<br><span class="hint" id="hint-link-url"></span></span>
+        </button>
+        <button id="act-bookmark">
+          <span class="icon">&#128278;</span>
+          <span class="label">Bookmark this spot<br><span class="hint">Copies link &amp; adds to navigation history</span></span>
+        </button>
+      </div>
+      <div class="cancel"><a id="act-cancel">Cancel</a></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>window.TX = { video: "https://www.youtube.com/watch?v=SfELX5BwDLY", passcode: "", type: "YouTube" };</script>
+  <script src="https://andoverct.info/reference/video/assets/transcripts.js"></script>
+</body>
+</html>
