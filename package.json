@@ -4,10 +4,18 @@
   "private": true,
   "description": "Build tooling for andoverct.info (reports + the-facts)",
   "scripts": {
+    "setup": "npm install && npm --prefix reference/video install",
     "report": "node _build/report.mjs",
     "report:all": "node _build/report.mjs --all",
+    "rebuild:reports": "node _build/report.mjs --all",
+    "rebuild:the-facts": "node the-facts/_build/render.js --all",
+    "rebuild:town-charter": "node town-charter/convert.js",
+    "rebuild:videos": "node reference/video/download-transcripts.js",
+    "rebuild:videos:boe": "node reference/video/transcribe-deepgram.js --missing",
+    "rebuild:all": "npm run rebuild:reports && npm run rebuild:the-facts && npm run rebuild:town-charter",
     "deploy": "node _build/deploy.mjs",
-    "deploy:go": "node _build/deploy.mjs --deploy"
+    "deploy:go": "node _build/deploy.mjs --deploy",
+    "publish": "npm run rebuild:all && npm run deploy:go"
   },
   "dependencies": {
     "basic-ftp": "^6.0.1",
