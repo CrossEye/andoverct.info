@@ -1,0 +1,60 @@
+{
+  "remote": {
+    "host": "pup.phpwebhosting.com",
+    "port": 21,
+    "secure": false,
+    "user": "crosseye",
+    "passwordEnv": "FTP_PASSWORD",
+    "root": "/www"
+  },
+  "ignore": [
+    "**/node_modules/**",
+    "**/.git/**",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/*.log",
+    "**/.env",
+    "**/.env.*",
+    "**/*.md",
+    "**/*.py",
+    "**/*.xlsx"
+  ],
+  "areas": [
+    {
+      "id": "root",
+      "src": ".",
+      "remote": "",
+      "include": ["index.html", "idx.php", "style.css", "favicon.ico", "favicon.svg", ".htaccess"]
+    },
+    {
+      "id": "the-facts",
+      "src": "the-facts",
+      "remote": "the-facts",
+      "exclude": ["_build/**"]
+    },
+    {
+      "id": "reports",
+      "src": "reports",
+      "remote": "reports",
+      "exclude": ["civic-report.zip", "civic-report.skill"]
+    },
+    {
+      "id": "town-charter",
+      "src": "town-charter",
+      "remote": "town-charter",
+      "exclude": ["convert.js", "package.json", "package-lock.json"]
+    },
+    {
+      "id": "reference",
+      "src": "reference",
+      "remote": "reference",
+      "exclude": ["video/**"]
+    },
+    {
+      "id": "video",
+      "src": "reference/video/output",
+      "remote": "reference/video",
+      "exclude": ["vtt/**", "video/**"]
+    }
+  ]
+}
