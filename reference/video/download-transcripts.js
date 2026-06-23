@@ -689,7 +689,7 @@ function convertVttToHtml(meeting, vttText) {
     <header>
       <p class="eyebrow">Meeting transcript</p>
       <h1 class="title">${escapeHtml(meeting.meeting)}</h1>
-      <p class="subtitle">${formatDateLong(meeting.date)} &middot; <a href="${videoUrl}" ${videoTarget}>${videoLinkText}</a> &middot; <a href="../index.html">All meetings</a></p>
+      <p class="subtitle">${formatDateLong(meeting.date)} &middot; <a href="${videoUrl}" ${videoTarget}${isZoom && meeting.passcode ? ' id="top-watch-zoom"' : ""}>${videoLinkText}</a></p>
     </header>
 
     <hr class="rule">

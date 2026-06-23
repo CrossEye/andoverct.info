@@ -97,13 +97,26 @@
     showToast("Opened on YouTube");
   });
 
-  var watchZoom = document.getElementById("act-watch-zoom");
-  if (watchZoom) watchZoom.addEventListener("click", function () {
-    closeOverlay();
+  // Zoom recordings can't deep-link: copy the passcode, toast, then open the
+  // recording after a brief pause. Shared by the overlay button and the
+  // "Watch on Zoom" link in the page subtitle.
+  function watchZoomFlow() {
     navigator.clipboard.writeText(PASSCODE).then(function () {
       showToast("Passcode copied — opening Zoom recording…");
       setTimeout(function () { window.open(VIDEO, "zoom-recording"); }, 3000);
     });
+  }
+
+  var watchZoom = document.getElementById("act-watch-zoom");
+  if (watchZoom) watchZoom.addEventListener("click", function () {
+    closeOverlay();
+    watchZoomFlow();
+  });
+
+  var topZoom = document.getElementById("top-watch-zoom");
+  if (topZoom) topZoom.addEventListener("click", function (e) {
+    e.preventDefault();
+    watchZoomFlow();
   });
 
   var bookmark = document.getElementById("act-bookmark");
