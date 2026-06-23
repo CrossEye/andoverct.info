@@ -126,7 +126,7 @@ This is the subject of competing legal opinions from the Town Attorney and the B
 
 ### The Town Attorney's Reading ###
 
-The Town Attorney (Dennis O'Brien, opinions of April 1, 2021 and [February 17, 2026](sources/Legal%20Opinion%20BOF%20Authority%20to%20Act%20Upon%20the%20BOE%20Budget%20-%202026-02-17.pdf)) concludes that **the BOF can modify the bottom line of the BOE budget** before sending it to the Town Meeting. His reasoning:
+The Town Attorney (Dennis O'Brien, opinions of April 1, 2021 and [February 17, 2026](../sources/Legal%20Opinion%20BOF%20Authority%20to%20Act%20Upon%20the%20BOE%20Budget%20-%202026-02-17.pdf)) concludes that **the BOF can modify the bottom line of the BOE budget** before sending it to the Town Meeting. His reasoning:
 
 1. The word "recommendations" in the Charter mirrors the language used in the controlling state statutes — [C.G.S. 10-222](https://www.cga.ct.gov/current/pub/chap_170.htm#sec_10-222), [C.G.S. 7-344](https://www.cga.ct.gov/current/pub/chap_097.htm#sec_7-344), and [C.G.S. 7-388](https://www.cga.ct.gov/current/pub/chap_097.htm#sec_7-388) — where boards of finance routinely make "recommendations" that set the ceiling for town meeting action.
 
@@ -141,7 +141,7 @@ The Town Attorney (Dennis O'Brien, opinions of April 1, 2021 and [February 17, 2
 
 ### The BOE Attorney's Reading ###
 
-The BOE's counsel (Shipman & Goodwin LLP, [memo of February 19, 2026](sources/Shipman%20and%20Goodwin%20Budget%20memo%202.pdf)) concludes that **the BOF cannot add to, delete from, or eliminate BOE budget requests** — it can only comment and recommend. Their reasoning:
+The BOE's counsel (Shipman & Goodwin LLP, [memo of February 19, 2026](../sources/Shipman%20and%20Goodwin%20Budget%20memo%202.pdf)) concludes that **the BOF cannot add to, delete from, or eliminate BOE budget requests** — it can only comment and recommend. Their reasoning:
 
 1. The Charter's plain text in [Section 802E](https://charter2024.andoverct.info/#Section802E) creates an explicit exception for the BOE: the BOF "may add to, delete from, or eliminate requests made by the various departments, offices, and agencies **except that** the Board may only comment and make recommendations on the budget requests of the local Board of Education."
 
