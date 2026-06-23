@@ -10,9 +10,10 @@
  *   - BOE: scrape the Andover Elementary "Agendas, Minutes & Recordings" page
  *     for Zoom recording share links AND their passcodes, and add new ones.
  *
- * It is NON-DESTRUCTIVE: it only appends meetings whose YouTube id / Zoom
- * share-token isn't already in meetings.json. Existing entries are never
- * modified. New entries are prepended (newest-first, matching convention).
+ * It is NON-DESTRUCTIVE: it only adds meetings whose YouTube id / Zoom
+ * share-token isn't already in meetings.json; existing entries are never
+ * modified. The whole list is kept sorted newest-first by date on every run,
+ * so an entry lands in the right place no matter when it's discovered.
  *
  *   node discover-meetings.js            # discover both, write meetings.json
  *   node discover-meetings.js --dry-run  # report what WOULD be added; write nothing
@@ -222,8 +223,10 @@ async function discoverBOE(existingTokens, usedIds) {
     return;
   }
 
-  added.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
-  fs.writeFileSync(MEETINGS_FILE, JSON.stringify([...added, ...meetings], null, 2) + "\n");
+  // Keep the whole list sorted newest-first so every entry sits in date order
+  // (stable, so same-date meetings keep their relative order).
+  const merged = [...added, ...meetings].sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+  fs.writeFileSync(MEETINGS_FILE, JSON.stringify(merged, null, 2) + "\n");
   console.log(`\nAdded ${added.length} meeting(s) to meetings.json.`);
   console.log(`Next: review the additions above (especially BOE passcodes), then run`);
   console.log(`  npm run rebuild:videos      # YouTube transcripts`);
