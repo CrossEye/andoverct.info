@@ -107,40 +107,45 @@ If you only have YouTube meetings to process, you can skip the Zoom toolchain en
 
 ## Catching up with newer meetings (the common task)
 
-1. **Find the new meetings.**
-   - YouTube: the town's meetings are posted to the Andover YouTube channel.
-     Grab the video id (the `v=` value) from each new video's URL.
-   - Zoom (BOE): get the recording share link **and its passcode**.
-
-2. **Add an entry per meeting to [`meetings.json`](meetings.json)** using the
-   shapes shown above. Order doesn't matter (the index sorts by date), but
-   keeping newest-first matches the existing convention.
-
-3. **Run the pipeline:**
+1. **Discover new meetings automatically.**
 
    ```powershell
-   node download-transcripts.js
+   node discover-meetings.js          # from repo root: npm run videos:discover
+   ```
+
+   This populates [`meetings.json`](meetings.json) from the two live sources the
+   recordings actually come from:
+   - **YouTube** — enumerates the Town of Andover channel's uploads + past
+     streams via `yt-dlp` and adds any new videos.
+   - **BOE (Zoom)** — scrapes the Andover Elementary "Agendas, Minutes &
+     Recordings" page for new Zoom recording links **and their passcodes**.
+
+   It is non-destructive: it only **appends** meetings whose YouTube id / Zoom
+   share-token isn't already listed, so manual entries and edits are preserved.
+   Each new entry is printed; the BOE passcodes come from hand-edited HTML, so
+   glance over them (a wrong one just makes the Deepgram step fail loudly).
+   `--dry-run` previews without writing; `--youtube` / `--boe` limits the source.
+
+   Anything the scrapers can't reach (a one-off recording on neither page) can
+   still be added to `meetings.json` by hand using the shapes shown above.
+
+2. **Run the pipeline:**
+
+   ```powershell
+   node download-transcripts.js            # YouTube  (npm run rebuild:videos)
+   node transcribe-deepgram.js --missing   # BOE/Zoom (npm run rebuild:videos:boe)
    ```
 
    By default the run is **incremental**: it skips any meeting that already has
-   a `.vtt`, and skips re-rendering HTML that already exists. So a normal run
-   only does work for the meetings you just added, then regenerates
-   `index.html`.
+   a `.vtt` and skips re-rendering existing HTML, so it only works the new
+   meetings, then regenerates `index.html`. Scope by date with
+   `--since 2026-05-01` if you want to be sure it isn't touching anything old.
 
-   To limit work to just the recent additions (useful if you want to be sure
-   it isn't touching anything old), scope by date:
+3. **Publish.** From the repo root, `npm run deploy` (dry-run) to preview, then
+   `npm run deploy:go` to upload the changed `output/` files to the site.
 
-   ```powershell
-   node download-transcripts.js --since 2026-05-01
-   ```
-
-4. **Publish.** Copy/deploy the updated [`output/`](output/) folder to wherever
-   the site is hosted. (There is no git remote or automated deploy configured
-   in this repo yet; see [`plans/docker-automation.md`](plans/docker-automation.md)
-   for the intended automation.)
-
-That's it — for YouTube-only catch-ups, steps 1–3 take under a minute of
-hands-on time.
+That's it — a YouTube-only catch-up is `videos:discover` → `rebuild:videos` →
+`deploy:go`.
 
 ## Command reference
 
