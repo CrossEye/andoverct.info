@@ -2,6 +2,11 @@
 # andoverct.info — document-root .htaccess
 # ---------------------------------------------------------------------------
 
+# No automatic directory listings. Index-less directories return 403 instead of
+# exposing a file listing. Deliberate listings are served on demand by idx.php
+# via the /<dir>/idx rewrite below, which is unaffected by this.
+Options -Indexes
+
 # Route /<anything>/idx through the directory-index helper.
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
