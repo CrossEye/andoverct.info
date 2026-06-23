@@ -1,7 +1,7 @@
 The Central Question: Can the BOF Change the BOE Budget Number?
 ===============================================================
 
-*An analysis of the competing legal opinions from the [Town Attorney](../sources/Legal%20Opinion%20BOF%20Authority%20to%20Act%20Upon%20the%20BOE%20Budget%20-%202026-02-17.pdf) and the [BOE's counsel](../sources/Shipman%20and%20Goodwin%20Budget%20memo%202.pdf), based on the [Andover Town Charter](https://charter2024.andoverct.info) and [Connecticut General Statutes](https://www.cga.ct.gov/current/pub/titles.htm).*
+*An analysis of the competing legal opinions from the [Town Attorney](../../sources/Legal%20Opinion%20BOF%20Authority%20to%20Act%20Upon%20the%20BOE%20Budget%20-%202026-02-17.pdf) and the [BOE's counsel](../../sources/Shipman%20and%20Goodwin%20Budget%20memo%202.pdf), based on the [Andover Town Charter](https://charter2024.andoverct.info) and [Connecticut General Statutes](https://www.cga.ct.gov/current/pub/titles.htm).*
 
 ----------
 
