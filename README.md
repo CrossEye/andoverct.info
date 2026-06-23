@@ -8,15 +8,15 @@ result.
 
 ## Repository layout
 
-| Path | What it is | Built by |
-| --- | --- | --- |
-| `index.html`, `style.css`, `idx.php`, `favicon.*`, `.htaccess` | Top-level hub chrome | hand-authored |
-| `the-facts/` | Newspaper-style "the facts" editions | `the-facts/_build/render.js` (Markdown → HTML) |
-| `reports/` | Long-form civic/analytical reports | `_build/report.mjs` (Markdown → HTML + PDF) |
-| `town-charter/` | Town-charter guide pages | `town-charter/convert.js` (data → HTML) |
-| `reference/` | Reference landing page | hand-authored |
-| `reference/video/` | Town-meeting transcripts (the former *TownMeetings* project, folded in) | `reference/video/download-transcripts.js` + `transcribe-deepgram.js` |
-| `_build/` | Shared report engine + the deploy tool | — |
+| Path                                                           | What it is                                                              | Built by                                                             |
+| -------------------------------------------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `index.html`, `style.css`, `idx.php`, `favicon.*`, `.htaccess` | Top-level hub chrome                                                    | hand-authored                                                        |
+| `the-facts/`                                                   | Newspaper-style "the facts" editions                                    | `the-facts/_build/render.js` (Markdown → HTML)                       |
+| `reports/`                                                     | Long-form civic/analytical reports                                      | `_build/report.mjs` (Markdown → HTML + PDF)                          |
+| `town-charter/`                                                | Town-charter guide pages                                                | `town-charter/convert.js` (data → HTML)                              |
+| `reference/`                                                   | Reference landing page                                                  | hand-authored                                                        |
+| `reference/video/`                                             | Town-meeting transcripts (the former *TownMeetings* project, folded in) | `reference/video/download-transcripts.js` + `transcribe-deepgram.js` |
+| `_build/`                                                      | Shared report engine + the deploy tool                                  | —                                                                    |
 
 **Not in this repo** (separate GitHub Pages sites on their own subdomains, linked
 from the hub): `charter22` / `charter24` / `flyer`.andoverct.info. They keep their
@@ -32,18 +32,18 @@ You never have to think about what changed — the deploy tool diffs it for you.
 
 Run all of these from the repo root.
 
-| Command | Does |
-| --- | --- |
-| `npm run setup` | Install dependencies (root + the video pipeline) |
-| `npm run rebuild:reports` | Rebuild every report (HTML + PDF) |
-| `npm run rebuild:the-facts` | Rebuild every "the facts" edition |
-| `npm run rebuild:town-charter` | Rebuild the town-charter pages |
-| `npm run rebuild:all` | Reports + the-facts + town-charter (the fast, local builds) |
-| `npm run rebuild:videos` | Fetch/render new **YouTube** meeting transcripts |
-| `npm run rebuild:videos:boe` | Transcribe missing **BOE (Zoom)** meetings via Deepgram |
-| `npm run deploy` | **Dry run** — show exactly what would upload, transfer nothing |
-| `npm run deploy:go` | Upload the changed files to the live server |
-| `npm run publish` | `rebuild:all` then `deploy:go` |
+| Command                        | Does                                                           |
+| ------------------------------ | -------------------------------------------------------------- |
+| `npm run setup`                | Install dependencies (root + the video pipeline)               |
+| `npm run rebuild:reports`      | Rebuild every report (HTML + PDF)                              |
+| `npm run rebuild:the-facts`    | Rebuild every "the facts" edition                              |
+| `npm run rebuild:town-charter` | Rebuild the town-charter pages                                 |
+| `npm run rebuild:all`          | Reports + the-facts + town-charter (the fast, local builds)    |
+| `npm run rebuild:videos`       | Fetch/render new **YouTube** meeting transcripts               |
+| `npm run rebuild:videos:boe`   | Transcribe missing **BOE (Zoom)** meetings via Deepgram        |
+| `npm run deploy`               | **Dry run** — show exactly what would upload, transfer nothing |
+| `npm run deploy:go`            | Upload the changed files to the live server                    |
+| `npm run publish`              | `rebuild:all` then `deploy:go`                                 |
 
 Notes:
 - `rebuild:videos*` are intentionally **not** part of `rebuild:all` — they are slow,
