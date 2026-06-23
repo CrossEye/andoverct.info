@@ -1,8 +1,6 @@
 Andover's Governance Structure: Board of Selectmen, First Selectman, and Town Administrator
 ============================================================================================
 
-*[← Back to Index](Index.md)*
-
 This document explains the three overlapping executive roles at the center of Andover's town government — the Board of Selectmen, the First Selectman, and the Town Administrator — and how authority is distributed among them. Understanding these distinctions matters for anyone trying to figure out who made a decision, who has the power to change it, and who to hold accountable. References to Charter sections link to the online version at [charter2024.andoverct.info](https://charter2024.andoverct.info).
 
 ----------

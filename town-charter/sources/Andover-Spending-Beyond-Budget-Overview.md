@@ -1,8 +1,6 @@
 Spending Beyond the Annual Budget: Supplemental Appropriations, Capital Spending, and Bonds
 ==============================================================================================
 
-*[← Back to Index](Index.md)*
-
 This document explains how Andover authorizes spending that arises outside the annual budget cycle — whether mid-year emergencies, capital equipment, draws on reserve funds, or major borrowing for capital projects. Each mechanism has a different threshold, different decision-makers, and a different level of voter involvement. References to Charter sections link to the online version at [charter2024.andoverct.info](https://charter2024.andoverct.info). State statutes link to the Connecticut General Assembly's published text.
 
 ----------

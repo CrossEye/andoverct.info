@@ -1,8 +1,6 @@
 Elections in Andover: Who Votes for What and When
 ==================================================
 
-*[← Back to Index](Index.md)*
-
 This document explains Andover's election system — which offices are elected, when, for how long, and under what rules. It covers the significant changes made by the 2024 charter revision (most of which take effect beginning in 2027), the minority representation rules that apply to different boards, and how ties are broken. References to Charter sections link to the online version at [charter2024.andoverct.info](https://charter2024.andoverct.info). State statutes link to the Connecticut General Assembly's published text.
 
 ----------

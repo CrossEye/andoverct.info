@@ -1,8 +1,6 @@
 Andover Town Meetings: When Are They Required and How Do They Work?
 ===================================================================
 
-*[← Back to Index](Index.md)*
-
 This document explains the three types of town meeting in Andover, Connecticut — what triggers each, who can call them, what they can and cannot decide, and what happens when things go wrong. References to Charter sections link to the online version at [charter2024.andoverct.info](https://charter2024.andoverct.info). State statutes link to the Connecticut General Assembly's published text.
 
 ----------

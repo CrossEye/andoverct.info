@@ -1,8 +1,6 @@
 How Officials Come and Go: Appointments, Vacancies, and Removals in Andover
 ============================================================================
 
-*[← Back to Index](Index.md)*
-
 This document explains how Andover's elected and appointed officials are selected, how their positions are filled when they become vacant, how they may be removed, and what obligations they carry while in office. These rules are scattered across multiple chapters of the Charter; this document gathers them into a single narrative. References to Charter sections link to the online version at [charter2024.andoverct.info](https://charter2024.andoverct.info).
 
 ----------

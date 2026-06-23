@@ -1,8 +1,6 @@
 Suggested Charter Revisions: BOF Authority Over the BOE Budget
 ===============================================================
 
-*[← Back to Index](Index.md)*
-
 *Proposed language changes to resolve the ambiguity in [Sections 802E](https://charter2024.andoverct.info/#Section802E) and [802F](https://charter2024.andoverct.info/#Section802F) while preserving the BOE's independence over its internal spending.*
 
 ----------

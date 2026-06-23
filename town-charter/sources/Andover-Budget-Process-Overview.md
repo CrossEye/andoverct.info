@@ -1,8 +1,6 @@
 The Andover Budget Process: A Plain-Language Overview
 =====================================================
 
-*[← Back to Index](Index.md)*
-
 This document walks through the annual budget process in the Town of Andover, Connecticut, as defined by the [Town Charter](https://charter2024.andoverct.info) (revised 2024) and the relevant [Connecticut General Statutes](https://www.cga.ct.gov/current/pub/titles.htm). It covers who does what, when, and with what authority — from the first planning conversations in October through final adoption at referendum.
 
 References to Charter sections link to the online version at [charter2024.andoverct.info](https://charter2024.andoverct.info). State statutes link to the Connecticut General Assembly's published text.
