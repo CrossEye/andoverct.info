@@ -177,7 +177,12 @@ async function discoverBOE(existingTokens, usedIds) {
     const fromText = after.match(/Passcode\s*:?\s*([^\s<]+)/i);
     if (fromText) passcode = fromText[1];
     else {
-      const fromHref = safeDecodeURI(decodeEntities(m[1])).match(/Passcode\s*:?\s*([^\s"&]+)/i);
+      // Passcode crammed into the href (after a startTime param), e.g.
+      //   ...?startTime=...%20Passcode:%20&amp;b0%8M9u
+      // Decode entities (&amp;->&) but NOT %-escapes (passcodes contain a literal
+      // %); skip the encoded/real space separator(s) after the label, then take
+      // the rest verbatim up to the next space/quote (passcodes may contain &/%).
+      const fromHref = decodeEntities(m[1]).match(/Passcode\s*:?\s*(?:%20|\s)*([^\s"]+)/i);
       if (fromHref) passcode = fromHref[1];
     }
 
