@@ -34,9 +34,13 @@ body[data-draft="true"]::before {
   line-height: 1;
 }
 
-/* Lift live content above the watermark. */
+/* Lift the navigation chrome (banner + footer) above the watermark — but NOT
+ * the main content container. Letting .container stay unpositioned puts the
+ * watermark above plain prose (so it reads as a watermark over the text) while
+ * still being covered by panels, blockquotes, and table headers that carry
+ * their own stacking context via backgrounds or shadows. Don't add .container
+ * to this rule — it produces the "watermark sits behind everything" bug. */
 body[data-draft="true"] .page-banner,
-body[data-draft="true"] .container,
 body[data-draft="true"] .page-footer {
   position: relative;
   z-index: 1;

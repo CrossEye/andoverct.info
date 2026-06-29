@@ -1,0 +1,82 @@
+/* DRAFT watermark. Pulled in via front matter's extraCss when this report is
+   still under review. Delete the front-matter line (and this file) when the
+   report goes final. */
+
+/* Screen / on-page HTML view: large diagonal "DRAFT" stamped behind content */
+body::before {
+  content: "DRAFT";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  font-family: var(--font-sans, -apple-system, sans-serif);
+  font-weight: 900;
+  font-size: 22vw;
+  letter-spacing: 0.05em;
+  color: rgba(176, 30, 30, 0.10);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* Make sure normal page content sits above the watermark */
+.report-body, .report-header, .breadcrumb, .page-footer, .report-title,
+.report-subtitle, .attribution, header, footer, main, article, section, table,
+h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote {
+  position: relative;
+  z-index: 1;
+}
+
+/* A second persistent badge at the top so the DRAFT flag survives even when
+   the watermark is hard to see on dense pages. */
+body::after {
+  content: "DRAFT";
+  position: fixed;
+  top: 8px;
+  right: 12px;
+  background: #b01e1e;
+  color: #fff;
+  padding: 4px 10px;
+  font-family: var(--font-sans, -apple-system, sans-serif);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  border-radius: 3px;
+  z-index: 9999;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+  pointer-events: none;
+}
+
+/* Print / PDF: WeasyPrint honours @page rules for repeated page furniture. The
+   diagonal body::before from above gets clipped to a single page, so for the
+   PDF we put a similar mark in the page background via @page. */
+@media print {
+  @page {
+    background-image: linear-gradient(
+      -30deg,
+      transparent 38%,
+      rgba(176, 30, 30, 0.10) 38%,
+      rgba(176, 30, 30, 0.10) 62%,
+      transparent 62%
+    );
+    /* WeasyPrint also supports @page strings/text via @top/@bottom blocks; we
+       leave those to the theme's @page rules. */
+  }
+
+  /* And keep the small badge at the top-right of every page (above content). */
+  body::after {
+    position: fixed;
+    top: 6mm;
+    right: 8mm;
+    font-size: 10pt;
+    padding: 2px 7px;
+  }
+
+  body::before {
+    /* On paper the @page gradient above already gives the diagonal red band;
+       suppress the duplicate centred stamp so the page isn't muddy. */
+    display: none;
+  }
+}
