@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Civic Card Designer</title>
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzFkMWQxZCIvPjxnIHRyYW5zZm9ybT0icm90YXRlKC0xMSAxMyAxNSkiPjxyZWN0IHg9IjYuNSIgeT0iNiIgd2lkdGg9IjEzLjUiIGhlaWdodD0iMTcuNSIgcng9IjIiIGZpbGw9IiNjZGE0MzQiLz48L2c+PGcgdHJhbnNmb3JtPSJyb3RhdGUoNyAxOCAxNykiPjxyZWN0IHg9IjExIiB5PSI4IiB3aWR0aD0iMTMuNSIgaGVpZ2h0PSIxNy41IiByeD0iMiIgZmlsbD0iI0ZCRjhGMSIgc3Ryb2tlPSIjMWQxZDFkIiBzdHJva2Utd2lkdGg9IjAuNiIvPjxnIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+PHBhdGggZD0iTTEzIDEyLjYgcTEuMyAtMS40IDIuNiAwIHQyLjYgMCB0Mi42IDAiIHN0cm9rZT0iIzFmN2EzZCIgc3Ryb2tlLXdpZHRoPSIxLjYiLz48cGF0aCBkPSJNMTMgMTYuMSBxMS4zIC0xLjIgMi42IDAgdDIuNiAwIHQyLjYgMCIgc3Ryb2tlPSIjNmE2NDUzIiBzdHJva2Utd2lkdGg9IjEiLz48cGF0aCBkPSJNMTMgMTkuMSBxMS4zIC0xLjIgMi42IDAgdDIuNiAwIHQyLjYgMCIgc3Ryb2tlPSIjNmE2NDUzIiBzdHJva2Utd2lkdGg9IjEiLz48cGF0aCBkPSJNMTMgMjIuMSBxMS4zIC0xLjIgMi4xIDAgdDIuMSAwIiBzdHJva2U9IiM2YTY0NTMiIHN0cm9rZS13aWR0aD0iMSIvPjwvZz48L2c+PC9zdmc+">
+<style>
+:root{
+  --cream:#FBF8F1;--green:#1f7a3d;--gold:#B8860B;--dark:#1d1d1d;--body:#2b2b2b;
+  --gray:#6a6453;--muted:#8a8170;--line:#e3ddce;--panel:#fff;--bg:#f1ece1;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--body);
+  font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.45;font-size:14px}
+header.app{background:var(--dark);color:#fff;padding:10px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+header.app .logo{flex:none;display:block}
+header.app h1{font-family:Georgia,serif;font-size:1.15rem;margin:0;color:#fff}
+header.app .sub{color:#bbb;font-size:.82rem}
+.layout{display:grid;grid-template-columns:380px 1fr;gap:0;align-items:start}
+@media(max-width:900px){.layout{grid-template-columns:1fr}}
+.edit{padding:14px;border-right:1px solid var(--line);height:calc(100vh - 44px);overflow:auto}
+.view{padding:18px;position:sticky;top:0;height:calc(100vh - 44px);overflow:auto}
+.card-box{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:14px}
+.card-box h2{font-size:.78rem;text-transform:uppercase;letter-spacing:.07em;color:var(--gold);margin:0 0 10px}
+label.f{display:block;margin:0 0 10px}
+label.f .lab{display:block;font-size:.78rem;color:var(--gray);margin-bottom:3px}
+input[type=text],textarea,select{width:100%;font:inherit;font-size:.86rem;padding:6px 8px;
+  border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--body)}
+textarea{resize:vertical;min-height:48px;line-height:1.4}
+textarea.big{min-height:78px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row > *{flex:0 0 auto}
+button{font:inherit;font-size:.82rem;font-weight:600;border:none;border-radius:6px;
+  padding:7px 11px;cursor:pointer;background:#e7e1d3;color:var(--dark)}
+button:active{transform:translateY(1px)}
+button.green{background:var(--green);color:#fff}
+button.gold{background:var(--gold);color:#fff}
+button.ghost{background:transparent;border:1px solid var(--line);color:var(--gray);padding:5px 9px}
+button.danger{background:#b0402c;color:#fff}
+.cardlist{display:flex;flex-direction:column;gap:4px;margin-bottom:8px}
+.cardlist .ci{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:6px;
+  padding:5px 8px;background:#fbf9f3;cursor:pointer}
+.cardlist .ci.active{border-color:var(--gold);background:#fff;box-shadow:0 0 0 1px var(--gold) inset}
+.cardlist .ci .nm{flex:1;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cardlist .ci .ty{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.pal{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pal label{display:flex;align-items:center;gap:6px;font-size:.76rem;color:var(--gray)}
+.pal input[type=color]{width:30px;height:24px;padding:0;border:1px solid var(--line);border-radius:4px;background:#fff}
+#preview{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;max-width:560px;margin:0 auto 14px}
+#preview svg{width:100%;height:auto;display:block;border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.exportbar{display:flex;gap:8px;flex-wrap:wrap;max-width:560px;margin:0 auto 14px}
+.jsonwrap{max-width:560px;margin:0 auto}
+.jsonwrap summary{cursor:pointer;font-size:.82rem;font-weight:600;color:var(--gray);padding:4px 0}
+#json{width:100%;min-height:240px;font-family:"SF Mono",Consolas,Menlo,monospace;font-size:.74rem;line-height:1.4}
+.hint{font-size:.72rem;color:var(--muted);margin:.2rem 0 0}
+.msg{font-size:.78rem;min-height:1.1em;margin-left:auto}
+.msg.ok{color:var(--green)}.msg.err{color:#b0402c}
+.thumbimg{max-width:120px;border:1px solid var(--line);border-radius:6px;display:block;margin-top:6px}
+.drop{border:2px dashed var(--line);border-radius:8px;padding:14px;text-align:center;color:var(--muted);
+  font-size:.8rem;cursor:pointer;background:#fbf9f3;transition:border-color .15s,background .15s,color .15s}
+.drop:hover{border-color:var(--gold)}
+.drop.over{border-color:var(--gold);background:#fff;color:var(--dark)}
+.drop img{max-width:150px;border:1px solid var(--line);border-radius:6px;display:block;margin:0 auto 8px}
+.drop .dzbtns{margin-top:8px}
+.contrast{font-size:.74rem;margin-top:10px;line-height:1.6;border-top:1px solid var(--line);padding-top:8px}
+.contrast .ok{color:var(--green);font-weight:600}
+.contrast .bad{color:#b0402c}
+.contrast .warnhead{color:#b0402c;font-weight:700}
+.contrast .ratio{color:var(--muted)}
+#themename{flex:1 1 110px;min-width:90px}
+.meas{position:absolute;left:-9999px;top:0;width:10px;height:10px;overflow:hidden;opacity:0;pointer-events:none}
+</style>
+</head>
+<body>
+<header class="app">
+  <svg class="logo" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
+    <g transform="rotate(-11 13 15)"><rect x="6.5" y="6" width="13.5" height="17.5" rx="2" fill="#cda434"/></g>
+    <g transform="rotate(7 18 17)">
+      <rect x="11" y="8" width="13.5" height="17.5" rx="2" fill="#FBF8F1"/>
+      <g fill="none" stroke-linecap="round">
+        <path d="M13 12.6 q1.3 -1.4 2.6 0 t2.6 0 t2.6 0" stroke="#1f7a3d" stroke-width="1.6"/>
+        <path d="M13 16.1 q1.3 -1.2 2.6 0 t2.6 0 t2.6 0" stroke="#6a6453" stroke-width="1"/>
+        <path d="M13 19.1 q1.3 -1.2 2.6 0 t2.6 0 t2.6 0" stroke="#6a6453" stroke-width="1"/>
+        <path d="M13 22.1 q1.3 -1.2 2.1 0 t2.1 0" stroke="#6a6453" stroke-width="1"/>
+      </g>
+    </g>
+  </svg>
+  <h1>Civic Card Designer</h1>
+  <span class="sub">1080&times;1080 social cards &middot; SVG &rarr; PNG, all in the browser</span>
+  <span id="msg" class="msg"></span>
+</header>
+
+<div class="layout">
+  <!-- ================= EDIT PANEL ================= -->
+  <div class="edit">
+    <div class="card-box">
+      <h2>Deck</h2>
+      <div id="cardlist" class="cardlist"></div>
+      <div class="row">
+        <select id="newtype"></select>
+        <button id="add" class="green">+ Add</button>
+        <button id="dup" class="ghost">Duplicate</button>
+        <button id="del" class="ghost">Delete</button>
+      </div>
+      <div class="row" style="margin-top:6px">
+        <button id="up" class="ghost">&uarr; Up</button>
+        <button id="down" class="ghost">&darr; Down</button>
+        <button id="reset" class="ghost" title="Reload the Andover sample deck">Load sample</button>
+        <button id="blank" class="ghost" title="Start an empty deck">New empty deck</button>
+      </div>
+    </div>
+
+    <div class="card-box">
+      <h2>This card</h2>
+      <label class="f"><span class="lab">Card name / filename</span>
+        <input type="text" id="cardname"></label>
+      <label class="f"><span class="lab">Card type</span>
+        <select id="cardtype"></select></label>
+      <div id="fields"></div>
+      <p class="hint">Colors you can use in number/headline fields: feature, featureDark, accent,
+        heading, text, label, faint, alert, ground &mdash; or any #hex.</p>
+    </div>
+
+    <div class="card-box">
+      <h2>Palette (whole deck)</h2>
+      <label class="f"><span class="lab">Theme</span>
+        <select id="themesel"></select></label>
+      <div id="palette" class="pal"></div>
+      <p class="hint">Pick a theme, or tweak any swatch to make your own (selector flips to
+        &ldquo;Custom&rdquo;). Then name it and save.</p>
+      <div class="row" style="margin-top:4px">
+        <input type="text" id="themename" placeholder="name this palette">
+        <button id="savetheme" class="green">Save</button>
+        <button id="deltheme" class="ghost">Delete</button>
+      </div>
+      <div class="row" style="margin-top:6px">
+        <button id="exportThemes" class="ghost">Export palettes</button>
+        <button id="importThemes" class="ghost">Import palettes</button>
+        <input type="file" id="themesFile" accept=".json,application/json" hidden>
+      </div>
+      <div id="contrast" class="contrast"></div>
+    </div>
+  </div>
+
+  <!-- ================= VIEW PANEL ================= -->
+  <div class="view">
+    <div id="preview"></div>
+    <div class="exportbar">
+      <button id="pngBtn" class="green">Download PNG</button>
+      <button id="svgBtn" class="gold">Download SVG</button>
+      <button id="allBtn" class="ghost">Export all PNGs</button>
+      <button id="copyBtn" class="ghost">Copy PNG</button>
+    </div>
+    <div class="jsonwrap">
+      <details open>
+        <summary>JSON spec (editable &mdash; this is the source of truth)</summary>
+        <textarea id="json" spellcheck="false"></textarea>
+        <div class="row" style="margin-top:6px">
+          <button id="applyJson" class="green">Apply JSON</button>
+          <button id="dlJson" class="ghost">Download .json</button>
+          <button id="loadJson" class="ghost">Load .json</button>
+          <input type="file" id="jsonFile" accept=".json,application/json" hidden>
+        </div>
+      </details>
+    </div>
+  </div>
+</div>
+
+<svg id="meas" class="meas" xmlns="http://www.w3.org/2000/svg"><text id="measT"></text></svg>
+
+<script>
+"use strict";
+const SVGNS="http://www.w3.org/2000/svg";
+const W=1080, PADL=80, PADR=1000, CW=PADR-PADL, CX=(PADL+PADR)/2, SRC_Y=1002;
+
+/* Palette roles describe WHAT a color does, so any theme can fill them.
+   ground=card background, accent=border/kicker/rules, heading=headlines,
+   text=body copy, label=neutral labels, faint=source line,
+   feature=highlight + CTA panel ground, featureDark=emphasis line, alert=sparing negative. */
+const ROLES=["ground","accent","heading","text","label","faint","feature","featureDark","alert"];
+const ROLE_LABEL={ground:"ground (card bg)",accent:"accent (border, kicker)",heading:"heading",
+  text:"body text",label:"labels / context",faint:"source line",feature:"feature (highlight, CTA)",
+  featureDark:"feature dark (emphasis)",alert:"alert (sparing)"};
+/* Curated themes. "Andover Civic" is the original; the rest borrow hues + names from
+   the letters themes.yml, retuned for a light card ground with legible dark text. */
+const THEMES={
+ "Andover Civic":      {ground:"#FBF8F1",accent:"#B8860B",heading:"#1d1d1d",text:"#2b2b2b",label:"#6a6453",faint:"#8a8170",feature:"#1f7a3d",featureDark:"#16602f",alert:"#b0402c"},
+ "Tangled Up in Blue": {ground:"#eef4fb",accent:"#2f6db5",heading:"#0F2557",text:"#243246",label:"#5b6b7d",faint:"#647284",feature:"#1f6fc2",featureDark:"#14507f",alert:"#b0402c"},
+ "Songs from the Woods":{ground:"#f0f6e6",accent:"#2a8589",heading:"#1b3a2e",text:"#2c3a30",label:"#5f6f60",faint:"#647564",feature:"#237a4b",featureDark:"#17593a",alert:"#b0402c"},
+ "Purple Haze":        {ground:"#f1eefb",accent:"#7a4fa8",heading:"#2e2547",text:"#383150",label:"#6a6385",faint:"#6a6488",feature:"#6f4bd0",featureDark:"#4f2f9b",alert:"#b0402c"},
+ "Sunday Papers":      {ground:"#f6eef4",accent:"#5a7d8c",heading:"#3a2f36",text:"#444444",label:"#675c63",faint:"#7c7178",feature:"#a83c68",featureDark:"#7a2c4c",alert:"#b0402c"},
+ "Whiter Shade of Pale":{ground:"#faf0e6",accent:"#9a6a28",heading:"#4a3b2a",text:"#5a4a3a",label:"#6c5c45",faint:"#857961",feature:"#9a5d24",featureDark:"#724616",alert:"#b0402c"},
+ /* dark themes: dark ground, light type; feature stays bright so the inverted CTA panel
+    (dark ground-colored text on the feature panel) keeps its contrast. */
+ "Back in Black":      {ground:"#1b1b1b",accent:"#cda434",heading:"#f5f2ea",text:"#dcd8ce",label:"#a49c8d",faint:"#8a8273",feature:"#36c07d",featureDark:"#5fd79a",alert:"#e2574c"},
+ "Green River":        {ground:"#10241a",accent:"#cf9b3a",heading:"#eef4f0",text:"#cdd8d2",label:"#9fb0a6",faint:"#82938a",feature:"#39b39a",featureDark:"#5fd0b8",alert:"#e2574c"}
+};
+const DEFAULT_PAL={...THEMES["Andover Civic"]};
+/* old palette/color names -> new role names, for migrating saved decks */
+const OLD2NEW={cream:"ground",gold:"accent",dark:"heading",body:"text",gray:"label",
+  muted:"faint",green:"feature",greendk:"featureDark",red:"alert"};
+
+const FAM={serif:"Georgia,'Times New Roman',serif",sans:"Arial,Helvetica,sans-serif"};
+const STYLE={serif_b:["serif","b"],serif_r:["serif","r"],serif_i:["serif","i"],
+  serif_bi:["serif","bi"],sans_b:["sans","b"],sans_r:["sans","r"]};
+
+let PAL={...DEFAULT_PAL};
+let deck=null, cur=0;
+
+/* ---------- low-level SVG helpers (ported from cardlib.py) ---------- */
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function col(name){return PAL[name]||name;}
+
+const measT=document.getElementById("measT");
+function textw(s,fam,wt,size,ls){
+  measT.setAttribute("font-family",FAM[fam]);
+  measT.setAttribute("font-weight",(wt==="b"||wt==="bi")?"bold":"normal");
+  measT.setAttribute("font-style",(wt==="i"||wt==="bi")?"italic":"normal");
+  measT.setAttribute("font-size",size);
+  if(ls) measT.setAttribute("letter-spacing",ls); else measT.removeAttribute("letter-spacing");
+  measT.textContent=s;
+  try{return measT.getComputedTextLength();}catch(e){return s.length*size*0.5;}
+}
+function wrap(s,fam,wt,size,maxw,ls){
+  const out=[];let line="";
+  for(const word of String(s).split(/\s+/).filter(Boolean)){
+    const t=(line+" "+word).trim();
+    if(textw(t,fam,wt,size,ls||0)<=maxw) line=t;
+    else{if(line)out.push(line);line=word;}
+  }
+  if(line)out.push(line);
+  return out;
+}
+function tline(x,y,s,sty,size,fill,anchor,ls,spans){
+  anchor=anchor||"start";ls=ls||0;
+  const [fam,wt]=STYLE[sty];
+  const extra=ls?` letter-spacing="${ls}"`:"";
+  const inner=(spans!=null)?spans:esc(s);
+  return `<text x="${x}" y="${y}" font-family="${FAM[fam]}" font-weight="${(wt==="b"||wt==="bi")?"bold":"normal"}" font-style="${(wt==="i"||wt==="bi")?"italic":"normal"}" font-size="${size}" fill="${fill}" text-anchor="${anchor}"${extra}>${inner}</text>`;
+}
+function block(x,y,s,sty,size,fill,maxw,leading,anchor,ls){
+  anchor=anchor||"start";ls=ls||0;
+  const [fam,wt]=STYLE[sty];
+  const out=[];let cy=y;
+  for(const ln of wrap(s,fam,wt,size,maxw,ls)){out.push(tline(x,cy,ln,sty,size,fill,anchor,ls));cy+=leading;}
+  return [out.join("\n"),cy-leading];
+}
+function frame(bg,border){
+  bg=bg||PAL.ground;border=border||PAL.accent;
+  return `<svg xmlns="${SVGNS}" width="${W}" height="${W}" viewBox="0 0 ${W} ${W}">\n`+
+    `<rect width="${W}" height="${W}" fill="${bg}"/>\n`+
+    `<rect x="26" y="26" width="${W-52}" height="${W-52}" rx="18" fill="none" stroke="${border}" stroke-width="3"/>\n`;
+}
+function kicker(text,y,color,rule,cx){
+  if(!text)return"";
+  y=y==null?126:y;color=color||PAL.accent;rule=rule!==false;cx=cx==null?CX:cx;
+  let size=27,ls=4;
+  while(textw(text,"sans","b",size,ls)>CW&&size>20)size--;
+  const tw=textw(text,"sans","b",size,ls);
+  let s=tline(cx,y,text,"sans_b",size,color,"middle",ls);
+  if(rule){const rw=Math.max(40,Math.round(tw*0.9));   /* underline tracks kicker width */
+    s+=`\n<rect x="${cx-rw/2}" y="${y+18}" width="${rw}" height="3" fill="${color}"/>`;}
+  return s;
+}
+function source(text){return text?tline(CX,SRC_Y,text,"sans_r",22,PAL.faint,"middle"):"";}
+function stat(cx,num,numcol,lablines){
+  const out=[tline(cx,560-66,num,"serif_b",66,numcol,"middle")];
+  let yy=560;
+  for(const ln of (lablines||[])){out.push(tline(cx,yy,ln,"sans_r",25,PAL.label,"middle"));yy+=30;}
+  return out.join("\n");
+}
+/* *word* -> green italic span inside a headline line */
+function headlineSpans(text){
+  let out="",last=0,m;const re=/\*([^*]+)\*/g;
+  while((m=re.exec(text))){out+=esc(text.slice(last,m.index));
+    out+=`<tspan font-style="italic" fill="${PAL.feature}">${esc(m[1])}</tspan>`;last=re.lastIndex;}
+  out+=esc(text.slice(last));return out;
+}
+
+/* ---------- per-type card builders ---------- */
+function c_statTrio(c){
+  let s=kicker(c.kicker);
+  const hl=String(c.headline||"").split("\n");let y=268;
+  for(const line of hl){s+="\n"+tline(PADL,y,"","serif_b",60,PAL.heading,"start",0,headlineSpans(line));y+=76;}
+  const cs=[PADL+CW/6,PADL+CW/2,PADR-CW/6];
+  (c.stats||[]).slice(0,3).forEach((st,i)=>{s+="\n"+stat(cs[i],st.num,col(st.color||"label"),st.label||[]);});
+  if(c.body){const[tk]=block(PADL,700,c.body,"serif_r",35,PAL.text,CW,47);s+="\n"+tk;}
+  s+="\n"+source(c.source);return s;
+}
+function c_numberStack(c){
+  let s=kicker(c.kicker);
+  if(c.headline)s+="\n"+tline(PADL,250,c.headline,"serif_b",56,PAL.heading);
+  let ry=400;
+  (c.rows||[]).forEach(r=>{
+    s+="\n"+tline(PADL,ry,r.num,"serif_b",86,col(r.color||"heading"));
+    const lx=PADL+Math.max(250,textw(r.num||"","serif","b",86,0)+28);
+    const[tk]=block(lx,ry-8,r.label,"serif_r",33,PAL.text,PADR-lx,38);s+="\n"+tk;ry+=150;});
+  if(c.emphasis){const[tk]=block(PADL,880,c.emphasis,"serif_bi",36,PAL.featureDark,CW,46);s+="\n"+tk;}
+  s+="\n"+source(c.source);return s;
+}
+function c_hero(c){
+  let s=kicker(c.kicker);
+  if(c.headline)s+="\n"+tline(PADL,250,c.headline,"serif_b",52,PAL.heading);
+  if(c.hero&&c.hero.num)s+="\n"+tline(CX,430,c.hero.num,"serif_b",124,PAL.feature,"middle");
+  if(c.hero&&c.hero.subtitle){const[tk]=block(CX,478,c.hero.subtitle,"sans_r",26,PAL.label,CW-120,32,"middle");s+="\n"+tk;}
+  if(c.left&&c.left.num){s+="\n"+tline(CX-220,640,c.left.num,"serif_b",56,PAL.heading,"middle");
+    (c.left.label||[]).forEach((ln,i)=>s+="\n"+tline(CX-220,686+i*28,ln,"sans_r",24,PAL.label,"middle"));}
+  if(c.right&&c.right.num){s+="\n"+tline(CX+220,640,c.right.num,"serif_b",56,PAL.heading,"middle");
+    (c.right.label||[]).forEach((ln,i)=>s+="\n"+tline(CX+220,686+i*28,ln,"sans_r",24,PAL.label,"middle"));}
+  if(c.body){const[tk]=block(PADL,820,c.body,"serif_r",35,PAL.text,CW,47);s+="\n"+tk;}
+  s+="\n"+source(c.source);return s;
+}
+function c_text(c){
+  let s=kicker(c.kicker);let y=270;
+  (c.headline||[]).forEach(l=>{s+="\n"+tline(PADL,y,"","serif_b",62,col(l.color||"heading"),"start",0,headlineSpans(l.text||""));y+=74;});
+  let by=y+30;
+  (c.body||[]).forEach(p=>{const[tk,endy]=block(PADL,by,p,"serif_r",37,PAL.text,CW,50);s+="\n"+tk;by=endy+74;});
+  if(c.emphasis){const[tk]=block(PADL,by+10,c.emphasis,"serif_bi",40,PAL.featureDark,CW,52);s+="\n"+tk;}
+  s+="\n"+source(c.source);return s;
+}
+function c_photo(c){
+  let s=kicker(c.kicker);
+  const px=74,py=250,pw=430,ph=558;
+  if(c.image){
+    s+=`\n<clipPath id="pc"><rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="10"/></clipPath>`;
+    s+=`\n<image x="${px}" y="${py}" width="${pw}" height="${ph}" preserveAspectRatio="xMidYMid slice" clip-path="url(#pc)" href="${c.image}"/>`;
+  }else{
+    s+=`\n<rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="10" fill="#ece6d8"/>`;
+    s+="\n"+tline(px+pw/2,py+ph/2,"[ photo here ]","sans_r",24,PAL.faint,"middle");
+  }
+  s+=`\n<rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="10" fill="none" stroke="#d8d1c2" stroke-width="2"/>`;
+  const tx=px+pw+44,tw=PADR-tx;
+  if(c.question){const[q]=block(tx,py+58,c.question,"serif_b",44,PAL.heading,tw,56);s+="\n"+q;}
+  if(c.caption){const[cap]=block(tx,py+300,c.caption,"serif_i",29,PAL.label,tw,40);s+="\n"+cap;}
+  if(c.emphasis){const[hb]=block(tx,py+ph-40,c.emphasis,"serif_bi",30,PAL.featureDark,tw,40);s+="\n"+hb;}
+  s+="\n"+source(c.source);return s;
+}
+function c_cta(c){
+  /* inverted panel: feature ground (set in buildSvg), light ground-colored text throughout */
+  let s=tline(CX,200,c.kicker||"","sans_b",28,PAL.ground,"middle",4);
+  s+=`\n<rect x="${CX-40}" y="248" width="80" height="3" fill="${PAL.ground}"/>`;
+  s+="\n"+tline(CX,470,c.big||"VOTE YES","serif_b",170,PAL.ground,"middle");
+  if(c.subtitle)s+="\n"+tline(CX,600,c.subtitle,"serif_i",42,PAL.ground,"middle");
+  let ly=740;(c.lines||[]).forEach(ln=>{s+="\n"+tline(CX,ly,ln,"sans_r",34,PAL.ground,"middle");ly+=52;});
+  if(c.tail)s+="\n"+tline(CX,920,c.tail,"serif_r",32,PAL.ground,"middle");
+  return s;
+}
+/* ---------- card-type registry: ONE entry per type (label, fields, defaults, render) ----------
+   Single source of truth for a card type. The type dropdowns, the form schema, blankCard()
+   defaults, and buildSvg() dispatch all derive from this. `fields` and `defaults` are plain
+   data (JSON-ready); only `render` and the optional frame role-overrides are code. To add a
+   type: add one entry here + write its render function above. */
+const CARD_TYPES={
+ "stat-trio":{label:"stat-trio",render:c_statTrio,
+   fields:[
+     ["kicker","Kicker (small gold heading)","text"],
+     ["headline","Headline — newline = 2nd line, *word* = green italic","area"],
+     ["stats","Stats, one per line:  number | color | label; 2nd label line","stats"],
+     ["body","Body paragraph","area"],
+     ["source","Source line","text"]],
+   defaults:{kicker:"KICKER",headline:"Headline line one\nHeadline line two",
+     stats:[{num:"00%",color:"feature",label:["label","second line"]}],body:"Body text.",source:"Source:"}},
+ "number-stack":{label:"number-stack",render:c_numberStack,
+   fields:[
+     ["kicker","Kicker","text"],
+     ["headline","Headline","text"],
+     ["rows","Rows, one per line:  number | color | label","rows"],
+     ["emphasis","Emphasis line (green italic)","area"],
+     ["source","Source line","text"]],
+   defaults:{kicker:"KICKER",headline:"Headline.",
+     rows:[{num:"0%",color:"feature",label:"what this number is"}],emphasis:"Emphasis line.",source:"Source:"}},
+ "hero-number":{label:"hero-number",render:c_hero,
+   fields:[
+     ["kicker","Kicker","text"],
+     ["headline","Headline","text"],
+     ["hero.num","Hero number","text"],
+     ["hero.subtitle","Hero subtitle","area"],
+     ["left.num","Left figure","text"],
+     ["left.label","Left label (use ; for 2 lines)","csvlabel"],
+     ["right.num","Right figure","text"],
+     ["right.label","Right label (use ; for 2 lines)","csvlabel"],
+     ["body","Body paragraph","area"],
+     ["source","Source line","text"]],
+   defaults:{kicker:"KICKER",headline:"Headline.",hero:{num:"$0",subtitle:"what the figure is"},
+     left:{num:"$0",label:["left","label"]},right:{num:"$0",label:["right","label"]},body:"Body text.",source:"Source:"}},
+ "text":{label:"text",render:c_text,
+   fields:[
+     ["kicker","Kicker","text"],
+     ["headline","Headline lines, one per line:  text | color","hlines"],
+     ["body","Body paragraphs (blank line between)","paras"],
+     ["emphasis","Emphasis line (green italic)","area"],
+     ["source","Source line","text"]],
+   defaults:{kicker:"KICKER",headline:[{text:"Headline.",color:"heading"}],
+     body:["First paragraph.","Second paragraph."],emphasis:"Emphasis line.",source:"Source:"}},
+ "photo":{label:"photo",render:c_photo,
+   fields:[
+     ["kicker","Kicker","text"],
+     ["image","Photo","image"],
+     ["question","Question / headline (right side)","area"],
+     ["caption","Caption (italic)","area"],
+     ["emphasis","Emphasis line","area"],
+     ["source","Source line","text"]],
+   defaults:{kicker:"KICKER",question:"A question?",caption:"Caption text.",emphasis:"Emphasis line.",source:"Source:"}},
+ "cta":{label:"green CTA",render:c_cta,frameBg:"feature",frameBorder:"featureDark",
+   fields:[
+     ["kicker","Kicker (centered)","text"],
+     ["big","Big line","text"],
+     ["subtitle","Subtitle (italic)","text"],
+     ["lines","Center lines (one per line)","lines"],
+     ["tail","Tail line","text"]],
+   defaults:{kicker:"DATE · DETAIL",big:"VOTE YES",subtitle:"for the thing",
+     lines:["Location","Hours"],tail:"Closing line."}},
+};
+/* derived: keep SCHEMA name for the form renderer */
+const SCHEMA=Object.fromEntries(Object.entries(CARD_TYPES).map(([k,v])=>[k,v.fields]));
+function buildSvg(card){
+  const def=CARD_TYPES[card.type];
+  if(!def)return frame()+"\n</svg>\n";
+  return frame(PAL[def.frameBg||"ground"],PAL[def.frameBorder||"accent"])+def.render(card)+"\n</svg>\n";
+}
+function populateTypeSelects(){
+  const opts=Object.entries(CARD_TYPES).map(([k,v])=>`<option value="${k}">${esc(v.label)}</option>`).join("");
+  document.getElementById("newtype").innerHTML=opts;
+  document.getElementById("cardtype").innerHTML=opts;
+}
+
+function getPath(o,p){return p.split(".").reduce((x,k)=>x&&x[k],o);}
+function setPath(o,p,v){const ks=p.split(".");let x=o;
+  for(let i=0;i<ks.length-1;i++){if(!x[ks[i]]||typeof x[ks[i]]!=="object")x[ks[i]]={};x=x[ks[i]];}
+  x[ks[ks.length-1]]=v;}
+
+function encode(kind,v){
+  switch(kind){
+    case"stats":return (v||[]).map(s=>`${s.num||""} | ${s.color||"label"} | ${(s.label||[]).join("; ")}`).join("\n");
+    case"rows":return (v||[]).map(r=>`${r.num||""} | ${r.color||"heading"} | ${r.label||""}`).join("\n");
+    case"hlines":return (v||[]).map(l=>`${l.text||""} | ${l.color||"heading"}`).join("\n");
+    case"paras":return (v||[]).join("\n\n");
+    case"lines":return (v||[]).join("\n");
+    case"csvlabel":return (v||[]).join("; ");
+    default:return v==null?"":v;
+  }
+}
+function decode(kind,str){
+  const lines=String(str).split("\n");
+  switch(kind){
+    case"stats":return lines.filter(l=>l.trim()).map(l=>{const[n,c,lab]=l.split("|");
+      return{num:(n||"").trim(),color:(c||"label").trim(),label:(lab||"").split(";").map(x=>x.trim()).filter(Boolean)};});
+    case"rows":return lines.filter(l=>l.trim()).map(l=>{const[n,c,lab]=l.split("|");
+      return{num:(n||"").trim(),color:(c||"heading").trim(),label:(lab||"").trim()};});
+    case"hlines":return lines.filter(l=>l.trim()).map(l=>{const[t,c]=l.split("|");
+      return{text:(t||"").trim(),color:(c||"heading").trim()};});
+    case"paras":return String(str).split(/\n\s*\n/).map(x=>x.trim()).filter(Boolean);
+    case"lines":return lines.map(x=>x.trim()).filter(Boolean);
+    case"csvlabel":return String(str).split(";").map(x=>x.trim()).filter(Boolean);
+    default:return str;
+  }
+}
+
+/* ---------- form rendering ---------- */
+function renderForm(){
+  const c=deck.cards[cur];
+  document.getElementById("cardname").value=c.name||"";
+  document.getElementById("cardtype").value=c.type;
+  const box=document.getElementById("fields");box.innerHTML="";
+  for(const [key,label,kind] of (SCHEMA[c.type]||[])){
+    const wrap=document.createElement("label");wrap.className="f";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=label;wrap.appendChild(lab);
+    if(kind==="image"){
+      const dz=document.createElement("div");dz.className="drop";dz.tabIndex=0;
+      const file=document.createElement("input");file.type="file";file.accept="image/*";file.hidden=true;
+      const setImg=f=>{if(!f||!f.type||!f.type.startsWith("image/"))return;
+        const fr=new FileReader();fr.onload=()=>{c.image=fr.result;sync();renderForm();};fr.readAsDataURL(f);};
+      file.addEventListener("change",ev=>setImg(ev.target.files[0]));
+      if(c.image){const im=document.createElement("img");im.src=c.image;im.alt="";dz.appendChild(im);
+        const cap=document.createElement("div");cap.textContent="Drop, click, or paste to replace";dz.appendChild(cap);}
+      else{const cap=document.createElement("div");cap.innerHTML="Drag &amp; drop an image here<br>&mdash; or click, or paste &mdash;";dz.appendChild(cap);}
+      const btns=document.createElement("div");btns.className="dzbtns";
+      const up=document.createElement("button");up.className="ghost";up.type="button";
+      up.textContent=c.image?"Replace image":"Upload image";
+      up.addEventListener("click",ev=>{ev.stopPropagation();file.click();});btns.appendChild(up);
+      if(c.image){const clr=document.createElement("button");clr.className="ghost";clr.type="button";
+        clr.textContent="Remove";clr.style.marginLeft="6px";
+        clr.addEventListener("click",ev=>{ev.stopPropagation();delete c.image;sync();renderForm();});btns.appendChild(clr);}
+      dz.appendChild(btns);
+      dz.addEventListener("click",()=>file.click());
+      dz.addEventListener("dragover",ev=>{ev.preventDefault();dz.classList.add("over");});
+      dz.addEventListener("dragleave",()=>dz.classList.remove("over"));
+      dz.addEventListener("drop",ev=>{ev.preventDefault();dz.classList.remove("over");
+        setImg(ev.dataTransfer&&ev.dataTransfer.files&&ev.dataTransfer.files[0]);});
+      dz.addEventListener("paste",ev=>{const items=(ev.clipboardData||{}).items||[];
+        for(const it of items){if(it.type&&it.type.startsWith("image/")){setImg(it.getAsFile());break;}}});
+      wrap.appendChild(dz);wrap.appendChild(file);
+    }else{
+      const isArea=(kind!=="text");
+      const el=document.createElement(isArea?"textarea":"input");
+      if(!isArea)el.type="text";
+      if(kind==="stats"||kind==="rows"||kind==="hlines"||kind==="paras")el.className="big";
+      el.value=encode(kind,getPath(c,key));
+      el.addEventListener("input",()=>{setPath(c,key,decode(kind,el.value));sync();});
+      wrap.appendChild(el);
+    }
+    box.appendChild(wrap);
+  }
+}
+
+/* ---------- deck list + palette ---------- */
+function renderList(){
+  const box=document.getElementById("cardlist");box.innerHTML="";
+  deck.cards.forEach((c,i)=>{
+    const d=document.createElement("div");d.className="ci"+(i===cur?" active":"");
+    d.innerHTML=`<span class="nm">${esc(c.name||"(unnamed)")}</span><span class="ty">${esc(c.type)}</span>`;
+    d.addEventListener("click",()=>{cur=i;renderForm();renderList();renderPreview();});
+    box.appendChild(d);
+  });
+}
+function renderPalette(){
+  const box=document.getElementById("palette");box.innerHTML="";
+  ROLES.forEach(k=>{
+    const l=document.createElement("label");l.title=ROLE_LABEL[k]||k;
+    const inp=document.createElement("input");inp.type="color";inp.value=PAL[k]||"#000000";
+    inp.addEventListener("input",()=>{PAL[k]=inp.value;deck.palette=PAL;renderThemeSel();sync();});
+    l.appendChild(inp);l.appendChild(document.createTextNode(k));box.appendChild(l);
+  });
+}
+/* user-saved palettes live in their own localStorage key, merged with built-ins */
+let userThemes={};
+function loadUserThemes(){try{userThemes=JSON.parse(localStorage.getItem("cardThemes"))||{};}catch(e){userThemes={};}}
+function saveUserThemes(){try{localStorage.setItem("cardThemes",JSON.stringify(userThemes));}catch(e){}}
+function allThemes(){return {...THEMES,...userThemes};}
+function matchTheme(){
+  for(const[name,p] of Object.entries(allThemes())){
+    if(ROLES.every(r=>(PAL[r]||"").toLowerCase()===(p[r]||"").toLowerCase()))return name;
+  }
+  return"";
+}
+function renderThemeSel(){
+  const sel=document.getElementById("themesel");sel.innerHTML="";
+  const g1=document.createElement("optgroup");g1.label="Built-in";
+  for(const name of Object.keys(THEMES)){const o=document.createElement("option");o.value=name;o.textContent=name;g1.appendChild(o);}
+  sel.appendChild(g1);
+  const un=Object.keys(userThemes);
+  if(un.length){const g2=document.createElement("optgroup");g2.label="My palettes";
+    for(const name of un){const o=document.createElement("option");o.value=name;o.textContent=name;g2.appendChild(o);}
+    sel.appendChild(g2);}
+  const oc=document.createElement("option");oc.value="";oc.textContent="Custom…";sel.appendChild(oc);
+  const m=matchTheme();sel.value=m;
+  const nameInp=document.getElementById("themename"),del=document.getElementById("deltheme");
+  if(document.activeElement!==nameInp)nameInp.value=m||"";
+  del.disabled=!(m&&userThemes[m]);
+}
+function applyTheme(name){
+  const t=allThemes()[name];if(!t)return;
+  PAL={...t};deck.palette=PAL;deck.theme=name;
+  renderPalette();renderThemeSel();sync();
+}
+/* ---------- WCAG contrast warnings ---------- */
+function hexRgb(h){h=(h||"").replace("#","");if(h.length===3)h=h.split("").map(c=>c+c).join("");
+  const n=parseInt(h,16)||0;return[(n>>16)&255,(n>>8)&255,n&255];}
+function relLum(h){const[r,g,b]=hexRgb(h).map(v=>{v/=255;return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4);});
+  return 0.2126*r+0.7152*g+0.0722*b;}
+function contrastRatio(a,b){const L1=relLum(a),L2=relLum(b),hi=Math.max(L1,L2),lo=Math.min(L1,L2);
+  return (hi+0.05)/(lo+0.05);}
+/* min ratios: ~3:1 for large/heavy type (headlines, big numbers, kicker),
+   4.5:1 for normal-size copy (body, labels, source, emphasis, CTA address lines). */
+const CONTRAST=[
+  {fg:"heading",   bg:"ground", min:3,   what:"heading"},
+  {fg:"text",      bg:"ground", min:4.5, what:"body text"},
+  {fg:"label",     bg:"ground", min:4.5, what:"labels / context"},
+  {fg:"faint",     bg:"ground", min:3,   what:"source line"},
+  {fg:"feature",   bg:"ground", min:3,   what:"feature number"},
+  {fg:"featureDark",bg:"ground",min:4.5, what:"emphasis line"},
+  {fg:"accent",    bg:"ground", min:3,   what:"kicker / accent"},
+  {fg:"alert",     bg:"ground", min:3,   what:"alert"},
+  {fg:"ground",    bg:"feature",min:4.5, what:"CTA text on feature panel"},
+];
+function renderContrast(){
+  const box=document.getElementById("contrast");if(!box)return;
+  const bad=CONTRAST.map(c=>({...c,r:contrastRatio(PAL[c.fg],PAL[c.bg])})).filter(c=>c.r<c.min);
+  if(!bad.length){box.innerHTML='<span class="ok">&#10003; Contrast looks good across all roles.</span>';return;}
+  box.innerHTML='<span class="warnhead">&#9888; Low contrast &mdash; may be hard to read:</span><br>'+
+    bad.map(b=>`<span class="bad">${b.what}</span> <span class="ratio">${b.r.toFixed(1)}:1 (aim ${b.min}:1)</span>`).join("<br>");
+}
+
+/* ---------- preview + json + persistence ---------- */
+function renderPreview(){
+  const c=deck.cards[cur];
+  document.getElementById("preview").innerHTML=c?buildSvg(c):"";
+}
+function renderJson(){
+  const ta=document.getElementById("json");
+  if(document.activeElement!==ta) ta.value=JSON.stringify(deck,null,2);
+}
+function save(){try{localStorage.setItem("cardDeck",JSON.stringify(deck));}catch(e){}}
+function sync(){renderPreview();renderJson();renderList();renderContrast();save();}
+
+/* ---------- export ---------- */
+function flash(t,err){const m=document.getElementById("msg");m.textContent=t;
+  m.className="msg "+(err?"err":"ok");setTimeout(()=>{m.textContent="";m.className="msg";},2500);}
+function downloadBlob(blob,name){const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+  a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500);}
+function svgToPng(svg){
+  return new Promise((res,rej)=>{
+    const img=new Image();
+    const blob=new Blob([svg],{type:"image/svg+xml;charset=utf-8"});
+    const url=URL.createObjectURL(blob);
+    img.onload=()=>{const cv=document.createElement("canvas");cv.width=W;cv.height=W;
+      const ctx=cv.getContext("2d");ctx.drawImage(img,0,0,W,W);URL.revokeObjectURL(url);
+      cv.toBlob(b=>b?res(b):rej(new Error("toBlob failed")),"image/png");};
+    img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error("SVG render failed"));};
+    img.src=url;
+  });
+}
+function curName(){const c=deck.cards[cur];return (c.name||"card").replace(/[^\w.-]+/g,"_");}
+
+document.getElementById("svgBtn").onclick=()=>{
+  const c=deck.cards[cur];downloadBlob(new Blob([buildSvg(c)],{type:"image/svg+xml"}),curName()+".svg");};
+document.getElementById("pngBtn").onclick=async()=>{
+  try{const b=await svgToPng(buildSvg(deck.cards[cur]));downloadBlob(b,curName()+".png");flash("PNG saved");}
+  catch(e){flash(e.message,true);}};
+document.getElementById("allBtn").onclick=async()=>{
+  for(let i=0;i<deck.cards.length;i++){const c=deck.cards[i];
+    try{const b=await svgToPng(buildSvg(c));downloadBlob(b,(c.name||("card"+i)).replace(/[^\w.-]+/g,"_")+".png");
+      await new Promise(r=>setTimeout(r,350));}catch(e){flash("Card "+i+": "+e.message,true);}}
+  flash("Exported "+deck.cards.length+" PNGs");};
+document.getElementById("copyBtn").onclick=async()=>{
+  try{const b=await svgToPng(buildSvg(deck.cards[cur]));
+    await navigator.clipboard.write([new ClipboardItem({"image/png":b})]);flash("PNG copied");}
+  catch(e){flash("Copy needs https/file:// — "+(e.name||e.message),true);}};
+
+/* ---------- deck operations ---------- */
+function blankCard(type){
+  const def=CARD_TYPES[type];
+  const defaults=def?JSON.parse(JSON.stringify(def.defaults||{})):{};
+  return Object.assign({type,name:"card_"+(deck.cards.length+1)},defaults);
+}
+document.getElementById("add").onclick=()=>{const t=document.getElementById("newtype").value;
+  deck.cards.splice(cur+1,0,blankCard(t));cur++;renderForm();sync();};
+document.getElementById("dup").onclick=()=>{const c=JSON.parse(JSON.stringify(deck.cards[cur]));
+  c.name=(c.name||"card")+"_copy";deck.cards.splice(cur+1,0,c);cur++;renderForm();sync();};
+document.getElementById("del").onclick=()=>{if(deck.cards.length<=1){flash("Keep at least one card",true);return;}
+  deck.cards.splice(cur,1);if(cur>=deck.cards.length)cur=deck.cards.length-1;renderForm();sync();};
+document.getElementById("up").onclick=()=>{if(cur===0)return;
+  [deck.cards[cur-1],deck.cards[cur]]=[deck.cards[cur],deck.cards[cur-1]];cur--;renderForm();sync();};
+document.getElementById("down").onclick=()=>{if(cur>=deck.cards.length-1)return;
+  [deck.cards[cur+1],deck.cards[cur]]=[deck.cards[cur],deck.cards[cur+1]];cur++;renderForm();sync();};
+document.getElementById("cardname").addEventListener("input",e=>{deck.cards[cur].name=e.target.value;renderList();save();});
+document.getElementById("cardtype").addEventListener("change",e=>{
+  deck.cards[cur].type=e.target.value;renderForm();sync();});
+
+/* ---------- JSON apply / load / save ---------- */
+document.getElementById("applyJson").onclick=()=>{
+  try{const d=migrate(JSON.parse(document.getElementById("json").value));
+    if(!d||!Array.isArray(d.cards))throw new Error("need {cards:[...]}");
+    deck=d;PAL={...DEFAULT_PAL,...(d.palette||{})};deck.palette=PAL;cur=0;
+    boot();flash("JSON applied");}catch(e){flash("JSON error: "+e.message,true);}};
+document.getElementById("dlJson").onclick=()=>downloadBlob(
+  new Blob([JSON.stringify(deck,null,2)],{type:"application/json"}),"card-deck.json");
+document.getElementById("loadJson").onclick=()=>document.getElementById("jsonFile").click();
+document.getElementById("jsonFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;
+  const fr=new FileReader();fr.onload=()=>{document.getElementById("json").value=fr.result;
+    document.getElementById("applyJson").click();};fr.readAsText(f);});
+document.getElementById("json").addEventListener("blur",renderJson);
+document.getElementById("reset").onclick=()=>{deck=sampleDeck();PAL={...DEFAULT_PAL};cur=0;boot();flash("Sample loaded");};
+document.getElementById("blank").onclick=()=>{deck={palette:{...DEFAULT_PAL},cards:[blankCard("stat-trio")]};
+  PAL={...DEFAULT_PAL};cur=0;boot();};
+
+/* ---------- the worked Andover sample deck ---------- */
+function sampleDeck(){return{palette:{...DEFAULT_PAL},cards:[
+ {type:"stat-trio",name:"01_thesis",
+  kicker:"ANDOVER SCHOOL BUDGET   ·   VOTE TUESDAY, JUNE 16",
+  headline:"Is the budget *unsustainable*?\nThe record says the opposite.",
+  stats:[{num:"+16.9%",color:"feature",label:["Andover","per-pupil, 5-yr growth"]},
+         {num:"+24.8%",color:"label",label:["the typical district","(peer median)"]},
+         {num:"+23.3%",color:"label",label:["the cost of living","(Social Security COLA)"]}],
+  body:"Slower than 35 of its 44 peer districts, and slower than the cost of living itself. That is not unsustainable. That is restraint.",
+  source:"Source: CT SDE per-pupil spending (NCEP), 2019-20 to 2024-25."},
+ {type:"number-stack",name:"02_tax",
+  kicker:"WHAT THE “6%” ACTUALLY IS",headline:"The 6% is not your tax bill.",
+  rows:[{num:"6.0%",color:"faint",label:"the school budget alone, one piece of the ballot"},
+        {num:"3.4%",color:"heading",label:"the entire Andover town budget"},
+        {num:"0.30%",color:"feature",label:"your estimated tax rate"}],
+  emphasis:"The number being used to alarm you is not the number you pay.",
+  source:"Source: Town of Andover FY 2026-27 Proposed Budget."},
+ {type:"hero-number",name:"03_reserve",
+  kicker:"USING THE RESERVE",headline:"Saved on purpose. Spent on purpose.",
+  hero:{num:"$346,709",subtitle:"balance at the last audit, built from years of finishing under budget"},
+  left:{num:"~$97,500",label:["drawn to cover a","Finance Board cut"]},
+  right:{num:"~$250,000",label:["left in the","account afterward"]},
+  body:"The town draws on its own fund balance too. This is ordinary budgeting, not a red flag.",
+  source:"Source: Conn. Gen. Stat. 10-248a; Town of Andover FY 2026-27 budget."},
+ {type:"text",name:"04_novote",
+  kicker:"WHAT A “NO” VOTE ACTUALLY DOES",
+  headline:[{text:"A NO vote cuts nothing.",color:"heading"}],
+  body:["It does not reopen scrutiny. The boards met in public, published every number, weighed the objections, and cut the budget twice.",
+        "It reruns the same referendum, weeks later, on essentially the same budget, and asks the rest of us to pay for it."],
+  emphasis:"If a NO vote changes nothing, why is anyone pushing it this hard?",
+  source:"andoverct.info/the-facts"},
+ {type:"text",name:"05_whosasking",
+  kicker:"WHO IS ASKING YOU TO VOTE “NO”",
+  headline:[{text:"Not the town.",color:"heading"},{text:"The First Selectman.",color:"feature"}],
+  body:["He sits ex officio on every town board. He helped build this budget from the inside, raised his objections, and the boards produced it anyway.",
+        "Now he spends private money to overturn the work of the boards he sits on."],
+  emphasis:"His mailer never mentions the office he holds.",
+  source:"Source: Andover Town Charter; the mailer’s own disclosure."},
+ {type:"photo",name:"06_gesture",
+  kicker:"THE JUDGMENT BEHIND THE MAILER",
+  question:"Is this the temperament you want deciding Andover’s schools?",
+  caption:"At a public meeting, Andover’s First Selectman made a “loser” gesture at a resident who disagreed with him.",
+  emphasis:"He is the official asking you to vote NO on the schools.",
+  source:"andoverct.info/the-facts"},
+ {type:"cta",name:"07_gotv",
+  kicker:"TUESDAY, JUNE 16   ·   POLLS CLOSE 8 PM",big:"VOTE YES",
+  subtitle:"for the Andover school budget",
+  lines:["Andover Town Hall  ·  17 School Road","Polls open 6:00 AM to 8:00 PM"],
+  tail:"The record is clear. This budget is restraint, not excess."},
+ {type:"cta",name:"08_gotv_morning",
+  kicker:"TUESDAY, JUNE 16   ·   POLLS ARE OPEN",big:"VOTE YES",
+  subtitle:"for the Andover school budget",
+  lines:["Andover Town Hall  ·  17 School Road","Polls open 6:00 AM to 8:00 PM"],
+  tail:"Today Andover decides. Bring a neighbor."}
+]};}
+
+/* ---------- migration: old color names -> role names ---------- */
+function migrate(d){
+  if(!d||typeof d!=="object")return d;
+  if(d.palette&&typeof d.palette==="object"){
+    const np={};for(const[k,v] of Object.entries(d.palette))np[OLD2NEW[k]||k]=v;d.palette=np;
+  }
+  (d.cards||[]).forEach(c=>{
+    (c.stats||[]).forEach(s=>{if(OLD2NEW[s.color])s.color=OLD2NEW[s.color];});
+    (c.rows||[]).forEach(r=>{if(OLD2NEW[r.color])r.color=OLD2NEW[r.color];});
+    if(Array.isArray(c.headline))c.headline.forEach(h=>{if(OLD2NEW[h.color])h.color=OLD2NEW[h.color];});
+  });
+  return d;
+}
+document.getElementById("themesel").addEventListener("change",e=>{
+  if(e.target.value)applyTheme(e.target.value);else renderThemeSel();});
+document.getElementById("savetheme").onclick=()=>{
+  const name=(document.getElementById("themename").value||"").trim();
+  if(!name){flash("Name the palette first",true);return;}
+  if(THEMES[name]){flash("“"+name+"” is a built-in name — choose another",true);return;}
+  userThemes[name]={...PAL};saveUserThemes();deck.theme=name;
+  renderThemeSel();flash("Saved palette “"+name+"”");};
+document.getElementById("deltheme").onclick=()=>{
+  const name=document.getElementById("themesel").value;
+  if(!name||!userThemes[name]){flash("Select one of your palettes to delete",true);return;}
+  delete userThemes[name];saveUserThemes();renderThemeSel();flash("Deleted “"+name+"”");};
+document.getElementById("exportThemes").onclick=()=>{
+  const n=Object.keys(userThemes).length;
+  if(!n){flash("No saved palettes to export yet",true);return;}
+  downloadBlob(new Blob([JSON.stringify(userThemes,null,2)],{type:"application/json"}),"card-palettes.json");
+  flash("Exported "+n+" palette"+(n>1?"s":""));};
+document.getElementById("importThemes").onclick=()=>document.getElementById("themesFile").click();
+document.getElementById("themesFile").addEventListener("change",e=>{
+  const f=e.target.files[0];if(!f)return;
+  const fr=new FileReader();fr.onload=()=>{
+    try{const obj=JSON.parse(fr.result);
+      if(!obj||typeof obj!=="object"||Array.isArray(obj))throw new Error("expected an object of name → palette");
+      let added=0,skipped=0;
+      for(const[name,p] of Object.entries(obj)){
+        if(THEMES[name]||!p||typeof p!=="object"){skipped++;continue;}
+        const np={};for(const[k,v] of Object.entries(p))np[OLD2NEW[k]||k]=v;
+        userThemes[name]=np;added++;
+      }
+      saveUserThemes();renderThemeSel();
+      flash("Imported "+added+(skipped?", skipped "+skipped:""));
+    }catch(err){flash("Import error: "+err.message,true);}
+    e.target.value="";
+  };fr.readAsText(f);});
+
+/* ---------- boot ---------- */
+function boot(){PAL={...DEFAULT_PAL,...(deck.palette||{})};deck.palette=PAL;
+  if(cur>=deck.cards.length)cur=0;
+  populateTypeSelects();
+  renderThemeSel();renderPalette();renderForm();renderList();renderPreview();renderJson();renderContrast();save();}
+(function init(){
+  loadUserThemes();
+  try{const saved=localStorage.getItem("cardDeck");if(saved){deck=migrate(JSON.parse(saved));}}catch(e){}
+  if(!deck||!Array.isArray(deck.cards)||!deck.cards.length)deck=sampleDeck();
+  const params=new URLSearchParams(location.search);
+  const q=params.get("card");
+  if(q!=null){const n=parseInt(q,10);if(n>=0&&n<deck.cards.length)cur=n;}
+  const t=params.get("theme");
+  if(t&&THEMES[t]){deck.palette={...THEMES[t]};deck.theme=t;}
+  boot();
+})();
+</script>
+</body>
+</html>
