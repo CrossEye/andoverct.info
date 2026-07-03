@@ -9,6 +9,16 @@ Options -Indexes
 
 # Route /<anything>/idx through the directory-index helper.
 RewriteEngine On
+
+# Strip Facebook's click-tracking parameter (fbclid / fbid) from inbound links.
+# Facebook appends ?fbclid=... to outbound URLs; 301 to the same URL without it,
+# preserving any other legitimate query params. The trailing "?" in the first
+# rule's target discards an otherwise-empty query string (the common case).
+RewriteCond %{QUERY_STRING} ^(?:fbclid|fbid)=[^&]*$ [NC]
+RewriteRule ^ %{REQUEST_URI}? [R=301,L]
+RewriteCond %{QUERY_STRING} ^(.*&)?(?:fbclid|fbid)=[^&]*&?(.*)$ [NC]
+RewriteRule ^ %{REQUEST_URI}?%1%2 [R=301,L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*/)?idx/?$ /idx.php?dir=$1 [L,QSA]
