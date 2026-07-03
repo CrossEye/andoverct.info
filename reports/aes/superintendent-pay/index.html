@@ -482,106 +482,9 @@ h3 .conf-mark {
     font-size: 11pt;
     margin-right: 4px;
 }
-
-/* Draft watermark — loaded by the engine when a report's front matter
- * contains `draft: true`. Adds a large diagonal "DRAFT" stamp behind the
- * content (screen + print), plus a small persistent badge at the top right
- * of every page. Selectors are gated on `body[data-draft="true"]` so this
- * file is also safe to load unconditionally if a future engine variant
- * decides to inline it.
- *
- * Customisation: a theme can override --draft-color, --draft-bg, and
- * --draft-text by setting them in the theme's :root block.
- */
-
-:root {
-  --draft-color: rgba(176, 30, 30, 0.10);
-  --draft-bg:    #b01e1e;
-  --draft-text:  #ffffff;
-}
-
-/* Diagonal stamp behind on-screen content. */
-body[data-draft="true"]::before {
-  content: "DRAFT";
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-30deg);
-  font-family: var(--font-sans);
-  font-weight: 900;
-  font-size: 22vw;
-  letter-spacing: 0.05em;
-  color: var(--draft-color);
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-  white-space: nowrap;
-  line-height: 1;
-}
-
-/* Lift the navigation chrome (banner + footer) above the watermark — but NOT
- * the main content container. Letting .container stay unpositioned puts the
- * watermark above plain prose (so it reads as a watermark over the text) while
- * still being covered by panels, blockquotes, and table headers that carry
- * their own stacking context via backgrounds or shadows. Don't add .container
- * to this rule — it produces the "watermark sits behind everything" bug. */
-body[data-draft="true"] .page-banner,
-body[data-draft="true"] .page-footer {
-  position: relative;
-  z-index: 1;
-}
-
-/* Small persistent badge at the top-right corner so the draft flag is
- * impossible to miss even on dense pages. */
-body[data-draft="true"]::after {
-  content: "DRAFT";
-  position: fixed;
-  top: 8px;
-  right: 12px;
-  background: var(--draft-bg);
-  color: var(--draft-text);
-  padding: 4px 10px;
-  font-family: var(--font-sans);
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  border-radius: 3px;
-  z-index: 9999;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
-  pointer-events: none;
-}
-
-/* Print / PDF rules. WeasyPrint repeats fixed elements on every page, and
- * honours @page backgrounds, so we get the diagonal band and the corner
- * badge on every PDF page. */
-@media print {
-  @page {
-    background-image: linear-gradient(
-      -30deg,
-      transparent 38%,
-      var(--draft-color) 38%,
-      var(--draft-color) 62%,
-      transparent 62%
-    );
-  }
-
-  body[data-draft="true"]::before {
-    /* The @page gradient above gives the diagonal band on paper;
-       suppress the duplicate centred stamp so the page isn't muddy. */
-    display: none;
-  }
-
-  body[data-draft="true"]::after {
-    position: fixed;
-    top: 6mm;
-    right: 8mm;
-    font-size: 10pt;
-    padding: 2px 7px;
-  }
-}
 </style>
 </head>
-<body data-draft="true">
+<body>
 <div class="page-banner">
   <nav class="page-banner-inner crumbs">
     <a href="/">Home</a><span class="sep">›</span><a href="/reports/">Reports</a><span class="sep">›</span><a href="/reports/aes/">Andover Elementary</a><span class="sep">›</span><span class="current">Superintendent Pay in Context</span>
@@ -628,10 +531,20 @@ Treating that as the Andover-share of a single full-time job, her implied
 1.0-FTE-equivalent compensation is <strong>$166,667</strong>.</p>
 <p>This report sets that figure in context by comparing it to every other
 Connecticut superintendent contract we could find for the 45 small towns
-identified as peers — towns of similar size, similar grade-level structure, and
-similar regional profile. The contracts vary in age and scope, so the report
-presents three different cuts of the data, each with different inclusion rules.
-Andover sits near the bottom in all three.</p>
+identified as peers — towns of similar size, similar grade-level structure,
+and similar regional profile. The contracts vary in age and scope, so the
+report presents two different cuts of the data, each with different
+inclusion rules. Andover sits at the bottom of both.</p>
+<p>One overall pattern is worth flagging up front: <strong>within the K-6/K-8
+cohort, FTE-equivalent pay is essentially uncorrelated with district
+enrollment</strong> (Pearson r ≈ 0.13 across 24 K-6/K-8 solo contracts). Small
+Connecticut elementary districts pay their superintendents in a fairly
+narrow band roughly independent of whether the district has 100 students
+or 1,200. The going rate is a market price for the role, not a
+per-student rate. This makes the scatter plot in the &#8220;Pay vs district
+size&#8221; section below relatively flat within the K-6/K-8 band — a fact
+that carries some weight when thinking about what Andover&#8217;s compensation
+should be.</p>
 <p class="section-label">Methodology</p>
 <h2 id="a-note-on-methodology-before-the-numbers">A note on methodology before the numbers<a class="header-anchor" href="#a-note-on-methodology-before-the-numbers" aria-label="Link to this section">¶</a></h2>
 <p>Two methodological choices shape every table that follows. Both deserve a line
@@ -662,7 +575,7 @@ Section 2 explicitly defines the role as a 0.60 FTE position. Section 4 defines
 &#8220;annual base salary&#8221; as the sum of (a) a cash component paid biweekly and (b) a
 $10,000 mandatory deferral into a 403(b) annuity. The three contract-year
 figures are:</p>
-<h3 id="andover-8217-s-portion-of-dr-bruneau-8217-s-compensation">Andover&#8217;s portion of Dr. Bruneau&#8217;s compensation <span class="conf-mark">✓</span> <em>Confirmed from contract, Section 4</em><a class="header-anchor" href="#andover-8217-s-portion-of-dr-bruneau-8217-s-compensation" aria-label="Link to this section">¶</a></h3>
+<h3 id="andover-8217-s-portion-of-dr-bruneau-8217-s-compensation">Andover&#8217;s portion of Dr. Bruneau&#8217;s compensation<a class="header-anchor" href="#andover-8217-s-portion-of-dr-bruneau-8217-s-compensation" aria-label="Link to this section">¶</a></h3>
 <table>
 <thead>
 <tr>
@@ -722,57 +635,51 @@ similarity to Andover (small enrollment, small budget, K-6 or K-8 elementary
 structure, sometimes regional secondary). After excluding Norwich (which is
 structurally very different — much larger, much more urban), the working
 comparison set is 44 districts.</p>
-<p>Of those 44, contract data is available for <strong>30 unique peer-district
-superintendent contracts covering 38 peer districts</strong> (the cohort grew by 6
-new contracts plus 2 successor refreshes in this round, all via direct
-§10-244c records requests to town clerks). Two HS-only reference contracts
-are also tracked: Amity Region 5 (Byars), the regional 7-12 supe shared by
-peer towns Bethany, Orange, and Woodbridge; and Northwestern Region 7
-(LePage), the regional 7-12 supe shared by peer towns Barkhamsted,
-Colebrook, New Hartford, and Norfolk. Only <strong>6 peer districts remain
-pending</strong>:</p>
+<p>Of those 44, contract data is in hand for <strong>31 unique superintendent
+contracts covering 39 peer districts</strong>. <strong>30 of those contracts are
+ranked in the tables below</strong>; three are treated as reference observations
+because the K-6/K-8 comparison isn&#8217;t clean for them, and they appear on
+the <a href="contracts/">contracts subpage</a> but aren&#8217;t ranked:</p>
 <ul>
-<li><strong>2 districts where the current supe is documented but the contract is
-not yet retrieved.</strong> Mansfield/Storrs (Dr. Candace Morell, appointed
-5/21/2025, started 7/1/2025); Woodbridge (K-6 supe unknown, new recruiting
-in progress).</li>
-<li><strong>4 districts</strong> where a thorough search of public sites and initial clerk
-outreach has not yet produced a current contract: Ashford, North Franklin
-(Franklin), Pomfret Center, Union. All four are very small EASTCONN-region
-districts where part-time superintendent arrangements are common but the
-supe&#8217;s name and tenure are not always established with certainty.</li>
+<li><strong>Amity Region 5</strong> (Byars) — HS-only regional 7-12 supe shared by
+peer towns Bethany, Orange, and Woodbridge.</li>
+<li><strong>Northwestern Region 7</strong> (LePage) — HS-only regional 7-12 supe shared
+by peer towns Barkhamsted, Colebrook, New Hartford, and Norfolk.</li>
+<li><strong>Chaplin / Region 11</strong> (Skarzynski) — joint K-12 contract for Chaplin
+K-6 and Region 11 HS. Skarzynski also holds a separate 0.3-FTE Hampton
+contract, which makes the FTE denominator for the joint contract
+unreliable (treating it as 1.0 FTE would put his total at 1.3 FTE
+across all roles, which isn&#8217;t physically plausible). Treating it as
+reference-only avoids a misleadingly low FTE-equivalent number in the
+ranking.</li>
 </ul>
-<p>In the round between this report and the previous one, <strong>all six remaining
-districts from the K-6/K-8 main cohort that the previous report flagged as
-&#8220;recent personnel change documented but contract not yet retrieved&#8221;</strong> —
-Marlborough, Orange, Sherman, Winsted, Woodstock, plus Bethany — have
-<strong>all</strong> now been retrieved. The pattern of clerk responses has been very
-consistent: a polite §10-244c records request emailed to a town clerk
-typically yields the contract within days. Two cohorts of stale data have
-also been refreshed in this round: Columbia (Fearon 2017-2018, the oldest
-entry in the dataset → Wilson 2024-2028) and Barkhamsted (Agostine
-2023-2026 → Sacharko 2025-2028 — a mid-term supe transition the prior data
-hadn&#8217;t captured).</p>
+<p>Only <strong>5 peer districts remain pending</strong>: Woodbridge (K-6 supe being
+recruited), plus four very small EASTCONN-region districts where
+part-time superintendent arrangements are common but the supe&#8217;s name
+and tenure are not always established with certainty (Ashford, North
+Franklin, Pomfret Center, Union).</p>
 <p>CGS § 10-244c (Public Act 17-2) directs town clerks to post superintendent
 contracts on the town website, but compliance is uneven. Requesting a copy
 from the town clerk — including via the state&#8217;s Freedom of Information
-process — turned out to be highly effective.</p>
+process — has turned out to be highly effective; almost every contract in
+the dataset that wasn&#8217;t publicly posted was obtained through a polite
+records request to the town clerk.</p>
 <p>The full list of pending districts appears in Sources at the end.</p>
 <p class="section-label before-part">Comparison</p>
-<h2 id="part-3-three-views-of-the-comparison">Part 3 — Three views of the comparison<a class="header-anchor" href="#part-3-three-views-of-the-comparison" aria-label="Link to this section">¶</a></h2>
-<p>The same underlying data supports three different views, each with different
-inclusion rules. Each makes a slightly different argument; the picture changes
-from view to view but Andover&#8217;s position never improves.</p>
-<h3 id="view-1-all-contracts-we-can-find-latest-known">View 1 — All contracts we can find, latest known<a class="header-anchor" href="#view-1-all-contracts-we-can-find-latest-known" aria-label="Link to this section">¶</a></h3>
-<p>The most inclusive view. Includes every contract whose dollar figure we have
-a real observation for, regardless of when it was signed. Five contracts in
-this view are stale (data is from 2017–18, 2021–22, or 2023–24 because no
-newer contract was located), two — the LePage Region 7 contract and the
-Byars Amity Region 5 contract — cover HS-only roles, two — the Brady-Shanley
-Region 1 contract and the White Region 4 contract — are joint K-12 regional
-contracts, and one — the Skarzynski Chaplin contract — is a joint K-12 with
-Region 11. Stale rows are flagged with ⚠.</p>
-<p class="intro-table">Andover ranks <strong>26th of 31</strong>. Mean: $200,860. Median: $193,250.</p>
+<h2 id="part-3-two-views-of-the-comparison">Part 3 — Two views of the comparison<a class="header-anchor" href="#part-3-two-views-of-the-comparison" aria-label="Link to this section">¶</a></h2>
+<p>The underlying data supports two views, each with a different inclusion
+rule. Both use the same vintage-fallback policy — <strong>2025-26 data where we
+have it, 2024-25 if we don&#8217;t, 2026-27 if that&#8217;s all we have</strong>. Older
+&#8220;stale&#8221; data is excluded from these tables but the underlying PDFs remain
+available in the <a href="contracts/">contracts</a> subpage and in the
+<a href="contracts.xlsx">spreadsheet</a> for inspection.</p>
+<h3 id="view-1-all-contracts-we-can-find-current-vintage">View 1 — All contracts we can find (current vintage)<a class="header-anchor" href="#view-1-all-contracts-we-can-find-current-vintage" aria-label="Link to this section">¶</a></h3>
+<p>The most inclusive ranked view. Includes every ranked contract whose data
+passes the vintage-fallback rule, regardless of grade-level scope. One
+contract — Byars Amity Region 5 — appears as an HS-only reference; two
+— Lisbon (Keating) and Sterling (Friend) — have their own contract-shape
+oddities flagged in the table notes.</p>
+<p class="intro-table">Andover ranks <strong>29th of 29</strong> — last. Mean: $212,100. Median: $200,000.</p>
 <table>
 <thead>
 <tr>
@@ -793,9 +700,9 @@ Region 11. Stale rows are flagged with ⚠.</p>
 <tr>
 <td class="num">2</td>
 <td>Brian J. White</td>
-<td class="num">2023–24</td>
+<td class="num">2025–26</td>
 <td>Centerbrook, Chester, Deep River</td>
-<td align="right" class="num">$265,577</td>
+<td align="right" class="num">$277,649</td>
 </tr>
 <tr>
 <td class="num">3</td>
@@ -806,588 +713,181 @@ Region 11. Stale rows are flagged with ⚠.</p>
 </tr>
 <tr>
 <td class="num">4</td>
+<td>Sally A. Keating §</td>
+<td class="num">2026–27</td>
+<td>Lisbon</td>
+<td align="right" class="num">$251,210</td>
+</tr>
+<tr>
+<td class="num">5</td>
 <td>Dr. Patricia Cosentino</td>
 <td class="num">2025–26</td>
 <td>Sherman</td>
 <td align="right" class="num">$249,163</td>
 </tr>
 <tr>
-<td class="num">5</td>
+<td class="num">6</td>
 <td>Melony M. Brady-Shanley</td>
 <td class="num">2025–26</td>
 <td>Falls Village, Kent, Lakeville, North Canaan, Sharon, West Cornwall</td>
 <td align="right" class="num">$245,610</td>
 </tr>
 <tr>
-<td class="num">6</td>
+<td class="num">7</td>
 <td>Dr. Vincent (Vince) Scarpetti</td>
 <td class="num">2025–26</td>
 <td>Orange</td>
 <td align="right" class="num">$244,337</td>
 </tr>
 <tr>
-<td class="num">7</td>
+<td class="num">8</td>
 <td>Dr. Jennifer Byars †</td>
 <td class="num">2025–26</td>
 <td>Amity Region 5 (Bethany/Orange/Woodbridge)</td>
 <td align="right" class="num">$243,762</td>
 </tr>
 <tr>
-<td class="num">8</td>
+<td class="num">9</td>
 <td>Dr. Thomas Baird</td>
 <td class="num">2025–26</td>
 <td>Hebron</td>
 <td align="right" class="num">$223,736</td>
 </tr>
 <tr>
-<td class="num">9</td>
+<td class="num">10</td>
 <td>Dr. Holly B. Hageman</td>
 <td class="num">2025–26</td>
 <td>Marlborough</td>
 <td align="right" class="num">$222,222</td>
 </tr>
 <tr>
-<td class="num">10</td>
+<td class="num">11</td>
+<td>Theodore F. Friend §</td>
+<td class="num">2026–27</td>
+<td>Sterling</td>
+<td align="right" class="num">$219,860</td>
+</tr>
+<tr>
+<td class="num">12</td>
 <td>Immacolata Canelli</td>
 <td class="num">2024–25</td>
 <td>East Hartland</td>
 <td align="right" class="num">$208,880</td>
 </tr>
 <tr>
-<td class="num">11</td>
+<td class="num">13</td>
 <td>Barbara Wilson</td>
 <td class="num">2025–26</td>
 <td>Columbia</td>
 <td align="right" class="num">$202,400</td>
 </tr>
 <tr>
-<td class="num">12</td>
+<td class="num">14</td>
 <td>Scott Feder</td>
 <td class="num">2025–26</td>
 <td>Voluntown</td>
 <td align="right" class="num">$200,000</td>
 </tr>
 <tr>
-<td class="num">13</td>
+<td class="num">15</td>
+<td>Dr. Candace Morell</td>
+<td class="num">2025–26</td>
+<td>Storrs (Mansfield)</td>
+<td align="right" class="num">$200,000</td>
+</tr>
+<tr>
+<td class="num">16</td>
 <td>Brian Hendrickson</td>
 <td class="num">2025–26</td>
 <td>Salem</td>
 <td align="right" class="num">$197,699</td>
 </tr>
 <tr>
-<td class="num">14</td>
+<td class="num">17</td>
 <td>Robert Gilbert</td>
 <td class="num">2025–26</td>
 <td>Colebrook</td>
 <td align="right" class="num">$195,620</td>
 </tr>
 <tr>
-<td class="num">15</td>
-<td>Steven LePage †</td>
-<td class="num">2023–24 ⚠</td>
-<td>Region 7 (Barkhamsted/Colebrook/New Hartford/Norfolk HS)</td>
-<td align="right" class="num">$195,000</td>
-</tr>
-<tr>
-<td class="num">16</td>
+<td class="num">18</td>
 <td>Jeffrey F. Sousa</td>
 <td class="num">2025–26</td>
 <td>New Hartford</td>
 <td align="right" class="num">$193,250</td>
 </tr>
 <tr>
-<td class="num">17</td>
+<td class="num">19</td>
 <td>Dr. Jack Zamary</td>
 <td class="num">2025–26</td>
 <td>Bozrah</td>
 <td align="right" class="num">$193,063</td>
 </tr>
 <tr>
-<td class="num">18</td>
+<td class="num">20</td>
 <td>Christopher Roche</td>
 <td class="num">2025–26</td>
 <td>Woodstock</td>
 <td align="right" class="num">$190,000</td>
 </tr>
 <tr>
-<td class="num">19</td>
+<td class="num">21</td>
 <td>Dr. Julie Luby</td>
 <td class="num">2025–26</td>
 <td>Winsted</td>
 <td align="right" class="num">$189,100</td>
 </tr>
 <tr>
-<td class="num">20</td>
+<td class="num">22</td>
 <td>Michele Raynor</td>
 <td class="num">2025–26</td>
 <td>Brooklyn</td>
 <td align="right" class="num">$185,000</td>
 </tr>
 <tr>
-<td class="num">21</td>
+<td class="num">23</td>
 <td>Kai Byrd</td>
 <td class="num">2024–25</td>
 <td>Bethany</td>
 <td align="right" class="num">$184,642</td>
 </tr>
 <tr>
-<td class="num">22</td>
+<td class="num">24</td>
+<td>Dr. Christopher Bitgood</td>
+<td class="num">2025–26</td>
+<td>Canterbury</td>
+<td align="right" class="num">$183,801</td>
+</tr>
+<tr>
+<td class="num">25</td>
 <td>Dr. Roy Seitsinger</td>
 <td class="num">2025–26</td>
 <td>Preston</td>
 <td align="right" class="num">$179,307</td>
 </tr>
 <tr>
-<td class="num">23</td>
+<td class="num">26</td>
 <td>Andrew Skarzynski (Hampton)</td>
 <td class="num">2025–26</td>
 <td>Hampton</td>
 <td align="right" class="num">$179,167</td>
-</tr>
-<tr>
-<td class="num">24</td>
-<td>William Hull</td>
-<td class="num">2025–26</td>
-<td>Baltic (Sprague)</td>
-<td align="right" class="num">$175,443</td>
-</tr>
-<tr>
-<td class="num">25</td>
-<td>Mary Beth Iacobelli</td>
-<td class="num">2024–25</td>
-<td>Norfolk</td>
-<td align="right" class="num">$173,750</td>
-</tr>
-<tr>
-<td class="num"><strong>26</strong></td>
-<td><strong>Valerie Bruneau</strong></td>
-<td class="num"><strong>2025–26</strong></td>
-<td><strong>Andover</strong></td>
-<td align="right" class="num"><strong>$166,667</strong></td>
 </tr>
 <tr>
 <td class="num">27</td>
-<td>Philip &#8220;Phil&#8221; Stevens</td>
-<td class="num">2023–24 ⚠</td>
-<td>West Willington</td>
-<td align="right" class="num">$164,591</td>
+<td>William Hull</td>
+<td class="num">2025–26</td>
+<td>Baltic (Sprague)</td>
+<td align="right" class="num">$175,443</td>
 </tr>
 <tr>
 <td class="num">28</td>
-<td>Steven Rioux</td>
-<td class="num">2021–22 ⚠</td>
-<td>Canterbury</td>
-<td align="right" class="num">$153,200</td>
-</tr>
-<tr>
-<td class="num">29</td>
-<td>Donna P. Leake</td>
-<td class="num">2021–22 ⚠</td>
-<td>Eastford</td>
-<td align="right" class="num">$146,866</td>
-</tr>
-<tr>
-<td class="num">30</td>
-<td>Valerie Bruneau</td>
-<td class="num">2021–22 ⚠</td>
-<td>Scotland</td>
-<td align="right" class="num">$143,048</td>
-</tr>
-<tr>
-<td class="num">31</td>
-<td>Andrew Skarzynski (Chaplin) ‡</td>
-<td class="num">2025–26</td>
-<td>Chaplin</td>
-<td align="right" class="num">$140,000</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p><strong>Notes:</strong> ⚠ flags contracts whose dollar figure is from before 2024–25. †
-Steven LePage&#8217;s Region 7 contract and Dr. Jennifer Byars&#8217; Amity Region 5
-contract both cover high-school-only roles (grades 7–12), a meaningfully
-different scope from the elementary-only superintendents that dominate
-this list — both are excluded from Views 2 and 3 below. Both are reference
-contracts representing 7-12 supervision that is paid by member towns
-through a regional district. ‡ Andrew Skarzynski&#8217;s Chaplin contract is a
-joint K-12 agreement covering Chaplin elementary (K-6) and Region 11
-(grades 7–12 serving Chaplin/Hampton/Scotland) under a single Central
-Office Committee; the FTE-equivalent shown is the superintendent&#8217;s full
-compensation, not Chaplin&#8217;s share. Skarzynski also serves Hampton K-8
-under a separate part-time contract (rank 23 above). The Sterling, CT
-contract (Friend 2026-2029) is excluded from this view because it is
-future-dated; it appears separately in the FY27 forward-looking section.
-The Fearon Columbia stale row is dropped: a current Wilson 2024-2028
-contract supersedes it.</p>
-</blockquote>
-<h3 id="view-2-k-6-k-8-only-latest-known">View 2 — K-6 / K-8 only, latest known<a class="header-anchor" href="#view-2-k-6-k-8-only-latest-known" aria-label="Link to this section">¶</a></h3>
-<p>Filters out the K-12 regional superintendent contracts (McKinnon ER9, White
-Region 4, Brady-Shanley Region 1, Skarzynski Chaplin) and the two HS-only
-reference contracts (LePage Region 7, Byars Amity Region 5), leaving only
-contracts whose scope is comparable to Andover&#8217;s K-6 role. This is the
-cohort that most directly matches Dr. Bruneau&#8217;s role.</p>
-<p class="intro-table">Andover ranks <strong>21st of 25</strong>. Mean: $193,052. Median: $190,000. Andover is
-<strong>−12% below the median</strong> ($166,667 vs $190,000).</p>
-<table>
-<thead>
-<tr>
-<th class="num">Rank</th>
-<th>Superintendent</th>
-<th class="num">Year</th>
-<th>District(s)</th>
-<th align="right" class="num">FTE-equiv</th>
-</tr>
-</thead>
-<tbody><tr>
-<td class="num">1</td>
-<td>Erika F. Sacharko</td>
-<td class="num">2025–26</td>
-<td>Barkhamsted</td>
-<td align="right" class="num">$265,141</td>
-</tr>
-<tr>
-<td class="num">2</td>
-<td>Dr. Patricia Cosentino</td>
-<td class="num">2025–26</td>
-<td>Sherman</td>
-<td align="right" class="num">$249,163</td>
-</tr>
-<tr>
-<td class="num">3</td>
-<td>Dr. Vincent (Vince) Scarpetti</td>
-<td class="num">2025–26</td>
-<td>Orange</td>
-<td align="right" class="num">$244,337</td>
-</tr>
-<tr>
-<td class="num">4</td>
-<td>Dr. Thomas Baird</td>
-<td class="num">2025–26</td>
-<td>Hebron</td>
-<td align="right" class="num">$223,736</td>
-</tr>
-<tr>
-<td class="num">5</td>
-<td>Dr. Holly B. Hageman</td>
-<td class="num">2025–26</td>
-<td>Marlborough</td>
-<td align="right" class="num">$222,222</td>
-</tr>
-<tr>
-<td class="num">6</td>
-<td>Immacolata Canelli</td>
-<td class="num">2024–25</td>
-<td>East Hartland</td>
-<td align="right" class="num">$208,880</td>
-</tr>
-<tr>
-<td class="num">7</td>
-<td>Barbara Wilson</td>
-<td class="num">2025–26</td>
-<td>Columbia</td>
-<td align="right" class="num">$202,400</td>
-</tr>
-<tr>
-<td class="num">8</td>
-<td>Scott Feder</td>
-<td class="num">2025–26</td>
-<td>Voluntown</td>
-<td align="right" class="num">$200,000</td>
-</tr>
-<tr>
-<td class="num">9</td>
-<td>Brian Hendrickson</td>
-<td class="num">2025–26</td>
-<td>Salem</td>
-<td align="right" class="num">$197,699</td>
-</tr>
-<tr>
-<td class="num">10</td>
-<td>Robert Gilbert</td>
-<td class="num">2025–26</td>
-<td>Colebrook</td>
-<td align="right" class="num">$195,620</td>
-</tr>
-<tr>
-<td class="num">11</td>
-<td>Jeffrey F. Sousa</td>
-<td class="num">2025–26</td>
-<td>New Hartford</td>
-<td align="right" class="num">$193,250</td>
-</tr>
-<tr>
-<td class="num">12</td>
-<td>Dr. Jack Zamary</td>
-<td class="num">2025–26</td>
-<td>Bozrah</td>
-<td align="right" class="num">$193,063</td>
-</tr>
-<tr>
-<td class="num">13</td>
-<td>Christopher Roche</td>
-<td class="num">2025–26</td>
-<td>Woodstock</td>
-<td align="right" class="num">$190,000</td>
-</tr>
-<tr>
-<td class="num">14</td>
-<td>Dr. Julie Luby</td>
-<td class="num">2025–26</td>
-<td>Winsted</td>
-<td align="right" class="num">$189,100</td>
-</tr>
-<tr>
-<td class="num">15</td>
-<td>Michele Raynor</td>
-<td class="num">2025–26</td>
-<td>Brooklyn</td>
-<td align="right" class="num">$185,000</td>
-</tr>
-<tr>
-<td class="num">16</td>
-<td>Kai Byrd</td>
-<td class="num">2024–25</td>
-<td>Bethany</td>
-<td align="right" class="num">$184,642</td>
-</tr>
-<tr>
-<td class="num">17</td>
-<td>Dr. Roy Seitsinger</td>
-<td class="num">2025–26</td>
-<td>Preston</td>
-<td align="right" class="num">$179,307</td>
-</tr>
-<tr>
-<td class="num">18</td>
-<td>Andrew Skarzynski (Hampton)</td>
-<td class="num">2025–26</td>
-<td>Hampton</td>
-<td align="right" class="num">$179,167</td>
-</tr>
-<tr>
-<td class="num">19</td>
-<td>William Hull</td>
-<td class="num">2025–26</td>
-<td>Baltic (Sprague)</td>
-<td align="right" class="num">$175,443</td>
-</tr>
-<tr>
-<td class="num">20</td>
 <td>Mary Beth Iacobelli</td>
 <td class="num">2024–25</td>
 <td>Norfolk</td>
 <td align="right" class="num">$173,750</td>
 </tr>
 <tr>
-<td class="num"><strong>21</strong></td>
-<td><strong>Valerie Bruneau</strong></td>
-<td class="num"><strong>2025–26</strong></td>
-<td><strong>Andover</strong></td>
-<td align="right" class="num"><strong>$166,667</strong></td>
-</tr>
-<tr>
-<td class="num">22</td>
-<td>Philip &#8220;Phil&#8221; Stevens</td>
-<td class="num">2023–24 ⚠</td>
-<td>West Willington</td>
-<td align="right" class="num">$164,591</td>
-</tr>
-<tr>
-<td class="num">23</td>
-<td>Steven Rioux</td>
-<td class="num">2021–22 ⚠</td>
-<td>Canterbury</td>
-<td align="right" class="num">$153,200</td>
-</tr>
-<tr>
-<td class="num">24</td>
-<td>Donna P. Leake</td>
-<td class="num">2021–22 ⚠</td>
-<td>Eastford</td>
-<td align="right" class="num">$146,866</td>
-</tr>
-<tr>
-<td class="num">25</td>
-<td>Valerie Bruneau</td>
-<td class="num">2021–22 ⚠</td>
-<td>Scotland</td>
-<td align="right" class="num">$143,048</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p><strong>Notes:</strong> Filter: <code>--latest-known --scope k-6,k-8</code>. The four contracts
-ranked below Andover are all stale. Rioux&#8217;s Canterbury contract expired
-June 2023, Leake&#8217;s Eastford expired June 2024, and Bruneau&#8217;s Scotland
-contract is the 2021-22 year-1 figure from her 2021-2024 contract (years
-2-3 were negotiated but not in our file, and no successor contract has
-been located) — so the current Canterbury, Eastford, and Scotland rates
-are almost certainly higher than the stale figures shown. Stevens&#8217; West
-Willington contract is still running through June 2026 but the listed
-figure is year-1 (2023–24); years 2 and 3 likely include step-ups. The
-previously-stale Fearon Columbia row at $146,660 has been <strong>replaced</strong> by
-the current Wilson contract at $202,400 — the largest single-row data
-refresh in the dataset to date. <strong>Note Skarzynski appears twice in the
-broader Views 1 and 2</strong> — once for his Chaplin/R11 joint contract (rank
-31 in View 1) and once for the Hampton part-time arrangement (rank 23 in
-View 1 / rank 18 in View 2).</p>
-</blockquote>
-<h3 id="view-3-k-6-k-8-only-current-contracts-only-strict">View 3 — K-6 / K-8 only, current contracts only (strict)<a class="header-anchor" href="#view-3-k-6-k-8-only-current-contracts-only-strict" aria-label="Link to this section">¶</a></h3>
-<p>The most apples-to-apples view: K-6/K-8 scope, contract data from 2024–25 or
-later, no stale figures. This eliminates uncertainty about whether older
-contracts have been renegotiated since.</p>
-<p class="intro-table">Andover ranks <strong>21st of 21</strong> — last. Mean: $200,885. Median: $193,250. Andover
-is <strong>−14% below the median</strong>.</p>
-<table>
-<thead>
-<tr>
-<th class="num">Rank</th>
-<th>Superintendent</th>
-<th class="num">Year</th>
-<th>District(s)</th>
-<th align="right" class="num">FTE-equiv</th>
-</tr>
-</thead>
-<tbody><tr>
-<td class="num">1</td>
-<td>Erika F. Sacharko</td>
-<td class="num">2025–26</td>
-<td>Barkhamsted</td>
-<td align="right" class="num">$265,141</td>
-</tr>
-<tr>
-<td class="num">2</td>
-<td>Dr. Patricia Cosentino</td>
-<td class="num">2025–26</td>
-<td>Sherman</td>
-<td align="right" class="num">$249,163</td>
-</tr>
-<tr>
-<td class="num">3</td>
-<td>Dr. Vincent (Vince) Scarpetti</td>
-<td class="num">2025–26</td>
-<td>Orange</td>
-<td align="right" class="num">$244,337</td>
-</tr>
-<tr>
-<td class="num">4</td>
-<td>Dr. Thomas Baird</td>
-<td class="num">2025–26</td>
-<td>Hebron</td>
-<td align="right" class="num">$223,736</td>
-</tr>
-<tr>
-<td class="num">5</td>
-<td>Dr. Holly B. Hageman</td>
-<td class="num">2025–26</td>
-<td>Marlborough</td>
-<td align="right" class="num">$222,222</td>
-</tr>
-<tr>
-<td class="num">6</td>
-<td>Immacolata Canelli</td>
-<td class="num">2024–25</td>
-<td>East Hartland</td>
-<td align="right" class="num">$208,880</td>
-</tr>
-<tr>
-<td class="num">7</td>
-<td>Barbara Wilson</td>
-<td class="num">2025–26</td>
-<td>Columbia</td>
-<td align="right" class="num">$202,400</td>
-</tr>
-<tr>
-<td class="num">8</td>
-<td>Scott Feder</td>
-<td class="num">2025–26</td>
-<td>Voluntown</td>
-<td align="right" class="num">$200,000</td>
-</tr>
-<tr>
-<td class="num">9</td>
-<td>Brian Hendrickson</td>
-<td class="num">2025–26</td>
-<td>Salem</td>
-<td align="right" class="num">$197,699</td>
-</tr>
-<tr>
-<td class="num">10</td>
-<td>Robert Gilbert</td>
-<td class="num">2025–26</td>
-<td>Colebrook</td>
-<td align="right" class="num">$195,620</td>
-</tr>
-<tr>
-<td class="num">11</td>
-<td>Jeffrey F. Sousa</td>
-<td class="num">2025–26</td>
-<td>New Hartford</td>
-<td align="right" class="num">$193,250</td>
-</tr>
-<tr>
-<td class="num">12</td>
-<td>Dr. Jack Zamary</td>
-<td class="num">2025–26</td>
-<td>Bozrah</td>
-<td align="right" class="num">$193,063</td>
-</tr>
-<tr>
-<td class="num">13</td>
-<td>Christopher Roche</td>
-<td class="num">2025–26</td>
-<td>Woodstock</td>
-<td align="right" class="num">$190,000</td>
-</tr>
-<tr>
-<td class="num">14</td>
-<td>Dr. Julie Luby</td>
-<td class="num">2025–26</td>
-<td>Winsted</td>
-<td align="right" class="num">$189,100</td>
-</tr>
-<tr>
-<td class="num">15</td>
-<td>Michele Raynor</td>
-<td class="num">2025–26</td>
-<td>Brooklyn</td>
-<td align="right" class="num">$185,000</td>
-</tr>
-<tr>
-<td class="num">16</td>
-<td>Kai Byrd</td>
-<td class="num">2024–25</td>
-<td>Bethany</td>
-<td align="right" class="num">$184,642</td>
-</tr>
-<tr>
-<td class="num">17</td>
-<td>Dr. Roy Seitsinger</td>
-<td class="num">2025–26</td>
-<td>Preston</td>
-<td align="right" class="num">$179,307</td>
-</tr>
-<tr>
-<td class="num">18</td>
-<td>Andrew Skarzynski (Hampton)</td>
-<td class="num">2025–26</td>
-<td>Hampton</td>
-<td align="right" class="num">$179,167</td>
-</tr>
-<tr>
-<td class="num">19</td>
-<td>William Hull</td>
-<td class="num">2025–26</td>
-<td>Baltic (Sprague)</td>
-<td align="right" class="num">$175,443</td>
-</tr>
-<tr>
-<td class="num">20</td>
-<td>Mary Beth Iacobelli</td>
-<td class="num">2024–25</td>
-<td>Norfolk</td>
-<td align="right" class="num">$173,750</td>
-</tr>
-<tr>
-<td class="num"><strong>21</strong></td>
+<td class="num"><strong>29</strong></td>
 <td><strong>Valerie Bruneau</strong></td>
 <td class="num"><strong>2025–26</strong></td>
 <td><strong>Andover</strong></td>
@@ -1395,30 +895,31 @@ is <strong>−14% below the median</strong>.</p>
 </tr>
 </tbody></table>
 <blockquote>
-<p><strong>Notes:</strong> Filter: <code>--scope k-6,k-8</code> (the default strict rule). <strong>No
-K-6/K-8 peer with a current contract pays less than Andover.</strong> The
-next-lowest peer — Norfolk at $173,750 — pays 4% more than Andover does.
-Scotland is not in this table because Bruneau&#8217;s Scotland contract that we
-have is stale (2021–22); a current Scotland contract would be expected to
-enter at the same $166,667 FTE-equivalent as Andover, since the two are
-proportional sides of the same 1.0 FTE. The cohort has now more than
-doubled from the first iteration of this report (10 peers in mid-June, 15
-after the first §10-244c outreach round, <strong>21 now</strong>), and the headline
-finding has held: <strong>Andover is alone at the bottom, with zero peers
-below</strong>. The next-lowest current K-6/K-8 peer is Norfolk at $173,750 (4%
-above Andover); the median is now $193,250 (15.9% above Andover); the
-mean is $200,885 (20.5% above Andover).</p>
+<p><strong>Notes:</strong> † Byars&#8217;s Amity Region 5 contract covers high-school-only
+(grades 7–12), a meaningfully different scope from the elementary-only
+superintendents that dominate this list — included as a reference
+observation representing 7-12 supervision paid by member towns through
+a regional district. § Lisbon and Sterling are entered under the
+vintage-fallback rule with 2026-27 contract data because no 2024-25 or
+2025-26 data has been located for those districts. Their figures are
+the earliest year of a future-effective contract and may be re-papered
+upward by the time those years arrive. Skarzynski also serves Hampton
+K-8 under a separate part-time contract (rank 26 above); his separate
+Chaplin+Region 11 joint K-12 contract is treated as a reference (see
+Part 2 introduction) rather than ranked, because the joint contract&#8217;s
+FTE denominator is entangled with the Hampton contract in a way we
+can&#8217;t cleanly resolve. The Steven LePage Region 7 (2023-2026) contract
+is excluded under the vintage-fallback rule because we have year-1
+data only and the rule requires 2024-25 or newer — the PDF remains on
+the contracts subpage for reference.</p>
 </blockquote>
-<p class="section-label before-part">FY 2026–27</p>
-<h2 id="part-4-the-fy-2026-27-proposal">Part 4 — The FY 2026–27 proposal<a class="header-anchor" href="#part-4-the-fy-2026-27-proposal" aria-label="Link to this section">¶</a></h2>
-<p>The 2023–2026 Andover contract expires June 30, 2026. The successor contract —
-referenced in the FY26/FY27 town budget approved February 11, 2026 — bumps the
-cash component from $90,000 to $100,000 for FY 2026–27 (a +11.1% increase on the
-cash component) and bumps the 403(b) deferral from $10,000 to $15,000.</p>
-<p>The combined effect: Andover&#8217;s payment goes from $100,000 to $115,000 (+15%). At
-the same 0.6 FTE share, the implied 1.0-FTE-equivalent rate goes from $166,667
-to $191,667.</p>
-<h3 id="where-the-fy27-proposal-would-place-andover-against-current-peer-rates">Where the FY27 proposal would place Andover against current peer rates<a class="header-anchor" href="#where-the-fy27-proposal-would-place-andover-against-current-peer-rates" aria-label="Link to this section">¶</a></h3>
+<h3 id="view-2-k-6-k-8-only-current-contracts-only-strict">View 2 — K-6 / K-8 only, current contracts only (strict)<a class="header-anchor" href="#view-2-k-6-k-8-only-current-contracts-only-strict" aria-label="Link to this section">¶</a></h3>
+<p>The most apples-to-apples view: K-6/K-8 scope, contract data from 2024–25
+or 2025-26 (no future-fallback). This eliminates uncertainty about
+whether older contracts have been renegotiated since and removes the
+joint-K-12 and HS-only outliers.</p>
+<p class="intro-table">Andover ranks <strong>23rd of 23</strong> — last. Mean: $200,104. Median: $193,250.
+Andover is <strong>−14% below the median</strong>.</p>
 <table>
 <thead>
 <tr>
@@ -1487,121 +988,142 @@ to $191,667.</p>
 </tr>
 <tr>
 <td class="num">9</td>
+<td>Dr. Candace Morell</td>
+<td class="num">2025–26</td>
+<td>Storrs (Mansfield)</td>
+<td align="right" class="num">$200,000</td>
+</tr>
+<tr>
+<td class="num">10</td>
 <td>Brian Hendrickson</td>
 <td class="num">2025–26</td>
 <td>Salem</td>
 <td align="right" class="num">$197,699</td>
 </tr>
 <tr>
-<td class="num">10</td>
+<td class="num">11</td>
 <td>Robert Gilbert</td>
 <td class="num">2025–26</td>
 <td>Colebrook</td>
 <td align="right" class="num">$195,620</td>
 </tr>
 <tr>
-<td class="num">11</td>
+<td class="num">12</td>
 <td>Jeffrey F. Sousa</td>
 <td class="num">2025–26</td>
 <td>New Hartford</td>
 <td align="right" class="num">$193,250</td>
 </tr>
 <tr>
-<td class="num">12</td>
+<td class="num">13</td>
 <td>Dr. Jack Zamary</td>
 <td class="num">2025–26</td>
 <td>Bozrah</td>
 <td align="right" class="num">$193,063</td>
 </tr>
 <tr>
-<td class="num"><strong>—</strong></td>
-<td><strong>Andover (FY 2026–27 proposed)</strong></td>
-<td class="num"><strong>2026–27</strong></td>
-<td><strong>Andover</strong></td>
-<td align="right" class="num"><strong>$191,667</strong></td>
-</tr>
-<tr>
-<td class="num">13</td>
+<td class="num">14</td>
 <td>Christopher Roche</td>
 <td class="num">2025–26</td>
 <td>Woodstock</td>
 <td align="right" class="num">$190,000</td>
 </tr>
 <tr>
-<td class="num">14</td>
+<td class="num">15</td>
 <td>Dr. Julie Luby</td>
 <td class="num">2025–26</td>
 <td>Winsted</td>
 <td align="right" class="num">$189,100</td>
 </tr>
 <tr>
-<td class="num">15</td>
+<td class="num">16</td>
 <td>Michele Raynor</td>
 <td class="num">2025–26</td>
 <td>Brooklyn</td>
 <td align="right" class="num">$185,000</td>
 </tr>
 <tr>
-<td class="num">16</td>
+<td class="num">17</td>
 <td>Kai Byrd</td>
 <td class="num">2024–25</td>
 <td>Bethany</td>
 <td align="right" class="num">$184,642</td>
 </tr>
 <tr>
-<td class="num">17</td>
+<td class="num">18</td>
+<td>Dr. Christopher Bitgood</td>
+<td class="num">2025–26</td>
+<td>Canterbury</td>
+<td align="right" class="num">$183,801</td>
+</tr>
+<tr>
+<td class="num">19</td>
 <td>Dr. Roy Seitsinger</td>
 <td class="num">2025–26</td>
 <td>Preston</td>
 <td align="right" class="num">$179,307</td>
 </tr>
 <tr>
-<td class="num">18</td>
+<td class="num">20</td>
 <td>Andrew Skarzynski (Hampton)</td>
 <td class="num">2025–26</td>
 <td>Hampton</td>
 <td align="right" class="num">$179,167</td>
-</tr>
-<tr>
-<td class="num">19</td>
-<td>William Hull</td>
-<td class="num">2025–26</td>
-<td>Baltic (Sprague)</td>
-<td align="right" class="num">$175,443</td>
-</tr>
-<tr>
-<td class="num">20</td>
-<td>Mary Beth Iacobelli</td>
-<td class="num">2024–25</td>
-<td>Norfolk</td>
-<td align="right" class="num">$173,750</td>
 </tr>
 <tr>
 <td class="num">21</td>
-<td>Valerie Bruneau</td>
+<td>William Hull</td>
 <td class="num">2025–26</td>
-<td>Andover (current FY26)</td>
-<td align="right" class="num">$166,667</td>
+<td>Baltic (Sprague)</td>
+<td align="right" class="num">$175,443</td>
+</tr>
+<tr>
+<td class="num">22</td>
+<td>Mary Beth Iacobelli</td>
+<td class="num">2024–25</td>
+<td>Norfolk</td>
+<td align="right" class="num">$173,750</td>
+</tr>
+<tr>
+<td class="num"><strong>23</strong></td>
+<td><strong>Valerie Bruneau</strong></td>
+<td class="num"><strong>2025–26</strong></td>
+<td><strong>Andover</strong></td>
+<td align="right" class="num"><strong>$166,667</strong></td>
 </tr>
 </tbody></table>
 <blockquote>
-<p><strong>Notes:</strong> <strong>This is an apples-to-not-quite-apples comparison.</strong> The
-Andover row is FY 2026–27. The peer rows are mostly FY 2025–26. Almost all
-of those peer contracts will themselves step up in FY 2026–27 — and
-Andover&#8217;s relative position will move down again once those FY27 peer
-figures are negotiated and published. So this table is best read as
-&#8220;where the FY27 Andover number would sit <em>if peer pay froze</em>&#8221;, which it
-won&#8217;t. The FY27 row is interpolated between Zamary ($193,063) and Roche
-($190,000) under that &#8220;frozen peer&#8221; assumption. The +$10K cash bump
-reflects a contractual move from −14% below the current-cohort median to
-roughly −0.8% below it, in a cohort that itself will move up before FY27
-begins. The 403(b) annuity bump from $10K to $15K — less remarked upon —
-is a structural change worth noting separately.</p>
+<p><strong>Notes:</strong> Filter: <code>--scope k-6,k-8</code> (the strict rule). <strong>No K-6/K-8 peer
+with a current contract pays less than Andover.</strong> The next-lowest peer —
+Norfolk at $173,750 — pays 4% more than Andover does. Scotland is not in
+this table because Bruneau&#8217;s Scotland contract that we have is stale
+(2021–22); a current Scotland contract would be expected to enter at the
+same $166,667 FTE-equivalent as Andover, since the two are proportional
+sides of the same 1.0 FTE. The median is $193,250 (15.9% above Andover);
+the mean is $200,104 (20.1% above Andover).</p>
 </blockquote>
-<p>The successor contract has not yet been published in full as of this report&#8217;s
-compilation date. When it is, the FY28 and FY29 figures (cash components of
-$105K and $110K respectively, per the budget document, plus the $15K annuity)
-can be added.</p>
+<p class="section-label">Enrollment</p>
+<h2 id="pay-vs-district-size">Pay vs district size<a class="header-anchor" href="#pay-vs-district-size" aria-label="Link to this section">¶</a></h2>
+<p>The two views above rank districts by FTE-equivalent pay only. This
+scatter overlays that pay figure against the total student enrollment the
+superintendent supervises, which is one of the plainer proxies for the
+job&#8217;s scale.</p>
+<p><img src="scatter.svg" alt="Superintendent pay vs enrollment scatter"></p>
+<blockquote>
+<p><strong>Notes:</strong> Enrollment counts are the K–12 student totals under the
+superintendent&#8217;s supervision for the 2024–25 school year (CT EdSight
+October-1 counts). For solo K-6/K-8 contracts, that&#8217;s the district&#8217;s
+elementary enrollment. For joint K-12 regional contracts (McKinnon ER9,
+White Region 4, Brady-Shanley Region 1), the count is the sum across
+all member districts&#8217; K-8 populations plus the regional HS. For the two
+HS-only reference contracts (LePage Region 7, Byars Amity Region 5),
+only the regional HS enrollment is shown. Andover&#8217;s point is
+highlighted; the four contracts nearest Andover in enrollment all pay
+substantially more per FTE. Enrollment values are cross-checked against
+published district budgets where available; where only approximate
+counts were available they are flagged in <code>enrollment.json</code> in the
+working repository.</p>
+</blockquote>
 <p class="section-label">At a glance</p>
 <h2 id="summary-table">Summary table<a class="header-anchor" href="#summary-table" aria-label="Link to this section">¶</a></h2>
 <table>
@@ -1621,19 +1143,15 @@ can be added.</p>
 </tr>
 <tr>
 <td>Where does that rank against peer Connecticut superintendents?</td>
-<td>Bottom 6 of 31 in the broadest view; last of 21 in the strictest</td>
+<td>Last of 29 in the broad view; last of 23 in the strict K-6/K-8 view</td>
 </tr>
 <tr>
 <td>How far below the K-6/K-8 peer median is Andover?</td>
-<td>$23,333 (−12%) below the latest-known median of $190,000; $26,583 (−14%) below the strict median of $193,250</td>
+<td>$26,583 (−14%) below the strict K-6/K-8 median of $193,250; $33,333 (−17%) below the broad-view median of $200,000</td>
 </tr>
 <tr>
 <td>Does any K-6/K-8 peer with a 2024-or-newer contract pay less?</td>
 <td><strong>No.</strong> Andover is at the bottom of every current-data peer cohort.</td>
-</tr>
-<tr>
-<td>What would FY 2026–27 do to Andover&#8217;s ranking against current peer rates?</td>
-<td>Move from last of 21 to about rank 13 of 21 (≈0.8% below current median). Peer rates will themselves rise in FY27, so the actual FY27-vs-FY27 picture will likely shift back toward the current gap.</td>
 </tr>
 <tr>
 <td>What is &#8220;cash compensation&#8221; in this report?</td>
@@ -1646,58 +1164,41 @@ can be added.</p>
 </tbody></table>
 <p class="section-label">Analysis</p>
 <h2 id="key-observations">Key Observations<a class="header-anchor" href="#key-observations" aria-label="Link to this section">¶</a></h2>
-<p><strong>Andover&#8217;s superintendent rate is unambiguously below peer rates across every
-cut of the data we can run.</strong> The bottom-of-the-distribution finding is not an
-artifact of one inclusion rule. Whether you use the broadest view (every
-contract we can find, including stale ones, all scopes) or the strictest
-(K-6/K-8 only, no stale data), Andover sits at or near the bottom.</p>
+<p><strong>Andover&#8217;s superintendent rate is unambiguously below peer rates across
+every cut of the data.</strong> The bottom-of-the-distribution finding is not an
+artifact of one inclusion rule. Whether you use the broad view (every
+ranked contract with current data, all scopes — N=29) or the strict view
+(K-6/K-8 only, current data — N=23), Andover is last with no peer below.</p>
 <p><strong>The strict K-6/K-8 view is the cleanest comparison.</strong> It eliminates two
 confounders — scope mismatch (K-12 regional supes earn more because their
 role is bigger) and stale data (older contracts almost certainly have
 step-ups not visible from the dollar figures we have). In that view,
-Andover is rank 21 of 21 — last — and no K-6/K-8 peer with a current
-contract pays less than Andover does. The cohort has more than doubled
-since the first iteration of this report (10 → 15 → 21) and the finding
-has held at each step: every K-6/K-8 contract added has paid more than
-Andover, not less.</p>
-<p><strong>The contracts ranked below Andover in the broader views are likely
-understated.</strong> Canterbury (Rioux, $153,200) is from a 2020–2023 contract
-that expired three years ago; Eastford (Leake, $146,866) from a 2021–2024
-contract that expired two years ago; Scotland (Bruneau, $143,048) is the
-year-1 figure of a 2021–2024 contract that expired two years ago. The
-current rates in these districts are presumably higher than the stale
-figures after intervening step-ups. The same logic applies to West
-Willington (Stevens). Chaplin (Skarzynski, $140,000), at the very bottom
-of View 1, is a current 2024–2027 contract but reflects only the
-contractual minimum for year 2; the negotiated amount could be higher.
-If those updated figures all came in higher, Andover would sit lower
-still in the broader views. (Columbia&#8217;s previously-stale 2017-2020 row is
-now resolved — the Wilson 2024-2028 contract supplies a current $202,400
-figure; the change shifts Columbia from below Andover to above-median.)</p>
-<p><strong>The FY 2026–27 proposal would move Andover from rank 21/21 to roughly
-rank 13/21 in the strict view against <em>current</em> peer rates</strong> — and that&#8217;s
-the important qualifier. The peer contracts shown are mostly FY 2025–26.
-Most of them will themselves step up in FY 2026–27. So while Andover&#8217;s FY27
-number would substantially close the gap if peer pay stood still, peer pay
-won&#8217;t stand still, and the actual FY27-vs-FY27 picture will likely shift
-back toward the current gap. The +$10K cash bump moves Andover from −14%
-below the current-cohort median to about −0.8% below it; whether it moves
-Andover closer to the FY27 median is a different question this report
-can&#8217;t yet answer.</p>
-<p><strong>The 403(b) bump from $10K to $15K is a structural change worth noting
-separately.</strong> The cash-component bump from $90K → $100K is what the
-FY26/FY27 budget document spotlights, but the 403(b) component is going up
-by half (50%) at the same time. Both are tax-advantaged compensation to
-the supe; both raise Andover&#8217;s total cost.</p>
-<p><strong>Only 6 peer districts remain pending</strong> — down from 22 two reports ago.
-Records requests to town clerks under CGS §10-244c have resolved the rest,
-including the entire six-district Region 1 cluster in a single contract
-(Brady-Shanley, served by the North Canaan clerk). The remaining six —
-Ashford, Mansfield/Storrs, North Franklin (Franklin), Pomfret Center,
-Union, Woodbridge — are the smallest of the EASTCONN-area districts plus
-two districts in transition (Mansfield&#8217;s new Morell contract not yet
-posted, Woodbridge K-6 supe being recruited). The missing rates could land
-above or below Andover&#8217;s; whether they do is genuinely unknown.</p>
+Andover is rank 23 of 23 — last — and no K-6/K-8 peer with a current
+contract pays less. The next-lowest current K-6/K-8 peer is Norfolk at
+$173,750, 4% above Andover; the median is $193,250, roughly 16% above.</p>
+<p><strong>Stale and reference-only contracts don&#8217;t appear in the ranking tables.</strong>
+The underlying older PDFs (Stevens West Willington 2023–24, Leake
+Eastford 2021–22, Bruneau Scotland 2021–22, LePage Region 7 2023–24) and
+the three reference contracts (Amity Region 5, Region 7, Skarzynski
+Chaplin+Region 11) remain on the <a href="contracts/">contracts subpage</a> and in
+the <a href="contracts.xlsx">downloadable spreadsheet</a> for inspection.</p>
+<p><strong>Enrollment doesn&#8217;t explain the gap.</strong> Within the K-6/K-8 cohort, pay
+and enrollment are essentially uncorrelated (Pearson r ≈ 0.13, r² ≈ 0.02
+— roughly 2% of the pay variance is &#8220;explained&#8221; by district size). Small
+CT elementary districts pay their superintendents in a fairly narrow band
+of $175K–$220K per FTE regardless of whether they have 100 students or
+1,200, which the scatter plot in &#8220;Pay vs district size&#8221; above makes
+visible. Andover sits well below that band. The apparent upward trend in
+the full-cohort scatter comes from the K-12 regional joint contracts
+(McKinnon ER9, White Region 4, Brady-Shanley Region 1) at the top-right,
+not from the K-6/K-8 cohort where Andover competes.</p>
+<p><strong>Only 5 peer districts remain pending.</strong> Records requests to town clerks
+under CGS §10-244c have resolved essentially every contract that could be
+resolved that way. The remaining five — Ashford, North Franklin
+(Franklin), Pomfret Center, Union, Woodbridge — are the smallest of the
+EASTCONN-area districts plus Woodbridge, which is between supes. The
+missing rates could land above or below Andover&#8217;s; whether they do is
+genuinely unknown.</p>
 <p class="section-label">Caveats</p>
 <h2 id="what-this-report-does-not-show">What this report does not show<a class="header-anchor" href="#what-this-report-does-not-show" aria-label="Link to this section">¶</a></h2>
 <ul>
@@ -1716,7 +1217,7 @@ cost-of-living-adjusted.</li>
 needs a more senior superintendent, and some peers manage two or three times
 Andover&#8217;s enrollment. This report normalizes by FTE, not by enrollment or
 budget size.</li>
-<li><strong>The missing peers.</strong> The 6 districts where clerk outreach has not yet
+<li><strong>The missing peers.</strong> The 5 districts where clerk outreach has not yet
 produced a current contract may have rates above or below the current
 cohort.</li>
 <li><strong>A causal claim about appropriateness.</strong> This report describes where Andover
@@ -1726,6 +1227,16 @@ judgment for residents.</li>
 </ul>
 <p class="section-label">Documentation</p>
 <h2 id="sources">Sources<a class="header-anchor" href="#sources" aria-label="Link to this section">¶</a></h2>
+<h3 id="bulk-downloads">Bulk downloads<a class="header-anchor" href="#bulk-downloads" aria-label="Link to this section">¶</a></h3>
+<ul>
+<li><strong><a href="contracts.zip">All contracts as a zipped archive</a></strong> — every PDF
+referenced below, organized by district slug, with a manifest CSV.</li>
+<li><strong><a href="contracts/">Contracts subpage</a></strong> — sortable table linking directly to
+each contract PDF; stale and future-dated entries included with flags
+for inspection.</li>
+</ul>
+<p><em>(The component-level spreadsheet that complements these sources is in the
+<a href="#other-formats">Other Formats</a> section below.)</em></p>
 <h3 id="andover-specific-documents">Andover-specific documents<a class="header-anchor" href="#andover-specific-documents" aria-label="Link to this section">¶</a></h3>
 <ul>
 <li><strong>Andover Superintendent Contract 2023-2026</strong> —
@@ -1734,105 +1245,16 @@ judgment for residents.</li>
 <li><strong>Andover FY26/FY27 Town Budget</strong> — approved at the February 11, 2026 Town
 Meeting; provides FY27 proposed figures</li>
 </ul>
-<h3 id="peer-district-contracts-in-the-analysis-30-2-references">Peer-district contracts in the analysis (30) + 2 references<a class="header-anchor" href="#peer-district-contracts-in-the-analysis-30-2-references" aria-label="Link to this section">¶</a></h3>
-<p>In FTE-equivalent rank order. &#8220;Clerk §10-244c&#8221; sources were obtained
-directly from a town clerk in response to a records request.</p>
-<ul>
-<li>McKinnon (ER9 K-12: Easton, Redding) — direct PDF, 2024-2027</li>
-<li>White (Region 4 K-12: Centerbrook, Chester, Deep River) — clerk §10-244c
-(Chester), 2023-2026</li>
-<li>Sacharko (Barkhamsted K-6 + curr coord combined role, 0.385 supe-only FTE)
-— clerk §10-244c, 2025-2028</li>
-<li>Cosentino (Sherman K-8, part-time 0.4 FTE) — clerk §10-244c, 2025-2028</li>
-<li>Brady-Shanley (Region 1 K-12 joint: Falls Village, Kent, Lakeville,
-North Canaan, Sharon, West Cornwall) — clerk §10-244c (North Canaan),
-2025-2028</li>
-<li>Scarpetti (Orange K-6) — clerk §10-244c, 2025-2028</li>
-<li>Byars (Amity Region 5 — reference HS-only contract for the regional 7-12
-supe serving Bethany / Orange / Woodbridge) — user-supplied PDF, 2025-2028</li>
-<li>Baird (Hebron) —
-<a href="https://www.hebron.k12.ct.us/common/pages/GetFile.ashx?key=2CGfAbjf">hebron.k12.ct.us/&#8230;/GetFile.ashx</a>,
-2025-2028</li>
-<li>Hageman (Marlborough K-6, TRB retiree 0.45 FTE) — clerk §10-244c, 2025-26</li>
-<li>Canelli (East Hartland / Hartland) — crawled, 2024-2027</li>
-<li>Wilson (Columbia K-6) — clerk §10-244c, 2024-2028</li>
-<li>Feder (Voluntown) —
-<a href="https://www.voluntown.gov/DocumentCenter/View/489/Superintendent-PDF">voluntown.gov/&#8230;/Superintendent-PDF</a>,
-2025-2026</li>
-<li>Hendrickson (Salem, part-time 0.7 FTE) —
-<a href="https://resources.finalsite.net/images/v1773319736/salemschoolsorg/n50ogiwnupu8wbrn55mt/Supt_Contract.pdf">salemschoolsorg/&#8230;/Supt_Contract.pdf</a>,
-2024-2027</li>
-<li>Gilbert (Colebrook K-6, part-time 0.4 FTE) — clerk §10-244c, 2025-2028</li>
-<li>LePage (Region 7 HS-only — reference contract for the regional 7-12 supe
-serving Barkhamsted / Colebrook / New Hartford / Norfolk) —
-<a href="https://www.newhartfordct.gov/sites/g/files/vyhlif961/f/pages/reg_7_superintendents_contract_2023-2026.pdf">newhartfordct.gov/&#8230;/reg_7_superintendents_contract_2023-2026.pdf</a>
-⚠</li>
-<li>Sousa (New Hartford K-6) — clerk §10-244c, 2023-2026 (year-3 estimate)</li>
-<li>Zamary (Bozrah) — Google Drive copy supplied by district, 2025-2028</li>
-<li>Roche (Woodstock K-8) — clerk §10-244c, 2025-2028</li>
-<li>Luby (Winsted K-8) — clerk §10-244c, 2024-2027</li>
-<li>Raynor (Brooklyn) — crawled, 2024-2027</li>
-<li>Byrd (Bethany K-6) — clerk §10-244c, 2024-2027 (year-1 used as 2025-26
-proxy)</li>
-<li>Seitsinger (Preston) — crawled, 2025-2028</li>
-<li>Skarzynski (Hampton K-8, part-time 0.3 FTE — separate from Chaplin joint)
-— clerk §10-244c, 2025-2028</li>
-<li>Hull (Baltic K-8 / Sprague, TRB retiree 0.44 FTE) — clerk §10-244c,
-2024-2027</li>
-<li>Iacobelli (Norfolk) — crawled, 2022-2025 (year-3 figure used)</li>
-<li>Bruneau (Andover) — Andover scanned PDF OCR&#8217;d, 2023-2026</li>
-<li>Stevens (West Willington) — crawled, 2023-2026 ⚠</li>
-<li>Rioux (Canterbury) — Canterbury CMS
-<a href="https://www.canterburyct.org/media/3811">media/3811</a>, 2020-2023 ⚠</li>
-<li>Leake (Eastford) —
-<a href="https://www.eastfordct.org/wp-content/uploads/2023/06/Superintendent-Contract-2022.pdf">eastfordct.org/&#8230;/Superintendent-Contract-2022.pdf</a>,
-2021-2024 ⚠</li>
-<li>Bruneau (Scotland; separate contract from Andover&#8217;s) — Scotland Town
-Clerk PDF at
-<a href="https://municipal-documents.s3.amazonaws.com/uploads/scotland-ct/town-clerk/documents/generals/22580/Superintendent%20Contract%202021-2024%20Bruneau%20%282%29.pdf">municipal-documents.s3.amazonaws.com/&#8230;/Bruneau (2).pdf</a>,
-2021-2024 ⚠</li>
-<li>Skarzynski (Chaplin K-6 joint with Region 11 HS) — crawled, 2024-2027</li>
-<li>Friend (Sterling K-8) — clerk §10-244c, 2026-2029 (future-dated proxy;
-excluded from latest-known views)</li>
-</ul>
-<h3 id="contracts-received-in-this-round-june-29-2026-via-clerk-10-244c">Contracts received in this round (June 29, 2026 via clerk §10-244c)<a class="header-anchor" href="#contracts-received-in-this-round-june-29-2026-via-clerk-10-244c" aria-label="Link to this section">¶</a></h3>
-<p>Eight contracts arrived after the previous report compilation, all in
-response to records requests routed through the clerks-tracker outreach
-app:</p>
-<ol>
-<li><strong>Hageman (Marlborough K-6, 2025-26)</strong> — TRB-retiree at 0.45 FTE
-(single-year contract); previously pending. Direct K-6 peer.</li>
-<li><strong>Scarpetti (Orange K-6, 2025-2028)</strong> — supersedes the prior $185,230
-floor inference from the Orange Administrators CBA; actual Scarpetti
-cash is meaningfully higher ($244K conservative).</li>
-<li><strong>Hull (Baltic / Sprague K-8, 2024-2027)</strong> — TRB-retiree at 0.44 FTE.
-Direct K-8 peer.</li>
-<li><strong>Friend (Sterling K-8, 2026-2029)</strong> — future-dated; the 2025-26 supe is
-different and contract still outstanding. Sterling enters the dataset
-as a future-proxy only.</li>
-<li><strong>Luby (Winsted K-8, 2024-2027)</strong> — full-time K-8. Direct peer.</li>
-<li><strong>Roche (Woodstock K-8, 2025-2028)</strong> — full-time K-8. Direct peer.</li>
-<li><strong>Sacharko (Barkhamsted K-6, 2025-2028)</strong> — REFRESH: supe transition
-(Agostine retired/left; Sacharko started 11/1/2025). Combined supe +
-curriculum coordinator role; we measure only the supe portion (0.5 FTE
-= 0.385 of 260 days). Pushed Barkhamsted to rank 1 in V2 + V3.</li>
-<li><strong>Wilson (Columbia K-6, 2024-2028)</strong> — REFRESH: successor to the
-ancient Fearon 2017-2020 contract (the dataset&#8217;s oldest entry). The
-Wilson 2025-26 figure ($202,400) is <strong>37% above</strong> the Fearon stale
-figure, illustrating just how much stale-contract data can understate.</li>
-</ol>
-<h3 id="pending-contract-not-located-in-public-search-6">Pending — contract not located in public search (6)<a class="header-anchor" href="#pending-contract-not-located-in-public-search-6" aria-label="Link to this section">¶</a></h3>
-<p>Only 6 peer districts remain pending. Two are in active transition; four
-are very small EASTCONN-region districts where part-time supe
-arrangements are common.</p>
-<p><strong>In transition; contract not yet posted</strong> (2 districts):</p>
-<ul>
-<li>Mansfield/<strong>Storrs</strong> — Dr. Candace Morell, appointed at Special BoE
-meeting 5/21/2025, started 7/1/2025</li>
-<li>Woodbridge — K-6 supe unknown (new supe being recruited)</li>
-</ul>
-<p><strong>Contract not located, supe name not always established</strong> (4 districts):</p>
-<p>Ashford, North Franklin (Franklin), Pomfret Center, Union.</p>
+<h3 id="pending-contract-not-located-in-public-search-5">Pending — contract not located in public search (5)<a class="header-anchor" href="#pending-contract-not-located-in-public-search-5" aria-label="Link to this section">¶</a></h3>
+<p>Five peer districts remain pending. Woodbridge is in transition (K-6 supe
+being recruited); the other four are very small EASTCONN-region districts
+where part-time supe arrangements are common and the supe&#8217;s name and
+tenure aren&#8217;t always established with certainty: Ashford, North Franklin
+(Franklin), Pomfret Center, Union.</p>
+<p>All 30 peer-district contracts in the analysis plus the two HS-only
+reference contracts are listed with links on the
+<strong><a href="contracts/">Contracts subpage</a></strong> and included in the
+<a href="contracts.zip">downloadable ZIP</a> and <a href="contracts.xlsx">spreadsheet</a>.</p>
 <h3 id="excluded">Excluded<a class="header-anchor" href="#excluded" aria-label="Link to this section">¶</a></h3>
 <p>Norwich (too dissimilar in size and structure to be a useful peer).</p>
 <h3 id="statutory-basis">Statutory basis<a class="header-anchor" href="#statutory-basis" aria-label="Link to this section">¶</a></h3>
@@ -1858,28 +1280,17 @@ K-12 superintendent across all seven member boards — a finding that has now
 been confirmed by retrieving the actual Brady-Shanley contract (one contract
 resolved six pending peer districts).</p>
 <p>A custom <strong>town-clerk outreach app</strong> (the &#8220;clerks tracker&#8221; at
-andoverct.info/clerks) was built between report compilations to manage
-§10-244c records requests at scale: it renders templated outreach emails
-per district, tracks reply status, holds received PDFs in a per-district
-uploads folder, and exports the entire dataset (manifest, JSON state,
-contracts) as a single zip. The seven contracts in the &#8220;Contracts received
-in this round&#8221; section above all came through that pipeline.</p>
-<h3 id="auxiliary-documents-used-to-set-salary-floors-and-templates">Auxiliary documents used to set salary floors and templates<a class="header-anchor" href="#auxiliary-documents-used-to-set-salary-floors-and-templates" aria-label="Link to this section">¶</a></h3>
-<ul>
-<li><strong>Orange Elementary Schools Administrators&#8217; Association CBA 2024-2027</strong> —
-publicly posted at
-<a href="https://www.orange-ct.gov/982/Board-of-Education-Contracts">orange-ct.gov/982/Board-of-Education-Contracts</a>.
-Article 10 establishes salary ranges for Orange&#8217;s K-6 administrators; the
-Director of Special Services 2026-27 max ($185,230) is a hard floor for
-Orange&#8217;s superintendent compensation pending location of the supe&#8217;s own
-contract.</li>
-</ul>
+andoverct.info/clerks) manages §10-244c records requests at scale: it
+renders templated outreach emails per district, tracks reply status, holds
+received PDFs in a per-district uploads folder, and exports the entire
+dataset as a single zip. Most contracts in this analysis were obtained
+through that pipeline.</p>
 
 <p class="section-label">Download</p>
 <h2 id="other-formats">Other Formats<a class="header-anchor" href="#other-formats" aria-label="Link to this section">¶</a></h2>
-<p>This report is available in three formats, all located alongside this page:</p>
+<p>This report is available in four formats, all located alongside this page:</p>
 
-<div class="format-cards cols-3">
+<div class="format-cards cols-4">
   <div class="format-card">
     <div class="format-card-icon">🌐</div>
     <div class="format-card-title"><a href="./">HTML</a></div>
@@ -1894,6 +1305,11 @@ contract.</li>
     <div class="format-card-icon">📑</div>
     <div class="format-card-title"><a href="report.pdf">PDF</a></div>
     <div class="format-card-desc">Print-ready version with all tables, footnotes, and source citations.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📊</div>
+    <div class="format-card-title"><a href="contracts.xlsx">Spreadsheet (XLSX)</a></div>
+    <div class="format-card-desc">Every contract's cash components (base, annuity, longevity, transport, dues, other) on a By-district sheet and a deduped By-contract sheet. Hyperlinks to each PDF.</div>
   </div>
 </div>
 

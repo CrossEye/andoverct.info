@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Superintendent Pay in Context — Contracts on file</title>
+  <style>/* Structural base styles for civic reports — theme-independent.
+ * Colors, fonts, and sizes come from the active theme (CSS custom properties
+ * in _build/themes/<name>.css), which is loaded BEFORE this file. */
+
+/* ---- Reset & base ---- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Layout ---- */
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner a { color: inherit; text-decoration: none; }
+.page-banner a:hover { text-decoration: underline; }
+
+/* ---- Breadcrumb (in the banner) ---- */
+.page-banner .crumbs a {
+    color: var(--crumb-link, var(--banner-ink));
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover, #fff);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current {
+    color: var(--crumb-current, #fff);
+}
+
+.container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* ---- Images / figures ---- */
+/* Scale charts and figures to the column (and the printed page box) rather
+   than overflowing at their intrinsic pixel/point size. */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+}
+
+/* ---- Lightbox (screen only; overlay is built at runtime by the viewer
+   script, so it never appears in the PDF). Click a chart to enlarge it. ---- */
+.container img { cursor: zoom-in; }
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vmin;
+    background: rgba(0, 0, 0, 0.85);
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+.lightbox-overlay.open { opacity: 1; }
+.lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    margin: 0;
+    cursor: zoom-out;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+    background: #fff;
+}
+
+/* ---- Title block ---- */
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-attribution {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    color: var(--ink-faint);
+    margin: 0 0 24px 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+.report-attribution a {
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+}
+.report-attribution a:hover {
+    color: var(--link);
+    border-bottom-color: var(--link);
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.methodology-header {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 0 0 36px 0;
+    line-height: 1.55;
+}
+
+/* ---- Section labels (small uppercase tags above h2) ---- */
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 36px 0 4px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+/* ---- Headings ---- */
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+h3 {
+    font-family: var(--font-sans);
+    font-size: var(--h3-size);
+    font-weight: 600;
+    margin: 28px 0 10px 0;
+    color: var(--accent-2);
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+
+/* ---- Header anchor links (HTML only; hidden in print) ---- */
+.header-anchor {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.2em;
+    color: var(--anchor);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.85em;
+    vertical-align: baseline;
+    cursor: pointer;
+    user-select: none;
+}
+h2:hover .header-anchor,
+h3:hover .header-anchor,
+.header-anchor:focus {
+    opacity: 1;
+}
+.header-anchor:hover {
+    color: var(--anchor-hover);
+}
+.header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+}
+.header-anchor.copied::after {
+    content: " copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+}
+@media print {
+    .header-anchor {
+        display: none;
+    }
+}
+
+/* ---- Body text ---- */
+p {
+    margin: 0 0 14px 0;
+    orphans: 3;
+    widows: 3;
+}
+p.intro-table {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+strong { font-weight: 700; color: var(--ink); }
+em { font-style: italic; }
+
+/* ---- Links ---- */
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* ---- Lists ---- */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+li {
+    margin: 0 0 6px 0;
+    line-height: 1.55;
+}
+
+/* ---- Tables ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-before: avoid;
+    break-before: avoid;
+}
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 9.5pt;
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--accent);
+}
+tbody tr:hover { background: var(--bg); }
+
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+tbody tr:last-child td {
+    border-bottom: 2px solid var(--accent);
+}
+
+/* ---- Blockquotes (source notes, verbatim quotes) ---- */
+blockquote {
+    margin: 14px 0 18px 0;
+    padding: 14px 20px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+blockquote p { margin: 0 0 8px 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ol, blockquote ul {
+    margin: 8px 0;
+}
+
+/* ---- HR ---- */
+hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+}
+
+/* ---- Inline code ---- */
+code {
+    font-family: var(--font-mono);
+    font-size: 9.5pt;
+    background: var(--bg-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: var(--accent-2);
+    overflow-wrap: break-word;
+}
+
+/* ---- Other Formats footer ---- */
+.formats-section {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+}
+.format-cards {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.format-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.format-cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media screen and (max-width: 700px) {
+    .format-cards.cols-3,
+    .format-cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+.format-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    padding: 14px;
+    text-align: left;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+.format-card-icon { font-size: 18pt; margin-bottom: 4px; }
+.format-card-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+.format-card-desc { font-size: 9pt; color: var(--ink-mute); line-height: 1.4; }
+.format-card a { display: block; }
+
+/* ---- Footer ---- */
+.page-footer {
+    max-width: var(--measure);
+    margin: 32px auto 60px;
+    padding: 24px var(--gutter);
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 9.5pt;
+    font-family: var(--font-sans);
+    border-top: 1px solid var(--rule);
+}
+
+/* ---- Confirmation glyphs ---- */
+h3 .conf-mark {
+    color: var(--confirm);
+    font-size: 11pt;
+    margin-right: 4px;
+}
+
+/* Default civic-report theme.
+ *
+ * A theme is just this set of CSS custom properties. To experiment, copy this
+ * file to _build/themes/<name>.css, change what you like, and point at it from
+ * _build/report.config.json ({"theme":"<name>"}) for all reports, or from a
+ * single report's front matter (theme: <name>). A non-default theme is layered
+ * ON TOP of this one, so it only needs to list the variables it changes.
+ *
+ * Scope: colors, fonts, and small size/width/gap tweaks — not layout changes.
+ */
+:root {
+  /* ---- Palette ---- */
+  --bg:             #fafaf7;   /* page background */
+  --bg-page:        #ffffff;   /* the white content card */
+  --bg-soft:        #f5f3ed;   /* callouts, table headers, inline code */
+  --ink:            #1a1a1a;   /* body text, main headings */
+  --ink-soft:       #333333;   /* blockquote / methodology text */
+  --ink-mute:       #5a5a5a;   /* subtitle, card descriptions */
+  --ink-faint:      #888888;   /* attribution, footer, captions */
+  --rule:           #e0ddd5;   /* hairline borders */
+  --accent:         #b8a878;   /* gold accent rules */
+  --accent-2:       #2c3e50;   /* slate: h3, table-header & code text */
+  --banner-bg:      #2c3e50;   /* top banner background */
+  --banner-ink:     #ecf0f1;   /* top banner text */
+  --crumb-link:       #b9c4cf; /* breadcrumb links in the banner */
+  --crumb-link-hover: #ffffff;
+  --crumb-current:    #ffffff; /* deepest crumb (current page), not a link */
+  --link:           #1a5490;
+  --link-hover:     #0d3a6b;
+  --link-underline: #c5d3e2;
+  --anchor:         #b8b3a4;   /* the ¶ header anchor */
+  --anchor-hover:   #6c7480;
+  --confirm:        #5a8a5a;   /* green ✓ confirmation mark */
+  --confirm-strong: #2e7d32;
+
+  /* ---- Fonts ---- */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:  "SF Mono", Monaco, Menlo, Consolas, monospace;
+
+  /* ---- Sizes (small tweaks only; no layout restructuring) ---- */
+  --base-size:  11pt;    /* body text */
+  --measure:    780px;   /* content column width */
+  --gutter:     30px;    /* horizontal padding / banner & footer gaps */
+  --title-size: 28pt;
+  --h2-size:    18pt;
+  --h3-size:    13pt;
+}
+
+/* bluegold — mirrors the light-mode look of the 55th campaign site
+ * (C:\Users\scott\Dev\Andover\55th, e.g. localhost:8080/reports): cool
+ * blue-gray paper, a dark navy banner with a gold underline, navy serif
+ * headings over a sans body, gold accent rules, and blue links.
+ *
+ * Note the deliberate font swap: base.css uses --font-serif for body text and
+ * --font-sans for headings/labels, so to match the campaign look (sans body,
+ * serif display) we put the SANS stack in --font-serif and the SERIF stack in
+ * --font-sans.
+ *
+ * Layered on default.css. Uses --banner-border (in base.css) for the gold rule
+ * under the banner. */
+:root {
+  /* Palette */
+  --bg:             #f4f6f9;
+  --bg-page:        #ffffff;
+  --bg-soft:        #eef4fb;   /* blue-050 tint for callouts / table headers */
+  --rule:           #e3e8ef;   /* hairlines */
+  --ink:            #19222e;
+  --ink-soft:       #2b3744;
+  --ink-mute:       #5b6775;
+  --ink-faint:      #8a94a1;
+  --accent:         #e8a800;   /* signature gold rules */
+  --accent-2:       #0f2a4a;   /* blue-900: headings, table-header & code text */
+  --banner-bg:      linear-gradient(180deg, #0f2a4a, #143862);
+  --banner-border:  3px solid #e8a800;
+  --banner-ink:     #dde8f5;   /* blue-100 */
+  --crumb-link:       #e8a800; /* gold breadcrumb links */
+  --crumb-link-hover: #ffffff; /* hover to white + underline */
+  --crumb-current:    #ffffff; /* current page, not a link */
+  --link:           #245c95;   /* blue-600 */
+  --link-hover:     #1c4e80;   /* blue-700 */
+  --link-underline: #cfe0f2;
+  --confirm:        #2f8f5b;
+  --confirm-strong: #1f7d49;
+
+  /* Type: sans body + serif display headings (see note above) */
+  --font-serif: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans:  Georgia, "Times New Roman", serif;
+
+  --measure: 860px;
+}
+
+
+.container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+.report-head h1 { margin-bottom: 6px; }
+.subtitle { color: #555; font-size: 14px; line-height: 1.5; }
+table.contracts-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 13px; }
+table.contracts-table th, table.contracts-table td {
+  padding: 6px 10px; border-bottom: 1px solid #ddd; text-align: left; vertical-align: top;
+}
+table.contracts-table th { background: #f5f2e8; font-weight: 600; }
+table.contracts-table td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+table.contracts-table .status-stale  { background: #faf4ee; color: #6b4a1a; }
+table.contracts-table .status-future { background: #f5f3fc; color: #3a2a6b; }
+table.contracts-table .status-cell { white-space: nowrap; font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/reports/">Reports</a><span class="sep">›</span><a href="/reports/aes/">Andover Elementary</a><span class="sep">›</span><a href="../">Superintendent Pay in Context</a><span class="sep">›</span><span class="current">Contracts</span>
+  </nav>
+</div>
+<main class="container">
+  <header class="report-head">
+    <h1>Contracts on file</h1>
+    <p class="subtitle">Superintendent Pay in Context — 33 unique contracts (27 primary, 2 future, 4 stale).
+       Click any filename to open the PDF. Joint contracts are listed once with all member districts in the District(s) column.
+       <a href="../">← Back to report</a> · <a href="../contracts.zip">Download all as ZIP</a> · <a href="../contracts.xlsx">Spreadsheet (XLSX)</a>
+    </p>
+  </header>
+  <section>
+    <table class="contracts-table">
+      <thead>
+        <tr>
+          <th>PDF</th>
+          <th>Superintendent</th>
+          <th>District(s)</th>
+          <th>Scope</th>
+          <th>Term</th>
+          <th>Vintage</th>
+          <th>FTE-equiv</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="status-primary">
+          <td><a href="er9/MANUAL__McKinnon_ER9_Supe_Contract_2024-2027.pdf" target="_blank" rel="noopener">MANUAL__McKinnon_ER9_Supe_Contract_2024-2027.pdf</a></td>
+          <td>Dr. Jason McKinnon</td>
+          <td>Easton, Redding</td>
+          <td>K-12 (ER9)</td>
+          <td>2024–2027</td>
+          <td class="num">2025-26</td>
+          <td class="num">$310,408</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="region-4/Brian_White_Contract_2025-28_FINAL_SIGNED_by_all.pdf" target="_blank" rel="noopener">Brian_White_Contract_2025-28_FINAL_SIGNED_by_all.pdf</a></td>
+          <td>Brian J. White</td>
+          <td>Centerbrook, Chester, Deep River</td>
+          <td>K-12 (Region 4)</td>
+          <td>2025–2028</td>
+          <td class="num">2025-26</td>
+          <td class="num">$277,649</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="barkhamsted/Sacharko_Barkhamsted_2025-2028.pdf" target="_blank" rel="noopener">Sacharko_Barkhamsted_2025-2028.pdf</a></td>
+          <td>Erika F. Sacharko</td>
+          <td>Barkhamsted</td>
+          <td>K-6</td>
+          <td>2025–2028</td>
+          <td class="num">2025-26</td>
+          <td class="num">$265,141</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="sherman/Cosentino_Sherman_2025-2028.pdf" target="_blank" rel="noopener">Cosentino_Sherman_2025-2028.pdf</a></td>
+          <td>Dr. Patricia Cosentino</td>
+          <td>Sherman</td>
+          <td>K-8</td>
+          <td>2025–2028</td>
+          <td class="num">2025-26</td>
+          <td class="num">$249,163</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="region-1/Brady-Shanley_Contract_2025-2028.pdf" target="_blank" rel="noopener">Brady-Shanley_Contract_2025-2028.pdf</a></td>
+          <td>Melony M. Brady-Shanley</td>
+          <td>Falls Village, Kent, Lakeville, North Canaan, Sharon, West Cornwall</td>
+          <td>K-12 (Region 1)</td>
+          <td>2025–2028</td>
+          <td class="num">2025-26</td>
+          <td class="num">$245,610</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="orange/Scarpetti_Orange_2025-2028.pdf" target="_blank" rel="noopener">Scarpetti_Orange_2025-2028.pdf</a></td>
+          <td>Dr. Vincent (Vince) Scarpetti</td>
+          <td>Orange</td>
+          <td>K-6</td>
+          <td>2025–2028</td>
+          <td class="num">2025-26</td>
+          <td class="num">$244,337</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="amity-region-5/Byars_Amity_R5_2025-2028.pdf" target="_blank" rel="noopener">Byars_Amity_R5_2025-2028.pdf</a></td>
+          <td>Dr. Jennifer Byars (Amity Region 5 HS only)</td>
+          <td>Amity Region 5</td>
+          <td>HS-only (Amity Region 5 grades 7-12)</td>
+          <td>2025–2028</td>
+          <td class="num">2025-26</td>
+          <td class="num">$243,762</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="hebron/KNOWN__GetFile_ashx.pdf" target="_blank" rel="noopener">KNOWN__GetFile_ashx.pdf</a></td>
+          <td>Dr. Thomas Baird</td>
+          <td>Hebron</td>
+          <td>K-6</td>
+          <td>2025–2028</td>
+          <td class="num">2025-26</td>
+          <td class="num">$223,736</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="marlborough/Hageman_Marlborough_2025-26.pdf" target="_blank" rel="noopener">Hageman_Marlborough_2025-26.pdf</a></td>
+          <td>Dr. Holly B. Hageman</td>
+          <td>Marlborough</td>
+          <td>K-6</td>
+          <td>2025–2026</td>
+          <td class="num">2025-26</td>
+          <td class="num">$222,222</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="east-hartland/score150__d2__superintendent_contract_2024-2027_20250131104253_pdf.pdf" target="_blank" rel="noopener">score150__d2__superintendent_contract_2024-2027_20250131104253_pdf.pdf</a></td>
+          <td>Immacolata Canelli</td>
+          <td>East Hartland</td>
+          <td>K-6</td>
+          <td>2024–2027</td>
+          <td class="num">2024-25</td>
+          <td class="num">$208,880</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="columbia/Wilson_Columbia_2024-2028.pdf" target="_blank" rel="noopener">Wilson_Columbia_2024-2028.pdf</a></td>
+          <td>Barbara Wilson</td>
+          <td>Columbia</td>
+          <td>K-6</td>
+          <td>2024–2028</td>
+          <td class="num">2025-26</td>
+          <td class="num">$202,400</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="voluntown/KNOWN__Superintendent-PDF.pdf" target="_blank" rel="noopener">KNOWN__Superintendent-PDF.pdf</a></td>
+          <td>Scott Feder</td>
+          <td>Voluntown</td>
+          <td>K-8 (assumed)</td>
+          <td>2025–2026</td>
+          <td class="num">2025-26</td>
+          <td class="num">$200,000</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="storrs/Morell_Mansfield_2025-2028.pdf" target="_blank" rel="noopener">Morell_Mansfield_2025-2028.pdf</a></td>
+          <td>Dr. Candace Morell</td>
+          <td>Storrs</td>
+          <td>K-8</td>
+          <td>2025–2028</td>
+          <td class="num">2025-26</td>
+          <td class="num">$200,000</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="salem/KNOWN__Hendrickson_Supt_Contract.pdf" target="_blank" rel="noopener">KNOWN__Hendrickson_Supt_Contract.pdf</a></td>
+          <td>Brian Hendrickson</td>
+          <td>Salem</td>
+          <td>K-8</td>
+          <td>2024–2027</td>
+          <td class="num">2025-26</td>
+          <td class="num">$197,699</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="colebrook/Gilbert_Colebrook_2025-2028.pdf" target="_blank" rel="noopener">Gilbert_Colebrook_2025-2028.pdf</a></td>
+          <td>Robert Gilbert</td>
+          <td>Colebrook</td>
+          <td>K-6</td>
+          <td>2025–2028</td>
+          <td class="num">2025-26</td>
+          <td class="num">$195,620</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="new-hartford/Sousa_NewHartford_K6_2023-2026.pdf" target="_blank" rel="noopener">Sousa_NewHartford_K6_2023-2026.pdf</a></td>
+          <td>Jeffrey F. Sousa</td>
+          <td>New Hartford</td>
+          <td>K-6</td>
+          <td>2023–2026</td>
+          <td class="num">2025-26</td>
+          <td class="num">$193,250</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="woodstock/Roche_Woodstock_2025-2028.pdf" target="_blank" rel="noopener">Roche_Woodstock_2025-2028.pdf</a></td>
+          <td>Christopher Roche</td>
+          <td>Woodstock</td>
+          <td>K-8</td>
+          <td>2025–2028</td>
+          <td class="num">2025-26</td>
+          <td class="num">$190,000</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="winsted/Luby_Winsted_2024-2027.pdf" target="_blank" rel="noopener">Luby_Winsted_2024-2027.pdf</a></td>
+          <td>Dr. Julie Luby</td>
+          <td>Winsted</td>
+          <td>K-8</td>
+          <td>2024–2027</td>
+          <td class="num">2025-26</td>
+          <td class="num">$189,100</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="brooklyn/score150__d2__005048-2e142bb1-802a-4e3b-85fb-cecdc7739353_pdf.pdf" target="_blank" rel="noopener">score150__d2__005048-2e142bb1-802a-4e3b-85fb-cecdc7739353_pdf.pdf</a></td>
+          <td>Michele Raynor</td>
+          <td>Brooklyn</td>
+          <td>K-8</td>
+          <td>2024–2027</td>
+          <td class="num">2025-26</td>
+          <td class="num">$185,000</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="bethany/KB_Contract_Byrd_2024-2027.pdf" target="_blank" rel="noopener">KB_Contract_Byrd_2024-2027.pdf</a></td>
+          <td>Kai Byrd</td>
+          <td>Bethany</td>
+          <td>K-6</td>
+          <td>2024–2027</td>
+          <td class="num">2024-25</td>
+          <td class="num">$184,642</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="canterbury/Bitgood_Canterbury_2024-2027.pdf" target="_blank" rel="noopener">Bitgood_Canterbury_2024-2027.pdf</a></td>
+          <td>Dr. Christopher Bitgood</td>
+          <td>Canterbury</td>
+          <td>K-6</td>
+          <td>2024–2027</td>
+          <td class="num">2025-26</td>
+          <td class="num">$183,801</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="preston/score170__d2__4775.pdf" target="_blank" rel="noopener">score170__d2__4775.pdf</a></td>
+          <td>Dr. Roy Seitsinger</td>
+          <td>Preston</td>
+          <td>K-8 (assumed)</td>
+          <td>2025–2028</td>
+          <td class="num">2025-26</td>
+          <td class="num">$179,307</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="hampton/CONTRACT_A.Skarzynski_25-28.pdf" target="_blank" rel="noopener">CONTRACT_A.Skarzynski_25-28.pdf</a></td>
+          <td>Andrew Skarzynski</td>
+          <td>Hampton</td>
+          <td>K-8</td>
+          <td>2025–2028</td>
+          <td class="num">2025-26</td>
+          <td class="num">$179,167</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="baltic/Hull_Sprague_2024-2027.pdf" target="_blank" rel="noopener">Hull_Sprague_2024-2027.pdf</a></td>
+          <td>William Hull</td>
+          <td>Baltic</td>
+          <td>K-8</td>
+          <td>2024–2027</td>
+          <td class="num">2025-26</td>
+          <td class="num">$175,443</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="norfolk/score220__d2__BOE-Superintendent-Contract-2022-2025_pdf.pdf" target="_blank" rel="noopener">score220__d2__BOE-Superintendent-Contract-2022-2025_pdf.pdf</a></td>
+          <td>Mary Beth Iacobelli</td>
+          <td>Norfolk</td>
+          <td>K-6</td>
+          <td>2022–2025</td>
+          <td class="num">2024-25</td>
+          <td class="num">$173,750</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="andover/KNOWN__2023-2026_Superintendents_Contract_pdf.pdf" target="_blank" rel="noopener">KNOWN__2023-2026_Superintendents_Contract_pdf.pdf</a></td>
+          <td>Valerie Bruneau</td>
+          <td>Andover</td>
+          <td>K-6</td>
+          <td>2023–2026</td>
+          <td class="num">2025-26</td>
+          <td class="num">$166,667</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-primary">
+          <td><a href="chaplin/score150__d2__superintendent_contract_2024-2027_pdf.pdf" target="_blank" rel="noopener">score150__d2__superintendent_contract_2024-2027_pdf.pdf</a></td>
+          <td>Andrew Skarzynski</td>
+          <td>Chaplin</td>
+          <td>K-12 (Region 11 + Chaplin)</td>
+          <td>2024–2027</td>
+          <td class="num">2025-26</td>
+          <td class="num">$141,750</td>
+          <td class="status-cell">Primary</td>
+        </tr>
+        <tr class="status-future">
+          <td><a href="lisbon/score150__d2__Superintendent-Contract-2026-2028.pdf" target="_blank" rel="noopener">score150__d2__Superintendent-Contract-2026-2028.pdf</a></td>
+          <td>Sally A. Keating</td>
+          <td>Lisbon</td>
+          <td>K-8</td>
+          <td>2026–2028</td>
+          <td class="num">2026-27</td>
+          <td class="num">$251,210</td>
+          <td class="status-cell">Future</td>
+        </tr>
+        <tr class="status-future">
+          <td><a href="sterling/Friend_Sterling_2026-2029.pdf" target="_blank" rel="noopener">Friend_Sterling_2026-2029.pdf</a></td>
+          <td>Theodore F. Friend</td>
+          <td>Sterling</td>
+          <td>K-8</td>
+          <td>2026–2029</td>
+          <td class="num">2026-27</td>
+          <td class="num">$219,980</td>
+          <td class="status-cell">Future</td>
+        </tr>
+        <tr class="status-stale">
+          <td><a href="region-7/score150__d3__reg_7_superintendents_contract_2023-2026_pdf.pdf" target="_blank" rel="noopener">score150__d3__reg_7_superintendents_contract_2023-2026_pdf.pdf</a></td>
+          <td>Steven LePage (Region 7 HS only)</td>
+          <td>Region 7</td>
+          <td>HS-only (Region 7 grades 7-12)</td>
+          <td>2023–2026</td>
+          <td class="num">2023-24</td>
+          <td class="num">$195,000</td>
+          <td class="status-cell">Stale ⚠</td>
+        </tr>
+        <tr class="status-stale">
+          <td><a href="west-willington/score150__d2__superintendent_contract_2022-2025pdf-PDF.pdf" target="_blank" rel="noopener">score150__d2__superintendent_contract_2022-2025pdf-PDF.pdf</a></td>
+          <td>Philip 'Phil' Stevens</td>
+          <td>West Willington</td>
+          <td>K-8 (assumed)</td>
+          <td>2023–2026</td>
+          <td class="num">2023-24</td>
+          <td class="num">$164,591</td>
+          <td class="status-cell">Stale ⚠</td>
+        </tr>
+        <tr class="status-stale">
+          <td><a href="eastford/KNOWN__Superintendent-Contract-2022_pdf.pdf" target="_blank" rel="noopener">KNOWN__Superintendent-Contract-2022_pdf.pdf</a></td>
+          <td>Donna P. Leake</td>
+          <td>Eastford</td>
+          <td>K-6</td>
+          <td>2021–2024</td>
+          <td class="num">2021-22</td>
+          <td class="num">$146,866</td>
+          <td class="status-cell">Stale ⚠</td>
+        </tr>
+        <tr class="status-stale">
+          <td><a href="scotland/KNOWN__Bruneau_Scotland_2021-2024.pdf" target="_blank" rel="noopener">KNOWN__Bruneau_Scotland_2021-2024.pdf</a></td>
+          <td>Valerie Bruneau</td>
+          <td>Scotland</td>
+          <td>K-6</td>
+          <td>2021–2024</td>
+          <td class="num">2021-22</td>
+          <td class="num">$143,048</td>
+          <td class="status-cell">Stale ⚠</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+</body>
+</html>

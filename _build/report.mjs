@@ -41,6 +41,8 @@ import { spawnSync } from "node:child_process";
 import { marked } from "marked";
 import { markedSmartypants } from "marked-smartypants";
 import matter from "gray-matter";
+import { buildContractsBundle } from "./contracts.mjs";
+import { buildScatterPlot } from "./scatter.mjs";
 
 marked.use(markedSmartypants());
 marked.use({ gfm: true });
@@ -614,6 +616,11 @@ async function buildReport(mdPath) {
   writeFileSync(htmlPath, screenHtml, "utf8");
   console.log(`wrote ${htmlPath} (${screenHtml.length.toLocaleString()} chars, theme: ${themeName})`);
 
+  // Build the scatter plot BEFORE the PDF so WeasyPrint can embed it.
+  if (meta.scatter) {
+    await buildScatterPlot(folder, meta);
+  }
+
   // Print HTML -> PDF via WeasyPrint (temp file in the folder so local images resolve)
   const printHtml = await buildHtml(mdBody, meta, { forPdf: true, extraCss, plugin, themeCss, breadcrumb });
   const tmpHtml = join(folder, ".report-print.tmp.html");
@@ -637,6 +644,11 @@ async function buildReport(mdPath) {
     rmSync(tmpHtml, { force: true });
   }
   console.log(`wrote ${pdfPath}`);
+
+  // Optional: contracts subpage + zip + xlsx (front-matter `contracts:`)
+  if (meta.contracts) {
+    await buildContractsBundle(folder, meta, themeCss, BASE_CSS, breadcrumb);
+  }
 }
 
 async function main() {
