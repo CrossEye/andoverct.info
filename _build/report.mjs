@@ -43,6 +43,7 @@ import { markedSmartypants } from "marked-smartypants";
 import matter from "gray-matter";
 import { buildContractsBundle } from "./contracts.mjs";
 import { buildScatterPlot } from "./scatter.mjs";
+import { buildResearchPages } from "./research.mjs";
 
 marked.use(markedSmartypants());
 marked.use({ gfm: true });
@@ -51,6 +52,24 @@ const HERE = import.meta.dirname;
 const BASE_CSS = readFileSync(join(HERE, "base.css"), "utf8");
 const PRINT_CSS = readFileSync(join(HERE, "print.css"), "utf8");
 const DRAFT_CSS = readFileSync(join(HERE, "draft.css"), "utf8");
+
+// Private-report chrome: an unmistakable "not public" banner. Layered onto the
+// screen CSS only when a report's front matter sets `private: true`.
+const PRIVATE_CSS = `
+.page-banner.private-banner {
+  background: #7a1420;
+  color: #f6e9e6;
+  border-bottom: 3px solid #4a0c14;
+}
+.page-banner.private-banner .crumbs .sep { color: #f6e9e6; opacity: .55; }
+.page-banner.private-banner .crumbs .current { color: #fff; }
+.private-badge {
+  display: inline-block; background: #fff; color: #7a1420;
+  font-weight: 700; letter-spacing: .12em; padding: 2px 9px;
+  border-radius: 4px; margin-right: .35em;
+}
+.private-note { font-weight: 600; opacity: .92; }
+`;
 
 // ---------------------------------------------------------------------------
 // Numeric-cell detection (shared by the column-aware aligner)
@@ -408,6 +427,16 @@ function breadcrumbHtml(meta, sections) {
     .join('<span class="sep">›</span>');
 }
 
+// Private reports get no public trail — just a loud PRIVATE badge and the title.
+function privateBreadcrumbHtml(meta) {
+  return (
+    '<span class="private-badge">🔒 PRIVATE</span>' +
+    '<span class="private-note">Not for public distribution</span>' +
+    '<span class="sep">›</span>' +
+    `<span class="current">${escapeHtml(meta.title)}</span>`
+  );
+}
+
 const CLIPBOARD_SCRIPT = `
 document.addEventListener('click', function(e) {
     const anchor = e.target.closest('.header-anchor');
@@ -465,7 +494,7 @@ const LIGHTBOX_SCRIPT = `
 // Assemble the document
 // ---------------------------------------------------------------------------
 
-async function buildHtml(mdText, meta, { forPdf, extraCss, plugin, themeCss, breadcrumb }) {
+async function buildHtml(mdText, meta, { forPdf, extraCss, plugin, themeCss, breadcrumb, isPrivate }) {
   const body = markdownToBody(mdText);
   const { headerHtml, rest: rest0 } = splitReport(body);
 
@@ -485,19 +514,23 @@ async function buildHtml(mdText, meta, { forPdf, extraCss, plugin, themeCss, bre
   // in either; the visible ¶ anchor is hidden in print via CSS.
   rest = addHeaderAnchors(rest);
 
-  const printCss = PRINT_CSS.replace("__PDF_PAGE_AUTHOR__", meta.pdf.author).replace(
-    "__PDF_PAGE_FOOTER__",
-    meta.pdf.footer
-  );
+  const printCss = (forPdf && meta.pdf)
+    ? PRINT_CSS.replace("__PDF_PAGE_AUTHOR__", meta.pdf.author).replace(
+        "__PDF_PAGE_FOOTER__",
+        meta.pdf.footer
+      )
+    : "";
   const draftCss = meta.draft ? "\n" + DRAFT_CSS : "";
+  const privateCss = isPrivate ? "\n" + PRIVATE_CSS : "";
   const bodyAttr = meta.draft ? ' data-draft="true"' : "";
   const css =
-    themeCss + "\n" + BASE_CSS + (forPdf ? printCss : "") + draftCss + (extraCss ? "\n" + extraCss : "");
+    themeCss + "\n" + BASE_CSS + (forPdf ? printCss : "") + draftCss + privateCss +
+    (extraCss ? "\n" + extraCss : "");
 
   const titleBlock =
     `<h1 class="report-title">${meta.title}</h1>\n` +
-    `<p class="report-subtitle">${meta.subtitle}</p>\n` +
-    `<p class="report-attribution">${meta.attribution}</p>\n` +
+    (meta.subtitle ? `<p class="report-subtitle">${meta.subtitle}</p>\n` : "") +
+    (meta.attribution ? `<p class="report-attribution">${meta.attribution}</p>\n` : "") +
     `<hr class="report-header-rule">\n` +
     `<p class="methodology-header">${headerHtml}</p>`;
 
@@ -529,7 +562,7 @@ ${rest}
 <style>${css}</style>
 </head>
 <body${bodyAttr}>
-<div class="page-banner">
+<div class="page-banner${isPrivate ? " private-banner" : ""}">
   <nav class="page-banner-inner crumbs">
     ${breadcrumb}
   </nav>
@@ -539,8 +572,7 @@ ${titleBlock}
 ${rest}
 </div>
 <div class="page-footer">
-${meta.footer} ·
-<a href="${meta.publicUrl}">${meta.pdf.footer}</a>
+${isPrivate ? meta.footer : `${meta.footer} ·\n<a href="${meta.publicUrl}">${meta.pdf.footer}</a>`}
 </div>
 <script>${CLIPBOARD_SCRIPT}</script>
 <script>${LIGHTBOX_SCRIPT}</script>
@@ -553,6 +585,15 @@ ${meta.footer} ·
 // ---------------------------------------------------------------------------
 
 function validateMeta(meta, mdPath) {
+  if (meta.private) {
+    // Private reports are screen-only (no PDF/format cards/public URL).
+    const required = ["pageTitle", "title", "footer"];
+    const missing = required.filter((k) => meta[k] === undefined);
+    if (missing.length) {
+      throw new Error(`${mdPath}: missing front-matter field(s): ${missing.join(", ")}`);
+    }
+    return;
+  }
   const required = ["publicUrl", "pageTitle", "title", "subtitle", "attribution", "footer", "pdf"];
   const missing = required.filter((k) => meta[k] === undefined);
   if (missing.length) {
@@ -611,6 +652,17 @@ async function buildReport(mdPath) {
     plugin = await import(pathToFileURL(pluginPath).href);
   }
 
+  // Private reports: screen-only, PRIVATE banner, no PDF/scatter/contracts/cards.
+  if (meta.private) {
+    const html = await buildHtml(mdBody, meta, {
+      forPdf: false, extraCss, plugin, themeCss,
+      breadcrumb: privateBreadcrumbHtml(meta), isPrivate: true,
+    });
+    writeFileSync(htmlPath, html, "utf8");
+    console.log(`wrote ${htmlPath} (private · ${html.length.toLocaleString()} chars, theme: ${themeName})`);
+    return;
+  }
+
   // Screen HTML
   const screenHtml = await buildHtml(mdBody, meta, { forPdf: false, extraCss, plugin, themeCss, breadcrumb });
   writeFileSync(htmlPath, screenHtml, "utf8");
@@ -648,6 +700,11 @@ async function buildReport(mdPath) {
   // Optional: contracts subpage + zip + xlsx (front-matter `contracts:`)
   if (meta.contracts) {
     await buildContractsBundle(folder, meta, themeCss, BASE_CSS, breadcrumb);
+  }
+
+  // Optional: supplementary research pages (front-matter `research:`)
+  if (meta.research) {
+    await buildResearchPages(folder, meta, themeCss, BASE_CSS, breadcrumb);
   }
 }
 
