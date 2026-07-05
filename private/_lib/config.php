@@ -38,8 +38,8 @@ define('PRIV_BASE_PATH', '/private');
 define('PRIV_MAIL_FROM', 'noreply@andoverct.info');
 define('PRIV_MAIL_FROM_NAME', "Scott Sauyet's Andover Site");
 
-define('PRIV_TOKEN_TTL', 900);        // magic-link lifetime, seconds (15 min)
-define('PRIV_SESSION_TTL', 60 * 60 * 12); // treat sessions older than this as stale
+define('PRIV_TOKEN_TTL', 900);            // magic-link lifetime, seconds (15 min)
+define('PRIV_SESSION_TTL', 60 * 60 * 24 * 30); // 30 days, sliding (refreshed on each visit)
 
 // --- First-run bootstrap of the data dir (idempotent, safe) -----------------
 // Creates the data directories and a random token pepper if they don't exist.

@@ -19,13 +19,17 @@ function priv_session_start() {
     }
     ini_set('session.use_strict_mode', '1');   // reject uninitialized session ids
     ini_set('session.use_only_cookies', '1');
+    // Keep idle session files alive as long as the login is valid, else PHP's GC
+    // (default ~24 min) would reap a persistent session well before 30 days.
+    ini_set('session.gc_maxlifetime', (string) PRIV_SESSION_TTL);
     session_name('privsess');
 
     $secure = true;      // forced: browser<->edge leg is always HTTPS
     $httponly = true;
+    $life = PRIV_SESSION_TTL;   // persistent cookie: survives browser restarts
     if (PHP_VERSION_ID >= 70300) {
         session_set_cookie_params(array(
-            'lifetime' => 0,
+            'lifetime' => $life,
             'path'     => '/private/',
             'domain'   => '',
             'secure'   => $secure,
@@ -35,9 +39,21 @@ function priv_session_start() {
     } else {
         // PHP < 7.3 has no samesite arg; browser default (Lax) applies, which is
         // exactly what we want for the top-level magic-link navigation.
-        session_set_cookie_params(0, '/private/', '', $secure, $httponly);
+        session_set_cookie_params($life, '/private/', '', $secure, $httponly);
     }
     session_start();
+}
+
+// Re-issue the session cookie with a fresh expiry so an ACTIVE session slides
+// forward and survives browser restarts (up to PRIV_SESSION_TTL of inactivity).
+// Guarded so it emits at most one Set-Cookie per request.
+function priv_touch_cookie() {
+    static $done = false;
+    if ($done || headers_sent()) { return; }
+    $done = true;
+    if (session_status() !== PHP_SESSION_ACTIVE) { return; }
+    setcookie(session_name(), session_id(), time() + PRIV_SESSION_TTL,
+        '/private/', '', true, true);
 }
 
 function priv_is_authorized($sub) {
@@ -47,6 +63,8 @@ function priv_is_authorized($sub) {
         unset($_SESSION['authed'][$sub]);
         return false;
     }
+    $_SESSION['authed'][$sub] = time();   // sliding window: activity keeps it alive
+    priv_touch_cookie();                   // and slide the persistent cookie
     return true;
 }
 
