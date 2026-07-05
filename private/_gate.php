@@ -41,7 +41,17 @@ if ($path === 'logout') {
 
 if ($path === 'verify') {
     priv_token_gc();
-    $token = isset($_GET['token']) ? (string) $_GET['token'] : '';
+    // GET never consumes the token — it only shows a confirm button. Link
+    // scanners (Proofpoint/Safe Links) pre-fetch via GET; not consuming here
+    // keeps the single-use token alive until the human submits the form.
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        $token = isset($_GET['token']) ? (string) $_GET['token'] : '';
+        priv_render_confirm($token);
+        exit;
+    }
+    // POST: actually consume + sign in. (The token itself is the capability, so
+    // no CSRF is required here; requiring a human click is what defeats scanners.)
+    $token = isset($_POST['token']) ? (string) $_POST['token'] : '';
     $res = priv_token_consume($token);
     if (!$res) {
         priv_render_notice('Link expired',
@@ -55,12 +65,7 @@ if ($path === 'verify') {
 }
 
 if ($path === 'admin' || strpos($path, 'admin/') === 0) {
-    // [Phase 4] owner-gated add/remove users.
-    if (!priv_current_is_owner()) {
-        priv_render_notice('Admin', 'Owner sign-in required.', 'err', 403);
-        exit;
-    }
-    priv_render_notice('Admin', 'The admin console arrives in a later phase.', 'ok');
+    priv_handle_admin($path);
     exit;
 }
 
@@ -163,6 +168,85 @@ function priv_handle_request_link($sub, $meta) {
     priv_render_notice('Check your email',
         'If your address is on the list for this area, a sign-in link is on its way. '
         . 'It expires in 15 minutes. You can close this tab.', 'ok');
+}
+
+// ---- admin console (owner-gated) ------------------------------------------
+function priv_handle_admin($path) {
+    $action = ($path === 'admin') ? '' : substr($path, strlen('admin/'));
+    $authed = priv_is_authorized('admin') && priv_current_is_owner();
+
+    if (!$authed) {
+        if ($action === 'request-link') { priv_handle_admin_request_link(); return; }
+        priv_render_admin_login();
+        return;
+    }
+    if ($action === 'add' || $action === 'remove') { priv_admin_mutate($action); return; }
+
+    $subs = priv_list_subsections();
+    foreach ($subs as $i => $s) { $subs[$i]['users'] = priv_list_users($s['id']); }
+    $flash = null;
+    if (!empty($_SESSION['admin_flash'])) {
+        $flash = $_SESSION['admin_flash'];
+        unset($_SESSION['admin_flash']);
+    }
+    priv_render_admin_console($subs, $flash);
+}
+
+// Owner-only: email an admin-scoped magic link. Same no-enumeration discipline.
+function priv_handle_admin_request_link() {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !priv_csrf_check()) {
+        priv_render_admin_login(array('type' => 'err', 'msg' => 'Your session expired — please try again.'));
+        return;
+    }
+    $raw = isset($_POST['email']) ? (string) $_POST['email'] : '';
+    $email = priv_norm_email($raw);
+    if (!priv_valid_email($email)) {
+        priv_render_admin_login(array('type' => 'err', 'msg' => 'Please enter a valid email address.'), $raw);
+        return;
+    }
+    $ipOk = priv_rate_ok('ip:' . priv_client_ip(), 20, 3600);
+    $emOk = priv_rate_ok('em:' . $email, 5, 3600);
+    if ($ipOk && $emOk && priv_is_owner($email)) {
+        $token = priv_token_create('admin', $email);
+        $link = PRIV_SITE_ORIGIN . PRIV_BASE_PATH . '/verify?token=' . $token;
+        $sent = priv_send_login_link($email, array('title' => 'the admin console'), $link);
+        priv_audit($sent ? 'admin-link-sent' : 'admin-link-send-failed', $email);
+    } else {
+        priv_audit(($ipOk && $emOk) ? 'admin-link-denied' : 'admin-link-ratelimited', $email);
+    }
+    priv_render_notice('Check your email',
+        'If that address is an owner, a sign-in link is on its way. It expires in 15 minutes.', 'ok');
+}
+
+// Owner-only: add/remove an allowlist email, then redirect back to the console.
+function priv_admin_mutate($action) {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !priv_csrf_check()) {
+        $_SESSION['admin_flash'] = array('type' => 'err', 'msg' => 'Action failed (session/CSRF). Try again.');
+        priv_redirect(PRIV_BASE_PATH . '/admin');
+    }
+    $sub = isset($_POST['sub']) ? (string) $_POST['sub'] : '';
+    $email = priv_norm_email(isset($_POST['email']) ? $_POST['email'] : '');
+
+    $valid = false;
+    foreach (priv_list_subsections() as $s) { if ($s['id'] === $sub) { $valid = true; break; } }
+    if (!$valid) {
+        $_SESSION['admin_flash'] = array('type' => 'err', 'msg' => 'Unknown area.');
+        priv_redirect(PRIV_BASE_PATH . '/admin');
+    }
+
+    if ($action === 'add') {
+        if (priv_add_user($sub, $email)) {
+            priv_audit('admin-add', $sub . ' ' . $email);
+            $_SESSION['admin_flash'] = array('type' => 'ok', 'msg' => 'Added ' . $email . ' to ' . $sub . '.');
+        } else {
+            $_SESSION['admin_flash'] = array('type' => 'err', 'msg' => 'That is not a valid email.');
+        }
+    } else {
+        priv_remove_user($sub, $email);
+        priv_audit('admin-remove', $sub . ' ' . $email);
+        $_SESSION['admin_flash'] = array('type' => 'ok', 'msg' => 'Removed ' . $email . ' from ' . $sub . '.');
+    }
+    priv_redirect(PRIV_BASE_PATH . '/admin');
 }
 
 // Stream a protected file after the auth check, with path-traversal containment

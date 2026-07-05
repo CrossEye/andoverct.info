@@ -22,6 +22,20 @@ function priv_allowlist_path($sub) {
     return PRIV_ALLOW_DIR . '/' . $sub . '.json';
 }
 
+// List defined subsections (dirs under subsections/ that have a _meta.json).
+function priv_list_subsections() {
+    $out = array();
+    $dirs = @glob(PRIV_SUBS_DIR . '/*', GLOB_ONLYDIR);
+    if (!is_array($dirs)) { return $out; }
+    foreach ($dirs as $d) {
+        if (!is_file($d . '/_meta.json')) { continue; }
+        $m = priv_json_read($d . '/_meta.json', array());
+        $id = basename($d);
+        $out[] = array('id' => $id, 'title' => isset($m['title']) ? $m['title'] : $id);
+    }
+    return $out;
+}
+
 // Case-insensitive membership check within a JSON email-array file.
 function priv_email_in_file($file, $email) {
     $email = priv_norm_email($email);
