@@ -181,6 +181,7 @@ function priv_handle_admin($path) {
         return;
     }
     if ($action === 'add' || $action === 'remove') { priv_admin_mutate($action); return; }
+    if ($action === 'mintlink') { priv_admin_mintlink(); return; }
 
     $subs = priv_list_subsections();
     foreach ($subs as $i => $s) { $subs[$i]['users'] = priv_list_users($s['id']); }
@@ -189,7 +190,12 @@ function priv_handle_admin($path) {
         $flash = $_SESSION['admin_flash'];
         unset($_SESSION['admin_flash']);
     }
-    priv_render_admin_console($subs, $flash);
+    $link = null;
+    if (!empty($_SESSION['admin_link'])) {
+        $link = $_SESSION['admin_link'];
+        unset($_SESSION['admin_link']);
+    }
+    priv_render_admin_console($subs, $flash, $link);
 }
 
 // Owner-only: email an admin-scoped magic link. Same no-enumeration discipline.
@@ -246,6 +252,32 @@ function priv_admin_mutate($action) {
         priv_audit('admin-remove', $sub . ' ' . $email);
         $_SESSION['admin_flash'] = array('type' => 'ok', 'msg' => 'Removed ' . $email . ' from ' . $sub . '.');
     }
+    priv_redirect(PRIV_BASE_PATH . '/admin');
+}
+
+// Owner-only: mint a real single-use sign-in link for an allowlisted user and
+// show it in the console for the owner to hand over out-of-band (no email).
+function priv_admin_mintlink() {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !priv_csrf_check()) {
+        $_SESSION['admin_flash'] = array('type' => 'err', 'msg' => 'Action failed (session/CSRF). Try again.');
+        priv_redirect(PRIV_BASE_PATH . '/admin');
+    }
+    $sub = isset($_POST['sub']) ? (string) $_POST['sub'] : '';
+    $email = priv_norm_email(isset($_POST['email']) ? $_POST['email'] : '');
+
+    $valid = false;
+    foreach (priv_list_subsections() as $s) { if ($s['id'] === $sub) { $valid = true; break; } }
+    if (!$valid || !priv_is_allowed($sub, $email)) {
+        $_SESSION['admin_flash'] = array('type' => 'err', 'msg' => 'That user is not on that area\'s list.');
+        priv_redirect(PRIV_BASE_PATH . '/admin');
+    }
+    $token = priv_token_create($sub, $email);
+    $_SESSION['admin_link'] = array(
+        'url'   => PRIV_SITE_ORIGIN . PRIV_BASE_PATH . '/verify?token=' . $token,
+        'email' => $email,
+        'sub'   => $sub,
+    );
+    priv_audit('admin-mintlink', $sub . ' ' . $email);
     priv_redirect(PRIV_BASE_PATH . '/admin');
 }
 

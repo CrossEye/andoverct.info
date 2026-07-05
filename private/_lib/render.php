@@ -70,9 +70,16 @@ function priv_css() {
   .ulist li:last-child{border-bottom:0;}
   .ulist .none{color:var(--mute);font-style:italic;}
   .ulist form{margin:0;}
+  .ulist .acts{display:flex;gap:6px;}
   .ulist button{width:auto;margin:0;padding:4px 9px;font-size:12px;background:none;
     border:1px solid #eec4c4;color:#8a1f1f;border-radius:6px;}
   .ulist button:hover{background:#fbeaea;}
+  .ulist button.getlink{border-color:#bcd0e6;color:var(--blue);}
+  .ulist button.getlink:hover{background:#eef4fb;}
+  .linkbox{background:#fff7e6;border:1px solid #f0d9a6;border-radius:10px;
+    padding:14px 16px;margin:0 0 20px;font-size:14px;color:#5a4a1f;}
+  .linkbox input{width:100%;margin-top:9px;font-family:var(--mono,monospace);font-size:12px;
+    padding:9px;border:1px solid #e0cf9a;border-radius:6px;background:#fff;color:var(--ink);}
   .addrow{display:flex;gap:8px;align-items:flex-start;margin:0 0 6px;}
   .addrow input{margin:0;} .addrow button{width:auto;margin:0;white-space:nowrap;}
 CSS;
@@ -143,19 +150,31 @@ function priv_render_admin_login($notice = null, $prefill = '') {
 
 // Admin console: per-subsection allowlist management. $subs is the list from
 // priv_list_subsections(); each augmented with a 'users' array.
-function priv_render_admin_console($subs, $flash = null) {
+function priv_render_admin_console($subs, $flash = null, $link = null) {
     $csrf = priv_csrf_field();
     $addBase = priv_h(PRIV_BASE_PATH . '/admin/add');
     $rmBase = priv_h(PRIV_BASE_PATH . '/admin/remove');
+    $linkBase = priv_h(PRIV_BASE_PATH . '/admin/mintlink');
 
     $body = '<div class="topbar"><h1>Admin</h1>'
           . '<form method="post" action="' . priv_h(PRIV_BASE_PATH . '/logout') . '">'
           . $csrf . '<button type="submit">Sign out</button></form></div>'
-          . '<p class="sub">Add or remove who can sign in to each private area.</p>';
+          . '<p class="sub">Add or remove who can sign in to each private area, '
+          . 'or generate a sign-in link to hand someone directly.</p>';
 
     if (is_array($flash)) {
         $cls = ($flash['type'] === 'ok') ? 'ok' : 'err';
         $body .= '<div class="note ' . $cls . '">' . priv_h($flash['msg']) . '</div>';
+    }
+
+    // A freshly generated sign-in link to copy and pass along.
+    if (is_array($link)) {
+        $body .= '<div class="linkbox"><strong>Sign-in link for '
+               . priv_h($link['email']) . '</strong> &middot; ' . priv_h($link['sub'])
+               . ' &middot; single use &middot; expires in 15 minutes. '
+               . 'Copy it and send it to them (text, chat, etc.):'
+               . '<input type="text" readonly onclick="this.select()" value="'
+               . priv_h($link['url']) . '"></div>';
     }
 
     foreach ($subs as $s) {
@@ -169,11 +188,14 @@ function priv_render_admin_console($subs, $flash = null) {
         } else {
             foreach ($users as $e) {
                 $eh = priv_h($e);
-                $body .= '<li><span>' . $eh . '</span>'
-                       . '<form method="post" action="' . $rmBase . '">' . $csrf
-                       . '<input type="hidden" name="sub" value="' . $sid . '">'
-                       . '<input type="hidden" name="email" value="' . $eh . '">'
-                       . '<button type="submit">Remove</button></form></li>';
+                $hidden = '<input type="hidden" name="sub" value="' . $sid . '">'
+                        . '<input type="hidden" name="email" value="' . $eh . '">';
+                $body .= '<li><span>' . $eh . '</span><span class="acts">'
+                       . '<form method="post" action="' . $linkBase . '">' . $csrf . $hidden
+                       . '<button type="submit" class="getlink">Get link</button></form>'
+                       . '<form method="post" action="' . $rmBase . '">' . $csrf . $hidden
+                       . '<button type="submit">Remove</button></form>'
+                       . '</span></li>';
             }
         }
         $body .= '</ul>';
