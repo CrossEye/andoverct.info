@@ -1,0 +1,37 @@
+# ---------------------------------------------------------------------------
+# /private — authenticated section. Apache never serves subsection content
+# directly; only _gate.php reads it (via readfile) after a session check.
+# ---------------------------------------------------------------------------
+
+Options -Indexes
+DirectoryIndex _gate.php
+
+# Deny direct HTTP access to protected content + internals. _gate.php reads
+# these from the filesystem, so denying HTTP access doesn't affect it.
+# Dual syntax: the host's Apache major version wasn't determinable from the spike.
+<FilesMatch "\.(html?|css|js|json|png|jpe?g|gif|svg|webp|pdf|txt|md|woff2?)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Never expose the library or vendored code directly.
+RedirectMatch 403 ^/private/_(lib|vendor)/
+
+# A denied raw hit lands on the gate, which renders the friendly sign-in page.
+ErrorDocument 403 /private/_gate.php
+
+RewriteEngine On
+
+# Re-declare the doc-root idx helper (enabling RewriteEngine stops inheritance).
+RewriteRule ^(.*/)?idx/?$ /idx.php?dir=private/$1 [L,QSA]
+
+# Route every clean URL (not a real file/dir) through the gate. Real files
+# (_gate.php runs directly; content files hit the deny above) are left alone.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ _gate.php?path=$1 [QSA,L]
