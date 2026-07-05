@@ -297,6 +297,7 @@ function priv_serve_content($sub, $rest) {
         header('Cache-Control: private, no-store');
         header('X-Content-Type-Options: nosniff');
         header('Referrer-Policy: no-referrer');
+        header('X-Frame-Options: DENY');
     }
     if ($_SERVER['REQUEST_METHOD'] !== 'HEAD') {
         readfile($target);

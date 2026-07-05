@@ -18,6 +18,7 @@ function priv_render_page($title, $bodyHtml, $status = 200, $wrapClass = '') {
         header('Content-Type: text/html; charset=utf-8');
         header('Referrer-Policy: no-referrer');
         header('X-Content-Type-Options: nosniff');
+        header('X-Frame-Options: DENY');
         header('Cache-Control: no-store');
     }
     $t = priv_h($title);
