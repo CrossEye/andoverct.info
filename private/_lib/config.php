@@ -33,13 +33,13 @@ define('PRIV_LOG_FILE', PRIV_DATA_DIR . '/logs/auth.log');
 define('PRIV_SITE_ORIGIN', 'https://andoverct.info');
 define('PRIV_BASE_PATH', '/private');
 
+// Sender identity (NOT secret — owned here, not in secrets.php). This is a
+// personal site, so the name must not imply the official town government.
+define('PRIV_MAIL_FROM', 'noreply@andoverct.info');
+define('PRIV_MAIL_FROM_NAME', "Scott Sauyet's Andover Site");
+
 define('PRIV_TOKEN_TTL', 900);        // magic-link lifetime, seconds (15 min)
 define('PRIV_SESSION_TTL', 60 * 60 * 12); // treat sessions older than this as stale
-
-// --- TEMPORARY: dev login (REMOVE IN PHASE 3 once magic links work) ----------
-// If set to a non-empty string, a request to /private/<sub>/?dev=<key> logs the
-// browser into <sub> without email, for pre-email testing of the gate.
-define('PRIV_DEV_KEY', 'dev-9f3a2c7b1e6d4051');
 
 // --- First-run bootstrap of the data dir (idempotent, safe) -----------------
 // Creates the data directories and a random token pepper if they don't exist.
@@ -78,4 +78,22 @@ function priv_secrets() {
         if (!is_array($secrets)) { $secrets = array(); }
     }
     return $secrets;
+}
+
+// SMTP settings (from secrets.php['smtp']) with sane defaults for this host.
+function priv_smtp() {
+    $s = priv_secrets();
+    $smtp = isset($s['smtp']) && is_array($s['smtp']) ? $s['smtp'] : array();
+    $merged = array_merge(array(
+        'host'       => 'mail.andoverct.info',
+        'port'       => 2525,
+        'encryption' => 'auto',
+        'user'       => 'noreply@andoverct.info',
+        'pass'       => '',
+    ), $smtp);
+    // Identity is non-secret and authoritative from config, so a stale
+    // secrets.php (e.g. an old display name) can never override it.
+    $merged['from'] = PRIV_MAIL_FROM;
+    $merged['from_name'] = PRIV_MAIL_FROM_NAME;
+    return $merged;
 }

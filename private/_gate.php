@@ -21,6 +21,8 @@
 require_once __DIR__ . '/_lib/config.php';
 require_once __DIR__ . '/_lib/auth.php';
 require_once __DIR__ . '/_lib/users.php';
+require_once __DIR__ . '/_lib/tokens.php';
+require_once __DIR__ . '/_lib/mailer.php';
 require_once __DIR__ . '/_lib/render.php';
 
 priv_bootstrap_data();
@@ -38,9 +40,18 @@ if ($path === 'logout') {
 }
 
 if ($path === 'verify') {
-    // [Phase 3] validate + consume the magic-link token here.
-    priv_render_notice('Sign-in', 'Magic-link sign-in is not enabled yet.', 'err', 503);
-    exit;
+    priv_token_gc();
+    $token = isset($_GET['token']) ? (string) $_GET['token'] : '';
+    $res = priv_token_consume($token);
+    if (!$res) {
+        priv_render_notice('Link expired',
+            'That sign-in link is invalid or has already been used. Please request a new one.',
+            'err', 400);
+        exit;
+    }
+    priv_login($res['sub'], $res['email']);      // regenerates id before any output
+    priv_audit('login', $res['sub'] . ' ' . $res['email']);
+    priv_redirect(PRIV_BASE_PATH . '/' . $res['sub'] . '/');
 }
 
 if ($path === 'admin' || strpos($path, 'admin/') === 0) {
@@ -82,18 +93,8 @@ $rest = implode('/', array_slice($segs, 1));
 
 // subsection endpoint: request a magic link
 if ($rest === 'request-link') {
-    // [Phase 3] csrf + rate-limit + allowlist + send. Stubbed to a generic page.
-    priv_render_notice('Check your email',
-        'If email sign-in were enabled, a sign-in link would be on its way.', 'ok');
+    priv_handle_request_link($sub, $meta);
     exit;
-}
-
-// TEMPORARY dev login (REMOVE IN PHASE 3): /private/<sub>/?dev=<PRIV_DEV_KEY>
-if (PRIV_DEV_KEY !== '' && isset($_GET['dev'])
-    && hash_equals(PRIV_DEV_KEY, (string) $_GET['dev'])) {
-    priv_login($sub, 'dev@localhost');
-    priv_audit('dev-login', $sub);
-    priv_redirect(PRIV_BASE_PATH . '/' . $sub . '/');
 }
 
 // ---- the gate --------------------------------------------------------------
@@ -129,6 +130,39 @@ function priv_route_path() {
 function priv_redirect($to) {
     if (!headers_sent()) { header('Location: ' . $to, true, 302); }
     exit;
+}
+
+// Handle a POSTed "email me a link" request. Never reveals whether an address is
+// on the list: the success page is identical for allowed, not-allowed, and
+// rate-limited inputs; a link is minted + mailed only when the email is allowed.
+function priv_handle_request_link($sub, $meta) {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !priv_csrf_check()) {
+        priv_render_login($sub, $meta,
+            array('type' => 'err', 'msg' => 'Your session expired — please try again.'));
+        return;
+    }
+    $raw = isset($_POST['email']) ? (string) $_POST['email'] : '';
+    $email = priv_norm_email($raw);
+    if (!priv_valid_email($email)) {
+        priv_render_login($sub, $meta,
+            array('type' => 'err', 'msg' => 'Please enter a valid email address.'), $raw);
+        return;
+    }
+
+    $ipOk = priv_rate_ok('ip:' . priv_client_ip(), 20, 3600);
+    $emOk = priv_rate_ok('em:' . $email, 5, 3600);
+    if ($ipOk && $emOk && priv_is_allowed($sub, $email)) {
+        $token = priv_token_create($sub, $email);
+        $link = PRIV_SITE_ORIGIN . PRIV_BASE_PATH . '/verify?token=' . $token;
+        $sent = priv_send_login_link($email, $meta, $link);
+        priv_audit($sent ? 'link-sent' : 'link-send-failed', $sub . ' ' . $email);
+    } else {
+        priv_audit(($ipOk && $emOk) ? 'link-denied' : 'link-ratelimited', $sub . ' ' . $email);
+    }
+
+    priv_render_notice('Check your email',
+        'If your address is on the list for this area, a sign-in link is on its way. '
+        . 'It expires in 15 minutes. You can close this tab.', 'ok');
 }
 
 // Stream a protected file after the auth check, with path-traversal containment
