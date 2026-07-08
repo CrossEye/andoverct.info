@@ -303,7 +303,7 @@ function absUrl(u, siteOrigin) {
   return u.startsWith("/") ? siteOrigin + u : u;
 }
 
-function ogHead({ title, description, path, image }, siteOrigin) {
+function ogHead({ title, description, path, image }, { siteOrigin, defaultOgImage }) {
   const url = siteOrigin + path;
   const lines = [
     `<meta property="og:type" content="website">`,
@@ -311,9 +311,10 @@ function ogHead({ title, description, path, image }, siteOrigin) {
     `<meta property="og:description" content="${escapeHtml(description)}">`,
     `<meta property="og:url" content="${escapeHtml(url)}">`,
   ];
-  if (image)
+  const img = image || defaultOgImage;
+  if (img)
     lines.push(
-      `<meta property="og:image" content="${escapeHtml(absUrl(image, siteOrigin))}">`
+      `<meta property="og:image" content="${escapeHtml(absUrl(img, siteOrigin))}">`
     );
   lines.push(`<link rel="canonical" href="${escapeHtml(url)}">`);
   return lines.join("\n");
@@ -407,7 +408,7 @@ function renderLeafPage(doc, ctx) {
           path: `/links/${doc.id}/`,
           image: doc.image,
         },
-        ctx.siteOrigin
+        ctx
       ),
       crumbs: crumbsHtml(doc.title),
       body,
@@ -445,7 +446,7 @@ function renderListPage(doc, docs, ctx) {
           path: `/links/${doc.id}/`,
           image: doc.image,
         },
-        ctx.siteOrigin
+        ctx
       ),
       crumbs: crumbsHtml(doc.title),
       body,
@@ -473,7 +474,7 @@ function renderIndexPage(docs, ctx) {
   return pageShell(
     {
       pageTitle: "Link registry — andoverct.info",
-      og: ogHead({ title: "Link registry — andoverct.info", description, path: "/links/" }, ctx.siteOrigin),
+      og: ogHead({ title: "Link registry — andoverct.info", description, path: "/links/" }, ctx),
       crumbs: crumbsHtml(null),
       body,
     },
@@ -493,7 +494,11 @@ function main() {
     );
   const css =
     loadTheme(config.theme || "default") + "\n" + BASE_CSS + LINKS_CSS;
-  const ctx = { siteOrigin: config.siteOrigin.replace(/\/+$/, ""), css };
+  const ctx = {
+    siteOrigin: config.siteOrigin.replace(/\/+$/, ""),
+    defaultOgImage: config.defaultOgImage,
+    css,
+  };
 
   const errors = [];
   const docs = loadDocs(errors);
