@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chaplin / RD 11 Shared Central Office — Superintendent Pay in Context</title>
+<style>/* Structural base styles for civic reports — theme-independent.
+ * Colors, fonts, and sizes come from the active theme (CSS custom properties
+ * in _build/themes/<name>.css), which is loaded BEFORE this file. */
+
+/* ---- Reset & base ---- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Layout ---- */
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner a { color: inherit; text-decoration: none; }
+.page-banner a:hover { text-decoration: underline; }
+
+/* ---- Breadcrumb (in the banner) ---- */
+.page-banner .crumbs a {
+    color: var(--crumb-link, var(--banner-ink));
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover, #fff);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current {
+    color: var(--crumb-current, #fff);
+}
+
+.container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* ---- Images / figures ---- */
+/* Scale charts and figures to the column (and the printed page box) rather
+   than overflowing at their intrinsic pixel/point size. */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+}
+
+/* ---- Lightbox (screen only; overlay is built at runtime by the viewer
+   script, so it never appears in the PDF). Click a chart to enlarge it. ---- */
+.container img { cursor: zoom-in; }
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vmin;
+    background: rgba(0, 0, 0, 0.85);
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+.lightbox-overlay.open { opacity: 1; }
+.lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    margin: 0;
+    cursor: zoom-out;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+    background: #fff;
+}
+
+/* ---- Title block ---- */
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-attribution {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    color: var(--ink-faint);
+    margin: 0 0 24px 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+.report-attribution a {
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+}
+.report-attribution a:hover {
+    color: var(--link);
+    border-bottom-color: var(--link);
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.methodology-header {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 0 0 36px 0;
+    line-height: 1.55;
+}
+
+/* ---- Section labels (small uppercase tags above h2) ---- */
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 36px 0 4px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+/* ---- Headings ---- */
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+h3 {
+    font-family: var(--font-sans);
+    font-size: var(--h3-size);
+    font-weight: 600;
+    margin: 28px 0 10px 0;
+    color: var(--accent-2);
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+
+/* ---- Header anchor links (HTML only; hidden in print) ---- */
+.header-anchor {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.2em;
+    color: var(--anchor);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.85em;
+    vertical-align: baseline;
+    cursor: pointer;
+    user-select: none;
+}
+h2:hover .header-anchor,
+h3:hover .header-anchor,
+.header-anchor:focus {
+    opacity: 1;
+}
+.header-anchor:hover {
+    color: var(--anchor-hover);
+}
+.header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+}
+.header-anchor.copied::after {
+    content: " copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+}
+@media print {
+    .header-anchor {
+        display: none;
+    }
+}
+
+/* ---- Body text ---- */
+p {
+    margin: 0 0 14px 0;
+    orphans: 3;
+    widows: 3;
+}
+p.intro-table {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+strong { font-weight: 700; color: var(--ink); }
+em { font-style: italic; }
+
+/* ---- Links ---- */
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* ---- Lists ---- */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+li {
+    margin: 0 0 6px 0;
+    line-height: 1.55;
+}
+
+/* ---- Tables ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-before: avoid;
+    break-before: avoid;
+}
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 9.5pt;
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--accent);
+}
+tbody tr:hover { background: var(--bg); }
+
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+tbody tr:last-child td {
+    border-bottom: 2px solid var(--accent);
+}
+
+/* ---- Blockquotes (source notes, verbatim quotes) ---- */
+blockquote {
+    margin: 14px 0 18px 0;
+    padding: 14px 20px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+blockquote p { margin: 0 0 8px 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ol, blockquote ul {
+    margin: 8px 0;
+}
+
+/* ---- HR ---- */
+hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+}
+
+/* ---- Inline code ---- */
+code {
+    font-family: var(--font-mono);
+    font-size: 9.5pt;
+    background: var(--bg-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: var(--accent-2);
+    overflow-wrap: break-word;
+}
+
+/* ---- Other Formats footer ---- */
+.formats-section {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+}
+.format-cards {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.format-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.format-cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media screen and (max-width: 700px) {
+    .format-cards.cols-3,
+    .format-cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+.format-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    padding: 14px;
+    text-align: left;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+.format-card-icon { font-size: 18pt; margin-bottom: 4px; }
+.format-card-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+.format-card-desc { font-size: 9pt; color: var(--ink-mute); line-height: 1.4; }
+.format-card a { display: block; }
+
+/* ---- Footer ---- */
+.page-footer {
+    max-width: var(--measure);
+    margin: 32px auto 60px;
+    padding: 24px var(--gutter);
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 9.5pt;
+    font-family: var(--font-sans);
+    border-top: 1px solid var(--rule);
+}
+
+/* ---- Confirmation glyphs ---- */
+h3 .conf-mark {
+    color: var(--confirm);
+    font-size: 11pt;
+    margin-right: 4px;
+}
+
+/* Default civic-report theme.
+ *
+ * A theme is just this set of CSS custom properties. To experiment, copy this
+ * file to _build/themes/<name>.css, change what you like, and point at it from
+ * _build/report.config.json ({"theme":"<name>"}) for all reports, or from a
+ * single report's front matter (theme: <name>). A non-default theme is layered
+ * ON TOP of this one, so it only needs to list the variables it changes.
+ *
+ * Scope: colors, fonts, and small size/width/gap tweaks — not layout changes.
+ */
+:root {
+  /* ---- Palette ---- */
+  --bg:             #fafaf7;   /* page background */
+  --bg-page:        #ffffff;   /* the white content card */
+  --bg-soft:        #f5f3ed;   /* callouts, table headers, inline code */
+  --ink:            #1a1a1a;   /* body text, main headings */
+  --ink-soft:       #333333;   /* blockquote / methodology text */
+  --ink-mute:       #5a5a5a;   /* subtitle, card descriptions */
+  --ink-faint:      #888888;   /* attribution, footer, captions */
+  --rule:           #e0ddd5;   /* hairline borders */
+  --accent:         #b8a878;   /* gold accent rules */
+  --accent-2:       #2c3e50;   /* slate: h3, table-header & code text */
+  --banner-bg:      #2c3e50;   /* top banner background */
+  --banner-ink:     #ecf0f1;   /* top banner text */
+  --crumb-link:       #b9c4cf; /* breadcrumb links in the banner */
+  --crumb-link-hover: #ffffff;
+  --crumb-current:    #ffffff; /* deepest crumb (current page), not a link */
+  --link:           #1a5490;
+  --link-hover:     #0d3a6b;
+  --link-underline: #c5d3e2;
+  --anchor:         #b8b3a4;   /* the ¶ header anchor */
+  --anchor-hover:   #6c7480;
+  --confirm:        #5a8a5a;   /* green ✓ confirmation mark */
+  --confirm-strong: #2e7d32;
+
+  /* ---- Fonts ---- */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:  "SF Mono", Monaco, Menlo, Consolas, monospace;
+
+  /* ---- Sizes (small tweaks only; no layout restructuring) ---- */
+  --base-size:  11pt;    /* body text */
+  --measure:    780px;   /* content column width */
+  --gutter:     30px;    /* horizontal padding / banner & footer gaps */
+  --title-size: 28pt;
+  --h2-size:    18pt;
+  --h3-size:    13pt;
+}
+
+/* bluegold — mirrors the light-mode look of the 55th campaign site
+ * (C:\Users\scott\Dev\Andover\55th, e.g. localhost:8080/reports): cool
+ * blue-gray paper, a dark navy banner with a gold underline, navy serif
+ * headings over a sans body, gold accent rules, and blue links.
+ *
+ * Note the deliberate font swap: base.css uses --font-serif for body text and
+ * --font-sans for headings/labels, so to match the campaign look (sans body,
+ * serif display) we put the SANS stack in --font-serif and the SERIF stack in
+ * --font-sans.
+ *
+ * Layered on default.css. Uses --banner-border (in base.css) for the gold rule
+ * under the banner. */
+:root {
+  /* Palette */
+  --bg:             #f4f6f9;
+  --bg-page:        #ffffff;
+  --bg-soft:        #eef4fb;   /* blue-050 tint for callouts / table headers */
+  --rule:           #e3e8ef;   /* hairlines */
+  --ink:            #19222e;
+  --ink-soft:       #2b3744;
+  --ink-mute:       #5b6775;
+  --ink-faint:      #8a94a1;
+  --accent:         #e8a800;   /* signature gold rules */
+  --accent-2:       #0f2a4a;   /* blue-900: headings, table-header & code text */
+  --banner-bg:      linear-gradient(180deg, #0f2a4a, #143862);
+  --banner-border:  3px solid #e8a800;
+  --banner-ink:     #dde8f5;   /* blue-100 */
+  --crumb-link:       #e8a800; /* gold breadcrumb links */
+  --crumb-link-hover: #ffffff; /* hover to white + underline */
+  --crumb-current:    #ffffff; /* current page, not a link */
+  --link:           #245c95;   /* blue-600 */
+  --link-hover:     #1c4e80;   /* blue-700 */
+  --link-underline: #cfe0f2;
+  --confirm:        #2f8f5b;
+  --confirm-strong: #1f7d49;
+
+  /* Type: sans body + serif display headings (see note above) */
+  --font-serif: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans:  Georgia, "Times New Roman", serif;
+
+  --measure: 860px;
+}
+
+
+.container { max-width: 900px; margin: 0 auto; padding: 24px; line-height: 1.55; }
+.container h1 { margin-top: 0; }
+.container h2 { margin-top: 32px; }
+.container h3 { margin-top: 20px; }
+.container hr { margin: 32px 0; border: 0; border-top: 1px solid #ddd; }
+.container table { border-collapse: collapse; margin: 8px 0 16px 0; font-size: 14px; }
+.container th, .container td { padding: 4px 10px; border-bottom: 1px solid #ddd; text-align: left; }
+.container th { background: #f5f2e8; font-weight: 600; }
+.container td.num, .container th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.container a { word-break: break-word; }
+.container ul, .container ol { padding-left: 24px; }
+.container li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/reports/">Reports</a><span class="sep">›</span><a href="/reports/aes/">Andover Elementary</a><span class="sep">›</span><a href="../../">Superintendent Pay in Context</a><span class="sep">›</span><span class="current">Chaplin / RD 11 Shared Central Office</span>
+  </nav>
+</div>
+<main class="container">
+<h1>Chaplin / Regional District 11 Shared Central Office</h1>
+<p>Background memo for the superintendent-pay comparison. Chaplin was the structural
+oddball in the 45-district elementary set: it shares its entire central office
+(including the superintendent) with Regional School District 11, so its
+&#8220;superintendent salary&#8221; is a negotiated fraction of a shared position rather than
+a clean single-district number. This memo documents exactly how that split works
+and what the FY 2025-26 numbers are, sourced to the adopted budgets.</p>
+<h2>Bottom line</h2>
+<p>Chaplin Elementary School (CES) and Regional School District 11 (Parish Hill
+Middle/High School, PHMS/HS) run one shared central office governed by a Central
+Office Committee (COC). The COC adopts a single central-office budget each year
+and splits every function between the two districts by a negotiated,
+function-specific percentage. For FY 2025-26 the total COC budget is $1,006,485,
+divided $485,479 to Chaplin (about 48%) and $521,005 to RD 11 (about 52%).</p>
+<p>The split is not one blanket percentage. Each office carries its own ratio:</p>
+<ul>
+<li>Superintendent&#8217;s Office: 40% Chaplin / 60% RD 11</li>
+<li>Business Office: 40% Chaplin / 60% RD 11</li>
+<li>Special Education Office: 50% Chaplin / 50% RD 11</li>
+<li>Maintenance: 25% Chaplin / 75% RD 11 (per the &#8220;MAINTENANCE-25/75&#8221; object label)</li>
+<li>Technology / IT Director: roughly 80% Chaplin / 20% RD 11</li>
+</ul>
+<p>For superintendent-pay purposes: the superintendent&#8217;s salary line in the COC
+budget is $141,750 for FY 2025-26, split $56,700 to Chaplin (40%) and $85,050 to
+RD 11 (60%).</p>
+<h2>How the two districts relate</h2>
+<p>The shared office spans two legally distinct school systems:</p>
+<ul>
+<li><strong>Chaplin Elementary School (CES)</strong>, PK through 6, is the town of Chaplin&#8217;s own
+district, overseen by a seven-member elected Chaplin Board of Education and
+funded through the town budget.</li>
+<li><strong>Regional School District 11 (RD 11)</strong> operates Parish Hill Middle/High School
+(grades 7-12) in Chaplin and serves the three member towns of Chaplin, Hampton,
+and Scotland. RD 11 has its own board (three members per town) and its own
+budget approved by tri-town referendum.</li>
+</ul>
+<p>Chaplin is the common thread: it is both a member town of RD 11 and the operator
+of its own elementary school, and the two systems share one administration.</p>
+<h2>The Central Office Committee and how costs are split</h2>
+<h3>The governing document</h3>
+<p>The authoritative allocation schedule is the <strong>Central Office Committee Budget
+25-27</strong>, COC-approved March 19, 2025. It is not published as a standalone file,
+but it is embedded (pages 26 onward) inside Chaplin&#8217;s FY 2025-26 Revised Budget
+Package. The same object-309 &#8220;CENTRAL OFFICE&#8221; charges also appear, split out by
+function, in each district&#8217;s own adopted budget: the RD 11 side in the RD 11
+FY 2025-26 budget, the Chaplin side in the Chaplin budget package.</p>
+<p>The COC budget presents each central-office function with four year-columns
+(2022-23 audited through 2025-26) followed by two allocation columns showing the
+Chaplin dollar share and the RD 11 dollar share, plus a plain-language annotation
+(for example &#8220;40% Chaplin&#8221;) on the lead salary line of each office.</p>
+<h3>Per-function allocation percentages, FY 2025-26</h3>
+<table>
+<thead>
+<tr>
+<th align="left">Central-office function</th>
+<th align="right">Chaplin</th>
+<th align="right">RD 11</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Superintendent&#8217;s Office</td>
+<td align="right">40%</td>
+<td align="right">60%</td>
+</tr>
+<tr>
+<td align="left">Business Office</td>
+<td align="right">40%</td>
+<td align="right">60%</td>
+</tr>
+<tr>
+<td align="left">Special Education Office</td>
+<td align="right">50%</td>
+<td align="right">50%</td>
+</tr>
+<tr>
+<td align="left">Maintenance (Object 114)</td>
+<td align="right">25%</td>
+<td align="right">75%</td>
+</tr>
+<tr>
+<td align="left">Technology / IT Director</td>
+<td align="right">~80%</td>
+<td align="right">~20%</td>
+</tr>
+</tbody></table>
+<p>The maintenance ratio is baked into the object label itself (&#8220;MAINTENANCE-25/75&#8221;).
+The technology ratio is inferred from the two sides&#8217; 309 charges (Chaplin
+$118,296 vs. RD 11 $29,573), so treat it as approximate pending the COC line
+detail. The differing per-function ratios are why the aggregate split lands near
+48/52 even though the two biggest offices are 40/60.</p>
+<h2>FY 2025-26 dollar figures</h2>
+<h3>Total shared central office</h3>
+<table>
+<thead>
+<tr>
+<th align="left">Measure</th>
+<th align="right">Amount</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Total COC budget (all functions)</td>
+<td align="right">$1,006,485</td>
+</tr>
+<tr>
+<td align="left">Chaplin (CES) object-309 charges</td>
+<td align="right">$485,479</td>
+</tr>
+<tr>
+<td align="left">RD 11 (PHMS/HS) object-309 charges</td>
+<td align="right">$521,005</td>
+</tr>
+</tbody></table>
+<p>The two 309 totals sum to $1,006,484, matching the COC total within rounding. The
+COC budget rose 2.95% ($28,832) over the prior year.</p>
+<h3>The three offices that matter for supe-pay work</h3>
+<p>Superintendent&#8217;s Office (Function 2320):</p>
+<table>
+<thead>
+<tr>
+<th align="left">Line</th>
+<th align="right">Total</th>
+<th align="right">Chaplin 40%</th>
+<th align="right">RD 11 60%</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Superintendent salary (2320.101)</td>
+<td align="right">$141,750</td>
+<td align="right">$56,700</td>
+<td align="right">$85,050</td>
+</tr>
+<tr>
+<td align="left">Total Superintendent&#8217;s Office</td>
+<td align="right">$257,092</td>
+<td align="right">$102,837</td>
+<td align="right">$154,255</td>
+</tr>
+</tbody></table>
+<p>Business Office (Function 2510):</p>
+<table>
+<thead>
+<tr>
+<th align="left">Line</th>
+<th align="right">Total</th>
+<th align="right">Chaplin 40%</th>
+<th align="right">RD 11 60%</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Business Manager salary (2510.104)</td>
+<td align="right">$56,270</td>
+<td align="right">$22,508</td>
+<td align="right">$33,762</td>
+</tr>
+</tbody></table>
+<p>Special Education Office (Function 1210):</p>
+<table>
+<thead>
+<tr>
+<th align="left">Line</th>
+<th align="right">Total</th>
+<th align="right">Chaplin 50%</th>
+<th align="right">RD 11 50%</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">SpEd/Pupil Personnel Dir (1210.107)</td>
+<td align="right">$130,871</td>
+<td align="right">$65,436</td>
+<td align="right">$65,436</td>
+</tr>
+<tr>
+<td align="left">Total Special Education Office</td>
+<td align="right">$237,376</td>
+<td align="right">$118,688</td>
+<td align="right">$118,688</td>
+</tr>
+</tbody></table>
+<p>For reference, the superintendent salary line has moved $89,164 (FY 2023-24
+audited) to $132,600 (FY 2024-25) to $141,750 (FY 2025-26). The jump between
+2023-24 and 2024-25 is large enough to suggest a superintendent transition rather
+than a raise, which is worth confirming if the salary series matters to the
+comparison.</p>
+<h2>What this means for the superintendent-pay comparison</h2>
+<p>Chaplin does not employ a stand-alone superintendent. The person is shared with
+RD 11 (and, per press coverage, also serves Hampton Elementary). Three different
+numbers could each be the &#8220;right&#8221; one depending on the methodology:</p>
+<ol>
+<li><strong>Full superintendent salary as carried in the COC budget: $141,750.</strong> This is
+the figure most comparable to another district&#8217;s superintendent salary, but it
+covers the Chaplin-plus-RD 11 workload only.</li>
+<li><strong>Chaplin&#8217;s attributed share: $56,700 (40%).</strong> This is what the town of Chaplin
+actually pays toward the superintendent. It understates the compensation of the
+person, but correctly states Chaplin&#8217;s cost.</li>
+<li><strong>Full central-office cost, not just salary.</strong> If the comparison is about
+administrative overhead rather than one salary, the relevant Chaplin figure is
+the $485,479 total 309 charge, or the $102,837 Chaplin superintendent&#8217;s-office
+share including benefits and support staff.</li>
+</ol>
+<p>The cleanest footnote for the cross-district table is probably: Chaplin shares a
+superintendent with RD 11 on a 40/60 basis; the superintendent&#8217;s salary is
+$141,750, of which Chaplin bears $56,700. Then pick whichever of those two numbers
+matches how the other 44 districts are counted.</p>
+<p>One open question flagged below: whether $141,750 is the superintendent&#8217;s full
+contractual salary or only the Chaplin-plus-RD 11 portion, since the same person
+reportedly also superintends Hampton Elementary.</p>
+<h2>History of the arrangement</h2>
+<p>The central-office compact once covered the elementary schools of all three RD 11
+towns (Chaplin, Hampton, Scotland) plus the regional secondary school. The Hampton
+and Scotland elementary boards withdrew from the central-office compact in the
+early 2000s, leaving today&#8217;s two-party arrangement between Chaplin Elementary and
+RD 11 / Parish Hill.</p>
+<p>In 2016-2017 a formally constituted Dissolution Committee studied dissolving RD 11
+outright and issued a Final Report in 2017 (with appendices on member-town
+start-up costs and a State Board of Education letter of action). The region was not
+dissolved, and the shared-office structure has continued.</p>
+<h2>Distinction from the town-assessment formula</h2>
+<p>Do not conflate the two different &#8220;splits&#8221; in play:</p>
+<ul>
+<li>The <strong>central-office split</strong> (this memo) divides the shared administration
+between two school systems, CES and RD 11/PHHS, by the function-specific
+percentages above.</li>
+<li>The <strong>town-assessment formula</strong> divides the RD 11 operating budget ($7,275,881
+for FY 2025-26) among the three member towns (Chaplin, Hampton, Scotland) by a
+separate enrollment-based assessment under the regional-district statutes. That
+is a town-to-town cost allocation, not a CES-to-PHHS one.</li>
+</ul>
+<p>A number pulled from the wrong one of these will not reconcile.</p>
+<h2>Open items to verify</h2>
+<ul>
+<li>Whether the $141,750 superintendent salary is the full contractual figure or
+only the Chaplin-plus-RD 11 share, given the reported Hampton Elementary role.
+If Hampton pays a separate share, total superintendent compensation exceeds the
+COC figure.</li>
+<li>The exact technology/IT and buildings/maintenance percentages, which differ from
+the 40/60 pattern and were partly inferred here from the two sides&#8217; 309 charges.</li>
+<li>The superintendent&#8217;s actual employment contract, if the comparison needs total
+compensation (benefits, annuities, expense allowances) rather than the salary
+line. Contracts are public under CT Public Act 17-2 via the town clerk.</li>
+<li>The apparent 2023-24 to 2024-25 salary jump, to confirm whether it reflects a
+superintendent transition.</li>
+</ul>
+<h2>Sources</h2>
+<p>All links verified accessible July 2, 2026. Primary budget documents first.</p>
+<h3>Primary budget documents</h3>
+<ul>
+<li><p><strong>Central Office Committee Budget 25-27</strong> (COC-approved March 19, 2025). The
+authoritative allocation schedule, showing every function&#8217;s Chaplin/RD 11 split
+and the &#8220;40% Chaplin&#8221; / &#8220;50% Chaplin&#8221; annotations. Embedded in Chaplin&#8217;s
+FY 2025-26 Revised Budget Package, from page 26.
+<a href="https://www.chaplinct.org/images/FY%202025-26%20REVISED%20BUDGET%20PACKAGE%20(FULL).pdf">https://www.chaplinct.org/images/FY%202025-26%20REVISED%20BUDGET%20PACKAGE%20(FULL).pdf</a></p>
+</li>
+<li><p><strong>Regional School District 11 Approved Budget, FY 2025-26.</strong> Carries the RD 11
+side of the shared office as object-309 &#8220;CENTRAL OFFICE&#8221; charges across
+functions 1085, 1210, 2320, 2510, and 2600 (totaling $521,005).
+<a href="https://municipal-documents.s3.amazonaws.com/uploads/scotland-ct/regional-district-11-board-of-education/articles/announcements/27460/rich_text_field_file/17507803031/Third%20Regional%20School%20District%2011%202025%202026.pdf">https://municipal-documents.s3.amazonaws.com/uploads/scotland-ct/regional-district-11-board-of-education/articles/announcements/27460/rich_text_field_file/17507803031/Third%20Regional%20School%20District%2011%202025%202026.pdf</a></p>
+</li>
+<li><p><strong>RD 11 Town Assessment Sheet, FY 2025-26.</strong> The separate three-town assessment
+allocation (distinct from the central-office split).
+<a href="https://municipal-documents.s3.amazonaws.com/uploads/scotland-ct/regional-district-11-board-of-education/articles/announcements/27460/rich_text_field_file/17507803032/Third%20Town%20Assessment%20Sheet.pdf">https://municipal-documents.s3.amazonaws.com/uploads/scotland-ct/regional-district-11-board-of-education/articles/announcements/27460/rich_text_field_file/17507803032/Third%20Town%20Assessment%20Sheet.pdf</a></p>
+</li>
+<li><p><strong>RD 11 budget referendum legal notice, July 1, 2025</strong> (adopted operating budget
+of $7,275,881 for FY 2025-26; source page for the two PDFs above).
+<a href="https://www.scotlandct.org/articles/legal-notice-regional-school-district-11-town-of-chaplin-hampton-and-scotland-notice-of-annual-meeting-june-17-2024-and-budget-referendum-july-1-2024">https://www.scotlandct.org/articles/legal-notice-regional-school-district-11-town-of-chaplin-hampton-and-scotland-notice-of-annual-meeting-june-17-2024-and-budget-referendum-july-1-2024</a></p>
+</li>
+</ul>
+<h3>Governance and structural documents</h3>
+<ul>
+<li><p><strong>RD 11 Dissolution Study Final Report, 2017 (Summary).</strong> History of the compact,
+the Hampton/Scotland withdrawal, and the 2016-2017 dissolution study.
+<a href="https://www.chaplinct.org/resources/dissolution_study_final_report_2017_summary.pdf">https://www.chaplinct.org/resources/dissolution_study_final_report_2017_summary.pdf</a></p>
+</li>
+<li><p><strong>Town of Chaplin school-governance page.</strong> Confirms CES (PK-6) and Parish Hill
+operate under the shared RD 11 administration.
+<a href="https://www.chaplinct.org/board.htm?id=z2yczpbr">https://www.chaplinct.org/board.htm?id=z2yczpbr</a></p>
+</li>
+<li><p><strong>Chaplin Elementary financial-information page</strong> (district-side budget postings).
+<a href="https://chaplinschool.org/ces-boe-financial-information/">https://chaplinschool.org/ces-boe-financial-information/</a></p>
+</li>
+</ul>
+<h3>Secondary coverage and rosters</h3>
+<ul>
+<li><p><strong>&#8220;Regional School District 11 proposes school budgets,&#8221; The Chronicle,
+Feb. 25, 2026.</strong> Confirms the three shared offices (superintendent, special
+education, business administration) and that the shared superintendent also
+serves Hampton Elementary.
+<a href="https://www.thechronicle.com/news/regional-school-district-11-proposes-school-budgets/article_c4557d78-1aa8-49cb-ab4a-0cec8ccde754.html">https://www.thechronicle.com/news/regional-school-district-11-proposes-school-budgets/article_c4557d78-1aa8-49cb-ab4a-0cec8ccde754.html</a></p>
+</li>
+<li><p><strong>CT Secretary of the State, Register & Manual, regional school district roster.</strong>
+Confirms RD 11 membership (Chaplin, Hampton, Scotland) and the current
+superintendent of record.
+<a href="https://portal.ct.gov/sots/register-manual/section-vii/regional-councils-of-governments">https://portal.ct.gov/sots/register-manual/section-vii/regional-councils-of-governments</a></p>
+</li>
+</ul>
+
+</main>
+</body>
+</html>
