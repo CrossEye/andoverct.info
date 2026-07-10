@@ -32,7 +32,7 @@ Executive summary
 Two of the five seats on the Andover Board of Selectmen are vacant. Both were
 last held by Republicans. The three remaining members are Democrats.
 
-That arrangement has prompted a natural question: if Anee Cremé also resigned,
+That arrangement has prompted a natural question: if Anne Cremé also resigned,
 would the board lose its quorum, be unable to meet, and therefore be forced to
 an election, with Anne free to run again?
 
@@ -104,7 +104,7 @@ affected board to fill its own vacancies:
 > with this section within 60 days following the date of notice to the Town
 > Clerk.
 
-Its only backstop, in [Section 208B](https://charter2024.andoverct.info/#Section208B)),
+Its only backstop, in [Section 208B](https://charter2024.andoverct.info/#Section208B),
 is that "in the event the affected board fails to act within 60 days, the Board
 of Selectmen may then fill the vacancy." For a vacancy on the Board of Selectmen
 itself, that backstop is circular. The affected board is the Board of Selectmen,

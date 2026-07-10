@@ -619,6 +619,17 @@ function isReportMd(mdPath) {
   }
 }
 
+// Private reports live under private/subsections/ and are marked by
+// `private: true` front matter instead of a publicUrl.
+function isPrivateReportMd(mdPath) {
+  try {
+    const { data } = matter(readFileSync(mdPath, "utf8"));
+    return !!(data && data.private);
+  } catch {
+    return false;
+  }
+}
+
 async function buildReport(mdPath) {
   const folder = dirname(mdPath);
   const raw = readFileSync(mdPath, "utf8");
@@ -711,18 +722,21 @@ async function buildReport(mdPath) {
 async function main() {
   const arg = process.argv[2];
   if (!arg) {
-    console.error("usage: node _build/report.mjs <path/to/report.md> | --all");
+    console.error("usage: node _build/report.mjs <path/to/report.md> | --all | --private");
     process.exit(2);
   }
 
-  if (arg === "--all") {
+  if (arg === "--all" || arg === "--private") {
     const root = process.cwd();
-    const files = globSync("reports/**/*.md", { cwd: root })
+    const [glob, filter, where] = arg === "--all"
+      ? ["reports/**/*.md", isReportMd, "reports/"]
+      : ["private/subsections/**/report.md", isPrivateReportMd, "private/subsections/"];
+    const files = globSync(glob, { cwd: root })
       .map((f) => resolve(root, f))
-      .filter(isReportMd)
+      .filter(filter)
       .sort();
     if (!files.length) {
-      console.error("no reports with front matter found under reports/");
+      console.error(`no reports with front matter found under ${where}`);
       process.exit(1);
     }
     const failed = [];
