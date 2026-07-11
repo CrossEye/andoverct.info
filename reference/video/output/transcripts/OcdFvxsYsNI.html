@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>IWWC  Regular Meeting — December 2, 2024</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <style>
+    /* Transcript-specific components. Theme, palette, and page chrome
+       (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
+       come from the shared style.css; these just use its variables. */
+    .para { display: flex; gap: 1em; padding: 0.5em 0.75em; border-radius: 6px; }
+    .para:nth-child(4n+1) { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+    .para-gap { font-size: 1px; line-height: 1px; height: 0; overflow: hidden; user-select: text; }
+    .para.speaker { border-top: 1px solid var(--rule-soft); margin-top: 0.6em; padding-top: 1em; }
+    .para.speaker:first-child { border-top: none; margin-top: 0; }
+
+    .timestamp {
+      flex: 0 0 5em; text-align: right;
+      color: var(--ink-mute); font-family: var(--sans);
+      font-size: 0.72rem; font-variant-numeric: tabular-nums; line-height: 1.9;
+      cursor: pointer; white-space: nowrap; padding-top: 0.15em;
+      transition: color 0.15s; user-select: none;
+    }
+    .timestamp:hover, .timestamp.hl { color: var(--accent); font-weight: 600; }
+
+    .text { flex: 1; min-width: 0; }
+    .cue { cursor: pointer; border-radius: 3px; transition: background-color 0.15s; }
+    .cue.hl { background-color: var(--accent-bg); }
+    @keyframes flash-highlight {
+      0%   { background-color: rgba(232, 168, 0, 0.45); }
+      100% { background-color: transparent; }
+    }
+    .cue.flash { animation: flash-highlight 4s ease-out forwards; }
+
+    /* action dialog */
+    #overlay { display: none; position: fixed; inset: 0; background: rgba(8, 22, 40, 0.5); z-index: 100; justify-content: center; align-items: center; }
+    #overlay.visible { display: flex; }
+    .dialog { background: var(--bg-card); border-radius: 10px; padding: 1.6rem 1.8rem; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28); max-width: 28rem; width: 90vw; border-top: 4px solid var(--accent); }
+    .dialog-header { margin-bottom: 1.2em; }
+    .dialog-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); }
+    .dialog-subtitle { font-family: var(--sans); font-size: 0.85rem; color: var(--ink-mute); margin-top: 0.2em; }
+    .dialog .ts-label { color: var(--accent); font-weight: 600; }
+    .dialog .actions { display: flex; flex-direction: column; gap: 0.5em; }
+    .dialog button { display: flex; align-items: center; gap: 0.6em; padding: 0.6em 1em; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--ink); cursor: pointer; font-family: var(--sans); font-size: 0.9rem; text-align: left; width: 100%; transition: background-color 0.12s, border-color 0.12s; }
+    .dialog button:hover { background: var(--accent-bg); border-color: var(--accent); }
+    .dialog button .icon { font-size: 1.1em; flex: 0 0 1.4em; text-align: center; }
+    .dialog button .label { flex: 1; }
+    .dialog button .hint { display: block; color: var(--ink-mute); font-size: 0.78rem; }
+    .dialog .cancel { margin-top: 0.6em; text-align: center; }
+    .dialog .cancel a { color: var(--ink-mute); font-family: var(--sans); font-size: 0.82rem; cursor: pointer; border-bottom: none; }
+    .dialog .cancel a:hover { color: var(--accent); }
+
+    /* toast */
+    #toast { position: fixed; top: 1.5em; left: 50%; transform: translateX(-50%) translateY(-4em); background: var(--accent); color: #15233a; padding: 0.7em 1.6em; border-radius: 8px; font-family: var(--sans); font-size: 0.95rem; font-weight: 600; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease; z-index: 200; pointer-events: none; text-align: center; max-width: 90vw; }
+    #toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    @media (max-width: 480px) { .timestamp { flex-basis: 4em; } }
+  </style>
+</head>
+<body class="bluegold">
+  <div class="page-banner">
+    <nav class="page-banner-inner crumbs">
+      <a href="/">Home</a><span class="sep">›</span><a href="/reference/">Reference</a><span class="sep">›</span><a href="../index.html">Video</a><span class="sep">›</span><span class="current">IWWC  Regular Meeting (12/2/24)</span>
+    </nav>
+  </div>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Meeting transcript</p>
+      <h1 class="title">IWWC  Regular Meeting</h1>
+      <p class="subtitle">December 2, 2024 &middot; <a href="https://www.youtube.com/watch?v=OcdFvxsYsNI" target="yt-meeting">Watch on YouTube</a> &middot; <a href="../index.html">All meetings</a></p>
+    </header>
+
+    <hr class="rule">
+
+    <div class="transcript">
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:00" data-default-t="0">0:00</div>
+        <div class="text"><span class="cue" id="t0" data-cue="t0" data-t="0" data-label="0:00">Monday,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:07" data-default-t="7">0:07</div>
+        <div class="text"><span class="cue" id="t7" data-cue="t7" data-t="7" data-label="0:07">12/02/2022.</span> <span class="cue" id="t42" data-cue="t42" data-t="42" data-label="0:42">Time.</span> <span class="cue" id="t47" data-cue="t47" data-t="47" data-label="0:47">So you have to get the the approval of the minutes</span> <span class="cue" id="t50" data-cue="t50" data-t="50" data-label="0:50">to be deferred. So we have a motion. Maybe we can defer the</span> <span class="cue" id="t55" data-cue="t55" data-t="55" data-label="0:55">approval of the minutes for another</span> <span class="cue" id="t58" data-cue="t58" data-t="58" data-label="0:58">call.</span> <span class="cue" id="t59" data-cue="t59" data-t="59" data-label="0:59">Why don't you wanna do that tonight?</span> <span class="cue" id="t62" data-cue="t62" data-t="62" data-label="1:02">Wouldn't she wanna be the one to</span> <span class="cue" id="t65" data-cue="t65" data-t="65" data-label="1:05">show the things that are incorrect on me? Who?</span> <span class="cue" id="t68" data-cue="t68" data-t="68" data-label="1:08">Marina?</span> <span class="cue" id="t71" data-cue="t71" data-t="71" data-label="1:11">Here. Think she's here virtually. I'm</span> <span class="cue" id="t74" data-cue="t74" data-t="74" data-label="1:14">here.</span> <span class="cue" id="t75" data-cue="t75" data-t="75" data-label="1:15">Okay.</span> <span class="cue" id="t76" data-cue="t76" data-t="76" data-label="1:16">I'm sorry. It's okay.</span> <span class="cue" id="t81" data-cue="t81" data-t="81" data-label="1:21">Eric has changed my name to fearless note taker.</span> <span class="cue" id="t85" data-cue="t85" data-t="85" data-label="1:25">Okay. Okay. Alright.</span> <span class="cue" id="t88" data-cue="t88" data-t="88" data-label="1:28">So</span> <span class="cue" id="t90" data-cue="t90" data-t="90" data-label="1:30">start with September. Well,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:32" data-default-t="92">1:32</div>
+        <div class="text"><span class="cue" id="t92" data-cue="t92" data-t="92" data-label="1:32">there's a couple of rules. What</span> <span class="cue" id="t95" data-cue="t95" data-t="95" data-label="1:35">I saw at least</span> <span class="cue" id="t98" data-cue="t98" data-t="98" data-label="1:38">the September 10 meeting,</span> <span class="cue" id="t103" data-cue="t103" data-t="103" data-label="1:43">I noticed the address that the</span> <span class="cue" id="t106" data-cue="t106" data-t="106" data-label="1:46">72</span> <span class="cue" id="t107" data-cue="t107" data-t="107" data-label="1:47">Old Farms Road</span> <span class="cue" id="t109" data-cue="t109" data-t="109" data-label="1:49">for the for the house that's being</span> <span class="cue" id="t112" data-cue="t112" data-t="112" data-label="1:52">built back there.</span> <span class="cue" id="t114" data-cue="t114" data-t="114" data-label="1:54">And I think that should be 72</span> <span class="cue" id="t117" data-cue="t117" data-t="117" data-label="1:57">Pine Ridge Road</span> <span class="cue" id="t120" data-cue="t120" data-t="120" data-label="2:00">instead of Old Farms Road.</span> <span class="cue" id="t122" data-cue="t122" data-t="122" data-label="2:02">I think you're probably right. Because they had to change it</span> <span class="cue" id="t125" data-cue="t125" data-t="125" data-label="2:05">because they're not going in on the back road.</span> <span class="cue" id="t128" data-cue="t128" data-t="128" data-label="2:08">And that's that was in September 10 meeting.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:16" data-default-t="136">2:16</div>
+        <div class="text"><span class="cue" id="t136" data-cue="t136" data-t="136" data-label="2:16">But does that property</span> <span class="cue" id="t138" data-cue="t138" data-t="138" data-label="2:18">actually front?</span> <span class="cue" id="t140" data-cue="t140" data-t="140" data-label="2:20">Because it runs on both roads.</span> <span class="cue" id="t144" data-cue="t144" data-t="144" data-label="2:24">I think we talked about the official address change to Pine Ridge. Yeah.</span> <span class="cue" id="t149" data-cue="t149" data-t="149" data-label="2:29">Okay. Yeah. I</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:33" data-default-t="153">2:33</div>
+        <div class="text"><span class="cue" id="t153" data-cue="t153" data-t="153" data-label="2:33">don't think it runs on the on the</span> <span class="cue" id="t156" data-cue="t156" data-t="156" data-label="2:36">Oak Farms or whatever it is. It had an easement that the guy had to travel</span> <span class="cue" id="t160" data-cue="t160" data-t="160" data-label="2:40">to get through that. And so he's not doing the easement anymore.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:47" data-default-t="167">2:47</div>
+        <div class="text"><span class="cue" id="t167" data-cue="t167" data-t="167" data-label="2:47">So</span> <span class="cue" id="t168" data-cue="t168" data-t="168" data-label="2:48">and then on November 4 meeting, I noticed we had to bring</span> <span class="cue" id="t175" data-cue="t175" data-t="175" data-label="2:55">in a a alternate</span> <span class="cue" id="t177" data-cue="t177" data-t="177" data-label="2:57">to be seated. That</span> <span class="cue" id="t180" data-cue="t180" data-t="180" data-label="3:00">wasn't</span> <span class="cue" id="t181" data-cue="t181" data-t="181" data-label="3:01">shown to happen.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="3:04" data-default-t="184">3:04</div>
+        <div class="text"><span class="cue" id="t184" data-cue="t184" data-t="184" data-label="3:04">Yeah. I looked it up. Brad is an actual member, not alternate according to the website.</span> <span class="cue" id="t190" data-cue="t190" data-t="190" data-label="3:10">Oh,</span> <span class="cue" id="t191" data-cue="t191" data-t="191" data-label="3:11">so he didn't okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="3:14" data-default-t="194">3:14</div>
+        <div class="text"><span class="cue" id="t194" data-cue="t194" data-t="194" data-label="3:14">Alright. So so in theory, he didn't have to be seated, which is okay. I just I wanted to double check when I did the minutes too, so he should be good.</span> <span class="cue" id="t202" data-cue="t202" data-t="202" data-label="3:22">Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="3:25" data-default-t="205">3:25</div>
+        <div class="text"><span class="cue" id="t205" data-cue="t205" data-t="205" data-label="3:25">That was all I understood. There seemed to be off to me anyway.</span> <span class="cue" id="t225" data-cue="t225" data-t="225" data-label="3:45">We the September ones.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="3:49" data-default-t="229">3:49</div>
+        <div class="text"><span class="cue" id="t229" data-cue="t229" data-t="229" data-label="3:49">September</span> <span class="cue" id="t230" data-cue="t230" data-t="230" data-label="3:50">10</span> <span class="cue" id="t231" data-cue="t231" data-t="231" data-label="3:51">for any means.</span> <span class="cue" id="t234" data-cue="t234" data-t="234" data-label="3:54">I'll second.</span> <span class="cue" id="t236" data-cue="t236" data-t="236" data-label="3:56">Now make a motion to</span> <span class="cue" id="t239" data-cue="t239" data-t="239" data-label="3:59">accept the meeting as of November 4.</span> <span class="cue" id="t242" data-cue="t242" data-t="242" data-label="4:02">I'll second. Public</span> <span class="cue" id="t248" data-cue="t248" data-t="248" data-label="4:08">comments.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="4:19" data-default-t="259">4:19</div>
+        <div class="text"><span class="cue" id="t259" data-cue="t259" data-t="259" data-label="4:19">Well, let's go to a permanent application,</span> <span class="cue" id="t262" data-cue="t262" data-t="262" data-label="4:22">IWWC</span> <span class="cue" id="t264" data-cue="t264" data-t="264" data-label="4:24">24 slash 10.</span> <span class="cue" id="t266" data-cue="t266" data-t="266" data-label="4:26">Eric Anderson, town of Andover,</span> <span class="cue" id="t269" data-cue="t269" data-t="269" data-label="4:29">Bunker Hill Road, replacement of the existing</span> <span class="cue" id="t272" data-cue="t272" data-t="272" data-label="4:32">bridge over the Hawk River.</span> <span class="cue" id="t277" data-cue="t277" data-t="277" data-label="4:37">We had a presentation</span> <span class="cue" id="t278" data-cue="t278" data-t="278" data-label="4:38">by Greg</span> <span class="cue" id="t280" data-cue="t280" data-t="280" data-label="4:40">last month.</span> <span class="cue" id="t283" data-cue="t283" data-t="283" data-label="4:43">We got to ask questions there. Did you have any question you wanted to ask, Jay? So</span> <span class="cue" id="t289" data-cue="t289" data-t="289" data-label="4:49">I watched</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="4:50" data-default-t="290">4:50</div>
+        <div class="text"><span class="cue" id="t290" data-cue="t290" data-t="290" data-label="4:50">the video,</span> <span class="cue" id="t291" data-cue="t291" data-t="291" data-label="4:51">and I guess my my question is</span> <span class="cue" id="t296" data-cue="t296" data-t="296" data-label="4:56">I didn't hear any discussion on whether or not this was a significant activity.</span> <span class="cue" id="t301" data-cue="t301" data-t="301" data-label="5:01">Did we talk about that last month? No.</span> <span class="cue" id="t305" data-cue="t305" data-t="305" data-label="5:05">And</span> <span class="cue" id="t307" data-cue="t307" data-t="307" data-label="5:07">while if you take a look at the bridge now, we'll take a look at the bridge when it's done,</span> <span class="cue" id="t312" data-cue="t312" data-t="312" data-label="5:12">there's probably not an awful lot of difference, new and bigger.</span> <span class="cue" id="t315" data-cue="t315" data-t="315" data-label="5:15">But I think in the interim,</span> <span class="cue" id="t317" data-cue="t317" data-t="317" data-label="5:17">there's gonna be an awful lot of disturbance of the wetlands going on.</span> <span class="cue" id="t321" data-cue="t321" data-t="321" data-label="5:21">And my my sense is this is the most significant</span> <span class="cue" id="t325" data-cue="t325" data-t="325" data-label="5:25">wetlands issue to be very on</span> <span class="cue" id="t329" data-cue="t329" data-t="329" data-label="5:29">the commission.</span> <span class="cue" id="t333" data-cue="t333" data-t="333" data-label="5:33">And what that buys you is</span> <span class="cue" id="t335" data-cue="t335" data-t="335" data-label="5:35">a public hearing if the commission were to determine that it was,</span> <span class="cue" id="t340" data-cue="t340" data-t="340" data-label="5:40">but I thought the</span> <span class="cue" id="t341" data-cue="t341" data-t="341" data-label="5:41">it should be at least discussed and we can make sure that we're doing</span> <span class="cue" id="t349" data-cue="t349" data-t="349" data-label="5:49">what we want is</span> <span class="cue" id="t351" data-cue="t351" data-t="351" data-label="5:51">not an oversight, that it's not a significant activity.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="6:02" data-default-t="362">6:02</div>
+        <div class="text"><span class="cue" id="t362" data-cue="t362" data-t="362" data-label="6:02">So my understanding last time was that it was open</span> <span class="cue" id="t364" data-cue="t364" data-t="364" data-label="6:04">to the public. I believe that they asked for public comments. I'm just trying to, you know, just want to clarify that there's a difference of distinction between that.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="6:13" data-default-t="373">6:13</div>
+        <div class="text"><span class="cue" id="t373" data-cue="t373" data-t="373" data-label="6:13">There it was not a public hearing. Okay. It was public meeting.</span> <span class="cue" id="t379" data-cue="t379" data-t="379" data-label="6:19">And again, it's got nothing to do with your presentation. It's got to do with how the commission</span> <span class="cue" id="t385" data-cue="t385" data-t="385" data-label="6:25">pulls those things. Understood.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="6:35" data-default-t="395">6:35</div>
+        <div class="text"><span class="cue" id="t395" data-cue="t395" data-t="395" data-label="6:35">Think we might have not considered it, but this is just</span> <span class="cue" id="t400" data-cue="t400" data-t="400" data-label="6:40">as a</span> <span class="cue" id="t403" data-cue="t403" data-t="403" data-label="6:43">significant</span> <span class="cue" id="t404" data-cue="t404" data-t="404" data-label="6:44">change because it's it's an already existing bridge, and then they're gonna replace it.</span> <span class="cue" id="t411" data-cue="t411" data-t="411" data-label="6:51">And</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="6:54" data-default-t="414">6:54</div>
+        <div class="text"><span class="cue" id="t414" data-cue="t414" data-t="414" data-label="6:54">the watercourse itself,</span> <span class="cue" id="t423" data-cue="t423" data-t="423" data-label="7:03">Besides the water, the river itself, all around it was really</span> <span class="cue" id="t428" data-cue="t428" data-t="428" data-label="7:08">wetlands.</span> <span class="cue" id="t429" data-cue="t429" data-t="429" data-label="7:09">There's there might be a couple of that they're gonna be in. There aren't yet. There's no federally or state regulated wetlands on-site. So the water course is the</span> <span class="cue" id="t439" data-cue="t439" data-t="439" data-label="7:19">all I'm passing to the water course and to the Upland Review area. And you said it wasn't gonna increase or slow down the flow.</span> <span class="cue" id="t445" data-cue="t445" data-t="445" data-label="7:25">Right. 1%. Right? Was very Right.</span> <span class="cue" id="t448" data-cue="t448" data-t="448" data-label="7:28">Correct. The water surface is slightly reduced, velocity slightly increased.</span> <span class="cue" id="t453" data-cue="t453" data-t="453" data-label="7:33">But, you know, it's really benefit by removing the three</span> <span class="cue" id="t458" data-cue="t458" data-t="458" data-label="7:38">the three cell structure opening up open bottom structure.</span> <span class="cue" id="t463" data-cue="t463" data-t="463" data-label="7:43">You know, it's it's much more beneficial to fish passage. There's</span> <span class="cue" id="t468" data-cue="t468" data-t="468" data-label="7:48">quite a bit of benefit</span> <span class="cue" id="t470" data-cue="t470" data-t="470" data-label="7:50">to the hydraulic sands. The environment is creating riparian shells so the critters can</span> <span class="cue" id="t476" data-cue="t476" data-t="476" data-label="7:56">pass them to meet the the bridge.</span> <span class="cue" id="t479" data-cue="t479" data-t="479" data-label="7:59">We</span> <span class="cue" id="t480" data-cue="t480" data-t="480" data-label="8:00">discussed a lot of this, you know, last week.</span> <span class="cue" id="t486" data-cue="t486" data-t="486" data-label="8:06">Do you think, Jared?</span> <span class="cue" id="t493" data-cue="t493" data-t="493" data-label="8:13">Which angle are you looking at?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="8:16" data-default-t="496">8:16</div>
+        <div class="text"><span class="cue" id="t496" data-cue="t496" data-t="496" data-label="8:16">Just</span> <span class="cue" id="t498" data-cue="t498" data-t="498" data-label="8:18">I think</span> <span class="cue" id="t499" data-cue="t499" data-t="499" data-label="8:19">when the job is in progress, if we go over and look at it, we're gonna say that is some significant activity going on in the water.</span> <span class="cue" id="t507" data-cue="t507" data-t="507" data-label="8:27">Right.</span> <span class="cue" id="t509" data-cue="t509" data-t="509" data-label="8:29">And</span> <span class="cue" id="t510" data-cue="t510" data-t="510" data-label="8:30">when it's all said and done, you know, it's not gonna look an awful lot different than</span> <span class="cue" id="t515" data-cue="t515" data-t="515" data-label="8:35">well, I hope it looks a little different than it does right now, but but in the big picture,</span> <span class="cue" id="t521" data-cue="t521" data-t="521" data-label="8:41">like</span> <span class="cue" id="t522" data-cue="t522" data-t="522" data-label="8:42">and and so I'm looking for a little helping Joe on that. That's,</span> <span class="cue" id="t527" data-cue="t527" data-t="527" data-label="8:47">you know,</span> <span class="cue" id="t529" data-cue="t529" data-t="529" data-label="8:49">my suspicion is it could be a significant activity,</span> <span class="cue" id="t533" data-cue="t533" data-t="533" data-label="8:53">but I don't know that for a fact. But</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="8:56" data-default-t="536">8:56</div>
+        <div class="text"><span class="cue" id="t536" data-cue="t536" data-t="536" data-label="8:56">Well, it's it's</span> <span class="cue" id="t538" data-cue="t538" data-t="538" data-label="8:58">it's up to the committee. There's Yep. Committee to decide or or the the other thing would be a public petition</span> <span class="cue" id="t544" data-cue="t544" data-t="544" data-label="9:04">for Correct.</span> <span class="cue" id="t547" data-cue="t547" data-t="547" data-label="9:07">Which there is notice published that the application was received</span> <span class="cue" id="t551" data-cue="t551" data-t="551" data-label="9:11">in</span> <span class="cue" id="t552" data-cue="t552" data-t="552" data-label="9:12">the</span> <span class="cue" id="t553" data-cue="t553" data-t="553" data-label="9:13">referees and then it's also gone through an extensive review process. No, am</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="9:19" data-default-t="559">9:19</div>
+        <div class="text"><span class="cue" id="t559" data-cue="t559" data-t="559" data-label="9:19">not criticizing,</span> <span class="cue" id="t561" data-cue="t561" data-t="561" data-label="9:21">I'm just criticizing</span> <span class="cue" id="t563" data-cue="t563" data-t="563" data-label="9:23">it our commission to do what we're supposed to be doing.</span> <span class="cue" id="t567" data-cue="t567" data-t="567" data-label="9:27">And that gives,</span> <span class="cue" id="t569" data-cue="t569" data-t="569" data-label="9:29">you know, that gives</span> <span class="cue" id="t571" data-cue="t571" data-t="571" data-label="9:31">an opportunity for the public and</span> <span class="cue" id="t574" data-cue="t574" data-t="574" data-label="9:34">frequently when you have public hearings, nobody shows up anyhow.</span> <span class="cue" id="t578" data-cue="t578" data-t="578" data-label="9:38">I think you look at the alternatives with this too.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="9:42" data-default-t="582">9:42</div>
+        <div class="text"><span class="cue" id="t582" data-cue="t582" data-t="582" data-label="9:42">I think you have to consider that</span> <span class="cue" id="t584" data-cue="t584" data-t="584" data-label="9:44">you know like not building a bridge or you know okay it kind of needs to Yeah you're missing the point you know. We've</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="9:53" data-default-t="593">9:53</div>
+        <div class="text"><span class="cue" id="t593" data-cue="t593" data-t="593" data-label="9:53">got to build a bridge no doubt about It's just a question whether it's a significant activity</span> <span class="cue" id="t598" data-cue="t598" data-t="598" data-label="9:58">in the watercourse. And I look through in our regulations on all these different things,</span> <span class="cue" id="t604" data-cue="t604" data-t="604" data-label="10:04">and it's kind of wishy motion, you know, in my mind.</span> <span class="cue" id="t611" data-cue="t611" data-t="611" data-label="10:11">It talks about any activity including but not limited to the following activities which may have a major or significant event.</span> <span class="cue" id="t620" data-cue="t620" data-t="620" data-label="10:20">Any activity involving</span> <span class="cue" id="t622" data-cue="t622" data-t="622" data-label="10:22">disposition or removal of material</span> <span class="cue" id="t625" data-cue="t625" data-t="625" data-label="10:25">which will or may have major substantial</span> <span class="cue" id="t629" data-cue="t629" data-t="629" data-label="10:29">effect or significant impact on the regulated area.</span> <span class="cue" id="t636" data-cue="t636" data-t="636" data-label="10:36">Any activity which substantially changes the natural channel</span> <span class="cue" id="t640" data-cue="t640" data-t="640" data-label="10:40">or may inhibit the natural dynamic of the waterborne system.</span> <span class="cue" id="t644" data-cue="t644" data-t="644" data-label="10:44">Any activity which substantially diminishes the natural capacity</span> <span class="cue" id="t647" data-cue="t647" data-t="647" data-label="10:47">of the inland watercourse to support fish,</span> <span class="cue" id="t650" data-cue="t650" data-t="650" data-label="10:50">aquatic wildlife,</span> <span class="cue" id="t652" data-cue="t652" data-t="652" data-label="10:52">or other biological type.</span> <span class="cue" id="t654" data-cue="t654" data-t="654" data-label="10:54">Any activity that is likely to cause or has potential cause substantial turbidity,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="10:59" data-default-t="659">10:59</div>
+        <div class="text"><span class="cue" id="t659" data-cue="t659" data-t="659" data-label="10:59">sulfation or sedimentation of weather or water pores. Any activity which causes substantial</span> <span class="cue" id="t665" data-cue="t665" data-t="665" data-label="11:05">diminue of flow</span> <span class="cue" id="t668" data-cue="t668" data-t="668" data-label="11:08">of an actual water force for groundwater level.</span> <span class="cue" id="t672" data-cue="t672" data-t="672" data-label="11:12">And again, when we're all said and done, the answer to all those questions is no.</span> <span class="cue" id="t677" data-cue="t677" data-t="677" data-label="11:17">In the interim,</span> <span class="cue" id="t678" data-cue="t678" data-t="678" data-label="11:18">I'm not so sure.</span> <span class="cue" id="t680" data-cue="t680" data-t="680" data-label="11:20">And so I guess</span> <span class="cue" id="t682" data-cue="t682" data-t="682" data-label="11:22">what I will do is I'll make a motion that we determine that it is a significant applicant and then</span> <span class="cue" id="t689" data-cue="t689" data-t="689" data-label="11:29">we vote on it one way or the other. And if it's voted down, that's fine. We've done our we've had our discussion on it. We've made our decision. We go about our business.</span> <span class="cue" id="t698" data-cue="t698" data-t="698" data-label="11:38">But if we think that</span> <span class="cue" id="t700" data-cue="t700" data-t="700" data-label="11:40">all</span> <span class="cue" id="t701" data-cue="t701" data-t="701" data-label="11:41">that major equipment going on in there, and again, gotta do it. We gotta fix the bridge.</span> <span class="cue" id="t707" data-cue="t707" data-t="707" data-label="11:47">But but does that warrant</span> <span class="cue" id="t711" data-cue="t711" data-t="711" data-label="11:51">us declaring that a significant activity?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="11:55" data-default-t="715">11:55</div>
+        <div class="text"><span class="cue" id="t715" data-cue="t715" data-t="715" data-label="11:55">So if we</span> <span class="cue" id="t716" data-cue="t716" data-t="716" data-label="11:56">I think it's pretty</span> <span class="cue" id="t718" data-cue="t718" data-t="718" data-label="11:58">by what you just read, it is a significant activity.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:03" data-default-t="723">12:03</div>
+        <div class="text"><span class="cue" id="t723" data-cue="t723" data-t="723" data-label="12:03">Just using that logic. But what would what happens then? The only thing we'd have to do is we'd have to set a public hearing for next meeting. We have a public hearing, probably nobody show up. We'd vote to to approve it.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:16" data-default-t="736">12:16</div>
+        <div class="text"><span class="cue" id="t736" data-cue="t736" data-t="736" data-label="12:16">You know but just what we've said we've gone through the process we've gone through the process yep and I think yeah I was gonna say it sounds like then we should.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:25" data-default-t="745">12:25</div>
+        <div class="text"><span class="cue" id="t745" data-cue="t745" data-t="745" data-label="12:25">All right I mean I'm all for it after reading that getting that description of what you're talking about. It's absolutely</span> <span class="cue" id="t752" data-cue="t752" data-t="752" data-label="12:32">a significant</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:34" data-default-t="754">12:34</div>
+        <div class="text"><span class="cue" id="t754" data-cue="t754" data-t="754" data-label="12:34">application.</span> <span class="cue" id="t755" data-cue="t755" data-t="755" data-label="12:35">Okay. Yeah. We would still be done with</span> <span class="cue" id="t757" data-cue="t757" data-t="757" data-label="12:37">we'd</span> <span class="cue" id="t758" data-cue="t758" data-t="758" data-label="12:38">be able to make a bid. We would be able to vote on it after</span> <span class="cue" id="t763" data-cue="t763" data-t="763" data-label="12:43">the public hearings closed. Yeah. So it's I don't think it's We're not we're not impacting the job that gives us a chance to do when we are When is this job</span> <span class="cue" id="t774" data-cue="t774" data-t="774" data-label="12:54">proposed?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:55" data-default-t="775">12:55</div>
+        <div class="text"><span class="cue" id="t775" data-cue="t775" data-t="775" data-label="12:55">If so, the the construction begin in</span> <span class="cue" id="t779" data-cue="t779" data-t="779" data-label="12:59">April or, you know, this this this spring.</span> <span class="cue" id="t782" data-cue="t782" data-t="782" data-label="13:02">This may have an impact on the construction schedule. Tom Walden is actually with CJM and he's the project engineer. He's got his hand up. I don't know if he wants to weigh in or if we we can let him do that. But</span> <span class="cue" id="t796" data-cue="t796" data-t="796" data-label="13:16">he's part of the design team and</span> <span class="cue" id="t800" data-cue="t800" data-t="800" data-label="13:20">was heavily involved in submitting the the the permitting application. So I don't know who submitted his significant activity or if that's a choice you guys make. But</span> <span class="cue" id="t808" data-cue="t808" data-t="808" data-label="13:28">so I imagine this that that would mean we'd go to another meeting, need to send notices out.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="13:34" data-default-t="814">13:34</div>
+        <div class="text"><span class="cue" id="t814" data-cue="t814" data-t="814" data-label="13:34">We need to redo the presentation too. We have to go through because you'd actually again only</span> <span class="cue" id="t819" data-cue="t819" data-t="819" data-label="13:39">decide on how to present the hearing.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="13:43" data-default-t="823">13:43</div>
+        <div class="text"><span class="cue" id="t823" data-cue="t823" data-t="823" data-label="13:43">So this may very well impact the standard.</span> <span class="cue" id="t828" data-cue="t828" data-t="828" data-label="13:48">The town was planning on doing</span> <span class="cue" id="t831" data-cue="t831" data-t="831" data-label="13:51">the tree clearing for this</span> <span class="cue" id="t833" data-cue="t833" data-t="833" data-label="13:53">starting today.</span> <span class="cue" id="t836" data-cue="t836" data-t="836" data-label="13:56">That got pushed back because we didn't have items in place,</span> <span class="cue" id="t841" data-cue="t841" data-t="841" data-label="14:01">which we have now,</span> <span class="cue" id="t843" data-cue="t843" data-t="843" data-label="14:03">we would have scheduled distinct tree</span> <span class="cue" id="t846" data-cue="t846" data-t="846" data-label="14:06">care</span> <span class="cue" id="t846-1" data-cue="t846-1" data-t="846" data-label="14:06">to cut all the trees along there</span> <span class="cue" id="t851" data-cue="t851" data-t="851" data-label="14:11">probably Wednesday or Thursday.</span> <span class="cue" id="t854" data-cue="t854" data-t="854" data-label="14:14">So if you are pushing that off</span> <span class="cue" id="t857" data-cue="t857" data-t="857" data-label="14:17">and you're going to</span> <span class="cue" id="t861" data-cue="t861" data-t="861" data-label="14:21">affect that,</span> <span class="cue" id="t862" data-cue="t862" data-t="862" data-label="14:22">you'll have to let me know, but that will</span> <span class="cue" id="t865" data-cue="t865" data-t="865" data-label="14:25">utility relocation</span> <span class="cue" id="t867" data-cue="t867" data-t="867" data-label="14:27">will take place</span> <span class="cue" id="t869" data-cue="t869" data-t="869" data-label="14:29">probably starting February</span> <span class="cue" id="t871" data-cue="t871" data-t="871" data-label="14:31">1.</span> <span class="cue" id="t873" data-cue="t873" data-t="873" data-label="14:33">So the tree clearing needs to be done</span> <span class="cue" id="t876" data-cue="t876" data-t="876" data-label="14:36">before that.</span> <span class="cue" id="t878" data-cue="t878" data-t="878" data-label="14:38">The reason we're doing it now</span> <span class="cue" id="t880" data-cue="t880" data-t="880" data-label="14:40">is we have a very narrow window</span> <span class="cue" id="t883" data-cue="t883" data-t="883" data-label="14:43">when we can satisfy</span> <span class="cue" id="t885" data-cue="t885" data-t="885" data-label="14:45">the NDDD</span> <span class="cue" id="t887" data-cue="t887" data-t="887" data-label="14:47">for</span> <span class="cue" id="t888" data-cue="t888" data-t="888" data-label="14:48">the</span> <span class="cue" id="t889" data-cue="t889" data-t="889" data-label="14:49">turtle species</span> <span class="cue" id="t891" data-cue="t891" data-t="891" data-label="14:51">and the sting species</span> <span class="cue" id="t893" data-cue="t893" data-t="893" data-label="14:53">and the bat species. So we work very carefully</span> <span class="cue" id="t896" data-cue="t896" data-t="896" data-label="14:56">with the herpetologist</span> <span class="cue" id="t898" data-cue="t898" data-t="898" data-label="14:58">to establish that schedule.</span> <span class="cue" id="t900" data-cue="t900" data-t="900" data-label="15:00">So</span> <span class="cue" id="t902" data-cue="t902" data-t="902" data-label="15:02">if you put it off one month,</span> <span class="cue" id="t905" data-cue="t905" data-t="905" data-label="15:05">maybe it'll still work.</span> <span class="cue" id="t907" data-cue="t907" data-t="907" data-label="15:07">I just say though, do we have would we have to impact what why would we have to stop the tree cutting? That's still gonna have to be done.</span> <span class="cue" id="t915" data-cue="t915" data-t="915" data-label="15:15">Because that's in the web. So if you're not gonna grant the weapons permit with that Okay. Can I add something, though? I just think,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="15:24" data-default-t="924">15:24</div>
+        <div class="text"><span class="cue" id="t924" data-cue="t924" data-t="924" data-label="15:24">like with that that wording it's a lot of it has to do with post construction impact.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="15:30" data-default-t="930">15:30</div>
+        <div class="text"><span class="cue" id="t930" data-cue="t930" data-t="930" data-label="15:30">That's what I So if you're changing the water for second fleet, let's say we're doing Right. But it's not. Yeah. It's not. It's</span> <span class="cue" id="t937" data-cue="t937" data-t="937" data-label="15:37">changing it a little bit.</span> <span class="cue" id="t939" data-cue="t939" data-t="939" data-label="15:39">Good for the better.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="15:41" data-default-t="941">15:41</div>
+        <div class="text"><span class="cue" id="t941" data-cue="t941" data-t="941" data-label="15:41">That's part of the bridge. But not the not the flow. Right? I mean Right there. The fell is basically staying the same. Flow is gonna be better. Better. It'll be improved. Right. Instead of</span> <span class="cue" id="t952" data-cue="t952" data-t="952" data-label="15:52">trying to make the river go</span> <span class="cue" id="t954" data-cue="t954" data-t="954" data-label="15:54">where the bridge is, it's letting the river go where it wants to go, just opening it up a little bit</span> <span class="cue" id="t961" data-cue="t961" data-t="961" data-label="16:01">on one side.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="16:03" data-default-t="963">16:03</div>
+        <div class="text"><span class="cue" id="t963" data-cue="t963" data-t="963" data-label="16:03">Yes. So that's changing the wall, but it's Yeah. I think, like, a significant impact would be, like, say, building a dam there or</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="16:12" data-default-t="972">16:12</div>
+        <div class="text"><span class="cue" id="t972" data-cue="t972" data-t="972" data-label="16:12">building a bridge and narrow the channel. Or maybe a significant impact on it would be, like, build bridge somewhere else.</span> <span class="cue" id="t980" data-cue="t980" data-t="980" data-label="16:20">Just Yeah. Like, long term impact. Now we're gonna just leave this old bridge and let it decay, but we're gonna build a new bridge. And then I would say maybe significant, but it's</span> <span class="cue" id="t992" data-cue="t992" data-t="992" data-label="16:32">I suppose if you look at it as the bridge itself is already creating significant.</span> <span class="cue" id="t998" data-cue="t998" data-t="998" data-label="16:38">It is. You know? So it's already been done, I guess, and then we would go there, film it in, film it in, changing everything up. It's not really either.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="16:47" data-default-t="1007">16:47</div>
+        <div class="text"><span class="cue" id="t1007" data-cue="t1007" data-t="1007" data-label="16:47">Has there been any negative? I mean, obviously, people on Bunker Hill know what's going on. I mean, has there been any</span> <span class="cue" id="t1013" data-cue="t1013" data-t="1013" data-label="16:53">no. I mean, they want a new bridge. Yeah.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="16:56" data-default-t="1016">16:56</div>
+        <div class="text"><span class="cue" id="t1016" data-cue="t1016" data-t="1016" data-label="16:56">Yeah. I mean, I think the biggest complaint would be the disruption of the whole project or the fact that it's been one lane since well since I've worked here. Right, right.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="17:07" data-default-t="1027">17:07</div>
+        <div class="text"><span class="cue" id="t1027" data-cue="t1027" data-t="1027" data-label="17:07">We're also</span> <span class="cue" id="t1028" data-cue="t1028" data-t="1028" data-label="17:08">talking about something that's had Army Corps of Engineers.</span> <span class="cue" id="t1033" data-cue="t1033" data-t="1033" data-label="17:13">Right. It's hard to measure deep</span> <span class="cue" id="t1035" data-cue="t1035" data-t="1035" data-label="17:15">water quality deep fissures.</span> <span class="cue" id="t1038" data-cue="t1038" data-t="1038" data-label="17:18">That's a defensive</span> <span class="cue" id="t1040" data-cue="t1040" data-t="1040" data-label="17:20">problem. Just bring it up and we just go.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="17:23" data-default-t="1043">17:23</div>
+        <div class="text"><span class="cue" id="t1043" data-cue="t1043" data-t="1043" data-label="17:23">What's that? What if you just?</span> <span class="cue" id="t1045" data-cue="t1045" data-t="1045" data-label="17:25">Well I've got I made a motion. Right. Okay. Nobody has to second it. Oh.</span> <span class="cue" id="t1052" data-cue="t1052" data-t="1052" data-label="17:32">And if it's not second the motion doesn't exist.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="17:36" data-default-t="1056">17:36</div>
+        <div class="text"><span class="cue" id="t1056" data-cue="t1056" data-t="1056" data-label="17:36">Or you could second it and vote. We</span> <span class="cue" id="t1059" data-cue="t1059" data-t="1059" data-label="17:39">could do that as well. I'll second it.</span> <span class="cue" id="t1065" data-cue="t1065" data-t="1065" data-label="17:45">Okay.</span> <span class="cue" id="t1077" data-cue="t1077" data-t="1077" data-label="17:57">So</span> <span class="cue" id="t1083" data-cue="t1083" data-t="1083" data-label="18:03">okay</span> <span class="cue" id="t1084" data-cue="t1084" data-t="1084" data-label="18:04">got it.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="18:06" data-default-t="1086">18:06</div>
+        <div class="text"><span class="cue" id="t1086" data-cue="t1086" data-t="1086" data-label="18:06">So we got it? Okay. Yep. Okay. Alright. Miranda get it?</span> <span class="cue" id="t1092" data-cue="t1092" data-t="1092" data-label="18:12">Got it.</span> <span class="cue" id="t1095" data-cue="t1095" data-t="1095" data-label="18:15">Alright. Thank you.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="18:18" data-default-t="1098">18:18</div>
+        <div class="text"><span class="cue" id="t1098" data-cue="t1098" data-t="1098" data-label="18:18">Okay.</span> <span class="cue" id="t1102" data-cue="t1102" data-t="1102" data-label="18:22">So that means that with any more discussions? They had a discussion about the the bridge and</span> <span class="cue" id="t1109" data-cue="t1109" data-t="1109" data-label="18:29">what's I I I was wondering about the you were saying they're gonna cut those trees. Every one of those trees that were dead, are they all gonna be cut down?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="18:39" data-default-t="1119">18:39</div>
+        <div class="text"><span class="cue" id="t1119" data-cue="t1119" data-t="1119" data-label="18:39">So there's a little bit of a nomenclature</span> <span class="cue" id="t1121" data-cue="t1121" data-t="1121" data-label="18:41">on that,</span> <span class="cue" id="t1123" data-cue="t1123" data-t="1123" data-label="18:43">but all the ones that have tape around them are getting</span> <span class="cue" id="t1128" data-cue="t1128" data-t="1128" data-label="18:48">cut.</span> <span class="cue" id="t1129" data-cue="t1129" data-t="1129" data-label="18:49">Yeah. But it's only one color. There's two colors of tape.</span> <span class="cue" id="t1134" data-cue="t1134" data-t="1134" data-label="18:54">It's pretty easy. The ones that are the</span> <span class="cue" id="t1137" data-cue="t1137" data-t="1137" data-label="18:57">most of the colors are getting in the cups.</span> <span class="cue" id="t1140" data-cue="t1140" data-t="1140" data-label="19:00">Which I thought is red and white, like candy cane? Yeah. Those are getting in the cup. Okay. Yes. Yeah. I guess they have to be cut. And a big part of that is simply</span> <span class="cue" id="t1150" data-cue="t1150" data-t="1150" data-label="19:10">they have to bring in pretty large crane.</span> <span class="cue" id="t1153" data-cue="t1153" data-t="1153" data-label="19:13">And the clearing, the limited clearing is based on</span> <span class="cue" id="t1157" data-cue="t1157" data-t="1157" data-label="19:17">the crane</span> <span class="cue" id="t1159" data-cue="t1159" data-t="1159" data-label="19:19">that they need to set the actual prefab deck sections.</span> <span class="cue" id="t1169" data-cue="t1169" data-t="1169" data-label="19:29">Will that just, like, one day, or</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="19:31" data-default-t="1171">19:31</div>
+        <div class="text"><span class="cue" id="t1171" data-cue="t1171" data-t="1171" data-label="19:31">is it</span> <span class="cue" id="t1174" data-cue="t1174" data-t="1174" data-label="19:34">I don't think it's very long. No. They they just pick them up and call them. Yeah. I know. It's pretty quick.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="19:41" data-default-t="1181">19:41</div>
+        <div class="text"><span class="cue" id="t1181" data-cue="t1181" data-t="1181" data-label="19:41">Tom's a construction guy. You want the construction,</span> <span class="cue" id="t1184" data-cue="t1184" data-t="1184" data-label="19:44">the answer is I don't know if you can type them in.</span> <span class="cue" id="t1189" data-cue="t1189" data-t="1189" data-label="19:49">Marina, there's someone we're wondering if they wanna talk.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="19:54" data-default-t="1194">19:54</div>
+        <div class="text"><span class="cue" id="t1194" data-cue="t1194" data-t="1194" data-label="19:54">Who?</span> <span class="cue" id="t1196" data-cue="t1196" data-t="1196" data-label="19:56">Tom Weldon, the like the one that's on there. Oh, he should he's on muted. He should be able to talk.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="20:02" data-default-t="1202">20:02</div>
+        <div class="text"><span class="cue" id="t1202" data-cue="t1202" data-t="1202" data-label="20:02">Oh, okay. I didn't know whether I could see it.</span> <span class="cue" id="t1204" data-cue="t1204" data-t="1204" data-label="20:04">That's</span> <span class="cue" id="t1205" data-cue="t1205" data-t="1205" data-label="20:05">quite alright.</span> <span class="cue" id="t1208" data-cue="t1208" data-t="1208" data-label="20:08">Thank you for the opportunity.</span> <span class="cue" id="t1211" data-cue="t1211" data-t="1211" data-label="20:11">In regards</span> <span class="cue" id="t1213" data-cue="t1213" data-t="1213" data-label="20:13">to the clearing of the trees,</span> <span class="cue" id="t1217" data-cue="t1217" data-t="1217" data-label="20:17">that work probably shouldn't take more than.</span> <span class="cue" id="t1220" data-cue="t1220" data-t="1220" data-label="20:20">Probably a couple of days to a week at most.</span> <span class="cue" id="t1224" data-cue="t1224" data-t="1224" data-label="20:24">The limits of the clearing were determined</span> <span class="cue" id="t1227" data-cue="t1227" data-t="1227" data-label="20:27">based upon the recreation</span> <span class="cue" id="t1229" data-cue="t1229" data-t="1229" data-label="20:29">of</span> <span class="cue" id="t1231" data-cue="t1231" data-t="1231" data-label="20:31">the.</span> <span class="cue" id="t1233" data-cue="t1233" data-t="1233" data-label="20:33">The new slopes that are going to need to be created.</span> <span class="cue" id="t1238" data-cue="t1238" data-t="1238" data-label="20:38">As we worked in conjunction with deep fisheries and with the</span> <span class="cue" id="t1243" data-cue="t1243" data-t="1243" data-label="20:43">state DOT OEP</span> <span class="cue" id="t1246" data-cue="t1246" data-t="1246" data-label="20:46">to create,</span> <span class="cue" id="t1247" data-cue="t1247" data-t="1247" data-label="20:47">excuse me,</span> <span class="cue" id="t1249" data-cue="t1249" data-t="1249" data-label="20:49">the armament of the slopes to protect the existing abutments</span> <span class="cue" id="t1253" data-cue="t1253" data-t="1253" data-label="20:53">and to formulate the</span> <span class="cue" id="t1255" data-cue="t1255" data-t="1255" data-label="20:55">proposed critter crossings on both sides of the bridge.</span> <span class="cue" id="t1259" data-cue="t1259" data-t="1259" data-label="20:59">The utilities</span> <span class="cue" id="t1260" data-cue="t1260" data-t="1260" data-label="21:00">are the</span> <span class="cue" id="t1262" data-cue="t1262" data-t="1262" data-label="21:02">at the immediate onset are the primary reason for the clearing on the upstream side</span> <span class="cue" id="t1268" data-cue="t1268" data-t="1268" data-label="21:08">because their present location adjacent to the downstream side of the bridge</span> <span class="cue" id="t1273" data-cue="t1273" data-t="1273" data-label="21:13">would make it impossible</span> <span class="cue" id="t1275" data-cue="t1275" data-t="1275" data-label="21:15">to remove the existing</span> <span class="cue" id="t1277" data-cue="t1277" data-t="1277" data-label="21:17">three culverts</span> <span class="cue" id="t1279" data-cue="t1279" data-t="1279" data-label="21:19">and to</span> <span class="cue" id="t1281" data-cue="t1281" data-t="1281" data-label="21:21">in order to build the new abutment and wing walls</span> <span class="cue" id="t1285" data-cue="t1285" data-t="1285" data-label="21:25">on the southwest,</span> <span class="cue" id="t1289" data-cue="t1289" data-t="1289" data-label="21:29">I'm sorry, the southeast corner of the bridge</span> <span class="cue" id="t1292" data-cue="t1292" data-t="1292" data-label="21:32">is gonna require the installation of a temporary earth retaining system.</span> <span class="cue" id="t1297" data-cue="t1297" data-t="1297" data-label="21:37">And with the utility lines overhead near immediate vicinity,</span> <span class="cue" id="t1302" data-cue="t1302" data-t="1302" data-label="21:42">it would make the placement of that material</span> <span class="cue" id="t1304" data-cue="t1304" data-t="1304" data-label="21:44">almost impossible.</span> <span class="cue" id="t1307" data-cue="t1307" data-t="1307" data-label="21:47">So in conversations and numerous field meetings with the overhead utilities,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="21:52" data-default-t="1312">21:52</div>
+        <div class="text"><span class="cue" id="t1312" data-cue="t1312" data-t="1312" data-label="21:52">the</span> <span class="cue" id="t1314" data-cue="t1314" data-t="1314" data-label="21:54">the locations were were deemed to be located to the upstream side</span> <span class="cue" id="t1318" data-cue="t1318" data-t="1318" data-label="21:58">while we complete</span> <span class="cue" id="t1320" data-cue="t1320" data-t="1320" data-label="22:00">the reconstruction of the bridge in total.</span> <span class="cue" id="t1322" data-cue="t1322" data-t="1322" data-label="22:02">And then once we're complete, the plan is to move the utilities</span> <span class="cue" id="t1327" data-cue="t1327" data-t="1327" data-label="22:07">back to their original location</span> <span class="cue" id="t1329" data-cue="t1329" data-t="1329" data-label="22:09">on the downstream side of the bridge.</span> <span class="cue" id="t1332" data-cue="t1332" data-t="1332" data-label="22:12">In addition to relocating the existing</span> <span class="cue" id="t1335" data-cue="t1335" data-t="1335" data-label="22:15">fire standpipe, etc.</span> <span class="cue" id="t1340" data-cue="t1340" data-t="1340" data-label="22:20">From the</span> <span class="cue" id="t1341" data-cue="t1341" data-t="1341" data-label="22:21">Northeast corner</span> <span class="cue" id="t1343" data-cue="t1343" data-t="1343" data-label="22:23">back down to the Southeast corner.</span> <span class="cue" id="t1349" data-cue="t1349" data-t="1349" data-label="22:29">As far as</span> <span class="cue" id="t1351" data-cue="t1351" data-t="1351" data-label="22:31">the overall impacts,</span> <span class="cue" id="t1355" data-cue="t1355" data-t="1355" data-label="22:35">there will be</span> <span class="cue" id="t1357" data-cue="t1357" data-t="1357" data-label="22:37">the erosion control fencing that we're using to control the siltation</span> <span class="cue" id="t1362" data-cue="t1362" data-t="1362" data-label="22:42">that may or may not occur.</span> <span class="cue" id="t1365" data-cue="t1365" data-t="1365" data-label="22:45">The siltation devices are being used to</span> <span class="cue" id="t1368" data-cue="t1368" data-t="1368" data-label="22:48">to keep any</span> <span class="cue" id="t1370" data-cue="t1370" data-t="1370" data-label="22:50">soil material from</span> <span class="cue" id="t1372" data-cue="t1372" data-t="1372" data-label="22:52">escaping to the river and causing siltation there.</span> <span class="cue" id="t1376" data-cue="t1376" data-t="1376" data-label="22:56">That same fencing will be used as exclusionary</span> <span class="cue" id="t1379" data-cue="t1379" data-t="1379" data-label="22:59">fencing</span> <span class="cue" id="t1380" data-cue="t1380" data-t="1380" data-label="23:00">to keep once</span> <span class="cue" id="t1383" data-cue="t1383" data-t="1383" data-label="23:03">the herpetologist</span> <span class="cue" id="t1384" data-cue="t1384" data-t="1384" data-label="23:04">that has been hired for the duration of the project to perform regular sweeps,</span> <span class="cue" id="t1391" data-cue="t1391" data-t="1391" data-label="23:11">the whole idea of the fencing is two part. One to keep the</span> <span class="cue" id="t1396" data-cue="t1396" data-t="1396" data-label="23:16">turtles and the snakes out of the work zone while we're working,</span> <span class="cue" id="t1400" data-cue="t1400" data-t="1400" data-label="23:20">as well as siltation control devices or sedimentation control devices.</span> <span class="cue" id="t1406" data-cue="t1406" data-t="1406" data-label="23:26">The water handling systems that we're proposing to use</span> <span class="cue" id="t1410" data-cue="t1410" data-t="1410" data-label="23:30">are basically sandbags,</span> <span class="cue" id="t1413" data-cue="t1413" data-t="1413" data-label="23:33">so there</span> <span class="cue" id="t1414" data-cue="t1414" data-t="1414" data-label="23:34">won't be any</span> <span class="cue" id="t1415" data-cue="t1415" data-t="1415" data-label="23:35">actual disturbance</span> <span class="cue" id="t1417" data-cue="t1417" data-t="1417" data-label="23:37">of the stream bed</span> <span class="cue" id="t1419" data-cue="t1419" data-t="1419" data-label="23:39">due to the vibration of sheet piles, etcetera,</span> <span class="cue" id="t1423" data-cue="t1423" data-t="1423" data-label="23:43">stirring up</span> <span class="cue" id="t1424" data-cue="t1424" data-t="1424" data-label="23:44">any</span> <span class="cue" id="t1426" data-cue="t1426" data-t="1426" data-label="23:46">silt or whatever</span> <span class="cue" id="t1428" data-cue="t1428" data-t="1428" data-label="23:48">while we're</span> <span class="cue" id="t1430" data-cue="t1430" data-t="1430" data-label="23:50">basically</span> <span class="cue" id="t1431" data-cue="t1431" data-t="1431" data-label="23:51">in a</span> <span class="cue" id="t1435" data-cue="t1435" data-t="1435" data-label="23:55">unconfined</span> <span class="cue" id="t1436" data-cue="t1436" data-t="1436" data-label="23:56">scenario,</span> <span class="cue" id="t1437" data-cue="t1437" data-t="1437" data-label="23:57">which we're allowed to be, we can work unconfined</span> <span class="cue" id="t1440" data-cue="t1440" data-t="1440" data-label="24:00">in</span> <span class="cue" id="t1442" data-cue="t1442" data-t="1442" data-label="24:02">the river</span> <span class="cue" id="t1443" data-cue="t1443" data-t="1443" data-label="24:03">from,</span> <span class="cue" id="t1444" data-cue="t1444" data-t="1444" data-label="24:04">I believe it's June 1 to September 30,</span> <span class="cue" id="t1448" data-cue="t1448" data-t="1448" data-label="24:08">and we're allowed to install our coffer dams by</span> <span class="cue" id="t1452" data-cue="t1452" data-t="1452" data-label="24:12">deep</span> <span class="cue" id="t1454" data-cue="t1454" data-t="1454" data-label="24:14">basically any time of the year.</span> <span class="cue" id="t1459" data-cue="t1459" data-t="1459" data-label="24:19">That's pretty much the job in a nutshell. I mean, we're gonna be working in the dry.</span> <span class="cue" id="t1469" data-cue="t1469" data-t="1469" data-label="24:29">We've gone to great lengths to ensure the protection of not only the.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="24:35" data-default-t="1475">24:35</div>
+        <div class="text"><span class="cue" id="t1475" data-cue="t1475" data-t="1475" data-label="24:35">The surrounding area of the</span> <span class="cue" id="t1478" data-cue="t1478" data-t="1478" data-label="24:38">the regulated upland areas on both sides of the bridge.</span> <span class="cue" id="t1483" data-cue="t1483" data-t="1483" data-label="24:43">We've</span> <span class="cue" id="t1484" data-cue="t1484" data-t="1484" data-label="24:44">we've designed the best bridge that</span> <span class="cue" id="t1487" data-cue="t1487" data-t="1487" data-label="24:47">we could</span> <span class="cue" id="t1489" data-cue="t1489" data-t="1489" data-label="24:49">that would not cause any further impacts</span> <span class="cue" id="t1492" data-cue="t1492" data-t="1492" data-label="24:52">to the upland</span> <span class="cue" id="t1494" data-cue="t1494" data-t="1494" data-label="24:54">impact areas</span> <span class="cue" id="t1496" data-cue="t1496" data-t="1496" data-label="24:56">that currently exist.</span> <span class="cue" id="t1499" data-cue="t1499" data-t="1499" data-label="24:59">To make the bridge</span> <span class="cue" id="t1502" data-cue="t1502" data-t="1502" data-label="25:02">truly hydraulically efficient</span> <span class="cue" id="t1506" data-cue="t1506" data-t="1506" data-label="25:06">and prevent overtopping from occurring</span> <span class="cue" id="t1509" data-cue="t1509" data-t="1509" data-label="25:09">would require us to raise the road approximately five feet. And at that point, the amount of fill that would need to be placed to create the slopes to hold the road</span> <span class="cue" id="t1519" data-cue="t1519" data-t="1519" data-label="25:19">would basically be</span> <span class="cue" id="t1523" data-cue="t1523" data-t="1523" data-label="25:23">overfilling</span> <span class="cue" id="t1524" data-cue="t1524" data-t="1524" data-label="25:24">the floodplain</span> <span class="cue" id="t1527" data-cue="t1527" data-t="1527" data-label="25:27">In that area within the Upland impact areas,</span> <span class="cue" id="t1530" data-cue="t1530" data-t="1530" data-label="25:30">which we've tried to avoid at all costs</span> <span class="cue" id="t1533" data-cue="t1533" data-t="1533" data-label="25:33">and</span> <span class="cue" id="t1534" data-cue="t1534" data-t="1534" data-label="25:34">excuse me our total impacts to the</span> <span class="cue" id="t1538" data-cue="t1538" data-t="1538" data-label="25:38">upstream impact areas.</span> <span class="cue" id="t1540" data-cue="t1540" data-t="1540" data-label="25:40">If I'm not mistaken, if I remember correctly, it's about eleven thirty seven cubic yards of cut. We're not placing any additional fill in the in the</span> <span class="cue" id="t1548" data-cue="t1548" data-t="1548" data-label="25:48">in the floodplains.</span> <span class="cue" id="t1552" data-cue="t1552" data-t="1552" data-label="25:52">And I I don't wanna ramble or take up any more of anybody's time, but is there any other specific questions I might be able to answer?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="26:06" data-default-t="1566">26:06</div>
+        <div class="text"><span class="cue" id="t1566" data-cue="t1566" data-t="1566" data-label="26:06">I think we're good. I think we're good.</span> <span class="cue" id="t1570" data-cue="t1570" data-t="1570" data-label="26:10">I'll make a motion to approve permit 24Dash10.</span> <span class="cue" id="t1574" data-cue="t1574" data-t="1574" data-label="26:14">Second.</span> <span class="cue" id="t1576" data-cue="t1576" data-t="1576" data-label="26:16">All in favor?</span> <span class="cue" id="t1577" data-cue="t1577" data-t="1577" data-label="26:17">Aye.</span> <span class="cue" id="t1579" data-cue="t1579" data-t="1579" data-label="26:19">Got it. One.</span> <span class="cue" id="t1581" data-cue="t1581" data-t="1581" data-label="26:21">Thank you.</span> <span class="cue" id="t1583" data-cue="t1583" data-t="1583" data-label="26:23">You.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="26:24" data-default-t="1584">26:24</div>
+        <div class="text"><span class="cue" id="t1584" data-cue="t1584" data-t="1584" data-label="26:24">Just write up, like, an approval letter and send that over. Yeah. I</span> <span class="cue" id="t1589" data-cue="t1589" data-t="1589" data-label="26:29">usually have to look at perm and then Right here. Okay. Mhmm. There's</span> <span class="cue" id="t1594" data-cue="t1594" data-t="1594" data-label="26:34">Thank you. Thank you. Thank you so much.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="26:51" data-default-t="1611">26:51</div>
+        <div class="text"><span class="cue" id="t1611" data-cue="t1611" data-t="1611" data-label="26:51">Next on our</span> <span class="cue" id="t1613" data-cue="t1613" data-t="1613" data-label="26:53">with some new business</span> <span class="cue" id="t1615" data-cue="t1615" data-t="1615" data-label="26:55">permit application,</span> <span class="cue" id="t1618" data-cue="t1618" data-t="1618" data-label="26:58">IWWC24Slash12,</span> <span class="cue" id="t1621" data-cue="t1621" data-t="1621" data-label="27:01">Robert and Pamela Mayer, 5 Sunset Lane.</span> <span class="cue" id="t1626" data-cue="t1626" data-t="1626" data-label="27:06">Are you here?</span> <span class="cue" id="t1631" data-cue="t1631" data-t="1631" data-label="27:11">Okay.</span> <span class="cue" id="t1633" data-cue="t1633" data-t="1633" data-label="27:13">They're not here, so we'll</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="27:16" data-default-t="1636">27:16</div>
+        <div class="text"><span class="cue" id="t1636" data-cue="t1636" data-t="1636" data-label="27:16">I don't what we got. We can we can discuss it, and you can receive it.</span> <span class="cue" id="t1641" data-cue="t1641" data-t="1641" data-label="27:21">Well, as</span> <span class="cue" id="t1643" data-cue="t1643" data-t="1643" data-label="27:23">far as I know, I think we'll put the</span> <span class="cue" id="t1647" data-cue="t1647" data-t="1647" data-label="27:27">did you see the drawing that was submitted?</span> <span class="cue" id="t1650" data-cue="t1650" data-t="1650" data-label="27:30">Yeah. Mhmm.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="27:31" data-default-t="1651">27:31</div>
+        <div class="text"><span class="cue" id="t1651" data-cue="t1651" data-t="1651" data-label="27:31">And then he was waiting on all my approval.</span> <span class="cue" id="t1655" data-cue="t1655" data-t="1655" data-label="27:35">I don't know when they see or when I haven't got that yet. I asked him if he received it, and I didn't hear anything.</span> <span class="cue" id="t1661" data-cue="t1661" data-t="1661" data-label="27:41">Last time we we talked, he hadn't got it yet.</span> <span class="cue" id="t1665" data-cue="t1665" data-t="1665" data-label="27:45">We put in for it, so we kinda need that before we can approve it anyway.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="27:48" data-default-t="1668">27:48</div>
+        <div class="text"><span class="cue" id="t1668" data-cue="t1668" data-t="1668" data-label="27:48">Oh. Since it's in the late, and you have to wait till next time.</span> <span class="cue" id="t1672" data-cue="t1672" data-t="1672" data-label="27:52">Okay. So hopefully, it'll happen by then.</span> <span class="cue" id="t1675" data-cue="t1675" data-t="1675" data-label="27:55">Alright. So we'll this.</span> <span class="cue" id="t1678" data-cue="t1678" data-t="1678" data-label="27:58">Skip it.</span> <span class="cue" id="t1679" data-cue="t1679" data-t="1679" data-label="27:59">Yeah. I mean, you can make a motion to it. Make a motion to receive it. Yeah. So</span> <span class="cue" id="t1684" data-cue="t1684" data-t="1684" data-label="28:04">it's just replacing a five foot by 16 foot wood dock with a four foot by 16 foot aluminum and composite dock in the same location. So</span> <span class="cue" id="t1694" data-cue="t1694" data-t="1694" data-label="28:14">I see no reason why we shouldn't be able to receive that.</span> <span class="cue" id="t1700" data-cue="t1700" data-t="1700" data-label="28:20">K.</span> <span class="cue" id="t1701" data-cue="t1701" data-t="1701" data-label="28:21">And, really, I can't think of any discussion we could have on that.</span> <span class="cue" id="t1707" data-cue="t1707" data-t="1707" data-label="28:27">Alright. So seven b is Did you wanna make a motion?</span> <span class="cue" id="t1714" data-cue="t1714" data-t="1714" data-label="28:34">Motion to receive the</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="28:37" data-default-t="1717">28:37</div>
+        <div class="text"><span class="cue" id="t1717" data-cue="t1717" data-t="1717" data-label="28:37">application one</span> <span class="cue" id="t1719" data-cue="t1719" data-t="1719" data-label="28:39">I w w c two thousand four hundred twelve</span> <span class="cue" id="t1722" data-cue="t1722" data-t="1722" data-label="28:42">permit</span> <span class="cue" id="t1724" data-cue="t1724" data-t="1724" data-label="28:44">I'll second it</span> <span class="cue" id="t1726" data-cue="t1726" data-t="1726" data-label="28:46">All in favor?</span> <span class="cue" id="t1728" data-cue="t1728" data-t="1728" data-label="28:48">Aye.</span> <span class="cue" id="t1729" data-cue="t1729" data-t="1729" data-label="28:49">Aye.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="28:51" data-default-t="1731">28:51</div>
+        <div class="text"><span class="cue" id="t1731" data-cue="t1731" data-t="1731" data-label="28:51">The b permit application</span> <span class="cue" id="t1733" data-cue="t1733" data-t="1733" data-label="28:53">IWWC</span> <span class="cue" id="t1735" data-cue="t1735" data-t="1735" data-label="28:55">24 slash 13, Andover Field Committee,</span> <span class="cue" id="t1738" data-cue="t1738" data-t="1738" data-label="28:58">Veterans Memorial Field,</span> <span class="cue" id="t1740" data-cue="t1740" data-t="1740" data-label="29:00">worked in up upland review area to construct a free pickleball courts,</span> <span class="cue" id="t1746" data-cue="t1746" data-t="1746" data-label="29:06">playscapes,</span> <span class="cue" id="t1747" data-cue="t1747" data-t="1747" data-label="29:07">and a pavilion area for multi use community enhancement.</span> <span class="cue" id="t1753" data-cue="t1753" data-t="1753" data-label="29:13">Excellent.</span> <span class="cue" id="t1754" data-cue="t1754" data-t="1754" data-label="29:14">Sounds</span> <span class="cue" id="t1756" data-cue="t1756" data-t="1756" data-label="29:16">great. It's still there.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="29:20" data-default-t="1760">29:20</div>
+        <div class="text"><span class="cue" id="t1760" data-cue="t1760" data-t="1760" data-label="29:20">So from the town's perspective,</span> <span class="cue" id="t1763" data-cue="t1763" data-t="1763" data-label="29:23">I'll refer to Christine and Scott,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="29:45" data-default-t="1785">29:45</div>
+        <div class="text"><span class="cue" id="t1785" data-cue="t1785" data-t="1785" data-label="29:45">I</span> <span class="cue" id="t1787" data-cue="t1787" data-t="1787" data-label="29:47">have I have a question I have to ask about this area that it's that you want to build all this.</span> <span class="cue" id="t1798" data-cue="t1798" data-t="1798" data-label="29:58">Is that it's all about the ball field.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="30:02" data-default-t="1802">30:02</div>
+        <div class="text"><span class="cue" id="t1802" data-cue="t1802" data-t="1802" data-label="30:02">By the. Is that is that area of blood? Is that a flooding area? Yes.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="30:08" data-default-t="1808">30:08</div>
+        <div class="text"><span class="cue" id="t1808" data-cue="t1808" data-t="1808" data-label="30:08">Everything here floods.</span> <span class="cue" id="t1811" data-cue="t1811" data-t="1811" data-label="30:11">Is it considered blood question?</span> <span class="cue" id="t1813" data-cue="t1813" data-t="1813" data-label="30:13">Yes.</span> <span class="cue" id="t1815" data-cue="t1815" data-t="1815" data-label="30:15">So you wanna go, you know, blood question?</span> <span class="cue" id="t1819" data-cue="t1819" data-t="1819" data-label="30:19">Correct.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="30:20" data-default-t="1820">30:20</div>
+        <div class="text"><span class="cue" id="t1820" data-cue="t1820" data-t="1820" data-label="30:20">Allowed by your chimney bridge.</span> <span class="cue" id="t1822" data-cue="t1822" data-t="1822" data-label="30:22">And,</span> <span class="cue" id="t1823" data-cue="t1823" data-t="1823" data-label="30:23">you know, if you if you look at what you can do in floodplain,</span> <span class="cue" id="t1828" data-cue="t1828" data-t="1828" data-label="30:28">in parks and recreation areas are one of the things. It's not like people are living there Right. And they get displaced.</span> <span class="cue" id="t1834" data-cue="t1834" data-t="1834" data-label="30:34">You're not gonna be able to play pickleball pickleball when it floods, but the water goes away and you you can get it and brush off the court and you you can play. And so Same thing with a play skate or</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="30:45" data-default-t="1845">30:45</div>
+        <div class="text"><span class="cue" id="t1845" data-cue="t1845" data-t="1845" data-label="30:45">anything. Yeah. Yep.</span> <span class="cue" id="t1847" data-cue="t1847" data-t="1847" data-label="30:47">And so if you want to find the example of that,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="30:51" data-default-t="1851">30:51</div>
+        <div class="text"><span class="cue" id="t1851" data-cue="t1851" data-t="1851" data-label="30:51">if you've ever been to Riverfront Recapture</span> <span class="cue" id="t1854" data-cue="t1854" data-t="1854" data-label="30:54">in Hartford,</span> <span class="cue" id="t1856" data-cue="t1856" data-t="1856" data-label="30:56">that entire</span> <span class="cue" id="t1857" data-cue="t1857" data-t="1857" data-label="30:57">park Floods. Yep. Is in a floodplain mode.</span> <span class="cue" id="t1861" data-cue="t1861" data-t="1861" data-label="31:01">Their 80 pathways</span> <span class="cue" id="t1864" data-cue="t1864" data-t="1864" data-label="31:04">can be six to eight feet underwater.</span> <span class="cue" id="t1867" data-cue="t1867" data-t="1867" data-label="31:07">The entire Ground</span> <span class="cue" id="t1869" data-cue="t1869" data-t="1869" data-label="31:09">Floor</span> <span class="cue" id="t1870" data-cue="t1870" data-t="1870" data-label="31:10">of</span> <span class="cue" id="t1871" data-cue="t1871" data-t="1871" data-label="31:11">the building they have there is designed to float. If you look very carefully on the side of the building,</span> <span class="cue" id="t1877" data-cue="t1877" data-t="1877" data-label="31:17">even though they pressure the water after the water goes shut down, you can see here Ground Floor gets six or seven feet of water in the building.</span> <span class="cue" id="t1886" data-cue="t1886" data-t="1886" data-label="31:26">But</span> <span class="cue" id="t1887" data-cue="t1887" data-t="1887" data-label="31:27">it's all constructive</span> <span class="cue" id="t1888" data-cue="t1888" data-t="1888" data-label="31:28">of materials that account for that? Yes. So the first thing is that</span> <span class="cue" id="t1894" data-cue="t1894" data-t="1894" data-label="31:34">it is in the flood zone,</span> <span class="cue" id="t1898" data-cue="t1898" data-t="1898" data-label="31:38">but it is not</span> <span class="cue" id="t1900" data-cue="t1900" data-t="1900" data-label="31:40">really</span> <span class="cue" id="t1901" data-cue="t1901" data-t="1901" data-label="31:41">in</span> <span class="cue" id="t1902" data-cue="t1902" data-t="1902" data-label="31:42">the flood way.</span> <span class="cue" id="t1904" data-cue="t1904" data-t="1904" data-label="31:44">And the difference is the areas where the paddleboards</span> <span class="cue" id="t1908" data-cue="t1908" data-t="1908" data-label="31:48">are</span> <span class="cue" id="t1909" data-cue="t1909" data-t="1909" data-label="31:49">are not because they're separated from the river by a pretty significant burn.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="31:54" data-default-t="1914">31:54</div>
+        <div class="text"><span class="cue" id="t1914" data-cue="t1914" data-t="1914" data-label="31:54">They build flood,</span> <span class="cue" id="t1916" data-cue="t1916" data-t="1916" data-label="31:56">but they're not going to see current,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="31:58" data-default-t="1918">31:58</div>
+        <div class="text"><span class="cue" id="t1918" data-cue="t1918" data-t="1918" data-label="31:58">which is why we can get away with</span> <span class="cue" id="t1921" data-cue="t1921" data-t="1921" data-label="32:01">putting fencing up in that direction. Obviously,</span> <span class="cue" id="t1924" data-cue="t1924" data-t="1924" data-label="32:04">it's problematic putting a chain link fence,</span> <span class="cue" id="t1927" data-cue="t1927" data-t="1927" data-label="32:07">you know, in a river, for instance.</span> <span class="cue" id="t1929" data-cue="t1929" data-t="1929" data-label="32:09">But if it's just in a pond,</span> <span class="cue" id="t1932" data-cue="t1932" data-t="1932" data-label="32:12">it doesn't really matter. So that area has flooded from time to time, but when the water recedes, it's back to normal.</span> <span class="cue" id="t1939" data-cue="t1939" data-t="1939" data-label="32:19">So we understand that the lower part will go underwater,</span> <span class="cue" id="t1944" data-cue="t1944" data-t="1944" data-label="32:24">if not every year, every two to three years.</span> <span class="cue" id="t1947" data-cue="t1947" data-t="1947" data-label="32:27">The upper level,</span> <span class="cue" id="t1949" data-cue="t1949" data-t="1949" data-label="32:29">in my lifetime where the playground is going, in my lifetime, I've never actually seen that flood,</span> <span class="cue" id="t1957" data-cue="t1957" data-t="1957" data-label="32:37">but that is within certainly within the five hundred year to double flame.</span> <span class="cue" id="t1961" data-cue="t1961" data-t="1961" data-label="32:41">So all the structures</span> <span class="cue" id="t1963" data-cue="t1963" data-t="1963" data-label="32:43">the only real structure that we're building there is a pavilion,</span> <span class="cue" id="t1967" data-cue="t1967" data-t="1967" data-label="32:47">and the pavilion can withstand</span> <span class="cue" id="t1969" data-cue="t1969" data-t="1969" data-label="32:49">Right. Flood.</span> <span class="cue" id="t1971" data-cue="t1971" data-t="1971" data-label="32:51">And the lighting bases that are installed</span> <span class="cue" id="t1975" data-cue="t1975" data-t="1975" data-label="32:55">will be installed and the concrete will go above the ordinary flood so</span> <span class="cue" id="t1980" data-cue="t1980" data-t="1980" data-label="33:00">that the lighting and the electrical portion won't flood.</span> <span class="cue" id="t1984" data-cue="t1984" data-t="1984" data-label="33:04">There is an existing electric panel</span> <span class="cue" id="t1987" data-cue="t1987" data-t="1987" data-label="33:07">and electrical equipment there also, but that that the level of that is above the flood twin.</span> <span class="cue" id="t1998" data-cue="t1998" data-t="1998" data-label="33:18">So it's designed to be underwater just like the existing running the practice on the water. The existing soccer field,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="33:26" data-default-t="2006">33:26</div>
+        <div class="text"><span class="cue" id="t2006" data-cue="t2006" data-t="2006" data-label="33:26">existing sprinkler</span> <span class="cue" id="t2007" data-cue="t2007" data-t="2007" data-label="33:27">system that all goes underwater in big.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="33:32" data-default-t="2012">33:32</div>
+        <div class="text"><span class="cue" id="t2012" data-cue="t2012" data-t="2012" data-label="33:32">Are you guys expecting the pickleball courts to sell over if it floods over?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="33:39" data-default-t="2019">33:39</div>
+        <div class="text"><span class="cue" id="t2019" data-cue="t2019" data-t="2019" data-label="33:39">It wouldn't surprise me if it gets a little mucky on the ports.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="33:44" data-default-t="2024">33:44</div>
+        <div class="text"><span class="cue" id="t2024" data-cue="t2024" data-t="2024" data-label="33:44">What what do you guys propose to</span> <span class="cue" id="t2027" data-cue="t2027" data-t="2027" data-label="33:47">wash the ports? I guess, like, remove the mud.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="33:51" data-default-t="2031">33:51</div>
+        <div class="text"><span class="cue" id="t2031" data-cue="t2031" data-t="2031" data-label="33:51">So that's a good question. I mean, I think the the fencing should accommodate at least our little</span> <span class="cue" id="t2041" data-cue="t2041" data-t="2041" data-label="34:01">our little three wheeled excavator</span> <span class="cue" id="t2043" data-cue="t2043" data-t="2043" data-label="34:03">so that we can</span> <span class="cue" id="t2045" data-cue="t2045" data-t="2045" data-label="34:05">muck it out.</span> <span class="cue" id="t2048" data-cue="t2048" data-t="2048" data-label="34:08">You know, I've watched them at Riverfront Recapture when they're mucking their trails back out, and they use just a giant pain loader.</span> <span class="cue" id="t2056" data-cue="t2056" data-t="2056" data-label="34:16">They sometimes get a foot or two of of silt</span> <span class="cue" id="t2060" data-cue="t2060" data-t="2060" data-label="34:20">on top of their trail, so it's pretty ugly. I don't think we're gonna have anywhere near that problem.</span> <span class="cue" id="t2065" data-cue="t2065" data-t="2065" data-label="34:25">I mean, I don't see any reason why we couldn't just pressure wash it off too.</span> <span class="cue" id="t2070" data-cue="t2070" data-t="2070" data-label="34:30">We certainly have that there that works.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="34:37" data-default-t="2077">34:37</div>
+        <div class="text"><span class="cue" id="t2077" data-cue="t2077" data-t="2077" data-label="34:37">They're they're normal plugging down here. But you would need any sediment. They cannot track</span> <span class="cue" id="t2081" data-cue="t2081" data-t="2081" data-label="34:41">what's down here. Okay.</span> <span class="cue" id="t2114" data-cue="t2114" data-t="2114" data-label="35:14">I clean up the mess.</span> <span class="cue" id="t2116" data-cue="t2116" data-t="2116" data-label="35:16">Yeah.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="35:18" data-default-t="2118">35:18</div>
+        <div class="text"><span class="cue" id="t2118" data-cue="t2118" data-t="2118" data-label="35:18">I mean, you know, we need some work</span> <span class="cue" id="t2121" data-cue="t2121" data-t="2121" data-label="35:21">other than that to do that. When's this scheduled for? Like, what</span> <span class="cue" id="t2125" data-cue="t2125" data-t="2125" data-label="35:25">time? We're</span> <span class="cue" id="t2127" data-cue="t2127" data-t="2127" data-label="35:27">assuming we're gonna be construction</span> <span class="cue" id="t2128" data-cue="t2128" data-t="2128" data-label="35:28">sometime in the spring</span> <span class="cue" id="t2130" data-cue="t2130" data-t="2130" data-label="35:30">for public works working on it. The goal is to use public works</span> <span class="cue" id="t2135" data-cue="t2135" data-t="2135" data-label="35:35">for the town's portion.</span> <span class="cue" id="t2138" data-cue="t2138" data-t="2138" data-label="35:38">We have a</span> <span class="cue" id="t2139" data-cue="t2139" data-t="2139" data-label="35:39">half million dollar steep grant from the state to help us out with this,</span> <span class="cue" id="t2143" data-cue="t2143" data-t="2143" data-label="35:43">and the town has to contribute about a 150 or a $160,000.</span> <span class="cue" id="t2148" data-cue="t2148" data-t="2148" data-label="35:48">So largely, public works will do the clearing</span> <span class="cue" id="t2152" data-cue="t2152" data-t="2152" data-label="35:52">cause there is</span> <span class="cue" id="t2154" data-cue="t2154" data-t="2154" data-label="35:54">some brush clearing that's required for this</span> <span class="cue" id="t2157" data-cue="t2157" data-t="2157" data-label="35:57">down there. And then they will do the excavation, put up the self and stuff like that.</span> <span class="cue" id="t2162" data-cue="t2162" data-t="2162" data-label="36:02">And then we'll sell out</span> <span class="cue" id="t2165" data-cue="t2165" data-t="2165" data-label="36:05">the actual core paving and probably some of the sub base.</span> <span class="cue" id="t2171" data-cue="t2171" data-t="2171" data-label="36:11">Yep. So that's the basic plan at this point. That's gonna be bought. Yeah.</span> <span class="cue" id="t2176" data-cue="t2176" data-t="2176" data-label="36:16">It should be perfect. Yeah. It's something</span> <span class="cue" id="t2178" data-cue="t2178" data-t="2178" data-label="36:18">it's something that was envisioned in the first</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="36:22" data-default-t="2182">36:22</div>
+        <div class="text"><span class="cue" id="t2182" data-cue="t2182" data-t="2182" data-label="36:22">go around when they redid the appeals, but there was no money available</span> <span class="cue" id="t2186" data-cue="t2186" data-t="2186" data-label="36:26">to do it. So this is basically the second phase of the original project.</span> <span class="cue" id="t2220" data-cue="t2220" data-t="2220" data-label="37:00">And even if we don't get that right up front,</span> <span class="cue" id="t2223" data-cue="t2223" data-t="2223" data-label="37:03">you know, that kind of stuff we can add</span> <span class="cue" id="t2225" data-cue="t2225" data-t="2225" data-label="37:05">with the time.</span> <span class="cue" id="t2229" data-cue="t2229" data-t="2229" data-label="37:09">I think it's great. And a playscape?</span> <span class="cue" id="t2232" data-cue="t2232" data-t="2232" data-label="37:12">Yes. There'll be two playscape. One for Little</span> <span class="cue" id="t2236" data-cue="t2236" data-t="2236" data-label="37:16">regions two to five and then five to 12 collection.</span> <span class="cue" id="t2239" data-cue="t2239" data-t="2239" data-label="37:19">Great.</span> <span class="cue" id="t2240" data-cue="t2240" data-t="2240" data-label="37:20">Great.</span> <span class="cue" id="t2242" data-cue="t2242" data-t="2242" data-label="37:22">We have worked with</span> <span class="cue" id="t2243" data-cue="t2243" data-t="2243" data-label="37:23">town's consulting herpetologist on this to make sure we're minimizing any impact to the</span> <span class="cue" id="t2249" data-cue="t2249" data-t="2249" data-label="37:29">local snake and turtle pocket. Haven't seen it with turtle pocket. Yeah. Yeah. They actually go by</span> <span class="cue" id="t2257" data-cue="t2257" data-t="2257" data-label="37:37">the courts.</span> <span class="cue" id="t2258" data-cue="t2258" data-t="2258" data-label="37:38">They go across the street,</span> <span class="cue" id="t2260" data-cue="t2260" data-t="2260" data-label="37:40">and they dig in that big lawn area in front of the the</span> <span class="cue" id="t2266" data-cue="t2266" data-t="2266" data-label="37:46">assisted living with the senior living complex. No.</span> <span class="cue" id="t2272" data-cue="t2272" data-t="2272" data-label="37:52">That's great. They've been spotted down there. Yep.</span> <span class="cue" id="t2294" data-cue="t2294" data-t="2294" data-label="38:14">Okay.</span> <span class="cue" id="t2332" data-cue="t2332" data-t="2332" data-label="38:52">No. I think it's great. Okay.</span> <span class="cue" id="t2335" data-cue="t2335" data-t="2335" data-label="38:55">Get it done.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="39:24" data-default-t="2364">39:24</div>
+        <div class="text"><span class="cue" id="t2364" data-cue="t2364" data-t="2364" data-label="39:24">Yeah. We</span> <span class="cue" id="t2366" data-cue="t2366" data-t="2366" data-label="39:26">have the one up on the view. 69</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="39:31" data-default-t="2371">39:31</div>
+        <div class="text"><span class="cue" id="t2371" data-cue="t2371" data-t="2371" data-label="39:31">Burnout Brookwood. It's a long</span> <span class="cue" id="t2374" data-cue="t2374" data-t="2374" data-label="39:34">existing gravel driveway with the wetlands crossing well, upstream</span> <span class="cue" id="t2380" data-cue="t2380" data-t="2380" data-label="39:40">crossing,</span> <span class="cue" id="t2381" data-cue="t2381" data-t="2381" data-label="39:41">and they paved the</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="39:44" data-default-t="2384">39:44</div>
+        <div class="text"><span class="cue" id="t2384" data-cue="t2384" data-t="2384" data-label="39:44">I'm not sure if they did it yet, actually, but</span> <span class="cue" id="t2387" data-cue="t2387" data-t="2387" data-label="39:47">I remember even the size of the driveway or anything.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="40:44" data-default-t="2444">40:44</div>
+        <div class="text"><span class="cue" id="t2444" data-cue="t2444" data-t="2444" data-label="40:44">I think typically the commission moves to the second and</span> <span class="cue" id="t2448" data-cue="t2448" data-t="2448" data-label="40:48">Tuesday,</span> <span class="cue" id="t2449" data-cue="t2449" data-t="2449" data-label="40:49">but that would put that meeting</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="40:51" data-default-t="2451">40:51</div>
+        <div class="text"><span class="cue" id="t2451" data-cue="t2451" data-t="2451" data-label="40:51">pretty far into July if we did that. Like the middle Well, the second Tuesday, which is after the first Monday.</span> <span class="cue" id="t2458" data-cue="t2458" data-t="2458" data-label="40:58">So it's moving at one day.</span> <span class="cue" id="t2461" data-cue="t2461" data-t="2461" data-label="41:01">But,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="41:03" data-default-t="2463">41:03</div>
+        <div class="text"><span class="cue" id="t2463" data-cue="t2463" data-t="2463" data-label="41:03">you know, I got no problem with being here on the seventh,</span> <span class="cue" id="t2466" data-cue="t2466" data-t="2466" data-label="41:06">Yeah. What</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="41:08" data-default-t="2468">41:08</div>
+        <div class="text"><span class="cue" id="t2468" data-cue="t2468" data-t="2468" data-label="41:08">what day is it for? Do you have do you have another?</span> <span class="cue" id="t2474" data-cue="t2474" data-t="2474" data-label="41:14">Monday people are back.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="41:21" data-default-t="2481">41:21</div>
+        <div class="text"><span class="cue" id="t2481" data-cue="t2481" data-t="2481" data-label="41:21">We'll leave it for the seventh. Okay. Right now. Does anybody have another copy of the dates?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="41:26" data-default-t="2486">41:26</div>
+        <div class="text"><span class="cue" id="t2486" data-cue="t2486" data-t="2486" data-label="41:26">I can make a copy. I'll make it, you know, go on. I mean, you might have sent it to me. I didn't get it. Alright. I didn't Yeah. I don't know. I think I just sent it. Okay. Yeah. If you could just go to put in my calendar. Yeah. That'd be great. That'd be great.</span> <span class="cue" id="t2504" data-cue="t2504" data-t="2504" data-label="41:44">Jeez. We're getting a little bridge.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="41:59" data-default-t="2519">41:59</div>
+        <div class="text"><span class="cue" id="t2519" data-cue="t2519" data-t="2519" data-label="41:59">Yeah. That that would be fun. Yeah. That would be fun to you know?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="42:03" data-default-t="2523">42:03</div>
+        <div class="text"><span class="cue" id="t2523" data-cue="t2523" data-t="2523" data-label="42:03">I could pick up all the game last for years. Yeah. They live in Ellington. They're full of tennis court that we've all Oh, okay. It'd be nice to have something, you know, something nice in town. The Playscape, I kinda</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="42:15" data-default-t="2535">42:15</div>
+        <div class="text"><span class="cue" id="t2535" data-cue="t2535" data-t="2535" data-label="42:15">question</span> <span class="cue" id="t2536" data-cue="t2536" data-t="2536" data-label="42:16">I guess because didn't they just put one here at the school?</span> <span class="cue" id="t2540" data-cue="t2540" data-t="2540" data-label="42:20">I think they just yep yep right and so it was like do we need another one I mean I know there you know there are a lot of money to put in</span> <span class="cue" id="t2547" data-cue="t2547" data-t="2547" data-label="42:27">whatever. I don't care.</span> <span class="cue" id="t2549" data-cue="t2549" data-t="2549" data-label="42:29">I don't really care.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="42:31" data-default-t="2551">42:31</div>
+        <div class="text"><span class="cue" id="t2551" data-cue="t2551" data-t="2551" data-label="42:31">At the school here? Yeah. I don't know what they put there. Right. I haven't been. Right. I haven't been yet. But, yeah, I mean, they put something, and I would assume it's pretty nice because they're all updated and even did theirs. Mean, everybody's been updating those different Columbia.</span> <span class="cue" id="t2566" data-cue="t2566" data-t="2566" data-label="42:46">Columbia.</span> <span class="cue" id="t2567" data-cue="t2567" data-t="2567" data-label="42:47">Yeah.</span> <span class="cue" id="t2569" data-cue="t2569" data-t="2569" data-label="42:49">And</span> <span class="cue" id="t2570" data-cue="t2570" data-t="2570" data-label="42:50">they're and they're never</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="43:08" data-default-t="2588">43:08</div>
+        <div class="text"><span class="cue" id="t2588" data-cue="t2588" data-t="2588" data-label="43:08">I</span> <span class="cue" id="t2592" data-cue="t2592" data-t="2592" data-label="43:12">was just saying, I I kinda questioned the the playscape only because Andover just put one here at this school. It's like, why do we need</span> <span class="cue" id="t2602" data-cue="t2602" data-t="2602" data-label="43:22">Mix it up.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="43:25" data-default-t="2605">43:25</div>
+        <div class="text"><span class="cue" id="t2605" data-cue="t2605" data-t="2605" data-label="43:25">Like you're saying, I mean, I have grandkids, so I go to the park. You're usually</span> <span class="cue" id="t2610" data-cue="t2610" data-t="2610" data-label="43:30">one by yourself or maybe there's another family. I mean, they're never it's never like</span> <span class="cue" id="t2616" data-cue="t2616" data-t="2616" data-label="43:36">there's 20 families at a time so to have too close it was like</span> <span class="cue" id="t2620" data-cue="t2620" data-t="2620" data-label="43:40">maybe they could spend the money somewhere else but</span> <span class="cue" id="t2623" data-cue="t2623" data-t="2623" data-label="43:43">not my fault I'm not on a committee I don't care</span> <span class="cue" id="t2627" data-cue="t2627" data-t="2627" data-label="43:47">but I</span> <span class="cue" id="t2628" data-cue="t2628" data-t="2628" data-label="43:48">questioned it.</span> <span class="cue" id="t2630" data-cue="t2630" data-t="2630" data-label="43:50">Well probably when that dream left the station</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="43:53" data-default-t="2633">43:53</div>
+        <div class="text"><span class="cue" id="t2633" data-cue="t2633" data-t="2633" data-label="43:53">they didn't know about this. Maybe. Yeah. That could be very true.</span> <span class="cue" id="t2638" data-cue="t2638" data-t="2638" data-label="43:58">Yeah it just seemed to have two in town was</span> <span class="cue" id="t2643" data-cue="t2643" data-t="2643" data-label="44:03">but yeah I again</span> <span class="cue" id="t2647" data-cue="t2647" data-t="2647" data-label="44:07">I'm hoping they have something my grandkids like.</span> <span class="cue" id="t2655" data-cue="t2655" data-t="2655" data-label="44:15">Alright so we're gonna leave the July 1?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="44:18" data-default-t="2658">44:18</div>
+        <div class="text"><span class="cue" id="t2658" data-cue="t2658" data-t="2658" data-label="44:18">July 7? Yeah.</span> <span class="cue" id="t2664" data-cue="t2664" data-t="2664" data-label="44:24">Yes we changed the time.</span> <span class="cue" id="t2681" data-cue="t2681" data-t="2681" data-label="44:41">And b on</span> <span class="cue" id="t2683" data-cue="t2683" data-t="2683" data-label="44:43">another business discussion</span> <span class="cue" id="t2685" data-cue="t2685" data-t="2685" data-label="44:45">on the annual or like</span> <span class="cue" id="t2687" data-cue="t2687" data-t="2687" data-label="44:47">a minute. We have to vote on the meeting dates? Yes. We do. We can. Yeah. Doesn't matter. I make a move. We accept the</span> <span class="cue" id="t2695" data-cue="t2695" data-t="2695" data-label="44:55">meeting dates for 2025.</span> <span class="cue" id="t2696" data-cue="t2696" data-t="2696" data-label="44:56">So I'll check that.</span> <span class="cue" id="t2698" data-cue="t2698" data-t="2698" data-label="44:58">All in favor? Aye.</span> <span class="cue" id="t2702" data-cue="t2702" data-t="2702" data-label="45:02">Discussion on the Hilla related regulations.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="45:05" data-default-t="2705">45:05</div>
+        <div class="text"><span class="cue" id="t2705" data-cue="t2705" data-t="2705" data-label="45:05">Okay, so</span> <span class="cue" id="t2707" data-cue="t2707" data-t="2707" data-label="45:07">again, watch</span> <span class="cue" id="t2708" data-cue="t2708" data-t="2708" data-label="45:08">the video from the last meeting, you know, it's first meeting I wasn't attended in, in a long time,</span> <span class="cue" id="t2715" data-cue="t2715" data-t="2715" data-label="45:15">all kinds of stuff was going on, but</span> <span class="cue" id="t2719" data-cue="t2719" data-t="2719" data-label="45:19">Marina, do you have those, copies of the two driveways that you could possibly</span> <span class="cue" id="t2724" data-cue="t2724" data-t="2724" data-label="45:24">show?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="45:25" data-default-t="2725">45:25</div>
+        <div class="text"><span class="cue" id="t2725" data-cue="t2725" data-t="2725" data-label="45:25">Yeah. Joe sent it to me, but I don't think Eric gave me full host</span> <span class="cue" id="t2730" data-cue="t2730" data-t="2730" data-label="45:30">capabilities.</span> <span class="cue" id="t2731" data-cue="t2731" data-t="2731" data-label="45:31">It's not giving me the option to share my screen, but I have them up. So I don't know. Joe, if you're able to get up</span> <span class="cue" id="t2738" data-cue="t2738" data-t="2738" data-label="45:38">from your seat there and go to the participant list on the screen,</span> <span class="cue" id="t2744" data-cue="t2744" data-t="2744" data-label="45:44">and I think you have to make me, like, a full</span> <span class="cue" id="t2746" data-cue="t2746" data-t="2746" data-label="45:46">host</span> <span class="cue" id="t2747" data-cue="t2747" data-t="2747" data-label="45:47">to share.</span> <span class="cue" id="t2748" data-cue="t2748" data-t="2748" data-label="45:48">Eric just has me as co host slash fearless notetaker</span> <span class="cue" id="t2752" data-cue="t2752" data-t="2752" data-label="45:52">listed</span> <span class="cue" id="t2754" data-cue="t2754" data-t="2754" data-label="45:54">there.</span> <span class="cue" id="t2756" data-cue="t2756" data-t="2756" data-label="45:56">Nick Host?</span> <span class="cue" id="t2758" data-cue="t2758" data-t="2758" data-label="45:58">Yes.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="46:01" data-default-t="2761">46:01</div>
+        <div class="text"><span class="cue" id="t2761" data-cue="t2761" data-t="2761" data-label="46:01">Do I want to change them yet? Fearless notetaker.</span> <span class="cue" id="t2764" data-cue="t2764" data-t="2764" data-label="46:04">Yeah.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="46:05" data-default-t="2765">46:05</div>
+        <div class="text"><span class="cue" id="t2765" data-cue="t2765" data-t="2765" data-label="46:05">I'm like, can you change my name? And they put this back.</span> <span class="cue" id="t2770" data-cue="t2770" data-t="2770" data-label="46:10">Let's see. Why is it still not giving me</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="46:14" data-default-t="2774">46:14</div>
+        <div class="text"><span class="cue" id="t2774" data-cue="t2774" data-t="2774" data-label="46:14">Did you hit yes or did you hit no? I swear you hit no. I</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="46:18" data-default-t="2778">46:18</div>
+        <div class="text"><span class="cue" id="t2778" data-cue="t2778" data-t="2778" data-label="46:18">you hit no. That's what it looked like to me.</span> <span class="cue" id="t2783" data-cue="t2783" data-t="2783" data-label="46:23">Yeah. It's still not giving me option.</span> <span class="cue" id="t2786" data-cue="t2786" data-t="2786" data-label="46:26">We</span> <span class="cue" id="t2787" data-cue="t2787" data-t="2787" data-label="46:27">think it hit the wrong button.</span> <span class="cue" id="t2791" data-cue="t2791" data-t="2791" data-label="46:31">What's the It</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="46:32" data-default-t="2792">46:32</div>
+        <div class="text"><span class="cue" id="t2792" data-cue="t2792" data-t="2792" data-label="46:32">says host. Yeah. I don't know why it's not giving me.</span> <span class="cue" id="t2797" data-cue="t2797" data-t="2797" data-label="46:37">Maybe it takes a minute. Or</span> <span class="cue" id="t2800" data-cue="t2800" data-t="2800" data-label="46:40">Share</span> <span class="cue" id="t2801" data-cue="t2801" data-t="2801" data-label="46:41">ops.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="46:45" data-default-t="2805">46:45</div>
+        <div class="text"><span class="cue" id="t2805" data-cue="t2805" data-t="2805" data-label="46:45">Yeah. It says host,</span> <span class="cue" id="t2807" data-cue="t2807" data-t="2807" data-label="46:47">so I can't</span> <span class="cue" id="t2808" data-cue="t2808" data-t="2808" data-label="46:48">you can't get it back? Yeah. I have now I have full</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="46:51" data-default-t="2811">46:51</div>
+        <div class="text"><span class="cue" id="t2811" data-cue="t2811" data-t="2811" data-label="46:51">full power, but I don't know.</span> <span class="cue" id="t2819" data-cue="t2819" data-t="2819" data-label="46:59">Yeah. I don't know why I don't have it, but</span> <span class="cue" id="t2826" data-cue="t2826" data-t="2826" data-label="47:06">whiteboard.</span> <span class="cue" id="t2827" data-cue="t2827" data-t="2827" data-label="47:07">I don't know what that is.</span> <span class="cue" id="t2831" data-cue="t2831" data-t="2831" data-label="47:11">Unless you wanna sign into your email quick,</span> <span class="cue" id="t2834" data-cue="t2834" data-t="2834" data-label="47:14">Joe, or if they're on the are they on the town website</span> <span class="cue" id="t2837" data-cue="t2837" data-t="2837" data-label="47:17">at all under that application?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="47:19" data-default-t="2839">47:19</div>
+        <div class="text"><span class="cue" id="t2839" data-cue="t2839" data-t="2839" data-label="47:19">One of them is. The other one isn't because there's no</span> <span class="cue" id="t2843" data-cue="t2843" data-t="2843" data-label="47:23">I'm not on the application for it. Oh, okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="47:26" data-default-t="2846">47:26</div>
+        <div class="text"><span class="cue" id="t2846" data-cue="t2846" data-t="2846" data-label="47:26">Yeah. I don't know why I don't have</span> <span class="cue" id="t2850" data-cue="t2850" data-t="2850" data-label="47:30">access, which is weird.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="47:33" data-default-t="2853">47:33</div>
+        <div class="text"><span class="cue" id="t2853" data-cue="t2853" data-t="2853" data-label="47:33">I could print them out. Well, I I've got a copy here to to pass around and</span> <span class="cue" id="t2859" data-cue="t2859" data-t="2859" data-label="47:39">we'll do that. Okay. So it was just, it would have been</span> <span class="cue" id="t2863" data-cue="t2863" data-t="2863" data-label="47:43">nicer a little bit if we could have had the big cut there. For a dozen copies.</span> <span class="cue" id="t2870" data-cue="t2870" data-t="2870" data-label="47:50">I don't think it's necessary for the discussion. So</span> <span class="cue" id="t2873" data-cue="t2873" data-t="2873" data-label="47:53">so anyhow,</span> <span class="cue" id="t2874" data-cue="t2874" data-t="2874" data-label="47:54">the</span> <span class="cue" id="t2877" data-cue="t2877" data-t="2877" data-label="47:57">so last week,</span> <span class="cue" id="t2878" data-cue="t2878" data-t="2878" data-label="47:58">last month,</span> <span class="cue" id="t2880" data-cue="t2880" data-t="2880" data-label="48:00">you were</span> <span class="cue" id="t2883" data-cue="t2883" data-t="2883" data-label="48:03">still reporting on a driveway over at,</span> <span class="cue" id="t2886" data-cue="t2886" data-t="2886" data-label="48:06">I'm gonna say, 60</span> <span class="cue" id="t2888" data-cue="t2888" data-t="2888" data-label="48:08">File on</span> <span class="cue" id="t2890" data-cue="t2890" data-t="2890" data-label="48:10">Lake Road,</span> <span class="cue" id="t2891" data-cue="t2891" data-t="2891" data-label="48:11">where they</span> <span class="cue" id="t2892" data-cue="t2892" data-t="2892" data-label="48:12">put put it in. And</span> <span class="cue" id="t2897" data-cue="t2897" data-t="2897" data-label="48:17">and I know you can't see this yet. I'm passing around,</span> <span class="cue" id="t2901" data-cue="t2901" data-t="2901" data-label="48:21">but the driveway,</span> <span class="cue" id="t2903" data-cue="t2903" data-t="2903" data-label="48:23">it goes out to the street and it everything just drained right down to this storm drain that runs,</span> <span class="cue" id="t2909" data-cue="t2909" data-t="2909" data-label="48:29">you know, dead shot right into the lake.</span> <span class="cue" id="t2913" data-cue="t2913" data-t="2913" data-label="48:33">And so I said, well, that doesn't look right. You know, it it didn't used to look like that. And</span> <span class="cue" id="t2919" data-cue="t2919" data-t="2919" data-label="48:39">and</span> <span class="cue" id="t2920" data-cue="t2920" data-t="2920" data-label="48:40">a couple of years ago, we created,</span> <span class="cue" id="t2922" data-cue="t2922" data-t="2922" data-label="48:42">you know, the lake regulations</span> <span class="cue" id="t2924" data-cue="t2924" data-t="2924" data-label="48:44">to</span> <span class="cue" id="t2925" data-cue="t2925" data-t="2925" data-label="48:45">to mitigate</span> <span class="cue" id="t2927" data-cue="t2927" data-t="2927" data-label="48:47">nutrient runoff into the lake because the lake, you know, it keeps getting</span> <span class="cue" id="t2931" data-cue="t2931" data-t="2931" data-label="48:51">it gets degraded,</span> <span class="cue" id="t2933" data-cue="t2933" data-t="2933" data-label="48:53">and eventually,</span> <span class="cue" id="t2935" data-cue="t2935" data-t="2935" data-label="48:55">you know, it's not gonna be as clean as it is now.</span> <span class="cue" id="t2938" data-cue="t2938" data-t="2938" data-label="48:58">And so we we made these regulations</span> <span class="cue" id="t2940" data-cue="t2940" data-t="2940" data-label="49:00">that gave the town the opportunity</span> <span class="cue" id="t2944" data-cue="t2944" data-t="2944" data-label="49:04">to have somebody that was going to increase the impervious</span> <span class="cue" id="t2949" data-cue="t2949" data-t="2949" data-label="49:09">surface</span> <span class="cue" id="t2950" data-cue="t2950" data-t="2950" data-label="49:10">on their lot,</span> <span class="cue" id="t2952" data-cue="t2952" data-t="2952" data-label="49:12">account for that,</span> <span class="cue" id="t2954" data-cue="t2954" data-t="2954" data-label="49:14">and</span> <span class="cue" id="t2955" data-cue="t2955" data-t="2955" data-label="49:15">do something in mitigation so that</span> <span class="cue" id="t2958" data-cue="t2958" data-t="2958" data-label="49:18">it wouldn't all run off into the lake and continue to get the algae blooms and and that sort of thing.</span> <span class="cue" id="t2966" data-cue="t2966" data-t="2966" data-label="49:26">Our process hasn't worked</span> <span class="cue" id="t2968" data-cue="t2968" data-t="2968" data-label="49:28">real well, you know, and there's</span> <span class="cue" id="t2973" data-cue="t2973" data-t="2973" data-label="49:33">in the wetlands is the least offensive</span> <span class="cue" id="t2976" data-cue="t2976" data-t="2976" data-label="49:36">of all the guilty parties here.</span> <span class="cue" id="t2979" data-cue="t2979" data-t="2979" data-label="49:39">But I wanted to let this group know</span> <span class="cue" id="t2981" data-cue="t2981" data-t="2981" data-label="49:41">that I think it's important that we maintain the quality of the lake because that's a really nice resource</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="49:48" data-default-t="2988">49:48</div>
+        <div class="text"><span class="cue" id="t2988" data-cue="t2988" data-t="2988" data-label="49:48">for Andover,</span> <span class="cue" id="t2990" data-cue="t2990" data-t="2990" data-label="49:50">and the people that live around the lake</span> <span class="cue" id="t2992" data-cue="t2992" data-t="2992" data-label="49:52">are contributing</span> <span class="cue" id="t2994" data-cue="t2994" data-t="2994" data-label="49:54">nicely to the tax rolls in Andover.</span> <span class="cue" id="t2998" data-cue="t2998" data-t="2998" data-label="49:58">So, you know, Andover</span> <span class="cue" id="t2999" data-cue="t2999" data-t="2999" data-label="49:59">Andover wins</span> <span class="cue" id="t3001" data-cue="t3001" data-t="3001" data-label="50:01">Andover wins by having the lake maintain good clear quality</span> <span class="cue" id="t3006" data-cue="t3006" data-t="3006" data-label="50:06">and that sort of thing.</span> <span class="cue" id="t3008" data-cue="t3008" data-t="3008" data-label="50:08">And I don't know if Joe we'd be able to do something like, you know, when a guy comes</span> <span class="cue" id="t3014" data-cue="t3014" data-t="3014" data-label="50:14">and he's paving over</span> <span class="cue" id="t3016" data-cue="t3016" data-t="3016" data-label="50:16">his gravel driveway and he's in the Lake District,</span> <span class="cue" id="t3019" data-cue="t3019" data-t="3019" data-label="50:19">we make it a</span> <span class="cue" id="t3021" data-cue="t3021" data-t="3021" data-label="50:21">condition of approval that he has to comply with the</span> <span class="cue" id="t3025" data-cue="t3025" data-t="3025" data-label="50:25">late rigs in the zoning thing.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="50:28" data-default-t="3028">50:28</div>
+        <div class="text"><span class="cue" id="t3028" data-cue="t3028" data-t="3028" data-label="50:28">Usually with</span> <span class="cue" id="t3030" data-cue="t3030" data-t="3030" data-label="50:30">that one I talked to Jim and we were like we were going back and forth he was like I'm not sure driveways</span> <span class="cue" id="t3036" data-cue="t3036" data-t="3036" data-label="50:36">fall under it and then we decided that they do.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="50:39" data-default-t="3039">50:39</div>
+        <div class="text"><span class="cue" id="t3039" data-cue="t3039" data-t="3039" data-label="50:39">And it specifically</span> <span class="cue" id="t3041" data-cue="t3041" data-t="3041" data-label="50:41">you know as an example</span> <span class="cue" id="t3042" data-cue="t3042" data-t="3042" data-label="50:42">in the regs it says when you pave the driveway</span> <span class="cue" id="t3046" data-cue="t3046" data-t="3046" data-label="50:46">you're creating an impervious surface</span> <span class="cue" id="t3048" data-cue="t3048" data-t="3048" data-label="50:48">and so it's got to be mitigated.</span> <span class="cue" id="t3051" data-cue="t3051" data-t="3051" data-label="50:51">It is</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="50:52" data-default-t="3052">50:52</div>
+        <div class="text"><span class="cue" id="t3052" data-cue="t3052" data-t="3052" data-label="50:52">that was specifically addressed in there. So now that's clarified. Yeah usually what I do with the stuff that needs the nutrient allocations, I know it changes</span> <span class="cue" id="t3060" data-cue="t3060" data-t="3060" data-label="51:00">the plan that comes to wetlands.</span> <span class="cue" id="t3062" data-cue="t3062" data-t="3062" data-label="51:02">Like the Forest Sunset is pending.</span> <span class="cue" id="t3067" data-cue="t3067" data-t="3067" data-label="51:07">Where they're putting a shed there and we're working on the nutrient allocation. So</span> <span class="cue" id="t3071" data-cue="t3071" data-t="3071" data-label="51:11">I was like wait to do the wetlands,</span> <span class="cue" id="t3073" data-cue="t3073" data-t="3073" data-label="51:13">know, we'll kind of work together and get to the plan because it's going to change what comes to me. So</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="51:20" data-default-t="3080">51:20</div>
+        <div class="text"><span class="cue" id="t3080" data-cue="t3080" data-t="3080" data-label="51:20">that's kind of what we do. Okay, and there was two driveways that kind of</span> <span class="cue" id="t3085" data-cue="t3085" data-t="3085" data-label="51:25">you know, got me a little bit as I go doing my walk around. So that was that was one of them where,</span> <span class="cue" id="t3091" data-cue="t3091" data-t="3091" data-label="51:31">you know, clearly</span> <span class="cue" id="t3093" data-cue="t3093" data-t="3093" data-label="51:33">any,</span> <span class="cue" id="t3094" data-cue="t3094" data-t="3094" data-label="51:34">you know, there's three, three bad things that can go into the lake. One is nutrients that make the plants grow.</span> <span class="cue" id="t3101" data-cue="t3101" data-t="3101" data-label="51:41">One is the pollutants</span> <span class="cue" id="t3103" data-cue="t3103" data-t="3103" data-label="51:43">from oil and that kind of stuff that drips on the driveway. And then the third thing is the sediment that goes in there. And this</span> <span class="cue" id="t3110" data-cue="t3110" data-t="3110" data-label="51:50">clearly</span> <span class="cue" id="t3111" data-cue="t3111" data-t="3111" data-label="51:51">is aggravating all three of those things,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="51:54" data-default-t="3114">51:54</div>
+        <div class="text"><span class="cue" id="t3114" data-cue="t3114" data-t="3114" data-label="51:54">you know, on the lake. That one's yeah. That one was a tough one. It may be better for sediment. I was thinking because Yep. Of</span> <span class="cue" id="t3121" data-cue="t3121" data-t="3121" data-label="52:01">you're taking the gravel</span> <span class="cue" id="t3123" data-cue="t3123" data-t="3123" data-label="52:03">out and putting a surface. But, yeah, you're definitely temperature and</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="52:07" data-default-t="3127">52:07</div>
+        <div class="text"><span class="cue" id="t3127" data-cue="t3127" data-t="3127" data-label="52:07">possible pollutants. You know? And and I know that</span> <span class="cue" id="t3131" data-cue="t3131" data-t="3131" data-label="52:11">a gravel driveway after it gets back down, it was not the most permeable surface in the world. It's not great. Yeah. But it but the the point of the regulations are it allows us the opportunity</span> <span class="cue" id="t3142" data-cue="t3142" data-t="3142" data-label="52:22">to help make the lake cleaner. We say if somebody's gonna go do this, they you know good go. Water going into the lake should be better than it was before they took action to</span> <span class="cue" id="t3154" data-cue="t3154" data-t="3154" data-label="52:34">do whatever they did to make the impervious surface.</span> <span class="cue" id="t3158" data-cue="t3158" data-t="3158" data-label="52:38">The other one</span> <span class="cue" id="t3160" data-cue="t3160" data-t="3160" data-label="52:40">is on Lakeside Drive. I think it's 33.</span> <span class="cue" id="t3163" data-cue="t3163" data-t="3163" data-label="52:43">And</span> <span class="cue" id="t3165" data-cue="t3165" data-t="3165" data-label="52:45">there's a little blue house here,</span> <span class="cue" id="t3167" data-cue="t3167" data-t="3167" data-label="52:47">and they they</span> <span class="cue" id="t3169" data-cue="t3169" data-t="3169" data-label="52:49">paved the entire width</span> <span class="cue" id="t3171" data-cue="t3171" data-t="3171" data-label="52:51">of the lot.</span> <span class="cue" id="t3173" data-cue="t3173" data-t="3173" data-label="52:53">You know? And have no more grass. No more grass. Yes. And it was so</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="52:59" data-default-t="3179">52:59</div>
+        <div class="text"><span class="cue" id="t3179" data-cue="t3179" data-t="3179" data-label="52:59">that that bothered me, and and I don't know if it's within the 200 knots. It's outside. Just outside. Even there even back by the house where they're doing it. Yeah. Yeah.</span> <span class="cue" id="t3201" data-cue="t3201" data-t="3201" data-label="53:21">They have to go in front of the I was gonna say, why was that approved? They don't say no. They have to go, you know, they have to work with the zoning agent to come up with a plan on how they're gonna mitigate</span> <span class="cue" id="t3213" data-cue="t3213" data-t="3213" data-label="53:33">that. And the best way to do that is to drive up. The other thing I like about the mitigation</span> <span class="cue" id="t3219" data-cue="t3219" data-t="3219" data-label="53:39">is that instead of running off into the lake, which runs off into the river, you know, it goes out to sea,</span> <span class="cue" id="t3226" data-cue="t3226" data-t="3226" data-label="53:46">if we</span> <span class="cue" id="t3228" data-cue="t3228" data-t="3228" data-label="53:48">have a dry well or a detention basin, you know, we're restoring the ground well. So I think</span> <span class="cue" id="t3234" data-cue="t3234" data-t="3234" data-label="53:54">that's important to us too. But when I saw this, you know, that's not going to happen.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="53:59" data-default-t="3239">53:59</div>
+        <div class="text"><span class="cue" id="t3239" data-cue="t3239" data-t="3239" data-label="53:59">And so I wanted to</span> <span class="cue" id="t3242" data-cue="t3242" data-t="3242" data-label="54:02">highlight that so that we</span> <span class="cue" id="t3244" data-cue="t3244" data-t="3244" data-label="54:04">can help. And I'm working with</span> <span class="cue" id="t3246" data-cue="t3246" data-t="3246" data-label="54:06">with Jim on how to improve the process</span> <span class="cue" id="t3249" data-cue="t3249" data-t="3249" data-label="54:09">on that. The other thing</span> <span class="cue" id="t3251" data-cue="t3251" data-t="3251" data-label="54:11">that</span> <span class="cue" id="t3252" data-cue="t3252" data-t="3252" data-label="54:12">the nutrient</span> <span class="cue" id="t3254" data-cue="t3254" data-t="3254" data-label="54:14">well, the weight regs</span> <span class="cue" id="t3255" data-cue="t3255" data-t="3255" data-label="54:15">allow there's there's several different things, you know, the impervious circles are bad.</span> <span class="cue" id="t3261" data-cue="t3261" data-t="3261" data-label="54:21">And we also expect when a guy</span> <span class="cue" id="t3263" data-cue="t3263" data-t="3263" data-label="54:23">is redoing his house with significant degree,</span> <span class="cue" id="t3267" data-cue="t3267" data-t="3267" data-label="54:27">part of the money that he's going to put into upgrading the house goes into keeping the lightweight.</span> <span class="cue" id="t3273" data-cue="t3273" data-t="3273" data-label="54:33">And so if and I know when we wrote the regs and they're far from perfect I had a big thing in there couldn't figure out how to make many better like but again it's the opportunity that we have to make the lake better And it says when you renovate 50% of your household for ten year period,</span> <span class="cue" id="t3289" data-cue="t3289" data-t="3289" data-label="54:49">you have to go do a nutrient allocation worksheet to mitigate.</span> <span class="cue" id="t3293" data-cue="t3293" data-t="3293" data-label="54:53">And and the end result has to be 10% cleaner water than you started with.</span> <span class="cue" id="t3300" data-cue="t3300" data-t="3300" data-label="55:00">And it's tough to tell where there's 50%,</span> <span class="cue" id="t3303" data-cue="t3303" data-t="3303" data-label="55:03">but there's a half a dozen houses around the lake that when you look at the ad</span> <span class="cue" id="t3309" data-cue="t3309" data-t="3309" data-label="55:09">that they're you know, when they sold it, said completely renovated.</span> <span class="cue" id="t3314" data-cue="t3314" data-t="3314" data-label="55:14">So to me,</span> <span class="cue" id="t3315" data-cue="t3315" data-t="3315" data-label="55:15">that</span> <span class="cue" id="t3317" data-cue="t3317" data-t="3317" data-label="55:17">removes all that over 50%,</span> <span class="cue" id="t3319" data-cue="t3319" data-t="3319" data-label="55:19">you know, and and we expect,</span> <span class="cue" id="t3322" data-cue="t3322" data-t="3322" data-label="55:22">I expect that we're gonna be putting</span> <span class="cue" id="t3325" data-cue="t3325" data-t="3325" data-label="55:25">something in to help make the lake cleaner than it was before we did that. That's part of</span> <span class="cue" id="t3332" data-cue="t3332" data-t="3332" data-label="55:32">the thing there. So so that's my pitch. We're struggling there a little bit. We keep working on it, but there's,</span> <span class="cue" id="t3338" data-cue="t3338" data-t="3338" data-label="55:38">you know, it's</span> <span class="cue" id="t3339" data-cue="t3339" data-t="3339" data-label="55:39">there there's places I can think of at least three houses that were completely renovated,</span> <span class="cue" id="t3345" data-cue="t3345" data-t="3345" data-label="55:45">and we didn't do any nutrient mitigation</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="55:50" data-default-t="3350">55:50</div>
+        <div class="text"><span class="cue" id="t3350" data-cue="t3350" data-t="3350" data-label="55:50">at all initially.</span> <span class="cue" id="t3352" data-cue="t3352" data-t="3352" data-label="55:52">Jim tells me we did we did get one one of them fixed</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="55:57" data-default-t="3357">55:57</div>
+        <div class="text"><span class="cue" id="t3357" data-cue="t3357" data-t="3357" data-label="55:57">up. That may be the one I was thinking about. That's where I was was trying to think of a way to</span> <span class="cue" id="t3363" data-cue="t3363" data-t="3363" data-label="56:03">address it, but like</span> <span class="cue" id="t3365" data-cue="t3365" data-t="3365" data-label="56:05">there was one that was</span> <span class="cue" id="t3367" data-cue="t3367" data-t="3367" data-label="56:07">it kind of fell on electrician to come up with. Yeah,</span> <span class="cue" id="t3371" data-cue="t3371" data-t="3371" data-label="56:11">no, it it falls</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="56:12" data-default-t="3372">56:12</div>
+        <div class="text"><span class="cue" id="t3372" data-cue="t3372" data-t="3372" data-label="56:12">on the phone. Yeah, but it was like she was deferring to him and they And were trying to I don't expect</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="56:19" data-default-t="3379">56:19</div>
+        <div class="text"><span class="cue" id="t3379" data-cue="t3379" data-t="3379" data-label="56:19">any homeowner</span> <span class="cue" id="t3381" data-cue="t3381" data-t="3381" data-label="56:21">to be able to understand these regulations.</span> <span class="cue" id="t3383" data-cue="t3383" data-t="3383" data-label="56:23">It's all gonna fall on the zoning official to work with them to come up with a plan. For the guys doing a big project like</span> <span class="cue" id="t3391" data-cue="t3391" data-t="3391" data-label="56:31">the bridge or the ball courts, you know, and all that kind of stuff, the engineer could do that very easily.</span> <span class="cue" id="t3397" data-cue="t3397" data-t="3397" data-label="56:37">The only guy I saw come up with a, you know,</span> <span class="cue" id="t3401" data-cue="t3401" data-t="3401" data-label="56:41">when I asked him,</span> <span class="cue" id="t3402" data-cue="t3402" data-t="3402" data-label="56:42">and</span> <span class="cue" id="t3403" data-cue="t3403" data-t="3403" data-label="56:43">we talked about that here at this meeting it was the</span> <span class="cue" id="t3407" data-cue="t3407" data-t="3407" data-label="56:47">guy at</span> <span class="cue" id="t3409" data-cue="t3409" data-t="3409" data-label="56:49">17</span> <span class="cue" id="t3410" data-cue="t3410" data-t="3410" data-label="56:50">Lakeside Drive Nick and</span> <span class="cue" id="t3413" data-cue="t3413" data-t="3413" data-label="56:53">yeah I forget his last call Wiki or something and</span> <span class="cue" id="t3416" data-cue="t3416" data-t="3416" data-label="56:56">he</span> <span class="cue" id="t3416-1" data-cue="t3416-1" data-t="3416" data-label="56:56">said yeah I had no problem filling it out. So, you know, he came in with a couple of drywalls of that and and just did a bang on Jim. But he's</span> <span class="cue" id="t3425" data-cue="t3425" data-t="3425" data-label="57:05">he must be the exception to the rule because everybody else you know, Jim is still struggling to figure it out a little bit and we'll we'll he's</span> <span class="cue" id="t3434" data-cue="t3434" data-t="3434" data-label="57:14">he's gonna retire and work on getting the new guy there. But we're missing those opportunities to keep the lake clean and that's my point that we</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="57:22" data-default-t="3442">57:22</div>
+        <div class="text"><span class="cue" id="t3442" data-cue="t3442" data-t="3442" data-label="57:22">we should be enthused about that because that's good for handover.</span> <span class="cue" id="t3446" data-cue="t3446" data-t="3446" data-label="57:26">Taxes,</span> <span class="cue" id="t3447" data-cue="t3447" data-t="3447" data-label="57:27">all the elected people, all that kind of stuff. So</span> <span class="cue" id="t3450" data-cue="t3450" data-t="3450" data-label="57:30">that was</span> <span class="cue" id="t3451" data-cue="t3451" data-t="3451" data-label="57:31">all that I wanted to share on the late breaks tonight. If you wanna read them, you know, they're in section seven of the zoning breaks, but I don't think you do. They're</span> <span class="cue" id="t3461" data-cue="t3461" data-t="3461" data-label="57:41">we're not that good.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="57:44" data-default-t="3464">57:44</div>
+        <div class="text"><span class="cue" id="t3464" data-cue="t3464" data-t="3464" data-label="57:44">So they're a lot better than they were. They yeah. They used to be nonexistent.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="57:48" data-default-t="3468">57:48</div>
+        <div class="text"><span class="cue" id="t3468" data-cue="t3468" data-t="3468" data-label="57:48">You know? So it it's it's there for us to take advantage of, and we should be. I think one of the hard things is translating</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="57:56" data-default-t="3476">57:56</div>
+        <div class="text"><span class="cue" id="t3476" data-cue="t3476" data-t="3476" data-label="57:56">that you get a bunch of numbers and then trying to translate that like you have a zoning agent that's like translating it like a rain garden.</span> <span class="cue" id="t3484" data-cue="t3484" data-t="3484" data-label="58:04">Yeah. Like where's</span> <span class="cue" id="t3486" data-cue="t3486" data-t="3486" data-label="58:06">what kind of rain garden will work on the site? Is it flat? You know is there a place to put a rain garden? Know it's like it's kind of just like a rain garden is this much but it's like it kind of depends on it. Yeah it allows</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="58:19" data-default-t="3499">58:19</div>
+        <div class="text"><span class="cue" id="t3499" data-cue="t3499" data-t="3499" data-label="58:19">the the regulations allow</span> <span class="cue" id="t3501" data-cue="t3501" data-t="3501" data-label="58:21">the zoning agent to</span> <span class="cue" id="t3503" data-cue="t3503" data-t="3503" data-label="58:23">specify</span> <span class="cue" id="t3504" data-cue="t3504" data-t="3504" data-label="58:24">to work with the property owner to say here is the best place to put a drywall or a detention base or whatever. But then you're almost get into like engineering too. You are. Yeah.</span> <span class="cue" id="t3515" data-cue="t3515" data-t="3515" data-label="58:35">But you know, and it's not hard. You take two inches of rain on all the impervious surface that you've created</span> <span class="cue" id="t3522" data-cue="t3522" data-t="3522" data-label="58:42">and you say that you've got a</span> <span class="cue" id="t3525" data-cue="t3525" data-t="3525" data-label="58:45">you do a calculation</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="58:47" data-default-t="3527">58:47</div>
+        <div class="text"><span class="cue" id="t3527" data-cue="t3527" data-t="3527" data-label="58:47">of that many gallons so the but then you have to because it's that</span> <span class="cue" id="t3531" data-cue="t3531" data-t="3531" data-label="58:51">part of it and then there's the phosphorus part so you have to like infiltrate all the water and then you have to do the phosphorus too</span> <span class="cue" id="t3538" data-cue="t3538" data-t="3538" data-label="58:58">And that's like where there are two kinds I of know.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="59:01" data-default-t="3541">59:01</div>
+        <div class="text"><span class="cue" id="t3541" data-cue="t3541" data-t="3541" data-label="59:01">And</span> <span class="cue" id="t3543" data-cue="t3543" data-t="3543" data-label="59:03">I could be wrong, but I think if you infiltrate the water,</span> <span class="cue" id="t3547" data-cue="t3547" data-t="3547" data-label="59:07">the phosphorus isn't going to flake. It's going to filter through the ground and go wherever it goes. And so all we're trying to do is keep the water</span> <span class="cue" id="t3557" data-cue="t3557" data-t="3557" data-label="59:17">keep a given amount of water to run it in the lathe that's</span> <span class="cue" id="t3560" data-cue="t3560" data-t="3560" data-label="59:20">at least as much as what you're allowing to by creating</span> <span class="cue" id="t3564" data-cue="t3564" data-t="3564" data-label="59:24">the newly impervious surface.</span> <span class="cue" id="t3567" data-cue="t3567" data-t="3567" data-label="59:27">So</span> <span class="cue" id="t3568" data-cue="t3568" data-t="3568" data-label="59:28">that's</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="59:29" data-default-t="3569">59:29</div>
+        <div class="text"><span class="cue" id="t3569" data-cue="t3569" data-t="3569" data-label="59:29">I'll call taking</span> <span class="cue" id="t3570" data-cue="t3570" data-t="3570" data-label="59:30">a bigger step on that. We'll try to figure out a way to get those</span> <span class="cue" id="t3575" data-cue="t3575" data-t="3575" data-label="59:35">drains</span> <span class="cue" id="t3577" data-cue="t3577" data-t="3577" data-label="59:37">not going into</span> <span class="cue" id="t3580" data-cue="t3580" data-t="3580" data-label="59:40">Down down</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="59:41" data-default-t="3581">59:41</div>
+        <div class="text"><span class="cue" id="t3581" data-cue="t3581" data-t="3581" data-label="59:41">That was the hard part of that driveway. That's like that's where you would put the</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="59:45" data-default-t="3585">59:45</div>
+        <div class="text"><span class="cue" id="t3585" data-cue="t3585" data-t="3585" data-label="59:45">infiltration system, but it's it's just a pipe. I I would love to do that. You know, one of that one of the questions that that still</span> <span class="cue" id="t3595" data-cue="t3595" data-t="3595" data-label="59:55">I'm not sure I understand as well as I should is</span> <span class="cue" id="t3599" data-cue="t3599" data-t="3599" data-label="59:59">when we take stormwater runoff,</span> <span class="cue" id="t3602" data-cue="t3602" data-t="3602" data-label="1:00:02">you know, and</span> <span class="cue" id="t3605" data-cue="t3605" data-t="3605" data-label="1:00:05">we frequently run it into wetlands.</span> <span class="cue" id="t3609" data-cue="t3609" data-t="3609" data-label="1:00:09">I don't think that's the right answer you know because the weapons are really great soil it's not soaking it we want to take that storm water runoff you know put it in a detention basin or something where it soak into the ground and do something. You don't want to dry out the ones so that's the problem. Don't want to dry it out. Run out. Don't</span> <span class="cue" id="t3626" data-cue="t3626" data-t="3626" data-label="1:00:26">want to take all the storm water runoff and put it in there in in there.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:00:30" data-default-t="3630">1:00:30</div>
+        <div class="text"><span class="cue" id="t3630" data-cue="t3630" data-t="3630" data-label="1:00:30">Kind of like I think the goal would be to</span> <span class="cue" id="t3633" data-cue="t3633" data-t="3633" data-label="1:00:33">keep it as close to the pre development conditions that you can. Yeah. So if there's any extra you store that.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:00:39" data-default-t="3639">1:00:39</div>
+        <div class="text"><span class="cue" id="t3639" data-cue="t3639" data-t="3639" data-label="1:00:39">Yep.</span> <span class="cue" id="t3641" data-cue="t3641" data-t="3641" data-label="1:00:41">But if if you're you're paving the driveway,</span> <span class="cue" id="t3645" data-cue="t3645" data-t="3645" data-label="1:00:45">I'm not sure we want that running into wetlands. I just assumed capture it, let it go back into the groundwater.</span> <span class="cue" id="t3651" data-cue="t3651" data-t="3651" data-label="1:00:51">Right. But if you</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:00:55" data-default-t="3655">1:00:55</div>
+        <div class="text"><span class="cue" id="t3655" data-cue="t3655" data-t="3655" data-label="1:00:55">put it into the groundwater,</span> <span class="cue" id="t3657" data-cue="t3657" data-t="3657" data-label="1:00:57">the water will over time discharge into the wetlands because it's still moving downhill.</span> <span class="cue" id="t3664" data-cue="t3664" data-t="3664" data-label="1:01:04">So it is</span> <span class="cue" id="t3665" data-cue="t3665" data-t="3665" data-label="1:01:05">recharging</span> <span class="cue" id="t3667" data-cue="t3667" data-t="3667" data-label="1:01:07">and it is ending up ideally,</span> <span class="cue" id="t3670" data-cue="t3670" data-t="3670" data-label="1:01:10">you don't want to move is move something from one drainage basin</span> <span class="cue" id="t3673" data-cue="t3673" data-t="3673" data-label="1:01:13">to another artificially.</span> <span class="cue" id="t3675" data-cue="t3675" data-t="3675" data-label="1:01:15">You want to keep,</span> <span class="cue" id="t3677" data-cue="t3677" data-t="3677" data-label="1:01:17">you know, because what Joe said, you don't want</span> <span class="cue" id="t3681" data-cue="t3681" data-t="3681" data-label="1:01:21">all of a sudden divert water that was naturally flowing into a wetlands Yeah. So that now the wetlands is no longer or what's</span> <span class="cue" id="t3689" data-cue="t3689" data-t="3689" data-label="1:01:29">even worse is if you do it to vernal pools,</span> <span class="cue" id="t3692" data-cue="t3692" data-t="3692" data-label="1:01:32">you know, you want those vernal pools to fill up with water so little froggies and amphibians live there and then dry out in the summer.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:01:42" data-default-t="3702">1:01:42</div>
+        <div class="text"><span class="cue" id="t3702" data-cue="t3702" data-t="3702" data-label="1:01:42">But if we paint a bunch of area you know we don't necessarily want it all go to you know in the lake or something where it's going to flow away</span> <span class="cue" id="t3709" data-cue="t3709" data-t="3709" data-label="1:01:49">we need to recharge the groundwater. And I tried to study that whole process up, and it didn't make any sense to me on how does water get to the groundwater.</span> <span class="cue" id="t3719" data-cue="t3719" data-t="3719" data-label="1:01:59">I don't think it just goes all the way through, you know, the dirt getting down there. Whenever I dig,</span> <span class="cue" id="t3725" data-cue="t3725" data-t="3725" data-label="1:02:05">you see water down maybe half a foot and then you're into dry dirt. So</span> <span class="cue" id="t3732" data-cue="t3732" data-t="3732" data-label="1:02:12">I'll never be that smart on that topic, but I do know that we can make a difference and keep the runoff from going into the lake.</span> <span class="cue" id="t3741" data-cue="t3741" data-t="3741" data-label="1:02:21">So that's</span> <span class="cue" id="t3742" data-cue="t3742" data-t="3742" data-label="1:02:22">that's all I can make sure. I I agree with what Derek was saying because you're</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:02:28" data-default-t="3748">1:02:28</div>
+        <div class="text"><span class="cue" id="t3748" data-cue="t3748" data-t="3748" data-label="1:02:28">creating an internal surface like the driver. Yep. And you wanna hydrate that ground under it because you're basically with the driver shedding more often. Yep. And you have that storm drainer carrying it away in somebody's house, and</span> <span class="cue" id="t3761" data-cue="t3761" data-t="3761" data-label="1:02:41">you wanna keep your weapons wet.</span> <span class="cue" id="t3764" data-cue="t3764" data-t="3764" data-label="1:02:44">You don't wanna dump it away. It's kinda fine line.</span> <span class="cue" id="t3770" data-cue="t3770" data-t="3770" data-label="1:02:50">That's</span> <span class="cue" id="t3771" data-cue="t3771" data-t="3771" data-label="1:02:51">interesting. They don't have a well underneath the driveway.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:02:55" data-default-t="3775">1:02:55</div>
+        <div class="text"><span class="cue" id="t3775" data-cue="t3775" data-t="3775" data-label="1:02:55">Well that's why</span> <span class="cue" id="t3777" data-cue="t3777" data-t="3777" data-label="1:02:57">if on on something that's less than 100 square feet of new impervious surface,</span> <span class="cue" id="t3783" data-cue="t3783" data-t="3783" data-label="1:03:03">it talks about you can, you know, do a lot with fresh snow to get get that stuff to go in under the shed or whatever,</span> <span class="cue" id="t3790" data-cue="t3790" data-t="3790" data-label="1:03:10">then</span> <span class="cue" id="t3792" data-cue="t3792" data-t="3792" data-label="1:03:12">and that's fine. But I didn't wanna make everybody experts</span> <span class="cue" id="t3795" data-cue="t3795" data-t="3795" data-label="1:03:15">on</span> <span class="cue" id="t3796" data-cue="t3796" data-t="3796" data-label="1:03:16">those regs.</span> <span class="cue" id="t3797" data-cue="t3797" data-t="3797" data-label="1:03:17">I just wanted to say the opportunities there, and we need to capture everyone we can so we keep the lake in as good shape as we can first of all, as we can. Absolutely.</span> <span class="cue" id="t3810" data-cue="t3810" data-t="3810" data-label="1:03:30">Yeah.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:03:32" data-default-t="3812">1:03:32</div>
+        <div class="text"><span class="cue" id="t3812" data-cue="t3812" data-t="3812" data-label="1:03:32">Really</span> <span class="cue" id="t3813" data-cue="t3813" data-t="3813" data-label="1:03:33">continued</span> <span class="cue" id="t3814" data-cue="t3814" data-t="3814" data-label="1:03:34">public awareness and awareness of people in the lake that they really should not be using</span> <span class="cue" id="t3820" data-cue="t3820" data-t="3820" data-label="1:03:40">high nitrogen,</span> <span class="cue" id="t3821" data-cue="t3821" data-t="3821" data-label="1:03:41">high phosphorus fertilizer,</span> <span class="cue" id="t3824" data-cue="t3824" data-t="3824" data-label="1:03:44">you know, anywhere near the lake zone.</span> <span class="cue" id="t3826" data-cue="t3826" data-t="3826" data-label="1:03:46">You know, with a quick look around the lake you can kind of see who's got nice green lawns and who doesn't.</span> <span class="cue" id="t3833" data-cue="t3833" data-t="3833" data-label="1:03:53">I need to make a pretty good guess that you know, where the fertilizer has been bought.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:03:58" data-default-t="3838">1:03:58</div>
+        <div class="text"><span class="cue" id="t3838" data-cue="t3838" data-t="3838" data-label="1:03:58">Last summer my yard was looking pretty good all the weeds but</span> <span class="cue" id="t3843" data-cue="t3843" data-t="3843" data-label="1:04:03">we look good because we have lots of rain. But</span> <span class="cue" id="t3846" data-cue="t3846" data-t="3846" data-label="1:04:06">generally you bet yeah you can tell we've got fertilizer.</span> <span class="cue" id="t3849" data-cue="t3849" data-t="3849" data-label="1:04:09">Yeah</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:04:10" data-default-t="3850">1:04:10</div>
+        <div class="text"><span class="cue" id="t3850" data-cue="t3850" data-t="3850" data-label="1:04:10">if you don't see ablated grass out of you know, order in a lawn and a lake, can tell that that's a pretty high maintenance product. See, then they could pave their whole front yard. Or they have a pet.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:04:25" data-default-t="3865">1:04:25</div>
+        <div class="text"><span class="cue" id="t3865" data-cue="t3865" data-t="3865" data-label="1:04:25">Some people have,</span> <span class="cue" id="t3867" data-cue="t3867" data-t="3867" data-label="1:04:27">you know, landscapers.</span> <span class="cue" id="t3869" data-cue="t3869" data-t="3869" data-label="1:04:29">Yeah.</span> <span class="cue" id="t3871" data-cue="t3871" data-t="3871" data-label="1:04:31">That's interesting.</span> <span class="cue" id="t3874" data-cue="t3874" data-t="3874" data-label="1:04:34">This happens.</span> <span class="cue" id="t3876" data-cue="t3876" data-t="3876" data-label="1:04:36">Right.</span> <span class="cue" id="t3879" data-cue="t3879" data-t="3879" data-label="1:04:39">You know, some people have every week they have the landscape recovery needs to come around. It's been a week or so. Then the guy next door I know what you've done. The future.</span> <span class="cue" id="t3889" data-cue="t3889" data-t="3889" data-label="1:04:49">Well,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:04:50" data-default-t="3890">1:04:50</div>
+        <div class="text"><span class="cue" id="t3890" data-cue="t3890" data-t="3890" data-label="1:04:50">he did that because</span> <span class="cue" id="t3892" data-cue="t3892" data-t="3892" data-label="1:04:52">wants to be able to drive in his garage,</span> <span class="cue" id="t3894" data-cue="t3894" data-t="3894" data-label="1:04:54">and he's got his garage full of stuff. And so he's always talking over here. But</span> <span class="cue" id="t3899" data-cue="t3899" data-t="3899" data-label="1:04:59">but the end result of his entire front yard is asphalt then.</span> <span class="cue" id="t3904" data-cue="t3904" data-t="3904" data-label="1:05:04">And Yeah. Where is that? 33 Lakeside Drive?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:05:10" data-default-t="3910">1:05:10</div>
+        <div class="text"><span class="cue" id="t3910" data-cue="t3910" data-t="3910" data-label="1:05:10">That's quite a. Can I shoot him over? I don't think it's shooting.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:05:21" data-default-t="3921">1:05:21</div>
+        <div class="text"><span class="cue" id="t3921" data-cue="t3921" data-t="3921" data-label="1:05:21">I don't know what that is. Yeah. It's a parka that.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:05:25" data-default-t="3925">1:05:25</div>
+        <div class="text"><span class="cue" id="t3925" data-cue="t3925" data-t="3925" data-label="1:05:25">Wow. But those are saying why would they get approved? I mean</span> <span class="cue" id="t3931" data-cue="t3931" data-t="3931" data-label="1:05:31">because that isn't a drive like you're saying, it's not a driveway.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:05:36" data-default-t="3936">1:05:36</div>
+        <div class="text"><span class="cue" id="t3936" data-cue="t3936" data-t="3936" data-label="1:05:36">What</span> <span class="cue" id="t3937" data-cue="t3937" data-t="3937" data-label="1:05:37">what I've seen is there is</span> <span class="cue" id="t3939" data-cue="t3939" data-t="3939" data-label="1:05:39">oftentimes</span> <span class="cue" id="t3940" data-cue="t3940" data-t="3940" data-label="1:05:40">a disconnect between what gets approved</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:05:43" data-default-t="3943">1:05:43</div>
+        <div class="text"><span class="cue" id="t3943" data-cue="t3943" data-t="3943" data-label="1:05:43">and what gets done. It's like the two people, you know, never talk to each other. Now did you look and see whether a driveway permit is actually pulled for that?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:05:52" data-default-t="3952">1:05:52</div>
+        <div class="text"><span class="cue" id="t3952" data-cue="t3952" data-t="3952" data-label="1:05:52">That's the hardest part. I I don't know. I know Jim looked into</span> <span class="cue" id="t3957" data-cue="t3957" data-t="3957" data-label="1:05:57">too much surprised when I showed him that photo.</span> <span class="cue" id="t3963" data-cue="t3963" data-t="3963" data-label="1:06:03">And it might not have been. Jay with the</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:06:06" data-default-t="3966">1:06:06</div>
+        <div class="text"><span class="cue" id="t3966" data-cue="t3966" data-t="3966" data-label="1:06:06">the I mean, I could see that on some side road. But at the lake, I would think they would be pretty cantous that David</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:06:14" data-default-t="3974">1:06:14</div>
+        <div class="text"><span class="cue" id="t3974" data-cue="t3974" data-t="3974" data-label="1:06:14">Public Works gets the call before he digs one. So that's usually how we figure it out. Saving companies don't come to us.</span> <span class="cue" id="t3981" data-cue="t3981" data-t="3981" data-label="1:06:21">So they'll explain it and be like, here's one, here's one, here's one. So then then you can track it. I mean, there are some</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:06:28" data-default-t="3988">1:06:28</div>
+        <div class="text"><span class="cue" id="t3988" data-cue="t3988" data-t="3988" data-label="1:06:28">ethical paving companies like Fuller, for instance, will always permit their work. They will always get them inspected.</span> <span class="cue" id="t3996" data-cue="t3996" data-t="3996" data-label="1:06:36">Anytime anybody right up to a town road,</span> <span class="cue" id="t4000" data-cue="t4000" data-t="4000" data-label="1:06:40">technically. So a lot of that paving is in the towns right away. Right. And therefore needs to be</span> <span class="cue" id="t4007" data-cue="t4007" data-t="4007" data-label="1:06:47">permitted.</span> <span class="cue" id="t4008" data-cue="t4008" data-t="4008" data-label="1:06:48">And Jay goes out and measures those</span> <span class="cue" id="t4011" data-cue="t4011" data-t="4011" data-label="1:06:51">and sign supposed to be signing off on them before they get paved.</span> <span class="cue" id="t4015" data-cue="t4015" data-t="4015" data-label="1:06:55">And then,</span> <span class="cue" id="t4018" data-cue="t4018" data-t="4018" data-label="1:06:58">you know, but he's only signing off on</span> <span class="cue" id="t4022" data-cue="t4022" data-t="4022" data-label="1:07:02">the apron.</span> <span class="cue" id="t4025" data-cue="t4025" data-t="4025" data-label="1:07:05">You know, so if they pave further in,</span> <span class="cue" id="t4030" data-cue="t4030" data-t="4030" data-label="1:07:10">you know, they could pave a quarter inch of pavement and Jay wouldn't care because it doesn't affect the town road and that's not his jurisdiction.</span> <span class="cue" id="t4037" data-cue="t4037" data-t="4037" data-label="1:07:17">But if it's But that's certainly a wide, right? Yeah. I mean, yeah.</span> <span class="cue" id="t4044" data-cue="t4044" data-t="4044" data-label="1:07:24">Yeah.</span> <span class="cue" id="t4044-1" data-cue="t4044-1" data-t="4044" data-label="1:07:24">Wired in the house.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:07:27" data-default-t="4047">1:07:27</div>
+        <div class="text"><span class="cue" id="t4047" data-cue="t4047" data-t="4047" data-label="1:07:27">And he's putting a basketball Yeah.</span> <span class="cue" id="t4050" data-cue="t4050" data-t="4050" data-label="1:07:30">They could. Maybe that's what he was thinking.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:07:32" data-default-t="4052">1:07:32</div>
+        <div class="text"><span class="cue" id="t4052" data-cue="t4052" data-t="4052" data-label="1:07:32">Well, I mean, that that's</span> <span class="cue" id="t4054" data-cue="t4054" data-t="4054" data-label="1:07:34">that's not right. I mean, that is beyond not right. You know, and even if you</span> <span class="cue" id="t4063" data-cue="t4063" data-t="4063" data-label="1:07:43">Yeah. How do you mitigate? There's no way you can mitigate for that much additional impervious service. Well, like, suspicion is that his lot no longer meets the coverage that will have.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:07:55" data-default-t="4075">1:07:55</div>
+        <div class="text"><span class="cue" id="t4075" data-cue="t4075" data-t="4075" data-label="1:07:55">I think he's got too much</span> <span class="cue" id="t4077" data-cue="t4077" data-t="4077" data-label="1:07:57">lot covered up, you know, for</span> <span class="cue" id="t4080" data-cue="t4080" data-t="4080" data-label="1:08:00">So the</span> <span class="cue" id="t4081" data-cue="t4081" data-t="4081" data-label="1:08:01">Yeah.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:08:03" data-default-t="4083">1:08:03</div>
+        <div class="text"><span class="cue" id="t4083" data-cue="t4083" data-t="4083" data-label="1:08:03">It doesn't look like it. Well, it sounds like you need to give him a zoning cease and desist</span> <span class="cue" id="t4089" data-cue="t4089" data-t="4089" data-label="1:08:09">and start with that.</span> <span class="cue" id="t4092" data-cue="t4092" data-t="4092" data-label="1:08:12">You're right.</span> <span class="cue" id="t4094" data-cue="t4094" data-t="4094" data-label="1:08:14">It's</span> <span class="cue" id="t4096" data-cue="t4096" data-t="4096" data-label="1:08:16">it's kind of different. Cool. Yeah.</span> <span class="cue" id="t4099" data-cue="t4099" data-t="4099" data-label="1:08:19">If you'd like to</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:08:21" data-default-t="4101">1:08:21</div>
+        <div class="text"><span class="cue" id="t4101" data-cue="t4101" data-t="4101" data-label="1:08:21">to move us there changing a driveway from gravel to cave.</span> <span class="cue" id="t4109" data-cue="t4109" data-t="4109" data-label="1:08:29">Like you said, that's a parking lot, not a</span> <span class="cue" id="t4113" data-cue="t4113" data-t="4113" data-label="1:08:33">driveway.</span> <span class="cue" id="t4120" data-cue="t4120" data-t="4120" data-label="1:08:40">Thanks. Yeah. Yeah. Yeah.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:08:43" data-default-t="4123">1:08:43</div>
+        <div class="text"><span class="cue" id="t4123" data-cue="t4123" data-t="4123" data-label="1:08:43">So step number one, Jed, I would find out whether they actually go down and talk to Lynn and find out whether permits were actually pulled for that. Okay. If they weren't, then that's easy. That's just a straight zoning violation</span> <span class="cue" id="t4135" data-cue="t4135" data-t="4135" data-label="1:08:55">and a violation</span> <span class="cue" id="t4137" data-cue="t4137" data-t="4137" data-label="1:08:57">of But what is that? A fee?</span> <span class="cue" id="t4139" data-cue="t4139" data-t="4139" data-label="1:08:59">Fee? Not I mean, you wouldn't make them take it out, would you? Why not?</span> <span class="cue" id="t4144" data-cue="t4144" data-t="4144" data-label="1:09:04">Would you? Would I? Yeah. Yeah. Yeah.</span> <span class="cue" id="t4147" data-cue="t4147" data-t="4147" data-label="1:09:07">With the town?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:09:12" data-default-t="4152">1:09:12</div>
+        <div class="text"><span class="cue" id="t4152" data-cue="t4152" data-t="4152" data-label="1:09:12">It was well so the guy</span> <span class="cue" id="t4159" data-cue="t4159" data-t="4159" data-label="1:09:19">hard to see.</span> <span class="cue" id="t4161" data-cue="t4161" data-t="4161" data-label="1:09:21">There's a little dent</span> <span class="cue" id="t4163" data-cue="t4163" data-t="4163" data-label="1:09:23">in the back of the house sticking out there a little bit. Mhmm. He came to get a permit because,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:09:28" data-default-t="4168">1:09:28</div>
+        <div class="text"><span class="cue" id="t4168" data-cue="t4168" data-t="4168" data-label="1:09:28">you know, he went in to put side yard? He needed a barrier permit</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:09:32" data-default-t="4172">1:09:32</div>
+        <div class="text"><span class="cue" id="t4172" data-cue="t4172" data-t="4172" data-label="1:09:32">to have that sticking out that four feet depth. Yeah. And and so the guy,</span> <span class="cue" id="t4178" data-cue="t4178" data-t="4178" data-label="1:09:38">you know,</span> <span class="cue" id="t4179" data-cue="t4179" data-t="4179" data-label="1:09:39">he showed that he's willing to work with the town. I think he probably just maybe he didn't even know that he needed to do anything. I mean, is amazing how some people don't.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:09:51" data-default-t="4191">1:09:51</div>
+        <div class="text"><span class="cue" id="t4191" data-cue="t4191" data-t="4191" data-label="1:09:51">Used to be one of those guys. But but Companies say that. They're like, you know. Yeah. Yeah. But it yeah. I mean, that's on the paving contractor.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:10:00" data-default-t="4200">1:10:00</div>
+        <div class="text"><span class="cue" id="t4200" data-cue="t4200" data-t="4200" data-label="1:10:00">And our ordinances now allow us to find them both. We can find the homeowners and we can find the contractors who do stupid things like that. And me, I would be holding the paving contractor</span> <span class="cue" id="t4213" data-cue="t4213" data-t="4213" data-label="1:10:13">responsible.</span> <span class="cue" id="t4214" data-cue="t4214" data-t="4214" data-label="1:10:14">If they didn't pull the fireman.</span> <span class="cue" id="t4216" data-cue="t4216" data-t="4216" data-label="1:10:16">If they did. Well</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:10:20" data-default-t="4220">1:10:20</div>
+        <div class="text"><span class="cue" id="t4220" data-cue="t4220" data-t="4220" data-label="1:10:20">I'll go ahead and look and see</span> <span class="cue" id="t4222" data-cue="t4222" data-t="4222" data-label="1:10:22">you know most driveways are 20 feet wide or something like that.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:10:26" data-default-t="4226">1:10:26</div>
+        <div class="text"><span class="cue" id="t4226" data-cue="t4226" data-t="4226" data-label="1:10:26">I'm just saying if they pulled</span> <span class="cue" id="t4229" data-cue="t4229" data-t="4229" data-label="1:10:29">and it was approved then nothing you can do.</span> <span class="cue" id="t4232" data-cue="t4232" data-t="4232" data-label="1:10:32">Right.</span> <span class="cue" id="t4235" data-cue="t4235" data-t="4235" data-label="1:10:35">We have a 40 foot drive wide.</span> <span class="cue" id="t4253" data-cue="t4253" data-t="4253" data-label="1:10:53">How often they would do</span> <span class="cue" id="t4256" data-cue="t4256" data-t="4256" data-label="1:10:56">You</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:10:57" data-default-t="4257">1:10:57</div>
+        <div class="text"><span class="cue" id="t4257" data-cue="t4257" data-t="4257" data-label="1:10:57">you get a permit and we've done that you get a permit and while you're getting</span> <span class="cue" id="t4262" data-cue="t4262" data-t="4262" data-label="1:11:02">that done you think oh if I could just put a you know</span> <span class="cue" id="t4266" data-cue="t4266" data-t="4266" data-label="1:11:06">you know, you think, oh, could you just do that? And I mean, that happens. It's</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:11:11" data-default-t="4271">1:11:11</div>
+        <div class="text"><span class="cue" id="t4271" data-cue="t4271" data-t="4271" data-label="1:11:11">you know, and</span> <span class="cue" id="t4273" data-cue="t4273" data-t="4273" data-label="1:11:13">here's an example.</span> <span class="cue" id="t4275" data-cue="t4275" data-t="4275" data-label="1:11:15">There's, you know, 161</span> <span class="cue" id="t4277" data-cue="t4277" data-t="4277" data-label="1:11:17">Lake Road, and that's one of the ones that was a total</span> <span class="cue" id="t4281" data-cue="t4281" data-t="4281" data-label="1:11:21">reefer.</span> <span class="cue" id="t4284" data-cue="t4284" data-t="4284" data-label="1:11:24">And they didn't sell it. The guy, you know, I guess, who bought it and he's living there over there.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:11:29" data-default-t="4289">1:11:29</div>
+        <div class="text"><span class="cue" id="t4289" data-cue="t4289" data-t="4289" data-label="1:11:29">But With that garage, is that what they're trying to do? Nope. This is this is just just a bull</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:11:35" data-default-t="4295">1:11:35</div>
+        <div class="text"><span class="cue" id="t4295" data-cue="t4295" data-t="4295" data-label="1:11:35">house. And</span> <span class="cue" id="t4298" data-cue="t4298" data-t="4298" data-label="1:11:38">but it was a total redo on it. And he got a building permit within</span> <span class="cue" id="t4304" data-cue="t4304" data-t="4304" data-label="1:11:44">I forget what it was, but, you know, very,</span> <span class="cue" id="t4307" data-cue="t4307" data-t="4307" data-label="1:11:47">very insignificant</span> <span class="cue" id="t4309" data-cue="t4309" data-t="4309" data-label="1:11:49">thing. Minimal. And then the next thing you know, you're it's a total redo and</span> <span class="cue" id="t4316" data-cue="t4316" data-t="4316" data-label="1:11:56">so they just be very much cheap. And</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:11:59" data-default-t="4319">1:11:59</div>
+        <div class="text"><span class="cue" id="t4319" data-cue="t4319" data-t="4319" data-label="1:11:59">there's a lot of that,</span> <span class="cue" id="t4322" data-cue="t4322" data-t="4322" data-label="1:12:02">you know, and that is why the assessor normally</span> <span class="cue" id="t4327" data-cue="t4327" data-t="4327" data-label="1:12:07">looks at all the houses.</span> <span class="cue" id="t4330" data-cue="t4330" data-t="4330" data-label="1:12:10">You know, we were just discussing that today because there's a lot of stuff that comes through,</span> <span class="cue" id="t4337" data-cue="t4337" data-t="4337" data-label="1:12:17">you know, and he's like, well,</span> <span class="cue" id="t4339" data-cue="t4339" data-t="4339" data-label="1:12:19">they pulled,</span> <span class="cue" id="t4341" data-cue="t4341" data-t="4341" data-label="1:12:21">they said the construction value</span> <span class="cue" id="t4343" data-cue="t4343" data-t="4343" data-label="1:12:23">was $10,000</span> <span class="cue" id="t4346" data-cue="t4346" data-t="4346" data-label="1:12:26">They built a 32 by 48 addition on their house with a separate kitchen, bathroom, two bedrooms,</span> <span class="cue" id="t4356" data-cue="t4356" data-t="4356" data-label="1:12:36">all for 10 over,</span> <span class="cue" id="t4358" data-cue="t4358" data-t="4358" data-label="1:12:38">you know, a garage with 10 foot ceilings. He's like,</span> <span class="cue" id="t4362" data-cue="t4362" data-t="4362" data-label="1:12:42">yeah,</span> <span class="cue" id="t4363" data-cue="t4363" data-t="4363" data-label="1:12:43">you know, and now that puts me in an awkward spot because I go in and I whack the appraisal way up and they're like, well, got permitted for $10,000</span> <span class="cue" id="t4372" data-cue="t4372" data-t="4372" data-label="1:12:52">you know,</span> <span class="cue" id="t4373" data-cue="t4373" data-t="4373" data-label="1:12:53">so it's,</span> <span class="cue" id="t4375" data-cue="t4375" data-t="4375" data-label="1:12:55">we all have to kind of work as</span> <span class="cue" id="t4378" data-cue="t4378" data-t="4378" data-label="1:12:58">regulatory</span> <span class="cue" id="t4379" data-cue="t4379" data-t="4379" data-label="1:12:59">agencies.</span> <span class="cue" id="t4381" data-cue="t4381" data-t="4381" data-label="1:13:01">They did the work themselves.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:13:03" data-default-t="4383">1:13:03</div>
+        <div class="text"><span class="cue" id="t4383" data-cue="t4383" data-t="4383" data-label="1:13:03">Doesn't matter. I I don't they don't charge themselves. Yeah.</span> <span class="cue" id="t4387" data-cue="t4387" data-t="4387" data-label="1:13:07">If</span> <span class="cue" id="t4388" data-cue="t4388" data-t="4388" data-label="1:13:08">I apply with $10,000</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:13:10" data-default-t="4390">1:13:10</div>
+        <div class="text"><span class="cue" id="t4390" data-cue="t4390" data-t="4390" data-label="1:13:10">But when they go to sell, house is certainly gonna Yeah. They</span> <span class="cue" id="t4394" data-cue="t4394" data-t="4394" data-label="1:13:14">than $10,000 on your branch. Guess why would my</span> <span class="cue" id="t4398" data-cue="t4398" data-t="4398" data-label="1:13:18">dad But it it doesn't matter because it's still the fair market value of the additional I</span> <span class="cue" id="t4405" data-cue="t4405" data-t="4405" data-label="1:13:25">know it. Yeah. I mean, did real estate. It was the same thing. I mean, people would upgrade their houses and, you know, don't tell anybody because you don't wanna pay taxes. But when they sell it,</span> <span class="cue" id="t4415" data-cue="t4415" data-t="4415" data-label="1:13:35">you know then it was</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:13:36" data-default-t="4416">1:13:36</div>
+        <div class="text"><span class="cue" id="t4416" data-cue="t4416" data-t="4416" data-label="1:13:36">I put a million into this. But you look at real estate listing and says total yeah okay did they do 50% or not? Right.</span> <span class="cue" id="t4427" data-cue="t4427" data-t="4427" data-label="1:13:47">Yeah it depends who you're talking to.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:13:51" data-default-t="4431">1:13:51</div>
+        <div class="text"><span class="cue" id="t4431" data-cue="t4431" data-t="4431" data-label="1:13:51">That's We all know that. That's why that is. Yep.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:13:55" data-default-t="4435">1:13:55</div>
+        <div class="text"><span class="cue" id="t4435" data-cue="t4435" data-t="4435" data-label="1:13:55">Yeah. That would be a constant battle.</span> <span class="cue" id="t4438" data-cue="t4438" data-t="4438" data-label="1:13:58">Yep. Yeah. Don't think you'll win.</span> <span class="cue" id="t4443" data-cue="t4443" data-t="4443" data-label="1:14:03">You might</span> <span class="cue" id="t4444" data-cue="t4444" data-t="4444" data-label="1:14:04">chip at it, but</span> <span class="cue" id="t4446" data-cue="t4446" data-t="4446" data-label="1:14:06">I don't think you'll win the battle.</span> <span class="cue" id="t4449" data-cue="t4449" data-t="4449" data-label="1:14:09">Tell you what, I watched the assessor from time to time sit there with Google Earth,</span> <span class="cue" id="t4454" data-cue="t4454" data-t="4454" data-label="1:14:14">and the assessor cards going down property after property,</span> <span class="cue" id="t4458" data-cue="t4458" data-t="4458" data-label="1:14:18">zooming in on it, looking at the assessor cards like, oh, there's a deck. There's a pool. That's not on the card. That's not on the card. That's not on the card.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:14:27" data-default-t="4467">1:14:27</div>
+        <div class="text"><span class="cue" id="t4467" data-cue="t4467" data-t="4467" data-label="1:14:27">That's not the ad click between the year. Oh, yeah. Yeah.</span> <span class="cue" id="t4473" data-cue="t4473" data-t="4473" data-label="1:14:33">I don't feel that way actually.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:14:35" data-default-t="4475">1:14:35</div>
+        <div class="text"><span class="cue" id="t4475" data-cue="t4475" data-t="4475" data-label="1:14:35">Yeah. And obviously</span> <span class="cue" id="t4476" data-cue="t4476" data-t="4476" data-label="1:14:36">we get like there's one on Lake Road that,</span> <span class="cue" id="t4480" data-cue="t4480" data-t="4480" data-label="1:14:40">you know, we're battling with a little bit that built the whole separate garage.</span> <span class="cue" id="t4487" data-cue="t4487" data-t="4487" data-label="1:14:47">You know, that was on permanent.</span> <span class="cue" id="t4490" data-cue="t4490" data-t="4490" data-label="1:14:50">That</span> <span class="cue" id="t4492" data-cue="t4492" data-t="4492" data-label="1:14:52">has caused us a little grief.</span> <span class="cue" id="t4494" data-cue="t4494" data-t="4494" data-label="1:14:54">That's the thing. Why would especially around the lake. I mean,</span> <span class="cue" id="t4500" data-cue="t4500" data-t="4500" data-label="1:15:00">Yeah.</span> <span class="cue" id="t4512" data-cue="t4512" data-t="4512" data-label="1:15:12">Okay you ready with your agenda?</span> <span class="cue" id="t4516" data-cue="t4516" data-t="4516" data-label="1:15:16">I second.</span> <span class="cue" id="t4519" data-cue="t4519" data-t="4519" data-label="1:15:19">All big? Big. I</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:15:22" data-default-t="4522">1:15:22</div>
+        <div class="text"><span class="cue" id="t4522" data-cue="t4522" data-t="4522" data-label="1:15:22">did that just for you Marina because I keep forgetting to do it in my meetings.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:15:26" data-default-t="4526">1:15:26</div>
+        <div class="text"><span class="cue" id="t4526" data-cue="t4526" data-t="4526" data-label="1:15:26">Does I didn't hear. Did you make the motion and then January 2?</span> <span class="cue" id="t4530" data-cue="t4530" data-t="4530" data-label="1:15:30">Yeah.</span> <span class="cue" id="t4531" data-cue="t4531" data-t="4531" data-label="1:15:31">Okay. Got it. You got it.</span> <span class="cue" id="t4534" data-cue="t4534" data-t="4534" data-label="1:15:34">Thank you.</span> <span class="cue" id="t4536" data-cue="t4536" data-t="4536" data-label="1:15:36">Bye, Marina. Bye.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:15:38" data-default-t="4538">1:15:38</div>
+        <div class="text"><span class="cue" id="t4538" data-cue="t4538" data-t="4538" data-label="1:15:38">Have a good night. Happy holidays. Thank you. You too. You too.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+    </div>
+
+    <footer class="colophon">
+      <p><strong>About this transcript.</strong> This transcript was generated by Deepgram from the meeting recording. Names, numbers, and other details may be inaccurate &mdash; please refer to the video for authoritative content.</p>
+      <p>Part of <code>andoverct.info</code>, an independent civic-reference site &mdash; not an official site of the Town of Andover. Compiled by <a href="mailto:scott@sauyet.com">Scott Sauyet</a>.</p>
+    </footer>
+  </main>
+
+  <div id="overlay">
+    <div class="dialog">
+      <div class="dialog-header">
+        <div class="dialog-title">IWWC  Regular Meeting</div>
+        <div class="dialog-subtitle">December 2, 2024 at <span class="ts-label" id="overlay-ts"></span></div>
+      </div>
+      <div class="actions">
+        <button id="act-yt">
+          <span class="icon">&#9654;</span>
+          <span class="label">Watch on YouTube<br><span class="hint">Opens at this timestamp</span></span>
+        </button>
+        <button id="act-copy-link">
+          <span class="icon">&#128279;</span>
+          <span class="label">Copy YouTube link<br><span class="hint" id="hint-link-url"></span></span>
+        </button>
+        <button id="act-bookmark">
+          <span class="icon">&#128278;</span>
+          <span class="label">Bookmark this spot<br><span class="hint">Copies link &amp; adds to navigation history</span></span>
+        </button>
+      </div>
+      <div class="cancel"><a id="act-cancel">Cancel</a></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>window.TX = { video: "https://www.youtube.com/watch?v=OcdFvxsYsNI", passcode: "", type: "YouTube" };</script>
+  <script src="https://andoverct.info/reference/video/assets/transcripts.js"></script>
+</body>
+</html>
