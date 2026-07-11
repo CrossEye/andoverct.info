@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>BOS Special Meeting Video Recording — July 27, 2020</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <style>
+    /* Transcript-specific components. Theme, palette, and page chrome
+       (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
+       come from the shared style.css; these just use its variables. */
+    .para { display: flex; gap: 1em; padding: 0.5em 0.75em; border-radius: 6px; }
+    .para:nth-child(4n+1) { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+    .para-gap { font-size: 1px; line-height: 1px; height: 0; overflow: hidden; user-select: text; }
+    .para.speaker { border-top: 1px solid var(--rule-soft); margin-top: 0.6em; padding-top: 1em; }
+    .para.speaker:first-child { border-top: none; margin-top: 0; }
+
+    .timestamp {
+      flex: 0 0 5em; text-align: right;
+      color: var(--ink-mute); font-family: var(--sans);
+      font-size: 0.72rem; font-variant-numeric: tabular-nums; line-height: 1.9;
+      cursor: pointer; white-space: nowrap; padding-top: 0.15em;
+      transition: color 0.15s; user-select: none;
+    }
+    .timestamp:hover, .timestamp.hl { color: var(--accent); font-weight: 600; }
+
+    .text { flex: 1; min-width: 0; }
+    .cue { cursor: pointer; border-radius: 3px; transition: background-color 0.15s; }
+    .cue.hl { background-color: var(--accent-bg); }
+    @keyframes flash-highlight {
+      0%   { background-color: rgba(232, 168, 0, 0.45); }
+      100% { background-color: transparent; }
+    }
+    .cue.flash { animation: flash-highlight 4s ease-out forwards; }
+
+    /* action dialog */
+    #overlay { display: none; position: fixed; inset: 0; background: rgba(8, 22, 40, 0.5); z-index: 100; justify-content: center; align-items: center; }
+    #overlay.visible { display: flex; }
+    .dialog { background: var(--bg-card); border-radius: 10px; padding: 1.6rem 1.8rem; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28); max-width: 28rem; width: 90vw; border-top: 4px solid var(--accent); }
+    .dialog-header { margin-bottom: 1.2em; }
+    .dialog-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); }
+    .dialog-subtitle { font-family: var(--sans); font-size: 0.85rem; color: var(--ink-mute); margin-top: 0.2em; }
+    .dialog .ts-label { color: var(--accent); font-weight: 600; }
+    .dialog .actions { display: flex; flex-direction: column; gap: 0.5em; }
+    .dialog button { display: flex; align-items: center; gap: 0.6em; padding: 0.6em 1em; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--ink); cursor: pointer; font-family: var(--sans); font-size: 0.9rem; text-align: left; width: 100%; transition: background-color 0.12s, border-color 0.12s; }
+    .dialog button:hover { background: var(--accent-bg); border-color: var(--accent); }
+    .dialog button .icon { font-size: 1.1em; flex: 0 0 1.4em; text-align: center; }
+    .dialog button .label { flex: 1; }
+    .dialog button .hint { display: block; color: var(--ink-mute); font-size: 0.78rem; }
+    .dialog .cancel { margin-top: 0.6em; text-align: center; }
+    .dialog .cancel a { color: var(--ink-mute); font-family: var(--sans); font-size: 0.82rem; cursor: pointer; border-bottom: none; }
+    .dialog .cancel a:hover { color: var(--accent); }
+
+    /* toast */
+    #toast { position: fixed; top: 1.5em; left: 50%; transform: translateX(-50%) translateY(-4em); background: var(--accent); color: #15233a; padding: 0.7em 1.6em; border-radius: 8px; font-family: var(--sans); font-size: 0.95rem; font-weight: 600; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease; z-index: 200; pointer-events: none; text-align: center; max-width: 90vw; }
+    #toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    @media (max-width: 480px) { .timestamp { flex-basis: 4em; } }
+  </style>
+</head>
+<body class="bluegold">
+  <div class="page-banner">
+    <nav class="page-banner-inner crumbs">
+      <a href="/">Home</a><span class="sep">›</span><a href="/reference/">Reference</a><span class="sep">›</span><a href="../index.html">Video</a><span class="sep">›</span><span class="current">BOS Special Meeting Video Recording (7/27/20)</span>
+    </nav>
+  </div>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Meeting transcript</p>
+      <h1 class="title">BOS Special Meeting Video Recording</h1>
+      <p class="subtitle">July 27, 2020 &middot; <a href="https://www.youtube.com/watch?v=n0nct2gnAFQ" target="yt-meeting">Watch on YouTube</a> &middot; <a href="../index.html">All meetings</a></p>
+    </header>
+
+    <hr class="rule">
+
+    <div class="transcript">
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:00" data-default-t="0">0:00</div>
+        <div class="text"><span class="cue" id="t0" data-cue="t0" data-t="0" data-label="0:00">Alright.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:15" data-default-t="75">1:15</div>
+        <div class="text"><span class="cue" id="t75" data-cue="t75" data-t="75" data-label="1:15">Yeah.</span> <span class="cue" id="t77" data-cue="t77" data-t="77" data-label="1:17">No. I'm I'm happy to see that you guys are testing the waters here because</span> <span class="cue" id="t82" data-cue="t82" data-t="82" data-label="1:22">the Zoom thing is driving everyone nuts.</span> <span class="cue" id="t86" data-cue="t86" data-t="86" data-label="1:26">This is good.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:14" data-default-t="134">2:14</div>
+        <div class="text"><span class="cue" id="t134" data-cue="t134" data-t="134" data-label="2:14">Okay. I'll make this very simple.</span> <span class="cue" id="t137" data-cue="t137" data-t="137" data-label="2:17">So we brought three contractors,</span> <span class="cue" id="t140" data-cue="t140" data-t="140" data-label="2:20">paving contractors to the transfer station to get an idea of what it's gonna cost</span> <span class="cue" id="t198" data-cue="t198" data-t="198" data-label="3:18">so I don't have a full breakdown. But I sat down with Pat, so we went through the numbers.</span> <span class="cue" id="t203" data-cue="t203" data-t="203" data-label="3:23">Roughly 5,000</span> <span class="cue" id="t204" data-cue="t204" data-t="204" data-label="3:24">of that is the cost to bring somebody in with the rototiller</span> <span class="cue" id="t208" data-cue="t208" data-t="208" data-label="3:28">or to peel</span> <span class="cue" id="t210" data-cue="t210" data-t="210" data-label="3:30">the existing pavement up and</span> <span class="cue" id="t212" data-cue="t212" data-t="212" data-label="3:32">haul it off to get disposed of.</span> <span class="cue" id="t215" data-cue="t215" data-t="215" data-label="3:35">So there's about a day and a half labor, he thinks, in grading it properly</span> <span class="cue" id="t221" data-cue="t221" data-t="221" data-label="3:41">to drain. That's presuming public works puts in</span> <span class="cue" id="t224" data-cue="t224" data-t="224" data-label="3:44">a double basin ahead of time before they get there. Could we have public works just to peel it up with the</span> <span class="cue" id="t230" data-cue="t230" data-t="230" data-label="3:50">odor?</span> <span class="cue" id="t233" data-cue="t233" data-t="233" data-label="3:53">I'm just saying if it's $5, and we've got disposal right behind it, can we?</span> <span class="cue" id="t238" data-cue="t238" data-t="238" data-label="3:58">No.</span> <span class="cue" id="t239" data-cue="t239" data-t="239" data-label="3:59">Mean, when we peel it up, we put it in a truck</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="4:17" data-default-t="257">4:17</div>
+        <div class="text"><span class="cue" id="t257" data-cue="t257" data-t="257" data-label="4:17">I mean, we could if if you wanna pursue that option.</span> <span class="cue" id="t262" data-cue="t262" data-t="262" data-label="4:22">I don't I mean, they've certainly peeled up all the asphalt that's</span> <span class="cue" id="t267" data-cue="t267" data-t="267" data-label="4:27">that's been removed so far. You know, they peeled up and recycled it. They can't</span> <span class="cue" id="t272" data-cue="t272" data-t="272" data-label="4:32">It just to me, the the time and effort of peeling it up versus the time and effort of just grinding it up and adding it right to the material,</span> <span class="cue" id="t283" data-cue="t283" data-t="283" data-label="4:43">it's about a wash, I think.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="4:49" data-default-t="289">4:49</div>
+        <div class="text"><span class="cue" id="t289" data-cue="t289" data-t="289" data-label="4:49">I just thought I was thinking $5 versus, what, 1,600 for a day's labor for a polyp arts. Yeah. How do you know it's a wash?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="4:58" data-default-t="298">4:58</div>
+        <div class="text"><span class="cue" id="t298" data-cue="t298" data-t="298" data-label="4:58">Well, because</span> <span class="cue" id="t302" data-cue="t302" data-t="302" data-label="5:02">so one of the contractors</span> <span class="cue" id="t304" data-cue="t304" data-t="304" data-label="5:04">gave me a a cost assuming it was gonna be ground up, and the other one gave me a cost</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:25" data-default-t="325">5:25</div>
+        <div class="text"><span class="cue" id="t325" data-cue="t325" data-t="325" data-label="5:25">with them grinding it up versus them peeling it up and removing it. Is there an advantage to that? I mean, given that they have to regrade it anyways?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:33" data-default-t="333">5:33</div>
+        <div class="text"><span class="cue" id="t333" data-cue="t333" data-t="333" data-label="5:33">To grinding it up? Yeah. You just end up with, you know, a tiny little bit more material.</span> <span class="cue" id="t355" data-cue="t355" data-t="355" data-label="5:55">No. No. They would just be grinding it into the the existing sub base</span> <span class="cue" id="t360" data-cue="t360" data-t="360" data-label="6:00">and using that as part of the sub base. K. Okay.</span> <span class="cue" id="t364" data-cue="t364" data-t="364" data-label="6:04">Now same thing when you recycle or reclaim the road. You just basically grind up the first</span> <span class="cue" id="t395" data-cue="t395" data-t="395" data-label="6:35">Right. I mean, honestly, the the base,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="11:38" data-default-t="698">11:38</div>
+        <div class="text"><span class="cue" id="t698" data-cue="t698" data-t="698" data-label="11:38">I</span> <span class="cue" id="t700" data-cue="t700" data-t="700" data-label="11:40">also had another thought.</span> <span class="cue" id="t703" data-cue="t703" data-t="703" data-label="11:43">Looking at that, whether or not we should be</span> <span class="cue" id="t706" data-cue="t706" data-t="706" data-label="11:46">pouring concrete slabs</span> <span class="cue" id="t707" data-cue="t707" data-t="707" data-label="11:47">over the top of those blocks</span> <span class="cue" id="t710" data-cue="t710" data-t="710" data-label="11:50">to take up some of the other issues that we talked about as far as being able to anchor to areas and things like that. Would it make sense to look at slabbing that?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:28" data-default-t="748">12:28</div>
+        <div class="text"><span class="cue" id="t748" data-cue="t748" data-t="748" data-label="12:28">You know, there's always</span> <span class="cue" id="t750" data-cue="t750" data-t="750" data-label="12:30">part of what I was trying to do, frankly, is,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:34" data-default-t="754">12:34</div>
+        <div class="text"><span class="cue" id="t754" data-cue="t754" data-t="754" data-label="12:34">you know, stay somewhat within the budget that we had allocated. I'm not criticizing what was done. I'm asking if you think that that would be a viable solution to address some of the issues that we're gonna have otherwise with putting the correct railing. I</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:49" data-default-t="769">12:49</div>
+        <div class="text"><span class="cue" id="t769" data-cue="t769" data-t="769" data-label="12:49">mean, I think I worked with Public Works to come up with a solution for the railing that they're happy with and I'm happy with. So we have a solution right now? So we have a solution. We are going to have to pour</span> <span class="cue" id="t782" data-cue="t782" data-t="782" data-label="13:02">on the side with the compactors.</span> <span class="cue" id="t785" data-cue="t785" data-t="785" data-label="13:05">We are going to have to pour</span> <span class="cue" id="t787" data-cue="t787" data-t="787" data-label="13:07">some small pads too bold to,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="13:10" data-default-t="790">13:10</div>
+        <div class="text"><span class="cue" id="t790" data-cue="t790" data-t="790" data-label="13:10">you know, where it dips down. We're thinking about the same thing in some way. I guess I was just thinking about bigger pads</span> <span class="cue" id="t797" data-cue="t797" data-t="797" data-label="13:17">and maybe it'd be more cumbersome,</span> <span class="cue" id="t799" data-cue="t799" data-t="799" data-label="13:19">you know, and that would also change. I'm just really worried about</span> <span class="cue" id="t802" data-cue="t802" data-t="802" data-label="13:22">compaction.</span> <span class="cue" id="t804" data-cue="t804" data-t="804" data-label="13:24">I didn't see the back film happening,</span> <span class="cue" id="t806" data-cue="t806" data-t="806" data-label="13:26">whether or not they were walking whether or not they were really back</span> <span class="cue" id="t810" data-cue="t810" data-t="810" data-label="13:30">compacted really well because settling against a wall with drainage is always an issue.</span> <span class="cue" id="t816" data-cue="t816" data-t="816" data-label="13:36">So</span> <span class="cue" id="t817" data-cue="t817" data-t="817" data-label="13:37">and we haven't had that up very long. We haven't had a lot of rain this summer.</span> <span class="cue" id="t1120" data-cue="t1120" data-t="1120" data-label="18:40">You know, available to you. And that doesn't sound like much, but if you wanna keep grass green,</span> <span class="cue" id="t1126" data-cue="t1126" data-t="1126" data-label="18:46">that's a lot of water.</span> <span class="cue" id="t1129" data-cue="t1129" data-t="1129" data-label="18:49">You give them the location of that. Well, I'm guessing it's not We're gonna talk to the</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="22:34" data-default-t="1354">22:34</div>
+        <div class="text"><span class="cue" id="t1354" data-cue="t1354" data-t="1354" data-label="22:34">scope of the project,</span> <span class="cue" id="t1357" data-cue="t1357" data-t="1357" data-label="22:37">you know,</span> <span class="cue" id="t1358" data-cue="t1358" data-t="1358" data-label="22:38">can't</span> <span class="cue" id="t1359" data-cue="t1359" data-t="1359" data-label="22:39">whatever the original scope is is what they're funding.</span> <span class="cue" id="t1362" data-cue="t1362" data-t="1362" data-label="22:42">So we couldn't do what we did before, which was</span> <span class="cue" id="t1366" data-cue="t1366" data-t="1366" data-label="22:46">fund the project and then kinda change</span> <span class="cue" id="t1369" data-cue="t1369" data-t="1369" data-label="22:49">pretty considerably considerably what what we we were were doing. Doing. So So</span> <span class="cue" id="t1372" data-cue="t1372" data-t="1372" data-label="22:52">so given those</span> <span class="cue" id="t1374" data-cue="t1374" data-t="1374" data-label="22:54">that circumstance,</span> <span class="cue" id="t1376" data-cue="t1376" data-t="1376" data-label="22:56">I thought probably the most important thing we had or we could fund out of state would either be a roadwork project or a culvert project.</span> <span class="cue" id="t1387" data-cue="t1387" data-t="1387" data-label="23:07">But given</span> <span class="cue" id="t1388" data-cue="t1388" data-t="1388" data-label="23:08">where we are in the planning process for culverts,</span> <span class="cue" id="t1392" data-cue="t1392" data-t="1392" data-label="23:12">I thought it would be better to do a roadwork project.</span> <span class="cue" id="t1396" data-cue="t1396" data-t="1396" data-label="23:16">So my suggestion</span> <span class="cue" id="t1398" data-cue="t1398" data-t="1398" data-label="23:18">is we do</span> <span class="cue" id="t1399" data-cue="t1399" data-t="1399" data-label="23:19">what we were planning on doing anyway,</span> <span class="cue" id="t1403" data-cue="t1403" data-t="1403" data-label="23:23">which is</span> <span class="cue" id="t1405" data-cue="t1405" data-t="1405" data-label="23:25">Long Hill Road from Route 6 to the just past the Bear Swamp Intersection,</span> <span class="cue" id="t1411" data-cue="t1411" data-t="1411" data-label="23:31">and then Shawnee Mill from Route 6</span> <span class="cue" id="t1414" data-cue="t1414" data-t="1414" data-label="23:34">to the intersection of Wales</span> <span class="cue" id="t1416" data-cue="t1416" data-t="1416" data-label="23:36">to be coordinated with the drainage work that we need to do on Shawnee Mill,</span> <span class="cue" id="t1422" data-cue="t1422" data-t="1422" data-label="23:42">and that would basically reconstruct</span> <span class="cue" id="t1424" data-cue="t1424" data-t="1424" data-label="23:44">those road sections.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="23:47" data-default-t="1427">23:47</div>
+        <div class="text"><span class="cue" id="t1427" data-cue="t1427" data-t="1427" data-label="23:47">And that would be covered by what? A 100% between a 100% match up and speed.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="23:52" data-default-t="1432">23:52</div>
+        <div class="text"><span class="cue" id="t1432" data-cue="t1432" data-t="1432" data-label="23:52">Right. So I have two I put in your packet</span> <span class="cue" id="t1438" data-cue="t1438" data-t="1438" data-label="23:58">cost estimates from that. Mhmm. We have numbers from two different contractors.</span> <span class="cue" id="t1443" data-cue="t1443" data-t="1443" data-label="24:03">Again, we put out an RFP,</span> <span class="cue" id="t1445" data-cue="t1445" data-t="1445" data-label="24:05">but we have pretty solid numbers. Okay.</span> <span class="cue" id="t1448" data-cue="t1448" data-t="1448" data-label="24:08">And that would both doing both of those would be around 265,000.</span> <span class="cue" id="t1636" data-cue="t1636" data-t="1636" data-label="27:16">We could simply tell the contractor to keep rolling up the road till we run out of money. And we won't get an answer on this until the next year, guess. Right? No? No.</span> <span class="cue" id="t1646" data-cue="t1646" data-t="1646" data-label="27:26">For the steep grant, we'll we will know supposedly,</span> <span class="cue" id="t1650" data-cue="t1650" data-t="1650" data-label="27:30">we will know by</span> <span class="cue" id="t2230" data-cue="t2230" data-t="2230" data-label="37:10">want to assess him for his use of the meal.</span> <span class="cue" id="t2234" data-cue="t2234" data-t="2234" data-label="37:14">That's the,</span> <span class="cue" id="t2236" data-cue="t2236" data-t="2236" data-label="37:16">you know</span> <span class="cue" id="t2237" data-cue="t2237" data-t="2237" data-label="37:17">I mean, the question is, do you wanna decide</span> <span class="cue" id="t2240" data-cue="t2240" data-t="2240" data-label="37:20">what is it how how do you wanna proceed from here? I mean, I feel like,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+    </div>
+
+    <footer class="colophon">
+      <p><strong>About this transcript.</strong> This transcript was generated by Deepgram from the meeting recording. Names, numbers, and other details may be inaccurate &mdash; please refer to the video for authoritative content.</p>
+      <p>Part of <code>andoverct.info</code>, an independent civic-reference site &mdash; not an official site of the Town of Andover. Compiled by <a href="mailto:scott@sauyet.com">Scott Sauyet</a>.</p>
+    </footer>
+  </main>
+
+  <div id="overlay">
+    <div class="dialog">
+      <div class="dialog-header">
+        <div class="dialog-title">BOS Special Meeting Video Recording</div>
+        <div class="dialog-subtitle">July 27, 2020 at <span class="ts-label" id="overlay-ts"></span></div>
+      </div>
+      <div class="actions">
+        <button id="act-yt">
+          <span class="icon">&#9654;</span>
+          <span class="label">Watch on YouTube<br><span class="hint">Opens at this timestamp</span></span>
+        </button>
+        <button id="act-copy-link">
+          <span class="icon">&#128279;</span>
+          <span class="label">Copy YouTube link<br><span class="hint" id="hint-link-url"></span></span>
+        </button>
+        <button id="act-bookmark">
+          <span class="icon">&#128278;</span>
+          <span class="label">Bookmark this spot<br><span class="hint">Copies link &amp; adds to navigation history</span></span>
+        </button>
+      </div>
+      <div class="cancel"><a id="act-cancel">Cancel</a></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>window.TX = { video: "https://www.youtube.com/watch?v=n0nct2gnAFQ", passcode: "", type: "YouTube" };</script>
+  <script src="https://andoverct.info/reference/video/assets/transcripts.js"></script>
+</body>
+</html>

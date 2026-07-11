@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Board of Finance - Regular Meeting Part 2 — May 26, 2021</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <style>
+    /* Transcript-specific components. Theme, palette, and page chrome
+       (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
+       come from the shared style.css; these just use its variables. */
+    .para { display: flex; gap: 1em; padding: 0.5em 0.75em; border-radius: 6px; }
+    .para:nth-child(4n+1) { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+    .para-gap { font-size: 1px; line-height: 1px; height: 0; overflow: hidden; user-select: text; }
+    .para.speaker { border-top: 1px solid var(--rule-soft); margin-top: 0.6em; padding-top: 1em; }
+    .para.speaker:first-child { border-top: none; margin-top: 0; }
+
+    .timestamp {
+      flex: 0 0 5em; text-align: right;
+      color: var(--ink-mute); font-family: var(--sans);
+      font-size: 0.72rem; font-variant-numeric: tabular-nums; line-height: 1.9;
+      cursor: pointer; white-space: nowrap; padding-top: 0.15em;
+      transition: color 0.15s; user-select: none;
+    }
+    .timestamp:hover, .timestamp.hl { color: var(--accent); font-weight: 600; }
+
+    .text { flex: 1; min-width: 0; }
+    .cue { cursor: pointer; border-radius: 3px; transition: background-color 0.15s; }
+    .cue.hl { background-color: var(--accent-bg); }
+    @keyframes flash-highlight {
+      0%   { background-color: rgba(232, 168, 0, 0.45); }
+      100% { background-color: transparent; }
+    }
+    .cue.flash { animation: flash-highlight 4s ease-out forwards; }
+
+    /* action dialog */
+    #overlay { display: none; position: fixed; inset: 0; background: rgba(8, 22, 40, 0.5); z-index: 100; justify-content: center; align-items: center; }
+    #overlay.visible { display: flex; }
+    .dialog { background: var(--bg-card); border-radius: 10px; padding: 1.6rem 1.8rem; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28); max-width: 28rem; width: 90vw; border-top: 4px solid var(--accent); }
+    .dialog-header { margin-bottom: 1.2em; }
+    .dialog-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); }
+    .dialog-subtitle { font-family: var(--sans); font-size: 0.85rem; color: var(--ink-mute); margin-top: 0.2em; }
+    .dialog .ts-label { color: var(--accent); font-weight: 600; }
+    .dialog .actions { display: flex; flex-direction: column; gap: 0.5em; }
+    .dialog button { display: flex; align-items: center; gap: 0.6em; padding: 0.6em 1em; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--ink); cursor: pointer; font-family: var(--sans); font-size: 0.9rem; text-align: left; width: 100%; transition: background-color 0.12s, border-color 0.12s; }
+    .dialog button:hover { background: var(--accent-bg); border-color: var(--accent); }
+    .dialog button .icon { font-size: 1.1em; flex: 0 0 1.4em; text-align: center; }
+    .dialog button .label { flex: 1; }
+    .dialog button .hint { display: block; color: var(--ink-mute); font-size: 0.78rem; }
+    .dialog .cancel { margin-top: 0.6em; text-align: center; }
+    .dialog .cancel a { color: var(--ink-mute); font-family: var(--sans); font-size: 0.82rem; cursor: pointer; border-bottom: none; }
+    .dialog .cancel a:hover { color: var(--accent); }
+
+    /* toast */
+    #toast { position: fixed; top: 1.5em; left: 50%; transform: translateX(-50%) translateY(-4em); background: var(--accent); color: #15233a; padding: 0.7em 1.6em; border-radius: 8px; font-family: var(--sans); font-size: 0.95rem; font-weight: 600; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease; z-index: 200; pointer-events: none; text-align: center; max-width: 90vw; }
+    #toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    @media (max-width: 480px) { .timestamp { flex-basis: 4em; } }
+  </style>
+</head>
+<body class="bluegold">
+  <div class="page-banner">
+    <nav class="page-banner-inner crumbs">
+      <a href="/">Home</a><span class="sep">›</span><a href="/reference/">Reference</a><span class="sep">›</span><a href="../index.html">Video</a><span class="sep">›</span><span class="current">Board of Finance - Regular Meeting Part 2 (5/26/21)</span>
+    </nav>
+  </div>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Meeting transcript</p>
+      <h1 class="title">Board of Finance - Regular Meeting Part 2</h1>
+      <p class="subtitle">May 26, 2021 &middot; <a href="https://www.youtube.com/watch?v=q3T43OwpEWo" target="yt-meeting">Watch on YouTube</a> &middot; <a href="../index.html">All meetings</a></p>
+    </header>
+
+    <hr class="rule">
+
+    <div class="transcript">
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:00" data-default-t="0">0:00</div>
+        <div class="text"><span class="cue" id="t0" data-cue="t0" data-t="0" data-label="0:00">Oh, hi. I do apologize. I am trying to</span> <span class="cue" id="t4" data-cue="t4" data-t="4" data-label="0:04">record.</span> <span class="cue" id="t6" data-cue="t6" data-t="6" data-label="0:06">However, I made Diane the cohost.</span> <span class="cue" id="t9" data-cue="t9" data-t="9" data-label="0:09">Oh, we're back on.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:12" data-default-t="12">0:12</div>
+        <div class="text"><span class="cue" id="t12" data-cue="t12" data-t="12" data-label="0:12">Okay. Now I see the recording light is back on.</span> <span class="cue" id="t17" data-cue="t17" data-t="17" data-label="0:17">Awesome. Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:20" data-default-t="20">0:20</div>
+        <div class="text"><span class="cue" id="t20" data-cue="t20" data-t="20" data-label="0:20">Yeah. Whatever it was hit the fiber backbone,</span> <span class="cue" id="t23" data-cue="t23" data-t="23" data-label="0:23">so that's kind of annoying.</span> <span class="cue" id="t25" data-cue="t25" data-t="25" data-label="0:25">Hey.</span> <span class="cue" id="t28" data-cue="t28" data-t="28" data-label="0:28">I mean, since Amanda's back, maybe we can</span> <span class="cue" id="t32" data-cue="t32" data-t="32" data-label="0:32">continue.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:33" data-default-t="33">0:33</div>
+        <div class="text"><span class="cue" id="t33" data-cue="t33" data-t="33" data-label="0:33">Do we want to pick off where</span> <span class="cue" id="t35" data-cue="t35" data-t="35" data-label="0:35">we left off?</span> <span class="cue" id="t39" data-cue="t39" data-t="39" data-label="0:39">Public speaking? That would be appropriate.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:41" data-default-t="41">0:41</div>
+        <div class="text"><span class="cue" id="t41" data-cue="t41" data-t="41" data-label="0:41">I think continuing with public speak would be</span> <span class="cue" id="t44" data-cue="t44" data-t="44" data-label="0:44">you know, nice and we can work with what we have. What do you think? Yes, I agree. Let's Let's do it. Rajon.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:53" data-default-t="53">0:53</div>
+        <div class="text"><span class="cue" id="t53" data-cue="t53" data-t="53" data-label="0:53">Okay. And it is recording?</span> <span class="cue" id="t55" data-cue="t55" data-t="55" data-label="0:55">Yes. I see the lights on.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:58" data-default-t="58">0:58</div>
+        <div class="text"><span class="cue" id="t58" data-cue="t58" data-t="58" data-label="0:58">So Mark just emailed me and said he cannot</span> <span class="cue" id="t62" data-cue="t62" data-t="62" data-label="1:02">oh, no. There he is. He's showing back up.</span> <span class="cue" id="t68" data-cue="t68" data-t="68" data-label="1:08">We might have Mark again.</span> <span class="cue" id="t83" data-cue="t83" data-t="83" data-label="1:23">Hey, Rob. Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:27" data-default-t="87">1:27</div>
+        <div class="text"><span class="cue" id="t87" data-cue="t87" data-t="87" data-label="1:27">Yeah. I I never dropped off. I was always here. I just killed my video because I haven't eaten yet. Alright. Can we continue with public speak? I think we have a quorum on.</span> <span class="cue" id="t99" data-cue="t99" data-t="99" data-label="1:39">Alright. So</span> <span class="cue" id="t101" data-cue="t101" data-t="101" data-label="1:41">I believe Did we lose</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:46" data-default-t="106">1:46</div>
+        <div class="text"><span class="cue" id="t106" data-cue="t106" data-t="106" data-label="1:46">Did we lose Amanda again?</span> <span class="cue" id="t108" data-cue="t108" data-t="108" data-label="1:48">Yeah. Did we lose Amanda again? Yeah. We did. But it's recording. So</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:55" data-default-t="115">1:55</div>
+        <div class="text"><span class="cue" id="t115" data-cue="t115" data-t="115" data-label="1:55">who haven't sorry. I missed a bunch, obviously, because I have no idea where we left off. I'm totally lost. Thought I thought Karen was speaking at the time.</span> <span class="cue" id="t124" data-cue="t124" data-t="124" data-label="2:04">Okay.</span> <span class="cue" id="t126" data-cue="t126" data-t="126" data-label="2:06">But Erin's gone.</span> <span class="cue" id="t128" data-cue="t128" data-t="128" data-label="2:08">Okay. We've lost her. Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:10" data-default-t="130">2:10</div>
+        <div class="text"><span class="cue" id="t130" data-cue="t130" data-t="130" data-label="2:10">So</span> <span class="cue" id="t131" data-cue="t131" data-t="131" data-label="2:11">So Caitlin hasn't spoken.</span> <span class="cue" id="t134" data-cue="t134" data-t="134" data-label="2:14">Caitlin, do you wanna speak?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:16" data-default-t="136">2:16</div>
+        <div class="text"><span class="cue" id="t136" data-cue="t136" data-t="136" data-label="2:16">Yes,</span> <span class="cue" id="t137" data-cue="t137" data-t="137" data-label="2:17">please. If you guys can hear me. Yes. We can. Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+    </div>
+
+    <footer class="colophon">
+      <p><strong>About this transcript.</strong> This transcript was generated by Deepgram from the meeting recording. Names, numbers, and other details may be inaccurate &mdash; please refer to the video for authoritative content.</p>
+      <p>Part of <code>andoverct.info</code>, an independent civic-reference site &mdash; not an official site of the Town of Andover. Compiled by <a href="mailto:scott@sauyet.com">Scott Sauyet</a>.</p>
+    </footer>
+  </main>
+
+  <div id="overlay">
+    <div class="dialog">
+      <div class="dialog-header">
+        <div class="dialog-title">Board of Finance - Regular Meeting Part 2</div>
+        <div class="dialog-subtitle">May 26, 2021 at <span class="ts-label" id="overlay-ts"></span></div>
+      </div>
+      <div class="actions">
+        <button id="act-yt">
+          <span class="icon">&#9654;</span>
+          <span class="label">Watch on YouTube<br><span class="hint">Opens at this timestamp</span></span>
+        </button>
+        <button id="act-copy-link">
+          <span class="icon">&#128279;</span>
+          <span class="label">Copy YouTube link<br><span class="hint" id="hint-link-url"></span></span>
+        </button>
+        <button id="act-bookmark">
+          <span class="icon">&#128278;</span>
+          <span class="label">Bookmark this spot<br><span class="hint">Copies link &amp; adds to navigation history</span></span>
+        </button>
+      </div>
+      <div class="cancel"><a id="act-cancel">Cancel</a></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>window.TX = { video: "https://www.youtube.com/watch?v=q3T43OwpEWo", passcode: "", type: "YouTube" };</script>
+  <script src="https://andoverct.info/reference/video/assets/transcripts.js"></script>
+</body>
+</html>

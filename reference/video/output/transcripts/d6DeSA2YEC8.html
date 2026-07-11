@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Board of Finance- Regular Meeting — July 26, 2023</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <style>
+    /* Transcript-specific components. Theme, palette, and page chrome
+       (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
+       come from the shared style.css; these just use its variables. */
+    .para { display: flex; gap: 1em; padding: 0.5em 0.75em; border-radius: 6px; }
+    .para:nth-child(4n+1) { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+    .para-gap { font-size: 1px; line-height: 1px; height: 0; overflow: hidden; user-select: text; }
+    .para.speaker { border-top: 1px solid var(--rule-soft); margin-top: 0.6em; padding-top: 1em; }
+    .para.speaker:first-child { border-top: none; margin-top: 0; }
+
+    .timestamp {
+      flex: 0 0 5em; text-align: right;
+      color: var(--ink-mute); font-family: var(--sans);
+      font-size: 0.72rem; font-variant-numeric: tabular-nums; line-height: 1.9;
+      cursor: pointer; white-space: nowrap; padding-top: 0.15em;
+      transition: color 0.15s; user-select: none;
+    }
+    .timestamp:hover, .timestamp.hl { color: var(--accent); font-weight: 600; }
+
+    .text { flex: 1; min-width: 0; }
+    .cue { cursor: pointer; border-radius: 3px; transition: background-color 0.15s; }
+    .cue.hl { background-color: var(--accent-bg); }
+    @keyframes flash-highlight {
+      0%   { background-color: rgba(232, 168, 0, 0.45); }
+      100% { background-color: transparent; }
+    }
+    .cue.flash { animation: flash-highlight 4s ease-out forwards; }
+
+    /* action dialog */
+    #overlay { display: none; position: fixed; inset: 0; background: rgba(8, 22, 40, 0.5); z-index: 100; justify-content: center; align-items: center; }
+    #overlay.visible { display: flex; }
+    .dialog { background: var(--bg-card); border-radius: 10px; padding: 1.6rem 1.8rem; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28); max-width: 28rem; width: 90vw; border-top: 4px solid var(--accent); }
+    .dialog-header { margin-bottom: 1.2em; }
+    .dialog-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); }
+    .dialog-subtitle { font-family: var(--sans); font-size: 0.85rem; color: var(--ink-mute); margin-top: 0.2em; }
+    .dialog .ts-label { color: var(--accent); font-weight: 600; }
+    .dialog .actions { display: flex; flex-direction: column; gap: 0.5em; }
+    .dialog button { display: flex; align-items: center; gap: 0.6em; padding: 0.6em 1em; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--ink); cursor: pointer; font-family: var(--sans); font-size: 0.9rem; text-align: left; width: 100%; transition: background-color 0.12s, border-color 0.12s; }
+    .dialog button:hover { background: var(--accent-bg); border-color: var(--accent); }
+    .dialog button .icon { font-size: 1.1em; flex: 0 0 1.4em; text-align: center; }
+    .dialog button .label { flex: 1; }
+    .dialog button .hint { display: block; color: var(--ink-mute); font-size: 0.78rem; }
+    .dialog .cancel { margin-top: 0.6em; text-align: center; }
+    .dialog .cancel a { color: var(--ink-mute); font-family: var(--sans); font-size: 0.82rem; cursor: pointer; border-bottom: none; }
+    .dialog .cancel a:hover { color: var(--accent); }
+
+    /* toast */
+    #toast { position: fixed; top: 1.5em; left: 50%; transform: translateX(-50%) translateY(-4em); background: var(--accent); color: #15233a; padding: 0.7em 1.6em; border-radius: 8px; font-family: var(--sans); font-size: 0.95rem; font-weight: 600; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease; z-index: 200; pointer-events: none; text-align: center; max-width: 90vw; }
+    #toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    @media (max-width: 480px) { .timestamp { flex-basis: 4em; } }
+  </style>
+</head>
+<body class="bluegold">
+  <div class="page-banner">
+    <nav class="page-banner-inner crumbs">
+      <a href="/">Home</a><span class="sep">›</span><a href="/reference/">Reference</a><span class="sep">›</span><a href="../index.html">Video</a><span class="sep">›</span><span class="current">Board of Finance- Regular Meeting (7/26/23)</span>
+    </nav>
+  </div>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Meeting transcript</p>
+      <h1 class="title">Board of Finance- Regular Meeting</h1>
+      <p class="subtitle">July 26, 2023 &middot; <a href="https://www.youtube.com/watch?v=d6DeSA2YEC8" target="yt-meeting">Watch on YouTube</a> &middot; <a href="../index.html">All meetings</a></p>
+    </header>
+
+    <hr class="rule">
+
+    <div class="transcript">
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:00" data-default-t="0">0:00</div>
+        <div class="text"><span class="cue" id="t0" data-cue="t0" data-t="0" data-label="0:00">Recording.</span> <span class="cue" id="t2" data-cue="t2" data-t="2" data-label="0:02">Thank you,</span> <span class="cue" id="t4" data-cue="t4" data-t="4" data-label="0:04">this is the town of Andover board of finance meeting for Wednesday 07/26/2023</span> <span class="cue" id="t9" data-cue="t9" data-t="9" data-label="0:09">I'll call the meeting to order.</span> <span class="cue" id="t12" data-cue="t12" data-t="12" data-label="0:12">First, recite the pledge of allegiance. I pledge allegiance to the flag of The United States Of America United States Of America</span> <span class="cue" id="t19" data-cue="t19" data-t="19" data-label="0:19">to the republic for which it stands</span> <span class="cue" id="t21" data-cue="t21" data-t="21" data-label="0:21">nation one nation under God the bull, liberty, and</span> <span class="cue" id="t27" data-cue="t27" data-t="27" data-label="0:27">scroll.</span> <span class="cue" id="t28" data-cue="t28" data-t="28" data-label="0:28">Thank you.</span> <span class="cue" id="t30" data-cue="t30" data-t="30" data-label="0:30">So we are</span> <span class="cue" id="t32" data-cue="t32" data-t="32" data-label="0:32">on a very limited agenda tonight. Obviously, we've said pretty much a full meeting last week.</span> <span class="cue" id="t38" data-cue="t38" data-t="38" data-label="0:38">We are mainly just going to talk about the fire department RFP and the contract</span> <span class="cue" id="t44" data-cue="t44" data-t="44" data-label="0:44">to purchase the new piece of equipment.</span> <span class="cue" id="t46" data-cue="t46" data-t="46" data-label="0:46">Before we get into that, we'll go ahead and open it up to public speak.</span> <span class="cue" id="t51" data-cue="t51" data-t="51" data-label="0:51">Eric, I don't see anybody</span> <span class="cue" id="t53" data-cue="t53" data-t="53" data-label="0:53">from the public on the meeting.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:55" data-default-t="55">0:55</div>
+        <div class="text"><span class="cue" id="t55" data-cue="t55" data-t="55" data-label="0:55">Correct the only public that I see here is Sean Goebel</span> <span class="cue" id="t59" data-cue="t59" data-t="59" data-label="0:59">and he's for a specific agenda item.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:04" data-default-t="64">1:04</div>
+        <div class="text"><span class="cue" id="t64" data-cue="t64" data-t="64" data-label="1:04">Okay</span> <span class="cue" id="t65" data-cue="t65" data-t="65" data-label="1:05">and he'll get a chance to talk then or whenever We'll go on to review the fire department RFP.</span> <span class="cue" id="t72" data-cue="t72" data-t="72" data-label="1:12">So</span> <span class="cue" id="t73" data-cue="t73" data-t="73" data-label="1:13">we do have the revised contract.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:16" data-default-t="76">1:16</div>
+        <div class="text"><span class="cue" id="t76" data-cue="t76" data-t="76" data-label="1:16">I didn't look at it word for word, but this is the one that Dennis had changes that Dennis had hoped for? Yes, Dennis proposed a series of changes to the contract. None of them were really very significant. They were just fairly minor learning con.</span> <span class="cue" id="t92" data-cue="t92" data-t="92" data-label="1:32">The</span> <span class="cue" id="t94" data-cue="t94" data-t="94" data-label="1:34">contractor agreed to all of the changes</span> <span class="cue" id="t97" data-cue="t97" data-t="97" data-label="1:37">and sent us a revised contract, which I looked at and compared to what Dennis had suggested.</span> <span class="cue" id="t104" data-cue="t104" data-t="104" data-label="1:44">And he in fact did incorporate the suggestions of the town's attorney.</span> <span class="cue" id="t108" data-cue="t108" data-t="108" data-label="1:48">It wasn't anything really material. They were just minor</span> <span class="cue" id="t112" data-cue="t112" data-t="112" data-label="1:52">points</span> <span class="cue" id="t113" data-cue="t113" data-t="113" data-label="1:53">that Dennis felt were important to include.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:56" data-default-t="116">1:56</div>
+        <div class="text"><span class="cue" id="t116" data-cue="t116" data-t="116" data-label="1:56">Yeah. And just some things to clarify and make it, know,</span> <span class="cue" id="t120" data-cue="t120" data-t="120" data-label="2:00">clear in some of the jurisdictions.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:03" data-default-t="123">2:03</div>
+        <div class="text"><span class="cue" id="t123" data-cue="t123" data-t="123" data-label="2:03">I I didn't get</span> <span class="cue" id="t124" data-cue="t124" data-t="124" data-label="2:04">I have the old, I guess, one printed out with me. I didn't get the new one printed out.</span> <span class="cue" id="t129" data-cue="t129" data-t="129" data-label="2:09">So I don't know. I I had two areas of concern. I'm not sure if we'll talk about those tonight or or what we're gonna do.</span> <span class="cue" id="t136" data-cue="t136" data-t="136" data-label="2:16">So I don't know if the areas I had of concern were addressed</span> <span class="cue" id="t139" data-cue="t139" data-t="139" data-label="2:19">by the lawyer or</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:22" data-default-t="142">2:22</div>
+        <div class="text"><span class="cue" id="t142" data-cue="t142" data-t="142" data-label="2:22">Okay. Well, let's let's,</span> <span class="cue" id="t144" data-cue="t144" data-t="144" data-label="2:24">I guess, give Sean an opportunity to kinda talk about the process. And and</span> <span class="cue" id="t151" data-cue="t151" data-t="151" data-label="2:31">so one thing that went on was that the</span> <span class="cue" id="t155" data-cue="t155" data-t="155" data-label="2:35">the RFP committee reviewed</span> <span class="cue" id="t158" data-cue="t158" data-t="158" data-label="2:38">the contract and the RFP,</span> <span class="cue" id="t161" data-cue="t161" data-t="161" data-label="2:41">and I'm paraphrasing here, Shana will give a chance to speak a little more clearly to this,</span> <span class="cue" id="t167" data-cue="t167" data-t="167" data-label="2:47">but they reviewed it they determined that the proposal</span> <span class="cue" id="t171" data-cue="t171" data-t="171" data-label="2:51">met the specifications</span> <span class="cue" id="t173" data-cue="t173" data-t="173" data-label="2:53">of the RFP and they recommended going forward.</span> <span class="cue" id="t177" data-cue="t177" data-t="177" data-label="2:57">If you remember Rob was a part of that committee and I believe he was at that meeting.</span> <span class="cue" id="t182" data-cue="t182" data-t="182" data-label="3:02">Sean had forwarded the minutes of that meeting to Eric and I think I may have included them on one of the emails that I sent you guys. I'm not sure if you read down all the way.</span> <span class="cue" id="t192" data-cue="t192" data-t="192" data-label="3:12">So that's what's happened so far. So what I would propose is we kind of give Sean an opportunity to kind of explain the process and make any comments about it and then we can ask questions</span> <span class="cue" id="t202" data-cue="t202" data-t="202" data-label="3:22">thereafter.</span> <span class="cue" id="t203" data-cue="t203" data-t="203" data-label="3:23">Make sense? Great,</span> <span class="cue" id="t204" data-cue="t204" data-t="204" data-label="3:24">makes sense.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="3:26" data-default-t="206">3:26</div>
+        <div class="text"><span class="cue" id="t206" data-cue="t206" data-t="206" data-label="3:26">Okay,</span> <span class="cue" id="t207" data-cue="t207" data-t="207" data-label="3:27">Sean, the floor is yours. You wanna kinda tell us what you guys how how you reviewed it and what you went through and your comments and thoughts about the proposal?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="3:36" data-default-t="216">3:36</div>
+        <div class="text"><span class="cue" id="t216" data-cue="t216" data-t="216" data-label="3:36">So what we did was once we got the bids in,</span> <span class="cue" id="t220" data-cue="t220" data-t="220" data-label="3:40">one bid, it was sent out to all the members that were going to review it, which were Jeff McGuire, Rob, myself,</span> <span class="cue" id="t229" data-cue="t229" data-t="229" data-label="3:49">Mark Goheegan,</span> <span class="cue" id="t231" data-cue="t231" data-t="231" data-label="3:51">Scott Yeomans,</span> <span class="cue" id="t233" data-cue="t233" data-t="233" data-label="3:53">Chris O'Brien,</span> <span class="cue" id="t234" data-cue="t234" data-t="234" data-label="3:54">and Mark</span> <span class="cue" id="t236" data-cue="t236" data-t="236" data-label="3:56">Lynch.</span> <span class="cue" id="t236-1" data-cue="t236-1" data-t="236" data-label="3:56">They were on their own. That was the truck committee from the fire department and then the other two.</span> <span class="cue" id="t241" data-cue="t241" data-t="241" data-label="4:01">So we reviewed everything at home,</span> <span class="cue" id="t244" data-cue="t244" data-t="244" data-label="4:04">went through it, got together,</span> <span class="cue" id="t247" data-cue="t247" data-t="247" data-label="4:07">discussed it. There's really no questions about it.</span> <span class="cue" id="t251" data-cue="t251" data-t="251" data-label="4:11">A lot of the topic was how detailed the</span> <span class="cue" id="t255" data-cue="t255" data-t="255" data-label="4:15">specs were and how everything was spelled out for, you know, how things are going to be built, where they were going to be, all that stuff.</span> <span class="cue" id="t261" data-cue="t261" data-t="261" data-label="4:21">Everybody thought it was a great product, everybody liked the way it was written,</span> <span class="cue" id="t266" data-cue="t266" data-t="266" data-label="4:26">and everybody was in favor. It's pretty much just like a twelve minute meeting.</span> <span class="cue" id="t271" data-cue="t271" data-t="271" data-label="4:31">And we have took a vote on it, and we voted to move it forward for approval.</span> <span class="cue" id="t279" data-cue="t279" data-t="279" data-label="4:39">So, you know, signed the contract and I guess</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="4:42" data-default-t="282">4:42</div>
+        <div class="text"><span class="cue" id="t282" data-cue="t282" data-t="282" data-label="4:42">contract was changed to meet the satisfaction of the attorney.</span> <span class="cue" id="t287" data-cue="t287" data-t="287" data-label="4:47">Always good.</span> <span class="cue" id="t290" data-cue="t290" data-t="290" data-label="4:50">That's pretty much where we stand. It was pretty short and sweet. Wasn't very many comments on it that night for anybody.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="4:57" data-default-t="297">4:57</div>
+        <div class="text"><span class="cue" id="t297" data-cue="t297" data-t="297" data-label="4:57">Okay.</span> <span class="cue" id="t298" data-cue="t298" data-t="298" data-label="4:58">Alright. Good. And just to</span> <span class="cue" id="t301" data-cue="t301" data-t="301" data-label="5:01">just to reiterate,</span> <span class="cue" id="t303" data-cue="t303" data-t="303" data-label="5:03">if I didn't forward this stuff to you guys. There were</span> <span class="cue" id="t308" data-cue="t308" data-t="308" data-label="5:08">a few comments from the attorney. Paragraph seven talks about waiving consequential damages.</span> <span class="cue" id="t314" data-cue="t314" data-t="314" data-label="5:14">Dennis had concerns like that, but every attorney will say that, but as he said, it's probably standard in the industry.</span> <span class="cue" id="t321" data-cue="t321" data-t="321" data-label="5:21">He said</span> <span class="cue" id="t324" data-cue="t324" data-t="324" data-label="5:24">he wanted to beef up paragraph six provides for an inspection of the truck by a representative of the customer. So we talked about team of inspectors for that</span> <span class="cue" id="t333" data-cue="t333" data-t="333" data-label="5:33">and I think that that</span> <span class="cue" id="t335" data-cue="t335" data-t="335" data-label="5:35">customers or representatives, yes, so it got changed to plural.</span> <span class="cue" id="t340" data-cue="t340" data-t="340" data-label="5:40">The paragraph in line five paragraph 11 to make sure the sentence means what I think it means. I'm quoting Dennis here. Due to the presence of the word express, I recommended adding original specifications in the bid proposal immediately after the word contract in line five. So</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="5:56" data-default-t="356">5:56</div>
+        <div class="text"><span class="cue" id="t356" data-cue="t356" data-t="356" data-label="5:56">that is</span> <span class="cue" id="t361" data-cue="t361" data-t="361" data-label="6:01">Just looking at real quickly.</span> <span class="cue" id="t365" data-cue="t365" data-t="365" data-label="6:05">Yeah that's.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="6:06" data-default-t="366">6:06</div>
+        <div class="text"><span class="cue" id="t366" data-cue="t366" data-t="366" data-label="6:06">Specifications</span> <span class="cue" id="t367" data-cue="t367" data-t="367" data-label="6:07">I asked so so</span> <span class="cue" id="t369" data-cue="t369" data-t="369" data-label="6:09">paragraph 13 ought to be deleted and replaced with the following and that basically it was that this contract shall be governed by and construed to the court as the laws of state of Connecticut in a suit blah blah blah. So he brought the court a competent jurisdiction proper venue in the state of Connecticut, I think wasn't totally clear in the first contract.</span> <span class="cue" id="t386" data-cue="t386" data-t="386" data-label="6:26">Right.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="6:28" data-default-t="388">6:28</div>
+        <div class="text"><span class="cue" id="t388" data-cue="t388" data-t="388" data-label="6:28">Okay.</span> <span class="cue" id="t389" data-cue="t389" data-t="389" data-label="6:29">So I guess at this point, we'll open up the floor for</span> <span class="cue" id="t393" data-cue="t393" data-t="393" data-label="6:33">to the board of finance members to ask any specific questions that they have regarding the bid or the equipment or the process or the contract.</span> <span class="cue" id="t403" data-cue="t403" data-t="403" data-label="6:43">Bill, do you wanna lead off if you had concerns about the original contract?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="6:46" data-default-t="406">6:46</div>
+        <div class="text"><span class="cue" id="t406" data-cue="t406" data-t="406" data-label="6:46">Sure.</span> <span class="cue" id="t408" data-cue="t408" data-t="408" data-label="6:48">So my first one was in and and, again, I don't do a lot of these contracts or these kind of things, but two things that</span> <span class="cue" id="t415" data-cue="t415" data-t="415" data-label="6:55">that jumped out at me. In article two, halfway through that the agreement at the cost to</span> <span class="cue" id="t421" data-cue="t421" data-t="421" data-label="7:01">NESE, I guess, NESE or whatever,</span> <span class="cue" id="t424" data-cue="t424" data-t="424" data-label="7:04">of acquiring any of the raw materials used in production supply of the products, basically, they're saying they can raise the price. They can void the contract altogether.</span> <span class="cue" id="t432" data-cue="t432" data-t="432" data-label="7:12">I I thought part of the whole reason for doing this now was to get locked in at a specific price.</span> <span class="cue" id="t439" data-cue="t439" data-t="439" data-label="7:19">And it just seems weird to me that, you know, the town is on the hook for</span> <span class="cue" id="t445" data-cue="t445" data-t="445" data-label="7:25">$967,262</span> <span class="cue" id="t448" data-cue="t448" data-t="448" data-label="7:28">or whatever the price may come up to be if their costs go up. And I just I was concerned about that language, and I guess I'd love to hear</span> <span class="cue" id="t456" data-cue="t456" data-t="456" data-label="7:36">what everybody else's thoughts were concerning that.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="7:39" data-default-t="459">7:39</div>
+        <div class="text"><span class="cue" id="t459" data-cue="t459" data-t="459" data-label="7:39">Yeah. I I don't think this is unusual.</span> <span class="cue" id="t462" data-cue="t462" data-t="462" data-label="7:42">I've seen this kind of thing before. Mean, just from my point of view, I mean, it's not desirable.</span> <span class="cue" id="t468" data-cue="t468" data-t="468" data-label="7:48">Obviously, we'd love to lock it in. I think that the, I would say that the reason for signing the, going out to bid really,</span> <span class="cue" id="t475" data-cue="t475" data-t="475" data-label="7:55">obviously you want to have a target price I don't know that you fully lock it in, but the other thing is you just need to secure a build slot because if you don't do this, and you know it's a long, long process.</span> <span class="cue" id="t487" data-cue="t487" data-t="487" data-label="8:07">I would notice to if you for those who may not have read through all that, but it is limited to basically 5% of the quoted bill of material. So there is a potential of a 5% increase in the material cost</span> <span class="cue" id="t500" data-cue="t500" data-t="500" data-label="8:20">or in the cost of the apparatus.</span> <span class="cue" id="t503" data-cue="t503" data-t="503" data-label="8:23">It would need to be have to be supported by some clear,</span> <span class="cue" id="t509" data-cue="t509" data-t="509" data-label="8:29">you know, costs of acquiring raw materials, costs associated with labor, which I think is kind of below any shipping costs or any other material increase in the level as they have this agreement. You know, the only thing that really doesn't,</span> <span class="cue" id="t523" data-cue="t523" data-t="523" data-label="8:43">I guess I would have concern about, but I don't think it's a major concern would be that it doesn't specifically state in here what the cost basis is. But I think that that would be the kind of thing that we would just, you know, require the manufacturer</span> <span class="cue" id="t536" data-cue="t536" data-t="536" data-label="8:56">to substantiate</span> <span class="cue" id="t538" data-cue="t538" data-t="538" data-label="8:58">clearly</span> <span class="cue" id="t540" data-cue="t540" data-t="540" data-label="9:00">with the original cost and and go back, you know and and then identify that but.</span> <span class="cue" id="t546" data-cue="t546" data-t="546" data-label="9:06">You know, unfortunately,</span> <span class="cue" id="t548" data-cue="t548" data-t="548" data-label="9:08">I think that's kind of what these large contracts do.</span> <span class="cue" id="t552" data-cue="t552" data-t="552" data-label="9:12">Anybody else have any comments or thoughts?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="9:18" data-default-t="558">9:18</div>
+        <div class="text"><span class="cue" id="t558" data-cue="t558" data-t="558" data-label="9:18">I guess my other comment about it is just the fact that so how much money do we have to put down</span> <span class="cue" id="t563" data-cue="t563" data-t="563" data-label="9:23">on this truck?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="9:25" data-default-t="565">9:25</div>
+        <div class="text"><span class="cue" id="t565" data-cue="t565" data-t="565" data-label="9:25">We do not.</span> <span class="cue" id="t568" data-cue="t568" data-t="568" data-label="9:28">We're not, we're, it's gonna be probably</span> <span class="cue" id="t571" data-cue="t571" data-t="571" data-label="9:31">a year</span> <span class="cue" id="t572" data-cue="t572" data-t="572" data-label="9:32">before we pay anything.</span> <span class="cue" id="t575" data-cue="t575" data-t="575" data-label="9:35">And more than likely, so</span> <span class="cue" id="t577" data-cue="t577" data-t="577" data-label="9:37">there's two things. One,</span> <span class="cue" id="t580" data-cue="t580" data-t="580" data-label="9:40">a decision has to be made to enter into the contract</span> <span class="cue" id="t584" data-cue="t584" data-t="584" data-label="9:44">because these things have a long lead time to bill, in this case a year and a half, which is actually surprisingly</span> <span class="cue" id="t590" data-cue="t590" data-t="590" data-label="9:50">short.</span> <span class="cue" id="t592" data-cue="t592" data-t="592" data-label="9:52">I've seen other people talking about build times in the two to three year range. So, the fact that they're guaranteeing a year and a half is actually pretty healthy.</span> <span class="cue" id="t603" data-cue="t603" data-t="603" data-label="10:03">But at some point, we're going to have to deal with and lock in a mechanism</span> <span class="cue" id="t608" data-cue="t608" data-t="608" data-label="10:08">of financing</span> <span class="cue" id="t610" data-cue="t610" data-t="610" data-label="10:10">or make a decision to self finance,</span> <span class="cue" id="t613" data-cue="t613" data-t="613" data-label="10:13">but that is not something we have to decide</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="10:17" data-default-t="617">10:17</div>
+        <div class="text"><span class="cue" id="t617" data-cue="t617" data-t="617" data-label="10:17">tonight.</span> <span class="cue" id="t619" data-cue="t619" data-t="619" data-label="10:19">Right now, all we have to do is agree that we're going to buy it if you so choose</span> <span class="cue" id="t625" data-cue="t625" data-t="625" data-label="10:25">and</span> <span class="cue" id="t626" data-cue="t626" data-t="626" data-label="10:26">authorize me to sign a contract so we can get a bill swap.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="10:32" data-default-t="632">10:32</div>
+        <div class="text"><span class="cue" id="t632" data-cue="t632" data-t="632" data-label="10:32">And I get that, but my biggest thing there is so</span> <span class="cue" id="t636" data-cue="t636" data-t="636" data-label="10:36">it's just that they can</span> <span class="cue" id="t638" data-cue="t638" data-t="638" data-label="10:38">null and nullify</span> <span class="cue" id="t640" data-cue="t640" data-t="640" data-label="10:40">this</span> <span class="cue" id="t641" data-cue="t641" data-t="641" data-label="10:41">agreement without any further liability to the buyer at all upon ten days notice. Like, If they wanted to, they just can say, we</span> <span class="cue" id="t649" data-cue="t649" data-t="649" data-label="10:49">don't want the contract anymore, year into this.</span> <span class="cue" id="t651" data-cue="t651" data-t="651" data-label="10:51">That doesn't seem</span> <span class="cue" id="t653" data-cue="t653" data-t="653" data-label="10:53">right to me that</span> <span class="cue" id="t655" data-cue="t655" data-t="655" data-label="10:55">we go to town, we get the money, we're planning on a truck, there's long lead times,</span> <span class="cue" id="t660" data-cue="t660" data-t="660" data-label="11:00">prices are going up.</span> <span class="cue" id="t662" data-cue="t662" data-t="662" data-label="11:02">And a year from today, we can find out, we</span> <span class="cue" id="t665" data-cue="t665" data-t="665" data-label="11:05">no longer have a contract, we got to start all over again.</span> <span class="cue" id="t668" data-cue="t668" data-t="668" data-label="11:08">And they have no obligation,</span> <span class="cue" id="t670" data-cue="t670" data-t="670" data-label="11:10">no liability,</span> <span class="cue" id="t671" data-cue="t671" data-t="671" data-label="11:11">no nothing to us. That seems pretty</span> <span class="cue" id="t674" data-cue="t674" data-t="674" data-label="11:14">wow. I mean,</span> <span class="cue" id="t676" data-cue="t676" data-t="676" data-label="11:16">I like to enter some contracts like that where I had that kind of right.</span> <span class="cue" id="t680" data-cue="t680" data-t="680" data-label="11:20">It just seems</span> <span class="cue" id="t681" data-cue="t681" data-t="681" data-label="11:21">everything's in their favor, nothing in our favor</span> <span class="cue" id="t685" data-cue="t685" data-t="685" data-label="11:25">in that section.</span> <span class="cue" id="t686" data-cue="t686" data-t="686" data-label="11:26">And and, of course, I have another section I'm not happy about. But,</span> <span class="cue" id="t689" data-cue="t689" data-t="689" data-label="11:29">I I mean, I guess I've never done this before on million dollar truck before, but it just seems like</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="11:35" data-default-t="695">11:35</div>
+        <div class="text"><span class="cue" id="t695" data-cue="t695" data-t="695" data-label="11:35">they</span> <span class="cue" id="t696" data-cue="t696" data-t="696" data-label="11:36">could just tell us to go pound sand in a year, and then we're up Shitts Creek. It just excuse my language. But</span> <span class="cue" id="t701" data-cue="t701" data-t="701" data-label="11:41">wow.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="11:43" data-default-t="703">11:43</div>
+        <div class="text"><span class="cue" id="t703" data-cue="t703" data-t="703" data-label="11:43">Well, on the other hand, they they lose every opportunity to make any money on this deal if that happens. I mean, I would think that there would really have to be a fairly</span> <span class="cue" id="t712" data-cue="t712" data-t="712" data-label="11:52">significant reason for terminating a contract such as</span> <span class="cue" id="t718" data-cue="t718" data-t="718" data-label="11:58">don't know. They can't get to par. They can't they can't meet the dates. They can't you know,</span> <span class="cue" id="t723" data-cue="t723" data-t="723" data-label="12:03">prices go up 10% instead of 5%. They can't recover that cost. I don't I don't know.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:09" data-default-t="729">12:09</div>
+        <div class="text"><span class="cue" id="t729" data-cue="t729" data-t="729" data-label="12:09">So Yeah. I mean I mean, people like</span> <span class="cue" id="t733" data-cue="t733" data-t="733" data-label="12:13">I said, people people will help me. Right? If I were to if I were to go out and I could build a million dollar home today and I buy</span> <span class="cue" id="t739" data-cue="t739" data-t="739" data-label="12:19">I I get a contract with the contractor,</span> <span class="cue" id="t741" data-cue="t741" data-t="741" data-label="12:21">and he defaults on delivering that house,</span> <span class="cue" id="t744" data-cue="t744" data-t="744" data-label="12:24">you know, as a contract. You're go for a million dollars. If he defaults, I'm gonna take him to court and sue his ass off. It just seems like we have no recourse if they decide to say,</span> <span class="cue" id="t754" data-cue="t754" data-t="754" data-label="12:34">it doesn't look too good for us anymore to do this contract, so we're out.</span> <span class="cue" id="t757" data-cue="t757" data-t="757" data-label="12:37">I don't know. Just just the concerns I had. I don't know if anybody else feels that way, but it just seems</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:42" data-default-t="762">12:42</div>
+        <div class="text"><span class="cue" id="t762" data-cue="t762" data-t="762" data-label="12:42">I just wanna piggyback on Bill too. This is Joanne, and then I'll let him do a second concern. That was my concern too. Like, it is we're taking a lot of risks with, you know, and going forward and I'm in favor of it, but I just, it'll be hard to</span> <span class="cue" id="t778" data-cue="t778" data-t="778" data-label="12:58">have gone, put it at our budget meeting, talked about it, talked about it several meetings. And then they do seem to have,</span> <span class="cue" id="t786" data-cue="t786" data-t="786" data-label="13:06">you know, they hold all the cards</span> <span class="cue" id="t788" data-cue="t788" data-t="788" data-label="13:08">where They hold all the cards. With that clause for this much money,</span> <span class="cue" id="t793" data-cue="t793" data-t="793" data-label="13:13">like say we're a year in and then, you know, costs double or something, which, you know, we know how inflation is going. We have no idea. The whole reason we're trying to get this done</span> <span class="cue" id="t803" data-cue="t803" data-t="803" data-label="13:23">and being willing and think it's necessary.</span> <span class="cue" id="t806" data-cue="t806" data-t="806" data-label="13:26">So that clause just bothers me as well though.</span> <span class="cue" id="t809" data-cue="t809" data-t="809" data-label="13:29">But I don't know if it's, you you guys would have the history more than I would have if this is in every,</span> <span class="cue" id="t815" data-cue="t815" data-t="815" data-label="13:35">every truck that we get. And yeah,</span> <span class="cue" id="t818" data-cue="t818" data-t="818" data-label="13:38">I doubt it, but I didn't like it.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="13:41" data-default-t="821">13:41</div>
+        <div class="text"><span class="cue" id="t821" data-cue="t821" data-t="821" data-label="13:41">I think the risk And I'm like you. Go ahead. I was just saying that just keep in mind, we don't have any money in this.</span> <span class="cue" id="t829" data-cue="t829" data-t="829" data-label="13:49">We have time certainly we, and I don't think that the, you know, if</span> <span class="cue" id="t833" data-cue="t833" data-t="833" data-label="13:53">they were to contact us in three months and say, hey, we can't do this for the price,</span> <span class="cue" id="t838" data-cue="t838" data-t="838" data-label="13:58">you know, that we had anticipated, we're gonna terminate the contract.</span> <span class="cue" id="t842" data-cue="t842" data-t="842" data-label="14:02">Is we still have the, know, wasn't this RFP</span> <span class="cue" id="t846" data-cue="t846" data-t="846" data-label="14:06">that was approved during the budget meeting, it was the, we provided the intention</span> <span class="cue" id="t852" data-cue="t852" data-t="852" data-label="14:12">to the town that, you know, made clear that it was going to be in our capital plan to purchase a fire truck</span> <span class="cue" id="t859" data-cue="t859" data-t="859" data-label="14:19">or fire apparatus for about amount for a million dollars, so I just just wanted to clarify that so so</span> <span class="cue" id="t865" data-cue="t865" data-t="865" data-label="14:25">it certainly is a risk</span> <span class="cue" id="t869" data-cue="t869" data-t="869" data-label="14:29">that you know they can't come through,</span> <span class="cue" id="t871" data-cue="t871" data-t="871" data-label="14:31">and I think our only real.</span> <span class="cue" id="t874" data-cue="t874" data-t="874" data-label="14:34">Potential</span> <span class="cue" id="t877" data-cue="t877" data-t="877" data-label="14:37">loss, if you will, is the amount of time that require us to go out to go out to bid again and figure this out.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="14:45" data-default-t="885">14:45</div>
+        <div class="text"><span class="cue" id="t885" data-cue="t885" data-t="885" data-label="14:45">Again, it's just like I'm for the truck. I'm not trying to say I'm not. I'm just</span> <span class="cue" id="t889" data-cue="t889" data-t="889" data-label="14:49">reviewing the contract, and and that really jumped out to me as</span> <span class="cue" id="t893" data-cue="t893" data-t="893" data-label="14:53">is</span> <span class="cue" id="t895" data-cue="t895" data-t="895" data-label="14:55">that language that I I would ever agree to in a in a contract, but okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="15:00" data-default-t="900">15:00</div>
+        <div class="text"><span class="cue" id="t900" data-cue="t900" data-t="900" data-label="15:00">So</span> <span class="cue" id="t901" data-cue="t901" data-t="901" data-label="15:01">so just a couple quick things. I mean,</span> <span class="cue" id="t905" data-cue="t905" data-t="905" data-label="15:05">you know, the contract basically says is if</span> <span class="cue" id="t910" data-cue="t910" data-t="910" data-label="15:10">there is an increase</span> <span class="cue" id="t913" data-cue="t913" data-t="913" data-label="15:13">in cost,</span> <span class="cue" id="t915" data-cue="t915" data-t="915" data-label="15:15">the town has the first rate to agree to that increase in cost.</span> <span class="cue" id="t920" data-cue="t920" data-t="920" data-label="15:20">And if we don't agree to that increase</span> <span class="cue" id="t923" data-cue="t923" data-t="923" data-label="15:23">in cost,</span> <span class="cue" id="t924" data-cue="t924" data-t="924" data-label="15:24">they can abandon the contract.</span> <span class="cue" id="t927" data-cue="t927" data-t="927" data-label="15:27">Yeah.</span> <span class="cue" id="t928" data-cue="t928" data-t="928" data-label="15:28">And</span> <span class="cue" id="t929" data-cue="t929" data-t="929" data-label="15:29">I will tell you that this has been an issue in the area. I know at least one neighbor in town</span> <span class="cue" id="t936" data-cue="t936" data-t="936" data-label="15:36">had an ambulance</span> <span class="cue" id="t938" data-cue="t938" data-t="938" data-label="15:38">that they'd been waiting on</span> <span class="cue" id="t940" data-cue="t940" data-t="940" data-label="15:40">with a two or two and a half year build time,</span> <span class="cue" id="t944" data-cue="t944" data-t="944" data-label="15:44">and the manufacturer just said, you know what, we're not going to deliver it,</span> <span class="cue" id="t949" data-cue="t949" data-t="949" data-label="15:49">And told them to pound sand.</span> <span class="cue" id="t951" data-cue="t951" data-t="951" data-label="15:51">I'm not saying it's not a real issue, it is,</span> <span class="cue" id="t955" data-cue="t955" data-t="955" data-label="15:55">but I don't know that the town,</span> <span class="cue" id="t959" data-cue="t959" data-t="959" data-label="15:59">you know, because there aren't a lot of vendors</span> <span class="cue" id="t963" data-cue="t963" data-t="963" data-label="16:03">bidding on this thing,</span> <span class="cue" id="t965" data-cue="t965" data-t="965" data-label="16:05">and there's a giant backlog of work,</span> <span class="cue" id="t968" data-cue="t968" data-t="968" data-label="16:08">the town doesn't have a lot of leverage in this one.</span> <span class="cue" id="t973" data-cue="t973" data-t="973" data-label="16:13">Right.</span> <span class="cue" id="t975" data-cue="t975" data-t="975" data-label="16:15">You know.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="16:16" data-default-t="976">16:16</div>
+        <div class="text"><span class="cue" id="t976" data-cue="t976" data-t="976" data-label="16:16">Like Mark said, it's just gonna hurt the town in the long run. We're just the only what would be best.</span> <span class="cue" id="t982" data-cue="t982" data-t="982" data-label="16:22">You know, we hope I understand what you're saying. This is our one chance. This is the language.</span> <span class="cue" id="t988" data-cue="t988" data-t="988" data-label="16:28">It'll just push it back for the fire department, you know, so we're trying to do our best job for them. That's all. So,</span> <span class="cue" id="t995" data-cue="t995" data-t="995" data-label="16:35">I mean, obviously we'd have to go back to square one and like Mark also said, there's no financial risk yet. I mean, we don't have money rolled up in it, but we kind of wanted to plan. This was the whole thing. Let's get it. This is what the cost is going to be. We can know going forward, we're going to have this every year for ten years probably when we finance it.</span> <span class="cue" id="t1016" data-cue="t1016" data-t="1016" data-label="16:56">I understand</span> <span class="cue" id="t1017" data-cue="t1017" data-t="1017" data-label="16:57">all sides of it.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="16:59" data-default-t="1019">16:59</div>
+        <div class="text"><span class="cue" id="t1019" data-cue="t1019" data-t="1019" data-label="16:59">And</span> <span class="cue" id="t1021" data-cue="t1021" data-t="1021" data-label="17:01">and so I know we're we're not locked in how we're</span> <span class="cue" id="t1025" data-cue="t1025" data-t="1025" data-label="17:05">paying for this right now. But do we pay them any money before delivery of the truck?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="17:14" data-default-t="1034">17:14</div>
+        <div class="text"><span class="cue" id="t1034" data-cue="t1034" data-t="1034" data-label="17:14">So that depends</span> <span class="cue" id="t1036" data-cue="t1036" data-t="1036" data-label="17:16">on,</span> <span class="cue" id="t1037" data-cue="t1037" data-t="1037" data-label="17:17">to some extent,</span> <span class="cue" id="t1039" data-cue="t1039" data-t="1039" data-label="17:19">on</span> <span class="cue" id="t1039-1" data-cue="t1039-1" data-t="1039" data-label="17:19">the</span> <span class="cue" id="t1041" data-cue="t1041" data-t="1041" data-label="17:21">finance</span> <span class="cue" id="t1043" data-cue="t1043" data-t="1043" data-label="17:23">company</span> <span class="cue" id="t1045" data-cue="t1045" data-t="1045" data-label="17:25">that we go through.</span> <span class="cue" id="t1047" data-cue="t1047" data-t="1047" data-label="17:27">Because in like, for instance, in the case of the public works pickup truck,</span> <span class="cue" id="t1053" data-cue="t1053" data-t="1053" data-label="17:33">we were legally obligated</span> <span class="cue" id="t1055" data-cue="t1055" data-t="1055" data-label="17:35">to escrow</span> <span class="cue" id="t1057" data-cue="t1057" data-t="1057" data-label="17:37">one year's worth of payments</span> <span class="cue" id="t1060" data-cue="t1060" data-t="1060" data-label="17:40">before</span> <span class="cue" id="t1061" data-cue="t1061" data-t="1061" data-label="17:41">the bank would lock us in and agree on a rate.</span> <span class="cue" id="t1065" data-cue="t1065" data-t="1065" data-label="17:45">Depending on who we use</span> <span class="cue" id="t1068" data-cue="t1068" data-t="1068" data-label="17:48">for financing</span> <span class="cue" id="t1069" data-cue="t1069" data-t="1069" data-label="17:49">that may occur.</span> <span class="cue" id="t1071" data-cue="t1071" data-t="1071" data-label="17:51">But if so, it's normally just escrow.</span> <span class="cue" id="t1074" data-cue="t1074" data-t="1074" data-label="17:54">It's not,</span> <span class="cue" id="t1075" data-cue="t1075" data-t="1075" data-label="17:55">you know? So it's money that can be retrieved.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="18:00" data-default-t="1080">18:00</div>
+        <div class="text"><span class="cue" id="t1080" data-cue="t1080" data-t="1080" data-label="18:00">Gotcha. Gotcha.</span> <span class="cue" id="t1082" data-cue="t1082" data-t="1082" data-label="18:02">That's good.</span> <span class="cue" id="t1087" data-cue="t1087" data-t="1087" data-label="18:07">That makes sense.</span> <span class="cue" id="t1089" data-cue="t1089" data-t="1089" data-label="18:09">So I'm not trying to hog your floor, but I do have article seven, which I know you said there were some changes made there too, but that's another one of those things that reads to me like, hey. We can give you a totally defective truck. The steering wheel comes off when a truck's going on the highway at 50 miles an hour, crashes and kills people,</span> <span class="cue" id="t1107" data-cue="t1107" data-t="1107" data-label="18:27">and we have no recourse at all. It's it's basically how I read article seven that it's, again, Fang Yu on you. If you if the truck's defective,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="18:35" data-default-t="1115">18:35</div>
+        <div class="text"><span class="cue" id="t1115" data-cue="t1115" data-t="1115" data-label="18:35">if people get killed as some as as as result of some defect in this truck, we have no recourse.</span> <span class="cue" id="t1123" data-cue="t1123" data-t="1123" data-label="18:43">That's what article says seven says. I I can't believe that. If if I buy a brand new Ford today</span> <span class="cue" id="t1128" data-cue="t1128" data-t="1128" data-label="18:48">and I'm driving down the road and the axle falls off,</span> <span class="cue" id="t1132" data-cue="t1132" data-t="1132" data-label="18:52">we're gonna sue the shit out of Ford.</span> <span class="cue" id="t1134" data-cue="t1134" data-t="1134" data-label="18:54">This thing says we have no recourse at all if they give us a a junk truck.</span> <span class="cue" id="t1140" data-cue="t1140" data-t="1140" data-label="19:00">I don't know if anybody else finds that</span> <span class="cue" id="t1143" data-cue="t1143" data-t="1143" data-label="19:03">difficult, but I got a problem I got a problem with that.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="19:07" data-default-t="1147">19:07</div>
+        <div class="text"><span class="cue" id="t1147" data-cue="t1147" data-t="1147" data-label="19:07">Yeah. This is the one that Dennis was concerned about also, but as he, you know, pointed out, it's kind of like standard language, and you might even be able to find this in some contract.</span> <span class="cue" id="t1156" data-cue="t1156" data-t="1156" data-label="19:16">You know, it's not a regulated thing in the same way that you'd have with a consumer product, like</span> <span class="cue" id="t1161" data-cue="t1161" data-t="1161" data-label="19:21">Ford truck,</span> <span class="cue" id="t1164" data-cue="t1164" data-t="1164" data-label="19:24">you know, and it may</span> <span class="cue" id="t1167" data-cue="t1167" data-t="1167" data-label="19:27">or may not actually hold water in any kind of you know situation of legal, don't know and that's that would be more Dennis's</span> <span class="cue" id="t1174" data-cue="t1174" data-t="1174" data-label="19:34">area than mine.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="19:39" data-default-t="1179">19:39</div>
+        <div class="text"><span class="cue" id="t1179" data-cue="t1179" data-t="1179" data-label="19:39">Again, I I just feel as if that as a board of finance member</span> <span class="cue" id="t1184" data-cue="t1184" data-t="1184" data-label="19:44">approving this,</span> <span class="cue" id="t1186" data-cue="t1186" data-t="1186" data-label="19:46">that</span> <span class="cue" id="t1187" data-cue="t1187" data-t="1187" data-label="19:47">we have the town's interest here, and we should be looking out for the town.</span> <span class="cue" id="t1191" data-cue="t1191" data-t="1191" data-label="19:51">And</span> <span class="cue" id="t1193" data-cue="t1193" data-t="1193" data-label="19:53">saying go forward with that kind of language again</span> <span class="cue" id="t1196" data-cue="t1196" data-t="1196" data-label="19:56">just seems like we're just</span> <span class="cue" id="t1198" data-cue="t1198" data-t="1198" data-label="19:58">putting the town at risk here and and</span> <span class="cue" id="t1202" data-cue="t1202" data-t="1202" data-label="20:02">I don't know. Just</span> <span class="cue" id="t1204" data-cue="t1204" data-t="1204" data-label="20:04">it's just weird language to me that that they can just totally avail themselves of all responsibility if they deliver us a defective truck and it ends up killing people</span> <span class="cue" id="t1214" data-cue="t1214" data-t="1214" data-label="20:14">or property or whatever.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="20:16" data-default-t="1216">20:16</div>
+        <div class="text"><span class="cue" id="t1216" data-cue="t1216" data-t="1216" data-label="20:16">Well,</span> <span class="cue" id="t1217" data-cue="t1217" data-t="1217" data-label="20:17">look. Remember who this contract</span> <span class="cue" id="t1220" data-cue="t1220" data-t="1220" data-label="20:20">is between.</span> <span class="cue" id="t1221" data-cue="t1221" data-t="1221" data-label="20:21">This contract is between the town</span> <span class="cue" id="t1225" data-cue="t1225" data-t="1225" data-label="20:25">and New England fire apparatus.</span> <span class="cue" id="t1228" data-cue="t1228" data-t="1228" data-label="20:28">So nowhere in there does that relieve the manufacturer</span> <span class="cue" id="t1234" data-cue="t1234" data-t="1234" data-label="20:34">of liability?</span> <span class="cue" id="t1235" data-cue="t1235" data-t="1235" data-label="20:35">It only relieves New England fire equipment</span> <span class="cue" id="t1239" data-cue="t1239" data-t="1239" data-label="20:39">from liability.</span> <span class="cue" id="t1241" data-cue="t1241" data-t="1241" data-label="20:41">And since they're not the manufacturer,</span> <span class="cue" id="t1244" data-cue="t1244" data-t="1244" data-label="20:44">you know, that's like if you go buy a vacuum cleaner from Sears</span> <span class="cue" id="t1249" data-cue="t1249" data-t="1249" data-label="20:49">and the vacuum cleaner,</span> <span class="cue" id="t1251" data-cue="t1251" data-t="1251" data-label="20:51">you know, catches on fire and burns your house down.</span> <span class="cue" id="t1254" data-cue="t1254" data-t="1254" data-label="20:54">Not really Sears' problem, that's the manufacturer's</span> <span class="cue" id="t1257" data-cue="t1257" data-t="1257" data-label="20:57">problem.</span> <span class="cue" id="t1258" data-cue="t1258" data-t="1258" data-label="20:58">Think that's why</span> <span class="cue" id="t1260" data-cue="t1260" data-t="1260" data-label="21:00">that's how I read it. That's why I don't think Dennis was all that, you know, he doesn't like it, but he wasn't really</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="21:08" data-default-t="1268">21:08</div>
+        <div class="text"><span class="cue" id="t1268" data-cue="t1268" data-t="1268" data-label="21:08">overly concerned about it. Yeah, it doesn't make that explicit. Yeah. I mean, if it was Sears, obviously the Torreloyer would sue both, you know? Sure. They'd go over Sears and and the manufacturer. And think this is just making clear that the the distributor is not</span> <span class="cue" id="t1284" data-cue="t1284" data-t="1284" data-label="21:24">It's not the distributor. I I see what you're saying. That that is different than that. Which which is still, I think, kinda questionable. It's it's like, you know, somebody putting up, you know, management's not responsible for the loss of articles that damaged on this property. Doesn't always hold up in court, you know? Right. Right. No,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="21:42" data-default-t="1302">21:42</div>
+        <div class="text"><span class="cue" id="t1302" data-cue="t1302" data-t="1302" data-label="21:42">I feel better about that the way you explain it.</span> <span class="cue" id="t1305" data-cue="t1305" data-t="1305" data-label="21:45">I I lost track of the fact that there was a manufacturer and a distributor,</span> <span class="cue" id="t1310" data-cue="t1310" data-t="1310" data-label="21:50">and</span> <span class="cue" id="t1310-1" data-cue="t1310-1" data-t="1310" data-label="21:50">I I agree with what you said</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="21:54" data-default-t="1314">21:54</div>
+        <div class="text"><span class="cue" id="t1314" data-cue="t1314" data-t="1314" data-label="21:54">about that. So okay. I'm more comfortable with that. But it's it's a fair point I mean yeah Louise</span> <span class="cue" id="t1321" data-cue="t1321" data-t="1321" data-label="22:01">what is the warranty on it</span> <span class="cue" id="t1323" data-cue="t1323" data-t="1323" data-label="22:03">from the manufacturer</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="22:10" data-default-t="1330">22:10</div>
+        <div class="text"><span class="cue" id="t1330" data-cue="t1330" data-t="1330" data-label="22:10">I think it depends on what.</span> <span class="cue" id="t1333" data-cue="t1333" data-t="1333" data-label="22:13">I remember looking at that a while back, but It's not in this contract. So No. No. But it is in the proposal.</span> <span class="cue" id="t1340" data-cue="t1340" data-t="1340" data-label="22:20">So give Sean a couple minutes and we can get you that answer.</span> <span class="cue" id="t1344" data-cue="t1344" data-t="1344" data-label="22:24">Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="22:25" data-default-t="1345">22:25</div>
+        <div class="text"><span class="cue" id="t1345" data-cue="t1345" data-t="1345" data-label="22:25">The short answer is with New England fire and app equipment and apparatus, there is no warranty once you've once you've inspected the vehicle and signed it. So that's kind of the,</span> <span class="cue" id="t1354" data-cue="t1354" data-t="1354" data-label="22:34">you know, item six, I think there,</span> <span class="cue" id="t1356" data-cue="t1356" data-t="1356" data-label="22:36">paragraph six.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="22:39" data-default-t="1359">22:39</div>
+        <div class="text"><span class="cue" id="t1359" data-cue="t1359" data-t="1359" data-label="22:39">I'm just saying if do we have a recourse as long as we have some sort of a recourse</span> <span class="cue" id="t1364" data-cue="t1364" data-t="1364" data-label="22:44">back from the manufacturer</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="22:47" data-default-t="1367">22:47</div>
+        <div class="text"><span class="cue" id="t1367" data-cue="t1367" data-t="1367" data-label="22:47">that makes me feel better. It's probably very limited but there probably is some.</span> <span class="cue" id="t1374" data-cue="t1374" data-t="1374" data-label="22:54">Specialty equipment like this, there's not going to be a ton.</span> <span class="cue" id="t1381" data-cue="t1381" data-t="1381" data-label="23:01">And can you get an extended warranty?</span> <span class="cue" id="t1387" data-cue="t1387" data-t="1387" data-label="23:07">Do I cost a lot of money?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="23:08" data-default-t="1388">23:08</div>
+        <div class="text"><span class="cue" id="t1388" data-cue="t1388" data-t="1388" data-label="23:08">I'm gonna say usually not worth the money you spend on No.</span> <span class="cue" id="t1392" data-cue="t1392" data-t="1392" data-label="23:12">That's a way for businesses to make a lot of extra profit.</span> <span class="cue" id="t1396" data-cue="t1396" data-t="1396" data-label="23:16">Yeah. It's just big profit for them. Yep. Which makes sense if you really can't afford to</span> <span class="cue" id="t1402" data-cue="t1402" data-t="1402" data-label="23:22">take a big hit, but I think in this case we'd probably be better off without.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="23:31" data-default-t="1411">23:31</div>
+        <div class="text"><span class="cue" id="t1411" data-cue="t1411" data-t="1411" data-label="23:31">There's no warranty general warranty plumbing warranty third party pump warranty. General warranties</span> <span class="cue" id="t1420" data-cue="t1420" data-t="1420" data-label="23:40">two years, then there's a plumbing warranty</span> <span class="cue" id="t1423" data-cue="t1423" data-t="1423" data-label="23:43">for ten years.</span> <span class="cue" id="t1425" data-cue="t1425" data-t="1425" data-label="23:45">Third party pump warranty.</span> <span class="cue" id="t1429" data-cue="t1429" data-t="1429" data-label="23:49">We'd have to look through. So basically,</span> <span class="cue" id="t1432" data-cue="t1432" data-t="1432" data-label="23:52">you know all the subsystems</span> <span class="cue" id="t1434" data-cue="t1434" data-t="1434" data-label="23:54">carry their own</span> <span class="cue" id="t1438" data-cue="t1438" data-t="1438" data-label="23:58">where a bunch of the subsystems</span> <span class="cue" id="t1439" data-cue="t1439" data-t="1439" data-label="23:59">carry their own</span> <span class="cue" id="t1442" data-cue="t1442" data-t="1442" data-label="24:02">warranties.</span> <span class="cue" id="t1443" data-cue="t1443" data-t="1443" data-label="24:03">So</span> <span class="cue" id="t1445" data-cue="t1445" data-t="1445" data-label="24:05">it's like specific</span> <span class="cue" id="t1447" data-cue="t1447" data-t="1447" data-label="24:07">to each individual thing. So I don't think you can say the drive train versus the vehicle warranty on a car. Right. Versus the van. Right. You know, it's all warrantied individually.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="24:20" data-default-t="1460">24:20</div>
+        <div class="text"><span class="cue" id="t1460" data-cue="t1460" data-t="1460" data-label="24:20">A lot of health systems involved. General warranty is two years. I'm I'm actually impressed with that. I I would have thought a year. But Yeah. Me too.</span> <span class="cue" id="t1469" data-cue="t1469" data-t="1469" data-label="24:29">Yeah. And that's from date of delivery.</span> <span class="cue" id="t1476" data-cue="t1476" data-t="1476" data-label="24:36">It go by mileage?</span> <span class="cue" id="t1479" data-cue="t1479" data-t="1479" data-label="24:39">No.</span> <span class="cue" id="t1480" data-cue="t1480" data-t="1480" data-label="24:40">No? Okay. Now,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="24:42" data-default-t="1482">24:42</div>
+        <div class="text"><span class="cue" id="t1482" data-cue="t1482" data-t="1482" data-label="24:42">of the big problems in, you know, having some involvement with the fire department up in Suffield where I used to live, just one of the big problems with fire equipment is it doesn't get used very much, you know, stuff sits. You have to make sure that you start the engine and, you know, make things make sure things operate and everything else.</span> <span class="cue" id="t1501" data-cue="t1501" data-t="1501" data-label="25:01">You may have more failures on a piece of equipment that doesn't get used very often that's low mileage.</span> <span class="cue" id="t1507" data-cue="t1507" data-t="1507" data-label="25:07">I mean, Sean could probably speak more to that than I could, but. Yeah,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="25:11" data-default-t="1511">25:11</div>
+        <div class="text"><span class="cue" id="t1511" data-cue="t1511" data-t="1511" data-label="25:11">I think a lot of this stuff, like same thing with the plow truck,</span> <span class="cue" id="t1515" data-cue="t1515" data-t="1515" data-label="25:15">you know, if they're manufactured,</span> <span class="cue" id="t1516" data-cue="t1516" data-t="1516" data-label="25:16">but then if you have, for instance, a Cummings engine in it, the engine comes with a different warranty from that manufacturer.</span> <span class="cue" id="t1524" data-cue="t1524" data-t="1524" data-label="25:24">So, the manufacturers</span> <span class="cue" id="t1525" data-cue="t1525" data-t="1525" data-label="25:25">pass off the warranties</span> <span class="cue" id="t1527" data-cue="t1527" data-t="1527" data-label="25:27">from their sub assembly people to you, essentially.</span> <span class="cue" id="t1535" data-cue="t1535" data-t="1535" data-label="25:35">Does that answer your question? Yep.</span> <span class="cue" id="t1538" data-cue="t1538" data-t="1538" data-label="25:38">Thanks.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="25:45" data-default-t="1545">25:45</div>
+        <div class="text"><span class="cue" id="t1545" data-cue="t1545" data-t="1545" data-label="25:45">Other questions for Sean or</span> <span class="cue" id="t1548" data-cue="t1548" data-t="1548" data-label="25:48">concerns about the contract and the RFP</span> <span class="cue" id="t1552" data-cue="t1552" data-t="1552" data-label="25:52">or proposal?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="25:55" data-default-t="1555">25:55</div>
+        <div class="text"><span class="cue" id="t1555" data-cue="t1555" data-t="1555" data-label="25:55">Bill brought up really good points. I'm glad you addressed them and I feel better about it too with the explanation.</span> <span class="cue" id="t1562" data-cue="t1562" data-t="1562" data-label="26:02">Know, we're just I think we have no in my</span> <span class="cue" id="t1565" data-cue="t1565" data-t="1565" data-label="26:05">opinion,</span> <span class="cue" id="t1566" data-cue="t1566" data-t="1566" data-label="26:06">yeah, you asked if there's any more questions. So no, no, I feel satisfied with the things that were brought up and answered.</span> <span class="cue" id="t1574" data-cue="t1574" data-t="1574" data-label="26:14">Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="26:18" data-default-t="1578">26:18</div>
+        <div class="text"><span class="cue" id="t1578" data-cue="t1578" data-t="1578" data-label="26:18">Does anyone wanna make a motion to</span> <span class="cue" id="t1581" data-cue="t1581" data-t="1581" data-label="26:21">approve moving forward on the contract?</span> <span class="cue" id="t1586" data-cue="t1586" data-t="1586" data-label="26:26">Yeah.</span> <span class="cue" id="t1588" data-cue="t1588" data-t="1588" data-label="26:28">Okay, we make some motions. So just to restate it, this is a motion to</span> <span class="cue" id="t1594" data-cue="t1594" data-t="1594" data-label="26:34">approve the town of Andover</span> <span class="cue" id="t1596" data-cue="t1596" data-t="1596" data-label="26:36">moving forward with the contract of new England fire equipment and apparatus for the new.</span> <span class="cue" id="t1603" data-cue="t1603" data-t="1603" data-label="26:43">New</span> <span class="cue" id="t1604" data-cue="t1604" data-t="1604" data-label="26:44">fire</span> <span class="cue" id="t1605" data-cue="t1605" data-t="1605" data-label="26:45">squad</span> <span class="cue" id="t1606" data-cue="t1606" data-t="1606" data-label="26:46">vehicle.</span> <span class="cue" id="t1608" data-cue="t1608" data-t="1608" data-label="26:48">Right? I guess. Anybody want to second that?</span> <span class="cue" id="t1612" data-cue="t1612" data-t="1612" data-label="26:52">I'll second it.</span> <span class="cue" id="t1614" data-cue="t1614" data-t="1614" data-label="26:54">Okay. Brian seconds. Do we have further discussion?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="26:58" data-default-t="1618">26:58</div>
+        <div class="text"><span class="cue" id="t1618" data-cue="t1618" data-t="1618" data-label="26:58">So if I were to suggest, I would suggest two things. One,</span> <span class="cue" id="t1623" data-cue="t1623" data-t="1623" data-label="27:03">you add to the motion</span> <span class="cue" id="t1625" data-cue="t1625" data-t="1625" data-label="27:05">the</span> <span class="cue" id="t1626" data-cue="t1626" data-t="1626" data-label="27:06">sum listed</span> <span class="cue" id="t1628" data-cue="t1628" data-t="1628" data-label="27:08">in the agreement,</span> <span class="cue" id="t1630" data-cue="t1630" data-t="1630" data-label="27:10">which is $967,262.00.</span> <span class="cue" id="t1637" data-cue="t1637" data-t="1637" data-label="27:17">And the second is that the motion explicitly</span> <span class="cue" id="t1640" data-cue="t1640" data-t="1640" data-label="27:20">authorizes</span> <span class="cue" id="t1641" data-cue="t1641" data-t="1641" data-label="27:21">the town administrator</span> <span class="cue" id="t1643" data-cue="t1643" data-t="1643" data-label="27:23">to sign the contract on behalf of the town.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="27:27" data-default-t="1647">27:27</div>
+        <div class="text"><span class="cue" id="t1647" data-cue="t1647" data-t="1647" data-label="27:27">Yeah. I thought about that one.</span> <span class="cue" id="t1652" data-cue="t1652" data-t="1652" data-label="27:32">Okay, Louise, are you okay with that wording? And</span> <span class="cue" id="t1656" data-cue="t1656" data-t="1656" data-label="27:36">Brian?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="27:39" data-default-t="1659">27:39</div>
+        <div class="text"><span class="cue" id="t1659" data-cue="t1659" data-t="1659" data-label="27:39">Yes,</span> <span class="cue" id="t1660" data-cue="t1660" data-t="1660" data-label="27:40">definitely.</span> <span class="cue" id="t1661" data-cue="t1661" data-t="1661" data-label="27:41">Okay.</span> <span class="cue" id="t1662" data-cue="t1662" data-t="1662" data-label="27:42">Yeah, it's a good point. You know, the sum I wouldn't have really thought about, but yeah, to explicitly authorize</span> <span class="cue" id="t1667" data-cue="t1667" data-t="1667" data-label="27:47">Eric to</span> <span class="cue" id="t1669" data-cue="t1669" data-t="1669" data-label="27:49">sign the contract,</span> <span class="cue" id="t1672" data-cue="t1672" data-t="1672" data-label="27:52">that does make a lot of sense.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="27:54" data-default-t="1674">27:54</div>
+        <div class="text"><span class="cue" id="t1674" data-cue="t1674" data-t="1674" data-label="27:54">Should we add that the price will not go up more than 5%?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="27:58" data-default-t="1678">27:58</div>
+        <div class="text"><span class="cue" id="t1678" data-cue="t1678" data-t="1678" data-label="27:58">I think that's implicit in the contract or it's explicit. Yeah,</span> <span class="cue" id="t1683" data-cue="t1683" data-t="1683" data-label="28:03">so it's clear in the contract</span> <span class="cue" id="t1685" data-cue="t1685" data-t="1685" data-label="28:05">pretty well written so I think since we're approving this contract</span> <span class="cue" id="t1689" data-cue="t1689" data-t="1689" data-label="28:09">you know provided by</span> <span class="cue" id="t1691" data-cue="t1691" data-t="1691" data-label="28:11">you know the vendor and signed on the date of July 24 just</span> <span class="cue" id="t1696" data-cue="t1696" data-t="1696" data-label="28:16">to make it explicit that probably is a good thing to put in there as well that should hold it lock it up pretty solid.</span> <span class="cue" id="t1707" data-cue="t1707" data-t="1707" data-label="28:27">Any other discussion?</span> <span class="cue" id="t1713" data-cue="t1713" data-t="1713" data-label="28:33">Okay, some good questions came up some good discussion. I guess we'll go ahead and call for a vote. All those favor of the motion say aye.</span> <span class="cue" id="t1722" data-cue="t1722" data-t="1722" data-label="28:42">Aye.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="28:44" data-default-t="1724">28:44</div>
+        <div class="text"><span class="cue" id="t1724" data-cue="t1724" data-t="1724" data-label="28:44">Any opposed?</span> <span class="cue" id="t1726" data-cue="t1726" data-t="1726" data-label="28:46">Any abstentions?</span> <span class="cue" id="t1729" data-cue="t1729" data-t="1729" data-label="28:49">Okay,</span> <span class="cue" id="t1730" data-cue="t1730" data-t="1730" data-label="28:50">hearing none, the motion passes. Thank you everybody.</span> <span class="cue" id="t1735" data-cue="t1735" data-t="1735" data-label="28:55">Appreciate everybody joining today to take care of this business.</span> <span class="cue" id="t1739" data-cue="t1739" data-t="1739" data-label="28:59">Item four on the agenda is public speak. Again, it doesn't look like we have anybody from members of the public other than Sean.</span> <span class="cue" id="t1747" data-cue="t1747" data-t="1747" data-label="29:07">So unless Sean, you have anything to add, we'll go ahead and move on.</span> <span class="cue" id="t1751" data-cue="t1751" data-t="1751" data-label="29:11">Appreciate all your hard work.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="29:13" data-default-t="1753">29:13</div>
+        <div class="text"><span class="cue" id="t1753" data-cue="t1753" data-t="1753" data-label="29:13">Okay, thank you.</span> <span class="cue" id="t1755" data-cue="t1755" data-t="1755" data-label="29:15">And does anybody want to make a motion to adjourn?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="29:20" data-default-t="1760">29:20</div>
+        <div class="text"><span class="cue" id="t1760" data-cue="t1760" data-t="1760" data-label="29:20">I'll make the motion to adjourn, Bill DeRoziers. Yeah, thanks Bill.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="29:24" data-default-t="1764">29:24</div>
+        <div class="text"><span class="cue" id="t1764" data-cue="t1764" data-t="1764" data-label="29:24">Anybody want a second? Second. Mooney seconds, any discussion?</span> <span class="cue" id="t1769" data-cue="t1769" data-t="1769" data-label="29:29">All those in favor say aye.</span> <span class="cue" id="t1772" data-cue="t1772" data-t="1772" data-label="29:32">Aye.</span> <span class="cue" id="t1772-1" data-cue="t1772-1" data-t="1772" data-label="29:32">Opposed?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="29:34" data-default-t="1774">29:34</div>
+        <div class="text"><span class="cue" id="t1774" data-cue="t1774" data-t="1774" data-label="29:34">I trust no abstentions.</span> <span class="cue" id="t1777" data-cue="t1777" data-t="1777" data-label="29:37">Okay, the meeting is adjourned. Thank you everybody for your time. Appreciate you gathering when we didn't really expect to, but this important business, I think it's a good move forward for the town. Some good questions and discussion. Thank you for paying close attention to this.</span> <span class="cue" id="t1790" data-cue="t1790" data-t="1790" data-label="29:50">Thank you, everybody. Thanks, Mark.</span> <span class="cue" id="t1792" data-cue="t1792" data-t="1792" data-label="29:52">You go Yeah.</span> <span class="cue" id="t1793" data-cue="t1793" data-t="1793" data-label="29:53">Oh, go ahead, Louise.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+    </div>
+
+    <footer class="colophon">
+      <p><strong>About this transcript.</strong> This transcript was generated by Deepgram from the meeting recording. Names, numbers, and other details may be inaccurate &mdash; please refer to the video for authoritative content.</p>
+      <p>Part of <code>andoverct.info</code>, an independent civic-reference site &mdash; not an official site of the Town of Andover. Compiled by <a href="mailto:scott@sauyet.com">Scott Sauyet</a>.</p>
+    </footer>
+  </main>
+
+  <div id="overlay">
+    <div class="dialog">
+      <div class="dialog-header">
+        <div class="dialog-title">Board of Finance- Regular Meeting</div>
+        <div class="dialog-subtitle">July 26, 2023 at <span class="ts-label" id="overlay-ts"></span></div>
+      </div>
+      <div class="actions">
+        <button id="act-yt">
+          <span class="icon">&#9654;</span>
+          <span class="label">Watch on YouTube<br><span class="hint">Opens at this timestamp</span></span>
+        </button>
+        <button id="act-copy-link">
+          <span class="icon">&#128279;</span>
+          <span class="label">Copy YouTube link<br><span class="hint" id="hint-link-url"></span></span>
+        </button>
+        <button id="act-bookmark">
+          <span class="icon">&#128278;</span>
+          <span class="label">Bookmark this spot<br><span class="hint">Copies link &amp; adds to navigation history</span></span>
+        </button>
+      </div>
+      <div class="cancel"><a id="act-cancel">Cancel</a></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>window.TX = { video: "https://www.youtube.com/watch?v=d6DeSA2YEC8", passcode: "", type: "YouTube" };</script>
+  <script src="https://andoverct.info/reference/video/assets/transcripts.js"></script>
+</body>
+</html>

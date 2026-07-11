@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Special Town Meeting — June 30, 2020</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <style>
+    /* Transcript-specific components. Theme, palette, and page chrome
+       (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
+       come from the shared style.css; these just use its variables. */
+    .para { display: flex; gap: 1em; padding: 0.5em 0.75em; border-radius: 6px; }
+    .para:nth-child(4n+1) { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+    .para-gap { font-size: 1px; line-height: 1px; height: 0; overflow: hidden; user-select: text; }
+    .para.speaker { border-top: 1px solid var(--rule-soft); margin-top: 0.6em; padding-top: 1em; }
+    .para.speaker:first-child { border-top: none; margin-top: 0; }
+
+    .timestamp {
+      flex: 0 0 5em; text-align: right;
+      color: var(--ink-mute); font-family: var(--sans);
+      font-size: 0.72rem; font-variant-numeric: tabular-nums; line-height: 1.9;
+      cursor: pointer; white-space: nowrap; padding-top: 0.15em;
+      transition: color 0.15s; user-select: none;
+    }
+    .timestamp:hover, .timestamp.hl { color: var(--accent); font-weight: 600; }
+
+    .text { flex: 1; min-width: 0; }
+    .cue { cursor: pointer; border-radius: 3px; transition: background-color 0.15s; }
+    .cue.hl { background-color: var(--accent-bg); }
+    @keyframes flash-highlight {
+      0%   { background-color: rgba(232, 168, 0, 0.45); }
+      100% { background-color: transparent; }
+    }
+    .cue.flash { animation: flash-highlight 4s ease-out forwards; }
+
+    /* action dialog */
+    #overlay { display: none; position: fixed; inset: 0; background: rgba(8, 22, 40, 0.5); z-index: 100; justify-content: center; align-items: center; }
+    #overlay.visible { display: flex; }
+    .dialog { background: var(--bg-card); border-radius: 10px; padding: 1.6rem 1.8rem; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28); max-width: 28rem; width: 90vw; border-top: 4px solid var(--accent); }
+    .dialog-header { margin-bottom: 1.2em; }
+    .dialog-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); }
+    .dialog-subtitle { font-family: var(--sans); font-size: 0.85rem; color: var(--ink-mute); margin-top: 0.2em; }
+    .dialog .ts-label { color: var(--accent); font-weight: 600; }
+    .dialog .actions { display: flex; flex-direction: column; gap: 0.5em; }
+    .dialog button { display: flex; align-items: center; gap: 0.6em; padding: 0.6em 1em; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--ink); cursor: pointer; font-family: var(--sans); font-size: 0.9rem; text-align: left; width: 100%; transition: background-color 0.12s, border-color 0.12s; }
+    .dialog button:hover { background: var(--accent-bg); border-color: var(--accent); }
+    .dialog button .icon { font-size: 1.1em; flex: 0 0 1.4em; text-align: center; }
+    .dialog button .label { flex: 1; }
+    .dialog button .hint { display: block; color: var(--ink-mute); font-size: 0.78rem; }
+    .dialog .cancel { margin-top: 0.6em; text-align: center; }
+    .dialog .cancel a { color: var(--ink-mute); font-family: var(--sans); font-size: 0.82rem; cursor: pointer; border-bottom: none; }
+    .dialog .cancel a:hover { color: var(--accent); }
+
+    /* toast */
+    #toast { position: fixed; top: 1.5em; left: 50%; transform: translateX(-50%) translateY(-4em); background: var(--accent); color: #15233a; padding: 0.7em 1.6em; border-radius: 8px; font-family: var(--sans); font-size: 0.95rem; font-weight: 600; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease; z-index: 200; pointer-events: none; text-align: center; max-width: 90vw; }
+    #toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    @media (max-width: 480px) { .timestamp { flex-basis: 4em; } }
+  </style>
+</head>
+<body class="bluegold">
+  <div class="page-banner">
+    <nav class="page-banner-inner crumbs">
+      <a href="/">Home</a><span class="sep">›</span><a href="/reference/">Reference</a><span class="sep">›</span><a href="../index.html">Video</a><span class="sep">›</span><span class="current">Special Town Meeting (6/30/20)</span>
+    </nav>
+  </div>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Meeting transcript</p>
+      <h1 class="title">Special Town Meeting</h1>
+      <p class="subtitle">June 30, 2020 &middot; <a href="https://www.youtube.com/watch?v=gBjYJjw0QZ8" target="yt-meeting">Watch on YouTube</a> &middot; <a href="../index.html">All meetings</a></p>
+    </header>
+
+    <hr class="rule">
+
+    <div class="transcript">
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:00" data-default-t="0">0:00</div>
+        <div class="text"><span class="cue" id="t0" data-cue="t0" data-t="0" data-label="0:00">Go through this process. It's all new. I'd really like to thank Linda and Amanda for doing an excellent job. Thank you very much. You're welcome. We're</span> <span class="cue" id="t8" data-cue="t8" data-t="8" data-label="0:08">all here for</span> <span class="cue" id="t10" data-cue="t10" data-t="10" data-label="0:10">a town special meeting. And</span> <span class="cue" id="t12" data-cue="t12" data-t="12" data-label="0:12">let me read the announcement for you all.</span> <span class="cue" id="t17" data-cue="t17" data-t="17" data-label="0:17">The electors and citizens qualified to vote in town meetings in</span> <span class="cue" id="t22" data-cue="t22" data-t="22" data-label="0:22">the town of Andover are hereby notified that a special town meeting for the town of Andover</span> <span class="cue" id="t27" data-cue="t27" data-t="27" data-label="0:27">will be virtually held on Tuesday, 06/30/2020</span> <span class="cue" id="t31" data-cue="t31" data-t="31" data-label="0:31">at 7PM</span> <span class="cue" id="t33" data-cue="t33" data-t="33" data-label="0:33">for the following purposes.</span> <span class="cue" id="t35" data-cue="t35" data-t="35" data-label="0:35">One, to choose a moderator for said meeting,</span> <span class="cue" id="t38" data-cue="t38" data-t="38" data-label="0:38">to elect a member to fill the vacancy on the Regent Eight Board of Education term ending 06/30/2023</span> <span class="cue" id="t46" data-cue="t46" data-t="46" data-label="0:46">and to adjourn.</span> <span class="cue" id="t48" data-cue="t48" data-t="48" data-label="0:48">Copies of the candidate synopsis of qualifications will be available on the TOM website at andoverct.org.</span> <span class="cue" id="t57" data-cue="t57" data-t="57" data-label="0:57">Dated at Andoverct,</span> <span class="cue" id="t58" data-cue="t58" data-t="58" data-label="0:58">the May</span> <span class="cue" id="t60" data-cue="t60" data-t="60" data-label="1:00">2020,</span> <span class="cue" id="t61" data-cue="t61" data-t="61" data-label="1:01">signed by the members of the Board of Selectmen.</span> <span class="cue" id="t65" data-cue="t65" data-t="65" data-label="1:05">So we're gonna get started. The first thing that we need to do is choose a moderator for said meeting.</span> <span class="cue" id="t71" data-cue="t71" data-t="71" data-label="1:11">I nominate Wally Barton.</span> <span class="cue" id="t74" data-cue="t74" data-t="74" data-label="1:14">I second it.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:16" data-default-t="76">1:16</div>
+        <div class="text"><span class="cue" id="t76" data-cue="t76" data-t="76" data-label="1:16">Okay.</span> <span class="cue" id="t78" data-cue="t78" data-t="78" data-label="1:18">Any other nominations?</span> <span class="cue" id="t81" data-cue="t81" data-t="81" data-label="1:21">All</span> <span class="cue" id="t82" data-cue="t82" data-t="82" data-label="1:22">All those in favor of Wally Barton? Aye.</span> <span class="cue" id="t85" data-cue="t85" data-t="85" data-label="1:25">Aye.</span> <span class="cue" id="t87" data-cue="t87" data-t="87" data-label="1:27">Wally,</span> <span class="cue" id="t88" data-cue="t88" data-t="88" data-label="1:28">the meeting is yours. Aye.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:34" data-default-t="94">1:34</div>
+        <div class="text"><span class="cue" id="t94" data-cue="t94" data-t="94" data-label="1:34">I just wanted to let everyone know that this meeting is being recorded.</span> <span class="cue" id="t99" data-cue="t99" data-t="99" data-label="1:39">Thank you.</span> <span class="cue" id="t105" data-cue="t105" data-t="105" data-label="1:45">Alright. Wally, you're muted. You have to unmute yourself.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:51" data-default-t="111">1:51</div>
+        <div class="text"><span class="cue" id="t111" data-cue="t111" data-t="111" data-label="1:51">Okay, Amanda. I'm gonna need your help cause you can see every</span> <span class="cue" id="t116" data-cue="t116" data-t="116" data-label="1:56">one I cannot so when someone raises their hand to make a nomination or to say something</span> <span class="cue" id="t121" data-cue="t121" data-t="121" data-label="2:01">you'll have to call on them all right?</span> <span class="cue" id="t124" data-cue="t124" data-t="124" data-label="2:04">Gotcha.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:06" data-default-t="126">2:06</div>
+        <div class="text"><span class="cue" id="t126" data-cue="t126" data-t="126" data-label="2:06">Okay so</span> <span class="cue" id="t129" data-cue="t129" data-t="129" data-label="2:09">nominations</span> <span class="cue" id="t130" data-cue="t130" data-t="130" data-label="2:10">for the Regional Eight Board of Education.</span> <span class="cue" id="t133" data-cue="t133" data-t="133" data-label="2:13">Are there any nominations?</span> <span class="cue" id="t141" data-cue="t141" data-t="141" data-label="2:21">Anybody raise their hand, Amanda?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:24" data-default-t="144">2:24</div>
+        <div class="text"><span class="cue" id="t144" data-cue="t144" data-t="144" data-label="2:24">Shannon Loudon. Shannon Loudon's raising her hand. Shannon, please unmute I</span> <span class="cue" id="t150" data-cue="t150" data-t="150" data-label="2:30">did.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:32" data-default-t="152">2:32</div>
+        <div class="text"><span class="cue" id="t152" data-cue="t152" data-t="152" data-label="2:32">I nominate Ed Smith for the vacancy on the Rams School Board.</span> <span class="cue" id="t158" data-cue="t158" data-t="158" data-label="2:38">Is there a second to the nomination?</span> <span class="cue" id="t161" data-cue="t161" data-t="161" data-label="2:41">I second.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:43" data-default-t="163">2:43</div>
+        <div class="text"><span class="cue" id="t163" data-cue="t163" data-t="163" data-label="2:43">And that is?</span> <span class="cue" id="t165" data-cue="t165" data-t="165" data-label="2:45">Daniel Foran. Thank you.</span> <span class="cue" id="t168" data-cue="t168" data-t="168" data-label="2:48">Is there any further nominations?</span> <span class="cue" id="t172" data-cue="t172" data-t="172" data-label="2:52">Yes.</span> <span class="cue" id="t174" data-cue="t174" data-t="174" data-label="2:54">I'd like to nominate Lori Blake.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:58" data-default-t="178">2:58</div>
+        <div class="text"><span class="cue" id="t178" data-cue="t178" data-t="178" data-label="2:58">That's Jerry Cremay dominating Lori Blake. Is there a second to that nomination?</span> <span class="cue" id="t184" data-cue="t184" data-t="184" data-label="3:04">I second that.</span> <span class="cue" id="t186" data-cue="t186" data-t="186" data-label="3:06">And you are?</span> <span class="cue" id="t187" data-cue="t187" data-t="187" data-label="3:07">Stacy Bigley.</span> <span class="cue" id="t189" data-cue="t189" data-t="189" data-label="3:09">Thank you.</span> <span class="cue" id="t190" data-cue="t190" data-t="190" data-label="3:10">Are there any further nominations?</span> <span class="cue" id="t197" data-cue="t197" data-t="197" data-label="3:17">Hi, Wallace. It's Dave</span> <span class="cue" id="t200" data-cue="t200" data-t="200" data-label="3:20">Costanian and I nominate Brian Clay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="3:23" data-default-t="203">3:23</div>
+        <div class="text"><span class="cue" id="t203" data-cue="t203" data-t="203" data-label="3:23">Brian</span> <span class="cue" id="t205" data-cue="t205" data-t="205" data-label="3:25">Clay has been nominated by Dave Costanian.</span> <span class="cue" id="t207" data-cue="t207" data-t="207" data-label="3:27">Is there a second?</span> <span class="cue" id="t210" data-cue="t210" data-t="210" data-label="3:30">I second Eric Anderson.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="3:34" data-default-t="214">3:34</div>
+        <div class="text"><span class="cue" id="t214" data-cue="t214" data-t="214" data-label="3:34">Seconded by Eric Anderson.</span> <span class="cue" id="t216" data-cue="t216" data-t="216" data-label="3:36">Are there any further nominations?</span> <span class="cue" id="t221" data-cue="t221" data-t="221" data-label="3:41">I'll have to say this twice more.</span> <span class="cue" id="t223" data-cue="t223" data-t="223" data-label="3:43">Are there any further nominations?</span> <span class="cue" id="t228" data-cue="t228" data-t="228" data-label="3:48">Are there any further nominations?</span> <span class="cue" id="t231" data-cue="t231" data-t="231" data-label="3:51">Wally, let me go through and just make sure.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="3:55" data-default-t="235">3:55</div>
+        <div class="text"><span class="cue" id="t235" data-cue="t235" data-t="235" data-label="3:55">No, if no one's raised their hand and come up with another nomination,</span> <span class="cue" id="t239" data-cue="t239" data-t="239" data-label="3:59">I've said it three times. That's how we normally do it at a meeting.</span> <span class="cue" id="t244" data-cue="t244" data-t="244" data-label="4:04">I will declare nominations</span> <span class="cue" id="t245" data-cue="t245" data-t="245" data-label="4:05">to be closed.</span> <span class="cue" id="t247" data-cue="t247" data-t="247" data-label="4:07">Now the hard part,</span> <span class="cue" id="t250" data-cue="t250" data-t="250" data-label="4:10">roll call down the list</span> <span class="cue" id="t253" data-cue="t253" data-t="253" data-label="4:13">and everyone will have to say who they vote for one at a time</span> <span class="cue" id="t257" data-cue="t257" data-t="257" data-label="4:17">to get through this. There is no secret ballot here. You'll have to verbally say who you're voting for.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="4:29" data-default-t="269">4:29</div>
+        <div class="text"><span class="cue" id="t269" data-cue="t269" data-t="269" data-label="4:29">Before we begin, we have Nicholas Eckert who just joined the meeting.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="4:36" data-default-t="276">4:36</div>
+        <div class="text"><span class="cue" id="t276" data-cue="t276" data-t="276" data-label="4:36">Nicholas.</span> <span class="cue" id="t281" data-cue="t281" data-t="281" data-label="4:41">Oh, yes. Hi, Nicholas. Can you hear us?</span> <span class="cue" id="t286" data-cue="t286" data-t="286" data-label="4:46">Nicholas?</span> <span class="cue" id="t289" data-cue="t289" data-t="289" data-label="4:49">Amanda, ask Wally before we vote.</span> <span class="cue" id="t295" data-cue="t295" data-t="295" data-label="4:55">Did Nicholas just disappear?</span> <span class="cue" id="t298" data-cue="t298" data-t="298" data-label="4:58">You should give a couple minutes.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:02" data-default-t="302">5:02</div>
+        <div class="text"><span class="cue" id="t302" data-cue="t302" data-t="302" data-label="5:02">I'm not seeing him.</span> <span class="cue" id="t305" data-cue="t305" data-t="305" data-label="5:05">Nick Eckhart, are you still there?</span> <span class="cue" id="t313" data-cue="t313" data-t="313" data-label="5:13">I think he's left the meeting. Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:15" data-default-t="315">5:15</div>
+        <div class="text"><span class="cue" id="t315" data-cue="t315" data-t="315" data-label="5:15">At some point, do we stop letting people in? I mean, we're about to take a vote.</span> <span class="cue" id="t321" data-cue="t321" data-t="321" data-label="5:21">Before we vote, can we hear from the candidates?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:26" data-default-t="326">5:26</div>
+        <div class="text"><span class="cue" id="t326" data-cue="t326" data-t="326" data-label="5:26">That's fine. Which way you wanna do it? Do you want just the candidates to speak or do you want a question and answer period as well?</span> <span class="cue" id="t338" data-cue="t338" data-t="338" data-label="5:38">Well, I would like for them to speak first</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:41" data-default-t="341">5:41</div>
+        <div class="text"><span class="cue" id="t341" data-cue="t341" data-t="341" data-label="5:41">and then I suspect if people have questions they should be allowed to ask them.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:48" data-default-t="348">5:48</div>
+        <div class="text"><span class="cue" id="t348" data-cue="t348" data-t="348" data-label="5:48">That's what we would normally do at a town meeting, but this is a little different.</span> <span class="cue" id="t353" data-cue="t353" data-t="353" data-label="5:53">So we would go to the, first person that was nominated,</span> <span class="cue" id="t356" data-cue="t356" data-t="356" data-label="5:56">was</span> <span class="cue" id="t358" data-cue="t358" data-t="358" data-label="5:58">Ed Smith,</span> <span class="cue" id="t360" data-cue="t360" data-t="360" data-label="6:00">if he'd like to make a statement.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="6:02" data-default-t="362">6:02</div>
+        <div class="text"><span class="cue" id="t362" data-cue="t362" data-t="362" data-label="6:02">Thank you very much. I would just refer to the letter that I have online for people to look at the details,</span> <span class="cue" id="t371" data-cue="t371" data-t="371" data-label="6:11">and</span> <span class="cue" id="t372" data-cue="t372" data-t="372" data-label="6:12">I will let there's a lot of things that are up there. Some people might be wondering if I'll be able to handle all of the things that I've listed as well as being on the ramp board event.</span> <span class="cue" id="t381" data-cue="t381" data-t="381" data-label="6:21">My intention is to, if selected for the board event,</span> <span class="cue" id="t384" data-cue="t384" data-t="384" data-label="6:24">to drop</span> <span class="cue" id="t386" data-cue="t386" data-t="386" data-label="6:26">the union position at my school</span> <span class="cue" id="t389" data-cue="t389" data-t="389" data-label="6:29">and also cut back on my EnviroCon</span> <span class="cue" id="t392" data-cue="t392" data-t="392" data-label="6:32">commitments,</span> <span class="cue" id="t393" data-cue="t393" data-t="393" data-label="6:33">so I will free up time,</span> <span class="cue" id="t395" data-cue="t395" data-t="395" data-label="6:35">as far as the Inland Wetlands Water Watershed Committee,</span> <span class="cue" id="t399" data-cue="t399" data-t="399" data-label="6:39">at Inverter,</span> <span class="cue" id="t400" data-cue="t400" data-t="400" data-label="6:40">I would expect to remain at meetings,</span> <span class="cue" id="t403" data-cue="t403" data-t="403" data-label="6:43">but only if they need a quorum,</span> <span class="cue" id="t406" data-cue="t406" data-t="406" data-label="6:46">And that pretty much sums up.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="6:52" data-default-t="412">6:52</div>
+        <div class="text"><span class="cue" id="t412" data-cue="t412" data-t="412" data-label="6:52">Okay,</span> <span class="cue" id="t413" data-cue="t413" data-t="413" data-label="6:53">the second person nominated was Lori Blake. Lori, would you like to say something?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="6:59" data-default-t="419">6:59</div>
+        <div class="text"><span class="cue" id="t419" data-cue="t419" data-t="419" data-label="6:59">Sure,</span> <span class="cue" id="t420" data-cue="t420" data-t="420" data-label="7:00">thanks Wally.</span> <span class="cue" id="t422" data-cue="t422" data-t="422" data-label="7:02">Well, I would just like to say,</span> <span class="cue" id="t424" data-cue="t424" data-t="424" data-label="7:04">I'm so pleased to see everyone came out tonight to vote. I think it's important that</span> <span class="cue" id="t428" data-cue="t428" data-t="428" data-label="7:08">Andover</span> <span class="cue" id="t430" data-cue="t430" data-t="430" data-label="7:10">has an option to say, to choose who they would like for this important position.</span> <span class="cue" id="t436" data-cue="t436" data-t="436" data-label="7:16">I too have a letter up on the website that hopefully folks had a chance to go and look at.</span> <span class="cue" id="t442" data-cue="t442" data-t="442" data-label="7:22">So I'll defer to that as well.</span> <span class="cue" id="t445" data-cue="t445" data-t="445" data-label="7:25">But I would just like to say that I'm excited to be a candidate and</span> <span class="cue" id="t450" data-cue="t450" data-t="450" data-label="7:30">I have a soon to be seventh grader entering RAM. So I will have quite a long few years in the RAM community as I have in the Andover Elementary community.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="7:40" data-default-t="460">7:40</div>
+        <div class="text"><span class="cue" id="t460" data-cue="t460" data-t="460" data-label="7:40">And I'm excited to participate and give back to make our schools as strong as they can for our community as well as our students so thank you.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="7:51" data-default-t="471">7:51</div>
+        <div class="text"><span class="cue" id="t471" data-cue="t471" data-t="471" data-label="7:51">We have Maria Nella who would like to ask a question.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="7:54" data-default-t="474">7:54</div>
+        <div class="text"><span class="cue" id="t474" data-cue="t474" data-t="474" data-label="7:54">Can I have the third candidate speak first please Amanda and then we'll go to the questions if that's alright? Yes.</span> <span class="cue" id="t482" data-cue="t482" data-t="482" data-label="8:02">Ryan Clayton, if you'd like to say something.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="8:05" data-default-t="485">8:05</div>
+        <div class="text"><span class="cue" id="t485" data-cue="t485" data-t="485" data-label="8:05">I will thank you and I'll keep it quick because I know folks are anxious like</span> <span class="cue" id="t491" data-cue="t491" data-t="491" data-label="8:11">the other candidates I've had an item</span> <span class="cue" id="t494" data-cue="t494" data-t="494" data-label="8:14">up on the up on the website.</span> <span class="cue" id="t496" data-cue="t496" data-t="496" data-label="8:16">Very excited to be given the opportunity</span> <span class="cue" id="t499" data-cue="t499" data-t="499" data-label="8:19">and nominated to be part of the RAM board and just looking forward to hearing some of the questions and moving forward.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="8:25" data-default-t="505">8:25</div>
+        <div class="text"><span class="cue" id="t505" data-cue="t505" data-t="505" data-label="8:25">Thank you.</span> <span class="cue" id="t506" data-cue="t506" data-t="506" data-label="8:26">Alright Amanda, if someone has a question now.</span> <span class="cue" id="t510" data-cue="t510" data-t="510" data-label="8:30">Okay, we'll start off with Maria Nella.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="8:34" data-default-t="514">8:34</div>
+        <div class="text"><span class="cue" id="t514" data-cue="t514" data-t="514" data-label="8:34">Hello, I just wanted double check is it a common practice to vote</span> <span class="cue" id="t522" data-cue="t522" data-t="522" data-label="8:42">via</span> <span class="cue" id="t523" data-cue="t523" data-t="523" data-label="8:43">I mean I guess not be be in a public vote like this for a position like this</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="8:50" data-default-t="530">8:50</div>
+        <div class="text"><span class="cue" id="t530" data-cue="t530" data-t="530" data-label="8:50">Yes. In</span> <span class="cue" id="t534" data-cue="t534" data-t="534" data-label="8:54">a town meeting, we do have the option of a secret ballot. Because</span> <span class="cue" id="t539" data-cue="t539" data-t="539" data-label="8:59">this is on Zoom,</span> <span class="cue" id="t541" data-cue="t541" data-t="541" data-label="9:01">it will be a roll call vote</span> <span class="cue" id="t543" data-cue="t543" data-t="543" data-label="9:03">by the people normally we'd have like a show of hands unless someone called for a secret ballot and then we'd hand out ballots we cannot do that on the Zoom</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="9:14" data-default-t="554">9:14</div>
+        <div class="text"><span class="cue" id="t554" data-cue="t554" data-t="554" data-label="9:14">program. We</span> <span class="cue" id="t555" data-cue="t555" data-t="555" data-label="9:15">could consider</span> <span class="cue" id="t557" data-cue="t557" data-t="557" data-label="9:17">using</span> <span class="cue" id="t558" data-cue="t558" data-t="558" data-label="9:18">the chat</span> <span class="cue" id="t560" data-cue="t560" data-t="560" data-label="9:20">piece of the Zoom call and sending our vote</span> <span class="cue" id="t564" data-cue="t564" data-t="564" data-label="9:24">to</span> <span class="cue" id="t565" data-cue="t565" data-t="565" data-label="9:25">the host So it's only visible to the host. I'm just concerned that, you know,</span> <span class="cue" id="t573" data-cue="t573" data-t="573" data-label="9:33">that the vote is public.</span> <span class="cue" id="t575" data-cue="t575" data-t="575" data-label="9:35">Right? So</span> <span class="cue" id="t576" data-cue="t576" data-t="576" data-label="9:36">I</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="9:38" data-default-t="578">9:38</div>
+        <div class="text"><span class="cue" id="t578" data-cue="t578" data-t="578" data-label="9:38">can Not everyone is on Zoom. We have some people that are on a telephone.</span> <span class="cue" id="t583" data-cue="t583" data-t="583" data-label="9:43">So they don't have that option available</span> <span class="cue" id="t586" data-cue="t586" data-t="586" data-label="9:46">on the phone.</span> <span class="cue" id="t588" data-cue="t588" data-t="588" data-label="9:48">So basically it's going to be a roll call</span> <span class="cue" id="t591" data-cue="t591" data-t="591" data-label="9:51">vote. They're gonna go down the list and say, who did you vote for? And then we're gonna tally the count that way.</span> <span class="cue" id="t598" data-cue="t598" data-t="598" data-label="9:58">Again, this is different than a town meeting where people are present</span> <span class="cue" id="t603" data-cue="t603" data-t="603" data-label="10:03">and we have the option of a secret ballot. We really don't have that tonight.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="10:08" data-default-t="608">10:08</div>
+        <div class="text"><span class="cue" id="t608" data-cue="t608" data-t="608" data-label="10:08">Okay, I guess I over. I didn't think about that. Linda Derrick or</span> <span class="cue" id="t613" data-cue="t613" data-t="613" data-label="10:13">Eric Anderson, did you wanna speak on that?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="10:19" data-default-t="619">10:19</div>
+        <div class="text"><span class="cue" id="t619" data-cue="t619" data-t="619" data-label="10:19">I actually think that's a very good idea.</span> <span class="cue" id="t623" data-cue="t623" data-t="623" data-label="10:23">Not everybody can do that. No, I mean, that's the only issue. So how many people are not</span> <span class="cue" id="t630" data-cue="t630" data-t="630" data-label="10:30">doing that?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="10:32" data-default-t="632">10:32</div>
+        <div class="text"><span class="cue" id="t632" data-cue="t632" data-t="632" data-label="10:32">Who is on a cell phone that it does not have the capabilities of this voting via Zoom?</span> <span class="cue" id="t643" data-cue="t643" data-t="643" data-label="10:43">We also have Ed Smith raising his hand.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="10:46" data-default-t="646">10:46</div>
+        <div class="text"><span class="cue" id="t646" data-cue="t646" data-t="646" data-label="10:46">Could I make a suggestion? Perhaps the three candidates</span> <span class="cue" id="t650" data-cue="t650" data-t="650" data-label="10:50">would vote and then drop off of the Zoom meeting so that they would not be witnessing who was voting. Would that be a help?</span> <span class="cue" id="t659" data-cue="t659" data-t="659" data-label="10:59">The meeting is being recorded,</span> <span class="cue" id="t662" data-cue="t662" data-t="662" data-label="11:02">though.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="11:03" data-default-t="663">11:03</div>
+        <div class="text"><span class="cue" id="t663" data-cue="t663" data-t="663" data-label="11:03">And the other thing is it it is a matter of public record. If if it's being recorded and then it goes into the minutes, it will reflect all of the votes.</span> <span class="cue" id="t673" data-cue="t673" data-t="673" data-label="11:13">Amanda, how many people are only</span> <span class="cue" id="t676" data-cue="t676" data-t="676" data-label="11:16">dialed in?</span> <span class="cue" id="t679" data-cue="t679" data-t="679" data-label="11:19">We have at least three phones. Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="11:24" data-default-t="684">11:24</div>
+        <div class="text"><span class="cue" id="t684" data-cue="t684" data-t="684" data-label="11:24">Is it an option to allow the rest of the community</span> <span class="cue" id="t688" data-cue="t688" data-t="688" data-label="11:28">to chat and</span> <span class="cue" id="t691" data-cue="t691" data-t="691" data-label="11:31">just those three to voice.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="11:38" data-default-t="698">11:38</div>
+        <div class="text"><span class="cue" id="t698" data-cue="t698" data-t="698" data-label="11:38">Dan Foran, did you have something you wanted to Yeah. I I personally have no problem with my vote being voiced, but if there's this much concern,</span> <span class="cue" id="t706" data-cue="t706" data-t="706" data-label="11:46">are we not doing this via mail in or through an absentee</span> <span class="cue" id="t711" data-cue="t711" data-t="711" data-label="11:51">ballot system if there's that much of a concern? And maybe that's something that we need to look at in lieu of what we're doing right now.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="11:58" data-default-t="718">11:58</div>
+        <div class="text"><span class="cue" id="t718" data-cue="t718" data-t="718" data-label="11:58">Dan, unfortunately, that would require a change to the town charter.</span> <span class="cue" id="t723" data-cue="t723" data-t="723" data-label="12:03">The public meeting</span> <span class="cue" id="t725" data-cue="t725" data-t="725" data-label="12:05">is the method that the town uses</span> <span class="cue" id="t729" data-cue="t729" data-t="729" data-label="12:09">for these types of affairs by the charter.</span> <span class="cue" id="t733" data-cue="t733" data-t="733" data-label="12:13">So we worked out with the town's attorney,</span> <span class="cue" id="t736" data-cue="t736" data-t="736" data-label="12:16">but the closest</span> <span class="cue" id="t737" data-cue="t737" data-t="737" data-label="12:17">we could come to our standard meeting is and still meet the governor's executive orders.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:24" data-default-t="744">12:24</div>
+        <div class="text"><span class="cue" id="t744" data-cue="t744" data-t="744" data-label="12:24">And this was it. So nothing's been handed down by the governor as far as elections go, even though stuff was done through the Board of Finance that town budgets did not need to be voted on and that the Board of Finance could pass whatever budget that they wanted to, but nothing was done as far as elections go?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:46" data-default-t="766">12:46</div>
+        <div class="text"><span class="cue" id="t766" data-cue="t766" data-t="766" data-label="12:46">The budget issue is a state statute</span> <span class="cue" id="t769" data-cue="t769" data-t="769" data-label="12:49">that the legislature</span> <span class="cue" id="t771" data-cue="t771" data-t="771" data-label="12:51">allowed.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:54" data-default-t="774">12:54</div>
+        <div class="text"><span class="cue" id="t774" data-cue="t774" data-t="774" data-label="12:54">So</span> <span class="cue" id="t776" data-cue="t776" data-t="776" data-label="12:56">my thought is that we have the ability for each participant</span> <span class="cue" id="t781" data-cue="t781" data-t="781" data-label="13:01">to message us privately.</span> <span class="cue" id="t784" data-cue="t784" data-t="784" data-label="13:04">So</span> <span class="cue" id="t785" data-cue="t785" data-t="785" data-label="13:05">it's up to</span> <span class="cue" id="t787" data-cue="t787" data-t="787" data-label="13:07">the moderators and and the board</span> <span class="cue" id="t790" data-cue="t790" data-t="790" data-label="13:10">if they would like</span> <span class="cue" id="t792" data-cue="t792" data-t="792" data-label="13:12">me to retrieve</span> <span class="cue" id="t793" data-cue="t793" data-t="793" data-label="13:13">votes</span> <span class="cue" id="t794" data-cue="t794" data-t="794" data-label="13:14">that way. Linda is a host, Linda Derek, and she would be able to see</span> <span class="cue" id="t800" data-cue="t800" data-t="800" data-label="13:20">the messages along with</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="13:22" data-default-t="802">13:22</div>
+        <div class="text"><span class="cue" id="t802" data-cue="t802" data-t="802" data-label="13:22">It doesn't matter if we actually</span> <span class="cue" id="t806" data-cue="t806" data-t="806" data-label="13:26">vote personally or publicly.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="13:30" data-default-t="810">13:30</div>
+        <div class="text"><span class="cue" id="t810" data-cue="t810" data-t="810" data-label="13:30">That's what I was going to suggest. Can we go through the role?</span> <span class="cue" id="t813" data-cue="t813" data-t="813" data-label="13:33">Because I don't mind voting personally.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="13:36" data-default-t="816">13:36</div>
+        <div class="text"><span class="cue" id="t816" data-cue="t816" data-t="816" data-label="13:36">Say your vote or you can send it privately through chat.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="13:42" data-default-t="822">13:42</div>
+        <div class="text"><span class="cue" id="t822" data-cue="t822" data-t="822" data-label="13:42">If it's a big issue the option is there but if people are willing</span> <span class="cue" id="t828" data-cue="t828" data-t="828" data-label="13:48">to voice their vote</span> <span class="cue" id="t830" data-cue="t830" data-t="830" data-label="13:50">we can get through this a lot quicker I think.</span> <span class="cue" id="t835" data-cue="t835" data-t="835" data-label="13:55">Okay, then let's voice our vote.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="13:58" data-default-t="838">13:58</div>
+        <div class="text"><span class="cue" id="t838" data-cue="t838" data-t="838" data-label="13:58">All right. Amanda, do you want to do the roll call please? Wait. Is</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="14:04" data-default-t="844">14:04</div>
+        <div class="text"><span class="cue" id="t844" data-cue="t844" data-t="844" data-label="14:04">everyone spoken? Yes, they are. You're right. Go ahead, Wally. All right. Anybody else put their hand up, Amanda?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="14:12" data-default-t="852">14:12</div>
+        <div class="text"><span class="cue" id="t852" data-cue="t852" data-t="852" data-label="14:12">Are two more people that are in the waiting room.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="14:16" data-default-t="856">14:16</div>
+        <div class="text"><span class="cue" id="t856" data-cue="t856" data-t="856" data-label="14:16">It looks like Nick Eckert is here again.</span> <span class="cue" id="t865" data-cue="t865" data-t="865" data-label="14:25">Would anyone else like to speak and ask a question during this time?</span> <span class="cue" id="t869" data-cue="t869" data-t="869" data-label="14:29">Shannon?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="14:31" data-default-t="871">14:31</div>
+        <div class="text"><span class="cue" id="t871" data-cue="t871" data-t="871" data-label="14:31">Yes. On the chat,</span> <span class="cue" id="t873" data-cue="t873" data-t="873" data-label="14:33">miss Lowley raised the question whether or not there was a number that those on the phone could call in to more privately vote.</span> <span class="cue" id="t881" data-cue="t881" data-t="881" data-label="14:41">So</span> <span class="cue" id="t881-1" data-cue="t881-1" data-t="881" data-label="14:41">given that it is an issue that's been raised, the question I would have is if everybody else other than the three people who are by phone</span> <span class="cue" id="t890" data-cue="t890" data-t="890" data-label="14:50">wants to vote privately as we would in a town meeting,</span> <span class="cue" id="t894" data-cue="t894" data-t="894" data-label="14:54">and then a phone number could be provided for people to either call or text so that those only those three people could</span> <span class="cue" id="t902" data-cue="t902" data-t="902" data-label="15:02">could call privately,</span> <span class="cue" id="t904" data-cue="t904" data-t="904" data-label="15:04">then we could deal with that very quickly. And I would and then you have a also a public record</span> <span class="cue" id="t910" data-cue="t910" data-t="910" data-label="15:10">of all those electronic votes via the chat.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="15:17" data-default-t="917">15:17</div>
+        <div class="text"><span class="cue" id="t917" data-cue="t917" data-t="917" data-label="15:17">Thank you, Shannon.</span> <span class="cue" id="t918" data-cue="t918" data-t="918" data-label="15:18">So Linda and Wally and the board do you think it's appropriate for those phone numbers to call Carol Lee at the town hall</span> <span class="cue" id="t928" data-cue="t928" data-t="928" data-label="15:28">to cast their vote</span> <span class="cue" id="t931" data-cue="t931" data-t="931" data-label="15:31">if they so choose?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="15:32" data-default-t="932">15:32</div>
+        <div class="text"><span class="cue" id="t932" data-cue="t932" data-t="932" data-label="15:32">If that's the way you wanna do it. Normally, we would have if someone requested a secret ballot would be a vote</span> <span class="cue" id="t939" data-cue="t939" data-t="939" data-label="15:39">rather than having people publicly vote on these positions.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="15:44" data-default-t="944">15:44</div>
+        <div class="text"><span class="cue" id="t944" data-cue="t944" data-t="944" data-label="15:44">We're make</span> <span class="cue" id="t945" data-cue="t945" data-t="945" data-label="15:45">we're making this more difficult than it than it</span> <span class="cue" id="t948" data-cue="t948" data-t="948" data-label="15:48">initially came out to be. I understand that people don't want to sit there and have their vote be public, but in this circumstance with what we're dealing with, this is what we should do to make it equal.</span> <span class="cue" id="t960" data-cue="t960" data-t="960" data-label="16:00">So if everybody does it the same way, problem. I</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="16:04" data-default-t="964">16:04</div>
+        <div class="text"><span class="cue" id="t964" data-cue="t964" data-t="964" data-label="16:04">agree and I personally</span> <span class="cue" id="t966" data-cue="t966" data-t="966" data-label="16:06">think that people can vote for the candidate of their choice.</span> <span class="cue" id="t971" data-cue="t971" data-t="971" data-label="16:11">Once you go through this whole list,</span> <span class="cue" id="t973" data-cue="t973" data-t="973" data-label="16:13">I don't think anybody's gonna remember who voted for who to be honest. There</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="16:18" data-default-t="978">16:18</div>
+        <div class="text"><span class="cue" id="t978" data-cue="t978" data-t="978" data-label="16:18">are three other select men though on this call, select woman. I apologize,</span> <span class="cue" id="t983" data-cue="t983" data-t="983" data-label="16:23">Paula.</span> <span class="cue" id="t985" data-cue="t985" data-t="985" data-label="16:25">So I'd like to hear from them.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="16:30" data-default-t="990">16:30</div>
+        <div class="text"><span class="cue" id="t990" data-cue="t990" data-t="990" data-label="16:30">Nick Eckert, by the way, I'm going to sign you in in a second, or maybe just go ahead. Can you just, Nick, tell me your street address?</span> <span class="cue" id="t1000" data-cue="t1000" data-t="1000" data-label="16:40">Wait, you have to unmute yourself.</span> <span class="cue" id="t1002" data-cue="t1002" data-t="1002" data-label="16:42">Unmute yourself.</span> <span class="cue" id="t1005" data-cue="t1005" data-t="1005" data-label="16:45">There you go. Right. Hi.</span> <span class="cue" id="t1008" data-cue="t1008" data-t="1008" data-label="16:48">7 Brown Drive.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="16:50" data-default-t="1010">16:50</div>
+        <div class="text"><span class="cue" id="t1010" data-cue="t1010" data-t="1010" data-label="16:50">And</span> <span class="cue" id="t1012" data-cue="t1012" data-t="1012" data-label="16:52">then Nick, I just need to see your photo ID.</span> <span class="cue" id="t1018" data-cue="t1018" data-t="1018" data-label="16:58">I'm sorry, what number did you say?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="17:00" data-default-t="1020">17:00</div>
+        <div class="text"><span class="cue" id="t1020" data-cue="t1020" data-t="1020" data-label="17:00">7.</span> <span class="cue" id="t1022" data-cue="t1022" data-t="1022" data-label="17:02">Okay.</span> <span class="cue" id="t1024" data-cue="t1024" data-t="1024" data-label="17:04">Could be my wife's name too, Erlinson. Yep. No, I got him.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="17:09" data-default-t="1029">17:09</div>
+        <div class="text"><span class="cue" id="t1029" data-cue="t1029" data-t="1029" data-label="17:09">Okay, very good. You're in.</span> <span class="cue" id="t1031" data-cue="t1031" data-t="1031" data-label="17:11">So we're just deliberating We the</span> <span class="cue" id="t1035" data-cue="t1035" data-t="1035" data-label="17:15">have Carrie Crompton who would like to speak.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="17:19" data-default-t="1039">17:19</div>
+        <div class="text"><span class="cue" id="t1039" data-cue="t1039" data-t="1039" data-label="17:19">I would like to ask</span> <span class="cue" id="t1041" data-cue="t1041" data-t="1041" data-label="17:21">all three candidates</span> <span class="cue" id="t1044" data-cue="t1044" data-t="1044" data-label="17:24">a question.</span> <span class="cue" id="t1046" data-cue="t1046" data-t="1046" data-label="17:26">Given that we are going to be having</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="17:28" data-default-t="1048">17:28</div>
+        <div class="text"><span class="cue" id="t1048" data-cue="t1048" data-t="1048" data-label="17:28">hard times ahead</span> <span class="cue" id="t1050" data-cue="t1050" data-t="1050" data-label="17:30">with all the fallout from COVID,</span> <span class="cue" id="t1053" data-cue="t1053" data-t="1053" data-label="17:33">there will have to be cuts in curriculum,</span> <span class="cue" id="t1056" data-cue="t1056" data-t="1056" data-label="17:36">I expect,</span> <span class="cue" id="t1057" data-cue="t1057" data-t="1057" data-label="17:37">in the next year anyway,</span> <span class="cue" id="t1059" data-cue="t1059" data-t="1059" data-label="17:39">and compromises made in, you know, what what is being given to the students.</span> <span class="cue" id="t1065" data-cue="t1065" data-t="1065" data-label="17:45">And I'd like to hear from each of the candidates</span> <span class="cue" id="t1068" data-cue="t1068" data-t="1068" data-label="17:48">what they would like to prioritize</span> <span class="cue" id="t1069" data-cue="t1069" data-t="1069" data-label="17:49">and keep no matter what, whether it's, you know,</span> <span class="cue" id="t1073" data-cue="t1073" data-t="1073" data-label="17:53">humanities or sciences or athletics or arts or whatever</span> <span class="cue" id="t1078" data-cue="t1078" data-t="1078" data-label="17:58">I would just like to know how how you feel about what's most important for the RAND students</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="18:07" data-default-t="1087">18:07</div>
+        <div class="text"><span class="cue" id="t1087" data-cue="t1087" data-t="1087" data-label="18:07">Well, I'll speak first.</span> <span class="cue" id="t1089" data-cue="t1089" data-t="1089" data-label="18:09">I'm I'm not gonna make a call on that until,</span> <span class="cue" id="t1092" data-cue="t1092" data-t="1092" data-label="18:12">I if elected,</span> <span class="cue" id="t1094" data-cue="t1094" data-t="1094" data-label="18:14">until I've had meetings with administration.</span> <span class="cue" id="t1097" data-cue="t1097" data-t="1097" data-label="18:17">I believe administration is gonna have lots of input on that, and so I would defer until</span> <span class="cue" id="t1103" data-cue="t1103" data-t="1103" data-label="18:23">I've gotten up to speed on a lot of the issues. I wouldn't make a judgment at this moment.</span> <span class="cue" id="t1108" data-cue="t1108" data-t="1108" data-label="18:28">Sorry to dodge the question.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="18:33" data-default-t="1113">18:33</div>
+        <div class="text"><span class="cue" id="t1113" data-cue="t1113" data-t="1113" data-label="18:33">I'd be happy to speak next if that's okay.</span> <span class="cue" id="t1116" data-cue="t1116" data-t="1116" data-label="18:36">It's hard to see everybody and I can't see if Brian's also trying to talk right now, but</span> <span class="cue" id="t1122" data-cue="t1122" data-t="1122" data-label="18:42">I think that</span> <span class="cue" id="t1124" data-cue="t1124" data-t="1124" data-label="18:44">there will likely have to be lots of difficult budget conversations.</span> <span class="cue" id="t1128" data-cue="t1128" data-t="1128" data-label="18:48">I think that</span> <span class="cue" id="t1130" data-cue="t1130" data-t="1130" data-label="18:50">we can't compromise a well rounded academic</span> <span class="cue" id="t1134" data-cue="t1134" data-t="1134" data-label="18:54">rigorous curriculum for the students,</span> <span class="cue" id="t1137" data-cue="t1137" data-t="1137" data-label="18:57">nor options to engage extracurricular activities, whether that be</span> <span class="cue" id="t1141" data-cue="t1141" data-t="1141" data-label="19:01">clubs,</span> <span class="cue" id="t1142" data-cue="t1142" data-t="1142" data-label="19:02">music, or athletics.</span> <span class="cue" id="t1145" data-cue="t1145" data-t="1145" data-label="19:05">And I think that there are creative ways</span> <span class="cue" id="t1150" data-cue="t1150" data-t="1150" data-label="19:10">to ensure that many</span> <span class="cue" id="t1152" data-cue="t1152" data-t="1152" data-label="19:12">things, if not all that are currently</span> <span class="cue" id="t1154" data-cue="t1154" data-t="1154" data-label="19:14">happening still occur. And I don't know what those ways are. I think they'll present themselves along the way as we dive into this situation a bit more.</span> <span class="cue" id="t1163" data-cue="t1163" data-t="1163" data-label="19:23">So</span> <span class="cue" id="t1164" data-cue="t1164" data-t="1164" data-label="19:24">sort of exactly like Ed said, I don't think we can pinpoint exactly what</span> <span class="cue" id="t1169" data-cue="t1169" data-t="1169" data-label="19:29">the rollout would be,</span> <span class="cue" id="t1171" data-cue="t1171" data-t="1171" data-label="19:31">but I think we're gonna have to have creative leaders. I think we're gonna have to think of new ways to do things such as how we're doing them now in an effort to cut as little, if anything at all for the students to meet all of the students' needs, because there are students that have various needs, interests, and strengths,</span> <span class="cue" id="t1188" data-cue="t1188" data-t="1188" data-label="19:48">and we should be able to have offerings that appeal to all of them.</span> <span class="cue" id="t1192" data-cue="t1192" data-t="1192" data-label="19:52">Thank you.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="19:57" data-default-t="1197">19:57</div>
+        <div class="text"><span class="cue" id="t1197" data-cue="t1197" data-t="1197" data-label="19:57">Hi, this is this is Brian and from a priority standpoint,</span> <span class="cue" id="t1202" data-cue="t1202" data-t="1202" data-label="20:02">it's</span> <span class="cue" id="t1203" data-cue="t1203" data-t="1203" data-label="20:03">the priority</span> <span class="cue" id="t1204" data-cue="t1204" data-t="1204" data-label="20:04">is education.</span> <span class="cue" id="t1208" data-cue="t1208" data-t="1208" data-label="20:08">Whether or not</span> <span class="cue" id="t1209" data-cue="t1209" data-t="1209" data-label="20:09">you'd wind up having to evaluate</span> <span class="cue" id="t1212" data-cue="t1212" data-t="1212" data-label="20:12">different ways to deliver that education. But you know, the question was, what's the priority?</span> <span class="cue" id="t1217" data-cue="t1217" data-t="1217" data-label="20:17">The priority, the priorities education,</span> <span class="cue" id="t1221" data-cue="t1221" data-t="1221" data-label="20:21">you know, from there, you'd look at,</span> <span class="cue" id="t1223" data-cue="t1223" data-t="1223" data-label="20:23">you know, what you've been able to do as relates to education and costs. Costs.</span> <span class="cue" id="t1228" data-cue="t1228" data-t="1228" data-label="20:28">And then identify what what might come next.</span> <span class="cue" id="t1232" data-cue="t1232" data-t="1232" data-label="20:32">As the other folks have said there, you know, it's not going be an individual, I think that that's able to make the decision you're going to work together.</span> <span class="cue" id="t1239" data-cue="t1239" data-t="1239" data-label="20:39">The key is working with the not just the board members,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="20:42" data-default-t="1242">20:42</div>
+        <div class="text"><span class="cue" id="t1242" data-cue="t1242" data-t="1242" data-label="20:42">but the superintendents</span> <span class="cue" id="t1244" data-cue="t1244" data-t="1244" data-label="20:44">and you know, and the folks within the school to help them identify what the priorities are post that but,</span> <span class="cue" id="t1251" data-cue="t1251" data-t="1251" data-label="20:51">you know, again, just from a straight what's the number one priority, it's the education of the students. Students</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="21:10" data-default-t="1270">21:10</div>
+        <div class="text"><span class="cue" id="t1270" data-cue="t1270" data-t="1270" data-label="21:10">of Jeff, back to you. You wanted to hear from the other select persons?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="21:20" data-default-t="1280">21:20</div>
+        <div class="text"><span class="cue" id="t1280" data-cue="t1280" data-t="1280" data-label="21:20">If they don't have a problem with taking the public vote or if they think that the chat is not a good option, then we're gonna go with the way that this meeting was established and set up in the beginning. Hey, Jeff, it's Jeff Murray. Hey, Jeff. Hey, how are you? I, you know, if somebody's really uncomfortable, we do the roll call. Would it be possible for them to just say instead of the vote that they're doing to say chat? So Linda could expect that to come in via chat and if the other people on the phone say text or call,</span> <span class="cue" id="t1309" data-cue="t1309" data-t="1309" data-label="21:49">they could expect their vote text or call.</span> <span class="cue" id="t1312" data-cue="t1312" data-t="1312" data-label="21:52">I think that the people that are gonna defer are probably gonna be small but we should give them that option</span> <span class="cue" id="t1318" data-cue="t1318" data-t="1318" data-label="21:58">if they so choose.</span> <span class="cue" id="t1319" data-cue="t1319" data-t="1319" data-label="21:59">Okay.</span> <span class="cue" id="t1321" data-cue="t1321" data-t="1321" data-label="22:01">That's just my thoughts.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="22:03" data-default-t="1323">22:03</div>
+        <div class="text"><span class="cue" id="t1323" data-cue="t1323" data-t="1323" data-label="22:03">Yeah,</span> <span class="cue" id="t1324" data-cue="t1324" data-t="1324" data-label="22:04">we so we talked about this</span> <span class="cue" id="t1326" data-cue="t1326" data-t="1326" data-label="22:06">a while during our meeting and I know a lot of people weren't able to</span> <span class="cue" id="t1331" data-cue="t1331" data-t="1331" data-label="22:11">listen in that night. So</span> <span class="cue" id="t1335" data-cue="t1335" data-t="1335" data-label="22:15">this was the best option we could do, but I'm</span> <span class="cue" id="t1338" data-cue="t1338" data-t="1338" data-label="22:18">fine with if people are not comfortable doing it publicly. I'm</span> <span class="cue" id="t1342" data-cue="t1342" data-t="1342" data-label="22:22">fine with either text or chat. I want to make sure everybody's comfortable with, you know, the procedure.</span> <span class="cue" id="t1348" data-cue="t1348" data-t="1348" data-label="22:28">So I'm fine with that.</span> <span class="cue" id="t1351" data-cue="t1351" data-t="1351" data-label="22:31">Scott.</span> <span class="cue" id="t1356" data-cue="t1356" data-t="1356" data-label="22:36">Scott, you have to unmute yourself.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="22:41" data-default-t="1361">22:41</div>
+        <div class="text"><span class="cue" id="t1361" data-cue="t1361" data-t="1361" data-label="22:41">I'm fine. I'm fine the way it's set up.</span> <span class="cue" id="t1364" data-cue="t1364" data-t="1364" data-label="22:44">Okay.</span> <span class="cue" id="t1367" data-cue="t1367" data-t="1367" data-label="22:47">Well?</span> <span class="cue" id="t1368" data-cue="t1368" data-t="1368" data-label="22:48">Dan, Lauren has his hand up.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="22:52" data-default-t="1372">22:52</div>
+        <div class="text"><span class="cue" id="t1372" data-cue="t1372" data-t="1372" data-label="22:52">Yeah. For the people that don't want to vote publicly, is it possible</span> <span class="cue" id="t1377" data-cue="t1377" data-t="1377" data-label="22:57">when the rest of us vote,</span> <span class="cue" id="t1379" data-cue="t1379" data-t="1379" data-label="22:59">afterwards they go into the waiting room and you bring them in one by one and they cast their vote unrecorded and then they go back into the waiting room?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="23:07" data-default-t="1387">23:07</div>
+        <div class="text"><span class="cue" id="t1387" data-cue="t1387" data-t="1387" data-label="23:07">That that's defeating the whole point of what they're trying to accomplish which to keep their vote private</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="23:13" data-default-t="1393">23:13</div>
+        <div class="text"><span class="cue" id="t1393" data-cue="t1393" data-t="1393" data-label="23:13">because it's a recorded meeting.</span> <span class="cue" id="t1395" data-cue="t1395" data-t="1395" data-label="23:15">This is just I just said unrecord that at that part of it. Stop the recording.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="23:21" data-default-t="1401">23:21</div>
+        <div class="text"><span class="cue" id="t1401" data-cue="t1401" data-t="1401" data-label="23:21">Okay. Now we're gonna end up having to sit there and and</span> <span class="cue" id="t1409" data-cue="t1409" data-t="1409" data-label="23:29">listen. We went through the town attorney to try to get this meeting set up because it was so different.</span> <span class="cue" id="t1415" data-cue="t1415" data-t="1415" data-label="23:35">I</span> <span class="cue" id="t1417" data-cue="t1417" data-t="1417" data-label="23:37">personally just believe now with everybody, we should all follow the same rules</span> <span class="cue" id="t1422" data-cue="t1422" data-t="1422" data-label="23:42">and we should all have to give our vote in public. It might be difficult, but it's just something that we should do.</span> <span class="cue" id="t1430" data-cue="t1430" data-t="1430" data-label="23:50">That's my opinion. The other selectmen I understand, right</span> <span class="cue" id="t1434" data-cue="t1434" data-t="1434" data-label="23:54">now we'd end up in a two two tie, so that's not really gonna do us any good. I just say we established meeting and the rules for this meeting this way, we should just do it Because I don't think taking Dan's idea and stopping the recording is really</span> <span class="cue" id="t1449" data-cue="t1449" data-t="1449" data-label="24:09">it will cause us more problems down the road than</span> <span class="cue" id="t1452" data-cue="t1452" data-t="1452" data-label="24:12">it will</span> <span class="cue" id="t1454" data-cue="t1454" data-t="1454" data-label="24:14">help someone avoid</span> <span class="cue" id="t1455" data-cue="t1455" data-t="1455" data-label="24:15">publicly voting for one of the candidates. So</span> <span class="cue" id="t1459" data-cue="t1459" data-t="1459" data-label="24:19">let's continue with the meeting as is and</span> <span class="cue" id="t1463" data-cue="t1463" data-t="1463" data-label="24:23">I just believe it's just in our best interest to sit there and all follow the same rules. So we're all gonna have to sit there and say who we're voting for.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="24:33" data-default-t="1473">24:33</div>
+        <div class="text"><span class="cue" id="t1473" data-cue="t1473" data-t="1473" data-label="24:33">All right, are we ready to start the vote then?</span> <span class="cue" id="t1476" data-cue="t1476" data-t="1476" data-label="24:36">Let's go.</span> <span class="cue" id="t1478" data-cue="t1478" data-t="1478" data-label="24:38">Amanda,</span> <span class="cue" id="t1480" data-cue="t1480" data-t="1480" data-label="24:40">can you go down through the roll please?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="24:42" data-default-t="1482">24:42</div>
+        <div class="text"><span class="cue" id="t1482" data-cue="t1482" data-t="1482" data-label="24:42">Yes. Okay. I'm going to go one by one.</span> <span class="cue" id="t1486" data-cue="t1486" data-t="1486" data-label="24:46">First, we have</span> <span class="cue" id="t1488" data-cue="t1488" data-t="1488" data-label="24:48">Carrie Crompton</span> <span class="cue" id="t1490" data-cue="t1490" data-t="1490" data-label="24:50">and George Elliott.</span> <span class="cue" id="t1493" data-cue="t1493" data-t="1493" data-label="24:53">You have to unmute yourself.</span> <span class="cue" id="t1497" data-cue="t1497" data-t="1497" data-label="24:57">Brian Klee.</span> <span class="cue" id="t1500" data-cue="t1500" data-t="1500" data-label="25:00">Brian Klee.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="25:01" data-default-t="1501">25:01</div>
+        <div class="text"><span class="cue" id="t1501" data-cue="t1501" data-t="1501" data-label="25:01">Okay. Thank you.</span> <span class="cue" id="t1505" data-cue="t1505" data-t="1505" data-label="25:05">Next,</span> <span class="cue" id="t1506" data-cue="t1506" data-t="1506" data-label="25:06">have Dan and Delia Foran.</span> <span class="cue" id="t1510" data-cue="t1510" data-t="1510" data-label="25:10">Please unmute yourself.</span> <span class="cue" id="t1513" data-cue="t1513" data-t="1513" data-label="25:13">Ed Smith.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="25:14" data-default-t="1514">25:14</div>
+        <div class="text"><span class="cue" id="t1514" data-cue="t1514" data-t="1514" data-label="25:14">Ed Smith.</span> <span class="cue" id="t1517" data-cue="t1517" data-t="1517" data-label="25:17">Thank you.</span> <span class="cue" id="t1518" data-cue="t1518" data-t="1518" data-label="25:18">Jeff McGuire, did you want to cast a vote?</span> <span class="cue" id="t1523" data-cue="t1523" data-t="1523" data-label="25:23">You're muted.</span> <span class="cue" id="t1526" data-cue="t1526" data-t="1526" data-label="25:26">Brian Clayton.</span> <span class="cue" id="t1528" data-cue="t1528" data-t="1528" data-label="25:28">Thank you.</span> <span class="cue" id="t1529" data-cue="t1529" data-t="1529" data-label="25:29">I think I like him more.</span> <span class="cue" id="t1533" data-cue="t1533" data-t="1533" data-label="25:33">Eric Anderson.</span> <span class="cue" id="t1541" data-cue="t1541" data-t="1541" data-label="25:41">Brian Clay.</span> <span class="cue" id="t1543" data-cue="t1543" data-t="1543" data-label="25:43">Okay.</span> <span class="cue" id="t1546" data-cue="t1546" data-t="1546" data-label="25:46">Thank you.</span> <span class="cue" id="t1547" data-cue="t1547" data-t="1547" data-label="25:47">Georgette Conrad.</span> <span class="cue" id="t1556" data-cue="t1556" data-t="1556" data-label="25:56">Georgette.</span> <span class="cue" id="t1558" data-cue="t1558" data-t="1558" data-label="25:58">Georgette,</span> <span class="cue" id="t1559" data-cue="t1559" data-t="1559" data-label="25:59">please unmute yourself.</span> <span class="cue" id="t1560" data-cue="t1560" data-t="1560" data-label="26:00">Okay, am I unmuted?</span> <span class="cue" id="t1563" data-cue="t1563" data-t="1563" data-label="26:03">Yes.</span> <span class="cue" id="t1564" data-cue="t1564" data-t="1564" data-label="26:04">Ryan Clay.</span> <span class="cue" id="t1567" data-cue="t1567" data-t="1567" data-label="26:07">Thank you.</span> <span class="cue" id="t1571" data-cue="t1571" data-t="1571" data-label="26:11">Mark Brinker.</span> <span class="cue" id="t1574" data-cue="t1574" data-t="1574" data-label="26:14">Please unmute yourself.</span> <span class="cue" id="t1576" data-cue="t1576" data-t="1576" data-label="26:16">Ed Smith.</span> <span class="cue" id="t1579" data-cue="t1579" data-t="1579" data-label="26:19">Thank you.</span> <span class="cue" id="t1580" data-cue="t1580" data-t="1580" data-label="26:20">And Jen is there.</span> <span class="cue" id="t1583" data-cue="t1583" data-t="1583" data-label="26:23">Yep, Ed Smith.</span> <span class="cue" id="t1592" data-cue="t1592" data-t="1592" data-label="26:32">Thank you.</span> <span class="cue" id="t1594" data-cue="t1594" data-t="1594" data-label="26:34">Bill Penn?</span> <span class="cue" id="t1598" data-cue="t1598" data-t="1598" data-label="26:38">It's Bill.</span> <span class="cue" id="t1600" data-cue="t1600" data-t="1600" data-label="26:40">Thank you.</span> <span class="cue" id="t1602" data-cue="t1602" data-t="1602" data-label="26:42">Thank you.</span> <span class="cue" id="t1604" data-cue="t1604" data-t="1604" data-label="26:44">Paula King.</span> <span class="cue" id="t1608" data-cue="t1608" data-t="1608" data-label="26:48">Lori Blake.</span> <span class="cue" id="t1610" data-cue="t1610" data-t="1610" data-label="26:50">Thank you.</span> <span class="cue" id="t1614" data-cue="t1614" data-t="1614" data-label="26:54">Grace and Dave Gustonian.</span> <span class="cue" id="t1617" data-cue="t1617" data-t="1617" data-label="26:57">Brian Clay.</span> <span class="cue" id="t1619" data-cue="t1619" data-t="1619" data-label="26:59">Brian Clay.</span> <span class="cue" id="t1621" data-cue="t1621" data-t="1621" data-label="27:01">Thank you.</span> <span class="cue" id="t1624" data-cue="t1624" data-t="1624" data-label="27:04">Anne Marie Daigle.</span> <span class="cue" id="t1626" data-cue="t1626" data-t="1626" data-label="27:06">Ed Smith.</span> <span class="cue" id="t1629" data-cue="t1629" data-t="1629" data-label="27:09">Thank you.</span> <span class="cue" id="t1634" data-cue="t1634" data-t="1634" data-label="27:14">Jerry Crem.</span> <span class="cue" id="t1636" data-cue="t1636" data-t="1636" data-label="27:16">Cremay. Laurie Blake.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="27:19" data-default-t="1639">27:19</div>
+        <div class="text"><span class="cue" id="t1639" data-cue="t1639" data-t="1639" data-label="27:19">Anne Cremay.</span> <span class="cue" id="t1640" data-cue="t1640" data-t="1640" data-label="27:20">Laurie Blake.</span> <span class="cue" id="t1642" data-cue="t1642" data-t="1642" data-label="27:22">Catherine Creme.</span> <span class="cue" id="t1644" data-cue="t1644" data-t="1644" data-label="27:24">Laurie Blake.</span> <span class="cue" id="t1646" data-cue="t1646" data-t="1646" data-label="27:26">Thank you.</span> <span class="cue" id="t1650" data-cue="t1650" data-t="1650" data-label="27:30">Ed Smith.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="27:32" data-default-t="1652">27:32</div>
+        <div class="text"><span class="cue" id="t1652" data-cue="t1652" data-t="1652" data-label="27:32">Myself,</span> <span class="cue" id="t1653" data-cue="t1653" data-t="1653" data-label="27:33">Ed Smith.</span> <span class="cue" id="t1654" data-cue="t1654" data-t="1654" data-label="27:34">And do you have Christie Hayes now? She was trying to get in. I was on the phone.</span> <span class="cue" id="t1660" data-cue="t1660" data-t="1660" data-label="27:40">You registered me on the phone.</span> <span class="cue" id="t1664" data-cue="t1664" data-t="1664" data-label="27:44">We did have her check-in.</span> <span class="cue" id="t1666" data-cue="t1666" data-t="1666" data-label="27:46">Okay.</span> <span class="cue" id="t1668" data-cue="t1668" data-t="1668" data-label="27:48">Ed Smith.</span> <span class="cue" id="t1669" data-cue="t1669" data-t="1669" data-label="27:49">Thank you.</span> <span class="cue" id="t1673" data-cue="t1673" data-t="1673" data-label="27:53">Katrina.</span> <span class="cue" id="t1675" data-cue="t1675" data-t="1675" data-label="27:55">Brian Cleat.</span> <span class="cue" id="t1678" data-cue="t1678" data-t="1678" data-label="27:58">Thank you.</span> <span class="cue" id="t1680" data-cue="t1680" data-t="1680" data-label="28:00">Maria Nella Chalfant.</span> <span class="cue" id="t1685" data-cue="t1685" data-t="1685" data-label="28:05">Lori Blake.</span> <span class="cue" id="t1687" data-cue="t1687" data-t="1687" data-label="28:07">Thank you.</span> <span class="cue" id="t1689" data-cue="t1689" data-t="1689" data-label="28:09">Irv Stanley?</span> <span class="cue" id="t1692" data-cue="t1692" data-t="1692" data-label="28:12">You have to unmute yourself.</span> <span class="cue" id="t1698" data-cue="t1698" data-t="1698" data-label="28:18">Brian Clay.</span> <span class="cue" id="t1700" data-cue="t1700" data-t="1700" data-label="28:20">Thank you.</span> <span class="cue" id="t1704" data-cue="t1704" data-t="1704" data-label="28:24">Stacy Bigley,</span> <span class="cue" id="t1707" data-cue="t1707" data-t="1707" data-label="28:27">please unmute.</span> <span class="cue" id="t1713" data-cue="t1713" data-t="1713" data-label="28:33">Monique Blake.</span> <span class="cue" id="t1714" data-cue="t1714" data-t="1714" data-label="28:34">Thank you.</span> <span class="cue" id="t1716" data-cue="t1716" data-t="1716" data-label="28:36">Absolutely.</span> <span class="cue" id="t1718" data-cue="t1718" data-t="1718" data-label="28:38">Brian Clay.</span> <span class="cue" id="t1721" data-cue="t1721" data-t="1721" data-label="28:41">Myself, Brian Clay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="28:42" data-default-t="1722">28:42</div>
+        <div class="text"><span class="cue" id="t1722" data-cue="t1722" data-t="1722" data-label="28:42">Thank you.</span> <span class="cue" id="t1726" data-cue="t1726" data-t="1726" data-label="28:46">Carol and Wally, I don't wanna leave you out.</span> <span class="cue" id="t1729" data-cue="t1729" data-t="1729" data-label="28:49">Brian Clayton for Wally.</span> <span class="cue" id="t1731" data-cue="t1731" data-t="1731" data-label="28:51">Brian Clayton</span> <span class="cue" id="t1733" data-cue="t1733" data-t="1733" data-label="28:53">for Carol. Kathleen</span> <span class="cue" id="t1738" data-cue="t1738" data-t="1738" data-label="28:58">Barrett.</span> <span class="cue" id="t1739" data-cue="t1739" data-t="1739" data-label="28:59">Ed Smith.</span> <span class="cue" id="t1741" data-cue="t1741" data-t="1741" data-label="29:01">Thank you.</span> <span class="cue" id="t1745" data-cue="t1745" data-t="1745" data-label="29:05">Scott Person?</span> <span class="cue" id="t1749" data-cue="t1749" data-t="1749" data-label="29:09">Ryan Clayt.</span> <span class="cue" id="t1750" data-cue="t1750" data-t="1750" data-label="29:10">Thank you.</span> <span class="cue" id="t1753" data-cue="t1753" data-t="1753" data-label="29:13">Shannon Loudon?</span> <span class="cue" id="t1757" data-cue="t1757" data-t="1757" data-label="29:17">Ed Smith.</span> <span class="cue" id="t1760" data-cue="t1760" data-t="1760" data-label="29:20">Thank you.</span> <span class="cue" id="t1763" data-cue="t1763" data-t="1763" data-label="29:23">Laurie Blake?</span> <span class="cue" id="t1767" data-cue="t1767" data-t="1767" data-label="29:27">Laurie Blake?</span> <span class="cue" id="t1769" data-cue="t1769" data-t="1769" data-label="29:29">Sean?</span> <span class="cue" id="t1774" data-cue="t1774" data-t="1774" data-label="29:34">Okay, Cindy and Jeff Murray?</span> <span class="cue" id="t1779" data-cue="t1779" data-t="1779" data-label="29:39">Laurie Blake.</span> <span class="cue" id="t1781" data-cue="t1781" data-t="1781" data-label="29:41">Laurie Blake.</span> <span class="cue" id="t1783" data-cue="t1783" data-t="1783" data-label="29:43">Thank you.</span> <span class="cue" id="t1786" data-cue="t1786" data-t="1786" data-label="29:46">Alright, next page.</span> <span class="cue" id="t1789" data-cue="t1789" data-t="1789" data-label="29:49">Kathy and Mike Palazzi.</span> <span class="cue" id="t1796" data-cue="t1796" data-t="1796" data-label="29:56">Brian Clay for Mike.</span> <span class="cue" id="t1798" data-cue="t1798" data-t="1798" data-label="29:58">Laurie Blake for Kathy.</span> <span class="cue" id="t1803" data-cue="t1803" data-t="1803" data-label="30:03">Thank you.</span> <span class="cue" id="t1805" data-cue="t1805" data-t="1805" data-label="30:05">Diane Grenier.</span> <span class="cue" id="t1810" data-cue="t1810" data-t="1810" data-label="30:10">Laurie Blake.</span> <span class="cue" id="t1813" data-cue="t1813" data-t="1813" data-label="30:13">Thank you.</span> <span class="cue" id="t1820" data-cue="t1820" data-t="1820" data-label="30:20">Bill and Lorraine.</span> <span class="cue" id="t1825" data-cue="t1825" data-t="1825" data-label="30:25">Ed Smith for Bill.</span> <span class="cue" id="t1827" data-cue="t1827" data-t="1827" data-label="30:27">Ed Smith for Lorraine.</span> <span class="cue" id="t1829" data-cue="t1829" data-t="1829" data-label="30:29">Thank you.</span> <span class="cue" id="t1832" data-cue="t1832" data-t="1832" data-label="30:32">Robert and Katherine</span> <span class="cue" id="t1835" data-cue="t1835" data-t="1835" data-label="30:35">Smith</span> <span class="cue" id="t1837" data-cue="t1837" data-t="1837" data-label="30:37">Ed Smith for Robert</span> <span class="cue" id="t1843" data-cue="t1843" data-t="1843" data-label="30:43">Katherine what was your vote</span> <span class="cue" id="t1845" data-cue="t1845" data-t="1845" data-label="30:45">Ed Smith, please. Thank you.</span> <span class="cue" id="t1850" data-cue="t1850" data-t="1850" data-label="30:50">Pat Morardi?</span> <span class="cue" id="t1852" data-cue="t1852" data-t="1852" data-label="30:52">Lori Blake.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="30:54" data-default-t="1854">30:54</div>
+        <div class="text"><span class="cue" id="t1854" data-cue="t1854" data-t="1854" data-label="30:54">Thank you.</span> <span class="cue" id="t1857" data-cue="t1857" data-t="1857" data-label="30:57">Linda and Steve Fish, we'll go with them first.</span> <span class="cue" id="t1862" data-cue="t1862" data-t="1862" data-label="31:02">Hi,</span> <span class="cue" id="t1864" data-cue="t1864" data-t="1864" data-label="31:04">Brian Klait for Linda.</span> <span class="cue" id="t1867" data-cue="t1867" data-t="1867" data-label="31:07">Brian Klait for Steve.</span> <span class="cue" id="t1871" data-cue="t1871" data-t="1871" data-label="31:11">Please announce your name before</span> <span class="cue" id="t1874" data-cue="t1874" data-t="1874" data-label="31:14">you vote.</span> <span class="cue" id="t1878" data-cue="t1878" data-t="1878" data-label="31:18">Carol,</span> <span class="cue" id="t1880" data-cue="t1880" data-t="1880" data-label="31:20">Laurie Blake,</span> <span class="cue" id="t1884" data-cue="t1884" data-t="1884" data-label="31:24">Dennis,</span> <span class="cue" id="t1885" data-cue="t1885" data-t="1885" data-label="31:25">Brian Clay.</span> <span class="cue" id="t1892" data-cue="t1892" data-t="1892" data-label="31:32">Tanya.</span> <span class="cue" id="t1898" data-cue="t1898" data-t="1898" data-label="31:38">Laurie Lake.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="31:40" data-default-t="1900">31:40</div>
+        <div class="text"><span class="cue" id="t1900" data-cue="t1900" data-t="1900" data-label="31:40">Thank you.</span> <span class="cue" id="t1904" data-cue="t1904" data-t="1904" data-label="31:44">Elaine Baccard and Don Keener.</span> <span class="cue" id="t1915" data-cue="t1915" data-t="1915" data-label="31:55">I was clicking on the wrong thing. Sorry.</span> <span class="cue" id="t1918" data-cue="t1918" data-t="1918" data-label="31:58">Elaine for Lori Blake.</span> <span class="cue" id="t1920" data-cue="t1920" data-t="1920" data-label="32:00">Don for Lori Blake.</span> <span class="cue" id="t1924" data-cue="t1924" data-t="1924" data-label="32:04">Thank you.</span> <span class="cue" id="t1926" data-cue="t1926" data-t="1926" data-label="32:06">Charlotte Nelson.</span> <span class="cue" id="t1931" data-cue="t1931" data-t="1931" data-label="32:11">Ed Smith.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="32:13" data-default-t="1933">32:13</div>
+        <div class="text"><span class="cue" id="t1933" data-cue="t1933" data-t="1933" data-label="32:13">Thank you.</span> <span class="cue" id="t1936" data-cue="t1936" data-t="1936" data-label="32:16">Kristen Soloway.</span> <span class="cue" id="t1942" data-cue="t1942" data-t="1942" data-label="32:22">Please unmute.</span> <span class="cue" id="t1943" data-cue="t1943" data-t="1943" data-label="32:23">Lori Blake.</span> <span class="cue" id="t1945" data-cue="t1945" data-t="1945" data-label="32:25">Thank you.</span> <span class="cue" id="t1948" data-cue="t1948" data-t="1948" data-label="32:28">Fred Oliver.</span> <span class="cue" id="t1952" data-cue="t1952" data-t="1952" data-label="32:32">Ed Smith.</span> <span class="cue" id="t1954" data-cue="t1954" data-t="1954" data-label="32:34">Thank you.</span> <span class="cue" id="t1958" data-cue="t1958" data-t="1958" data-label="32:38">Stephanie Bancroft.</span> <span class="cue" id="t1961" data-cue="t1961" data-t="1961" data-label="32:41">Brian Clayton.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="32:44" data-default-t="1964">32:44</div>
+        <div class="text"><span class="cue" id="t1964" data-cue="t1964" data-t="1964" data-label="32:44">You.</span> <span class="cue" id="t1965" data-cue="t1965" data-t="1965" data-label="32:45">Erin Boris.</span> <span class="cue" id="t1974" data-cue="t1974" data-t="1974" data-label="32:54">Linda, was that clear? Laurie Blake.</span> <span class="cue" id="t1977" data-cue="t1977" data-t="1977" data-label="32:57">Okay.</span> <span class="cue" id="t1978" data-cue="t1978" data-t="1978" data-label="32:58">Thank you.</span> <span class="cue" id="t1980" data-cue="t1980" data-t="1980" data-label="33:00">Katie Marino.</span> <span class="cue" id="t1982" data-cue="t1982" data-t="1982" data-label="33:02">Laurie Blake. Thank</span> <span class="cue" id="t1985" data-cue="t1985" data-t="1985" data-label="33:05">you.</span> <span class="cue" id="t1986" data-cue="t1986" data-t="1986" data-label="33:06">Susan Slater.</span> <span class="cue" id="t1989" data-cue="t1989" data-t="1989" data-label="33:09">Laurie Blake.</span> <span class="cue" id="t1992" data-cue="t1992" data-t="1992" data-label="33:12">You.</span> <span class="cue" id="t1993" data-cue="t1993" data-t="1993" data-label="33:13">Scott Chalfant.</span> <span class="cue" id="t1995" data-cue="t1995" data-t="1995" data-label="33:15">Laurie Blake.</span> <span class="cue" id="t1997" data-cue="t1997" data-t="1997" data-label="33:17">Thank you.</span> <span class="cue" id="t2001" data-cue="t2001" data-t="2001" data-label="33:21">Nancy Dooley.</span> <span class="cue" id="t2005" data-cue="t2005" data-t="2005" data-label="33:25">Laurie Blake.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="33:26" data-default-t="2006">33:26</div>
+        <div class="text"><span class="cue" id="t2006" data-cue="t2006" data-t="2006" data-label="33:26">Thank</span> <span class="cue" id="t2008" data-cue="t2008" data-t="2008" data-label="33:28">you.</span> <span class="cue" id="t2009" data-cue="t2009" data-t="2009" data-label="33:29">Linda Armstrong.</span> <span class="cue" id="t2012" data-cue="t2012" data-t="2012" data-label="33:32">Ed Smith.</span> <span class="cue" id="t2015" data-cue="t2015" data-t="2015" data-label="33:35">Thank you.</span> <span class="cue" id="t2017" data-cue="t2017" data-t="2017" data-label="33:37">Lorraine and Tom.</span> <span class="cue" id="t2025" data-cue="t2025" data-t="2025" data-label="33:45">Lorraine and Thomas Dunphy.</span> <span class="cue" id="t2037" data-cue="t2037" data-t="2037" data-label="33:57">Lorraine and Thomas Dunphy are you there?</span> <span class="cue" id="t2045" data-cue="t2045" data-t="2045" data-label="34:05">Alright, we'll circle back.</span> <span class="cue" id="t2047" data-cue="t2047" data-t="2047" data-label="34:07">Next up, Louise Goodwin</span> <span class="cue" id="t2050" data-cue="t2050" data-t="2050" data-label="34:10">and Joe King.</span> <span class="cue" id="t2053" data-cue="t2053" data-t="2053" data-label="34:13">Ed Smith.</span> <span class="cue" id="t2056" data-cue="t2056" data-t="2056" data-label="34:16">And Ed Smith.</span> <span class="cue" id="t2058" data-cue="t2058" data-t="2058" data-label="34:18">Thank you.</span> <span class="cue" id="t2062" data-cue="t2062" data-t="2062" data-label="34:22">Paul Bancroft.</span> <span class="cue" id="t2066" data-cue="t2066" data-t="2066" data-label="34:26">Brian</span> <span class="cue" id="t2067" data-cue="t2067" data-t="2067" data-label="34:27">Clay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="34:30" data-default-t="2070">34:30</div>
+        <div class="text"><span class="cue" id="t2070" data-cue="t2070" data-t="2070" data-label="34:30">Thank you.</span> <span class="cue" id="t2072" data-cue="t2072" data-t="2072" data-label="34:32">Linda, just FYI, we had Lucy Wilson join on the meeting.</span> <span class="cue" id="t2076" data-cue="t2076" data-t="2076" data-label="34:36">Would you like to add or go back?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="34:41" data-default-t="2081">34:41</div>
+        <div class="text"><span class="cue" id="t2081" data-cue="t2081" data-t="2081" data-label="34:41">Should we just</span> <span class="cue" id="t2083" data-cue="t2083" data-t="2083" data-label="34:43">get her in right this second? Lucy,</span> <span class="cue" id="t2087" data-cue="t2087" data-t="2087" data-label="34:47">Where are you?</span> <span class="cue" id="t2091" data-cue="t2091" data-t="2091" data-label="34:51">Lucy</span> <span class="cue" id="t2092" data-cue="t2092" data-t="2092" data-label="34:52">Wilson, you have to unmute yourself. Hi, Lucy.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="34:57" data-default-t="2097">34:57</div>
+        <div class="text"><span class="cue" id="t2097" data-cue="t2097" data-t="2097" data-label="34:57">Lucy. Do you want tell me your address first? 428</span> <span class="cue" id="t2100" data-cue="t2100" data-t="2100" data-label="35:00">Lake Road.</span> <span class="cue" id="t2102" data-cue="t2102" data-t="2102" data-label="35:02">4</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="35:05" data-default-t="2105">35:05</div>
+        <div class="text"><span class="cue" id="t2105" data-cue="t2105" data-t="2105" data-label="35:05">Lake Road. Got it. And just flash me your photo ID.</span> <span class="cue" id="t2109" data-cue="t2109" data-t="2109" data-label="35:09">Okay.</span> <span class="cue" id="t2110" data-cue="t2110" data-t="2110" data-label="35:10">Give me one second.</span> <span class="cue" id="t2114" data-cue="t2114" data-t="2114" data-label="35:14">Very</span> <span class="cue" id="t2115" data-cue="t2115" data-t="2115" data-label="35:15">good. Thanks, Lucy.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="35:17" data-default-t="2117">35:17</div>
+        <div class="text"><span class="cue" id="t2117" data-cue="t2117" data-t="2117" data-label="35:17">Thank you. Okay. See we have Lorraine and Thomas Dunphy have unmuted themselves.</span> <span class="cue" id="t2130" data-cue="t2130" data-t="2130" data-label="35:30">Yep.</span> <span class="cue" id="t2133" data-cue="t2133" data-t="2133" data-label="35:33">Lorraine and Thomas Gungee. Can hear us?</span> <span class="cue" id="t2153" data-cue="t2153" data-t="2153" data-label="35:53">Okay, we'll circle back around.</span> <span class="cue" id="t2159" data-cue="t2159" data-t="2159" data-label="35:59">Scott Chalfant.</span> <span class="cue" id="t2163" data-cue="t2163" data-t="2163" data-label="36:03">I already voted Amanda.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="36:05" data-default-t="2165">36:05</div>
+        <div class="text"><span class="cue" id="t2165" data-cue="t2165" data-t="2165" data-label="36:05">Oh thank you.</span> <span class="cue" id="t2166" data-cue="t2166" data-t="2166" data-label="36:06">So I apologize.</span> <span class="cue" id="t2168" data-cue="t2168" data-t="2168" data-label="36:08">People have moved around during the voting. So please let me know if I call on you. Let me know if you already voted.</span> <span class="cue" id="t2176" data-cue="t2176" data-t="2176" data-label="36:16">Next we have Sheila Patrice.</span> <span class="cue" id="t2181" data-cue="t2181" data-t="2181" data-label="36:21">Lori Blake.</span> <span class="cue" id="t2183" data-cue="t2183" data-t="2183" data-label="36:23">Thank you.</span> <span class="cue" id="t2187" data-cue="t2187" data-t="2187" data-label="36:27">Ellie Pen?</span> <span class="cue" id="t2196" data-cue="t2196" data-t="2196" data-label="36:36">Ellie Pen, can you hear us?</span> <span class="cue" id="t2201" data-cue="t2201" data-t="2201" data-label="36:41">You have to unmute yourself.</span> <span class="cue" id="t2208" data-cue="t2208" data-t="2208" data-label="36:48">Sorry about that. Ed Smith.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="36:50" data-default-t="2210">36:50</div>
+        <div class="text"><span class="cue" id="t2210" data-cue="t2210" data-t="2210" data-label="36:50">Thank you.</span> <span class="cue" id="t2214" data-cue="t2214" data-t="2214" data-label="36:54">Megan Lally.</span> <span class="cue" id="t2218" data-cue="t2218" data-t="2218" data-label="36:58">Laurie Blake.</span> <span class="cue" id="t2222" data-cue="t2222" data-t="2222" data-label="37:02">Thank you.</span> <span class="cue" id="t2227" data-cue="t2227" data-t="2227" data-label="37:07">We have another phone number who is calling in. Linda?</span> <span class="cue" id="t2232" data-cue="t2232" data-t="2232" data-label="37:12">This is Lorraine.</span> <span class="cue" id="t2237" data-cue="t2237" data-t="2237" data-label="37:17">You are. Thank you.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="37:18" data-default-t="2238">37:18</div>
+        <div class="text"><span class="cue" id="t2238" data-cue="t2238" data-t="2238" data-label="37:18">I'm</span> <span class="cue" id="t2243" data-cue="t2243" data-t="2243" data-label="37:23">sorry. Did you get my vote for Ed Smith?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="37:26" data-default-t="2246">37:26</div>
+        <div class="text"><span class="cue" id="t2246" data-cue="t2246" data-t="2246" data-label="37:26">First, we need to check you in so you can give me your street address.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="37:32" data-default-t="2252">37:32</div>
+        <div class="text"><span class="cue" id="t2252" data-cue="t2252" data-t="2252" data-label="37:32">I've already did that, and I did my</span> <span class="cue" id="t2256" data-cue="t2256" data-t="2256" data-label="37:36">photo ID. It's just my camera went out. Okay. Then</span> <span class="cue" id="t2260" data-cue="t2260" data-t="2260" data-label="37:40">yes, we're on to your vote.</span> <span class="cue" id="t2264" data-cue="t2264" data-t="2264" data-label="37:44">Lorraine Dundee votes for Ed Smith.</span> <span class="cue" id="t2267" data-cue="t2267" data-t="2267" data-label="37:47">Thomas Dundee</span> <span class="cue" id="t2269" data-cue="t2269" data-t="2269" data-label="37:49">votes for Ed Smith.</span> <span class="cue" id="t2275" data-cue="t2275" data-t="2275" data-label="37:55">You get that?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="37:58" data-default-t="2278">37:58</div>
+        <div class="text"><span class="cue" id="t2278" data-cue="t2278" data-t="2278" data-label="37:58">Do you have</span> <span class="cue" id="t2280" data-cue="t2280" data-t="2280" data-label="38:00">Thank you.</span> <span class="cue" id="t2281" data-cue="t2281" data-t="2281" data-label="38:01">Okay.</span> <span class="cue" id="t2284" data-cue="t2284" data-t="2284" data-label="38:04">And Lorraine, if you could mute your phone back because it's</span> <span class="cue" id="t2288" data-cue="t2288" data-t="2288" data-label="38:08">reverbing. Great. Thanks. Thank you. Yep.</span> <span class="cue" id="t2292" data-cue="t2292" data-t="2292" data-label="38:12">So we just let Brian Dupli in.</span> <span class="cue" id="t2296" data-cue="t2296" data-t="2296" data-label="38:16">Brian? Brian,</span> <span class="cue" id="t2301" data-cue="t2301" data-t="2301" data-label="38:21">are you there?</span> <span class="cue" id="t2306" data-cue="t2306" data-t="2306" data-label="38:26">I think we're all set.</span> <span class="cue" id="t2308" data-cue="t2308" data-t="2308" data-label="38:28">Okay. Okay.</span> <span class="cue" id="t2310" data-cue="t2310" data-t="2310" data-label="38:30">Brian, can you hear</span> <span class="cue" id="t2313" data-cue="t2313" data-t="2313" data-label="38:33">us?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="38:37" data-default-t="2317">38:37</div>
+        <div class="text"><span class="cue" id="t2317" data-cue="t2317" data-t="2317" data-label="38:37">Brian, your audio is not connected.</span> <span class="cue" id="t2324" data-cue="t2324" data-t="2324" data-label="38:44">There we go. Looks like he's connecting now. Yep.</span> <span class="cue" id="t2340" data-cue="t2340" data-t="2340" data-label="39:00">Can he use my camera?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="39:10" data-default-t="2350">39:10</div>
+        <div class="text"><span class="cue" id="t2350" data-cue="t2350" data-t="2350" data-label="39:10">There you go. There we go. Sorry about that. I'm gonna use my wife's camera. Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="39:15" data-default-t="2355">39:15</div>
+        <div class="text"><span class="cue" id="t2355" data-cue="t2355" data-t="2355" data-label="39:15">Great. Ryan,</span> <span class="cue" id="t2356" data-cue="t2356" data-t="2356" data-label="39:16">so just tell me your street address. Sure. It's 5 Chester Brooks Lane.</span> <span class="cue" id="t2365" data-cue="t2365" data-t="2365" data-label="39:25">Okay. Very good. And then your photo ID in you're in.</span> <span class="cue" id="t2369" data-cue="t2369" data-t="2369" data-label="39:29">Great. Thank you. Okay.</span> <span class="cue" id="t2372" data-cue="t2372" data-t="2372" data-label="39:32">Are we taking his</span> <span class="cue" id="t2373" data-cue="t2373" data-t="2373" data-label="39:33">vote right now while he's here?</span> <span class="cue" id="t2379" data-cue="t2379" data-t="2379" data-label="39:39">Out for Laurie Blake.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="39:43" data-default-t="2383">39:43</div>
+        <div class="text"><span class="cue" id="t2383" data-cue="t2383" data-t="2383" data-label="39:43">Thank you. You're welcome. Okay.</span> <span class="cue" id="t2385" data-cue="t2385" data-t="2385" data-label="39:45">So I'm gonna take a moment and go through, make sure we haven't forgotten anyone or if anyone else got moved around. Hey, Amanda. I don't think we got Lucy.</span> <span class="cue" id="t2394" data-cue="t2394" data-t="2394" data-label="39:54">I didn't vote yet. Yeah. She needs to vote.</span> <span class="cue" id="t2399" data-cue="t2399" data-t="2399" data-label="39:59">Lucy, go ahead.</span> <span class="cue" id="t2401" data-cue="t2401" data-t="2401" data-label="40:01">Laurie Blake.</span> <span class="cue" id="t2402" data-cue="t2402" data-t="2402" data-label="40:02">Thank you.</span> <span class="cue" id="t2406" data-cue="t2406" data-t="2406" data-label="40:06">You have a question? I didn't vote yet.</span> <span class="cue" id="t2410" data-cue="t2410" data-t="2410" data-label="40:10">Georgia, go ahead.</span> <span class="cue" id="t2412" data-cue="t2412" data-t="2412" data-label="40:12">Clyde didn't vote yet.</span> <span class="cue" id="t2414" data-cue="t2414" data-t="2414" data-label="40:14">Okay, go ahead.</span> <span class="cue" id="t2416" data-cue="t2416" data-t="2416" data-label="40:16">Brian Clay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="40:21" data-default-t="2421">40:21</div>
+        <div class="text"><span class="cue" id="t2421" data-cue="t2421" data-t="2421" data-label="40:21">Was that your vote? That was my vote as well.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="40:26" data-default-t="2426">40:26</div>
+        <div class="text"><span class="cue" id="t2426" data-cue="t2426" data-t="2426" data-label="40:26">Just to clarify, are you both voting for Lori Blake?</span> <span class="cue" id="t2430" data-cue="t2430" data-t="2430" data-label="40:30">No, we're both voting for Brian Clayton.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="40:33" data-default-t="2433">40:33</div>
+        <div class="text"><span class="cue" id="t2433" data-cue="t2433" data-t="2433" data-label="40:33">Brian Clayton. Okay, thank you. And Amanda, Georgette already voted, so I have Georgette already. I'm But just adding</span> <span class="cue" id="t2441" data-cue="t2441" data-t="2441" data-label="40:41">Clive didn't. Yep. I'm just adding Clive. I already had you,</span> <span class="cue" id="t2446" data-cue="t2446" data-t="2446" data-label="40:46">Georgette.</span> <span class="cue" id="t2448" data-cue="t2448" data-t="2448" data-label="40:48">Thank you. Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="41:14" data-default-t="2474">41:14</div>
+        <div class="text"><span class="cue" id="t2474" data-cue="t2474" data-t="2474" data-label="41:14">Hand</span> <span class="cue" id="t2476" data-cue="t2476" data-t="2476" data-label="41:16">up</span> <span class="cue" id="t2484" data-cue="t2484" data-t="2484" data-label="41:24">no one has their hand up out there</span> <span class="cue" id="t2487" data-cue="t2487" data-t="2487" data-label="41:27">and has it checking</span> <span class="cue" id="t2490" data-cue="t2490" data-t="2490" data-label="41:30">just checking.</span> <span class="cue" id="t2500" data-cue="t2500" data-t="2500" data-label="41:40">Nope.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="41:50" data-default-t="2510">41:50</div>
+        <div class="text"><span class="cue" id="t2510" data-cue="t2510" data-t="2510" data-label="41:50">Okay. Please speak up and unmute yourself if you have not voted.</span> <span class="cue" id="t2515" data-cue="t2515" data-t="2515" data-label="41:55">I am triple checking now to make sure we have everyone. There's 53 participants.</span> <span class="cue" id="t2533" data-cue="t2533" data-t="2533" data-label="42:13">How many? 53 people. How come that Linda, is there an easy way to check</span> <span class="cue" id="t2538" data-cue="t2538" data-t="2538" data-label="42:18">if everyone</span> <span class="cue" id="t2539" data-cue="t2539" data-t="2539" data-label="42:19">who</span> <span class="cue" id="t2541" data-cue="t2541" data-t="2541" data-label="42:21">you signed in voted?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="42:28" data-default-t="2548">42:28</div>
+        <div class="text"><span class="cue" id="t2548" data-cue="t2548" data-t="2548" data-label="42:28">Not an easy way, but I can confirm that we have</span> <span class="cue" id="t2552" data-cue="t2552" data-t="2552" data-label="42:32">I have 67</span> <span class="cue" id="t2553" data-cue="t2553" data-t="2553" data-label="42:33">votes.</span> <span class="cue" id="t2555" data-cue="t2555" data-t="2555" data-label="42:35">I don't understand.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="42:37" data-default-t="2557">42:37</div>
+        <div class="text"><span class="cue" id="t2557" data-cue="t2557" data-t="2557" data-label="42:37">Because we have 53</span> <span class="cue" id="t2559" data-cue="t2559" data-t="2559" data-label="42:39">households,</span> <span class="cue" id="t2560" data-cue="t2560" data-t="2560" data-label="42:40">but there's multiple people in several several of the households.</span> <span class="cue" id="t2575" data-cue="t2575" data-t="2575" data-label="42:55">There's</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="42:56" data-default-t="2576">42:56</div>
+        <div class="text"><span class="cue" id="t2576" data-cue="t2576" data-t="2576" data-label="42:56">And on my list of</span> <span class="cue" id="t2580" data-cue="t2580" data-t="2580" data-label="43:00">checking in, had 69</span> <span class="cue" id="t2583" data-cue="t2583" data-t="2583" data-label="43:03">people</span> <span class="cue" id="t2584" data-cue="t2584" data-t="2584" data-label="43:04">checked in</span> <span class="cue" id="t2586" data-cue="t2586" data-t="2586" data-label="43:06">and 67</span> <span class="cue" id="t2588" data-cue="t2588" data-t="2588" data-label="43:08">votes.</span> <span class="cue" id="t2593" data-cue="t2593" data-t="2593" data-label="43:13">I counted 69 votes, Linda.</span> <span class="cue" id="t2600" data-cue="t2600" data-t="2600" data-label="43:20">I can count again.</span> <span class="cue" id="t2607" data-cue="t2607" data-t="2607" data-label="43:27">What did you say, Shannon?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="43:29" data-default-t="2609">43:29</div>
+        <div class="text"><span class="cue" id="t2609" data-cue="t2609" data-t="2609" data-label="43:29">69 votes? Yeah. The same number of people that you have entered for the meeting. Uh-huh.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="43:37" data-default-t="2617">43:37</div>
+        <div class="text"><span class="cue" id="t2617" data-cue="t2617" data-t="2617" data-label="43:37">Do you think it makes sense to go through each person again? I'm happy to do it.</span> <span class="cue" id="t2622" data-cue="t2622" data-t="2622" data-label="43:42">Let me just count real quick. I counted 68.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="43:46" data-default-t="2626">43:46</div>
+        <div class="text"><span class="cue" id="t2626" data-cue="t2626" data-t="2626" data-label="43:46">And</span> <span class="cue" id="t2628" data-cue="t2628" data-t="2628" data-label="43:48">while it is close,</span> <span class="cue" id="t2630" data-cue="t2630" data-t="2630" data-label="43:50">it is close.</span> <span class="cue" id="t2633" data-cue="t2633" data-t="2633" data-label="43:53">It's not a one vote margin or a two vote margin.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="44:00" data-default-t="2640">44:00</div>
+        <div class="text"><span class="cue" id="t2640" data-cue="t2640" data-t="2640" data-label="44:00">Right, Jeff. I counted 68 also. I had a an errant mark. Do you have 68? I have 68. Cindy and I had Cindy and I had 68 as well. Yeah. I actually have 68 as well.</span> <span class="cue" id="t2651" data-cue="t2651" data-t="2651" data-label="44:11">Are we sure on the number?</span> <span class="cue" id="t2654" data-cue="t2654" data-t="2654" data-label="44:14">Yes.</span> <span class="cue" id="t2656" data-cue="t2656" data-t="2656" data-label="44:16">Three? I was</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="44:17" data-default-t="2657">44:17</div>
+        <div class="text"><span class="cue" id="t2657" data-cue="t2657" data-t="2657" data-label="44:17">keeping track as well. And I think Sean Blake, I didn't actually hear his vote.</span> <span class="cue" id="t2664" data-cue="t2664" data-t="2664" data-label="44:24">And that was my only question mark when</span> <span class="cue" id="t2667" data-cue="t2667" data-t="2667" data-label="44:27">I don't know if he was if he was voting. I'm not a registered Thanks, Sheila. He's he's not a registered voter.</span> <span class="cue" id="t2674" data-cue="t2674" data-t="2674" data-label="44:34">Okay. Alright. Because I heard somebody say Sean, and then I didn't hear anything after, and I didn't know if that was a vote or not. But the meeting is recorded. Right?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="44:44" data-default-t="2684">44:44</div>
+        <div class="text"><span class="cue" id="t2684" data-cue="t2684" data-t="2684" data-label="44:44">So we can always go back through the recording.</span> <span class="cue" id="t2686" data-cue="t2686" data-t="2686" data-label="44:46">Had we used the</span> <span class="cue" id="t2688" data-cue="t2688" data-t="2688" data-label="44:48">message,</span> <span class="cue" id="t2689" data-cue="t2689" data-t="2689" data-label="44:49">we will have an audit trail automatically,</span> <span class="cue" id="t2691" data-cue="t2691" data-t="2691" data-label="44:51">but we have the recording to fall back to for accuracy.</span> <span class="cue" id="t2695" data-cue="t2695" data-t="2695" data-label="44:55">Linda,</span> <span class="cue" id="t2696" data-cue="t2696" data-t="2696" data-label="44:56">do you have the vote totals?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="44:59" data-default-t="2699">44:59</div>
+        <div class="text"><span class="cue" id="t2699" data-cue="t2699" data-t="2699" data-label="44:59">I have the vote totals as 26</span> <span class="cue" id="t2701" data-cue="t2701" data-t="2701" data-label="45:01">for Lori Blake,</span> <span class="cue" id="t2704" data-cue="t2704" data-t="2704" data-label="45:04">20 for Brian Clay,</span> <span class="cue" id="t2707" data-cue="t2707" data-t="2707" data-label="45:07">21 for Ed Smith.</span> <span class="cue" id="t2711" data-cue="t2711" data-t="2711" data-label="45:11">I had 22 for Ed Smith, Linda. And so that may be the one that is missing because then we're at 68</span> <span class="cue" id="t2719" data-cue="t2719" data-t="2719" data-label="45:19">and it all jives.</span> <span class="cue" id="t2722" data-cue="t2722" data-t="2722" data-label="45:22">Shannon Still comes out the winner.</span> <span class="cue" id="t2728" data-cue="t2728" data-t="2728" data-label="45:28">Okay.</span> <span class="cue" id="t2731" data-cue="t2731" data-t="2731" data-label="45:31">Can take the votes that are over the phone?</span> <span class="cue" id="t2736" data-cue="t2736" data-t="2736" data-label="45:36">You took everyone's vote</span> <span class="cue" id="t2739" data-cue="t2739" data-t="2739" data-label="45:39">verbally.</span> <span class="cue" id="t2740" data-cue="t2740" data-t="2740" data-label="45:40">Yeah, whether they were phone or video.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="45:44" data-default-t="2744">45:44</div>
+        <div class="text"><span class="cue" id="t2744" data-cue="t2744" data-t="2744" data-label="45:44">Okay. All right, there's only one item left on the agenda and that's to adjourn if someone wants to make</span> <span class="cue" id="t2751" data-cue="t2751" data-t="2751" data-label="45:51">a motion to adjourn.</span> <span class="cue" id="t2753" data-cue="t2753" data-t="2753" data-label="45:53">I move to adjourn.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="45:55" data-default-t="2755">45:55</div>
+        <div class="text"><span class="cue" id="t2755" data-cue="t2755" data-t="2755" data-label="45:55">Is there a second? I'll second it. All in favor?</span> <span class="cue" id="t2760" data-cue="t2760" data-t="2760" data-label="46:00">Aye. Congratulations,</span> <span class="cue" id="t2762" data-cue="t2762" data-t="2762" data-label="46:02">Lori. Congratulations,</span> <span class="cue" id="t2765" data-cue="t2765" data-t="2765" data-label="46:05">Thank you very much. Congratulations,</span> <span class="cue" id="t2766" data-cue="t2766" data-t="2766" data-label="46:06">Lori. You for your patience and</span> <span class="cue" id="t2770" data-cue="t2770" data-t="2770" data-label="46:10">cooperation.</span> <span class="cue" id="t2771" data-cue="t2771" data-t="2771" data-label="46:11">Good job, guys. Good job, Amanda.</span> <span class="cue" id="t2774" data-cue="t2774" data-t="2774" data-label="46:14">Thank you, Amanda. Thank</span> <span class="cue" id="t2775" data-cue="t2775" data-t="2775" data-label="46:15">Well, you, Linda, and congratulations,</span> <span class="cue" id="t2779" data-cue="t2779" data-t="2779" data-label="46:19">Lori.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="46:20" data-default-t="2780">46:20</div>
+        <div class="text"><span class="cue" id="t2780" data-cue="t2780" data-t="2780" data-label="46:20">Wally, are you still on? Yes. I am. Can can you tell me how many total registered voters we have in town?</span> <span class="cue" id="t2787" data-cue="t2787" data-t="2787" data-label="46:27">Give me one second.</span> <span class="cue" id="t2789" data-cue="t2789" data-t="2789" data-label="46:29">I</span> <span class="cue" id="t2791" data-cue="t2791" data-t="2791" data-label="46:31">believe it's Congratulations, Lori. 29,</span> <span class="cue" id="t2793" data-cue="t2793" data-t="2793" data-label="46:33">bud. Here, Shannon, I can tell you. Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="46:37" data-default-t="2797">46:37</div>
+        <div class="text"><span class="cue" id="t2797" data-cue="t2797" data-t="2797" data-label="46:37">Not me.</span> <span class="cue" id="t2800" data-cue="t2800" data-t="2800" data-label="46:40">That was from Diane Greiner. Yes. Oh, Diane. Sorry.</span> <span class="cue" id="t2805" data-cue="t2805" data-t="2805" data-label="46:45">Hold on.</span> <span class="cue" id="t2807" data-cue="t2807" data-t="2807" data-label="46:47">Total 2,184.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="46:51" data-default-t="2811">46:51</div>
+        <div class="text"><span class="cue" id="t2811" data-cue="t2811" data-t="2811" data-label="46:51">Okay. Thank you. And just to make sure I have the</span> <span class="cue" id="t2815" data-cue="t2815" data-t="2815" data-label="46:55">the the numbers right, we had 22 for Ed Smith,</span> <span class="cue" id="t2818" data-cue="t2818" data-t="2818" data-label="46:58">26 for Laurie Blake,</span> <span class="cue" id="t2820" data-cue="t2820" data-t="2820" data-label="47:00">and 20 for Brian Quate? Correct. Okay. This and that is going out.</span> <span class="cue" id="t2828" data-cue="t2828" data-t="2828" data-label="47:08">Thank you all. Thank you all. Yeah. Well done.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+    </div>
+
+    <footer class="colophon">
+      <p><strong>About this transcript.</strong> This transcript was generated by Deepgram from the meeting recording. Names, numbers, and other details may be inaccurate &mdash; please refer to the video for authoritative content.</p>
+      <p>Part of <code>andoverct.info</code>, an independent civic-reference site &mdash; not an official site of the Town of Andover. Compiled by <a href="mailto:scott@sauyet.com">Scott Sauyet</a>.</p>
+    </footer>
+  </main>
+
+  <div id="overlay">
+    <div class="dialog">
+      <div class="dialog-header">
+        <div class="dialog-title">Special Town Meeting</div>
+        <div class="dialog-subtitle">June 30, 2020 at <span class="ts-label" id="overlay-ts"></span></div>
+      </div>
+      <div class="actions">
+        <button id="act-yt">
+          <span class="icon">&#9654;</span>
+          <span class="label">Watch on YouTube<br><span class="hint">Opens at this timestamp</span></span>
+        </button>
+        <button id="act-copy-link">
+          <span class="icon">&#128279;</span>
+          <span class="label">Copy YouTube link<br><span class="hint" id="hint-link-url"></span></span>
+        </button>
+        <button id="act-bookmark">
+          <span class="icon">&#128278;</span>
+          <span class="label">Bookmark this spot<br><span class="hint">Copies link &amp; adds to navigation history</span></span>
+        </button>
+      </div>
+      <div class="cancel"><a id="act-cancel">Cancel</a></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>window.TX = { video: "https://www.youtube.com/watch?v=gBjYJjw0QZ8", passcode: "", type: "YouTube" };</script>
+  <script src="https://andoverct.info/reference/video/assets/transcripts.js"></script>
+</body>
+</html>

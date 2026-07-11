@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Board of Finance - Special Meeting Budget Workshop — April 20, 2022</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <style>
+    /* Transcript-specific components. Theme, palette, and page chrome
+       (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
+       come from the shared style.css; these just use its variables. */
+    .para { display: flex; gap: 1em; padding: 0.5em 0.75em; border-radius: 6px; }
+    .para:nth-child(4n+1) { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+    .para-gap { font-size: 1px; line-height: 1px; height: 0; overflow: hidden; user-select: text; }
+    .para.speaker { border-top: 1px solid var(--rule-soft); margin-top: 0.6em; padding-top: 1em; }
+    .para.speaker:first-child { border-top: none; margin-top: 0; }
+
+    .timestamp {
+      flex: 0 0 5em; text-align: right;
+      color: var(--ink-mute); font-family: var(--sans);
+      font-size: 0.72rem; font-variant-numeric: tabular-nums; line-height: 1.9;
+      cursor: pointer; white-space: nowrap; padding-top: 0.15em;
+      transition: color 0.15s; user-select: none;
+    }
+    .timestamp:hover, .timestamp.hl { color: var(--accent); font-weight: 600; }
+
+    .text { flex: 1; min-width: 0; }
+    .cue { cursor: pointer; border-radius: 3px; transition: background-color 0.15s; }
+    .cue.hl { background-color: var(--accent-bg); }
+    @keyframes flash-highlight {
+      0%   { background-color: rgba(232, 168, 0, 0.45); }
+      100% { background-color: transparent; }
+    }
+    .cue.flash { animation: flash-highlight 4s ease-out forwards; }
+
+    /* action dialog */
+    #overlay { display: none; position: fixed; inset: 0; background: rgba(8, 22, 40, 0.5); z-index: 100; justify-content: center; align-items: center; }
+    #overlay.visible { display: flex; }
+    .dialog { background: var(--bg-card); border-radius: 10px; padding: 1.6rem 1.8rem; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28); max-width: 28rem; width: 90vw; border-top: 4px solid var(--accent); }
+    .dialog-header { margin-bottom: 1.2em; }
+    .dialog-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); }
+    .dialog-subtitle { font-family: var(--sans); font-size: 0.85rem; color: var(--ink-mute); margin-top: 0.2em; }
+    .dialog .ts-label { color: var(--accent); font-weight: 600; }
+    .dialog .actions { display: flex; flex-direction: column; gap: 0.5em; }
+    .dialog button { display: flex; align-items: center; gap: 0.6em; padding: 0.6em 1em; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--ink); cursor: pointer; font-family: var(--sans); font-size: 0.9rem; text-align: left; width: 100%; transition: background-color 0.12s, border-color 0.12s; }
+    .dialog button:hover { background: var(--accent-bg); border-color: var(--accent); }
+    .dialog button .icon { font-size: 1.1em; flex: 0 0 1.4em; text-align: center; }
+    .dialog button .label { flex: 1; }
+    .dialog button .hint { display: block; color: var(--ink-mute); font-size: 0.78rem; }
+    .dialog .cancel { margin-top: 0.6em; text-align: center; }
+    .dialog .cancel a { color: var(--ink-mute); font-family: var(--sans); font-size: 0.82rem; cursor: pointer; border-bottom: none; }
+    .dialog .cancel a:hover { color: var(--accent); }
+
+    /* toast */
+    #toast { position: fixed; top: 1.5em; left: 50%; transform: translateX(-50%) translateY(-4em); background: var(--accent); color: #15233a; padding: 0.7em 1.6em; border-radius: 8px; font-family: var(--sans); font-size: 0.95rem; font-weight: 600; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease; z-index: 200; pointer-events: none; text-align: center; max-width: 90vw; }
+    #toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    @media (max-width: 480px) { .timestamp { flex-basis: 4em; } }
+  </style>
+</head>
+<body class="bluegold">
+  <div class="page-banner">
+    <nav class="page-banner-inner crumbs">
+      <a href="/">Home</a><span class="sep">›</span><a href="/reference/">Reference</a><span class="sep">›</span><a href="../index.html">Video</a><span class="sep">›</span><span class="current">Board of Finance - Special Meeting Budget Workshop (4/20/22)</span>
+    </nav>
+  </div>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Meeting transcript</p>
+      <h1 class="title">Board of Finance - Special Meeting Budget Workshop</h1>
+      <p class="subtitle">April 20, 2022 &middot; <a href="https://www.youtube.com/watch?v=WaaxuSLWbJc" target="yt-meeting">Watch on YouTube</a> &middot; <a href="../index.html">All meetings</a></p>
+    </header>
+
+    <hr class="rule">
+
+    <div class="transcript">
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:00" data-default-t="0">0:00</div>
+        <div class="text"><span class="cue" id="t0" data-cue="t0" data-t="0" data-label="0:00">All right.</span> <span class="cue" id="t3" data-cue="t3" data-t="3" data-label="0:03">Okay, let's call this budget workshop meeting to order at 07:01PM.</span> <span class="cue" id="t13" data-cue="t13" data-t="13" data-label="0:13">And let's start with the pledge of allegiance. The</span> <span class="cue" id="t16" data-cue="t16" data-t="16" data-label="0:16">pledge allegiance Pledge allegiance to the flag</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:19" data-default-t="19">0:19</div>
+        <div class="text"><span class="cue" id="t19" data-cue="t19" data-t="19" data-label="0:19">The United States Of America. And</span> <span class="cue" id="t22" data-cue="t22" data-t="22" data-label="0:22">to the republic</span> <span class="cue" id="t24" data-cue="t24" data-t="24" data-label="0:24">for which it stands.</span> <span class="cue" id="t26" data-cue="t26" data-t="26" data-label="0:26">One nation under</span> <span class="cue" id="t28" data-cue="t28" data-t="28" data-label="0:28">God,</span> <span class="cue" id="t29" data-cue="t29" data-t="29" data-label="0:29">indivisible,</span> <span class="cue" id="t30" data-cue="t30" data-t="30" data-label="0:30">liberty,</span> <span class="cue" id="t32" data-cue="t32" data-t="32" data-label="0:32">justice for all.</span> <span class="cue" id="t36" data-cue="t36" data-t="36" data-label="0:36">Right.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:38" data-default-t="38">0:38</div>
+        <div class="text"><span class="cue" id="t38" data-cue="t38" data-t="38" data-label="0:38">Eric, do we have anybody for public speak here?</span> <span class="cue" id="t42" data-cue="t42" data-t="42" data-label="0:42">I think we have.</span> <span class="cue" id="t43" data-cue="t43" data-t="43" data-label="0:43">You appear to have Elaine Bucard and</span> <span class="cue" id="t47" data-cue="t47" data-t="47" data-label="0:47">Anne Cermey.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:53" data-default-t="53">0:53</div>
+        <div class="text"><span class="cue" id="t53" data-cue="t53" data-t="53" data-label="0:53">Okay. Hi, miss Elaine. I just joined in to to give a listen.</span> <span class="cue" id="t58" data-cue="t58" data-t="58" data-label="0:58">Oh, okay. Thanks. Okay. Yep.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:08" data-default-t="68">1:08</div>
+        <div class="text"><span class="cue" id="t68" data-cue="t68" data-t="68" data-label="1:08">This is Anne from a.</span> <span class="cue" id="t71" data-cue="t71" data-t="71" data-label="1:11">I just</span> <span class="cue" id="t73" data-cue="t73" data-t="73" data-label="1:13">want to say I support the budget that was approved by the boe.</span> <span class="cue" id="t80" data-cue="t80" data-t="80" data-label="1:20">Okay.</span> <span class="cue" id="t82" data-cue="t82" data-t="82" data-label="1:22">Anything else just that</span> <span class="cue" id="t84" data-cue="t84" data-t="84" data-label="1:24">just that.</span> <span class="cue" id="t86" data-cue="t86" data-t="86" data-label="1:26">Okay.</span> <span class="cue" id="t87" data-cue="t87" data-t="87" data-label="1:27">The only budget.</span> <span class="cue" id="t89" data-cue="t89" data-t="89" data-label="1:29">Okay. Thanks for attending.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:31" data-default-t="91">1:31</div>
+        <div class="text"><span class="cue" id="t91" data-cue="t91" data-t="91" data-label="1:31">Okay,</span> <span class="cue" id="t92" data-cue="t92" data-t="92" data-label="1:32">that appears to be everybody you have for public speak.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:35" data-default-t="95">1:35</div>
+        <div class="text"><span class="cue" id="t95" data-cue="t95" data-t="95" data-label="1:35">Okay, perfect.</span> <span class="cue" id="t97" data-cue="t97" data-t="97" data-label="1:37">All right,</span> <span class="cue" id="t98" data-cue="t98" data-t="98" data-label="1:38">let's jump into the budget.</span> <span class="cue" id="t101" data-cue="t101" data-t="101" data-label="1:41">I'm just quick correction,</span> <span class="cue" id="t104" data-cue="t104" data-t="104" data-label="1:44">Eric for you</span> <span class="cue" id="t106" data-cue="t106" data-t="106" data-label="1:46">On this, I found an error on one of the lines. Row 684,</span> <span class="cue" id="t112" data-cue="t112" data-t="112" data-label="1:52">which is the AES Board of Education budget.</span> <span class="cue" id="t116" data-cue="t116" data-t="116" data-label="1:56">The department request number is wrong.</span> <span class="cue" id="t120" data-cue="t120" data-t="120" data-label="2:00">It should be</span> <span class="cue" id="t123" data-cue="t123" data-t="123" data-label="2:03">4000122787.</span> <span class="cue" id="t130" data-cue="t130" data-t="130" data-label="2:10">Went back and looked at the</span> <span class="cue" id="t133" data-cue="t133" data-t="133" data-label="2:13">requested presentation from February 9 and that's what the what they requested.</span> <span class="cue" id="t140" data-cue="t140" data-t="140" data-label="2:20">We fix that column G.</span> <span class="cue" id="t142" data-cue="t142" data-t="142" data-label="2:22">Yep.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:24" data-default-t="144">2:24</div>
+        <div class="text"><span class="cue" id="t144" data-cue="t144" data-t="144" data-label="2:24">And then fix the dollar change and the percent change,</span> <span class="cue" id="t148" data-cue="t148" data-t="148" data-label="2:28">h and I as well.</span> <span class="cue" id="t150" data-cue="t150" data-t="150" data-label="2:30">That</span> <span class="cue" id="t153" data-cue="t153" data-t="153" data-label="2:33">changes in both automatic.</span> <span class="cue" id="t155" data-cue="t155" data-t="155" data-label="2:35">Okay.</span> <span class="cue" id="t157" data-cue="t157" data-t="157" data-label="2:37">Alright.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:43" data-default-t="163">2:43</div>
+        <div class="text"><span class="cue" id="t163" data-cue="t163" data-t="163" data-label="2:43">Getting some background noise. Do we have everybody on mute? That phone number? Oh, Joann, go ahead.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:49" data-default-t="169">2:49</div>
+        <div class="text"><span class="cue" id="t169" data-cue="t169" data-t="169" data-label="2:49">I was gonna ask about a change too, Diane. I'm not sure if I'm right or not,</span> <span class="cue" id="t174" data-cue="t174" data-t="174" data-label="2:54">but</span> <span class="cue" id="t175" data-cue="t175" data-t="175" data-label="2:55">if you,</span> <span class="cue" id="t177" data-cue="t177" data-t="177" data-label="2:57">the revenue,</span> <span class="cue" id="t178" data-cue="t178" data-t="178" data-label="2:58">you know, that revenue sheet where you can see the mill rate,</span> <span class="cue" id="t183" data-cue="t183" data-t="183" data-label="3:03">I had asked,</span> <span class="cue" id="t184" data-cue="t184" data-t="184" data-label="3:04">I hope that was- Hold on one second.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="3:07" data-default-t="187">3:07</div>
+        <div class="text"><span class="cue" id="t187" data-cue="t187" data-t="187" data-label="3:07">Mayor, can you mute that phone number?</span> <span class="cue" id="t189" data-cue="t189" data-t="189" data-label="3:09">I think because it's unmuted.</span> <span class="cue" id="t204" data-cue="t204" data-t="204" data-label="3:24">Where</span> <span class="cue" id="t205" data-cue="t205" data-t="205" data-label="3:25">are we getting the feedback from? Okay. I'm not sure.</span> <span class="cue" id="t209" data-cue="t209" data-t="209" data-label="3:29">Right. On the revenue tab. Okay. Yep. The revenue tab</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="3:34" data-default-t="214">3:34</div>
+        <div class="text"><span class="cue" id="t214" data-cue="t214" data-t="214" data-label="3:34">where we had talked about the 100,000</span> <span class="cue" id="t217" data-cue="t217" data-t="217" data-label="3:37">as the place marker for the fund balance.</span> <span class="cue" id="t220" data-cue="t220" data-t="220" data-label="3:40">Yes. I</span> <span class="cue" id="t222" data-cue="t222" data-t="222" data-label="3:42">mentioned this to Eric yesterday. I saw that at the top. Maybe I'm looking at a wrong spreadsheet. I saw the 100,000 at the top. When you go down to the bottom and you calculate,</span> <span class="cue" id="t232" data-cue="t232" data-t="232" data-label="3:52">I just don't have it in front of me to give you a line, but when you go down to the bottom</span> <span class="cue" id="t237" data-cue="t237" data-t="237" data-label="3:57">where it says fund balance 2223,</span> <span class="cue" id="t241" data-cue="t241" data-t="241" data-label="4:01">I thought I saw 250,000</span> <span class="cue" id="t243" data-cue="t243" data-t="243" data-label="4:03">there.</span> <span class="cue" id="t246" data-cue="t246" data-t="246" data-label="4:06">So row 42.</span> <span class="cue" id="t249" data-cue="t249" data-t="249" data-label="4:09">This should be the spreadsheet</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="4:11" data-default-t="251">4:11</div>
+        <div class="text"><span class="cue" id="t251" data-cue="t251" data-t="251" data-label="4:11">on my. So this should be the spreadsheet from Eric dated</span> <span class="cue" id="t255" data-cue="t255" data-t="255" data-label="4:15">04/14/2022.</span> <span class="cue" id="t259" data-cue="t259" data-t="259" data-label="4:19">Okay.</span> <span class="cue" id="t259-1" data-cue="t259-1" data-t="259" data-label="4:19">Row 42 use of fund balance</span> <span class="cue" id="t262" data-cue="t262" data-t="262" data-label="4:22">two fifty was for 2122.</span> <span class="cue" id="t267" data-cue="t267" data-t="267" data-label="4:27">And then the green. You're</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="4:29" data-default-t="269">4:29</div>
+        <div class="text"><span class="cue" id="t269" data-cue="t269" data-t="269" data-label="4:29">right in this for twenty twenty two, twenty three,</span> <span class="cue" id="t273" data-cue="t273" data-t="273" data-label="4:33">two fifty you're right that's a good thank you</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="4:36" data-default-t="276">4:36</div>
+        <div class="text"><span class="cue" id="t276" data-cue="t276" data-t="276" data-label="4:36">I know I saw it but I</span> <span class="cue" id="t280" data-cue="t280" data-t="280" data-label="4:40">don't check today Eric and I saw it again so I wanted to bring it up because that'll affect the calculation</span> <span class="cue" id="t287" data-cue="t287" data-t="287" data-label="4:47">Maybe. Are</span> <span class="cue" id="t290" data-cue="t290" data-t="290" data-label="4:50">you talking about the green column column I?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="4:53" data-default-t="293">4:53</div>
+        <div class="text"><span class="cue" id="t293" data-cue="t293" data-t="293" data-label="4:53">Let me. No, she's talking about line 78.</span> <span class="cue" id="t298" data-cue="t298" data-t="298" data-label="4:58">Thank you. Oh,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:00" data-default-t="300">5:00</div>
+        <div class="text"><span class="cue" id="t300" data-cue="t300" data-t="300" data-label="5:00">70 eight. Oh,</span> <span class="cue" id="t302" data-cue="t302" data-t="302" data-label="5:02">70 eight. Oh, okay. Because up up on 42,</span> <span class="cue" id="t307" data-cue="t307" data-t="307" data-label="5:07">it's right.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:08" data-default-t="308">5:08</div>
+        <div class="text"><span class="cue" id="t308" data-cue="t308" data-t="308" data-label="5:08">Yeah. Okay. I'm on 42 too. Okay. So you're saying 78</span> <span class="cue" id="t312" data-cue="t312" data-t="312" data-label="5:12">column H,</span> <span class="cue" id="t314" data-cue="t314" data-t="314" data-label="5:14">that two fifty should be 100.</span> <span class="cue" id="t317" data-cue="t317" data-t="317" data-label="5:17">100.</span> <span class="cue" id="t318" data-cue="t318" data-t="318" data-label="5:18">Okay.</span> <span class="cue" id="t319" data-cue="t319" data-t="319" data-label="5:19">Good catch.</span> <span class="cue" id="t320" data-cue="t320" data-t="320" data-label="5:20">Eagle eyes.</span> <span class="cue" id="t322" data-cue="t322" data-t="322" data-label="5:22">All right.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:23" data-default-t="323">5:23</div>
+        <div class="text"><span class="cue" id="t323" data-cue="t323" data-t="323" data-label="5:23">And I don't remember, by the way, we talk about putting 100 there?</span> <span class="cue" id="t328" data-cue="t328" data-t="328" data-label="5:28">We talked about a placeholder for 100.</span> <span class="cue" id="t332" data-cue="t332" data-t="332" data-label="5:32">Okay.</span> <span class="cue" id="t332-1" data-cue="t332-1" data-t="332" data-label="5:32">I've obviously forgotten. Sorry. Well,</span> <span class="cue" id="t336" data-cue="t336" data-t="336" data-label="5:36">I can't remember what I did yesterday, Rob.</span> <span class="cue" id="t339" data-cue="t339" data-t="339" data-label="5:39">Right.</span> <span class="cue" id="t344" data-cue="t344" data-t="344" data-label="5:44">All right.</span> <span class="cue" id="t345" data-cue="t345" data-t="345" data-label="5:45">Any other things that anybody saw?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:49" data-default-t="349">5:49</div>
+        <div class="text"><span class="cue" id="t349" data-cue="t349" data-t="349" data-label="5:49">We're getting that feedback again. I don't know what's going on. Sounds</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="5:55" data-default-t="355">5:55</div>
+        <div class="text"><span class="cue" id="t355" data-cue="t355" data-t="355" data-label="5:55">like somebody's television almost like.</span> <span class="cue" id="t359" data-cue="t359" data-t="359" data-label="5:59">All right.</span> <span class="cue" id="t363" data-cue="t363" data-t="363" data-label="6:03">All right.</span> <span class="cue" id="t367" data-cue="t367" data-t="367" data-label="6:07">Other than that, Eric, I have one other question for you.</span> <span class="cue" id="t371" data-cue="t371" data-t="371" data-label="6:11">On the mill rate calculation,</span> <span class="cue" id="t374" data-cue="t374" data-t="374" data-label="6:14">you're</span> <span class="cue" id="t375" data-cue="t375" data-t="375" data-label="6:15">row 65.</span> <span class="cue" id="t377" data-cue="t377" data-t="377" data-label="6:17">Correct.</span> <span class="cue" id="t378" data-cue="t378" data-t="378" data-label="6:18">And you have the difference, the calculation to make up the difference between what the actual mill rate was and what we charged.</span> <span class="cue" id="t385" data-cue="t385" data-t="385" data-label="6:25">Get the difference between the two mill rates as</span> <span class="cue" id="t389" data-cue="t389" data-t="389" data-label="6:29">0.13,</span> <span class="cue" id="t390" data-cue="t390" data-t="390" data-label="6:30">not 0.12.</span> <span class="cue" id="t395" data-cue="t395" data-t="395" data-label="6:35">Well,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="6:36" data-default-t="396">6:36</div>
+        <div class="text"><span class="cue" id="t396" data-cue="t396" data-t="396" data-label="6:36">zero- And then you have it multiplying</span> <span class="cue" id="t399" data-cue="t399" data-t="399" data-label="6:39">it by 271,447,</span> <span class="cue" id="t402" data-cue="t402" data-t="402" data-label="6:42">And the spreadsheet says 1 mil for that year was 271,446.</span> <span class="cue" id="t409" data-cue="t409" data-t="409" data-label="6:49">So can you just check that math and make sure</span> <span class="cue" id="t414" data-cue="t414" data-t="414" data-label="6:54">we've got the right numbers going into that calculation?</span> <span class="cue" id="t421" data-cue="t421" data-t="421" data-label="7:01">Sure.</span> <span class="cue" id="t422" data-cue="t422" data-t="422" data-label="7:02">Well, I get 36 mills.</span> <span class="cue" id="t425" data-cue="t425" data-t="425" data-label="7:05">Subtract 35.87</span> <span class="cue" id="t427" data-cue="t427" data-t="427" data-label="7:07">is 0.13.</span> <span class="cue" id="t433" data-cue="t433" data-t="433" data-label="7:13">Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="7:16" data-default-t="436">7:16</div>
+        <div class="text"><span class="cue" id="t436" data-cue="t436" data-t="436" data-label="7:16">So,</span> <span class="cue" id="t437" data-cue="t437" data-t="437" data-label="7:17">so if we can just</span> <span class="cue" id="t440" data-cue="t440" data-t="440" data-label="7:20">make sure and then the the mill, the dollar amount, the $2.71 $4.04 7</span> <span class="cue" id="t446" data-cue="t446" data-t="446" data-label="7:26">in column j,</span> <span class="cue" id="t449" data-cue="t449" data-t="449" data-label="7:29">the spreadsheet says on line 62,</span> <span class="cue" id="t451" data-cue="t451" data-t="451" data-label="7:31">column g, that it was $2.71 $4.04 6.</span> <span class="cue" id="t456" data-cue="t456" data-t="456" data-label="7:36">So, if we can just fix that note and the calculation because I think you have that calculation going into the mill rate calculation.</span> <span class="cue" id="t463" data-cue="t463" data-t="463" data-label="7:43">Yeah.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="7:44" data-default-t="464">7:44</div>
+        <div class="text"><span class="cue" id="t464" data-cue="t464" data-t="464" data-label="7:44">Yeah, we have it minus 1.104,</span> <span class="cue" id="t470" data-cue="t470" data-t="470" data-label="7:50">and it's gonna be a hair more.</span> <span class="cue" id="t475" data-cue="t475" data-t="475" data-label="7:55">I will redo the calculation.</span> <span class="cue" id="t478" data-cue="t478" data-t="478" data-label="7:58">Alright.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="7:59" data-default-t="479">7:59</div>
+        <div class="text"><span class="cue" id="t479" data-cue="t479" data-t="479" data-label="7:59">Okay. It's at most gonna change the mill rate by point o one.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="8:04" data-default-t="484">8:04</div>
+        <div class="text"><span class="cue" id="t484" data-cue="t484" data-t="484" data-label="8:04">Right, it's like nothing but.</span> <span class="cue" id="t490" data-cue="t490" data-t="490" data-label="8:10">All right.</span> <span class="cue" id="t493" data-cue="t493" data-t="493" data-label="8:13">Right.</span> <span class="cue" id="t493-1" data-cue="t493-1" data-t="493" data-label="8:13">Does anybody have any questions</span> <span class="cue" id="t496" data-cue="t496" data-t="496" data-label="8:16">on the spreadsheet,</span> <span class="cue" id="t499" data-cue="t499" data-t="499" data-label="8:19">on the budget or anything that anybody wants to talk about?</span> <span class="cue" id="t508" data-cue="t508" data-t="508" data-label="8:28">Joanne?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="8:29" data-default-t="509">8:29</div>
+        <div class="text"><span class="cue" id="t509" data-cue="t509" data-t="509" data-label="8:29">I'm going to have a couple of things that I'd like to discuss, but I don't always want to be, you know, I don't know if anyone else wants to ask their question first.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="8:40" data-default-t="520">8:40</div>
+        <div class="text"><span class="cue" id="t520" data-cue="t520" data-t="520" data-label="8:40">What do you want to jump to the front of the I</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="8:45" data-default-t="525">8:45</div>
+        <div class="text"><span class="cue" id="t525" data-cue="t525" data-t="525" data-label="8:45">know, because I have several, I don't wanna,</span> <span class="cue" id="t529" data-cue="t529" data-t="529" data-label="8:49">I guess basically</span> <span class="cue" id="t532" data-cue="t532" data-t="532" data-label="8:52">I don't know. I don't see anyone unmuting.</span> <span class="cue" id="t535" data-cue="t535" data-t="535" data-label="8:55">Is the 707 number, is that Marina?</span> <span class="cue" id="t541" data-cue="t541" data-t="541" data-label="9:01">The phone number? The phone number Marina.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="9:03" data-default-t="543">9:03</div>
+        <div class="text"><span class="cue" id="t543" data-cue="t543" data-t="543" data-label="9:03">Okay.</span> <span class="cue" id="t545" data-cue="t545" data-t="545" data-label="9:05">Hello, Marina.</span> <span class="cue" id="t551" data-cue="t551" data-t="551" data-label="9:11">I mean, I know we're gonna be open for discussion and all, but since we're talking about that mill rate page,</span> <span class="cue" id="t557" data-cue="t557" data-t="557" data-label="9:17">am I coming through clear to you all?</span> <span class="cue" id="t560" data-cue="t560" data-t="560" data-label="9:20">I can hear you okay. Thank you. Because when I listen back to the tape on,</span> <span class="cue" id="t566" data-cue="t566" data-t="566" data-label="9:26">that's posted on the website, a lot of times my</span> <span class="cue" id="t569" data-cue="t569" data-t="569" data-label="9:29">speech is garbled when I say something.</span> <span class="cue" id="t572" data-cue="t572" data-t="572" data-label="9:32">And so I'm hoping that during the meeting,</span> <span class="cue" id="t574" data-cue="t574" data-t="574" data-label="9:34">it's not like that.</span> <span class="cue" id="t577" data-cue="t577" data-t="577" data-label="9:37">So thank you. I just wanted to make sure.</span> <span class="cue" id="t579" data-cue="t579" data-t="579" data-label="9:39">So</span> <span class="cue" id="t581" data-cue="t581" data-t="581" data-label="9:41">obviously we're looking at this budget, just one overall thing that I wanted to</span> <span class="cue" id="t586" data-cue="t586" data-t="586" data-label="9:46">say is</span> <span class="cue" id="t587" data-cue="t587" data-t="587" data-label="9:47">I was, you know, doing some calculations on the mill rate</span> <span class="cue" id="t591" data-cue="t591" data-t="591" data-label="9:51">and different things. I know Eric will give us the final numbers, but, you know, we just need to, we know how much we have to raise by taxes and how much, you know, by looking at the sheets, what the percentages are going to be.</span> <span class="cue" id="t605" data-cue="t605" data-t="605" data-label="10:05">A thing that's</span> <span class="cue" id="t607" data-cue="t607" data-t="607" data-label="10:07">making it seem less than it is, if we had this, if a mill was, if we didn't have the reval in town,</span> <span class="cue" id="t614" data-cue="t614" data-t="614" data-label="10:14">this would be,</span> <span class="cue" id="t616" data-cue="t616" data-t="616" data-label="10:16">I believe, between an eight and a 9%</span> <span class="cue" id="t619" data-cue="t619" data-t="619" data-label="10:19">increase,</span> <span class="cue" id="t620" data-cue="t620" data-t="620" data-label="10:20">you know, so it's it's pretty hefty.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="10:23" data-default-t="623">10:23</div>
+        <div class="text"><span class="cue" id="t623" data-cue="t623" data-t="623" data-label="10:23">Hold on. Stop, stop, stop.</span> <span class="cue" id="t627" data-cue="t627" data-t="627" data-label="10:27">Wait, total amount we're asking by taxation</span> <span class="cue" id="t630" data-cue="t630" data-t="630" data-label="10:30">is increasing in this budget 5.7%.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="10:34" data-default-t="634">10:34</div>
+        <div class="text"><span class="cue" id="t634" data-cue="t634" data-t="634" data-label="10:34">That's irrespective of the mill rate. I'm not allowed to make a comment, Mr. Manager.</span> <span class="cue" id="t640" data-cue="t640" data-t="640" data-label="10:40">No, no, I'm I just didn't even finish.</span> <span class="cue" id="t643" data-cue="t643" data-t="643" data-label="10:43">Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="10:44" data-default-t="644">10:44</div>
+        <div class="text"><span class="cue" id="t644" data-cue="t644" data-t="644" data-label="10:44">Sorry. I mean, I'm making, I, I just,</span> <span class="cue" id="t648" data-cue="t648" data-t="648" data-label="10:48">you know, I just think I need to stop for a moment. So go ahead, I</span> <span class="cue" id="t654" data-cue="t654" data-t="654" data-label="10:54">just didn't even get a thought out. I just, you know, you have no idea where I was going.</span> <span class="cue" id="t663" data-cue="t663" data-t="663" data-label="11:03">I just was doing some calculations</span> <span class="cue" id="t667" data-cue="t667" data-t="667" data-label="11:07">based on if a mill was, you know, it's,</span> <span class="cue" id="t671" data-cue="t671" data-t="671" data-label="11:11">whatever we do approve eventually</span> <span class="cue" id="t675" data-cue="t675" data-t="675" data-label="11:15">is based on</span> <span class="cue" id="t677" data-cue="t677" data-t="677" data-label="11:17">the new, you know, the reval rates. And it's just so up and down, you never know. It's all I was gonna say. I mean, really don't have,</span> <span class="cue" id="t686" data-cue="t686" data-t="686" data-label="11:26">I have other questions</span> <span class="cue" id="t687" data-cue="t687" data-t="687" data-label="11:27">that I was gonna say. I'm a little taken aback, so I'm kind of stumbling through my words.</span> <span class="cue" id="t697" data-cue="t697" data-t="697" data-label="11:37">Know, say we were trying to pass this much spending through and it wasn't a revalue year,</span> <span class="cue" id="t702" data-cue="t702" data-t="702" data-label="11:42">the increase would be, it would look a lot worse. Clearly that is how you make a budget</span> <span class="cue" id="t709" data-cue="t709" data-t="709" data-label="11:49">and it's based on the new mill rate, the new reval list,</span> <span class="cue" id="t713" data-cue="t713" data-t="713" data-label="11:53">the new grand list,</span> <span class="cue" id="t714" data-cue="t714" data-t="714" data-label="11:54">whatever it is. I was just making an observation</span> <span class="cue" id="t717" data-cue="t717" data-t="717" data-label="11:57">that it would've you know, in a nonreval year, it would've been a lot higher.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:03" data-default-t="723">12:03</div>
+        <div class="text"><span class="cue" id="t723" data-cue="t723" data-t="723" data-label="12:03">I mean, I I think that the</span> <span class="cue" id="t726" data-cue="t726" data-t="726" data-label="12:06">to Eric's point is that in a nonreval year, 5.7%</span> <span class="cue" id="t730" data-cue="t730" data-t="730" data-label="12:10">increase would be that's what it would be.</span> <span class="cue" id="t733" data-cue="t733" data-t="733" data-label="12:13">Right?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:14" data-default-t="734">12:14</div>
+        <div class="text"><span class="cue" id="t734" data-cue="t734" data-t="734" data-label="12:14">That's all I meant. I don't know why I got the stop, stop, stop or whatever. So</span> <span class="cue" id="t740" data-cue="t740" data-t="740" data-label="12:20">anyways.</span> <span class="cue" id="t742" data-cue="t742" data-t="742" data-label="12:22">Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:26" data-default-t="746">12:26</div>
+        <div class="text"><span class="cue" id="t746" data-cue="t746" data-t="746" data-label="12:26">But respectfully</span> <span class="cue" id="t747" data-cue="t747" data-t="747" data-label="12:27">respecting everyone's position.</span> <span class="cue" id="t751" data-cue="t751" data-t="751" data-label="12:31">Yeah, that's, I mean, this is true numbers. I'm not saying it's not, it's just a big increase in spending, that's all.</span> <span class="cue" id="t759" data-cue="t759" data-t="759" data-label="12:39">And I'll sit back. I do have more things to talk about, but I'm gonna take a moment.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:47" data-default-t="767">12:47</div>
+        <div class="text"><span class="cue" id="t767" data-cue="t767" data-t="767" data-label="12:47">Anybody else have any comments</span> <span class="cue" id="t769" data-cue="t769" data-t="769" data-label="12:49">they wanna share?</span> <span class="cue" id="t779" data-cue="t779" data-t="779" data-label="12:59">No.</span> <span class="cue" id="t782" data-cue="t782" data-t="782" data-label="13:02">Well, I'm looking at this budget, and I'll just give a high level summary of how I think about it right now. You know, this is a budget coming off of budget year of a zero percent increase last year. So this budget</span> <span class="cue" id="t796" data-cue="t796" data-t="796" data-label="13:16">reflects</span> <span class="cue" id="t798" data-cue="t798" data-t="798" data-label="13:18">everything we need to do.</span> <span class="cue" id="t801" data-cue="t801" data-t="801" data-label="13:21">You know, it's a significant increase,</span> <span class="cue" id="t805" data-cue="t805" data-t="805" data-label="13:25">but we had no increase last year.</span> <span class="cue" id="t809" data-cue="t809" data-t="809" data-label="13:29">So</span> <span class="cue" id="t811" data-cue="t811" data-t="811" data-label="13:31">this is really something that's going to go to the taxpayers from my point of view</span> <span class="cue" id="t817" data-cue="t817" data-t="817" data-label="13:37">and say,</span> <span class="cue" id="t818" data-cue="t818" data-t="818" data-label="13:38">do you want to spend the money on what we need to do get that get it done. So</span> <span class="cue" id="t823" data-cue="t823" data-t="823" data-label="13:43">we can get the roadwork done and get what we need accomplished.</span> <span class="cue" id="t829" data-cue="t829" data-t="829" data-label="13:49">So this is really,</span> <span class="cue" id="t830" data-cue="t830" data-t="830" data-label="13:50">you know, a budget</span> <span class="cue" id="t833" data-cue="t833" data-t="833" data-label="13:53">trying to accomplish the plan put in place by the Board of Selectmen to get the roadwork done and, you know, and keep pushing that envelope up. We had a little derailment</span> <span class="cue" id="t844" data-cue="t844" data-t="844" data-label="14:04">last year of not being able to get any increase put through last year. So this is kind of where we fall now.</span> <span class="cue" id="t853" data-cue="t853" data-t="853" data-label="14:13">And I think it's up to the taxpayers to decide how they want to spend their money</span> <span class="cue" id="t860" data-cue="t860" data-t="860" data-label="14:20">when we get to referendum.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="14:26" data-default-t="866">14:26</div>
+        <div class="text"><span class="cue" id="t866" data-cue="t866" data-t="866" data-label="14:26">Any other</span> <span class="cue" id="t867" data-cue="t867" data-t="867" data-label="14:27">questions, comments,</span> <span class="cue" id="t869" data-cue="t869" data-t="869" data-label="14:29">Joanne? I a question. Go ahead, Louise.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="14:33" data-default-t="873">14:33</div>
+        <div class="text"><span class="cue" id="t873" data-cue="t873" data-t="873" data-label="14:33">Are we gonna discuss the Andover school budget</span> <span class="cue" id="t877" data-cue="t877" data-t="877" data-label="14:37">or is that?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="14:40" data-default-t="880">14:40</div>
+        <div class="text"><span class="cue" id="t880" data-cue="t880" data-t="880" data-label="14:40">There</span> <span class="cue" id="t882" data-cue="t882" data-t="882" data-label="14:42">is, okay, so what we can do is the school budget as it's presented is one number for us. We can't cut any specific line items, but we can cut the total dollar amount</span> <span class="cue" id="t895" data-cue="t895" data-t="895" data-label="14:55">and make a change there if we chose so choose.</span> <span class="cue" id="t899" data-cue="t899" data-t="899" data-label="14:59">Okay.</span> <span class="cue" id="t901" data-cue="t901" data-t="901" data-label="15:01">Does that answer your question?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="15:04" data-default-t="904">15:04</div>
+        <div class="text"><span class="cue" id="t904" data-cue="t904" data-t="904" data-label="15:04">Yeah, but is that gonna happen prior to us? I mean, I'm okay with the way the budget is now presenting it to the town,</span> <span class="cue" id="t913" data-cue="t913" data-t="913" data-label="15:13">but I didn't know if there was any outstanding</span> <span class="cue" id="t916" data-cue="t916" data-t="916" data-label="15:16">questions or concerns about the school budget.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="15:21" data-default-t="921">15:21</div>
+        <div class="text"><span class="cue" id="t921" data-cue="t921" data-t="921" data-label="15:21">All right.</span> <span class="cue" id="t922" data-cue="t922" data-t="922" data-label="15:22">I do have some concerns about the school budget.</span> <span class="cue" id="t926" data-cue="t926" data-t="926" data-label="15:26">And I will tell you since,</span> <span class="cue" id="t928" data-cue="t928" data-t="928" data-label="15:28">and I'll just tell you where I'm coming from on that.</span> <span class="cue" id="t932" data-cue="t932" data-t="932" data-label="15:32">Since the</span> <span class="cue" id="t936" data-cue="t936" data-t="936" data-label="15:36">move by the town to stop the shared financial service</span> <span class="cue" id="t941" data-cue="t941" data-t="941" data-label="15:41">jobs.</span> <span class="cue" id="t943" data-cue="t943" data-t="943" data-label="15:43">I think</span> <span class="cue" id="t945" data-cue="t945" data-t="945" data-label="15:45">we could easily cut</span> <span class="cue" id="t947" data-cue="t947" data-t="947" data-label="15:47">$20,000</span> <span class="cue" id="t949" data-cue="t949" data-t="949" data-label="15:49">from the school budget,</span> <span class="cue" id="t951" data-cue="t951" data-t="951" data-label="15:51">because the position that's going to be left over the school is not a director or finance</span> <span class="cue" id="t957" data-cue="t957" data-t="957" data-label="15:57">and treasurer of the town.</span> <span class="cue" id="t962" data-cue="t962" data-t="962" data-label="16:02">School can do whatever it wants with that position because it's their position. After we go our separate ways as of June 30,</span> <span class="cue" id="t970" data-cue="t970" data-t="970" data-label="16:10">and they can do what they want. But if you know you were to hire.</span> <span class="cue" id="t977" data-cue="t977" data-t="977" data-label="16:17">It's not the same job anymore.</span> <span class="cue" id="t979" data-cue="t979" data-t="979" data-label="16:19">So really,</span> <span class="cue" id="t980" data-cue="t980" data-t="980" data-label="16:20">it's not that high paying of a job, and the roles and responsibilities of that job has</span> <span class="cue" id="t986" data-cue="t986" data-t="986" data-label="16:26">totally changed</span> <span class="cue" id="t988" data-cue="t988" data-t="988" data-label="16:28">going forward.</span> <span class="cue" id="t989" data-cue="t989" data-t="989" data-label="16:29">And I think it would be prudent to make a an adjustment there and let the school</span> <span class="cue" id="t995" data-cue="t995" data-t="995" data-label="16:35">figure out how they want to deal with it. I don't think it won't impact the kids won't impact the quality of education is just an administrative</span> <span class="cue" id="t1003" data-cue="t1003" data-t="1003" data-label="16:43">job.</span> <span class="cue" id="t1006" data-cue="t1006" data-t="1006" data-label="16:46">And they can choose to</span> <span class="cue" id="t1009" data-cue="t1009" data-t="1009" data-label="16:49">do what they want with that job and craft it any way they want. It's their purview.</span> <span class="cue" id="t1014" data-cue="t1014" data-t="1014" data-label="16:54">But I don't think we need to fund it at the same level it was</span> <span class="cue" id="t1018" data-cue="t1018" data-t="1018" data-label="16:58">in the budget.</span> <span class="cue" id="t1022" data-cue="t1022" data-t="1022" data-label="17:02">Are they going to be</span> <span class="cue" id="t1025" data-cue="t1025" data-t="1025" data-label="17:05">any changes responsibility for her</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="17:08" data-default-t="1028">17:08</div>
+        <div class="text"><span class="cue" id="t1028" data-cue="t1028" data-t="1028" data-label="17:08">since after Well, Eddie will be working after June 30,</span> <span class="cue" id="t1033" data-cue="t1033" data-t="1033" data-label="17:13">that director of finance job is gone.</span> <span class="cue" id="t1036" data-cue="t1036" data-t="1036" data-label="17:16">Sherry will only be working at the school and doing school work.</span> <span class="cue" id="t1041" data-cue="t1041" data-t="1041" data-label="17:21">And we will go back to just having an assistant</span> <span class="cue" id="t1044" data-cue="t1044" data-t="1044" data-label="17:24">position which will be Marina on the town side.</span> <span class="cue" id="t1048" data-cue="t1048" data-t="1048" data-label="17:28">And we did put a placeholder in the budget for a part time treasurer.</span> <span class="cue" id="t1053" data-cue="t1053" data-t="1053" data-label="17:33">Okay.</span> <span class="cue" id="t1054" data-cue="t1054" data-t="1054" data-label="17:34">Yeah. So,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="17:39" data-default-t="1059">17:39</div>
+        <div class="text"><span class="cue" id="t1059" data-cue="t1059" data-t="1059" data-label="17:39">we do not need a full time treasurer, we're too small in town.</span> <span class="cue" id="t1065" data-cue="t1065" data-t="1065" data-label="17:45">I think that makes sense, Diane.</span> <span class="cue" id="t1069" data-cue="t1069" data-t="1069" data-label="17:49">Yep. I agree with that as well.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="17:52" data-default-t="1072">17:52</div>
+        <div class="text"><span class="cue" id="t1072" data-cue="t1072" data-t="1072" data-label="17:52">Yeah, since I have one. Go ahead, Joanne. I'm sorry, did I miss any of the conversation at the beginning?</span> <span class="cue" id="t1080" data-cue="t1080" data-t="1080" data-label="18:00">I realize that there are, that was a great point Diane and I know that they're changing the positions and there won't be as many, know, the responsibilities are going to be different.</span> <span class="cue" id="t1089" data-cue="t1089" data-t="1089" data-label="18:09">So was there any conversation because we know that's not changing till the fiscal year ends?</span> <span class="cue" id="t1095" data-cue="t1095" data-t="1095" data-label="18:15">I mean I know I just did I miss any conversation tonight to see if</span> <span class="cue" id="t1101" data-cue="t1101" data-t="1101" data-label="18:21">you know.</span> <span class="cue" id="t1102" data-cue="t1102" data-t="1102" data-label="18:22">No we're bored at night so I don't want to ask things that aren't appropriate to our topic tonight but. Oh okay</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="18:28" data-default-t="1108">18:28</div>
+        <div class="text"><span class="cue" id="t1108" data-cue="t1108" data-t="1108" data-label="18:28">As far as I know right now, there is just, you know, a whole transition</span> <span class="cue" id="t1112" data-cue="t1112" data-t="1112" data-label="18:32">going through from now until June 30. Right. Because it's</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="18:36" data-default-t="1116">18:36</div>
+        <div class="text"><span class="cue" id="t1116" data-cue="t1116" data-t="1116" data-label="18:36">still staying the same until then. And then like you said in next year's budget,</span> <span class="cue" id="t1121" data-cue="t1121" data-t="1121" data-label="18:41">the position is going to be totally different and not So</span> <span class="cue" id="t1124" data-cue="t1124" data-t="1124" data-label="18:44">that makes perfect sense.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="18:46" data-default-t="1126">18:46</div>
+        <div class="text"><span class="cue" id="t1126" data-cue="t1126" data-t="1126" data-label="18:46">Okay.</span> <span class="cue" id="t1128" data-cue="t1128" data-t="1128" data-label="18:48">So reducing that down, what would be the effect</span> <span class="cue" id="t1131" data-cue="t1131" data-t="1131" data-label="18:51">of the mill rate</span> <span class="cue" id="t1133" data-cue="t1133" data-t="1133" data-label="18:53">and the percentage of increase</span> <span class="cue" id="t1135" data-cue="t1135" data-t="1135" data-label="18:55">that we're asking for the town? If we made a change, it</span> <span class="cue" id="t1139" data-cue="t1139" data-t="1139" data-label="18:59">would be pretty small.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="19:01" data-default-t="1141">19:01</div>
+        <div class="text"><span class="cue" id="t1141" data-cue="t1141" data-t="1141" data-label="19:01">I just plugged it into the spreadsheet. Lowered</span> <span class="cue" id="t1144" data-cue="t1144" data-t="1144" data-label="19:04">the school budget increase a little bit to 5.1%,</span> <span class="cue" id="t1147" data-cue="t1147" data-t="1147" data-label="19:07">but it didn't</span> <span class="cue" id="t1149" data-cue="t1149" data-t="1149" data-label="19:09">really have any</span> <span class="cue" id="t1151" data-cue="t1151" data-t="1151" data-label="19:11">significant impact.</span> <span class="cue" id="t1152" data-cue="t1152" data-t="1152" data-label="19:12">It didn't change the decimal even on the overall budget</span> <span class="cue" id="t1156" data-cue="t1156" data-t="1156" data-label="19:16">impact unless I did them unless I the spreadsheet didn't propagate properly. But $20,000</span> <span class="cue" id="t1161" data-cue="t1161" data-t="1161" data-label="19:21">is</span> <span class="cue" id="t1163" data-cue="t1163" data-t="1163" data-label="19:23">know, out of a 10.10</span> <span class="cue" id="t1166" data-cue="t1166" data-t="1166" data-label="19:26">and a quarter million dollar budget</span> <span class="cue" id="t1169" data-cue="t1169" data-t="1169" data-label="19:29">doesn't do much. But, you know, look, every little bit counts and</span> <span class="cue" id="t1174" data-cue="t1174" data-t="1174" data-label="19:34">if that's what you guys wanna do, that's fine. I I assumed we would come here tonight and some people would have ideas for</span> <span class="cue" id="t1181" data-cue="t1181" data-t="1181" data-label="19:41">this or that.</span> <span class="cue" id="t1182" data-cue="t1182" data-t="1182" data-label="19:42">I personally am</span> <span class="cue" id="t1184" data-cue="t1184" data-t="1184" data-label="19:44">on board with the idea of, generally speaking, taking what we've got in front of us to the town and</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="19:51" data-default-t="1191">19:51</div>
+        <div class="text"><span class="cue" id="t1191" data-cue="t1191" data-t="1191" data-label="19:51">trying to</span> <span class="cue" id="t1192" data-cue="t1192" data-t="1192" data-label="19:52">explain that, as Diane said,</span> <span class="cue" id="t1195" data-cue="t1195" data-t="1195" data-label="19:55">after a zero budget last year, here we are.</span> <span class="cue" id="t1198" data-cue="t1198" data-t="1198" data-label="19:58">But it's</span> <span class="cue" id="t1201" data-cue="t1201" data-t="1201" data-label="20:01">not a big difference, I don't think.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="20:06" data-default-t="1206">20:06</div>
+        <div class="text"><span class="cue" id="t1206" data-cue="t1206" data-t="1206" data-label="20:06">All right.</span> <span class="cue" id="t1209" data-cue="t1209" data-t="1209" data-label="20:09">I'm on a motion right now to</span> <span class="cue" id="t1212" data-cue="t1212" data-t="1212" data-label="20:12">reduce the school budget by $20,000</span> <span class="cue" id="t1215" data-cue="t1215" data-t="1215" data-label="20:15">to $4,102,787</span> <span class="cue" id="t1221" data-cue="t1221" data-t="1221" data-label="20:21">Do I have a second?</span> <span class="cue" id="t1223" data-cue="t1223" data-t="1223" data-label="20:23">I'll second it. Who</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="20:28" data-default-t="1228">20:28</div>
+        <div class="text"><span class="cue" id="t1228" data-cue="t1228" data-t="1228" data-label="20:28">said it first?</span> <span class="cue" id="t1229" data-cue="t1229" data-t="1229" data-label="20:29">Someone else can. Is that you, Rob?</span> <span class="cue" id="t1233" data-cue="t1233" data-t="1233" data-label="20:33">That was Kurt. Kurt second. Okay.</span> <span class="cue" id="t1236" data-cue="t1236" data-t="1236" data-label="20:36">So I made the motion Kurt second.</span> <span class="cue" id="t1239" data-cue="t1239" data-t="1239" data-label="20:39">Let's any discussion. Do we have any discussion on this? Anybody have any questions or concerns?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="20:49" data-default-t="1249">20:49</div>
+        <div class="text"><span class="cue" id="t1249" data-cue="t1249" data-t="1249" data-label="20:49">No, basically it just makes sense based on the conversation we just had the position and the responsibilities are going to be</span> <span class="cue" id="t1256" data-cue="t1256" data-t="1256" data-label="20:56">totally different. So we can't fund that position at that same level. That's all. Nothing to do with the school budget itself, just the change that</span> <span class="cue" id="t1266" data-cue="t1266" data-t="1266" data-label="21:06">came about this year. So that's my discussion. It makes sense.</span> <span class="cue" id="t1272" data-cue="t1272" data-t="1272" data-label="21:12">Anybody else?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="21:13" data-default-t="1273">21:13</div>
+        <div class="text"><span class="cue" id="t1273" data-cue="t1273" data-t="1273" data-label="21:13">That that number of 93,730</span> <span class="cue" id="t1277" data-cue="t1277" data-t="1277" data-label="21:17">stood out stood out to me.</span> <span class="cue" id="t1279" data-cue="t1279" data-t="1279" data-label="21:19">Is that is that the actual salary</span> <span class="cue" id="t1282" data-cue="t1282" data-t="1282" data-label="21:22">that they had set for her at the school?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="21:25" data-default-t="1285">21:25</div>
+        <div class="text"><span class="cue" id="t1285" data-cue="t1285" data-t="1285" data-label="21:25">I believe if it's in that finance</span> <span class="cue" id="t1288" data-cue="t1288" data-t="1288" data-label="21:28">position</span> <span class="cue" id="t1289" data-cue="t1289" data-t="1289" data-label="21:29">on their budget, that is the salary for that job.</span> <span class="cue" id="t1293" data-cue="t1293" data-t="1293" data-label="21:33">What do you got to do to get it?</span> <span class="cue" id="t1295" data-cue="t1295" data-t="1295" data-label="21:35">I</span> <span class="cue" id="t1296" data-cue="t1296" data-t="1296" data-label="21:36">don't know, Kern.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="21:40" data-default-t="1300">21:40</div>
+        <div class="text"><span class="cue" id="t1300" data-cue="t1300" data-t="1300" data-label="21:40">That's a that's an awful lot of money. It's more than she was making doing the the duel.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="21:44" data-default-t="1304">21:44</div>
+        <div class="text"><span class="cue" id="t1304" data-cue="t1304" data-t="1304" data-label="21:44">No. I think that I don't know what that probably included a raise. I don't know what her current salary is now,</span> <span class="cue" id="t1312" data-cue="t1312" data-t="1312" data-label="21:52">but that was what was being budgeted going forward.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="21:58" data-default-t="1318">21:58</div>
+        <div class="text"><span class="cue" id="t1318" data-cue="t1318" data-t="1318" data-label="21:58">I agree, Kirk. I'm not sure where the figure came from either. It was definitely lower the year before.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="22:04" data-default-t="1324">22:04</div>
+        <div class="text"><span class="cue" id="t1324" data-cue="t1324" data-t="1324" data-label="22:04">The year before figure was $77,600</span> <span class="cue" id="t1328" data-cue="t1328" data-t="1328" data-label="22:08">and I believe that was just Laura's job because</span> <span class="cue" id="t1333" data-cue="t1333" data-t="1333" data-label="22:13">Laura was still,</span> <span class="cue" id="t1335" data-cue="t1335" data-t="1335" data-label="22:15">I believe employed when the budget was done last year for the school.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="22:21" data-default-t="1341">22:21</div>
+        <div class="text"><span class="cue" id="t1341" data-cue="t1341" data-t="1341" data-label="22:21">And I don't think her salary was included even as an FYI on the personnel</span> <span class="cue" id="t1347" data-cue="t1347" data-t="1347" data-label="22:27">spreadsheet that we got. So we can't tell.</span> <span class="cue" id="t1350" data-cue="t1350" data-t="1350" data-label="22:30">Right.</span> <span class="cue" id="t1351" data-cue="t1351" data-t="1351" data-label="22:31">Okay.</span> <span class="cue" id="t1353" data-cue="t1353" data-t="1353" data-label="22:33">So</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="22:36" data-default-t="1356">22:36</div>
+        <div class="text"><span class="cue" id="t1356" data-cue="t1356" data-t="1356" data-label="22:36">any more discussion on this?</span> <span class="cue" id="t1360" data-cue="t1360" data-t="1360" data-label="22:40">We</span> <span class="cue" id="t1361" data-cue="t1361" data-t="1361" data-label="22:41">call for a vote?</span> <span class="cue" id="t1363" data-cue="t1363" data-t="1363" data-label="22:43">All in favor?</span> <span class="cue" id="t1366" data-cue="t1366" data-t="1366" data-label="22:46">Aye. Aye.</span> <span class="cue" id="t1368" data-cue="t1368" data-t="1368" data-label="22:48">Linda, Kurt,</span> <span class="cue" id="t1373" data-cue="t1373" data-t="1373" data-label="22:53">Joanne.</span> <span class="cue" id="t1374" data-cue="t1374" data-t="1374" data-label="22:54">Aye.</span> <span class="cue" id="t1375" data-cue="t1375" data-t="1375" data-label="22:55">Louise. Yes.</span> <span class="cue" id="t1378" data-cue="t1378" data-t="1378" data-label="22:58">Okay. Rob.</span> <span class="cue" id="t1380" data-cue="t1380" data-t="1380" data-label="23:00">Almost, I'm gonna abstain.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="23:10" data-default-t="1390">23:10</div>
+        <div class="text"><span class="cue" id="t1390" data-cue="t1390" data-t="1390" data-label="23:10">Okay.</span> <span class="cue" id="t1391" data-cue="t1391" data-t="1391" data-label="23:11">So there are one, two, three, four,</span> <span class="cue" id="t1395" data-cue="t1395" data-t="1395" data-label="23:15">five yeses,</span> <span class="cue" id="t1396" data-cue="t1396" data-t="1396" data-label="23:16">one abstention,</span> <span class="cue" id="t1398" data-cue="t1398" data-t="1398" data-label="23:18">no, nos.</span> <span class="cue" id="t1401" data-cue="t1401" data-t="1401" data-label="23:21">Motion passes.</span> <span class="cue" id="t1407" data-cue="t1407" data-t="1407" data-label="23:27">Okay.</span> <span class="cue" id="t1411" data-cue="t1411" data-t="1411" data-label="23:31">If we can get that updated</span> <span class="cue" id="t1412" data-cue="t1412" data-t="1412" data-label="23:32">on the spreadsheet as well with those other corrections we have.</span> <span class="cue" id="t1419" data-cue="t1419" data-t="1419" data-label="23:39">And Eric,</span> <span class="cue" id="t1421" data-cue="t1421" data-t="1421" data-label="23:41">for you, do you want to correct this spreadsheet and then have us,</span> <span class="cue" id="t1426" data-cue="t1426" data-t="1426" data-label="23:46">unless anybody has any other changes they wanna make,</span> <span class="cue" id="t1431" data-cue="t1431" data-t="1431" data-label="23:51">have us vote on it next week?</span> <span class="cue" id="t1434" data-cue="t1434" data-t="1434" data-label="23:54">Or do you guys</span> <span class="cue" id="t1436" data-cue="t1436" data-t="1436" data-label="23:56">wanna see the spreadsheet one more time?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="24:00" data-default-t="1440">24:00</div>
+        <div class="text"><span class="cue" id="t1440" data-cue="t1440" data-t="1440" data-label="24:00">Are we still discussing the budget in general. I was letting the whole school talk go by but I was gonna ask to see something since we're all together.</span> <span class="cue" id="t1450" data-cue="t1450" data-t="1450" data-label="24:10">Okay, the sheet, I mean just to see</span> <span class="cue" id="t1452" data-cue="t1452" data-t="1452" data-label="24:12">a few weeks back.</span> <span class="cue" id="t1455" data-cue="t1455" data-t="1455" data-label="24:15">I mean, like you said, I'm in favor of</span> <span class="cue" id="t1459" data-cue="t1459" data-t="1459" data-label="24:19">probably moving forward with the budget as it is. And then obviously the townspeople and townsfolks are going to have their say,</span> <span class="cue" id="t1467" data-cue="t1467" data-t="1467" data-label="24:27">But there was,</span> <span class="cue" id="t1470" data-cue="t1470" data-t="1470" data-label="24:30">Eric had provided us with something on the public works.</span> <span class="cue" id="t1477" data-cue="t1477" data-t="1477" data-label="24:37">And I had it, that's why it was frustrating to me to sign me on tonight because I had it that I had a couple of questions on.</span> <span class="cue" id="t1484" data-cue="t1484" data-t="1484" data-label="24:44">It might have been an overview</span> <span class="cue" id="t1486" data-cue="t1486" data-t="1486" data-label="24:46">of the dollar amount and what it's spent on, and it might have been in the board of selectmen packet.</span> <span class="cue" id="t1493" data-cue="t1493" data-t="1493" data-label="24:53">You're talking about a sheet that was put together that said what we spent last year, what we're gonna spend this year? Yeah, yeah. And I just was, you know, since we were together, I was going to kind of take a look at that because that's another,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="25:05" data-default-t="1505">25:05</div>
+        <div class="text"><span class="cue" id="t1505" data-cue="t1505" data-t="1505" data-label="25:05">you know, the hot ticket item or a big ticket item that we know</span> <span class="cue" id="t1508" data-cue="t1508" data-t="1508" data-label="25:08">a lot of spending is going into. We've heard all the reasons. I'm not saying I'm,</span> <span class="cue" id="t1514" data-cue="t1514" data-t="1514" data-label="25:14">totally understand what they're trying to get done, but that was something that I was gonna ask a couple of questions on my own and then I just couldn't get my hands on it.</span> <span class="cue" id="t1522" data-cue="t1522" data-t="1522" data-label="25:22">Can we ask our town administrator if he might have that available to share with us?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="25:29" data-default-t="1529">25:29</div>
+        <div class="text"><span class="cue" id="t1529" data-cue="t1529" data-t="1529" data-label="25:29">I mean, I can look and be taking a couple minutes to look through and see right And</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="25:34" data-default-t="1534">25:34</div>
+        <div class="text"><span class="cue" id="t1534" data-cue="t1534" data-t="1534" data-label="25:34">I apologize, I really wanted to have it in my hands and I did earlier today.</span> <span class="cue" id="t1540" data-cue="t1540" data-t="1540" data-label="25:40">Let me see if I have it really Thank you. Because if that gives us in case I had any last minute questions on that budget wise.</span> <span class="cue" id="t1549" data-cue="t1549" data-t="1549" data-label="25:49">Let me go see if I have it.</span> <span class="cue" id="t1551" data-cue="t1551" data-t="1551" data-label="25:51">I</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="25:54" data-default-t="1554">25:54</div>
+        <div class="text"><span class="cue" id="t1554" data-cue="t1554" data-t="1554" data-label="25:54">have everything else. I did a quick search of my email. I'm not not quite sure. How how how long ago was this? I feel like it was a couple weeks ago. It was once you have the patient's</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="26:09" data-default-t="1569">26:09</div>
+        <div class="text"><span class="cue" id="t1569" data-cue="t1569" data-t="1569" data-label="26:09">Was what Diane was when we had the public works presentation.</span> <span class="cue" id="t1574" data-cue="t1574" data-t="1574" data-label="26:14">Yes, yes.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="26:18" data-default-t="1578">26:18</div>
+        <div class="text"><span class="cue" id="t1578" data-cue="t1578" data-t="1578" data-label="26:18">Hold on.</span> <span class="cue" id="t1579" data-cue="t1579" data-t="1579" data-label="26:19">I have a roadwork report hold on.</span> <span class="cue" id="t1583" data-cue="t1583" data-t="1583" data-label="26:23">Oh, I have it.</span> <span class="cue" id="t1585" data-cue="t1585" data-t="1585" data-label="26:25">Thank you.</span> <span class="cue" id="t1587" data-cue="t1587" data-t="1587" data-label="26:27">So</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="26:29" data-default-t="1589">26:29</div>
+        <div class="text"><span class="cue" id="t1589" data-cue="t1589" data-t="1589" data-label="26:29">if I can share my screen, I can try doing that. Share screen.</span> <span class="cue" id="t1595" data-cue="t1595" data-t="1595" data-label="26:35">Post disabled.</span> <span class="cue" id="t1598" data-cue="t1598" data-t="1598" data-label="26:38">Hang on.</span> <span class="cue" id="t1607" data-cue="t1607" data-t="1607" data-label="26:47">You should be able to share now.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="27:02" data-default-t="1622">27:02</div>
+        <div class="text"><span class="cue" id="t1622" data-cue="t1622" data-t="1622" data-label="27:02">Can you guys see this?</span> <span class="cue" id="t1627" data-cue="t1627" data-t="1627" data-label="27:07">Can you see the screen?</span> <span class="cue" id="t1629" data-cue="t1629" data-t="1629" data-label="27:09">Yes. Yes.</span> <span class="cue" id="t1631" data-cue="t1631" data-t="1631" data-label="27:11">Thank you. That's exactly what I'm So it's this.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="27:16" data-default-t="1636">27:16</div>
+        <div class="text"><span class="cue" id="t1636" data-cue="t1636" data-t="1636" data-label="27:16">Oh, this is just one year though. It's not the one with the updated.</span> <span class="cue" id="t1640" data-cue="t1640" data-t="1640" data-label="27:20">Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="27:23" data-default-t="1643">27:23</div>
+        <div class="text"><span class="cue" id="t1643" data-cue="t1643" data-t="1643" data-label="27:23">This is last year,</span> <span class="cue" id="t1645" data-cue="t1645" data-t="1645" data-label="27:25">and then the one for this year is, July.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="27:29" data-default-t="1649">27:29</div>
+        <div class="text"><span class="cue" id="t1649" data-cue="t1649" data-t="1649" data-label="27:29">Okay.</span> <span class="cue" id="t1651" data-cue="t1651" data-t="1651" data-label="27:31">I think that's a good document to track down though, for the purposes of the public hearing. Yeah.</span> <span class="cue" id="t1657" data-cue="t1657" data-t="1657" data-label="27:37">When you're talking about,</span> <span class="cue" id="t1659" data-cue="t1659" data-t="1659" data-label="27:39">you know, where's the, where's the meat</span> <span class="cue" id="t1661" data-cue="t1661" data-t="1661" data-label="27:41">in the town budget this year,</span> <span class="cue" id="t1663" data-cue="t1663" data-t="1663" data-label="27:43">right? Public works is it. So you</span> <span class="cue" id="t1666" data-cue="t1666" data-t="1666" data-label="27:46">know that this is your backup. Well, sorry. This year's version of this document</span> <span class="cue" id="t1671" data-cue="t1671" data-t="1671" data-label="27:51">is your backup in a way to discuss it with the public to say, look, you know,</span> <span class="cue" id="t1676" data-cue="t1676" data-t="1676" data-label="27:56">this is why,</span> <span class="cue" id="t1677" data-cue="t1677" data-t="1677" data-label="27:57">you know, we're increasing the public works expenditure to get some things done to try to catch up. I'm</span> <span class="cue" id="t1683" data-cue="t1683" data-t="1683" data-label="28:03">sure anybody in town</span> <span class="cue" id="t1685" data-cue="t1685" data-t="1685" data-label="28:05">can think of a pothole somewhere</span> <span class="cue" id="t1687" data-cue="t1687" data-t="1687" data-label="28:07">or something more serious than that that they'd like addressed and this might help us</span> <span class="cue" id="t1693" data-cue="t1693" data-t="1693" data-label="28:13">get through that.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="28:19" data-default-t="1699">28:19</div>
+        <div class="text"><span class="cue" id="t1699" data-cue="t1699" data-t="1699" data-label="28:19">I'm trying to find that document, I cannot find it. I know, I thought it was a two page sheet.</span> <span class="cue" id="t1705" data-cue="t1705" data-t="1705" data-label="28:25">Really was I not</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="28:26" data-default-t="1706">28:26</div>
+        <div class="text"><span class="cue" id="t1706" data-cue="t1706" data-t="1706" data-label="28:26">have it in hard copy, but I don't have it. See, I can't get my hands on it, but I'm just don't why I have it in my phone. I don't have it</span> <span class="cue" id="t1714" data-cue="t1714" data-t="1714" data-label="28:34">in my</span> <span class="cue" id="t1716" data-cue="t1716" data-t="1716" data-label="28:36">directory here.</span> <span class="cue" id="t1720" data-cue="t1720" data-t="1720" data-label="28:40">Alright, this is</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="28:41" data-default-t="1721">28:41</div>
+        <div class="text"><span class="cue" id="t1721" data-cue="t1721" data-t="1721" data-label="28:41">I mean, I'm sure we'll track it down</span> <span class="cue" id="t1725" data-cue="t1725" data-t="1725" data-label="28:45">between</span> <span class="cue" id="t1727" data-cue="t1727" data-t="1727" data-label="28:47">everybody here.</span> <span class="cue" id="t1728" data-cue="t1728" data-t="1728" data-label="28:48">It was,</span> <span class="cue" id="t1729" data-cue="t1729" data-t="1729" data-label="28:49">know, Joanne mentioned something about the selectman. Maybe that's where it went</span> <span class="cue" id="t1734" data-cue="t1734" data-t="1734" data-label="28:54">and got pulled from, Diane. I don't know. I didn't see it in a quick perusal of my emails, but frankly, I get behind and things get buried.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="29:02" data-default-t="1742">29:02</div>
+        <div class="text"><span class="cue" id="t1742" data-cue="t1742" data-t="1742" data-label="29:02">Right.</span> <span class="cue" id="t1743" data-cue="t1743" data-t="1743" data-label="29:03">Right.</span> <span class="cue" id="t1744" data-cue="t1744" data-t="1744" data-label="29:04">That document</span> <span class="cue" id="t1746" data-cue="t1746" data-t="1746" data-label="29:06">was presented to the Board of Finance first.</span> <span class="cue" id="t1750" data-cue="t1750" data-t="1750" data-label="29:10">Mhmm. And and</span> <span class="cue" id="t1751" data-cue="t1751" data-t="1751" data-label="29:11">last month or the month before when the board of selectmen had questions,</span> <span class="cue" id="t1756" data-cue="t1756" data-t="1756" data-label="29:16">I just forwarded them the same</span> <span class="cue" id="t1758" data-cue="t1758" data-t="1758" data-label="29:18">note from Jay to them.</span> <span class="cue" id="t1761" data-cue="t1761" data-t="1761" data-label="29:21">Right.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="29:22" data-default-t="1762">29:22</div>
+        <div class="text"><span class="cue" id="t1762" data-cue="t1762" data-t="1762" data-label="29:22">So you did get that.</span> <span class="cue" id="t1764" data-cue="t1764" data-t="1764" data-label="29:24">I'm trying to see whether I can find it real quick.</span> <span class="cue" id="t1767" data-cue="t1767" data-t="1767" data-label="29:27">Yeah. We definitely had it. I can't remember</span> <span class="cue" id="t1770" data-cue="t1770" data-t="1770" data-label="29:30">where I saved it to.</span> <span class="cue" id="t1774" data-cue="t1774" data-t="1774" data-label="29:34">Oh, crap.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="29:38" data-default-t="1778">29:38</div>
+        <div class="text"><span class="cue" id="t1778" data-cue="t1778" data-t="1778" data-label="29:38">And if</span> <span class="cue" id="t1779" data-cue="t1779" data-t="1779" data-label="29:39">we don't get our hands on it, I mean, I'll find it afterwards</span> <span class="cue" id="t1784" data-cue="t1784" data-t="1784" data-label="29:44">and my questions can be answered. It just</span> <span class="cue" id="t1787" data-cue="t1787" data-t="1787" data-label="29:47">tells the needs of the town.</span> <span class="cue" id="t1789" data-cue="t1789" data-t="1789" data-label="29:49">One other thing while you're looking,</span> <span class="cue" id="t1792" data-cue="t1792" data-t="1792" data-label="29:52">I would just like to see, since this probably won't be a long meeting tonight, I'd love to see the,</span> <span class="cue" id="t1799" data-cue="t1799" data-t="1799" data-label="29:59">if someone could share</span> <span class="cue" id="t1802" data-cue="t1802" data-t="1802" data-label="30:02">the revised,</span> <span class="cue" id="t1803" data-cue="t1803" data-t="1803" data-label="30:03">what we would be, just that revenue sheet and shows the mill rate and all the things that I was bringing at the beginning of the</span> <span class="cue" id="t1811" data-cue="t1811" data-t="1811" data-label="30:11">meeting,</span> <span class="cue" id="t1813" data-cue="t1813" data-t="1813" data-label="30:13">just to kind of visually look at it again and make sure that I'm not forgetting. Are we able to do that? Share that one?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="30:19" data-default-t="1819">30:19</div>
+        <div class="text"><span class="cue" id="t1819" data-cue="t1819" data-t="1819" data-label="30:19">Because we found that one fun balance, different thing that I brought up. So I just kind of wanna make sure there wasn't anything else that I was gonna question.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="30:28" data-default-t="1828">30:28</div>
+        <div class="text"><span class="cue" id="t1828" data-cue="t1828" data-t="1828" data-label="30:28">Oh, you're looking for this. I think I may have found it.</span> <span class="cue" id="t1833" data-cue="t1833" data-t="1833" data-label="30:33">Okay.</span> <span class="cue" id="t1835" data-cue="t1835" data-t="1835" data-label="30:35">Here's my email here</span> <span class="cue" id="t1837" data-cue="t1837" data-t="1837" data-label="30:37">Friday, March</span> <span class="cue" id="t1838" data-cue="t1838" data-t="1838" data-label="30:38">18.</span> <span class="cue" id="t1840" data-cue="t1840" data-t="1840" data-label="30:40">Okay. From Eric with two documents attached. Second one</span> <span class="cue" id="t1844" data-cue="t1844" data-t="1844" data-label="30:44">is a two page document, three page actually, sorry, document.</span> <span class="cue" id="t1848" data-cue="t1848" data-t="1848" data-label="30:48">It does start with the 2021</span> <span class="cue" id="t1850" data-cue="t1850" data-t="1850" data-label="30:50">Road and Tara Roadwork Cost Report, but if you scroll down</span> <span class="cue" id="t1855" data-cue="t1855" data-t="1855" data-label="30:55">there's the twenty</span> <span class="cue" id="t1857" data-cue="t1857" data-t="1857" data-label="30:57">twenty two-twenty twenty three Road Improvement Request</span> <span class="cue" id="t1860" data-cue="t1860" data-t="1860" data-label="31:00">and that is</span> <span class="cue" id="t1863" data-cue="t1863" data-t="1863" data-label="31:03">707500.</span> <span class="cue" id="t1866" data-cue="t1866" data-t="1866" data-label="31:06">Thank you, Brian. So I have it here.</span> <span class="cue" id="t1869" data-cue="t1869" data-t="1869" data-label="31:09">If anybody wants to go through their emails, it's it's March 18 from Eric.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="31:24" data-default-t="1884">31:24</div>
+        <div class="text"><span class="cue" id="t1884" data-cue="t1884" data-t="1884" data-label="31:24">I do not</span> <span class="cue" id="t1888" data-cue="t1888" data-t="1888" data-label="31:28">have that in my emails right now.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="31:31" data-default-t="1891">31:31</div>
+        <div class="text"><span class="cue" id="t1891" data-cue="t1891" data-t="1891" data-label="31:31">Just I cleaned suppose I could hit reply to all and pass it back on.</span> <span class="cue" id="t1897" data-cue="t1897" data-t="1897" data-label="31:37">Or if you want me to share my screen, I mean.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="31:41" data-default-t="1901">31:41</div>
+        <div class="text"><span class="cue" id="t1901" data-cue="t1901" data-t="1901" data-label="31:41">Either way, I mean, I know I'm jumping around at some point, I wanna look at this document</span> <span class="cue" id="t1907" data-cue="t1907" data-t="1907" data-label="31:47">And then maybe since Diane has this up, can we look at this?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="31:51" data-default-t="1911">31:51</div>
+        <div class="text"><span class="cue" id="t1911" data-cue="t1911" data-t="1911" data-label="31:51">And then we could Oh, this is the revenue tab from the budget worksheet.</span> <span class="cue" id="t1917" data-cue="t1917" data-t="1917" data-label="31:57">Yeah.</span> <span class="cue" id="t1921" data-cue="t1921" data-t="1921" data-label="32:01">Do you want to look at here.</span> <span class="cue" id="t1923" data-cue="t1923" data-t="1923" data-label="32:03">So we're, I</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="32:05" data-default-t="1925">32:05</div>
+        <div class="text"><span class="cue" id="t1925" data-cue="t1925" data-t="1925" data-label="32:05">want to make it, let me make mine bigger. I just, I just forwarded it right replied to all on that and sent it and hopefully</span> <span class="cue" id="t1933" data-cue="t1933" data-t="1933" data-label="32:13">saw the attachment comes through.</span> <span class="cue" id="t1937" data-cue="t1937" data-t="1937" data-label="32:17">Thanks Rob for doing that. I got it Rob.</span> <span class="cue" id="t1940" data-cue="t1940" data-t="1940" data-label="32:20">Thank you.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="32:21" data-default-t="1941">32:21</div>
+        <div class="text"><span class="cue" id="t1941" data-cue="t1941" data-t="1941" data-label="32:21">Is the attachment in there Kurt sometimes my Gmail is weird about that. Oh, no, maybe not. Nope, no attachment.</span> <span class="cue" id="t1948" data-cue="t1948" data-t="1948" data-label="32:28">Hold on. I'm looking.</span> <span class="cue" id="t1950" data-cue="t1950" data-t="1950" data-label="32:30">No attachment.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="32:31" data-default-t="1951">32:31</div>
+        <div class="text"><span class="cue" id="t1951" data-cue="t1951" data-t="1951" data-label="32:31">Alright, I'll I'll fix that. Give me a sec. You guys talk about this.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="32:35" data-default-t="1955">32:35</div>
+        <div class="text"><span class="cue" id="t1955" data-cue="t1955" data-t="1955" data-label="32:35">Yeah.</span> <span class="cue" id="t1956" data-cue="t1956" data-t="1956" data-label="32:36">So my only questions, Diane, were I'm</span> <span class="cue" id="t1960" data-cue="t1960" data-t="1960" data-label="32:40">assuming</span> <span class="cue" id="t1961" data-cue="t1961" data-t="1961" data-label="32:41">is this the changes have been made. Right?</span> <span class="cue" id="t1965" data-cue="t1965" data-t="1965" data-label="32:45">And going to make those changes. Right. So Right. And then right. So we'll make those changes, and then we'll look at the final numbers. Is that what we're And then we'll have a final</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="32:55" data-default-t="1975">32:55</div>
+        <div class="text"><span class="cue" id="t1975" data-cue="t1975" data-t="1975" data-label="32:55">workbook.</span> <span class="cue" id="t1977" data-cue="t1977" data-t="1977" data-label="32:57">Okay. You know, Excel spreadsheet. Does that work for everybody?</span> <span class="cue" id="t1982" data-cue="t1982" data-t="1982" data-label="33:02">Yes.</span> <span class="cue" id="t1984" data-cue="t1984" data-t="1984" data-label="33:04">And then everybody you know, it shouldn't be long.</span> <span class="cue" id="t1988" data-cue="t1988" data-t="1988" data-label="33:08">It should be fairly quick for Eric to make those changes. Then we'll have, you know, two days to look at it over and then we can</span> <span class="cue" id="t1996" data-cue="t1996" data-t="1996" data-label="33:16">review everything</span> <span class="cue" id="t1997" data-cue="t1997" data-t="1997" data-label="33:17">and make our final decision next Wednesday</span> <span class="cue" id="t2001" data-cue="t2001" data-t="2001" data-label="33:21">because it's on the agenda.</span> <span class="cue" id="t2002" data-cue="t2002" data-t="2002" data-label="33:22">Are</span> <span class="cue" id="t2004" data-cue="t2004" data-t="2004" data-label="33:24">you good with that guys are.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="33:28" data-default-t="2008">33:28</div>
+        <div class="text"><span class="cue" id="t2008" data-cue="t2008" data-t="2008" data-label="33:28">That sounds fine with me. Yeah.</span> <span class="cue" id="t2015" data-cue="t2015" data-t="2015" data-label="33:35">Yeah, I guess if I had had any, that's fine with me. Thank you for bringing this back up.</span> <span class="cue" id="t2021" data-cue="t2021" data-t="2021" data-label="33:41">I thought there was something else I was gonna point out, but there isn't, it was just that one. I knew it was in one place than the other. So thank you for that. And then,</span> <span class="cue" id="t2029" data-cue="t2029" data-t="2029" data-label="33:49">yeah, I guess I just wanted an overview of looking at the public works document if someone, but you don't have that now or you do?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="33:59" data-default-t="2039">33:59</div>
+        <div class="text"><span class="cue" id="t2039" data-cue="t2039" data-t="2039" data-label="33:59">Still working on hold on.</span> <span class="cue" id="t2047" data-cue="t2047" data-t="2047" data-label="34:07">I don't know why I can't find it. Hold on.</span> <span class="cue" id="t2068" data-cue="t2068" data-t="2068" data-label="34:28">I don't have that one in my email.</span> <span class="cue" id="t2072" data-cue="t2072" data-t="2072" data-label="34:32">So</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="34:39" data-default-t="2079">34:39</div>
+        <div class="text"><span class="cue" id="t2079" data-cue="t2079" data-t="2079" data-label="34:39">I made the mistake of closing it and I'm, you know, I'm losing it in the clutter. Give me a give me a minute and I'll find it.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="34:47" data-default-t="2087">34:47</div>
+        <div class="text"><span class="cue" id="t2087" data-cue="t2087" data-t="2087" data-label="34:47">Just</span> <span class="cue" id="t2088" data-cue="t2088" data-t="2088" data-label="34:48">quickly scrolling through my stuff to see if I can pick it up real quick.</span> <span class="cue" id="t2097" data-cue="t2097" data-t="2097" data-label="34:57">Yippee.</span> <span class="cue" id="t2100" data-cue="t2100" data-t="2100" data-label="35:00">No, I don't have them in here.</span> <span class="cue" id="t2111" data-cue="t2111" data-t="2111" data-label="35:11">What was the date of that email? March 18.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="35:16" data-default-t="2116">35:16</div>
+        <div class="text"><span class="cue" id="t2116" data-cue="t2116" data-t="2116" data-label="35:16">I have the email,</span> <span class="cue" id="t2118" data-cue="t2118" data-t="2118" data-label="35:18">but it doesn't have an attachment.</span> <span class="cue" id="t2154" data-cue="t2154" data-t="2154" data-label="35:54">Oh, here we go.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="35:56" data-default-t="2156">35:56</div>
+        <div class="text"><span class="cue" id="t2156" data-cue="t2156" data-t="2156" data-label="35:56">I got it. I got it.</span> <span class="cue" id="t2167" data-cue="t2167" data-t="2167" data-label="36:07">Okay,</span> <span class="cue" id="t2168" data-cue="t2168" data-t="2168" data-label="36:08">let's go back to this.</span> <span class="cue" id="t2171" data-cue="t2171" data-t="2171" data-label="36:11">I'm sharing my screen again.</span> <span class="cue" id="t2177" data-cue="t2177" data-t="2177" data-label="36:17">This is the one.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="36:20" data-default-t="2180">36:20</div>
+        <div class="text"><span class="cue" id="t2180" data-cue="t2180" data-t="2180" data-label="36:20">Yep. And I just attached it to an email. Hopefully, that's.</span> <span class="cue" id="t2184" data-cue="t2184" data-t="2184" data-label="36:24">I I I had to download it off of it's so bizarre. I went into my sent folder. The email I sent you all, in my sent folder, the attachment show up. So I pulled it from there.</span> <span class="cue" id="t2195" data-cue="t2195" data-t="2195" data-label="36:35">Anyway,</span> <span class="cue" id="t2196" data-cue="t2196" data-t="2196" data-label="36:36">this is the this is it because, yeah, page one has this, but then if you scroll down Right. Yep. And then page two starts twenty two twenty three.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="36:44" data-default-t="2204">36:44</div>
+        <div class="text"><span class="cue" id="t2204" data-cue="t2204" data-t="2204" data-label="36:44">So, Joanne, can you see that?</span> <span class="cue" id="t2208" data-cue="t2208" data-t="2208" data-label="36:48">Oh, you're on mute.</span> <span class="cue" id="t2210" data-cue="t2210" data-t="2210" data-label="36:50">So what was your question?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="36:55" data-default-t="2215">36:55</div>
+        <div class="text"><span class="cue" id="t2215" data-cue="t2215" data-t="2215" data-label="36:55">I think I just wanted to look it over</span> <span class="cue" id="t2218" data-cue="t2218" data-t="2218" data-label="36:58">and see</span> <span class="cue" id="t2219" data-cue="t2219" data-t="2219" data-label="36:59">if I had any questions</span> <span class="cue" id="t2221" data-cue="t2221" data-t="2221" data-label="37:01">of it. So again, I appreciate all of you looking and putting it up there. I knew like Rob kind of surmised for me or summarized for me that it is one of our big ticket items that, you know, a lot of questions will come on</span> <span class="cue" id="t2237" data-cue="t2237" data-t="2237" data-label="37:17">for that. So I wanted to</span> <span class="cue" id="t2241" data-cue="t2241" data-t="2241" data-label="37:21">be prepared.</span> <span class="cue" id="t2243" data-cue="t2243" data-t="2243" data-label="37:23">That's all. So I now that we all know we at least have it, I want to look at that.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="37:31" data-default-t="2251">37:31</div>
+        <div class="text"><span class="cue" id="t2251" data-cue="t2251" data-t="2251" data-label="37:31">Yep, and again, you know, hopefully this time the email has an attachment.</span> <span class="cue" id="t2256" data-cue="t2256" data-t="2256" data-label="37:36">Thank you. So you should be able to pull it up yourself.</span> <span class="cue" id="t2259" data-cue="t2259" data-t="2259" data-label="37:39">I appreciate it. Yeah.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="37:45" data-default-t="2265">37:45</div>
+        <div class="text"><span class="cue" id="t2265" data-cue="t2265" data-t="2265" data-label="37:45">All</span> <span class="cue" id="t2269" data-cue="t2269" data-t="2269" data-label="37:49">right.</span> <span class="cue" id="t2271" data-cue="t2271" data-t="2271" data-label="37:51">Any</span> <span class="cue" id="t2275" data-cue="t2275" data-t="2275" data-label="37:55">other questions that anybody has or anybody want to make any comment on the budget as it stands right now.</span> <span class="cue" id="t2283" data-cue="t2283" data-t="2283" data-label="38:03">Go</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="38:05" data-default-t="2285">38:05</div>
+        <div class="text"><span class="cue" id="t2285" data-cue="t2285" data-t="2285" data-label="38:05">ahead, Louise. Would it be possible to put that document we just brought up onto the website.</span> <span class="cue" id="t2291" data-cue="t2291" data-t="2291" data-label="38:11">So in case people have questions ahead of time?</span> <span class="cue" id="t2294" data-cue="t2294" data-t="2294" data-label="38:14">The public works document?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="38:17" data-default-t="2297">38:17</div>
+        <div class="text"><span class="cue" id="t2297" data-cue="t2297" data-t="2297" data-label="38:17">Yeah, on the budget,</span> <span class="cue" id="t2300" data-cue="t2300" data-t="2300" data-label="38:20">on the end oversight under the budget issues.</span> <span class="cue" id="t2305" data-cue="t2305" data-t="2305" data-label="38:25">Can we do that?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="38:28" data-default-t="2308">38:28</div>
+        <div class="text"><span class="cue" id="t2308" data-cue="t2308" data-t="2308" data-label="38:28">Think it's in the board of selection packet already, but I don't know, you know.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="38:34" data-default-t="2314">38:34</div>
+        <div class="text"><span class="cue" id="t2314" data-cue="t2314" data-t="2314" data-label="38:34">Would be the worst thing to have it with the budget,</span> <span class="cue" id="t2317" data-cue="t2317" data-t="2317" data-label="38:37">but okay, I could go either way on that. I just think it should definitely be a part of our presentation.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="38:43" data-default-t="2323">38:43</div>
+        <div class="text"><span class="cue" id="t2323" data-cue="t2323" data-t="2323" data-label="38:43">Right, I mean, presentation hasn't been created yet so for the</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="38:48" data-default-t="2328">38:48</div>
+        <div class="text"><span class="cue" id="t2328" data-cue="t2328" data-t="2328" data-label="38:48">hence why I'm saying it. We</span> <span class="cue" id="t2330" data-cue="t2330" data-t="2330" data-label="38:50">have to, we still have to create it. Right, right.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="38:57" data-default-t="2337">38:57</div>
+        <div class="text"><span class="cue" id="t2337" data-cue="t2337" data-t="2337" data-label="38:57">All right.</span> <span class="cue" id="t2340" data-cue="t2340" data-t="2340" data-label="39:00">Anybody else have any questions,</span> <span class="cue" id="t2342" data-cue="t2342" data-t="2342" data-label="39:02">concerns, anything on this budget that you want to talk about? Plans are to have Eric make the changes we talked about tonight,</span> <span class="cue" id="t2349" data-cue="t2349" data-t="2349" data-label="39:09">the corrections and the change to the school,</span> <span class="cue" id="t2353" data-cue="t2353" data-t="2353" data-label="39:13">and</span> <span class="cue" id="t2353-1" data-cue="t2353-1" data-t="2353" data-label="39:13">then we'll get a clean spreadsheet out to everybody.</span> <span class="cue" id="t2358" data-cue="t2358" data-t="2358" data-label="39:18">And then</span> <span class="cue" id="t2359" data-cue="t2359" data-t="2359" data-label="39:19">we will talk about this in the meeting on</span> <span class="cue" id="t2363" data-cue="t2363" data-t="2363" data-label="39:23">Wednesday, next Wednesday.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="39:27" data-default-t="2367">39:27</div>
+        <div class="text"><span class="cue" id="t2367" data-cue="t2367" data-t="2367" data-label="39:27">Diane, I am formulating a question if you give me a minute. Sorry.</span> <span class="cue" id="t2371" data-cue="t2371" data-t="2371" data-label="39:31">Just Okay. Have a</span> <span class="cue" id="t2372" data-cue="t2372" data-t="2372" data-label="39:32">I want to ask it in the right way.</span> <span class="cue" id="t2374" data-cue="t2374" data-t="2374" data-label="39:34">Okay. Right. Together in my because I'm going be talking. I'm going to ask Eric a quick question, but I want to formulate it right.</span> <span class="cue" id="t2381" data-cue="t2381" data-t="2381" data-label="39:41">Okay. Thank you for allowing me a moment.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="39:46" data-default-t="2386">39:46</div>
+        <div class="text"><span class="cue" id="t2386" data-cue="t2386" data-t="2386" data-label="39:46">So next Wednesday, that's the</span> <span class="cue" id="t2389" data-cue="t2389" data-t="2389" data-label="39:49">drop dead date for us to</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="39:51" data-default-t="2391">39:51</div>
+        <div class="text"><span class="cue" id="t2391" data-cue="t2391" data-t="2391" data-label="39:51">Approve the budget to send it to the annual meeting. Right.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="40:00" data-default-t="2400">40:00</div>
+        <div class="text"><span class="cue" id="t2400" data-cue="t2400" data-t="2400" data-label="40:00">Eric, if I could ask you a quick question.</span> <span class="cue" id="t2402" data-cue="t2402" data-t="2402" data-label="40:02">When I was looking at, you know, the employee spreadsheet</span> <span class="cue" id="t2406" data-cue="t2406" data-t="2406" data-label="40:06">and the personnel spreadsheet, which goes over hours</span> <span class="cue" id="t2410" data-cue="t2410" data-t="2410" data-label="40:10">and</span> <span class="cue" id="t2411" data-cue="t2411" data-t="2411" data-label="40:11">different</span> <span class="cue" id="t2412" data-cue="t2412" data-t="2412" data-label="40:12">things, I know we have the salaries.</span> <span class="cue" id="t2415" data-cue="t2415" data-t="2415" data-label="40:15">Is</span> <span class="cue" id="t2416" data-cue="t2416" data-t="2416" data-label="40:16">there</span> <span class="cue" id="t2418" data-cue="t2418" data-t="2418" data-label="40:18">the the people such as like</span> <span class="cue" id="t2421" data-cue="t2421" data-t="2421" data-label="40:21">the zoning agent, the wetlands agent,</span> <span class="cue" id="t2425" data-cue="t2425" data-t="2425" data-label="40:25">guys that maybe work ten hours a week,</span> <span class="cue" id="t2427" data-cue="t2427" data-t="2427" data-label="40:27">Are they involved in? They're not in Murph, right? They they follow the twenty hour rule as well.</span> <span class="cue" id="t2433" data-cue="t2433" data-t="2433" data-label="40:33">Correct.</span> <span class="cue" id="t2434" data-cue="t2434" data-t="2434" data-label="40:34">Thank you. They're not eligible for any benefits.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="40:39" data-default-t="2439">40:39</div>
+        <div class="text"><span class="cue" id="t2439" data-cue="t2439" data-t="2439" data-label="40:39">Because I know.</span> <span class="cue" id="t2441" data-cue="t2441" data-t="2441" data-label="40:41">So let me just make sure there's no one else I wanna ask about.</span> <span class="cue" id="t2444" data-cue="t2444" data-t="2444" data-label="40:44">And</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="40:50" data-default-t="2450">40:50</div>
+        <div class="text"><span class="cue" id="t2450" data-cue="t2450" data-t="2450" data-label="40:50">I know that we raised the hour for the building department person,</span> <span class="cue" id="t2455" data-cue="t2455" data-t="2455" data-label="40:55">the bill, not the secretary, but the actual building official.</span> <span class="cue" id="t2459" data-cue="t2459" data-t="2459" data-label="40:59">What is his current hours per week that we raised it to?</span> <span class="cue" id="t2463" data-cue="t2463" data-t="2463" data-label="41:03">Seven.</span> <span class="cue" id="t2467" data-cue="t2467" data-t="2467" data-label="41:07">Correct.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="41:08" data-default-t="2468">41:08</div>
+        <div class="text"><span class="cue" id="t2468" data-cue="t2468" data-t="2468" data-label="41:08">Thank you. All right.</span> <span class="cue" id="t2475" data-cue="t2475" data-t="2475" data-label="41:15">And someone like that's at the transfer station and does seventeen hours per week. So no benefits there?</span> <span class="cue" id="t2482" data-cue="t2482" data-t="2482" data-label="41:22">Correct.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="41:23" data-default-t="2483">41:23</div>
+        <div class="text"><span class="cue" id="t2483" data-cue="t2483" data-t="2483" data-label="41:23">I sound like I'm a screw. I don't want to. I just want to make sure that I'm understanding</span> <span class="cue" id="t2489" data-cue="t2489" data-t="2489" data-label="41:29">that it's a definite flat</span> <span class="cue" id="t2491" data-cue="t2491" data-t="2491" data-label="41:31">twenty hours or above could be eligible, but anybody that I see on this spreadsheet that's under twenty hours would not be.</span> <span class="cue" id="t2500" data-cue="t2500" data-t="2500" data-label="41:40">Correct.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="41:42" data-default-t="2502">41:42</div>
+        <div class="text"><span class="cue" id="t2502" data-cue="t2502" data-t="2502" data-label="41:42">Thank you.</span> <span class="cue" id="t2503" data-cue="t2503" data-t="2503" data-label="41:43">Okay.</span> <span class="cue" id="t2504" data-cue="t2504" data-t="2504" data-label="41:44">That's what I, that's all I would have Diane.</span> <span class="cue" id="t2507" data-cue="t2507" data-t="2507" data-label="41:47">All right.</span> <span class="cue" id="t2508" data-cue="t2508" data-t="2508" data-label="41:48">Anybody else?</span> <span class="cue" id="t2510" data-cue="t2510" data-t="2510" data-label="41:50">Kurt, Louise, Rob?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="41:52" data-default-t="2512">41:52</div>
+        <div class="text"><span class="cue" id="t2512" data-cue="t2512" data-t="2512" data-label="41:52">I had a question</span> <span class="cue" id="t2514" data-cue="t2514" data-t="2514" data-label="41:54">probably for Eric. Who's</span> <span class="cue" id="t2516" data-cue="t2516" data-t="2516" data-label="41:56">our clerk tonight?</span> <span class="cue" id="t2518" data-cue="t2518" data-t="2518" data-label="41:58">Marina is our clerk tonight.</span> <span class="cue" id="t2520" data-cue="t2520" data-t="2520" data-label="42:00">Okay, thank you.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="42:04" data-default-t="2524">42:04</div>
+        <div class="text"><span class="cue" id="t2524" data-cue="t2524" data-t="2524" data-label="42:04">I'm good for now and you know I I think we gotta take it to the town and</span> <span class="cue" id="t2531" data-cue="t2531" data-t="2531" data-label="42:11">see how things go. I'm loathe to</span> <span class="cue" id="t2534" data-cue="t2534" data-t="2534" data-label="42:14">take a preemptive whack at this.</span> <span class="cue" id="t2537" data-cue="t2537" data-t="2537" data-label="42:17">Okay.</span> <span class="cue" id="t2538" data-cue="t2538" data-t="2538" data-label="42:18">That's just my perspective, very different than last year.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="42:26" data-default-t="2546">42:26</div>
+        <div class="text"><span class="cue" id="t2546" data-cue="t2546" data-t="2546" data-label="42:26">Okay,</span> <span class="cue" id="t2547" data-cue="t2547" data-t="2547" data-label="42:27">anybody else?</span> <span class="cue" id="t2552" data-cue="t2552" data-t="2552" data-label="42:32">Okay,</span> <span class="cue" id="t2554" data-cue="t2554" data-t="2554" data-label="42:34">hearing none.</span> <span class="cue" id="t2556" data-cue="t2556" data-t="2556" data-label="42:36">Let's move on.</span> <span class="cue" id="t2558" data-cue="t2558" data-t="2558" data-label="42:38">I don't have any correspondence anybody get anything that they need to share.</span> <span class="cue" id="t2565" data-cue="t2565" data-t="2565" data-label="42:45">No. Okay.</span> <span class="cue" id="t2567" data-cue="t2567" data-t="2567" data-label="42:47">Okay, Eric, we're at public speak if we go around.</span> <span class="cue" id="t2572" data-cue="t2572" data-t="2572" data-label="42:52">Okay.</span> <span class="cue" id="t2575" data-cue="t2575" data-t="2575" data-label="42:55">First up, now Bruno</span> <span class="cue" id="t2578" data-cue="t2578" data-t="2578" data-label="42:58">And Jerry's here.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="43:01" data-default-t="2581">43:01</div>
+        <div class="text"><span class="cue" id="t2581" data-cue="t2581" data-t="2581" data-label="43:01">If I could go first,</span> <span class="cue" id="t2583" data-cue="t2583" data-t="2583" data-label="43:03">being the Board of Education chairman,</span> <span class="cue" id="t2587" data-cue="t2587" data-t="2587" data-label="43:07">I'm kind of disappointed</span> <span class="cue" id="t2589" data-cue="t2589" data-t="2589" data-label="43:09">that</span> <span class="cue" id="t2590" data-cue="t2590" data-t="2590" data-label="43:10">the Board of Finance</span> <span class="cue" id="t2592" data-cue="t2592" data-t="2592" data-label="43:12">felt the need</span> <span class="cue" id="t2593" data-cue="t2593" data-t="2593" data-label="43:13">to cut us $20,000</span> <span class="cue" id="t2596" data-cue="t2596" data-t="2596" data-label="43:16">I'm also very disappointed that you don't trust</span> <span class="cue" id="t2600" data-cue="t2600" data-t="2600" data-label="43:20">our board</span> <span class="cue" id="t2602" data-cue="t2602" data-t="2602" data-label="43:22">to come up with a responsible budget</span> <span class="cue" id="t2604" data-cue="t2604" data-t="2604" data-label="43:24">in a responsible way</span> <span class="cue" id="t2607" data-cue="t2607" data-t="2607" data-label="43:27">to</span> <span class="cue" id="t2608" data-cue="t2608" data-t="2608" data-label="43:28">support our school</span> <span class="cue" id="t2610" data-cue="t2610" data-t="2610" data-label="43:30">and to keep it going.</span> <span class="cue" id="t2613" data-cue="t2613" data-t="2613" data-label="43:33">I</span> <span class="cue" id="t2615" data-cue="t2615" data-t="2615" data-label="43:35">just don't understand this.</span> <span class="cue" id="t2617" data-cue="t2617" data-t="2617" data-label="43:37">I know that we've if we come in with a zero increase,</span> <span class="cue" id="t2622" data-cue="t2622" data-t="2622" data-label="43:42">it still doesn't matter.</span> <span class="cue" id="t2625" data-cue="t2625" data-t="2625" data-label="43:45">You all want to cut the budget.</span> <span class="cue" id="t2629" data-cue="t2629" data-t="2629" data-label="43:49">We can't keep going</span> <span class="cue" id="t2631" data-cue="t2631" data-t="2631" data-label="43:51">in this direction.</span> <span class="cue" id="t2634" data-cue="t2634" data-t="2634" data-label="43:54">Our expenses go up,</span> <span class="cue" id="t2637" data-cue="t2637" data-t="2637" data-label="43:57">salaries go up,</span> <span class="cue" id="t2639" data-cue="t2639" data-t="2639" data-label="43:59">and you know as well as I do that in your own personal households,</span> <span class="cue" id="t2643" data-cue="t2643" data-t="2643" data-label="44:03">your expenses go up as well.</span> <span class="cue" id="t2646" data-cue="t2646" data-t="2646" data-label="44:06">And if you are working for a salary for a dollar per hour or whatever dollar per hour you work for,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="44:12" data-default-t="2652">44:12</div>
+        <div class="text"><span class="cue" id="t2652" data-cue="t2652" data-t="2652" data-label="44:12">you'll find that with inflation going on right now, you probably are having a tough time.</span> <span class="cue" id="t2658" data-cue="t2658" data-t="2658" data-label="44:18">And if you're on a fixed income, you're also having a tough time.</span> <span class="cue" id="t2661" data-cue="t2661" data-t="2661" data-label="44:21">It's the reality of the economy</span> <span class="cue" id="t2664" data-cue="t2664" data-t="2664" data-label="44:24">and</span> <span class="cue" id="t2665" data-cue="t2665" data-t="2665" data-label="44:25">our town.</span> <span class="cue" id="t2667" data-cue="t2667" data-t="2667" data-label="44:27">I support our town. I will</span> <span class="cue" id="t2670" data-cue="t2670" data-t="2670" data-label="44:30">go out of my way</span> <span class="cue" id="t2672" data-cue="t2672" data-t="2672" data-label="44:32">to support what the board of</span> <span class="cue" id="t2675" data-cue="t2675" data-t="2675" data-label="44:35">education wants</span> <span class="cue" id="t2676" data-cue="t2676" data-t="2676" data-label="44:36">and I will support whatever the town board of selectmen</span> <span class="cue" id="t2680" data-cue="t2680" data-t="2680" data-label="44:40">want.</span> <span class="cue" id="t2682" data-cue="t2682" data-t="2682" data-label="44:42">I know it's important.</span> <span class="cue" id="t2684" data-cue="t2684" data-t="2684" data-label="44:44">I know it's important when I drive up Hendy Road every day and down Hendy Road.</span> <span class="cue" id="t2690" data-cue="t2690" data-t="2690" data-label="44:50">I know it's important when I see what's going on on the roads and the bridges,</span> <span class="cue" id="t2695" data-cue="t2695" data-t="2695" data-label="44:55">and I know that people cost money.</span> <span class="cue" id="t2699" data-cue="t2699" data-t="2699" data-label="44:59">And you have to pay people a fair wage.</span> <span class="cue" id="t2702" data-cue="t2702" data-t="2702" data-label="45:02">And I am</span> <span class="cue" id="t2704" data-cue="t2704" data-t="2704" data-label="45:04">supportive of this town.</span> <span class="cue" id="t2706" data-cue="t2706" data-t="2706" data-label="45:06">I will</span> <span class="cue" id="t2707" data-cue="t2707" data-t="2707" data-label="45:07">go to my savings account</span> <span class="cue" id="t2709" data-cue="t2709" data-t="2709" data-label="45:09">to pay you that's in taxes</span> <span class="cue" id="t2712" data-cue="t2712" data-t="2712" data-label="45:12">what you need to support this town.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="45:15" data-default-t="2715">45:15</div>
+        <div class="text"><span class="cue" id="t2715" data-cue="t2715" data-t="2715" data-label="45:15">We need to be together</span> <span class="cue" id="t2717" data-cue="t2717" data-t="2717" data-label="45:17">and the</span> <span class="cue" id="t2718" data-cue="t2718" data-t="2718" data-label="45:18">divisiveness</span> <span class="cue" id="t2719" data-cue="t2719" data-t="2719" data-label="45:19">is just not a good thing.</span> <span class="cue" id="t2722" data-cue="t2722" data-t="2722" data-label="45:22">And I hope that you will take that with you and think about it and put it in your heart.</span> <span class="cue" id="t2728" data-cue="t2728" data-t="2728" data-label="45:28">Because</span> <span class="cue" id="t2729" data-cue="t2729" data-t="2729" data-label="45:29">it's disappointing</span> <span class="cue" id="t2731" data-cue="t2731" data-t="2731" data-label="45:31">with that kind of behavior that goes on.</span> <span class="cue" id="t2733" data-cue="t2733" data-t="2733" data-label="45:33">And that's all I have to say. Thank you for listening.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="45:39" data-default-t="2739">45:39</div>
+        <div class="text"><span class="cue" id="t2739" data-cue="t2739" data-t="2739" data-label="45:39">I'm equally as disappointed</span> <span class="cue" id="t2741" data-cue="t2741" data-t="2741" data-label="45:41">that</span> <span class="cue" id="t2742" data-cue="t2742" data-t="2742" data-label="45:42">the motion was made</span> <span class="cue" id="t2745" data-cue="t2745" data-t="2745" data-label="45:45">to address what is really a school personnel</span> <span class="cue" id="t2750" data-cue="t2750" data-t="2750" data-label="45:50">budgetary issue.</span> <span class="cue" id="t2751" data-cue="t2751" data-t="2751" data-label="45:51">I know that the town had requested</span> <span class="cue" id="t2754" data-cue="t2754" data-t="2754" data-label="45:54">multiple positions</span> <span class="cue" id="t2755" data-cue="t2755" data-t="2755" data-label="45:55">because the town knows what they need.</span> <span class="cue" id="t2758" data-cue="t2758" data-t="2758" data-label="45:58">I'm disappointed</span> <span class="cue" id="t2760" data-cue="t2760" data-t="2760" data-label="46:00">that the reasoning is</span> <span class="cue" id="t2762" data-cue="t2762" data-t="2762" data-label="46:02">that</span> <span class="cue" id="t2762-1" data-cue="t2762-1" data-t="2762" data-label="46:02">we feel as a</span> <span class="cue" id="t2765" data-cue="t2765" data-t="2765" data-label="46:05">board of finance that</span> <span class="cue" id="t2767" data-cue="t2767" data-t="2767" data-label="46:07">that person's job is</span> <span class="cue" id="t2769" data-cue="t2769" data-t="2769" data-label="46:09">up to us to decide what their responsibilities are going to be. Yes,</span> <span class="cue" id="t2774" data-cue="t2774" data-t="2774" data-label="46:14">previous to the merger that was made, this cooperative agreement that was made between the town and the school prior to my even getting hired,</span> <span class="cue" id="t2784" data-cue="t2784" data-t="2784" data-label="46:24">the</span> <span class="cue" id="t2785" data-cue="t2785" data-t="2785" data-label="46:25">business person that worked here worked a point eight. But since that person has left,</span> <span class="cue" id="t2791" data-cue="t2791" data-t="2791" data-label="46:31">we have been in constant transition.</span> <span class="cue" id="t2795" data-cue="t2795" data-t="2795" data-label="46:35">Everything, you know, we got a new system admins, so it wouldn't have mattered if it was the former finance person,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="46:41" data-default-t="2801">46:41</div>
+        <div class="text"><span class="cue" id="t2801" data-cue="t2801" data-t="2801" data-label="46:41">or the current finance person, they would have needed time to adjust to that.</span> <span class="cue" id="t2807" data-cue="t2807" data-t="2807" data-label="46:47">We have been in transition with the audit, and we've been in transition with the budget and the negotiations that we had last year.</span> <span class="cue" id="t2813" data-cue="t2813" data-t="2813" data-label="46:53">And so I'm hurt</span> <span class="cue" id="t2815" data-cue="t2815" data-t="2815" data-label="46:55">that the Board of Finance</span> <span class="cue" id="t2818" data-cue="t2818" data-t="2818" data-label="46:58">would say, we don't think that that personnel person on the Board of Ed deserves</span> <span class="cue" id="t2823" data-cue="t2823" data-t="2823" data-label="47:03">to be full time,</span> <span class="cue" id="t2825" data-cue="t2825" data-t="2825" data-label="47:05">when that is a decision that's made on the school side for this year.</span> <span class="cue" id="t2829" data-cue="t2829" data-t="2829" data-label="47:09">And so I am disappointed. And feel that that was a little bit of a personal</span> <span class="cue" id="t2834" data-cue="t2834" data-t="2834" data-label="47:14">situation that was brought about. But</span> <span class="cue" id="t2838" data-cue="t2838" data-t="2838" data-label="47:18">I</span> <span class="cue" id="t2839" data-cue="t2839" data-t="2839" data-label="47:19">going forward would</span> <span class="cue" id="t2841" data-cue="t2841" data-t="2841" data-label="47:21">just like to be on the record as stating that I do believe that that position being in transition</span> <span class="cue" id="t2848" data-cue="t2848" data-t="2848" data-label="47:28">and the mere fact that it's going to start July 1, which is when the new school year begins to unmerge</span> <span class="cue" id="t2854" data-cue="t2854" data-t="2854" data-label="47:34">and go back to what it was with all of these changes now from what it once was is unfair.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="47:53" data-default-t="2873">47:53</div>
+        <div class="text"><span class="cue" id="t2873" data-cue="t2873" data-t="2873" data-label="47:53">Okay,</span> <span class="cue" id="t2874" data-cue="t2874" data-t="2874" data-label="47:54">thank you, Val. Next up, Tim B.</span> <span class="cue" id="t2886" data-cue="t2886" data-t="2886" data-label="48:06">Tim?</span> <span class="cue" id="t2889" data-cue="t2889" data-t="2889" data-label="48:09">Going once, going twice okay next up on my screen and creme I</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="48:17" data-default-t="2897">48:17</div>
+        <div class="text"><span class="cue" id="t2897" data-cue="t2897" data-t="2897" data-label="48:17">feel the same way as Jerry and Valerie that</span> <span class="cue" id="t2903" data-cue="t2903" data-t="2903" data-label="48:23">we you should not have cut that $20,000</span> <span class="cue" id="t2908" data-cue="t2908" data-t="2908" data-label="48:28">that's the board of ed</span> <span class="cue" id="t2910" data-cue="t2910" data-t="2910" data-label="48:30">budget and they spent a lot of time getting that budget</span> <span class="cue" id="t2914" data-cue="t2914" data-t="2914" data-label="48:34">just right and then I don't think that you understand</span> <span class="cue" id="t2918" data-cue="t2918" data-t="2918" data-label="48:38">what it is to cut that.</span> <span class="cue" id="t2923" data-cue="t2923" data-t="2923" data-label="48:43">Think we it was wrong to have cut that that's all.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="48:49" data-default-t="2929">48:49</div>
+        <div class="text"><span class="cue" id="t2929" data-cue="t2929" data-t="2929" data-label="48:49">Okay and thank you and</span> <span class="cue" id="t2931" data-cue="t2931" data-t="2931" data-label="48:51">next up on my screen, Kimberly Persson.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="48:57" data-default-t="2937">48:57</div>
+        <div class="text"><span class="cue" id="t2937" data-cue="t2937" data-t="2937" data-label="48:57">Hi, everyone. Thank you for your time tonight.</span> <span class="cue" id="t2940" data-cue="t2940" data-t="2940" data-label="49:00">I completely</span> <span class="cue" id="t2941" data-cue="t2941" data-t="2941" data-label="49:01">agree with the cut.</span> <span class="cue" id="t2943" data-cue="t2943" data-t="2943" data-label="49:03">And I appreciate Diane doing that.</span> <span class="cue" id="t2946" data-cue="t2946" data-t="2946" data-label="49:06">I also didn't have time to send a letter to the Board of Finance, but I will be sending one.</span> <span class="cue" id="t2952" data-cue="t2952" data-t="2952" data-label="49:12">I agree with the cut completely.</span> <span class="cue" id="t2954" data-cue="t2954" data-t="2954" data-label="49:14">Thank you.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="49:18" data-default-t="2958">49:18</div>
+        <div class="text"><span class="cue" id="t2958" data-cue="t2958" data-t="2958" data-label="49:18">Diane, that seems to be all the public that's on my screen.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="49:23" data-default-t="2963">49:23</div>
+        <div class="text"><span class="cue" id="t2963" data-cue="t2963" data-t="2963" data-label="49:23">Okay.</span> <span class="cue" id="t2965" data-cue="t2965" data-t="2965" data-label="49:25">All right.</span> <span class="cue" id="t2966" data-cue="t2966" data-t="2966" data-label="49:26">Any other</span> <span class="cue" id="t2968" data-cue="t2968" data-t="2968" data-label="49:28">members of the Board of Finance have any other comments or questions or any concerns they want to air?</span> <span class="cue" id="t2974" data-cue="t2974" data-t="2974" data-label="49:34">If not, we're ready for adjournment. Can I have a motion for adjournment?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="49:38" data-default-t="2978">49:38</div>
+        <div class="text"><span class="cue" id="t2978" data-cue="t2978" data-t="2978" data-label="49:38">Wait a minute. There's a Tim B on the screen as well. Is that public?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="49:44" data-default-t="2984">49:44</div>
+        <div class="text"><span class="cue" id="t2984" data-cue="t2984" data-t="2984" data-label="49:44">Eric did call on him, but he did not respond.</span> <span class="cue" id="t2988" data-cue="t2988" data-t="2988" data-label="49:48">Oh, I didn't hear that one. Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="49:54" data-default-t="2994">49:54</div>
+        <div class="text"><span class="cue" id="t2994" data-cue="t2994" data-t="2994" data-label="49:54">Okay, Joanne.</span> <span class="cue" id="t2996" data-cue="t2996" data-t="2996" data-label="49:56">I just want to make sure. So we're saying that we'll</span> <span class="cue" id="t3001" data-cue="t3001" data-t="3001" data-label="50:01">circle back to this next week, you know, with those adjustments. We've all made our decision on what we're gonna put forward. So we'll that will be part of our regular meeting. Right? And that's enough time before the public</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="50:14" data-default-t="3014">50:14</div>
+        <div class="text"><span class="cue" id="t3014" data-cue="t3014" data-t="3014" data-label="50:14">meeting date that's already been established, right? I'm sure. Yes, have to take action on the budget next week. That's our drop dead date. Okay,</span> <span class="cue" id="t3024" data-cue="t3024" data-t="3024" data-label="50:24">that was it. Thanks. Any</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="50:27" data-default-t="3027">50:27</div>
+        <div class="text"><span class="cue" id="t3027" data-cue="t3027" data-t="3027" data-label="50:27">other comments? Any other questions?</span> <span class="cue" id="t3032" data-cue="t3032" data-t="3032" data-label="50:32">Do I have a motion to adjourn?</span> <span class="cue" id="t3034" data-cue="t3034" data-t="3034" data-label="50:34">I'll make the motion to adjourn.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="50:37" data-default-t="3037">50:37</div>
+        <div class="text"><span class="cue" id="t3037" data-cue="t3037" data-t="3037" data-label="50:37">Okay, Louise motion to adjourn. Can I have a second? Second it. We have seconds.</span> <span class="cue" id="t3044" data-cue="t3044" data-t="3044" data-label="50:44">All in favor?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="50:45" data-default-t="3045">50:45</div>
+        <div class="text"><span class="cue" id="t3045" data-cue="t3045" data-t="3045" data-label="50:45">Aye. Aye.</span> <span class="cue" id="t3048" data-cue="t3048" data-t="3048" data-label="50:48">Thanks Diane for stepping up on it. Thanks.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="50:53" data-default-t="3053">50:53</div>
+        <div class="text"><span class="cue" id="t3053" data-cue="t3053" data-t="3053" data-label="50:53">Thanks everybody. See you next week. Thank you. Bye bye. Bye. Bye bye.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+    </div>
+
+    <footer class="colophon">
+      <p><strong>About this transcript.</strong> This transcript was generated by Deepgram from the meeting recording. Names, numbers, and other details may be inaccurate &mdash; please refer to the video for authoritative content.</p>
+      <p>Part of <code>andoverct.info</code>, an independent civic-reference site &mdash; not an official site of the Town of Andover. Compiled by <a href="mailto:scott@sauyet.com">Scott Sauyet</a>.</p>
+    </footer>
+  </main>
+
+  <div id="overlay">
+    <div class="dialog">
+      <div class="dialog-header">
+        <div class="dialog-title">Board of Finance - Special Meeting Budget Workshop</div>
+        <div class="dialog-subtitle">April 20, 2022 at <span class="ts-label" id="overlay-ts"></span></div>
+      </div>
+      <div class="actions">
+        <button id="act-yt">
+          <span class="icon">&#9654;</span>
+          <span class="label">Watch on YouTube<br><span class="hint">Opens at this timestamp</span></span>
+        </button>
+        <button id="act-copy-link">
+          <span class="icon">&#128279;</span>
+          <span class="label">Copy YouTube link<br><span class="hint" id="hint-link-url"></span></span>
+        </button>
+        <button id="act-bookmark">
+          <span class="icon">&#128278;</span>
+          <span class="label">Bookmark this spot<br><span class="hint">Copies link &amp; adds to navigation history</span></span>
+        </button>
+      </div>
+      <div class="cancel"><a id="act-cancel">Cancel</a></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>window.TX = { video: "https://www.youtube.com/watch?v=WaaxuSLWbJc", passcode: "", type: "YouTube" };</script>
+  <script src="https://andoverct.info/reference/video/assets/transcripts.js"></script>
+</body>
+</html>

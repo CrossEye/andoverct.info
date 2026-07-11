@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Board Of Finance Regular Meeting Part 2 — February 28, 2024</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <style>
+    /* Transcript-specific components. Theme, palette, and page chrome
+       (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
+       come from the shared style.css; these just use its variables. */
+    .para { display: flex; gap: 1em; padding: 0.5em 0.75em; border-radius: 6px; }
+    .para:nth-child(4n+1) { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+    .para-gap { font-size: 1px; line-height: 1px; height: 0; overflow: hidden; user-select: text; }
+    .para.speaker { border-top: 1px solid var(--rule-soft); margin-top: 0.6em; padding-top: 1em; }
+    .para.speaker:first-child { border-top: none; margin-top: 0; }
+
+    .timestamp {
+      flex: 0 0 5em; text-align: right;
+      color: var(--ink-mute); font-family: var(--sans);
+      font-size: 0.72rem; font-variant-numeric: tabular-nums; line-height: 1.9;
+      cursor: pointer; white-space: nowrap; padding-top: 0.15em;
+      transition: color 0.15s; user-select: none;
+    }
+    .timestamp:hover, .timestamp.hl { color: var(--accent); font-weight: 600; }
+
+    .text { flex: 1; min-width: 0; }
+    .cue { cursor: pointer; border-radius: 3px; transition: background-color 0.15s; }
+    .cue.hl { background-color: var(--accent-bg); }
+    @keyframes flash-highlight {
+      0%   { background-color: rgba(232, 168, 0, 0.45); }
+      100% { background-color: transparent; }
+    }
+    .cue.flash { animation: flash-highlight 4s ease-out forwards; }
+
+    /* action dialog */
+    #overlay { display: none; position: fixed; inset: 0; background: rgba(8, 22, 40, 0.5); z-index: 100; justify-content: center; align-items: center; }
+    #overlay.visible { display: flex; }
+    .dialog { background: var(--bg-card); border-radius: 10px; padding: 1.6rem 1.8rem; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28); max-width: 28rem; width: 90vw; border-top: 4px solid var(--accent); }
+    .dialog-header { margin-bottom: 1.2em; }
+    .dialog-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); }
+    .dialog-subtitle { font-family: var(--sans); font-size: 0.85rem; color: var(--ink-mute); margin-top: 0.2em; }
+    .dialog .ts-label { color: var(--accent); font-weight: 600; }
+    .dialog .actions { display: flex; flex-direction: column; gap: 0.5em; }
+    .dialog button { display: flex; align-items: center; gap: 0.6em; padding: 0.6em 1em; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--ink); cursor: pointer; font-family: var(--sans); font-size: 0.9rem; text-align: left; width: 100%; transition: background-color 0.12s, border-color 0.12s; }
+    .dialog button:hover { background: var(--accent-bg); border-color: var(--accent); }
+    .dialog button .icon { font-size: 1.1em; flex: 0 0 1.4em; text-align: center; }
+    .dialog button .label { flex: 1; }
+    .dialog button .hint { display: block; color: var(--ink-mute); font-size: 0.78rem; }
+    .dialog .cancel { margin-top: 0.6em; text-align: center; }
+    .dialog .cancel a { color: var(--ink-mute); font-family: var(--sans); font-size: 0.82rem; cursor: pointer; border-bottom: none; }
+    .dialog .cancel a:hover { color: var(--accent); }
+
+    /* toast */
+    #toast { position: fixed; top: 1.5em; left: 50%; transform: translateX(-50%) translateY(-4em); background: var(--accent); color: #15233a; padding: 0.7em 1.6em; border-radius: 8px; font-family: var(--sans); font-size: 0.95rem; font-weight: 600; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease; z-index: 200; pointer-events: none; text-align: center; max-width: 90vw; }
+    #toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    @media (max-width: 480px) { .timestamp { flex-basis: 4em; } }
+  </style>
+</head>
+<body class="bluegold">
+  <div class="page-banner">
+    <nav class="page-banner-inner crumbs">
+      <a href="/">Home</a><span class="sep">›</span><a href="/reference/">Reference</a><span class="sep">›</span><a href="../index.html">Video</a><span class="sep">›</span><span class="current">Board Of Finance Regular Meeting Part 2 (2/28/24)</span>
+    </nav>
+  </div>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Meeting transcript</p>
+      <h1 class="title">Board Of Finance Regular Meeting Part 2</h1>
+      <p class="subtitle">February 28, 2024 &middot; <a href="https://www.youtube.com/watch?v=hE9P8v8W9Mc" target="yt-meeting">Watch on YouTube</a> &middot; <a href="../index.html">All meetings</a></p>
+    </header>
+
+    <hr class="rule">
+
+    <div class="transcript">
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:00" data-default-t="0">0:00</div>
+        <div class="text"><span class="cue" id="t0" data-cue="t0" data-t="0" data-label="0:00">Okay,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="0:03" data-default-t="3">0:03</div>
+        <div class="text"><span class="cue" id="t3" data-cue="t3" data-t="3" data-label="0:03">thank you everybody. This is the Ton of Andover Board of Finance meeting for Wednesday, February 28.</span> <span class="cue" id="t11" data-cue="t11" data-t="11" data-label="0:11">We'll go ahead through our</span> <span class="cue" id="t13" data-cue="t13" data-t="13" data-label="0:13">meeting agenda. The first is the call to order and Pledge of Allegiance. We'll say the Pledge of Allegiance.</span> <span class="cue" id="t19" data-cue="t19" data-t="19" data-label="0:19">Betty,</span> <span class="cue" id="t20" data-cue="t20" data-t="20" data-label="0:20">pledge allegiance to the flag of The United States Of America and to the Republic,</span> <span class="cue" id="t25" data-cue="t25" data-t="25" data-label="0:25">which stands</span> <span class="cue" id="t26" data-cue="t26" data-t="26" data-label="0:26">one nation,</span> <span class="cue" id="t29" data-cue="t29" data-t="29" data-label="0:29">indivisible, with liberty and justice for all.</span> <span class="cue" id="t33" data-cue="t33" data-t="33" data-label="0:33">Thank you. Move on to agenda item two, which is public speak. We do have some visitors today. I think they are mostly our candidates.</span> <span class="cue" id="t46" data-cue="t46" data-t="46" data-label="0:46">Linda, we also have you. Does anybody have any</span> <span class="cue" id="t49" data-cue="t49" data-t="49" data-label="0:49">members of the public would like to speak?</span> <span class="cue" id="t54" data-cue="t54" data-t="54" data-label="0:54">During the public speak portion. Of course, the candidates will get an opportunity to speak</span> <span class="cue" id="t60" data-cue="t60" data-t="60" data-label="1:00">once we get to that point in the agenda.</span> <span class="cue" id="t68" data-cue="t68" data-t="68" data-label="1:08">Okay, hearing none, guess we'll move on.</span> <span class="cue" id="t71" data-cue="t71" data-t="71" data-label="1:11">Agenda item three is changes or additions to the agenda. Does anybody have any</span> <span class="cue" id="t76" data-cue="t76" data-t="76" data-label="1:16">suggested changes or additions to the agenda?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:21" data-default-t="81">1:21</div>
+        <div class="text"><span class="cue" id="t81" data-cue="t81" data-t="81" data-label="1:21">Mark, I had one.</span> <span class="cue" id="t83" data-cue="t83" data-t="83" data-label="1:23">Did we receive any late communication today by email at all?</span> <span class="cue" id="t88" data-cue="t88" data-t="88" data-label="1:28">I wasn't able to check after. Okay.</span> <span class="cue" id="t90" data-cue="t90" data-t="90" data-label="1:30">I haven't, no. Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:32" data-default-t="92">1:32</div>
+        <div class="text"><span class="cue" id="t92" data-cue="t92" data-t="92" data-label="1:32">That's more of a question.</span> <span class="cue" id="t97" data-cue="t97" data-t="97" data-label="1:37">No, I don't have any changes. I'll wait till open discussion at the end. It's a quick thing. Thank you. Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="1:43" data-default-t="103">1:43</div>
+        <div class="text"><span class="cue" id="t103" data-cue="t103" data-t="103" data-label="1:43">Joanne, after that, I did send everybody out just before this meeting</span> <span class="cue" id="t109" data-cue="t109" data-t="109" data-label="1:49">what the Board of Selectmen is passing on to you</span> <span class="cue" id="t113" data-cue="t113" data-t="113" data-label="1:53">for the budget.</span> <span class="cue" id="t116" data-cue="t116" data-t="116" data-label="1:56">Not anticipating that we talk about it this time, but so that you have it for next week's budget discussion.</span> <span class="cue" id="t122" data-cue="t122" data-t="122" data-label="2:02">Thanks, sir. Okay. Thanks, sir. Okay. Is</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:05" data-default-t="125">2:05</div>
+        <div class="text"><span class="cue" id="t125" data-cue="t125" data-t="125" data-label="2:05">that their</span> <span class="cue" id="t126" data-cue="t126" data-t="126" data-label="2:06">recommended budget? They're not gonna meet on that anymore? Everything's good?</span> <span class="cue" id="t131" data-cue="t131" data-t="131" data-label="2:11">Far as I know,</span> <span class="cue" id="t133" data-cue="t133" data-t="133" data-label="2:13">pretty much approved it.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="2:14" data-default-t="134">2:14</div>
+        <div class="text"><span class="cue" id="t134" data-cue="t134" data-t="134" data-label="2:14">Okay,</span> <span class="cue" id="t135" data-cue="t135" data-t="135" data-label="2:15">very good.</span> <span class="cue" id="t137" data-cue="t137" data-t="137" data-label="2:17">Thanks.</span> <span class="cue" id="t139" data-cue="t139" data-t="139" data-label="2:19">Okay,</span> <span class="cue" id="t140" data-cue="t140" data-t="140" data-label="2:20">well,</span> <span class="cue" id="t141" data-cue="t141" data-t="141" data-label="2:21">else have any</span> <span class="cue" id="t143" data-cue="t143" data-t="143" data-label="2:23">comments or questions about the agenda?</span> <span class="cue" id="t148" data-cue="t148" data-t="148" data-label="2:28">All right, we will move on to agenda item four. 4A is the vacant position on the Board of Finance.</span> <span class="cue" id="t154" data-cue="t154" data-t="154" data-label="2:34">As all of the members are aware, we have</span> <span class="cue" id="t157" data-cue="t157" data-t="157" data-label="2:37">three people who have expressed interest</span> <span class="cue" id="t159" data-cue="t159" data-t="159" data-label="2:39">in</span> <span class="cue" id="t161" data-cue="t161" data-t="161" data-label="2:41">the open position on the Board of Finance.</span> <span class="cue" id="t164" data-cue="t164" data-t="164" data-label="2:44">One is Stephen King,</span> <span class="cue" id="t166" data-cue="t166" data-t="166" data-label="2:46">the second is Kimberly Persson,</span> <span class="cue" id="t168" data-cue="t168" data-t="168" data-label="2:48">and</span> <span class="cue" id="t169" data-cue="t169" data-t="169" data-label="2:49">the third is Adrian Mandeville.</span> <span class="cue" id="t172" data-cue="t172" data-t="172" data-label="2:52">And I don't see Adrian connected,</span> <span class="cue" id="t175" data-cue="t175" data-t="175" data-label="2:55">but we do have, looks like Kimberly and Stephen.</span> <span class="cue" id="t178" data-cue="t178" data-t="178" data-label="2:58">So what I would propose is that we give each of the interested parties</span> <span class="cue" id="t184" data-cue="t184" data-t="184" data-label="3:04">an opportunity to kind of say hello,</span> <span class="cue" id="t188" data-cue="t188" data-t="188" data-label="3:08">introduce themselves,</span> <span class="cue" id="t189" data-cue="t189" data-t="189" data-label="3:09">tell us why they're interested,</span> <span class="cue" id="t190" data-cue="t190" data-t="190" data-label="3:10">and give us a little bit of their background that they think would be relevant to this position.</span> <span class="cue" id="t195" data-cue="t195" data-t="195" data-label="3:15">And then any of the board members can ask further questions if you have any.</span> <span class="cue" id="t201" data-cue="t201" data-t="201" data-label="3:21">And we can do one of two things. We could either</span> <span class="cue" id="t204" data-cue="t204" data-t="204" data-label="3:24">go into executive session to discuss the</span> <span class="cue" id="t210" data-cue="t210" data-t="210" data-label="3:30">appointment, or we could table it to the next meeting some other time.</span> <span class="cue" id="t214" data-cue="t214" data-t="214" data-label="3:34">So I'm</span> <span class="cue" id="t215" data-cue="t215" data-t="215" data-label="3:35">good with either. I do think we want to get somebody on the board sooner rather than later. We haven't really started our budget discussions, but that's going to happen awfully quickly as everybody knows.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="3:46" data-default-t="226">3:46</div>
+        <div class="text"><span class="cue" id="t226" data-cue="t226" data-t="226" data-label="3:46">So we'll go ahead and start.</span> <span class="cue" id="t229" data-cue="t229" data-t="229" data-label="3:49">First on the agenda is Stephen King. Stephen, can you hear us Okay. I can hear you fine.</span> <span class="cue" id="t235" data-cue="t235" data-t="235" data-label="3:55">And we can hear you. So welcome. I appreciate the opportunity to</span> <span class="cue" id="t241" data-cue="t241" data-t="241" data-label="4:01">talk to you and</span> <span class="cue" id="t243" data-cue="t243" data-t="243" data-label="4:03">your interest in the position. So we don't always often get multiple people interested in open positions. So it's</span> <span class="cue" id="t250" data-cue="t250" data-t="250" data-label="4:10">a nice opportunity</span> <span class="cue" id="t252" data-cue="t252" data-t="252" data-label="4:12">for us as well. So again, why don't you just tell us a little bit about yourself,</span> <span class="cue" id="t257" data-cue="t257" data-t="257" data-label="4:17">why you're interested in the position and give a little bit of your background, if you would. I know you did include a resume with your</span> <span class="cue" id="t264" data-cue="t264" data-t="264" data-label="4:24">your letter of interest, which is helpful.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="4:27" data-default-t="267">4:27</div>
+        <div class="text"><span class="cue" id="t267" data-cue="t267" data-t="267" data-label="4:27">I've been in town living here for now</span> <span class="cue" id="t270" data-cue="t270" data-t="270" data-label="4:30">about fourteen years. I married a lifer</span> <span class="cue" id="t273" data-cue="t273" data-t="273" data-label="4:33">who grew up town</span> <span class="cue" id="t276" data-cue="t276" data-t="276" data-label="4:36">and, we live over on Barnett Brook Road.</span> <span class="cue" id="t280" data-cue="t280" data-t="280" data-label="4:40">Yeah, in the past year, I've, had some interactions with the town and it's kind of caught my interest in, getting involved in some of the town politics.</span> <span class="cue" id="t289" data-cue="t289" data-t="289" data-label="4:49">And I recently got involved with the RTC in town.</span> <span class="cue" id="t293" data-cue="t293" data-t="293" data-label="4:53">And, speaking with Jeff Murray,</span> <span class="cue" id="t296" data-cue="t296" data-t="296" data-label="4:56">he mentioned that, the Board of Finance had an opening. It'll be a good opportunity to get my feet wet,</span> <span class="cue" id="t301" data-cue="t301" data-t="301" data-label="5:01">in getting involved in</span> <span class="cue" id="t303" data-cue="t303" data-t="303" data-label="5:03">the management of the town and,</span> <span class="cue" id="t306" data-cue="t306" data-t="306" data-label="5:06">in town politics. So I figured I'd reach out and</span> <span class="cue" id="t309" data-cue="t309" data-t="309" data-label="5:09">see what it's all about and,</span> <span class="cue" id="t312" data-cue="t312" data-t="312" data-label="5:12">you know, meet everybody and, you know, see if it's something I'd be interested in doing and you'd be interested in, you know, my qualifications.</span> <span class="cue" id="t320" data-cue="t320" data-t="320" data-label="5:20">I'm graduate of, Central Connecticut State University and and the University of Connecticut.</span> <span class="cue" id="t325" data-cue="t325" data-t="325" data-label="5:25">My</span> <span class="cue" id="t327" data-cue="t327" data-t="327" data-label="5:27">I currently work full time for the state of Connecticut</span> <span class="cue" id="t330" data-cue="t330" data-t="330" data-label="5:30">supporting</span> <span class="cue" id="t332" data-cue="t332" data-t="332" data-label="5:32">cell and genome science over at UConn Health, which is we support about $350,000,000</span> <span class="cue" id="t338" data-cue="t338" data-t="338" data-label="5:38">in grant funded research and manage four data centers throughout the state, and we support the</span> <span class="cue" id="t344" data-cue="t344" data-t="344" data-label="5:44">entire UConn</span> <span class="cue" id="t346" data-cue="t346" data-t="346" data-label="5:46">community of PIs, affiliates, and collaborators.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="5:50" data-default-t="350">5:50</div>
+        <div class="text"><span class="cue" id="t350" data-cue="t350" data-t="350" data-label="5:50">So it's somewhat of a stressful job.</span> <span class="cue" id="t353" data-cue="t353" data-t="353" data-label="5:53">But</span> <span class="cue" id="t356" data-cue="t356" data-t="356" data-label="5:56">the Benny's are pretty good, and I've got a good department and a good bunch of people I work with, so that helps.</span> <span class="cue" id="t364" data-cue="t364" data-t="364" data-label="6:04">On the road to retirement, hopefully in another three or four years, so I see light at the end of the tunnel.</span> <span class="cue" id="t369" data-cue="t369" data-t="369" data-label="6:09">But, you know, I've been involved with business all my life, managing people, managing resources,</span> <span class="cue" id="t375" data-cue="t375" data-t="375" data-label="6:15">and,</span> <span class="cue" id="t377" data-cue="t377" data-t="377" data-label="6:17">been very successful at it. I I run a successful business, out of my home,</span> <span class="cue" id="t382" data-cue="t382" data-t="382" data-label="6:22">and</span> <span class="cue" id="t384" data-cue="t384" data-t="384" data-label="6:24">I think, I think I could,</span> <span class="cue" id="t387" data-cue="t387" data-t="387" data-label="6:27">you know, possibly contribute</span> <span class="cue" id="t389" data-cue="t389" data-t="389" data-label="6:29">to the Board of Finance.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="6:34" data-default-t="394">6:34</div>
+        <div class="text"><span class="cue" id="t394" data-cue="t394" data-t="394" data-label="6:34">Okay, thank you very much, Steven. Does anybody have any specific questions for Steven?</span> <span class="cue" id="t400" data-cue="t400" data-t="400" data-label="6:40">Anyone on the board?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="6:42" data-default-t="402">6:42</div>
+        <div class="text"><span class="cue" id="t402" data-cue="t402" data-t="402" data-label="6:42">I do, Mark.</span> <span class="cue" id="t403" data-cue="t403" data-t="403" data-label="6:43">So Steven, clearly looking at your resume, you're so qualified for a position in the town and everything like that and in business. Have you followed? I know I've been in town</span> <span class="cue" id="t414" data-cue="t414" data-t="414" data-label="6:54">probably just a little bit longer than you, and I got involved for</span> <span class="cue" id="t418" data-cue="t418" data-t="418" data-label="6:58">the same reason,</span> <span class="cue" id="t420" data-cue="t420" data-t="420" data-label="7:00">following along and</span> <span class="cue" id="t422" data-cue="t422" data-t="422" data-label="7:02">of wanting to participate and become part of the community. Have you followed the last couple of years, things that have been happening?</span> <span class="cue" id="t429" data-cue="t429" data-t="429" data-label="7:09">I've watched them. With budgets and, you know, with all of the,</span> <span class="cue" id="t434" data-cue="t434" data-t="434" data-label="7:14">you know, the trying to move the town forward or,</span> <span class="cue" id="t437" data-cue="t437" data-t="437" data-label="7:17">you know,</span> <span class="cue" id="t438" data-cue="t438" data-t="438" data-label="7:18">that kind of thing.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="7:20" data-default-t="440">7:20</div>
+        <div class="text"><span class="cue" id="t440" data-cue="t440" data-t="440" data-label="7:20">Somewhat</span> <span class="cue" id="t441" data-cue="t441" data-t="441" data-label="7:21">followed. I followed the construction of the senior center. Again, I mentioned I watched the mill rate go up and, you know, taxes go up and things of that nature.</span> <span class="cue" id="t450" data-cue="t450" data-t="450" data-label="7:30">You know, I hear,</span> <span class="cue" id="t452" data-cue="t452" data-t="452" data-label="7:32">you know,</span> <span class="cue" id="t454" data-cue="t454" data-t="454" data-label="7:34">rumblings about spending and, you know, people dissatisfied</span> <span class="cue" id="t458" data-cue="t458" data-t="458" data-label="7:38">with how money's being spent. And I just thought it'd be interesting to get a little more intimate with how we or how the town uses our tax money, our tax dollars.</span> <span class="cue" id="t469" data-cue="t469" data-t="469" data-label="7:49">You know, it's just some of the questions you ask, lot of people don't have the answers. It was interesting. I was at an RTC meeting on Tuesday</span> <span class="cue" id="t477" data-cue="t477" data-t="477" data-label="7:57">and,</span> <span class="cue" id="t478" data-cue="t478" data-t="478" data-label="7:58">representative Weir was there and they were talking about, taxes and spending and all the the proposals that are happening in Hartford. I said, well, let me I'm brand new here. Forgive me my ignorance, but I have a question for you, representative.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="8:11" data-default-t="491">8:11</div>
+        <div class="text"><span class="cue" id="t491" data-cue="t491" data-t="491" data-label="8:11">I said, you know, I was never a proponent for,</span> <span class="cue" id="t495" data-cue="t495" data-t="495" data-label="8:15">illicit drugs, and the state has approved, you know, this marijuana use, and we're selling all this stuff and there's tax revenue coming in. Where's that money going and how's it being processed? Because it can't be funneled through a bank because that's a federal institution.</span> <span class="cue" id="t510" data-cue="t510" data-t="510" data-label="8:30">And he didn't have an answer for me. He said, well, me ask. I'll find out. So I guess the only way to find out this stuff is to get involved.</span> <span class="cue" id="t518" data-cue="t518" data-t="518" data-label="8:38">So,</span> <span class="cue" id="t519" data-cue="t519" data-t="519" data-label="8:39">you know, in a nutshell.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="8:41" data-default-t="521">8:41</div>
+        <div class="text"><span class="cue" id="t521" data-cue="t521" data-t="521" data-label="8:41">No. Clearly, you have the interest, so that's that's good. And and I agree. I kind of got involved the same way that you did, balancing</span> <span class="cue" id="t530" data-cue="t530" data-t="530" data-label="8:50">spending versus taxes and mill rate and the whole thing and making sure. And I'm not trying to preach at you or talk to you. I'm going to let all the other board members ask questions. But I think that's good. I think more people should get involved to balance it. Just</span> <span class="cue" id="t545" data-cue="t545" data-t="545" data-label="9:05">like a household,</span> <span class="cue" id="t547" data-cue="t547" data-t="547" data-label="9:07">we've always say, every year you can't fund every single thing. You've got to pick and choose, come up with a plan.</span> <span class="cue" id="t553" data-cue="t553" data-t="553" data-label="9:13">Like Mark said, we'll be getting into the budget soon. I personally, just because of the stage of life I'm at, kind of like you,</span> <span class="cue" id="t562" data-cue="t562" data-t="562" data-label="9:22">been involved. I've listened to every single</span> <span class="cue" id="t565" data-cue="t565" data-t="565" data-label="9:25">town, board of BOS</span> <span class="cue" id="t567" data-cue="t567" data-t="567" data-label="9:27">budget meeting,</span> <span class="cue" id="t569" data-cue="t569" data-t="569" data-label="9:29">you know, kind of to see what they have in mind for the spending and the taxes and all of that kind of thing.</span> <span class="cue" id="t574" data-cue="t574" data-t="574" data-label="9:34">So that's great. No, thank you for answering my questions.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="9:37" data-default-t="577">9:37</div>
+        <div class="text"><span class="cue" id="t577" data-cue="t577" data-t="577" data-label="9:37">You know, one one other point in passing, you know, my wife and I are here for for life. I I intend to die here. So, and you know, the</span> <span class="cue" id="t585" data-cue="t585" data-t="585" data-label="9:45">town's gonna be important to me and the success of the town is important to me. And for those, if you didn't read my resume, I've been involved with, and I don't know if this is a good thing or bad thing, maybe a bad thing for some, but the Andover Sportsman's Club. I've been involved with the board of directors now for, since I joined</span> <span class="cue" id="t602" data-cue="t602" data-t="602" data-label="10:02">back twelve years ago, and for the past five years, I've been the chairman of the board and the chief range safety officer. And I like to think of, we've had some great accomplishments at the club. We're very strong financially and done a really good job. I got a really good group on the board, and I think that's a testimony to how I run my business.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="10:23" data-default-t="623">10:23</div>
+        <div class="text"><span class="cue" id="t623" data-cue="t623" data-t="623" data-label="10:23">Nice.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="10:27" data-default-t="627">10:27</div>
+        <div class="text"><span class="cue" id="t627" data-cue="t627" data-t="627" data-label="10:27">I have a question. Sorry. Go ahead, Louise. Yeah. I got it. Thanks.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="10:34" data-default-t="634">10:34</div>
+        <div class="text"><span class="cue" id="t634" data-cue="t634" data-t="634" data-label="10:34">Steve, what do you feel the biggest challenge is for Andover?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="10:41" data-default-t="641">10:41</div>
+        <div class="text"><span class="cue" id="t641" data-cue="t641" data-t="641" data-label="10:41">I know it's a broad question. A broad question. I think I think an interesting one is understanding</span> <span class="cue" id="t647" data-cue="t647" data-t="647" data-label="10:47">demographics,</span> <span class="cue" id="t648" data-cue="t648" data-t="648" data-label="10:48">housing, and schooling,</span> <span class="cue" id="t650" data-cue="t650" data-t="650" data-label="10:50">and and and the and the the costs associated with that. The demographics have changed, the housing has changed,</span> <span class="cue" id="t657" data-cue="t657" data-t="657" data-label="10:57">and</span> <span class="cue" id="t658" data-cue="t658" data-t="658" data-label="10:58">I know that we have several towns pooling all these resources into</span> <span class="cue" id="t662" data-cue="t662" data-t="662" data-label="11:02">the school budgets, and I know that's always been a</span> <span class="cue" id="t665" data-cue="t665" data-t="665" data-label="11:05">bone of contention,</span> <span class="cue" id="t667" data-cue="t667" data-t="667" data-label="11:07">as far as a</span> <span class="cue" id="t668" data-cue="t668" data-t="668" data-label="11:08">strain on</span> <span class="cue" id="t670" data-cue="t670" data-t="670" data-label="11:10">budgets. And that's, you know, certainly something I'd I like to understand better. But,</span> <span class="cue" id="t676" data-cue="t676" data-t="676" data-label="11:16">you know, the the the demographics</span> <span class="cue" id="t678" data-cue="t678" data-t="678" data-label="11:18">is an interesting one, especially with the rise</span> <span class="cue" id="t681" data-cue="t681" data-t="681" data-label="11:21">the the shortage of housing.</span> <span class="cue" id="t683" data-cue="t683" data-t="683" data-label="11:23">There's not a lot of construction going on. I was I was just having a conversation with this with this with somebody last night. Not a lot of construction in Andover for new housing, so there's a a huge shortage, so it drives up the prices.</span> <span class="cue" id="t694" data-cue="t694" data-t="694" data-label="11:34">But as opposed to some other towns where, you know, there are is construction and a little more housing available. So but, and I guess the question is, you know, the the the people moving in, do they have young children?</span> <span class="cue" id="t707" data-cue="t707" data-t="707" data-label="11:47">Is that gonna cause a strain on the school systems? The grammar I know we have a grammar school here. And then how does how do those dynamics work as they progress through the school system,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="11:56" data-default-t="716">11:56</div>
+        <div class="text"><span class="cue" id="t716" data-cue="t716" data-t="716" data-label="11:56">through the years? So,</span> <span class="cue" id="t718" data-cue="t718" data-t="718" data-label="11:58">I guess a lot of it has to do with looking forward, not just, you know, you know, looking at the immediate</span> <span class="cue" id="t725" data-cue="t725" data-t="725" data-label="12:05">expenses,</span> <span class="cue" id="t726" data-cue="t726" data-t="726" data-label="12:06">but looking down the road four, eight, twelve years down the road, which is important.</span> <span class="cue" id="t731" data-cue="t731" data-t="731" data-label="12:11">Something that I I always try to do is look forward.</span> <span class="cue" id="t735" data-cue="t735" data-t="735" data-label="12:15">Thank you.</span> <span class="cue" id="t739" data-cue="t739" data-t="739" data-label="12:19">Questions or comments from other board members?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="12:26" data-default-t="746">12:26</div>
+        <div class="text"><span class="cue" id="t746" data-cue="t746" data-t="746" data-label="12:26">Mark, I just wanted to, I know you talked about how we're handling this tonight and then you went right into the candidates.</span> <span class="cue" id="t751" data-cue="t751" data-t="751" data-label="12:31">I like that we're speaking. I just wanted to voice that I like that we're speaking to the candidates themselves,</span> <span class="cue" id="t757" data-cue="t757" data-t="757" data-label="12:37">being able to ask them questions like we've done in the past.</span> <span class="cue" id="t760" data-cue="t760" data-t="760" data-label="12:40">I would hope that we would go into a brief</span> <span class="cue" id="t763" data-cue="t763" data-t="763" data-label="12:43">executive session if you thought and discuss</span> <span class="cue" id="t767" data-cue="t767" data-t="767" data-label="12:47">if we</span> <span class="cue" id="t768" data-cue="t768" data-t="768" data-label="12:48">think we know what we wanna do or if we want time. Again, like you said, not necessarily making a decision since we're probably gonna have three qualified candidates</span> <span class="cue" id="t777" data-cue="t777" data-t="777" data-label="12:57">and we're gonna wanna think about, you know,</span> <span class="cue" id="t780" data-cue="t780" data-t="780" data-label="13:00">so</span> <span class="cue" id="t781" data-cue="t781" data-t="781" data-label="13:01">that's my only input that I wanted to ask at the beginning, you know, that would be the way what I'd like to see. I don't wanna keep the candidates on hold forever tonight.</span> <span class="cue" id="t790" data-cue="t790" data-t="790" data-label="13:10">Yeah, yeah. I would like to go that way if we could. Yeah, I think that's reasonable.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="13:16" data-default-t="796">13:16</div>
+        <div class="text"><span class="cue" id="t796" data-cue="t796" data-t="796" data-label="13:16">Yeah, I'd second that. I'd like to go to executive session, just have a quick conversation amongst ourselves.</span> <span class="cue" id="t801" data-cue="t801" data-t="801" data-label="13:21">All</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="13:24" data-default-t="804">13:24</div>
+        <div class="text"><span class="cue" id="t804" data-cue="t804" data-t="804" data-label="13:24">right. Thank you, Stephen. I think the one thing I would mention that if Jeff Murray told you getting into the Board of Finance was just getting your feet wet, he may have been underplaying the role. It's, it can get a little bit interesting,</span> <span class="cue" id="t816" data-cue="t816" data-t="816" data-label="13:36">during</span> <span class="cue" id="t818" data-cue="t818" data-t="818" data-label="13:38">budget season. It's a Have a good set of waiters. Yeah. You may need a, you may need a scuba to that still. But no, it's, I appreciate the,</span> <span class="cue" id="t826" data-cue="t826" data-t="826" data-label="13:46">the interest. We definitely need people involved in the town. It, it, it just makes us all better if we get people who are interested, involved and committed. We definitely appreciate all of your participation tonight. So thanks very much.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="14:00" data-default-t="840">14:00</div>
+        <div class="text"><span class="cue" id="t840" data-cue="t840" data-t="840" data-label="14:00">Okay.</span> <span class="cue" id="t841" data-cue="t841" data-t="841" data-label="14:01">So if nobody else has any questions for</span> <span class="cue" id="t845" data-cue="t845" data-t="845" data-label="14:05">Steven, we will go ahead to Kimberly</span> <span class="cue" id="t848" data-cue="t848" data-t="848" data-label="14:08">Persson. And am I saying your last name right, Kimberly? So</span> <span class="cue" id="t852" data-cue="t852" data-t="852" data-label="14:12">Yes, you are. Can you all Yeah, hear</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="14:15" data-default-t="855">14:15</div>
+        <div class="text"><span class="cue" id="t855" data-cue="t855" data-t="855" data-label="14:15">we can. Yeah. Thanks. Okay. Perfect. I've heard it pronounced that way, but I don't wanna make any assumptions.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="14:22" data-default-t="862">14:22</div>
+        <div class="text"><span class="cue" id="t862" data-cue="t862" data-t="862" data-label="14:22">No, it's fine. So I'm Kimberly Persson. I grew up in Andover actually on Pine Ridge Drive.</span> <span class="cue" id="t869" data-cue="t869" data-t="869" data-label="14:29">I have seven siblings,</span> <span class="cue" id="t871" data-cue="t871" data-t="871" data-label="14:31">four girls, four boys.</span> <span class="cue" id="t874" data-cue="t874" data-t="874" data-label="14:34">Wonderful neighborhood to grow up on Dead End Road. I went to Andover Elementary School,</span> <span class="cue" id="t880" data-cue="t880" data-t="880" data-label="14:40">had a couple of kids.</span> <span class="cue" id="t882" data-cue="t882" data-t="882" data-label="14:42">They went to Andover Elementary School.</span> <span class="cue" id="t884" data-cue="t884" data-t="884" data-label="14:44">I was a children's librarian here at Andover Public Library.</span> <span class="cue" id="t890" data-cue="t890" data-t="890" data-label="14:50">I ran a very successful nonprofit here in Andover,</span> <span class="cue" id="t894" data-cue="t894" data-t="894" data-label="14:54">where I learned a lot about budgets,</span> <span class="cue" id="t897" data-cue="t897" data-t="897" data-label="14:57">money in, money out.</span> <span class="cue" id="t900" data-cue="t900" data-t="900" data-label="15:00">I learned a tremendous</span> <span class="cue" id="t902" data-cue="t902" data-t="902" data-label="15:02">amount</span> <span class="cue" id="t904" data-cue="t904" data-t="904" data-label="15:04">of our community here</span> <span class="cue" id="t906" data-cue="t906" data-t="906" data-label="15:06">and</span> <span class="cue" id="t908" data-cue="t908" data-t="908" data-label="15:08">what needed to happen to grow</span> <span class="cue" id="t911" data-cue="t911" data-t="911" data-label="15:11">that program into a very, very successful nonprofit.</span> <span class="cue" id="t916" data-cue="t916" data-t="916" data-label="15:16">I</span> <span class="cue" id="t918" data-cue="t918" data-t="918" data-label="15:18">listened to the community,</span> <span class="cue" id="t920" data-cue="t920" data-t="920" data-label="15:20">grew the program, and ran it for about twenty plus years,</span> <span class="cue" id="t925" data-cue="t925" data-t="925" data-label="15:25">eventually decided that I had left it the best that I could</span> <span class="cue" id="t929" data-cue="t929" data-t="929" data-label="15:29">and went to work at UConn Health.</span> <span class="cue" id="t935" data-cue="t935" data-t="935" data-label="15:35">I think that I can offer a lot to your group.</span> <span class="cue" id="t939" data-cue="t939" data-t="939" data-label="15:39">I'm a very good listener</span> <span class="cue" id="t941" data-cue="t941" data-t="941" data-label="15:41">and</span> <span class="cue" id="t943" data-cue="t943" data-t="943" data-label="15:43">I just think that</span> <span class="cue" id="t945" data-cue="t945" data-t="945" data-label="15:45">can sprinkle some common sense on what can be very complicated.</span> <span class="cue" id="t949" data-cue="t949" data-t="949" data-label="15:49">I've attended budget meetings. I've listened to a lot of Board of Education meetings, a lot of Board of Finance meetings.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="15:56" data-default-t="956">15:56</div>
+        <div class="text"><span class="cue" id="t956" data-cue="t956" data-t="956" data-label="15:56">I have a</span> <span class="cue" id="t958" data-cue="t958" data-t="958" data-label="15:58">ton of friends in the town of Vandiver because I've been here for so long.</span> <span class="cue" id="t964" data-cue="t964" data-t="964" data-label="16:04">So</span> <span class="cue" id="t965" data-cue="t965" data-t="965" data-label="16:05">I'm very interested in the position. I think I can help.</span> <span class="cue" id="t970" data-cue="t970" data-t="970" data-label="16:10">Is there</span> <span class="cue" id="t972" data-cue="t972" data-t="972" data-label="16:12">anything else you'd like to ask me?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="16:16" data-default-t="976">16:16</div>
+        <div class="text"><span class="cue" id="t976" data-cue="t976" data-t="976" data-label="16:16">I'll open it up to the board and ask if anybody has any specific questions.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="16:22" data-default-t="982">16:22</div>
+        <div class="text"><span class="cue" id="t982" data-cue="t982" data-t="982" data-label="16:22">Go ahead, John. Kim, I just wanted to</span> <span class="cue" id="t986" data-cue="t986" data-t="986" data-label="16:26">Did you try to run for the Board of Finance this past year,</span> <span class="cue" id="t989" data-cue="t989" data-t="989" data-label="16:29">if memory serves me correctly? I did not. Okay. And I'm trying to remember and forgive me. I knew there was a you probably saw me on the ballot to run for the Board of Education.</span> <span class="cue" id="t999" data-cue="t999" data-t="999" data-label="16:39">Oh, okay. So you were on the board. I knew Yes. It may seem familiar. And</span> <span class="cue" id="t1005" data-cue="t1005" data-t="1005" data-label="16:45">I may be getting you confused with one of your siblings who I thought was appearing appearing today like many</span> <span class="cue" id="t1010" data-cue="t1010" data-t="1010" data-label="16:50">in town.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="16:53" data-default-t="1013">16:53</div>
+        <div class="text"><span class="cue" id="t1013" data-cue="t1013" data-t="1013" data-label="16:53">Yes, was unendorsed,</span> <span class="cue" id="t1014" data-cue="t1014" data-t="1014" data-label="16:54">but I was extremely interested in</span> <span class="cue" id="t1017" data-cue="t1017" data-t="1017" data-label="16:57">sitting on the Board of Education as well. I actually sat on the Board of Education for a while. And</span> <span class="cue" id="t1024" data-cue="t1024" data-t="1024" data-label="17:04">I</span> <span class="cue" id="t1025" data-cue="t1025" data-t="1025" data-label="17:05">ended up having to leave the role because of my position</span> <span class="cue" id="t1029" data-cue="t1029" data-t="1029" data-label="17:09">running the nonprofit in town.</span> <span class="cue" id="t1031" data-cue="t1031" data-t="1031" data-label="17:11">The two of the positions were a conflict.</span> <span class="cue" id="t1034" data-cue="t1034" data-t="1034" data-label="17:14">So I had to give up my seat on the Board of Education</span> <span class="cue" id="t1037" data-cue="t1037" data-t="1037" data-label="17:17">in order to run the nonprofit.</span> <span class="cue" id="t1042" data-cue="t1042" data-t="1042" data-label="17:22">Just the experience that I gained there</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="17:26" data-default-t="1046">17:26</div>
+        <div class="text"><span class="cue" id="t1046" data-cue="t1046" data-t="1046" data-label="17:26">pardon me? Sorry. I didn't mean to cut you off.</span> <span class="cue" id="t1048" data-cue="t1048" data-t="1048" data-label="17:28">Why don't you finish? That's okay.</span> <span class="cue" id="t1052" data-cue="t1052" data-t="1052" data-label="17:32">What was that nonprofit? That's okay.</span> <span class="cue" id="t1055" data-cue="t1055" data-t="1055" data-label="17:35">COOL, community organized and operated latchkey.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="17:39" data-default-t="1059">17:39</div>
+        <div class="text"><span class="cue" id="t1059" data-cue="t1059" data-t="1059" data-label="17:39">Yeah. My kids went to COOL. Okay. Got it. Mhmm.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="17:43" data-default-t="1063">17:43</div>
+        <div class="text"><span class="cue" id="t1063" data-cue="t1063" data-t="1063" data-label="17:43">K. Mhmm. A wonderful, wonderful program. I mean, started out.</span> <span class="cue" id="t1068" data-cue="t1068" data-t="1068" data-label="17:48">So when I took COOL over, it had a state grant, and there were only eight kids in it.</span> <span class="cue" id="t1075" data-cue="t1075" data-t="1075" data-label="17:55">At</span> <span class="cue" id="t1076" data-cue="t1076" data-t="1076" data-label="17:56">the time that I took it over, they had lost the grant.</span> <span class="cue" id="t1079" data-cue="t1079" data-t="1079" data-label="17:59">And</span> <span class="cue" id="t1080" data-cue="t1080" data-t="1080" data-label="18:00">I was left with this program with</span> <span class="cue" id="t1084" data-cue="t1084" data-t="1084" data-label="18:04">virtually almost no money.</span> <span class="cue" id="t1086" data-cue="t1086" data-t="1086" data-label="18:06">And,</span> <span class="cue" id="t1088" data-cue="t1088" data-t="1088" data-label="18:08">oh my gosh, what am I going to do? So I started</span> <span class="cue" id="t1091" data-cue="t1091" data-t="1091" data-label="18:11">listening to the parents that were there, started advertising</span> <span class="cue" id="t1094" data-cue="t1094" data-t="1094" data-label="18:14">this program more and more. And quite honestly, I grew it to a program where there were 30 kids in the afternoon, 30 kids in the morning,</span> <span class="cue" id="t1103" data-cue="t1103" data-t="1103" data-label="18:23">taking in tuition, it was run completely on tuition only.</span> <span class="cue" id="t1108" data-cue="t1108" data-t="1108" data-label="18:28">And I then added in</span> <span class="cue" id="t1111" data-cue="t1111" data-t="1111" data-label="18:31">a preschool endorsement to it.</span> <span class="cue" id="t1114" data-cue="t1114" data-t="1114" data-label="18:34">Then after that, I left it to get a full time job.</span> <span class="cue" id="t1118" data-cue="t1118" data-t="1118" data-label="18:38">Very proud of that.</span> <span class="cue" id="t1120" data-cue="t1120" data-t="1120" data-label="18:40">Very wonderful,</span> <span class="cue" id="t1122" data-cue="t1122" data-t="1122" data-label="18:42">wonderful experience.</span> <span class="cue" id="t1124" data-cue="t1124" data-t="1124" data-label="18:44">And that taught me a lot about budgets, our community,</span> <span class="cue" id="t1127" data-cue="t1127" data-t="1127" data-label="18:47">and</span> <span class="cue" id="t1129" data-cue="t1129" data-t="1129" data-label="18:49">brings me here.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="18:52" data-default-t="1132">18:52</div>
+        <div class="text"><span class="cue" id="t1132" data-cue="t1132" data-t="1132" data-label="18:52">Great. Thank you for that. Yeah, it's a necessary program for sure. Good job on doing It's extremely, it's huge. It's getting bigger in childcare.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="19:03" data-default-t="1143">19:03</div>
+        <div class="text"><span class="cue" id="t1143" data-cue="t1143" data-t="1143" data-label="19:03">That program was created for</span> <span class="cue" id="t1148" data-cue="t1148" data-t="1148" data-label="19:08">parents who had nowhere to bring their children in Andover for childcare.</span> <span class="cue" id="t1154" data-cue="t1154" data-t="1154" data-label="19:14">There</span> <span class="cue" id="t1155" data-cue="t1155" data-t="1155" data-label="19:15">was no place to</span> <span class="cue" id="t1157" data-cue="t1157" data-t="1157" data-label="19:17">do it.</span> <span class="cue" id="t1159" data-cue="t1159" data-t="1159" data-label="19:19">Yeah,</span> <span class="cue" id="t1159-1" data-cue="t1159-1" data-t="1159" data-label="19:19">it was wonderful.</span> <span class="cue" id="t1161" data-cue="t1161" data-t="1161" data-label="19:21">It was a wonderful experience.</span> <span class="cue" id="t1163" data-cue="t1163" data-t="1163" data-label="19:23">And my time at UConnell,</span> <span class="cue" id="t1165" data-cue="t1165" data-t="1165" data-label="19:25">worked for a neurosurgeon, that was my first program,</span> <span class="cue" id="t1169" data-cue="t1169" data-t="1169" data-label="19:29">is wonderful too.</span> <span class="cue" id="t1171" data-cue="t1171" data-t="1171" data-label="19:31">But yeah,</span> <span class="cue" id="t1173" data-cue="t1173" data-t="1173" data-label="19:33">my roots are pretty deep in Andover.</span> <span class="cue" id="t1175" data-cue="t1175" data-t="1175" data-label="19:35">I'm here too for a long time.</span> <span class="cue" id="t1179" data-cue="t1179" data-t="1179" data-label="19:39">Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="19:40" data-default-t="1180">19:40</div>
+        <div class="text"><span class="cue" id="t1180" data-cue="t1180" data-t="1180" data-label="19:40">Other questions from the board, Bill? Sorry. I would just repeat the question that was asked earlier. What do you see, Kim, as number one priority for you in joining the Board of Finance?</span> <span class="cue" id="t1193" data-cue="t1193" data-t="1193" data-label="19:53">For the town, I guess I would say. What would my priority be for joining this?</span> <span class="cue" id="t1198" data-cue="t1198" data-t="1198" data-label="19:58">No, I said, I guess what do you think the number one priority for the town is when you join the Board of Finance? What are the things that you see in town</span> <span class="cue" id="t1204" data-cue="t1204" data-t="1204" data-label="20:04">as one of our top priorities?</span> <span class="cue" id="t1209" data-cue="t1209" data-t="1209" data-label="20:09">Or are you most interested in, I guess?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="20:12" data-default-t="1212">20:12</div>
+        <div class="text"><span class="cue" id="t1212" data-cue="t1212" data-t="1212" data-label="20:12">I think my biggest priority listening to all of the meetings that we've had in the last four or five years</span> <span class="cue" id="t1219" data-cue="t1219" data-t="1219" data-label="20:19">is</span> <span class="cue" id="t1220" data-cue="t1220" data-t="1220" data-label="20:20">listening</span> <span class="cue" id="t1221" data-cue="t1221" data-t="1221" data-label="20:21">to the town members</span> <span class="cue" id="t1223" data-cue="t1223" data-t="1223" data-label="20:23">and communicating</span> <span class="cue" id="t1225" data-cue="t1225" data-t="1225" data-label="20:25">with them</span> <span class="cue" id="t1226" data-cue="t1226" data-t="1226" data-label="20:26">openly,</span> <span class="cue" id="t1228" data-cue="t1228" data-t="1228" data-label="20:28">and trying to</span> <span class="cue" id="t1230" data-cue="t1230" data-t="1230" data-label="20:30">maybe get them to understand</span> <span class="cue" id="t1233" data-cue="t1233" data-t="1233" data-label="20:33">why we're spending this money and</span> <span class="cue" id="t1236" data-cue="t1236" data-t="1236" data-label="20:36">what we need it for.</span> <span class="cue" id="t1241" data-cue="t1241" data-t="1241" data-label="20:41">I think there's probably a general misunderstanding</span> <span class="cue" id="t1245" data-cue="t1245" data-t="1245" data-label="20:45">of</span> <span class="cue" id="t1246" data-cue="t1246" data-t="1246" data-label="20:46">where the money is going and what has to happen with it. So for me, it's communication</span> <span class="cue" id="t1251" data-cue="t1251" data-t="1251" data-label="20:51">and it's listening.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="20:53" data-default-t="1253">20:53</div>
+        <div class="text"><span class="cue" id="t1253" data-cue="t1253" data-t="1253" data-label="20:53">Great, thanks. If that's a good answer, you know? It is a good answer for me.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="20:59" data-default-t="1259">20:59</div>
+        <div class="text"><span class="cue" id="t1259" data-cue="t1259" data-t="1259" data-label="20:59">That's that's that's what I I tend to sit, listen,</span> <span class="cue" id="t1263" data-cue="t1263" data-t="1263" data-label="21:03">think,</span> <span class="cue" id="t1265" data-cue="t1265" data-t="1265" data-label="21:05">and then</span> <span class="cue" id="t1269" data-cue="t1269" data-t="1269" data-label="21:09">communicate after I've I've heard, I have to think a little bit about how I'm going to respond to people.</span> <span class="cue" id="t1275" data-cue="t1275" data-t="1275" data-label="21:15">Sure.</span> <span class="cue" id="t1276" data-cue="t1276" data-t="1276" data-label="21:16">Thank you. I think it's communication.</span> <span class="cue" id="t1279" data-cue="t1279" data-t="1279" data-label="21:19">Okay.</span> <span class="cue" id="t1280" data-cue="t1280" data-t="1280" data-label="21:20">You're welcome.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="21:22" data-default-t="1282">21:22</div>
+        <div class="text"><span class="cue" id="t1282" data-cue="t1282" data-t="1282" data-label="21:22">Other</span> <span class="cue" id="t1283" data-cue="t1283" data-t="1283" data-label="21:23">questions from the board?</span> <span class="cue" id="t1287" data-cue="t1287" data-t="1287" data-label="21:27">Luiz, you had your hand up. Are you gonna ask that same question?</span> <span class="cue" id="t1291" data-cue="t1291" data-t="1291" data-label="21:31">Was.</span> <span class="cue" id="t1292" data-cue="t1292" data-t="1292" data-label="21:32">It's</span> <span class="cue" id="t1294" data-cue="t1294" data-t="1294" data-label="21:34">a good question.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="21:35" data-default-t="1295">21:35</div>
+        <div class="text"><span class="cue" id="t1295" data-cue="t1295" data-t="1295" data-label="21:35">Okay. I do wanna ask him, what do you do with the neurosurgeon</span> <span class="cue" id="t1300" data-cue="t1300" data-t="1300" data-label="21:40">at UConn? This</span> <span class="cue" id="t1305" data-cue="t1305" data-t="1305" data-label="21:45">was an interesting program. He was starting a brand new neurosurgery</span> <span class="cue" id="t1309" data-cue="t1309" data-t="1309" data-label="21:49">residency,</span> <span class="cue" id="t1311" data-cue="t1311" data-t="1311" data-label="21:51">and I was fortunate enough to get picked for the position.</span> <span class="cue" id="t1315" data-cue="t1315" data-t="1315" data-label="21:55">I worked for him for two years</span> <span class="cue" id="t1318" data-cue="t1318" data-t="1318" data-label="21:58">and I ended up actually having to take over the administration of the entire department as well as</span> <span class="cue" id="t1326" data-cue="t1326" data-t="1326" data-label="22:06">run his residency.</span> <span class="cue" id="t1331" data-cue="t1331" data-t="1331" data-label="22:11">While I was doing that job,</span> <span class="cue" id="t1333" data-cue="t1333" data-t="1333" data-label="22:13">I was working on continuing medical education programs</span> <span class="cue" id="t1337" data-cue="t1337" data-t="1337" data-label="22:17">for him in another department and I was recruited out of</span> <span class="cue" id="t1342" data-cue="t1342" data-t="1342" data-label="22:22">neurosurgery.</span> <span class="cue" id="t1344" data-cue="t1344" data-t="1344" data-label="22:24">Now I am in the continuing medical education program at UConn Health and I administer the entire program</span> <span class="cue" id="t1352" data-cue="t1352" data-t="1352" data-label="22:32">for UConn Health, which is basically how doctors</span> <span class="cue" id="t1356" data-cue="t1356" data-t="1356" data-label="22:36">keep their licenses.</span> <span class="cue" id="t1357" data-cue="t1357" data-t="1357" data-label="22:37">They have to achieve so many credits.</span> <span class="cue" id="t1360" data-cue="t1360" data-t="1360" data-label="22:40">That's now where I am at</span> <span class="cue" id="t1363" data-cue="t1363" data-t="1363" data-label="22:43">at UConn Health.</span> <span class="cue" id="t1366" data-cue="t1366" data-t="1366" data-label="22:46">Neurosurgery</span> <span class="cue" id="t1369" data-cue="t1369" data-t="1369" data-label="22:49">program was huge. He grew that program</span> <span class="cue" id="t1372" data-cue="t1372" data-t="1372" data-label="22:52">while I worked with him 300%.</span> <span class="cue" id="t1374" data-cue="t1374" data-t="1374" data-label="22:54">It was brand new.</span> <span class="cue" id="t1376" data-cue="t1376" data-t="1376" data-label="22:56">Wow.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="22:57" data-default-t="1377">22:57</div>
+        <div class="text"><span class="cue" id="t1377" data-cue="t1377" data-t="1377" data-label="22:57">Big deal.</span> <span class="cue" id="t1380" data-cue="t1380" data-t="1380" data-label="23:00">Yeah, it was a lot of work.</span> <span class="cue" id="t1383" data-cue="t1383" data-t="1383" data-label="23:03">Thank you.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="23:05" data-default-t="1385">23:05</div>
+        <div class="text"><span class="cue" id="t1385" data-cue="t1385" data-t="1385" data-label="23:05">Other questions or comments from the board?</span> <span class="cue" id="t1392" data-cue="t1392" data-t="1392" data-label="23:12">Okay, hearing none. Thank you, Kimberly. We appreciate your willingness</span> <span class="cue" id="t1396" data-cue="t1396" data-t="1396" data-label="23:16">to serve and thanks for</span> <span class="cue" id="t1400" data-cue="t1400" data-t="1400" data-label="23:20">You're welcome. Talking to the board and letting us know who you are.</span> <span class="cue" id="t1403" data-cue="t1403" data-t="1403" data-label="23:23">Okay, and I see Adrian's joining us. Adrian, same opportunity</span> <span class="cue" id="t1408" data-cue="t1408" data-t="1408" data-label="23:28">to introduce yourself and</span> <span class="cue" id="t1410" data-cue="t1410" data-t="1410" data-label="23:30">tell the board a little bit about why you're interested and your background.</span> <span class="cue" id="t1415" data-cue="t1415" data-t="1415" data-label="23:35">I don't know. Is my mic still open?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="23:39" data-default-t="1419">23:39</div>
+        <div class="text"><span class="cue" id="t1419" data-cue="t1419" data-t="1419" data-label="23:39">Adrian, we can't really hear you. We're barely hearing you, Adrian. This sounds muffled.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="23:44" data-default-t="1424">23:44</div>
+        <div class="text"><span class="cue" id="t1424" data-cue="t1424" data-t="1424" data-label="23:44">Let me see if I can make this stuff running.</span> <span class="cue" id="t1430" data-cue="t1430" data-t="1430" data-label="23:50">How's that?</span> <span class="cue" id="t1432" data-cue="t1432" data-t="1432" data-label="23:52">It's a little better, but still muffled.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="24:00" data-default-t="1440">24:00</div>
+        <div class="text"><span class="cue" id="t1440" data-cue="t1440" data-t="1440" data-label="24:00">My communication is a little glitchy on this side. I'm not sure if it's the storm we're having.</span> <span class="cue" id="t1445" data-cue="t1445" data-t="1445" data-label="24:05">Yeah.</span> <span class="cue" id="t1447" data-cue="t1447" data-t="1447" data-label="24:07">It</span> <span class="cue" id="t1450" data-cue="t1450" data-t="1450" data-label="24:10">just sounds like you're talking through a pillow.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="24:13" data-default-t="1453">24:13</div>
+        <div class="text"><span class="cue" id="t1453" data-cue="t1453" data-t="1453" data-label="24:13">Yeah. Do I wonder if you have a, like, the a laptop folded up or something or the the microphone obstructed.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="24:20" data-default-t="1460">24:20</div>
+        <div class="text"><span class="cue" id="t1460" data-cue="t1460" data-t="1460" data-label="24:20">I'd set. Let me see if anything.</span> <span class="cue" id="t1462" data-cue="t1462" data-t="1462" data-label="24:22">I apologize.</span> <span class="cue" id="t1464" data-cue="t1464" data-t="1464" data-label="24:24">I can't set it anyway.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="24:32" data-default-t="1472">24:32</div>
+        <div class="text"><span class="cue" id="t1472" data-cue="t1472" data-t="1472" data-label="24:32">If it doesn't get better, I wonder if you tried to call in with a cell phone with the with the numbers. We could always try that. But Yeah. Take your time. We're fine. Take your time.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="24:43" data-default-t="1483">24:43</div>
+        <div class="text"><span class="cue" id="t1483" data-cue="t1483" data-t="1483" data-label="24:43">Well, he's working on that. My video off. Mike offers some more bandwidth.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="24:48" data-default-t="1488">24:48</div>
+        <div class="text"><span class="cue" id="t1488" data-cue="t1488" data-t="1488" data-label="24:48">Yeah. I think it's probably on his end. Most people you were you were slowing down a little bit, Kimberly, but I I think and we were getting a little bit of</span> <span class="cue" id="t1495" data-cue="t1495" data-t="1495" data-label="24:55">a little bit of glitching and I'm gonna mute my my iPad.</span> <span class="cue" id="t1498" data-cue="t1498" data-t="1498" data-label="24:58">That might help.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="25:03" data-default-t="1503">25:03</div>
+        <div class="text"><span class="cue" id="t1503" data-cue="t1503" data-t="1503" data-label="25:03">For those who are new on the board, you may not know, but, you know, Adrian served before.</span> <span class="cue" id="t1508" data-cue="t1508" data-t="1508" data-label="25:08">He was on the board of fans for a number of years. He was on the board when I joined.</span> <span class="cue" id="t1514" data-cue="t1514" data-t="1514" data-label="25:14">Went on to Boris Lechman</span> <span class="cue" id="t1517" data-cue="t1517" data-t="1517" data-label="25:17">and a brief stint, at least I don't know how brief, but a stint on the board of Ed as well, I believe.</span> <span class="cue" id="t1523" data-cue="t1523" data-t="1523" data-label="25:23">So he's been around.</span> <span class="cue" id="t1525" data-cue="t1525" data-t="1525" data-label="25:25">Yeah.</span> <span class="cue" id="t1527" data-cue="t1527" data-t="1527" data-label="25:27">Yep. But</span> <span class="cue" id="t1532" data-cue="t1532" data-t="1532" data-label="25:32">Anything, Adrian? Yeah. Yeah.</span> <span class="cue" id="t1536" data-cue="t1536" data-t="1536" data-label="25:36">Yeah.</span> <span class="cue" id="t1541" data-cue="t1541" data-t="1541" data-label="25:41">It's muffled.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="25:42" data-default-t="1542">25:42</div>
+        <div class="text"><span class="cue" id="t1542" data-cue="t1542" data-t="1542" data-label="25:42">Yeah. It's really bad, man. I'm sorry. We can barely hear you.</span> <span class="cue" id="t1546" data-cue="t1546" data-t="1546" data-label="25:46">I'm gonna try to turn it.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="25:49" data-default-t="1549">25:49</div>
+        <div class="text"><span class="cue" id="t1549" data-cue="t1549" data-t="1549" data-label="25:49">Alright.</span> <span class="cue" id="t1550" data-cue="t1550" data-t="1550" data-label="25:50">So, yeah, Adrian was on as Rob said, he was on the board of finance before I joined, was</span> <span class="cue" id="t1557" data-cue="t1557" data-t="1557" data-label="25:57">elected to the board</span> <span class="cue" id="t1559" data-cue="t1559" data-t="1559" data-label="25:59">of selectmen and that's why he moved on from the board of finance directly.</span> <span class="cue" id="t1565" data-cue="t1565" data-t="1565" data-label="26:05">I served on that role until last fall. How often</span> <span class="cue" id="t1569" data-cue="t1569" data-t="1569" data-label="26:09">you meet monthly?</span> <span class="cue" id="t1572" data-cue="t1572" data-t="1572" data-label="26:12">How often do we meet? Yeah.</span> <span class="cue" id="t1575" data-cue="t1575" data-t="1575" data-label="26:15">A minimum of monthly.</span> <span class="cue" id="t1577" data-cue="t1577" data-t="1577" data-label="26:17">Minimum of monthly? Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="26:20" data-default-t="1580">26:20</div>
+        <div class="text"><span class="cue" id="t1580" data-cue="t1580" data-t="1580" data-label="26:20">During the budget season, we'll we'll meet three, four times a month. Hold on. Adrian, we're still you're still kinda muffled.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="26:26" data-default-t="1586">26:26</div>
+        <div class="text"><span class="cue" id="t1586" data-cue="t1586" data-t="1586" data-label="26:26">Still kinda muffled. Alright. I appreciate just wait for Adrian. It's getting better. Yeah. It sounds better. It does sound better. You're you're improving.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="26:36" data-default-t="1596">26:36</div>
+        <div class="text"><span class="cue" id="t1596" data-cue="t1596" data-t="1596" data-label="26:36">I</span> <span class="cue" id="t1597" data-cue="t1597" data-t="1597" data-label="26:37">I tried a different microphone. It's still not so nice, I guess.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="26:42" data-default-t="1602">26:42</div>
+        <div class="text"><span class="cue" id="t1602" data-cue="t1602" data-t="1602" data-label="26:42">That's a little better. You can go ahead and give it a shot, I think.</span> <span class="cue" id="t1606" data-cue="t1606" data-t="1606" data-label="26:46">Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="26:58" data-default-t="1618">26:58</div>
+        <div class="text"><span class="cue" id="t1618" data-cue="t1618" data-t="1618" data-label="26:58">Adrian, you wanna kinda give us the overview? Can you hear us? Yeah. If you can hear me, I I can't tell if this is working or not. Yeah. That's better. It's better. We can hear you. It's little</span> <span class="cue" id="t1627" data-cue="t1627" data-t="1627" data-label="27:07">muffled, but it's not you know, we can understand you. Think at least I can.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="27:11" data-default-t="1631">27:11</div>
+        <div class="text"><span class="cue" id="t1631" data-cue="t1631" data-t="1631" data-label="27:11">Alright.</span> <span class="cue" id="t1632" data-cue="t1632" data-t="1632" data-label="27:12">Well, let's</span> <span class="cue" id="t1634" data-cue="t1634" data-t="1634" data-label="27:14">so I</span> <span class="cue" id="t1636" data-cue="t1636" data-t="1636" data-label="27:16">I'll be honest. I threw my name in kind of last minute</span> <span class="cue" id="t1640" data-cue="t1640" data-t="1640" data-label="27:20">believing that you actually at that point had not had anyone put</span> <span class="cue" id="t1647" data-cue="t1647" data-t="1647" data-label="27:27">their self forward.</span> <span class="cue" id="t1650" data-cue="t1650" data-t="1650" data-label="27:30">So I I have to be honest in saying that I'm</span> <span class="cue" id="t1654" data-cue="t1654" data-t="1654" data-label="27:34">excited to see that you had</span> <span class="cue" id="t1659" data-cue="t1659" data-t="1659" data-label="27:39">David Neiman.</span> <span class="cue" id="t1662" data-cue="t1662" data-t="1662" data-label="27:42">And so</span> <span class="cue" id="t1665" data-cue="t1665" data-t="1665" data-label="27:45">I</span> <span class="cue" id="t1666" data-cue="t1666" data-t="1666" data-label="27:46">I personally</span> <span class="cue" id="t1668" data-cue="t1668" data-t="1668" data-label="27:48">have to say, I think you guys are gonna have a very a very tough couple years ahead of you,</span> <span class="cue" id="t1673" data-cue="t1673" data-t="1673" data-label="27:53">whoever's on this board because,</span> <span class="cue" id="t1675" data-cue="t1675" data-t="1675" data-label="27:55">you know, as a board of finance, it's not just about this year. It's about the coming years. And you have</span> <span class="cue" id="t1681" data-cue="t1681" data-t="1681" data-label="28:01">you have</span> <span class="cue" id="t1683" data-cue="t1683" data-t="1683" data-label="28:03">in five years from now, if you look at the population projections and percentages,</span> <span class="cue" id="t1688" data-cue="t1688" data-t="1688" data-label="28:08">your big issue is really gonna be RAM.</span> <span class="cue" id="t1692" data-cue="t1692" data-t="1692" data-label="28:12">Five years out from now, Ram is gonna need a million dollars</span> <span class="cue" id="t1695" data-cue="t1695" data-t="1695" data-label="28:15">more from the time of Andover than they're collecting this year.</span> <span class="cue" id="t1699" data-cue="t1699" data-t="1699" data-label="28:19">So that's really your that's really gonna be your struggle.</span> <span class="cue" id="t1703" data-cue="t1703" data-t="1703" data-label="28:23">I</span> <span class="cue" id="t1706" data-cue="t1706" data-t="1706" data-label="28:26">I have</span> <span class="cue" id="t1708" data-cue="t1708" data-t="1708" data-label="28:28">I have talked to I I I know I talked</span> <span class="cue" id="t1712" data-cue="t1712" data-t="1712" data-label="28:32">and I have took the time to talk</span> <span class="cue" id="t1715" data-cue="t1715" data-t="1715" data-label="28:35">to</span> <span class="cue" id="t1715-1" data-cue="t1715-1" data-t="1715" data-label="28:35">two good candidates there.</span> <span class="cue" id="t1717" data-cue="t1717" data-t="1717" data-label="28:37">And</span> <span class="cue" id="t1719" data-cue="t1719" data-t="1719" data-label="28:39">I've been saying for a long time, we really want to get more candidates involved.</span> <span class="cue" id="t1723" data-cue="t1723" data-t="1723" data-label="28:43">And we have two new candidates. I think it's good to have new members to the board.</span> <span class="cue" id="t1730" data-cue="t1730" data-t="1730" data-label="28:50">I am going to remove myself from the Tennessee, and I would ask you to consider Steve. I think he</span> <span class="cue" id="t1737" data-cue="t1737" data-t="1737" data-label="28:57">the best of the the best of the the two that are gonna be left.</span> <span class="cue" id="t1742" data-cue="t1742" data-t="1742" data-label="29:02">I I think it's important that that you guys consider all candidates, but I'm</span> <span class="cue" id="t1747" data-cue="t1747" data-t="1747" data-label="29:07">I'm gonna remove myself because I I really really really thought you didn't have a qualified candidate, and now I see you do. And I think you've been born again, new blood on these boards.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para">
+        <div class="timestamp" data-default-label="29:15" data-default-t="1755">29:15</div>
+        <div class="text"><span class="cue" id="t1755" data-cue="t1755" data-t="1755" data-label="29:15">You know, I did do</span> <span class="cue" id="t1759" data-cue="t1759" data-t="1759" data-label="29:19">board myself. I'm the floor.</span> <span class="cue" id="t1762" data-cue="t1762" data-t="1762" data-label="29:22">I'm I'm I'm happy to step aside for a minute and let someone else take that lead. I will let you guys make your decision,</span> <span class="cue" id="t1768" data-cue="t1768" data-t="1768" data-label="29:28">between those two.</span> <span class="cue" id="t1770" data-cue="t1770" data-t="1770" data-label="29:30">And I hope whoever you choose serves serves you well.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="29:35" data-default-t="1775">29:35</div>
+        <div class="text"><span class="cue" id="t1775" data-cue="t1775" data-t="1775" data-label="29:35">Okay.</span> <span class="cue" id="t1776" data-cue="t1776" data-t="1776" data-label="29:36">All right. Well, thank you, Adrian. Again, I appreciate your willingness to step in</span> <span class="cue" id="t1782" data-cue="t1782" data-t="1782" data-label="29:42">and volunteer when it didn't look like you didn't think there was anybody in.</span> <span class="cue" id="t1786" data-cue="t1786" data-t="1786" data-label="29:46">I think you've got a role in this talent in the future for sure regardless.</span> <span class="cue" id="t1790" data-cue="t1790" data-t="1790" data-label="29:50">I know you were a good mentor for me when we started,</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="29:54" data-default-t="1794">29:54</div>
+        <div class="text"><span class="cue" id="t1794" data-cue="t1794" data-t="1794" data-label="29:54">you know, when I was first put on the board, so I appreciate that. And will say candidly, if there's anything that I can do for this board or, you know, another board at the town can always reach out to me, I'm glad to put some time in.</span> <span class="cue" id="t1808" data-cue="t1808" data-t="1808" data-label="30:08">You know, I I think I think you guys will be fine. You got a a pretty good your board has experience now.</span> <span class="cue" id="t1814" data-cue="t1814" data-t="1814" data-label="30:14">You got some some fresh faces that can do well, but I think you'll be fine. And I I do encourage you to consider Steven, though. After talking to him, I think,</span> <span class="cue" id="t1824" data-cue="t1824" data-t="1824" data-label="30:24">as the personality, I think you're gonna</span> <span class="cue" id="t1827" data-cue="t1827" data-t="1827" data-label="30:27">you know, you kinda make dig down on some of these budgets pretty hard, and you guys know that. And then it's always been Okay. Longer Yeah. To do that. So I wish you luck. Alright. Have a good day. Okay. Appreciate it. And good luck to you. Yeah, Sandra. Thanks, Sina. For all the information</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="30:42" data-default-t="1842">30:42</div>
+        <div class="text"><span class="cue" id="t1842" data-cue="t1842" data-t="1842" data-label="30:42">along the way. And</span> <span class="cue" id="t1845" data-cue="t1845" data-t="1845" data-label="30:45">when I was a newbie, you were quite kind with answering questions and everything and were always a wealth of</span> <span class="cue" id="t1851" data-cue="t1851" data-t="1851" data-label="30:51">information.</span> <span class="cue" id="t1853" data-cue="t1853" data-t="1853" data-label="30:53">So wishing you the best.</span> <span class="cue" id="t1855" data-cue="t1855" data-t="1855" data-label="30:55">Okay.</span> <span class="cue" id="t1856" data-cue="t1856" data-t="1856" data-label="30:56">Thank you. Bye bye. Bye. Okay.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="30:59" data-default-t="1859">30:59</div>
+        <div class="text"><span class="cue" id="t1859" data-cue="t1859" data-t="1859" data-label="30:59">So thank you, everybody.</span> <span class="cue" id="t1862" data-cue="t1862" data-t="1862" data-label="31:02">So as part of this, before we move on to the next agenda item, I think we will,</span> <span class="cue" id="t1866" data-cue="t1866" data-t="1866" data-label="31:06">as suggested or proposed, we'll</span> <span class="cue" id="t1870" data-cue="t1870" data-t="1870" data-label="31:10">adjourn into executive session.</span> <span class="cue" id="t1872" data-cue="t1872" data-t="1872" data-label="31:12">And Eric, you can kind of</span> <span class="cue" id="t1874" data-cue="t1874" data-t="1874" data-label="31:14">discuss those particulars here. But I believe what happens is that</span> <span class="cue" id="t1878" data-cue="t1878" data-t="1878" data-label="31:18">members of the public will be</span> <span class="cue" id="t1881" data-cue="t1881" data-t="1881" data-label="31:21">moved to a</span> <span class="cue" id="t1883" data-cue="t1883" data-t="1883" data-label="31:23">waiting room.</span> <span class="cue" id="t1884" data-cue="t1884" data-t="1884" data-label="31:24">That's correct. And</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="31:26" data-default-t="1886">31:26</div>
+        <div class="text"><span class="cue" id="t1886" data-cue="t1886" data-t="1886" data-label="31:26">then once we're out of executive session, anybody in the waiting room will be</span> <span class="cue" id="t1890" data-cue="t1890" data-t="1890" data-label="31:30">asked back to the meeting.</span> <span class="cue" id="t1892" data-cue="t1892" data-t="1892" data-label="31:32">Board members,</span> <span class="cue" id="t1895" data-cue="t1895" data-t="1895" data-label="31:35">we can have Eric be part of this. We'd have to invite him, though, I believe, into the executive session. Is that correct, Eric,</span> <span class="cue" id="t1902" data-cue="t1902" data-t="1902" data-label="31:42">I'm remembering the process</span> <span class="cue" id="t1904" data-cue="t1904" data-t="1904" data-label="31:44">correctly?</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="31:45" data-default-t="1905">31:45</div>
+        <div class="text"><span class="cue" id="t1905" data-cue="t1905" data-t="1905" data-label="31:45">Yes.</span> <span class="cue" id="t1906" data-cue="t1906" data-t="1906" data-label="31:46">If you don't want me in in the executive session, that's fine. I have no issues with that. I just would have to figure out how to hand over</span> <span class="cue" id="t1915" data-cue="t1915" data-t="1915" data-label="31:55">You'd have to hand over control. Yeah. Control.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="31:57" data-default-t="1917">31:57</div>
+        <div class="text"><span class="cue" id="t1917" data-cue="t1917" data-t="1917" data-label="31:57">I'm I'm actually looking at that right now because I thought</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="32:01" data-default-t="1921">32:01</div>
+        <div class="text"><span class="cue" id="t1921" data-cue="t1921" data-t="1921" data-label="32:01">he might end up doing that. Personally, I I'd I'd like Eric's input. Yeah. I have no problem with that either. And and if it's logistically easier, let's just do it. Yeah. Let's do it.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="32:11" data-default-t="1931">32:11</div>
+        <div class="text"><span class="cue" id="t1931" data-cue="t1931" data-t="1931" data-label="32:11">I was gonna say, I think it's fine that he comes in with us as well. I think it's gonna be our board's decision.</span> <span class="cue" id="t1938" data-cue="t1938" data-t="1938" data-label="32:18">I think we have enough experience and knowledge being a Board of making our decisions at this point, but obviously have Eric be there, of course.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+      <div class="para speaker">
+        <div class="timestamp" data-default-label="32:26" data-default-t="1946">32:26</div>
+        <div class="text"><span class="cue" id="t1946" data-cue="t1946" data-t="1946" data-label="32:26">Okay.</span> <span class="cue" id="t1948" data-cue="t1948" data-t="1948" data-label="32:28">No objections then. We'll go ahead and continue on that basis.</span> <span class="cue" id="t1952" data-cue="t1952" data-t="1952" data-label="32:32">Okay.</span> <span class="cue" id="t1953" data-cue="t1953" data-t="1953" data-label="32:33">So,</span> <span class="cue" id="t1954" data-cue="t1954" data-t="1954" data-label="32:34">Steven, Linda, Kimberly,</span> <span class="cue" id="t1956" data-cue="t1956" data-t="1956" data-label="32:36">you'll be moved into the waiting room.</span></div>
+      </div>
+      <div class="para-gap" aria-hidden="true">&nbsp;</div>
+    </div>
+
+    <footer class="colophon">
+      <p><strong>About this transcript.</strong> This transcript was generated by Deepgram from the meeting recording. Names, numbers, and other details may be inaccurate &mdash; please refer to the video for authoritative content.</p>
+      <p>Part of <code>andoverct.info</code>, an independent civic-reference site &mdash; not an official site of the Town of Andover. Compiled by <a href="mailto:scott@sauyet.com">Scott Sauyet</a>.</p>
+    </footer>
+  </main>
+
+  <div id="overlay">
+    <div class="dialog">
+      <div class="dialog-header">
+        <div class="dialog-title">Board Of Finance Regular Meeting Part 2</div>
+        <div class="dialog-subtitle">February 28, 2024 at <span class="ts-label" id="overlay-ts"></span></div>
+      </div>
+      <div class="actions">
+        <button id="act-yt">
+          <span class="icon">&#9654;</span>
+          <span class="label">Watch on YouTube<br><span class="hint">Opens at this timestamp</span></span>
+        </button>
+        <button id="act-copy-link">
+          <span class="icon">&#128279;</span>
+          <span class="label">Copy YouTube link<br><span class="hint" id="hint-link-url"></span></span>
+        </button>
+        <button id="act-bookmark">
+          <span class="icon">&#128278;</span>
+          <span class="label">Bookmark this spot<br><span class="hint">Copies link &amp; adds to navigation history</span></span>
+        </button>
+      </div>
+      <div class="cancel"><a id="act-cancel">Cancel</a></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>window.TX = { video: "https://www.youtube.com/watch?v=hE9P8v8W9Mc", passcode: "", type: "YouTube" };</script>
+  <script src="https://andoverct.info/reference/video/assets/transcripts.js"></script>
+</body>
+</html>
