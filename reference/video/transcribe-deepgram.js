@@ -13,8 +13,13 @@
 //
 // Usage:
 //   node transcribe-deepgram.js boe-2026-05-13 [more ids...]
-//   node transcribe-deepgram.js --all-boe      # every BOE Zoom meeting
-//   node transcribe-deepgram.js --missing      # BOE Zoom meetings with no transcript yet
+//   node transcribe-deepgram.js --all-boe       # every BOE Zoom meeting
+//   node transcribe-deepgram.js --missing       # BOE Zoom meetings with no transcript yet
+//   node transcribe-deepgram.js --missing-town  # YouTube meetings with no transcript yet
+//
+// YouTube meetings get their audio via yt-dlp (bin/yt-dlp.exe); Zoom meetings
+// via Playwright. Entries with skipTranscribe: true in meetings.json are never
+// selected by the --missing selectors (dead links, silent recordings).
 //
 // Env / flags:
 //   DEEPGRAM_API_KEY   required — your Deepgram API key
@@ -69,25 +74,78 @@ function selectTargets(argv) {
   const flags = argv.filter((a) => a.startsWith("--"));
   const ids = argv.filter((a) => !a.startsWith("--"));
   const isBoeZoom = (m) => m.type === "Zoom" && m.id.startsWith("boe-") && m.link;
+  const isTown = (m) => m.type === "YouTube" && m.link;
+  const transcribed = () =>
+    new Set(fs.readdirSync(TRANSCRIPTS_DIR).filter((f) => f.endsWith(".html")).map((f) => f.replace(".html", "")));
   if (ids.length) return ids.map((id) => meetings.find((m) => m.id === id)).filter(Boolean);
   if (flags.includes("--all-boe")) {
     return meetings.filter(isBoeZoom).sort((a, b) => b.date.localeCompare(a.date));
   }
   if (flags.includes("--missing")) {
-    const have = new Set(
-      fs.readdirSync(TRANSCRIPTS_DIR).filter((f) => f.endsWith(".html")).map((f) => f.replace(".html", ""))
-    );
-    return meetings.filter((m) => isBoeZoom(m) && !have.has(m.id)).sort((a, b) => b.date.localeCompare(a.date));
+    const have = transcribed();
+    return meetings
+      .filter((m) => isBoeZoom(m) && !m.skipTranscribe && !have.has(m.id))
+      .sort((a, b) => b.date.localeCompare(a.date));
+  }
+  if (flags.includes("--missing-town")) {
+    const have = transcribed();
+    return meetings
+      .filter((m) => isTown(m) && !m.skipTranscribe && !have.has(m.id))
+      .sort((a, b) => b.date.localeCompare(a.date));
   }
   return [];
 }
 
 // ---------------------------------------------------------------------------
-// Audio acquisition — download the recording's .m4a (audio only, ~10x smaller
-// than the 4K mp4) by clicking Zoom's "Download (N files)" bundle.
+// Audio acquisition.
+//   YouTube: yt-dlp audio-only download (bestaudio m4a).
+//   Zoom:    download the recording's .m4a (audio only, ~10x smaller than the
+//            4K mp4) by clicking Zoom's "Download (N files)" bundle.
 // ---------------------------------------------------------------------------
 
+const YT_DLP = path.join(ROOT, "bin", "yt-dlp.exe");
+
+async function ensureYouTubeAudio(meeting) {
+  const m4a = path.join(VIDEO_DIR, `${meeting.id}.m4a`);
+  if (fs.existsSync(m4a) && !REDO_AUDIO) {
+    console.log(`  [audio] using existing ${path.basename(m4a)}`);
+    return m4a;
+  }
+  if (!fs.existsSync(YT_DLP)) {
+    console.log("  [audio] downloading yt-dlp…");
+    const { YTDLP } = require("yt-dlp-node");
+    await YTDLP.downloadYTDLP({ dst: path.dirname(YT_DLP) });
+  }
+  fs.mkdirSync(VIDEO_DIR, { recursive: true });
+  const { execFile } = require("node:child_process");
+  const run = () =>
+    new Promise((resolve, reject) => {
+      // --js-runtimes node: without a JS runtime yt-dlp falls back to a client
+      // that reports many valid (especially older) videos as "not available".
+      execFile(
+        YT_DLP,
+        ["-f", "bestaudio[ext=m4a]/bestaudio", "--js-runtimes", "node",
+         "-o", path.join(VIDEO_DIR, `${meeting.id}.%(ext)s`), meeting.link],
+        { maxBuffer: 16 * 1024 * 1024 },
+        (err) => (err ? reject(err) : resolve())
+      );
+    });
+  console.log(`  [audio] downloading via yt-dlp…`);
+  try {
+    await run();
+  } catch (err) {
+    // YouTube 403s and "not available" errors are frequently transient — one
+    // immediate retry cures nearly all of them.
+    console.log(`  [audio] retrying after: ${String(err.message || err).split("\n").pop().slice(0, 120)}`);
+    await run();
+  }
+  if (!fs.existsSync(m4a)) throw new Error("yt-dlp produced no .m4a");
+  console.log(`  [audio] saved ${path.basename(m4a)}`);
+  return m4a;
+}
+
 async function ensureAudio(meeting) {
+  if (meeting.type === "YouTube") return ensureYouTubeAudio(meeting);
   // Only ever reuse/download the audio-only .m4a (~40-150 MB). NEVER the .mp4:
   // the Zoom recordings include multi-GB 4K video that breaks the upload (Node
   // can't read >2 GiB, and large uploads to Deepgram fail/time out).
@@ -256,7 +314,12 @@ function deepgramToVtt(json, opts = {}) {
 async function main() {
   const targets = selectTargets(process.argv.slice(2));
   if (!targets.length) {
-    console.error("No meetings selected. Pass meeting id(s), or --all-boe / --missing.");
+    const argv = process.argv.slice(2);
+    if (argv.includes("--missing") || argv.includes("--missing-town")) {
+      console.log("Nothing to transcribe — every selected meeting already has a transcript.");
+      return;
+    }
+    console.error("No meetings selected. Pass meeting id(s), or --all-boe / --missing / --missing-town.");
     process.exit(1);
   }
   fs.mkdirSync(VTT_DIR, { recursive: true });

@@ -40,7 +40,10 @@ const TRANSCRIPTS_DIR = path.join(OUTPUT_DIR, "transcripts");
 const VIDEO_DIR = path.join(OUTPUT_DIR, "video");
 const MEETINGS_FILE = path.join(__dirname, "meetings.json");
 
-const REBUILD = (process.env.REBUILD || "").toLowerCase();
+// REBUILD via env var, or --rebuild=html|index|all on the command line (npm
+// scripts on Windows can't set env vars inline).
+const rebuildArg = process.argv.find((a) => a.startsWith("--rebuild="));
+const REBUILD = (process.env.REBUILD || (rebuildArg ? rebuildArg.split("=")[1] : "")).toLowerCase();
 const WHISPER_MODEL = process.env.WHISPER_MODEL || "base";
 const HEADLESS = process.env.HEADLESS !== "false";
 const YT_CONCURRENCY = 3;
@@ -993,7 +996,11 @@ async function main() {
   fs.mkdirSync(VIDEO_DIR, { recursive: true });
 
   const afterSince = (m) => !SINCE || m.date >= SINCE;
-  const ytMeetings = meetings.filter((m) => m.type === "YouTube" && m.link && afterSince(m));
+  // Deepgram-designated meetings are transcribed by transcribe-deepgram.js;
+  // never fetch YouTube auto-captions for them.
+  const ytMeetings = meetings.filter(
+    (m) => m.type === "YouTube" && m.link && m.transcriber !== "deepgram" && afterSince(m)
+  );
   const zoomMeetings = meetings.filter((m) => m.type === "Zoom" && m.link && afterSince(m));
 
   // --- YouTube pipeline ---

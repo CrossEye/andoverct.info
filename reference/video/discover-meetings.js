@@ -141,7 +141,7 @@ async function discoverYouTube(existingYtIds) {
         console.error(`  [${id}] upload_date fetch failed: ${(e.stderr || e.message || "").trim()}`);
       }
     }
-    entries.push({ id, date, meeting, link: `https://www.youtube.com/watch?v=${id}`, type: "YouTube" });
+    entries.push({ id, date, meeting, link: `https://www.youtube.com/watch?v=${id}`, type: "YouTube", transcriber: "deepgram" });
     console.log(`  + YouTube ${date || "????-??-??"}  ${meeting}  (${id})`);
   }
   return entries;
@@ -191,7 +191,7 @@ async function discoverBOE(existingTokens, usedIds) {
     for (let n = 2; usedIds.has(id); n++) id = `boe-${date || token.slice(0, 10)}-${n}`;
     usedIds.add(id);
 
-    entries.push({ id, date: date || "", meeting: title, link: `https://us02web.zoom.us/rec/share/${token}`, passcode, type: "Zoom" });
+    entries.push({ id, date: date || "", meeting: title, link: `https://us02web.zoom.us/rec/share/${token}`, passcode, type: "Zoom", transcriber: "deepgram" });
     existingTokens.add(token);
     console.log(`  + BOE ${date || "????-??-??"}  ${title}  | passcode: ${passcode || "(NONE PARSED)"}`);
   }
