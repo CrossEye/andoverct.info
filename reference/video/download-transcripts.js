@@ -735,6 +735,33 @@ ${paraHtml}
 // Index page
 // ---------------------------------------------------------------------------
 
+// Board filter labels, in display order. Joint meetings carry several codes in
+// meetings.json `boards` and match each board's filter.
+const BOARD_LABELS = [
+  ["BOS", "Selectmen"],
+  ["BOF", "Finance"],
+  ["BOE", "Education"],
+  ["TOWN", "Town Meeting"],
+  ["PZC", "Planning & Zoning"],
+  ["IWWC", "Inland Wetlands"],
+  ["ZBA", "Zoning Appeals"],
+  ["BAA", "Assessment Appeals"],
+  ["CIP", "Capital Improvement"],
+  ["OTHER", "Other"],
+];
+
+const QUARTER_MONTHS = ["January – March", "April – June", "July – September", "October – December"];
+
+function quarterKey(dateStr) {
+  const [y, mo] = dateStr.split("-").map(Number);
+  return `${y}-Q${Math.floor((mo - 1) / 3) + 1}`;
+}
+
+function quarterLabel(key) {
+  const [y, q] = key.split("-Q");
+  return `${QUARTER_MONTHS[q - 1]} ${y}`;
+}
+
 function generateIndex(meetings, transcriptFiles) {
   const hasAnyPasscode = meetings.some((m) => m.passcode);
 
@@ -755,7 +782,7 @@ function generateIndex(meetings, transcriptFiles) {
               : ""
           }</td>`
         : "";
-      return `        <tr>
+      return `        <tr data-boards="${(m.boards || []).join(" ")}" data-q="${quarterKey(m.date)}">
           <td class="col-date">${formatDateLong(m.date)}</td>
           <td>${escapeHtml(m.meeting)}</td>
           ${passcodeCell}
@@ -764,6 +791,63 @@ function generateIndex(meetings, transcriptFiles) {
         </tr>`;
     })
     .join("\n");
+
+  // Filter bar: board chips (a joint meeting matches each of its boards) and a
+  // reverse-chronological calendar-quarter dropdown.
+  const presentBoards = new Set(meetings.filter((m) => m.link).flatMap((m) => m.boards || []));
+  const boardChips = [`<button class="chip active" data-board="ALL">All boards</button>`]
+    .concat(
+      BOARD_LABELS.filter(([code]) => presentBoards.has(code)).map(
+        ([code, label]) => `<button class="chip" data-board="${code}">${label}</button>`
+      )
+    )
+    .join("\n        ");
+  const quarters = [...new Set(meetings.filter((m) => m.link).map((m) => quarterKey(m.date)))].sort().reverse();
+  const quarterOptions = [`<option value="ALL">All dates</option>`]
+    .concat(quarters.map((q) => `<option value="${q}">${quarterLabel(q)}</option>`))
+    .join("\n          ");
+  const filterBar = `    <div class="filters">
+      <div class="chiprow" id="board-chips">
+        ${boardChips}
+      </div>
+      <div class="filter-row2">
+        <select id="quarter-select" aria-label="Filter by date range">
+          ${quarterOptions}
+        </select>
+        <span id="match-count"></span>
+      </div>
+    </div>`;
+
+  const filterScript = `
+  <script>
+    (function () {
+      var board = "ALL", quarter = "ALL";
+      var rows = Array.prototype.slice.call(document.querySelectorAll("tbody tr"));
+      var count = document.getElementById("match-count");
+      function apply() {
+        var shown = 0;
+        rows.forEach(function (tr) {
+          var ok = (board === "ALL" || (" " + tr.dataset.boards + " ").indexOf(" " + board + " ") !== -1) &&
+                   (quarter === "ALL" || tr.dataset.q === quarter);
+          tr.style.display = ok ? "" : "none";
+          if (ok) shown++;
+        });
+        count.textContent = shown === rows.length ? rows.length + " meetings" : shown + " of " + rows.length + " meetings";
+      }
+      document.getElementById("board-chips").addEventListener("click", function (e) {
+        var chip = e.target.closest(".chip");
+        if (!chip) return;
+        board = chip.dataset.board;
+        this.querySelectorAll(".chip").forEach(function (c) { c.classList.toggle("active", c === chip); });
+        apply();
+      });
+      document.getElementById("quarter-select").addEventListener("change", function () {
+        quarter = this.value;
+        apply();
+      });
+      apply();
+    })();
+  </script>`;
 
   const passcodeHeader = hasAnyPasscode ? `<th>Passcode</th>` : "";
   const passcodeStyles = hasAnyPasscode
@@ -826,6 +910,15 @@ function generateIndex(meetings, transcriptFiles) {
     .col-date { white-space: nowrap; color: var(--ink-mute); font-family: var(--sans); font-size: 0.85rem; width: 11em; }
     .col-link { white-space: nowrap; }
     .unavailable { color: var(--ink-mute); font-style: italic; font-size: 0.9em; opacity: 0.7; }
+
+    .filters { margin: 0 0 1.2em; display: flex; flex-direction: column; gap: 0.7em; }
+    .chiprow { display: flex; flex-wrap: wrap; gap: 0.4em; }
+    .chip { font-family: var(--sans); font-size: 0.8rem; font-weight: 600; padding: 0.3em 0.85em; border-radius: 999px; border: 1px solid var(--rule); background: transparent; color: var(--ink-soft); cursor: pointer; transition: background-color 0.12s, border-color 0.12s, color 0.12s; }
+    .chip:hover { border-color: var(--accent); color: var(--ink); }
+    .chip.active { background: var(--accent); border-color: var(--accent); color: #15233a; }
+    .filter-row2 { display: flex; align-items: center; gap: 1em; }
+    #quarter-select { font-family: var(--sans); font-size: 0.85rem; padding: 0.35em 0.6em; border-radius: 6px; border: 1px solid var(--rule); background: var(--bg-card, transparent); color: var(--ink); }
+    #match-count { font-family: var(--sans); font-size: 0.8rem; color: var(--ink-mute); }
 ${passcodeStyles}
 
     @media (max-width: 600px) {
@@ -852,6 +945,8 @@ ${passcodeStyles}
 
     <hr class="rule">
 
+${filterBar}
+
     <table>
       <thead>
         <tr>
@@ -871,7 +966,7 @@ ${rows}
       <p><strong>About these transcripts.</strong> ${disclaimerText} Names, numbers, and other details may be inaccurate &mdash; please refer to the videos for authoritative content.</p>
       <p>Part of <code>andoverct.info</code>, an independent civic-reference site &mdash; not an official site of the Town of Andover. Compiled by <a href="mailto:scott@sauyet.com">Scott Sauyet</a>.</p>
     </footer>
-  </main>${copyScript}
+  </main>${filterScript}${copyScript}
 </body>
 </html>
 `;
