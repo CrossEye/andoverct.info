@@ -98,6 +98,7 @@ Layout (outside the repo, this machine only):
 | vhost config | `Apache24\conf\extra\httpd-andoverct.conf` |
 | logs | `Apache24\logs\andoverct-{error,access}.log` |
 | hosts entry | `127.0.0.1 andoverct.local` in `C:\Windows\System32\drivers\etc\hosts` |
+| auto-start at logon | `start-andoverct-preview.vbs` in `shell:startup` (launches httpd hidden; delete the file to disable) |
 
 PHP runs through `mod_fcgid` (matches the server's `cgi-fcgi` SAPI); PHP
 version 7.0.33 vs production 7.0.32; extension set matches except `dba`,
