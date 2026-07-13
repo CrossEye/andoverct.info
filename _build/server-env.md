@@ -78,3 +78,49 @@ SPL sqlite3 standard tokenizer xml xmlreader xmlrpc xmlwriter xsl zip zlib
 
 (Notables: OpenSSL 1.0.2a; mcrypt present (removed in PHP 7.2 — don't rely
 on it); no intl, no opcache.)
+
+## Local preview (set up 2026-07-13)
+
+`http://andoverct.local/` serves this working tree directly.
+
+```
+npm run preview          # start Apache (console mode, loopback only) + open browser
+npm run preview:stop     # stop it
+node _build/preview.mjs --status
+```
+
+Layout (outside the repo, this machine only):
+
+| Piece | Location |
+|---|---|
+| Apache 2.4.68 (Apache Lounge VS18) | `C:\Users\scott\Dev\servers\Apache24` |
+| PHP 7.0.33 NTS x64 + php.ini | `C:\Users\scott\Dev\servers\php-7.0.33` |
+| vhost config | `Apache24\conf\extra\httpd-andoverct.conf` |
+| logs | `Apache24\logs\andoverct-{error,access}.log` |
+| hosts entry | `127.0.0.1 andoverct.local` in `C:\Windows\System32\drivers\etc\hosts` |
+
+PHP runs through `mod_fcgid` (matches the server's `cgi-fcgi` SAPI); PHP
+version 7.0.33 vs production 7.0.32; extension set matches except `dba`,
+`ftp`, `posix` (unavailable on Windows, unused by the site). `.htaccess`
+files are read per request — no restart needed to test them; restart
+(`preview:stop` + `preview`) only after touching `httpd.conf` or the vhost.
+
+Deliberate divergences from production:
+
+- Apache **2.4** vs 2.2 — the dual-syntax authz blocks handle this; anything
+  2.4-only outside an `<IfModule mod_authz_core.c>` guard will 500 in
+  production but work locally, so test authz changes on the server too.
+- `error_reporting = E_ALL`, `display_errors = On` — production silently
+  swallows everything; local surfaces it (that's the point).
+- x64 PHP vs the server's 32-bit build (`PHP_INT_MAX` differs).
+- `date.timezone = UTC` set explicitly (production leaves it unset, which
+  behaves as UTC but would warn under E_ALL).
+- Local-only vhost hardening: all dotfiles denied (production only denies
+  `.ht*` — but `.env`/`.git` are never deployed), `/node_modules` 404s,
+  `.git`/`.meta`/`.claude` dirs denied.
+- `mail()`/sendmail doesn't exist on Windows — the /private mailer's SMTP
+  path is what works locally (openssl.cafile is configured for TLS verify).
+
+Verified working on setup: static pages, `/idx` rewrite + PHP, `/the-facts/`
+dispatcher, `/private/` gate (sign-in renders, `_lib` 403s), styled 404,
+fbclid-stripping 301.
