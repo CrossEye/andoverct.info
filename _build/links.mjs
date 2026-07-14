@@ -9,6 +9,11 @@
  *   npm run rebuild:links
  *   node _build/links.mjs
  *
+ * Also importable: other build scripts (e.g. the town-asset renderer) reuse
+ * loadDocsFrom() plus the render/shell helpers to emit registry pages into
+ * their own output trees. Importing never runs the CLI, and the orphan-prune
+ * step is CLI-only — pruning would be wrong in a staged tree.
+ *
  * Two doc shapes, distinguished by their keys:
  *   leaf  — { id, title, description, url, image?, date?, archived? }
  *   list  — { id, title, description, image?, groups | links }
@@ -34,7 +39,8 @@ import {
   readdirSync,
   rmSync,
 } from "node:fs";
-import { join, resolve } from "node:path";
+import { join, resolve, relative, sep } from "node:path";
+import { pathToFileURL } from "node:url";
 import { load as parseYaml } from "js-yaml";
 
 const HERE = import.meta.dirname;
@@ -46,10 +52,10 @@ const ID_RE = /^[A-Za-z0-9_-]+$/;
 const URL_RE = /^(https?:\/\/|\/)/; // external or root-relative internal
 const EXT_RE = /^https?:\/\//;
 
-const BASE_CSS = readFileSync(join(HERE, "base.css"), "utf8");
+export const BASE_CSS = readFileSync(join(HERE, "base.css"), "utf8");
 
 // Registry-specific chrome, layered onto the shared theme + base.css.
-const LINKS_CSS = `
+export const LINKS_CSS = `
 .link-card {
     border: 1px solid var(--rule);
     background: var(--bg);
@@ -100,7 +106,7 @@ const LINKS_CSS = `
 // Helpers shared with report.mjs (copied — report.mjs exports nothing)
 // ---------------------------------------------------------------------------
 
-function escapeHtml(s) {
+export function escapeHtml(s) {
   return String(s)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -109,7 +115,7 @@ function escapeHtml(s) {
     .replace(/'/g, "&#39;");
 }
 
-function loadConfig() {
+export function loadConfig() {
   const p = join(HERE, "report.config.json");
   if (!existsSync(p)) return {};
   try {
@@ -119,7 +125,7 @@ function loadConfig() {
   }
 }
 
-function loadTheme(name) {
+export function loadTheme(name) {
   const dir = join(HERE, "themes");
   const base = readFileSync(join(dir, "default.css"), "utf8");
   if (!name || name === "default") return base;
@@ -253,17 +259,20 @@ function normalizeDoc(raw, stem) {
   return doc;
 }
 
-// Reads every links/_src/*.yaml into a Map<id, doc>, pushing all problems
-// (bad filename, parse failure, schema violation, dangling reference) onto
-// `errors` so the caller can report the whole batch at once.
-function loadDocs(errors) {
-  if (!existsSync(SRC_DIR)) throw new Error(`source directory not found: ${SRC_DIR}`);
+// Reads every <dir>/*.yaml into a Map<id, doc>, collecting all problems
+// (bad filename, parse failure, schema violation, dangling reference) so the
+// caller can report the whole batch at once. Error messages name files by
+// their path relative to the repo root (e.g. "links/_src/foo.yaml").
+export function loadDocsFrom(dir) {
+  if (!existsSync(dir)) throw new Error(`source directory not found: ${dir}`);
+  const label = relative(ROOT, dir).split(sep).join("/") || ".";
+  const errors = [];
   const docs = new Map();
-  const files = readdirSync(SRC_DIR)
+  const files = readdirSync(dir)
     .filter((f) => f.endsWith(".yaml"))
     .sort();
   for (const file of files) {
-    const rel = `links/_src/${file}`;
+    const rel = `${label}/${file}`;
     const stem = file.slice(0, -".yaml".length);
     if (!ID_RE.test(stem)) {
       errors.push(`${rel}: filename id "${stem}" must be letters/digits/_/- only`);
@@ -271,7 +280,7 @@ function loadDocs(errors) {
     }
     let raw;
     try {
-      raw = parseYaml(readFileSync(join(SRC_DIR, file), "utf8"));
+      raw = parseYaml(readFileSync(join(dir, file), "utf8"));
     } catch (e) {
       errors.push(`${rel}: YAML parse error: ${e.message}`);
       continue;
@@ -288,22 +297,22 @@ function loadDocs(errors) {
     for (const g of doc.groups) {
       for (const ref of g.links) {
         if (!docs.has(ref))
-          errors.push(`links/_src/${id}.yaml: reference to unknown id "${ref}"`);
+          errors.push(`${label}/${id}.yaml: reference to unknown id "${ref}"`);
       }
     }
   }
-  return docs;
+  return { docs, errors };
 }
 
 // ---------------------------------------------------------------------------
 // Rendering
 // ---------------------------------------------------------------------------
 
-function absUrl(u, siteOrigin) {
+export function absUrl(u, siteOrigin) {
   return u.startsWith("/") ? siteOrigin + u : u;
 }
 
-function ogHead({ title, description, path, image }, { siteOrigin, defaultOgImage }) {
+export function ogHead({ title, description, path, image }, { siteOrigin, defaultOgImage }) {
   const url = siteOrigin + path;
   const lines = [
     `<meta property="og:type" content="website">`,
@@ -321,7 +330,7 @@ function ogHead({ title, description, path, image }, { siteOrigin, defaultOgImag
 }
 
 // Home › Links › <title>; pass currentTitle=null on the index page itself.
-function crumbsHtml(currentTitle) {
+export function crumbsHtml(currentTitle) {
   const trail = [{ label: "Home", href: "/" }];
   let current = "Links";
   if (currentTitle !== null) {
@@ -334,7 +343,7 @@ function crumbsHtml(currentTitle) {
     .join('<span class="sep">›</span>');
 }
 
-function pageShell({ pageTitle, og, crumbs, body }, css) {
+export function pageShell({ pageTitle, og, crumbs, body }, css) {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -374,7 +383,7 @@ function metaLineHtml(doc) {
 
 // The card for a leaf doc, both on its own page and inlined in lists. Only
 // the first occurrence per page carries the fragment id (withFragment).
-function leafCardHtml(doc, withFragment) {
+export function leafCardHtml(doc, withFragment) {
   const idAttr = withFragment ? ` id="link-${doc.id}"` : "";
   const mark = EXT_RE.test(doc.url)
     ? `<span class="ext-mark" title="external link">&#8599;</span>`
@@ -387,7 +396,7 @@ function leafCardHtml(doc, withFragment) {
 
 // The card for a list doc referenced from another page: links to the list's
 // own page instead of inlining its contents (the no-nesting rule).
-function listRefCardHtml(doc, withFragment) {
+export function listRefCardHtml(doc, withFragment) {
   const idAttr = withFragment ? ` id="link-${doc.id}"` : "";
   return `<div class="link-card"${idAttr}>
   <div class="link-card-title"><a href="/links/${doc.id}/">${escapeHtml(doc.title)}</a></div>
@@ -395,7 +404,7 @@ function listRefCardHtml(doc, withFragment) {
 </div>`;
 }
 
-function renderLeafPage(doc, ctx) {
+export function renderLeafPage(doc, ctx) {
   const body =
     `<p class="section-label">Source</p>\n` + leafCardHtml(doc, true);
   return pageShell(
@@ -417,7 +426,7 @@ function renderLeafPage(doc, ctx) {
   );
 }
 
-function renderListPage(doc, docs, ctx) {
+export function renderListPage(doc, docs, ctx) {
   const seen = new Set();
   let body =
     `<h1 class="report-title">${escapeHtml(doc.title)}</h1>\n` +
@@ -455,7 +464,7 @@ function renderListPage(doc, docs, ctx) {
   );
 }
 
-function renderIndexPage(docs, ctx) {
+export function renderIndexPage(docs, ctx) {
   const byId = (a, b) =>
     /^\d+$/.test(a.id) && /^\d+$/.test(b.id)
       ? Number(a.id) - Number(b.id)
@@ -483,7 +492,9 @@ function renderIndexPage(docs, ctx) {
 }
 
 // ---------------------------------------------------------------------------
-// Main
+// Main (CLI only — importing this module never reaches here; the orphan
+// prune below must stay out of the exported functions, because callers
+// rendering into staging trees must never prune)
 // ---------------------------------------------------------------------------
 
 function main() {
@@ -500,8 +511,7 @@ function main() {
     css,
   };
 
-  const errors = [];
-  const docs = loadDocs(errors);
+  const { docs, errors } = loadDocsFrom(SRC_DIR);
   if (errors.length) {
     for (const e of errors) console.error(`ERROR ${e}`);
     process.exit(1);
@@ -539,9 +549,16 @@ function main() {
   }
 }
 
-try {
-  main();
-} catch (err) {
-  console.error(err.message);
-  process.exit(1);
+// Run the CLI only when executed directly (node _build/links.mjs), never on
+// import.
+const isMain =
+  process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href;
+
+if (isMain) {
+  try {
+    main();
+  } catch (err) {
+    console.error(err.message);
+    process.exit(1);
+  }
 }
