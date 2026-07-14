@@ -182,6 +182,11 @@ function priv_handle_admin($path) {
     }
     if ($action === 'add' || $action === 'remove') { priv_admin_mutate($action); return; }
     if ($action === 'mintlink') { priv_admin_mintlink(); return; }
+    if ($action === 'promote') {
+        require_once __DIR__ . '/_lib/promote.php';
+        ta_handle();
+        return;
+    }
 
     $subs = priv_list_subsections();
     foreach ($subs as $i => $s) { $subs[$i]['users'] = priv_list_users($s['id']); }

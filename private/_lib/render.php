@@ -160,7 +160,8 @@ function priv_render_admin_console($subs, $flash = null, $link = null) {
           . '<form method="post" action="' . priv_h(PRIV_BASE_PATH . '/logout') . '">'
           . $csrf . '<button type="submit">Sign out</button></form></div>'
           . '<p class="sub">Add or remove who can sign in to each private area, '
-          . 'or generate a sign-in link to hand someone directly.</p>';
+          . 'or generate a sign-in link to hand someone directly. '
+          . '<a href="' . priv_h(PRIV_BASE_PATH . '/admin/promote') . '">Publishing &rsaquo;</a></p>';
 
     if (is_array($flash)) {
         $cls = ($flash['type'] === 'ok') ? 'ok' : 'err';
