@@ -81,7 +81,15 @@ on it); no intl, no opcache.)
 
 ## Local preview (set up 2026-07-13)
 
-`http://andoverct.local/` serves this working tree directly.
+`http://andoverct.local/` and `https://andoverct.local/` both serve this
+working tree directly. HTTPS uses a self-signed cert
+(`C:\Users\scott\Dev\servers\certs\andoverct.local.crt`, valid to 2036,
+SAN: andoverct.local/localhost/127.0.0.1) installed in the Windows
+trusted-root store, so Edge/Chrome (and modern Firefox, which imports
+Windows roots) show no warning. Parity caveat: over local HTTPS, PHP sees
+`HTTPS=on` — production PHP never does (nginx terminates SSL and passes no
+forwarded-proto header), so anything that branches on HTTPS detection
+should be exercised at http://andoverct.local/ too.
 
 ```
 npm run preview          # start Apache (console mode, loopback only) + open browser
@@ -95,7 +103,8 @@ Layout (outside the repo, this machine only):
 |---|---|
 | Apache 2.4.68 (Apache Lounge VS18) | `C:\Users\scott\Dev\servers\Apache24` |
 | PHP 7.0.33 NTS x64 + php.ini | `C:\Users\scott\Dev\servers\php-7.0.33` |
-| vhost config | `Apache24\conf\extra\httpd-andoverct.conf` |
+| vhost config (:80 + :443, shared body) | `Apache24\conf\extra\httpd-andoverct{,-common}.conf` |
+| self-signed cert + key | `C:\Users\scott\Dev\servers\certs\` |
 | logs | `Apache24\logs\andoverct-{error,access}.log` |
 | hosts entry | `127.0.0.1 andoverct.local` in `C:\Windows\System32\drivers\etc\hosts` |
 | auto-start at logon | `start-andoverct-preview.vbs` in `shell:startup` (launches httpd hidden; delete the file to disable) |
