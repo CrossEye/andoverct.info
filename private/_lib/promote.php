@@ -25,9 +25,11 @@ define('TA_LOCK', TA_DIR . '/state.lock');
 define('TA_UNCLEARED', '!! THIS PIECE IS NOT CLEARED');
 
 // The only destinations a step may write. Anything else in a step tree is a
-// hard refusal: nothing at all is copied.
+// hard refusal: nothing at all is copied. The whole /series/ section belongs
+// to this pipeline (plan 004 — the renderer also emits the /series/ landing
+// page), so the prefix is series/, not series/town-asset/.
 function ta_allowed_prefixes() {
-    return array('series/town-asset/', 'links/', 'private/subsections/town-asset/');
+    return array('series/', 'links/', 'private/subsections/town-asset/');
 }
 
 // Idempotent, like priv_bootstrap_data(): first visit creates the data dirs.
