@@ -97,11 +97,15 @@ function mdToHtml(md) {
   let html = marked.parse(md);
   html = html.replace(/<h2([^>]*)>Sources<\/h2>/, '<h2$1 class="sources-h">Sources</h2>');
   html = html.replace(/<p>Every source cited above/, '<p class="collection-footer">Every source cited above');
-  // Citation markers arrive as bare digit links ([1](…/links/1073/)); the
-  // piece chrome spec (stage-0 mockup) renders them as superscript [1].
-  // Digit-only link text is the discriminator — source-list links carry titles.
-  html = html.replace(/<a href="([^"]*\/links\/\d+\/)">(\d+)<\/a>/g,
-    '<sup><a href="$1">[$2]</a></sup>');
+  // Citation markers become superscript [1] per the piece chrome spec.
+  // Two shapes arrive from build.py: bare register-page markers
+  // ([1](/links/1073/)) and timecoded transcript deep links, possibly
+  // sub-lettered ([2a](…#t3241 "at 54:01 in the recording")). Marker-shaped
+  // link text (digits + optional letter) on a /links/ or #t target is the
+  // discriminator — source-list links carry titles, prose links carry words.
+  html = html.replace(
+    /<a href="([^"]*(?:\/links\/\d+\/|#t\d+))"((?:\s+title="[^"]*")?)>(\d+[a-z]?)<\/a>/g,
+    '<sup><a href="$1"$2>[$3]</a></sup>');
   return html;
 }
 
