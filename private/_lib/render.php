@@ -160,8 +160,7 @@ function priv_render_admin_console($subs, $flash = null, $link = null) {
           . '<form method="post" action="' . priv_h(PRIV_BASE_PATH . '/logout') . '">'
           . $csrf . '<button type="submit">Sign out</button></form></div>'
           . '<p class="sub">Add or remove who can sign in to each private area, '
-          . 'or generate a sign-in link to hand someone directly. '
-          . '<a href="' . priv_h(PRIV_BASE_PATH . '/admin/promote') . '">Publishing &rsaquo;</a></p>';
+          . 'or generate a sign-in link to hand someone directly.</p>';
 
     if (is_array($flash)) {
         $cls = ($flash['type'] === 'ok') ? 'ok' : 'err';
@@ -206,6 +205,10 @@ function priv_render_admin_console($subs, $flash = null, $link = null) {
                . '<button type="submit">Add</button></form>';
         $body .= '</div>';
     }
+    // Publishing console (neutral label), set off from the allowlist cards.
+    $body .= '<div class="card"><h2 style="margin-bottom:12px"><a href="'
+           . priv_h(PRIV_BASE_PATH . '/admin/promote')
+           . '">Publishing &rsaquo;</a></h2></div>';
     $body .= '<footer>Signed in as ' . priv_h(priv_current_email())
            . ' · andoverct.info</footer>';
     priv_render_page('Admin', $body, 200, 'wide');
