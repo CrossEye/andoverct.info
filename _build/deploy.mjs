@@ -17,6 +17,13 @@
  *   npm run deploy -- --deploy --delete   # also remove remote files that are
  *                                         #   gone locally (off by default)
  *   npm run deploy -- --verbose           # full file lists + FTP protocol log
+ *   npm run deploy -- --deploy --allow-untracked   # override the git guard
+ *
+ * Git guard: files that git does not track (and does not ignore) are refused
+ * at --deploy/--seed time and flagged on dry runs. Untracked files in a deploy
+ * area are almost always rehearsal fallout (a local town-asset promotion) or
+ * uncommitted work-in-progress — never something to publish silently. Commit
+ * the files, or pass --allow-untracked to publish them deliberately.
  *
  * The FTP password is read from $FTP_PASSWORD (or a gitignored .env at the repo
  * root: FTP_PASSWORD=...). Host/port/user/web-root are non-secret and live in
@@ -31,7 +38,8 @@
 
 import { readFileSync, writeFileSync, existsSync, statSync, readdirSync } from "node:fs";
 import { createHash } from "node:crypto";
-import { join, resolve, posix } from "node:path";
+import { execSync } from "node:child_process";
+import { join, resolve, posix, relative } from "node:path";
 import { Client } from "basic-ftp";
 
 const HERE = import.meta.dirname;
@@ -51,6 +59,7 @@ const SEED = has("--seed");
 const DELETE = has("--delete");
 const ONLY = valOf("--area");
 const VERBOSE = has("--verbose") || has("-v");
+const ALLOW_UNTRACKED = has("--allow-untracked");
 
 if (DEPLOY && SEED) fail("Use either --deploy or --seed, not both.");
 
@@ -208,6 +217,43 @@ if (removed.length) {
 }
 
 console.log(`\n  total to upload: ${upload.length} file(s), ${fmtBytes(totalBytes)}\n`);
+
+// ---------------------------------------------------------------------------
+// Git guard: refuse to publish (or seed) files git does not track. Gitignored
+// files never trip it (ignoring is deliberate); untracked-and-not-ignored is
+// the danger class — rehearsal fallout from a local town-asset promotion, or
+// work-in-progress not yet committed. See the usage note in the header.
+// ---------------------------------------------------------------------------
+function untrackedOffenders(candidates) {
+  let raw;
+  try {
+    raw = execSync("git ls-files --others --exclude-standard", {
+      cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"],
+    });
+  } catch {
+    return []; // not a git checkout / no git — guard degrades to a no-op
+  }
+  const untracked = new Set(raw.split(/\r?\n/).filter(Boolean));
+  return candidates.filter((f) =>
+    untracked.has(relative(ROOT, f.abs).replace(/\\/g, "/")));
+}
+
+{
+  // Deploy publishes `upload`; seed records baseline for files new to it.
+  const candidates = SEED ? files.filter((f) => baseline[f.key] === undefined) : upload;
+  const offenders = untrackedOffenders(candidates);
+  if (offenders.length && !ALLOW_UNTRACKED) {
+    console.log(`  ! ${offenders.length} file(s) are NOT TRACKED BY GIT:`);
+    for (const f of (VERBOSE ? offenders : offenders.slice(0, 12)))
+      console.log(`      ??  ${f.key}`);
+    if (!VERBOSE && offenders.length > 12) console.log(`      … and ${offenders.length - 12} more (use --verbose)`);
+    if (DEPLOY || SEED) {
+      fail(`refusing to ${SEED ? "seed" : "publish"} untracked files. Commit them first, `
+        + `or pass --allow-untracked if this is deliberate.`);
+    }
+    console.log(`  ! a real deploy would refuse these (commit them, or --allow-untracked).\n`);
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Act
