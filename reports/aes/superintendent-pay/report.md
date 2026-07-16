@@ -22,6 +22,8 @@ scatter:
 research:
   - subdir: research/chaplin-rd11
     title: Chaplin / RD 11 Shared Central Office
+  - subdir: research/union-combined-position
+    title: Union Combined Superintendent / Principal Position
 sectionLabels:
   - - overview
     - Introduction
@@ -73,10 +75,11 @@ minus Norwich as structurally unlike. Contracts were assembled from town
 and school-district websites, OCR of scanned PDFs, and direct §10-244c
 records requests to town clerks where public postings did not surface a
 current contract. Of the 44 working-set
-peer districts, contract data is in hand for **39 districts across 30
-unique peer superintendent contracts**, plus three reference contracts
-(Amity Region 5, Northwestern Region 7, and Chaplin/Region 11) included on
-the contracts subpage but not ranked. For the remaining 5 peer districts a
+peer districts, contract data is in hand for **40 districts across 30
+unique peer superintendent contracts**, plus four reference contracts
+(Amity Region 5, Northwestern Region 7, Chaplin/Region 11, and Union)
+included on the contracts subpage but not ranked. For the remaining 4
+peer districts a
 thorough search of public sites and clerk outreach has not yet produced a
 current contract. All figures are "cash compensation" — the salary line
 plus any board-paid 403(b) annuity, longevity bonus, fixed transportation
@@ -228,9 +231,9 @@ structure, sometimes regional secondary). After excluding Norwich (which is
 structurally very different — much larger, much more urban), the working
 comparison set is 44 districts.
 
-Of those 44, contract data is in hand for **31 unique superintendent
-contracts covering 39 peer districts**. **30 of those contracts are
-ranked in the tables below**; three are treated as reference observations
+Of those 44, contract data is in hand for **32 unique superintendent
+contracts covering 40 peer districts**. **30 of those contracts are
+ranked in the tables below**; four are treated as reference observations
 because the K-6/K-8 comparison isn't clean for them, and they appear on
 the [contracts subpage](contracts/) but aren't ranked:
 
@@ -245,12 +248,17 @@ the [contracts subpage](contracts/) but aren't ranked:
   across all roles, which isn't physically plausible). Treating it as
   reference-only avoids a misleadingly low FTE-equivalent number in the
   ranking.
+- **Union** (Jackopsic) — combined superintendent/principal position in
+  a single ~45-student district (the smallest in Connecticut). The
+  superintendent role is a $10,701 addendum to the principal contract
+  with no stated hours split, so its FTE-equivalent rate is a modeled
+  construct rather than a contract-stated figure (see the note below).
 
-Only **5 peer districts remain pending**: Woodbridge (K-6 supe being
-recruited), plus four very small EASTCONN-region districts where
+Only **4 peer districts remain pending**: Woodbridge (K-6 supe being
+recruited), plus three very small EASTCONN-region districts where
 part-time superintendent arrangements are common but the supe's name
 and tenure are not always established with certainty (Ashford, North
-Franklin, Pomfret Center, Union).
+Franklin, Pomfret Center).
 
 CGS § 10-244c (Public Act 17-2) directs town clerks to post superintendent
 contracts on the town website, but compliance is uneven. Requesting a copy
@@ -278,6 +286,27 @@ $166,667. Not precise enough to rank cleanly against solo K-6 contracts,
 but not a case where Chaplin pays below Andover either. The supporting
 memo carries the full set of qualifications for a reader who wants to
 walk the underlying assumptions.
+
+**A note on the Union reference contract.** Union — the smallest school
+district in Connecticut (~45 students, one schoolhouse) — was resolved
+by a records request to the town clerk, but with a twist: Union combines
+the superintendent and elementary-principal roles in one person under
+paired contracts. For 2025-26 the superintendent role is a $10,701
+addendum (exactly one-twelfth of the $128,419 principal salary) with no
+stated hours split, so there is no contract-stated superintendent salary
+or FTE to rank. A
+[supporting research memo](research/union-combined-position/)
+reconstructs an FTE-equivalent rate by splitting the combined pay using
+the market ratio of superintendent to elementary-principal pay in
+Union's enrollment class (1.44, per the 2025-26 AASA salary study):
+roughly **$210,000–$230,000** FTE-equivalent, depending on how the
+contract's cash-in-lieu-of-insurance stipend and 10% board TSA
+contribution are counted, with an implied superintendent time share of
+about 5.5% — roughly 11–12 days a year. A peer-median benchmark and the
+ratio method agree on the time split within about a percentage point.
+The construct is consistent with the peer cohort's rates, but because it
+is a modeled figure rather than contract-stated dollars, Union is
+treated as reference-only rather than ranked.
 
 
 
@@ -492,9 +521,9 @@ is unaffected.
 
 **Stale and reference-only contracts don't appear in the ranking tables.**
 The underlying older PDFs (Stevens West Willington 2023–24, Bruneau
-Scotland 2021–22, LePage Region 7 2023–24) and the three reference
-contracts (Amity Region 5, Region 7, Skarzynski Chaplin+Region 11)
-remain on the [contracts subpage](contracts/) and in the
+Scotland 2021–22, LePage Region 7 2023–24) and the four reference
+contracts (Amity Region 5, Region 7, Skarzynski Chaplin+Region 11,
+Jackopsic Union) remain on the [contracts subpage](contracts/) and in the
 [downloadable spreadsheet](contracts.xlsx) for inspection.
 
 **Enrollment doesn't explain the gap.** Within the K-6/K-8 cohort, pay
@@ -508,10 +537,10 @@ upward trend in the full-cohort scatter comes from the K-12 regional
 joint contracts (McKinnon ER9, White Region 4, Brady-Shanley Region 1)
 at the top-right, not from the K-6/K-8 cohort where Andover competes.
 
-**Only 5 peer districts remain pending.** Records requests to town clerks
+**Only 4 peer districts remain pending.** Records requests to town clerks
 under CGS §10-244c have resolved essentially every contract that could be
-resolved that way. The remaining five — Ashford, North Franklin
-(Franklin), Pomfret Center, Union, Woodbridge — are the smallest of the
+resolved that way. The remaining four — Ashford, North Franklin
+(Franklin), Pomfret Center, Woodbridge — are the smallest of the
 EASTCONN-area districts plus Woodbridge, which is between supes. The
 missing rates could land above or below Andover's; whether they do is
 genuinely unknown.
@@ -541,7 +570,7 @@ What this report does not show
   needs a more senior superintendent, and some peers manage two or three times
   Andover's enrollment. This report normalizes by FTE, not by enrollment or
   budget size.
-- **The missing peers.** The 5 districts where clerk outreach has not yet
+- **The missing peers.** The 4 districts where clerk outreach has not yet
   produced a current contract may have rates above or below the current
   cohort.
 - **A causal claim about appropriateness.** This report describes where Andover
@@ -575,16 +604,17 @@ Sources
   Meeting; provides FY27 proposed figures
 
 
-### Pending — contract not located in public search (5) ###
+### Pending — contract not located in public search (4) ###
 
-Five peer districts remain pending. Woodbridge is in transition (K-6 supe
-being recruited); the other four are very small EASTCONN-region districts
+Four peer districts remain pending. Woodbridge is in transition (K-6 supe
+being recruited); the other three are very small EASTCONN-region districts
 where part-time supe arrangements are common and the supe's name and
 tenure aren't always established with certainty: Ashford, North Franklin
-(Franklin), Pomfret Center, Union.
+(Franklin), Pomfret Center.
 
-All 30 peer-district contracts in the analysis plus the two HS-only
-reference contracts are listed with links on the
+All 30 peer-district contracts in the analysis plus the four reference
+contracts (Amity Region 5, Northwestern Region 7, Chaplin/Region 11,
+Union) are listed with links on the
 **[Contracts subpage](contracts/)** and included in the
 [downloadable ZIP](contracts.zip) and [spreadsheet](contracts.xlsx).
 
