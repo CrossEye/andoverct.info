@@ -1014,11 +1014,50 @@ document.getElementById("svgBtn").onclick=()=>{
 document.getElementById("pngBtn").onclick=async()=>{
   try{const b=await svgToPng(buildSvg(deck.cards[cur]));downloadBlob(b,curName()+".png");flash("PNG saved");}
   catch(e){flash(e.message,true);}};
+/* ---------- minimal ZIP writer (store-only) ----------
+   PNGs are already deflate-compressed, so the zip only wraps them (method 0,
+   no compression). Self-contained — no CDN dependency, works offline/file://. */
+const CRC_T=(()=>{const t=new Uint32Array(256);
+  for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?0xEDB88320^(c>>>1):c>>>1;t[n]=c;}
+  return t;})();
+function crc32(u8){let c=0xFFFFFFFF;
+  for(let i=0;i<u8.length;i++)c=CRC_T[(c^u8[i])&0xFF]^(c>>>8);
+  return (c^0xFFFFFFFF)>>>0;}
+function zipStore(files){   /* files: [{name, data:Uint8Array}] -> Blob */
+  const enc=new TextEncoder(),parts=[],cdir=[];let off=0;
+  const d=new Date(),
+    dtime=((d.getHours()<<11)|(d.getMinutes()<<5)|(d.getSeconds()>>1))&0xFFFF,
+    ddate=(((d.getFullYear()-1980)<<9)|((d.getMonth()+1)<<5)|d.getDate())&0xFFFF;
+  const u16=v=>[v&255,(v>>>8)&255],u32=v=>[v&255,(v>>>8)&255,(v>>>16)&255,(v>>>24)&255];
+  for(const f of files){
+    const nm=enc.encode(f.name),crc=crc32(f.data),sz=f.data.length;
+    const common=[...u16(20),...u16(0x0800),...u16(0),...u16(dtime),...u16(ddate),
+      ...u32(crc),...u32(sz),...u32(sz),...u16(nm.length),...u16(0)];
+    parts.push(new Uint8Array([...u32(0x04034b50),...common]),nm,f.data);
+    cdir.push(new Uint8Array([...u32(0x02014b50),...u16(20),...common,
+      ...u16(0),...u16(0),...u16(0),...u32(0),...u32(off)]),nm);
+    off+=30+nm.length+sz;
+  }
+  let csize=0;cdir.forEach(p=>csize+=p.length);
+  parts.push(...cdir,new Uint8Array([...u32(0x06054b50),...u16(0),...u16(0),
+    ...u16(files.length),...u16(files.length),...u32(csize),...u32(off),...u16(0)]));
+  return new Blob(parts,{type:"application/zip"});
+}
 document.getElementById("allBtn").onclick=async()=>{
-  for(let i=0;i<deck.cards.length;i++){const c=deck.cards[i];
-    try{const b=await svgToPng(buildSvg(c));downloadBlob(b,(c.name||("card"+i)).replace(/[^\w.-]+/g,"_")+".png");
-      await new Promise(r=>setTimeout(r,350));}catch(e){flash("Card "+i+": "+e.message,true);}}
-  renderPreview();flash("Exported "+deck.cards.length+" PNGs");};
+  const btn=document.getElementById("allBtn"),files=[],used=new Set();
+  try{
+    for(let i=0;i<deck.cards.length;i++){
+      btn.textContent=`Zipping ${i+1}/${deck.cards.length}…`;
+      const c=deck.cards[i];
+      const base=(c.name||("card"+(i+1))).replace(/[^\w.-]+/g,"_");
+      let nm=base,n=2;while(used.has(nm))nm=base+"_"+(n++);used.add(nm);
+      const b=await svgToPng(buildSvg(c));
+      files.push({name:nm+".png",data:new Uint8Array(await b.arrayBuffer())});
+    }
+    downloadBlob(zipStore(files),"card-deck.zip");
+    flash("Exported "+files.length+" PNGs as card-deck.zip");
+  }catch(e){flash("Export failed: "+(e.message||e),true);}
+  btn.textContent="Export all PNGs";renderPreview();};
 document.getElementById("copyBtn").onclick=()=>{
   const btn=document.getElementById("copyBtn"),note=document.getElementById("expnote");
   const done=(ok,msg)=>{flash(ok?msg:"Copy failed — details below the buttons",!ok);
