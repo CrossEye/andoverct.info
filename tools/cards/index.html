@@ -991,7 +991,7 @@ function sync(){renderPreview();renderJson();renderList();renderContrast();save(
 
 /* ---------- export ---------- */
 function flash(t,err){const m=document.getElementById("msg");m.textContent=t;
-  m.className="msg "+(err?"err":"ok");setTimeout(()=>{m.textContent="";m.className="msg";},2500);}
+  m.className="msg "+(err?"err":"ok");setTimeout(()=>{m.textContent="";m.className="msg";},err?7000:2500);}
 function downloadBlob(blob,name){const a=document.createElement("a");a.href=URL.createObjectURL(blob);
   a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500);}
 function svgToPng(svg){
@@ -1018,10 +1018,22 @@ document.getElementById("allBtn").onclick=async()=>{
     try{const b=await svgToPng(buildSvg(c));downloadBlob(b,(c.name||("card"+i)).replace(/[^\w.-]+/g,"_")+".png");
       await new Promise(r=>setTimeout(r,350));}catch(e){flash("Card "+i+": "+e.message,true);}}
   renderPreview();flash("Exported "+deck.cards.length+" PNGs");};
-document.getElementById("copyBtn").onclick=async()=>{
-  try{const b=await svgToPng(buildSvg(deck.cards[cur]));
-    await navigator.clipboard.write([new ClipboardItem({"image/png":b})]);flash("PNG copied");}
-  catch(e){flash("Copy needs https/file:// — "+(e.name||e.message),true);}};
+document.getElementById("copyBtn").onclick=()=>{
+  const btn=document.getElementById("copyBtn");
+  const done=(ok,msg)=>{flash(msg,!ok);
+    btn.textContent=ok?"Copied ✓":"Copy failed ✗";
+    setTimeout(()=>{btn.textContent="Copy PNG";},2000);};
+  if(!navigator.clipboard||!window.ClipboardItem){
+    done(false,"This browser can't copy images to the clipboard — use Download PNG");return;}
+  const png=svgToPng(buildSvg(deck.cards[cur]));
+  /* write must start inside the click gesture — pass the pending PNG as a
+     promise so rasterizing doesn't outlive the transient activation */
+  let p;
+  try{p=navigator.clipboard.write([new ClipboardItem({"image/png":png})]);}
+  catch(e){p=png.then(b=>navigator.clipboard.write([new ClipboardItem({"image/png":b})]));}
+  p.then(()=>done(true,"PNG copied — paste with Ctrl+V"))
+   .catch(e=>{console.error("Copy PNG failed:",e);
+     done(false,"Copy failed: "+((e&&(e.message||e.name))||"unknown error"));});};
 
 /* ---------- deck operations ---------- */
 function blankCard(type){
