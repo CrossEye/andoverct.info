@@ -172,6 +172,7 @@ button.danger{background:#b0402c;color:#fff}
       <button id="allBtn" class="ghost">Export all PNGs</button>
       <button id="copyBtn" class="ghost">Copy PNG</button>
     </div>
+    <p id="expnote" class="hint" style="max-width:560px;margin:-6px auto 14px"></p>
     <div class="jsonwrap">
       <details>
         <summary>JSON spec (editable &mdash; this is the source of truth)</summary>
@@ -1019,21 +1020,27 @@ document.getElementById("allBtn").onclick=async()=>{
       await new Promise(r=>setTimeout(r,350));}catch(e){flash("Card "+i+": "+e.message,true);}}
   renderPreview();flash("Exported "+deck.cards.length+" PNGs");};
 document.getElementById("copyBtn").onclick=()=>{
-  const btn=document.getElementById("copyBtn");
-  const done=(ok,msg)=>{flash(msg,!ok);
+  const btn=document.getElementById("copyBtn"),note=document.getElementById("expnote");
+  const done=(ok,msg)=>{flash(ok?msg:"Copy failed — details below the buttons",!ok);
+    note.textContent=msg;note.style.color=ok?"var(--green)":"#b0402c";
     btn.textContent=ok?"Copied ✓":"Copy failed ✗";
     setTimeout(()=>{btn.textContent="Copy PNG";},2000);};
-  if(!navigator.clipboard||!window.ClipboardItem){
-    done(false,"This browser can't copy images to the clipboard — use Download PNG");return;}
+  if(!navigator.clipboard||!navigator.clipboard.write||!window.ClipboardItem){
+    done(false,"This browser doesn't expose image clipboard writes (ClipboardItem) — use Download PNG instead.");return;}
   const png=svgToPng(buildSvg(deck.cards[cur]));
+  const write=b=>navigator.clipboard.write([new ClipboardItem({"image/png":b})]);
   /* write must start inside the click gesture — pass the pending PNG as a
      promise so rasterizing doesn't outlive the transient activation */
-  let p;
-  try{p=navigator.clipboard.write([new ClipboardItem({"image/png":png})]);}
-  catch(e){p=png.then(b=>navigator.clipboard.write([new ClipboardItem({"image/png":b})]));}
-  p.then(()=>done(true,"PNG copied — paste with Ctrl+V"))
-   .catch(e=>{console.error("Copy PNG failed:",e);
-     done(false,"Copy failed: "+((e&&(e.message||e.name))||"unknown error"));});};
+  let first;
+  try{first=write(png);}catch(e){first=Promise.reject(e);}
+  first.catch(e1=>png.then(write).catch(e2=>{   // retry with the resolved blob: some browsers reject the promise form
+      const d=e=>((e&&(e.message||e.name))||"unknown error");
+      let msg="Copy failed: "+d(e2)+(d(e1)!==d(e2)?" — first attempt: "+d(e1):"");
+      if(/NotAllowed|denied|permission/i.test(d(e1)+d(e2)))
+        msg+=" · Brave blocks clipboard writes by default: click the icon left of the address bar → Site settings → Clipboard → Allow, then reload.";
+      throw new Error(msg);}))
+    .then(()=>done(true,"PNG copied — paste with Ctrl+V"))
+    .catch(e=>{console.error("Copy PNG:",e);done(false,e.message);});};
 
 /* ---------- deck operations ---------- */
 function blankCard(type){
