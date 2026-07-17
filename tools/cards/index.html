@@ -1026,7 +1026,9 @@ document.getElementById("copyBtn").onclick=()=>{
     btn.textContent=ok?"Copied ✓":"Copy failed ✗";
     setTimeout(()=>{btn.textContent="Copy PNG";},2000);};
   if(!navigator.clipboard||!navigator.clipboard.write||!window.ClipboardItem){
-    done(false,"This browser doesn't expose image clipboard writes (ClipboardItem) — use Download PNG instead.");return;}
+    done(false,window.isSecureContext
+      ?"This browser doesn't expose image clipboard writes (ClipboardItem) — use Download PNG instead."
+      :"Clipboard copy needs a secure context — you're on http://. Use the https:// site (or file://), or Download PNG instead.");return;}
   const png=svgToPng(buildSvg(deck.cards[cur]));
   const write=b=>navigator.clipboard.write([new ClipboardItem({"image/png":b})]);
   /* write must start inside the click gesture — pass the pending PNG as a
