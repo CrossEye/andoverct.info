@@ -24,7 +24,24 @@ header.app .sub{color:#bbb;font-size:.82rem}
 .card-box{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:14px}
 .card-box h2{font-size:.78rem;text-transform:uppercase;letter-spacing:.07em;color:var(--gold);margin:0 0 10px}
 label.f{display:block;margin:0 0 10px}
-label.f .lab{display:block;font-size:.78rem;color:var(--gray);margin-bottom:3px}
+label.f .lab{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--gray);margin-bottom:3px}
+.gear{background:none;border:none;padding:0 2px;margin-left:auto;cursor:pointer;color:var(--muted);
+  font-size:.95rem;line-height:1;opacity:.3;flex:none}
+label.f:hover .gear,.gear:focus-visible{opacity:.9}
+.gear.on{opacity:1;color:var(--gold)}
+.gear.on::after{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;
+  background:var(--gold);margin-left:3px;vertical-align:2px}
+.twpop{position:fixed;z-index:50;background:#fff;border:1px solid var(--line);border-radius:8px;
+  box-shadow:0 4px 18px rgba(0,0,0,.18);padding:10px 12px;width:256px;font-size:.78rem}
+.twpop h3{margin:0 0 8px;font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;
+  color:var(--gold);display:flex;align-items:center;gap:6px}
+.twpop h3 .ttl{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.twpop .rowt{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.twpop .rowt label{flex:0 0 80px;color:var(--gray)}
+.twpop input,.twpop select{flex:1;font:inherit;font-size:.78rem;padding:3px 6px;
+  border:1px solid var(--line);border-radius:5px;min-width:0;width:auto}
+.twpop .foot{display:flex;gap:6px;justify-content:flex-end;margin-top:8px}
+.twpop .foot button{padding:4px 9px;font-size:.74rem}
 input[type=text],textarea,select{width:100%;font:inherit;font-size:.86rem;padding:6px 8px;
   border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--body)}
 textarea{resize:vertical;min-height:48px;line-height:1.4}
@@ -120,6 +137,8 @@ button.danger{background:#b0402c;color:#fff}
       <div id="fields"></div>
       <p class="hint">Colors you can use in number/headline fields: feature, featureDark, accent,
         heading, text, label, faint, alert, ground &mdash; or any #hex.</p>
+      <p class="hint">&#9881; on a field label fine-tunes that field on this card only
+        (nudge, size, line height, color, font, alignment). Tweaks live in the JSON spec.</p>
     </div>
 
     <div class="card-box">
@@ -254,18 +273,28 @@ function frame(bg,border){
     `<rect width="${W}" height="${W}" fill="${bg}"/>\n`+
     `<rect x="26" y="26" width="${W-52}" height="${W-52}" rx="18" fill="none" stroke="${border}" stroke-width="3"/>\n`;
 }
-function kicker(text,y,color,rule,cx){
+function kicker(text,y,color,rule,cx,key){
   if(!text)return"";
-  y=y==null?126:y;color=color||PAL.accent;rule=rule!==false;cx=cx==null?CX:cx;
-  let size=27,ls=4;
-  while(textw(text,"sans","b",size,ls)>CW&&size>20)size--;
-  const tw=textw(text,"sans","b",size,ls);
-  let s=tline(cx,y,text,"sans_b",size,color,"middle",ls);
+  const t=twk(key||"kicker");
+  y=y==null?126:y;color=t.color?col(t.color):(color||PAL.accent);rule=rule!==false;cx=cx==null?CX:cx;
+  const sty=(t.font&&STYLE[t.font])?t.font:"sans_b",[fam,wt]=STYLE[sty];
+  let size=t.size||27,ls=4;
+  if(!t.size)while(textw(text,fam,wt,size,ls)>CW&&size>20)size--;
+  const anchor=t.align||"middle",x=alignX(cx,CW,"middle",anchor);
+  const tw=textw(text,fam,wt,size,ls);
+  let s=tline(x,y,text,sty,size,color,anchor,ls);
   if(rule){const rw=Math.max(40,Math.round(tw*0.9));   /* underline tracks kicker width */
-    s+=`\n<rect x="${cx-rw/2}" y="${y+18}" width="${rw}" height="3" fill="${color}"/>`;}
-  return s;
+    const rx=anchor==="start"?x:anchor==="end"?x-rw:x-rw/2;
+    s+=`\n<rect x="${rx}" y="${y+18}" width="${rw}" height="3" fill="${color}"/>`;}
+  return nudge(s,t.dy);
 }
-function source(text){return text?tline(CX,SRC_Y,text,"sans_r",22,PAL.faint,"middle"):"";}
+function source(text){
+  if(!text)return"";
+  const t=twk("source");
+  const sty=(t.font&&STYLE[t.font])?t.font:"sans_r";
+  const anchor=t.align||"middle",x=alignX(CX,CW,"middle",anchor);
+  return nudge(tline(x,SRC_Y,text,sty,t.size||22,t.color?col(t.color):PAL.faint,anchor),t.dy);
+}
 function stat(cx,num,numcol,lablines){
   const out=[tline(cx,560-66,num,"serif_b",66,numcol,"middle")];
   let yy=560;
@@ -278,6 +307,45 @@ function headlineSpans(text){
   while((m=re.exec(text))){out+=esc(text.slice(last,m.index));
     out+=`<tspan font-style="italic" fill="${PAL.feature}">${esc(m[1])}</tspan>`;last=re.lastIndex;}
   out+=esc(text.slice(last));return out;
+}
+
+/* ---------- per-field tweaks ----------
+   Optional per-card overrides, stored in the card JSON as
+     tweaks:{ fieldKey:{ dy, size, lh, color, font, align } }
+   size/lh/color/font/align feed the normal layout, so wrapping and flow follow;
+   dy is a pure visual nudge applied after layout — it moves only that field and
+   does not shift downstream fields or the card's vertical centering. */
+let CURT={};
+function twk(key){return (CURT&&CURT[key])||{};}
+function nudge(mk,dy){return dy?`<g transform="translate(0,${dy})">${mk}</g>`:mk;}
+function alignX(x,colw,from,to){
+  const left=from==="middle"?x-colw/2:from==="end"?x-colw:x;
+  return to==="middle"?left+colw/2:to==="end"?left+colw:left;
+}
+/* merged (style,size,leading) for a field — for renderers that must measure
+   before placing (bottom-anchored or centered-in-gap blocks) */
+function twkText(key,sty,size,leading){
+  const t=twk(key);
+  if(t.size){leading=Math.round(leading*t.size/size);size=t.size;}
+  if(t.lh)leading=t.lh;
+  if(t.font&&STYLE[t.font])sty=t.font;
+  return[sty,size,leading];
+}
+function fblock(key,x,y,s,sty,size,fill,maxw,leading,anchor,ls){
+  const t=twk(key);anchor=anchor||"start";
+  [sty,size,leading]=twkText(key,sty,size,leading);
+  if(t.color)fill=col(t.color);
+  if(t.align&&t.align!==anchor){x=alignX(x,maxw,anchor,t.align);anchor=t.align;}
+  const[mk,endy]=block(x,y,s,sty,size,fill,maxw,leading,anchor,ls);
+  return[nudge(mk,t.dy),endy];
+}
+function ftline(key,x,y,s,sty,size,fill,anchor,ls,spans,colw){
+  const t=twk(key);anchor=anchor||"start";colw=colw==null?CW:colw;
+  if(t.size)size=t.size;
+  if(t.color)fill=col(t.color);
+  if(t.font&&STYLE[t.font])sty=t.font;
+  if(t.align&&t.align!==anchor){x=alignX(x,colw,anchor,t.align);anchor=t.align;}
+  return nudge(tline(x,y,s,sty,size,fill,anchor,ls,spans),t.dy);
 }
 
 /* ---------- vertical centering ----------
@@ -298,45 +366,46 @@ function vcenter(inner,top,bot,hasKicker){
 function c_statTrio(c){
   const K=!!c.kicker; let m="";
   const hl=String(c.headline||"").split("\n");let y=268;
-  for(const line of hl){m+="\n"+tline(PADL,y,"","serif_b",60,PAL.heading,"start",0,headlineSpans(line));y+=76;}
+  const hstep=Math.round(76*((twk("headline").size||60)/60));
+  for(const line of hl){m+="\n"+ftline("headline",PADL,y,"","serif_b",60,PAL.heading,"start",0,headlineSpans(line));y+=hstep;}
   const cs=[PADL+CW/6,PADL+CW/2,PADR-CW/6];
   (c.stats||[]).slice(0,3).forEach((st,i)=>{m+="\n"+stat(cs[i],st.num,col(st.color||"label"),st.label||[]);});
   let bot=596;
-  if(c.body){const[tk,endy]=block(PADL,700,c.body,"serif_r",35,PAL.text,CW,47);m+="\n"+tk;bot=endy+8;}
+  if(c.body){const[tk,endy]=fblock("body",PADL,700,c.body,"serif_r",35,PAL.text,CW,47);m+="\n"+tk;bot=endy+8;}
   return kicker(c.kicker)+"\n"+vcenter(m,225,bot,K)+"\n"+source(c.source);
 }
 function c_numberStack(c){
   const K=!!c.kicker; let m="";
-  if(c.headline)m+="\n"+tline(PADL,250,c.headline,"serif_b",56,PAL.heading);
+  if(c.headline)m+="\n"+ftline("headline",PADL,250,c.headline,"serif_b",56,PAL.heading);
   let ry=400;
   (c.rows||[]).forEach(r=>{
     m+="\n"+tline(PADL,ry,r.num,"serif_b",86,col(r.color||"heading"));
     const lx=PADL+Math.max(250,textw(r.num||"","serif","b",86,0)+28);
     const[tk]=block(lx,ry-8,r.label,"serif_r",33,PAL.text,PADR-lx,38);m+="\n"+tk;ry+=150;});
   let bot=ry-150+14;
-  if(c.emphasis){const[tk,endy]=block(PADL,ry+30,c.emphasis,"serif_bi",36,PAL.featureDark,CW,46);m+="\n"+tk;bot=endy+8;}
+  if(c.emphasis){const[tk,endy]=fblock("emphasis",PADL,ry+30,c.emphasis,"serif_bi",36,PAL.featureDark,CW,46);m+="\n"+tk;bot=endy+8;}
   return kicker(c.kicker)+"\n"+vcenter(m,c.headline?210:340,bot,K)+"\n"+source(c.source);
 }
 function c_hero(c){
   const K=!!c.kicker; let m="";
-  if(c.headline)m+="\n"+tline(PADL,250,c.headline,"serif_b",52,PAL.heading);
-  if(c.hero&&c.hero.num)m+="\n"+tline(CX,430,c.hero.num,"serif_b",124,PAL.feature,"middle");
-  if(c.hero&&c.hero.subtitle){const[tk]=block(CX,478,c.hero.subtitle,"sans_r",26,PAL.label,CW-120,32,"middle");m+="\n"+tk;}
+  if(c.headline)m+="\n"+ftline("headline",PADL,250,c.headline,"serif_b",52,PAL.heading);
+  if(c.hero&&c.hero.num)m+="\n"+ftline("hero.num",CX,430,c.hero.num,"serif_b",124,PAL.feature,"middle");
+  if(c.hero&&c.hero.subtitle){const[tk]=fblock("hero.subtitle",CX,478,c.hero.subtitle,"sans_r",26,PAL.label,CW-120,32,"middle");m+="\n"+tk;}
   let sb=520;
   if(c.left&&c.left.num){m+="\n"+tline(CX-220,640,c.left.num,"serif_b",56,PAL.heading,"middle");
     (c.left.label||[]).forEach((ln,i)=>{m+="\n"+tline(CX-220,686+i*28,ln,"sans_r",24,PAL.label,"middle");sb=Math.max(sb,686+i*28);});}
   if(c.right&&c.right.num){m+="\n"+tline(CX+220,640,c.right.num,"serif_b",56,PAL.heading,"middle");
     (c.right.label||[]).forEach((ln,i)=>{m+="\n"+tline(CX+220,686+i*28,ln,"sans_r",24,PAL.label,"middle");sb=Math.max(sb,686+i*28);});}
   let bot=sb+8;
-  if(c.body){const[tk,endy]=block(PADL,820,c.body,"serif_r",35,PAL.text,CW,47);m+="\n"+tk;bot=endy+8;}
+  if(c.body){const[tk,endy]=fblock("body",PADL,820,c.body,"serif_r",35,PAL.text,CW,47);m+="\n"+tk;bot=endy+8;}
   return kicker(c.kicker)+"\n"+vcenter(m,c.headline?213:341,bot,K)+"\n"+source(c.source);
 }
 function c_text(c){
   const K=!!c.kicker; let m="",y=270;
   (c.headline||[]).forEach(l=>{m+="\n"+tline(PADL,y,"","serif_b",62,col(l.color||"heading"),"start",0,headlineSpans(l.text||""));y+=74;});
   let by=y+30,bot=y-74+14;
-  (c.body||[]).forEach(p=>{const[tk,endy]=block(PADL,by,p,"serif_r",37,PAL.text,CW,50);m+="\n"+tk;by=endy+74;bot=endy+8;});
-  if(c.emphasis){const[tk,endy]=block(PADL,by+10,c.emphasis,"serif_bi",40,PAL.featureDark,CW,52);m+="\n"+tk;bot=endy+8;}
+  (c.body||[]).forEach(p=>{const[tk,endy]=fblock("body",PADL,by,p,"serif_r",37,PAL.text,CW,50);m+="\n"+tk;by=endy+74;bot=endy+8;});
+  if(c.emphasis){const[tk,endy]=fblock("emphasis",PADL,by+10,c.emphasis,"serif_bi",40,PAL.featureDark,CW,52);m+="\n"+tk;bot=endy+8;}
   return kicker(c.kicker)+"\n"+vcenter(m,225,bot,K)+"\n"+source(c.source);
 }
 function c_photo(c){
@@ -350,20 +419,36 @@ function c_photo(c){
     m+="\n"+tline(px+pw/2,py+ph/2,"[ photo here ]","sans_r",24,PAL.faint,"middle");
   }
   m+=`\n<rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="10" fill="none" stroke="#d8d1c2" stroke-width="2"/>`;
+  /* right column flows: question top-aligned, emphasis bottom-anchored, caption
+     centered in the gap between them (clamped so it never crowds either). */
   const tx=px+pw+44,tw=PADR-tx;
-  if(c.question){const[q]=block(tx,py+58,c.question,"serif_b",44,PAL.heading,tw,56);m+="\n"+q;}
-  if(c.caption){const[cap]=block(tx,py+300,c.caption,"serif_i",29,PAL.label,tw,40);m+="\n"+cap;}
-  if(c.emphasis){const[hb]=block(tx,py+ph-40,c.emphasis,"serif_bi",30,PAL.featureDark,tw,40);m+="\n"+hb;}
+  let qbot=py+10;
+  if(c.question){const[q,qe]=fblock("question",tx,py+58,c.question,"serif_b",44,PAL.heading,tw,56);m+="\n"+q;qbot=qe;}
+  let etop=py+ph-10;
+  if(c.emphasis){
+    const[es,esz,el]=twkText("emphasis","serif_bi",30,40);
+    const eln=wrap(c.emphasis,STYLE[es][0],STYLE[es][1],esz,tw,0).length;
+    etop=py+ph-40-(eln-1)*el;
+    const[hb]=fblock("emphasis",tx,etop,c.emphasis,"serif_bi",30,PAL.featureDark,tw,40);m+="\n"+hb;
+  }
+  if(c.caption){
+    const[cs,csz,cl]=twkText("caption","serif_i",29,40);
+    const ch=(wrap(c.caption,STYLE[cs][0],STYLE[cs][1],csz,tw,0).length-1)*cl;
+    const minY=qbot+64, maxY=etop-ch-56;
+    let cy=Math.round((qbot+etop)/2-ch/2);
+    cy=Math.min(Math.max(cy,minY),Math.max(maxY,minY));
+    const[cap]=fblock("caption",tx,cy,c.caption,"serif_i",29,PAL.label,tw,40);m+="\n"+cap;
+  }
   return kicker(c.kicker)+"\n"+vcenter(m,py,py+ph,K)+"\n"+source(c.source);
 }
 function c_cta(c){
   /* inverted panel: feature ground (set in buildSvg), light ground-colored text throughout */
-  let s=tline(CX,200,c.kicker||"","sans_b",28,PAL.ground,"middle",4);
+  let s=ftline("kicker",CX,200,c.kicker||"","sans_b",28,PAL.ground,"middle",4);
   s+=`\n<rect x="${CX-40}" y="248" width="80" height="3" fill="${PAL.ground}"/>`;
-  s+="\n"+tline(CX,470,c.big||"VOTE YES","serif_b",170,PAL.ground,"middle");
-  if(c.subtitle)s+="\n"+tline(CX,600,c.subtitle,"serif_i",42,PAL.ground,"middle");
+  s+="\n"+ftline("big",CX,470,c.big||"VOTE YES","serif_b",170,PAL.ground,"middle");
+  if(c.subtitle)s+="\n"+ftline("subtitle",CX,600,c.subtitle,"serif_i",42,PAL.ground,"middle");
   let ly=740;(c.lines||[]).forEach(ln=>{s+="\n"+tline(CX,ly,ln,"sans_r",34,PAL.ground,"middle");ly+=52;});
-  if(c.tail)s+="\n"+tline(CX,920,c.tail,"serif_r",32,PAL.ground,"middle");
+  if(c.tail)s+="\n"+ftline("tail",CX,920,c.tail,"serif_r",32,PAL.ground,"middle");
   return s;
 }
 /* --- new styles: break the shared silhouette (band/quote/list/bars/table/air) --- */
@@ -371,20 +456,21 @@ function c_quote(c){
   /* pull-quote: oversized quote glyph (fixed corner accent) + centered italic
      serif quote + attribution. */
   const K=!!c.tag; let m="";
-  const[q,endy]=block(150,430,c.quote||"","serif_i",58,PAL.heading,CW-140,74);
+  const[q,endy]=fblock("quote",150,430,c.quote||"","serif_i",58,PAL.heading,CW-140,74);
   m+=q; let bot=endy+14;
-  if(c.attribution){m+="\n"+tline(PADR,endy+96,c.attribution,"serif_r",34,PAL.label,"end");bot=endy+96+8;}
+  if(c.attribution){m+="\n"+ftline("attribution",PADR,endy+96,c.attribution,"serif_r",34,PAL.label,"end");bot=endy+96+8;}
   const deco=tline(96,360,"\u201c","serif_b",340,PAL.accent,"start");
   const rt=273,dy=Math.round((rt+CBOT)/2-(388+bot)/2);   // region tuned so mark->quote gap == attr->source gap
-  return deco+"\n"+(c.tag?kicker(c.tag,150):"")+
+  return deco+"\n"+(c.tag?kicker(c.tag,150,null,true,null,"tag"):"")+
     `\n<g transform="translate(0,${dy})">\n${m}\n</g>\n`+source(c.source);
 }
 function c_checklist(c){
   /* headline + a scannable marked list. One mark char for the whole list,
      colored by role (green check, gold bullet, red x). A different rhythm. */
   const K=!!c.kicker; let m="",y;
-  if(c.headline){y=264;for(const line of String(c.headline).split("\n")){
-    m+="\n"+tline(PADL,y,"","serif_b",58,PAL.heading,"start",0,headlineSpans(line));y+=72;}}
+  if(c.headline){y=264;const hstep=Math.round(72*((twk("headline").size||58)/58));
+    for(const line of String(c.headline).split("\n")){
+    m+="\n"+ftline("headline",PADL,y,"","serif_b",58,PAL.heading,"start",0,headlineSpans(line));y+=hstep;}}
   else y=240;
   const mark=c.mark||"\u2713",mcol=col(c.markColor||"feature");
   let iy=y+60,bot=iy;
@@ -392,7 +478,7 @@ function c_checklist(c){
     m+="\n"+tline(PADL,iy,mark,"sans_b",46,mcol,"start");
     const[tk,endy]=block(PADL+78,iy,it,"serif_r",37,PAL.text,CW-78,48);
     m+="\n"+tk;iy=Math.max(iy+70,endy+40);bot=iy-40+8;});
-  if(c.emphasis){const[tk,endy]=block(PADL,iy+22,c.emphasis,"serif_bi",38,PAL.featureDark,CW,50);m+="\n"+tk;bot=endy+8;}
+  if(c.emphasis){const[tk,endy]=fblock("emphasis",PADL,iy+22,c.emphasis,"serif_bi",38,PAL.featureDark,CW,50);m+="\n"+tk;bot=endy+8;}
   return kicker(c.kicker)+"\n"+vcenter(m,c.headline?222:200,bot,K)+"\n"+source(c.source);
 }
 function _num(v){const m=String(v==null?"":v).match(/-?[\d,.]+/);return m?parseFloat(m[0].replace(/,/g,"")):0;}
@@ -400,7 +486,7 @@ function c_compareBar(c){
   /* headline + horizontal proportional bars. Light data-viz: fill length is
      proportional to the value; favorable bar in feature, others in label. */
   const K=!!c.kicker; let m="";
-  if(c.headline)m+="\n"+tline(PADL,252,"","serif_b",54,PAL.heading,"start",0,headlineSpans(c.headline));
+  if(c.headline)m+="\n"+ftline("headline",PADL,252,"","serif_b",54,PAL.heading,"start",0,headlineSpans(c.headline));
   const bars=c.bars||[],vals=bars.map(b=>_num(b.value));
   let mx=c.max?_num(c.max):(vals.length?Math.max(...vals):1);if(!mx)mx=1;
   const track=relLum(PAL.ground)<0.4?"#ffffff22":"#00000016";
@@ -416,7 +502,7 @@ function c_compareBar(c){
     if(fw>vw+36)m+="\n"+tline(PADL+fw-16,by+barh-12,disp,"serif_b",30,PAL.ground,"end");
     else m+="\n"+tline(PADL+fw+16,by+barh-12,disp,"serif_b",30,PAL.heading,"start");});
   let bot=bt+(bars.length-1)*rowh+68;
-  if(c.caption){const[tk,endy]=block(PADL,bt+bars.length*rowh+30,c.caption,"serif_i",32,PAL.featureDark,CW,44);m+="\n"+tk;bot=endy+8;}
+  if(c.caption){const[tk,endy]=fblock("caption",PADL,bt+bars.length*rowh+30,c.caption,"serif_i",32,PAL.featureDark,CW,44);m+="\n"+tk;bot=endy+8;}
   return kicker(c.kicker)+"\n"+vcenter(m,c.headline?213:338,bot,K)+"\n"+source(c.source);
 }
 function c_banner(c){
@@ -425,13 +511,16 @@ function c_banner(c){
   const band=col(c.bandColor||"feature"),bh=430;
   let out=`<rect x="26" y="26" width="${W-52}" height="${bh-26}" rx="18" fill="${band}"/>`;
   out+=`\n<rect x="26" y="${bh-40}" width="${W-52}" height="40" fill="${band}"/>`;
-  if(c.kicker){out+="\n"+tline(CX,150,c.kicker,"sans_b",27,PAL.ground,"middle",4);
-    out+=`\n<rect x="${CX-40}" y="168" width="80" height="3" fill="${PAL.ground}"/>`;}
+  if(c.kicker){out+="\n"+ftline("kicker",CX,150,c.kicker,"sans_b",27,PAL.ground,"middle",4);
+    const ka=twk("kicker").align||"middle",kx=alignX(CX,CW,"middle",ka);
+    const krx=ka==="start"?kx:ka==="end"?kx-80:kx-40;
+    out+=`\n<rect x="${krx}" y="168" width="80" height="3" fill="${PAL.ground}"/>`;}
   let y=250;
-  for(const line of String(c.headline||"").split("\n")){out+="\n"+tline(CX,y,line,"serif_b",66,PAL.ground,"middle");y+=80;}
+  const hstep=Math.round(80*((twk("headline").size||66)/66));
+  for(const line of String(c.headline||"").split("\n")){out+="\n"+ftline("headline",CX,y,line,"serif_b",66,PAL.ground,"middle");y+=hstep;}
   let m="",by=520,bot=520;
-  if(c.body){const[tk,endy]=block(CX,by,c.body,"serif_r",37,PAL.text,CW,50,"middle");m+=tk;by=endy;bot=endy+6;}
-  if(c.emphasis){const[tk,endy]=block(CX,by+84,c.emphasis,"serif_bi",40,PAL.featureDark,CW,52,"middle");m+="\n"+tk;bot=endy+8;}
+  if(c.body){const[tk,endy]=fblock("body",CX,by,c.body,"serif_r",37,PAL.text,CW,50,"middle");m+=tk;by=endy;bot=endy+6;}
+  if(c.emphasis){const[tk,endy]=fblock("emphasis",CX,by+84,c.emphasis,"serif_bi",40,PAL.featureDark,CW,52,"middle");m+="\n"+tk;bot=endy+8;}
   const rt=bh+40,dy=Math.round((rt+CBOT)/2-(493+bot)/2);
   out+=`\n<g transform="translate(0,${dy})">${m}</g>`;
   out+="\n"+source(c.source);return out;
@@ -440,7 +529,7 @@ function c_ledger(c){
   /* right-aligned numeric table (civic-report house style): item ... amount
      rows, a rule, an emphasized total. Reads like a document, not a poster. */
   const K=!!c.kicker; let m="";
-  if(c.headline)m+="\n"+tline(PADL,258,c.headline,"serif_b",52,PAL.heading);
+  if(c.headline)m+="\n"+ftline("headline",PADL,258,c.headline,"serif_b",52,PAL.heading);
   let y=400;
   (c.rows||[]).forEach(r=>{
     m+="\n"+tline(PADL,y,r.label||"","serif_r",38,PAL.text);
@@ -450,16 +539,16 @@ function c_ledger(c){
     m+=`\n<rect x="${PADL}" y="${y-6}" width="${CW}" height="3" fill="${PAL.accent}"/>`;y+=46;
     m+="\n"+tline(PADL,y,c.total.label||"","serif_b",42,PAL.heading);
     m+="\n"+tline(PADR,y,c.total.amount||"","serif_b",42,PAL.feature,"end");bot=y+12;y+=20;}
-  if(c.note){const[tk,endy]=block(PADL,y+60,c.note,"serif_i",32,PAL.label,CW,44);m+="\n"+tk;bot=endy+6;}
+  if(c.note){const[tk,endy]=fblock("note",PADL,y+60,c.note,"serif_i",32,PAL.label,CW,44);m+="\n"+tk;bot=endy+6;}
   return kicker(c.kicker)+"\n"+vcenter(m,c.headline?221:378,bot,K)+"\n"+source(c.source);
 }
 function c_bigQuestion(c){
   /* near-empty palate cleanser: one big centered question, lots of air.
      Maximum contrast against the dense cards; good for a hanging-question beat. */
   const K=!!c.kicker; let m="";
-  const[q,endy]=block(CX,470,c.question||"","serif_b",76,PAL.heading,CW,92,"middle");
+  const[q,endy]=fblock("question",CX,470,c.question||"","serif_b",76,PAL.heading,CW,92,"middle");
   m+=q; let bot=endy+16;
-  if(c.subtitle){const[tk,endy2]=block(CX,endy+90,c.subtitle,"serif_i",40,PAL.featureDark,CW-80,52,"middle");m+="\n"+tk;bot=endy2+8;}
+  if(c.subtitle){const[tk,endy2]=fblock("subtitle",CX,endy+90,c.subtitle,"serif_i",40,PAL.featureDark,CW-80,52,"middle");m+="\n"+tk;bot=endy2+8;}
   return kicker(c.kicker)+"\n"+vcenter(m,415,bot,K)+"\n"+source(c.source);
 }
 /* ---------- card-type registry: ONE entry per type (label, fields, defaults, render) ----------
@@ -469,6 +558,7 @@ function c_bigQuestion(c){
    type: add one entry here + write its render function above. */
 const CARD_TYPES={
  "stat-trio":{label:"stat-trio",render:c_statTrio,
+   tweakable:["kicker","headline","body","source"],
    fields:[
      ["kicker","Kicker (small gold heading)","text"],
      ["headline","Headline — newline = 2nd line, *word* = green italic","area"],
@@ -478,6 +568,7 @@ const CARD_TYPES={
    defaults:{kicker:"KICKER",headline:"Headline line one\nHeadline line two",
      stats:[{num:"00%",color:"feature",label:["label","second line"]}],body:"Body text.",source:"Source:"}},
  "number-stack":{label:"number-stack",render:c_numberStack,
+   tweakable:["kicker","headline","emphasis","source"],
    fields:[
      ["kicker","Kicker","text"],
      ["headline","Headline","text"],
@@ -487,6 +578,7 @@ const CARD_TYPES={
    defaults:{kicker:"KICKER",headline:"Headline.",
      rows:[{num:"0%",color:"feature",label:"what this number is"}],emphasis:"Emphasis line.",source:"Source:"}},
  "hero-number":{label:"hero-number",render:c_hero,
+   tweakable:["kicker","headline","hero.num","hero.subtitle","body","source"],
    fields:[
      ["kicker","Kicker","text"],
      ["headline","Headline","text"],
@@ -501,6 +593,7 @@ const CARD_TYPES={
    defaults:{kicker:"KICKER",headline:"Headline.",hero:{num:"$0",subtitle:"what the figure is"},
      left:{num:"$0",label:["left","label"]},right:{num:"$0",label:["right","label"]},body:"Body text.",source:"Source:"}},
  "text":{label:"text",render:c_text,
+   tweakable:["kicker","body","emphasis","source"],
    fields:[
      ["kicker","Kicker","text"],
      ["headline","Headline lines, one per line:  text | color","hlines"],
@@ -510,6 +603,7 @@ const CARD_TYPES={
    defaults:{kicker:"KICKER",headline:[{text:"Headline.",color:"heading"}],
      body:["First paragraph.","Second paragraph."],emphasis:"Emphasis line.",source:"Source:"}},
  "photo":{label:"photo",render:c_photo,
+   tweakable:["kicker","question","caption","emphasis","source"],
    fields:[
      ["kicker","Kicker","text"],
      ["image","Photo","image"],
@@ -519,6 +613,7 @@ const CARD_TYPES={
      ["source","Source line","text"]],
    defaults:{kicker:"KICKER",question:"A question?",caption:"Caption text.",emphasis:"Emphasis line.",source:"Source:"}},
  "cta":{label:"green CTA",render:c_cta,frameBg:"feature",frameBorder:"featureDark",
+   tweakable:["kicker","big","subtitle","tail"],
    fields:[
      ["kicker","Kicker (centered)","text"],
      ["big","Big line","text"],
@@ -528,6 +623,7 @@ const CARD_TYPES={
    defaults:{kicker:"DATE · DETAIL",big:"VOTE YES",subtitle:"for the thing",
      lines:["Location","Hours"],tail:"Closing line."}},
  "quote":{label:"pull-quote",render:c_quote,
+   tweakable:["tag","quote","attribution","source"],
    fields:[
      ["tag","Small tag (optional, above the mark)","text"],
      ["quote","The quote","area"],
@@ -537,6 +633,7 @@ const CARD_TYPES={
      quote:"A short, quotable line that carries the whole card on its own.",
      attribution:"\u2014 name, role",source:"Source:"}},
  "checklist":{label:"checklist",render:c_checklist,
+   tweakable:["kicker","headline","emphasis","source"],
    fields:[
      ["kicker","Kicker","text"],
      ["headline","Headline — newline = 2nd line, *word* = feature italic","area"],
@@ -549,6 +646,7 @@ const CARD_TYPES={
      items:["First point on the list.","Second point.","Third point."],
      emphasis:"Emphasis line.",source:"Source:"}},
  "compare-bar":{label:"compare-bar",render:c_compareBar,
+   tweakable:["kicker","headline","caption","source"],
    fields:[
      ["kicker","Kicker","text"],
      ["headline","Headline (*word* = feature italic)","text"],
@@ -561,6 +659,7 @@ const CARD_TYPES={
            {label:"Theirs",value:"24.8",color:"label",display:"+24.8%"}],
      max:"",caption:"Caption line.",source:"Source:"}},
  "banner":{label:"banner",render:c_banner,
+   tweakable:["kicker","headline","body","emphasis","source"],
    fields:[
      ["kicker","Kicker (reversed, in band)","text"],
      ["headline","Headline in band — newline = 2nd line","area"],
@@ -572,6 +671,7 @@ const CARD_TYPES={
      body:"A sentence or two of support, centered under the band.",
      emphasis:"A closing question or line.",source:"Source:"}},
  "ledger":{label:"ledger",render:c_ledger,
+   tweakable:["kicker","headline","note","source"],
    fields:[
      ["kicker","Kicker","text"],
      ["headline","Headline","text"],
@@ -584,6 +684,7 @@ const CARD_TYPES={
      rows:[{label:"First line item",amount:"$0"},{label:"Second line item",amount:"$0"}],
      total:{label:"Total",amount:"$0"},note:"A one-line takeaway.",source:"Source:"}},
  "big-question":{label:"big-question",render:c_bigQuestion,
+   tweakable:["kicker","question","subtitle","source"],
    fields:[
      ["kicker","Kicker (centered, small)","text"],
      ["question","The question (large, centered)","area"],
@@ -605,6 +706,7 @@ function palOf(card){
 }
 function buildSvg(card){
   PAL=palOf(card);
+  CURT=(card&&card.tweaks)||{};
   const def=CARD_TYPES[card.type];
   if(!def)return frame()+"\n</svg>\n";
   return frame(PAL[def.frameBg||"ground"],PAL[def.frameBorder||"accent"])+def.render(card)+"\n</svg>\n";
@@ -655,13 +757,23 @@ function decode(kind,str){
 
 /* ---------- form rendering ---------- */
 function renderForm(){
+  closeTweaks();
   const c=deck.cards[cur];
   document.getElementById("cardname").value=c.name||"";
   document.getElementById("cardtype").value=c.type;
+  const tweakable=(CARD_TYPES[c.type]&&CARD_TYPES[c.type].tweakable)||[];
   const box=document.getElementById("fields");box.innerHTML="";
   for(const [key,label,kind] of (SCHEMA[c.type]||[])){
     const wrap=document.createElement("label");wrap.className="f";
     const lab=document.createElement("span");lab.className="lab";lab.textContent=label;wrap.appendChild(lab);
+    if(tweakable.includes(key)){
+      const g=document.createElement("button");g.type="button";
+      g.className="gear"+((c.tweaks&&c.tweaks[key])?" on":"");
+      g.innerHTML="&#9881;";
+      g.title="Fine-tune this field on this card (nudge, size, color, font, alignment)";
+      g.addEventListener("click",ev=>{ev.preventDefault();ev.stopPropagation();openTweaks(g,key,label);});
+      lab.appendChild(g);
+    }
     if(kind==="image"){
       const dz=document.createElement("div");dz.className="drop";dz.tabIndex=0;
       const file=document.createElement("input");file.type="file";file.accept="image/*";file.hidden=true;
@@ -700,6 +812,83 @@ function renderForm(){
   }
   showCardPalette();
 }
+
+/* ---------- per-field tweak popup ---------- */
+const TW_FONTS=[["","default"],["serif_r","serif"],["serif_b","serif bold"],["serif_i","serif italic"],
+  ["serif_bi","serif bold-italic"],["sans_r","sans"],["sans_b","sans bold"]];
+const TW_ALIGNS=[["","default"],["start","left"],["middle","center"],["end","right"]];
+let twPop=null,twGear=null;
+function setTweak(key,prop,val){
+  const c=deck.cards[cur];
+  if(val===""||val==null||(typeof val==="number"&&!isFinite(val))){
+    if(c.tweaks&&c.tweaks[key]){delete c.tweaks[key][prop];
+      if(!Object.keys(c.tweaks[key]).length)delete c.tweaks[key];
+      if(!Object.keys(c.tweaks).length)delete c.tweaks;}
+  }else{
+    if(!c.tweaks)c.tweaks={};if(!c.tweaks[key])c.tweaks[key]={};
+    c.tweaks[key][prop]=val;
+  }
+  if(twGear)twGear.classList.toggle("on",!!(c.tweaks&&c.tweaks[key]));
+  sync();
+}
+function closeTweaks(){if(twPop){twPop.remove();twPop=null;twGear=null;}}
+function openTweaks(gear,key,fieldLabel){
+  if(twPop&&twGear===gear){closeTweaks();return;}
+  closeTweaks();twGear=gear;
+  const c=deck.cards[cur],t=(c.tweaks&&c.tweaks[key])||{};
+  const pop=document.createElement("div");pop.className="twpop";
+  const h=document.createElement("h3");
+  const ttl=document.createElement("span");ttl.className="ttl";ttl.textContent=fieldLabel;h.appendChild(ttl);
+  const x=document.createElement("button");x.type="button";x.className="ghost";x.textContent="×";
+  x.style.padding="0 6px";x.addEventListener("click",closeTweaks);h.appendChild(x);
+  pop.appendChild(h);
+  const row=(labTxt,el)=>{const d=document.createElement("div");d.className="rowt";
+    const l=document.createElement("label");l.textContent=labTxt;d.appendChild(l);d.appendChild(el);pop.appendChild(d);};
+  const num=(prop,labTxt,step,title)=>{
+    const i=document.createElement("input");i.type="number";i.step=step||1;i.placeholder="default";
+    if(t[prop]!=null)i.value=t[prop];if(title)i.title=title;
+    i.addEventListener("input",()=>setTweak(key,prop,i.value===""?null:parseFloat(i.value)));
+    row(labTxt,i);};
+  num("dy","Nudge ↕ px",2,"negative = up, positive = down; moves only this field");
+  num("size","Font size px",1);
+  num("lh","Line height px",1);
+  const ci=document.createElement("input");ci.type="text";ci.placeholder="default";
+  ci.title="role name (feature, heading, …) or #hex";ci.setAttribute("list","twroles");
+  if(t.color)ci.value=t.color;
+  ci.addEventListener("input",()=>setTweak(key,"color",ci.value.trim()||null));
+  row("Color",ci);
+  const sel=(prop,labTxt,opts)=>{
+    const s=document.createElement("select");
+    for(const[v,txt] of opts){const o=document.createElement("option");o.value=v;o.textContent=txt;s.appendChild(o);}
+    s.value=t[prop]||"";
+    s.addEventListener("change",()=>setTweak(key,prop,s.value||null));
+    row(labTxt,s);};
+  sel("font","Font",TW_FONTS);
+  sel("align","Align",TW_ALIGNS);
+  const foot=document.createElement("div");foot.className="foot";
+  const rst=document.createElement("button");rst.type="button";rst.className="ghost";rst.textContent="Reset field";
+  rst.addEventListener("click",()=>{
+    if(c.tweaks){delete c.tweaks[key];if(!Object.keys(c.tweaks).length)delete c.tweaks;}
+    gear.classList.remove("on");sync();closeTweaks();openTweaks(gear,key,fieldLabel);});
+  foot.appendChild(rst);pop.appendChild(foot);
+  document.body.appendChild(pop);
+  const r=gear.getBoundingClientRect();
+  pop.style.left=Math.max(8,Math.min(r.right-256,innerWidth-264))+"px";
+  let top=r.bottom+6;
+  if(top+pop.offsetHeight>innerHeight-8)top=Math.max(8,r.top-pop.offsetHeight-6);
+  pop.style.top=top+"px";
+  twPop=pop;
+}
+document.addEventListener("pointerdown",e=>{
+  if(twPop&&!twPop.contains(e.target)&&!(twGear&&twGear.contains(e.target)))closeTweaks();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeTweaks();});
+(function(){
+  const dl=document.createElement("datalist");dl.id="twroles";
+  ROLES.forEach(r=>{const o=document.createElement("option");o.value=r;dl.appendChild(o);});
+  document.body.appendChild(dl);
+  const ep=document.querySelector(".edit");   // popup is position:fixed; don't let it drift on scroll
+  if(ep)ep.addEventListener("scroll",closeTweaks,{passive:true});
+})();
 
 /* ---------- deck list + palette ---------- */
 function renderList(){
