@@ -983,9 +983,15 @@ function renderPreview(){
   const c=deck.cards[cur];
   document.getElementById("preview").innerHTML=c?buildSvg(c):"";
 }
+/* The textarea is left alone while focused OR holding unapplied edits (gold
+   border) — resyncing it on blur used to wipe the user's edits the instant
+   they clicked Apply, because mousedown blurs the textarea first. */
+let jsonDirty=false;
+function setJsonDirty(v){jsonDirty=v;
+  document.getElementById("json").style.borderColor=v?"var(--gold)":"";}
 function renderJson(){
   const ta=document.getElementById("json");
-  if(document.activeElement!==ta) ta.value=JSON.stringify(deck,null,2);
+  if(document.activeElement!==ta&&!jsonDirty) ta.value=JSON.stringify(deck,null,2);
 }
 function save(){try{localStorage.setItem("cardDeck",JSON.stringify(deck));}catch(e){}}
 function sync(){renderPreview();renderJson();renderList();renderContrast();save();}
@@ -1110,14 +1116,17 @@ document.getElementById("applyJson").onclick=()=>{
   try{const d=migrate(JSON.parse(document.getElementById("json").value));
     if(!d||!Array.isArray(d.cards))throw new Error("need {cards:[...]}");
     deck=d;if(!deck.palette)deck.palette={...DEFAULT_PAL};cur=0;
+    setJsonDirty(false);   // applied — textarea is canonical again (errors keep edits + gold border)
     boot();flash("JSON applied");}catch(e){flash("JSON error: "+e.message,true);}};
 document.getElementById("dlJson").onclick=()=>downloadBlob(
   new Blob([JSON.stringify(deck,null,2)],{type:"application/json"}),"card-deck.json");
 document.getElementById("loadJson").onclick=()=>document.getElementById("jsonFile").click();
 document.getElementById("jsonFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;
   const fr=new FileReader();fr.onload=()=>{document.getElementById("json").value=fr.result;
-    document.getElementById("applyJson").click();};fr.readAsText(f);});
-document.getElementById("json").addEventListener("blur",renderJson);
+    document.getElementById("applyJson").click();};fr.readAsText(f);
+  e.target.value="";   // else picking the same file again fires no change event
+});
+document.getElementById("json").addEventListener("input",()=>setJsonDirty(true));
 document.getElementById("reset").onclick=()=>{deck=sampleDeck();PAL={...DEFAULT_PAL};cur=0;boot();flash("Sample loaded");};
 document.getElementById("blank").onclick=()=>{deck={palette:{...DEFAULT_PAL},cards:[blankCard("stat-trio")]};
   PAL={...DEFAULT_PAL};cur=0;boot();};
