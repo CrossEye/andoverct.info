@@ -299,9 +299,11 @@ or FTE to rank. A
 reconstructs an FTE-equivalent rate by splitting the combined pay using
 the market ratio of superintendent to elementary-principal pay in
 Union's enrollment class (1.44, per the 2025-26 AASA salary study):
-roughly **$210,000–$230,000** FTE-equivalent, depending on how the
-contract's cash-in-lieu-of-insurance stipend and 10% board TSA
-contribution are counted, with an implied superintendent time share of
+roughly **$217,000** FTE-equivalent on the memo's default accounting,
+which counts the 10% board TSA contribution but excludes the contract's
+cash-in-lieu-of-insurance stipend (matching the methodology's exclusion
+of peers' health benefits; counting the stipend raises the figure to
+about $231,000), with an implied superintendent time share of
 about 5.5% — roughly 11–12 days a year. A peer-median benchmark and the
 ratio method agree on the time split within about a percentage point.
 The construct is consistent with the peer cohort's rates, but because it

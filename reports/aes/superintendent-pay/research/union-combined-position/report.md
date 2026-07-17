@@ -21,17 +21,18 @@ Bottom line
 For 2025-26 Union pays Jackopsic $128,419 as principal plus a $10,701
 addendum for serving as superintendent, plus a $400-biweekly stipend in lieu
 of health insurance (~$10,400/yr) and a board-paid tax-sheltered-annuity
-contribution of 10% of salary/stipend (~$14,952). Total cash for the combined
-position: ~$164,472.
+contribution of 10% of salary/stipend (~$14,952). Cash for the combined
+position: ~$154,072 on the default accounting here, which excludes the
+stipend as an insurance substitute (see below); ~$164,472 with it.
 
 Splitting the combined pay into role shares using the market ratio of
 superintendent to elementary-principal pay in Union's enrollment class
 (r = 1.44, from the 2025-26 AASA salary study) implies the superintendent
 role occupies about **5.5% of the position's time** and that the
-FTE-equivalent superintendent salary is roughly **$210,000–$231,000**
-depending on which cash components are counted — squarely in the peer set's
-range (per-district total-cash FTE-equivalent mean $217,222, median
-$202,400). Union belongs in the report as a **reference entry, not a ranked
+FTE-equivalent superintendent salary is roughly **$217,000** on the default
+accounting (about **$231,000** if the stipend is counted as cash) — squarely
+in the peer set's range (per-district total-cash FTE-equivalent mean
+$217,222, median $202,400). Union belongs in the report as a **reference entry, not a ranked
 row**: the FTE figure is a modeled construct, unlike the contract-stated
 dollars behind every ranked district.
 
@@ -105,21 +106,24 @@ excluded):
 |:--------------------------------------------|---------:|:----------|
 | Principal-role salary, P                    | $128,419 | Included |
 | Superintendent-role addendum, S             |  $10,701 | Included |
-| Stipend in lieu of health insurance (26×$400)| $10,400 | Judgment call — see below |
+| Stipend in lieu of health insurance (26×$400)| $10,400 | Excluded by default — see below |
 | TSA contribution, 10% of salary/stipend     |  $14,952 | Included (board-paid annuity) |
 | Term life, sick/personal days               |        — | Excluded (non-cash) |
-| **Combined position, total cash**           | **$164,472** | |
+| **Combined position, default cash**         | **$154,072** | (**$164,472** with the stipend) |
 
 The stipend is genuine cash on the paycheck, which argues for inclusion; but
 it substitutes for health insurance, which the methodology *excludes* for
 every peer district. Counting it makes Union look relatively better paid
-than a peer whose (excluded) insurance premium the board pays directly. Both
-treatments are shown in the results.
+than a peer whose (excluded) insurance premium the board pays directly. The
+default accounting therefore **excludes** the stipend, matching the
+methodology's treatment of the peers' health benefits; the with-stipend
+variant is shown alongside in the results. (The TSA stays in either way: it
+is board-paid annuity money, though its contractual 10% base does include
+the stipend.)
 
-The TSA contribution was **not** in the earlier draft of this analysis; it
-comes straight from the contract's benefits sentence and is the same species
-of board-paid 403(b)/annuity money that is counted for every other district
-(e.g., Andover's $10,000). The 10% is assumed to apply to the full
+The TSA contribution comes straight from the contract's benefits sentence
+and is the same species of board-paid 403(b)/annuity money that is counted
+for every other district (e.g., Andover's $10,000). The 10% is assumed to apply to the full
 salary+stipend, including the supe addendum, since the supe agreement adds
 its compensation "to his base salary as Principal" (see caveats).
 
@@ -184,21 +188,21 @@ The FTE-equivalent superintendent salary by treatment:
 | Components included                          | Supe share |     FTE-equiv |
 |:---------------------------------------------|-----------:|--------------:|
 | Salary only (S + rP)                         |    $10,701 |      $195,624 |
+| **Salary + TSA — the default** (stipend excluded as insurance substitute) | $11,851 | **$216,649** |
 | Salary + stipend                             |    $11,501 |      $210,248 |
-| Salary + TSA (stipend excluded as insurance substitute) | $11,851 | $216,649 |
-| Salary + stipend + TSA (full cash)           |    $12,651 |      $231,273 |
+| Salary + stipend + TSA (with-stipend variant)|    $12,651 |      $231,273 |
 
-Sensitivity is linear in r: each 0.1 of r moves the full-cash figure by
-0.1 × P-share ≈ $15,200 (≈ $13,800 for the salary+stipend variant):
+Sensitivity is linear in r: each 0.1 of r moves the default figure by
+0.1 × P-share ≈ $14,200 (≈ $15,200 for the with-stipend variant):
 
-| r    | Salary+stipend | Full cash | Supe time |
-|:-----|---------------:|----------:|----------:|
-| 1.30 |       $190,926 |  $210,018 |      6.0% |
-| 1.44 |       $210,248 |  $231,273 |      5.5% |
-| 1.50 |       $218,530 |  $240,383 |      5.3% |
+| r    | Default (salary+TSA) | With stipend | Supe time |
+|:-----|---------------------:|-------------:|----------:|
+| 1.30 |             $196,738 |     $210,018 |      6.0% |
+| 1.44 |             $216,649 |     $231,273 |      5.5% |
+| 1.50 |             $225,182 |     $240,383 |      5.3% |
 
-A plain proportional split (r = 1) would give $149,520 on the
-salary+stipend basis ($164,472 full cash) and 7.7% supe time.
+A plain proportional split (r = 1) would give $154,072 on the default
+basis ($164,472 with the stipend) and 7.7% supe time.
 
 
 ### Cross-check against the peer set ###
@@ -212,24 +216,23 @@ district rows, joint contracts counted once per district):
 | Base salary only                  | $198,740 | $195,000 |
 
 (Counting each joint contract once instead of per-district: mean $206,435,
-median $195,620. An earlier draft of this memo cited mean $210,321 / median
-$198,850 from a prior snapshot of the data; the qualitative picture is
-unchanged.)
+median $195,620.)
 
 Two points of support:
 
 - The ratio-method results land within a few percent of the peer averages
-  on a like-for-like basis: full-cash construct $231,273 vs. total-cash
-  mean $217,222 (+6%); salary+stipend construct $210,248 vs. base-only
-  mean $198,740 (+6%). The convergence is principled, not lucky: the
-  method carries Union's own pay level through, and Union pays in the same
-  compressed Connecticut market as the peers.
+  on a like-for-like basis: the default construct $216,649 vs. total-cash
+  mean $217,222 (within 0.3%); salary-only $195,624 vs. base-only mean
+  $198,740 (−2%); the with-stipend variant $231,273 vs. total-cash mean
+  (+6%). The convergence is principled, not lucky: the method carries
+  Union's own pay level through, and Union pays in the same compressed
+  Connecticut market as the peers.
 - An independent second estimate is available by benchmarking directly:
   assume a full-time Union superintendent would earn the peer median and
-  back out the time split. On a total-cash basis, h = 12,651 / 202,400 =
-  6.3%; on a salary basis, h = 11,501 / 195,000 = 5.9%. The two routes
-  agree with the ratio method (5.5%) within about a percentage point on
-  the time split.
+  back out the time split. On the default basis, h = 11,851 / 202,400 =
+  5.9%; on a salary-only basis, h = 10,701 / 195,000 = 5.5%. The two
+  routes agree with the ratio method (5.5%) within half a percentage
+  point on the time split.
 
 The flat salary-vs-enrollment relationship in the peer set (Pearson
 r = 0.14 across the 38 ranked rows with enrollment data) is what licenses
@@ -243,10 +246,12 @@ Union appears as a **reference entry** (like Chaplin/RD 11, Amity Region 5,
 and Region 7): the combined position's cash is contract-verified, but the
 FTE-equivalent superintendent figure rests on a modeled ratio, unlike the
 contract-stated dollars behind the ranked rows. The FTE-equivalent is
-reported as **roughly $210,000–$230,000** (salary+stipend at the low end,
-full cash including the TSA at the high end), with both derivations (ratio
-method and peer-median benchmark) noted, letting the agreement between them
-carry the argument. The implied ~5.5% superintendent time share — about
+reported as **roughly $217,000** on the default accounting (salary + TSA,
+with the in-lieu-of-insurance stipend excluded to match the methodology's
+exclusion of peers' health benefits), noting that counting the stipend
+raises it to about $231,000 — with both derivations (ratio method and
+peer-median benchmark) noted, letting the agreement between them carry the
+argument. The implied ~5.5% superintendent time share — about
 11–12 days a year at a 210-day work year — is itself a striking,
 easily-quoted fact for the smallest district in the state.
 
@@ -272,8 +277,9 @@ Caveats
   periods in a standard year; the contract does not state a count, and an
   occasional fiscal year contains a 27th biweekly payday. If the stipend
   were instead paid only over the school year (21–22 pays), the 2025-26
-  stipend would be $8,400–$8,800 and the salary+stipend FTE figure would
-  fall by roughly $1,300–$1,700.
+  stipend would be $8,400–$8,800; the with-stipend variant would fall by
+  roughly $1,300–$1,700, and the default figure by only ~$250 (through the
+  TSA's salary/stipend base).
 - **TSA base ambiguity**: the 10% TSA contribution appears in the
   *principal's* contract ("10% of salary/stipend"). We assume the base
   includes the supe addendum, since the supe agreement adds its
@@ -281,8 +287,9 @@ Caveats
   the principal salary + stipend only, the 2025-26 TSA is $13,882 (not
   $14,952) and the full-cash FTE figure drops by about $1,600.
 - **The stipend substitutes for health insurance**, which the methodology
-  excludes for peers. The treatment matrix above shows the figure both
-  ways; be explicit about which is used wherever the number is quoted.
+  excludes for peers — which is why the default accounting excludes it.
+  The treatment matrix above shows the figure both ways; be explicit about
+  which is used wherever the number is quoted.
 - **Peer statistics move** as contracts continue to arrive; the
   cross-check should be recomputed from the current dataset rather than
   quoted from this memo's snapshot.
