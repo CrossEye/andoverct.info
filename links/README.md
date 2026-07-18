@@ -121,8 +121,8 @@ The targeted card is highlighted (gold outline) on arrival.
 
 ## Conventions
 
-- Ids so far are plain numbers: small numbers for individual sources,
-  100-and-up for collections. Nothing enforces this — any slug matching
+- Ids so far are plain numbers, assigned in order regardless of kind — leaves
+  and lists share one sequence. Nothing enforces this — any slug matching
   `[A-Za-z0-9_-]+` works — but numeric ids sort numerically on the index.
 - `description` should tell a reader what the source *is* and where/when it
   came from, in a sentence or two. It doubles as the Facebook preview text.
