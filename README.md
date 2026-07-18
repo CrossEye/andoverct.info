@@ -14,6 +14,7 @@ result.
 | `the-facts/`                                                   | Newspaper-style "the facts" editions                                    | `the-facts/_build/render.js` (Markdown → HTML)                       |
 | `reports/`                                                     | Long-form civic/analytical reports                                      | `_build/report.mjs` (Markdown → HTML + PDF)                          |
 | `town-charter/`                                                | Town-charter guide pages                                                | `town-charter/convert.js` (data → HTML)                              |
+| `links/`                                                       | Link registry — shareable pages for campaign sources ([docs](links/README.md)) | `_build/links.mjs` (YAML in `links/_src/` → HTML)              |
 | `reference/`                                                   | Reference landing page                                                  | hand-authored                                                        |
 | `reference/video/`                                             | Town-meeting transcripts (the former *TownMeetings* project, folded in) | `reference/video/download-transcripts.js` + `transcribe-deepgram.js` |
 | `_build/`                                                      | Shared report engine + the deploy tool                                  | —                                                                    |
@@ -38,7 +39,9 @@ Run all of these from the repo root.
 | `npm run rebuild:reports`      | Rebuild every report (HTML + PDF)                              |
 | `npm run rebuild:the-facts`    | Rebuild every "the facts" edition                              |
 | `npm run rebuild:town-charter` | Rebuild the town-charter pages                                 |
-| `npm run rebuild:all`          | Reports + the-facts + town-charter (the fast, local builds)    |
+| `npm run rebuild:links`        | Rebuild the link-registry pages from `links/_src/*.yaml`       |
+| `npm run rebuild:private`      | Rebuild the private reports                                    |
+| `npm run rebuild:all`          | Reports + the-facts + town-charter + links + private (the fast, local builds) |
 | `npm run rebuild:videos`       | Fetch/render new **YouTube** meeting transcripts               |
 | `npm run rebuild:videos:boe`   | Transcribe missing **BOE (Zoom)** meetings via Deepgram        |
 | `npm run deploy`               | **Dry run** — show exactly what would upload, transfer nothing |
@@ -49,6 +52,17 @@ Notes:
 - `rebuild:videos*` are intentionally **not** part of `rebuild:all` — they are slow,
   networked, and need extra tools/keys (see below). Run them deliberately.
 - Build a single report instead of all: `npm run report -- reports/<area>/<name>/<file>.md`.
+
+## The link registry
+
+`/links/` gives every source cited in a post or campaign a stable, shareable
+page (`https://andoverct.info/links/<id>/`) with proper Open Graph tags, so a
+Facebook share unfurls into a clean preview instead of a raw PDF or archive
+link. Sources are authored as one small YAML file each under `links/_src/`;
+**list** docs collect them into per-campaign pages, and `npm run rebuild:links`
+generates all the HTML (with strict validation — dangling references and
+schema errors fail the build). Full authoring reference:
+[`links/README.md`](links/README.md).
 
 ## Setting up on a new machine
 
