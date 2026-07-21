@@ -72,7 +72,7 @@ function decomp(ctx, groupId, args = {}) {
   const labels = [
     { v: last(pp), t: `Per-pupil  ${fmt(last(pp))}`, c: PAL.green, s: 15, w: 'bold' },
     { v: last(sp), t: `Total spending  ${fmt(last(sp))}`, c: PAL.goldText, s: 13.5, w: 'bold' },
-    { v: last(cp), t: `CPI-U  ${fmt(last(cp))}`, c: PAL.purple, s: 13.5, w: 'bold' },
+    { v: last(cp), t: `Inflation  ${fmt(last(cp))}`, c: PAL.purple, s: 13.5, w: 'bold' },
     { v: last(en), t: `Enrollment  ${fmt(last(en))}`, c: PAL.slate, s: 13.5, w: 'bold' },
   ].sort((a, b) => b.v - a.v);
   const minGap = 20;
