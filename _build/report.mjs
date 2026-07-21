@@ -37,6 +37,7 @@
 import { readFileSync, writeFileSync, existsSync, rmSync, globSync } from "node:fs";
 import { dirname, join, basename, resolve, isAbsolute } from "node:path";
 import { pathToFileURL } from "node:url";
+import { createRequire } from "node:module";
 import { spawnSync } from "node:child_process";
 import { marked } from "marked";
 import { markedSmartypants } from "marked-smartypants";
@@ -514,8 +515,17 @@ async function buildHtml(mdText, meta, { forPdf, extraCss, plugin, themeCss, bre
   // in either; the visible ¶ anchor is hidden in print via CSS.
   rest = addHeaderAnchors(rest);
 
+  // In the PDF, relative hrefs would otherwise become file:// annotations
+  // pointing at the build machine; resolve them against the report's public
+  // URL. Leaves fragments and absolute schemes alone; img src stays relative
+  // so WeasyPrint keeps loading local images from the report folder.
+  if (forPdf && meta.publicUrl) {
+    rest = rest.replace(/href="(?!https?:|mailto:|#|data:)([^"]+)"/g,
+      (m, rel) => `href="${new URL(rel, meta.publicUrl).href}"`);
+  }
+
   const printCss = (forPdf && meta.pdf)
-    ? PRINT_CSS.replace("__PDF_PAGE_AUTHOR__", meta.pdf.author).replace(
+    ? PRINT_CSS.replaceAll("__PDF_PAGE_AUTHOR__", meta.pdf.author).replaceAll(
         "__PDF_PAGE_FOOTER__",
         meta.pdf.footer
       )
@@ -630,11 +640,33 @@ function isPrivateReportMd(mdPath) {
   }
 }
 
+// Data directives (<% decomp|locmap|datatable ... %>): reports that carry a
+// dataset.json get their markdown preprocessed by the vendored directives
+// module (CommonJS, hence createRequire). Data files live in the report's own
+// folder; reports without dataset.json build unchanged.
+function preprocessDirectives(mdBody, folder) {
+  const datasetPath = join(folder, "dataset.json");
+  if (!existsSync(datasetPath)) return mdBody;
+  const require = createRequire(import.meta.url);
+  const { preprocess } = require("./directives");
+  const optional = (name) => {
+    const p = join(folder, name);
+    return existsSync(p) ? JSON.parse(readFileSync(p, "utf8")) : undefined;
+  };
+  const ctx = {
+    data: JSON.parse(readFileSync(datasetPath, "utf8")),
+    geo: optional("towns_xy.json"),
+    cpi: optional("cpi_fy.json"),
+  };
+  return preprocess(mdBody, ctx);
+}
+
 async function buildReport(mdPath) {
   const folder = dirname(mdPath);
   const raw = readFileSync(mdPath, "utf8");
-  const { data: meta, content: mdBody } = matter(raw);
+  const { data: meta, content: rawBody } = matter(raw);
   validateMeta(meta, mdPath);
+  const mdBody = preprocessDirectives(rawBody, folder);
 
   const htmlName = meta.htmlFile || "index.html";
   const pdfName = meta.pdfFile || basename(mdPath).replace(/\.md$/, "") + ".pdf";
