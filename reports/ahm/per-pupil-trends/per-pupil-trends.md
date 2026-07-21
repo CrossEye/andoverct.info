@@ -122,6 +122,11 @@ local districts. A Hebron seventh grader is counted in RHAM's enrollment and
 nowhere else, so sums across a town-and-region group count every student and
 every dollar exactly once.
 
+You do not have to take this report's groupings as given. An [interactive
+companion](explore/) generates the same map, chart, and table for any town,
+district, or region you assemble yourself — same data, same rendering code —
+with a link you can share for whatever you find.
+
 
 
 Part 1 — The Region as One System
@@ -460,6 +465,11 @@ margins, though the enrollment declines shown here are far too large to be
 preschool artifacts. Finally, the most recent federal data is FY 2023; the two
 budget years since, including the referendums of 2025 and 2026, are outside its
 window.
+
+To look past the ten groups presented here — different year windows, other
+towns, or a region of your own construction — use the [interactive
+companion](explore/), which builds its charts from the same data files and
+rendering code as this report.
 
 
 

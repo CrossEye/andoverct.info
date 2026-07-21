@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Explore the Per-Pupil Data — Andover, Hebron &amp; Marlborough</title>
+<meta name="description" content="Interactive companion to the Spending, Students, and Per-Pupil Costs report: pick any town, regional district, or custom region and see its locator map, decomposition chart, and data table.">
+<style>
+  :root {
+    --cream: #FBF8F1; --ink: #2b2b2b; --sub: #6a6453; --gold: #B8860B;
+    --navy0: #12233c; --navy1: #1d3a5f; --green: #1f7a3d; --rule: #E3DDCE;
+    --link: #245c95;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--cream); color: var(--ink);
+         font: 16px/1.55 Georgia, "Times New Roman", serif; }
+  .page-banner { background: linear-gradient(135deg, var(--navy0), var(--navy1));
+    border-bottom: 3px solid var(--gold); color: #e9eef5; padding: 10px 16px;
+    font-family: Verdana, Geneva, sans-serif; font-size: 12.5px; }
+  .page-banner a { color: #cfa53a; text-decoration: none; }
+  .page-banner a:hover { text-decoration: underline; }
+  .page-banner .sep { margin: 0 6px; opacity: .55; }
+  .page-banner .current { color: #fff; font-weight: 700; }
+  .container { max-width: 980px; margin: 0 auto; padding: 22px 18px 60px; }
+  h1 { font-size: 30px; margin: 14px 0 4px; }
+  .subtitle { color: var(--sub); font-style: italic; margin: 0 0 18px; }
+  .basis-box { border-left: 4px solid var(--gold); background: #f3efe4;
+    padding: 12px 16px; font-style: italic; font-size: 14.5px; margin: 0 0 22px; }
+  .basis-box a { color: var(--link); }
+  .controls { background: #f6f2e7; border: 1px solid var(--rule); border-radius: 8px;
+    padding: 14px 16px; font-family: Verdana, Geneva, sans-serif; font-size: 13px; }
+  .controls .row { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center;
+    margin-bottom: 10px; }
+  .controls .row:last-child { margin-bottom: 0; }
+  .controls label { color: var(--sub); font-size: 12px; }
+  select, button, input[type=text] { font: inherit; padding: 5px 8px;
+    border: 1px solid #c9c2ae; border-radius: 5px; background: #fff; color: var(--ink); }
+  button { cursor: pointer; background: #fffdf7; }
+  button:hover { border-color: var(--gold); }
+  button.primary { background: var(--green); border-color: var(--green); color: #fff; }
+  #shareUrl { width: 320px; max-width: 60vw; font-size: 12px; color: #555; }
+  .hint { color: var(--sub); font-size: 13px; font-family: Verdana, Geneva, sans-serif;
+    margin: 10px 2px 0; }
+  .msg { border-left: 4px solid var(--gold); background: #fdf6df; padding: 8px 12px;
+    margin: 14px 0 0; font-size: 14px; }
+  .msg.warn { border-left-color: #b0532f; background: #f9e9e0; }
+  .maparea { position: relative; margin-top: 22px; }
+  .maparea svg { display: block; width: 100%; height: auto; }
+  #mapOverlay { position: absolute; inset: 0; }
+  #mapOverlay polygon { fill: transparent; stroke: none; pointer-events: all; cursor: pointer; }
+  #mapOverlay polygon:hover { fill: rgba(184, 134, 11, 0.18); }
+  .output h2 { font-size: 22px; border-bottom: 2px solid var(--gold);
+    padding-bottom: 4px; margin: 30px 0 12px; }
+  #chart { margin-top: 8px; }
+  #chart svg { display: block; width: 100%; height: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 15px; margin: 10px 0; }
+  th, td { padding: 6px 10px; border-bottom: 1px solid var(--rule); text-align: left; }
+  thead th { border-bottom: 2px solid var(--gold); color: #1d3a5f;
+    font-family: Verdana, Geneva, sans-serif; font-size: 12.5px; }
+  th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  blockquote.notes { border-left: 4px solid var(--gold); background: #f3efe4;
+    margin: 14px 0 0; padding: 10px 14px; font-size: 13.5px; color: #4c463a; }
+  .colophon { margin-top: 46px; border-top: 1px solid var(--rule); padding-top: 14px;
+    color: var(--sub); font-size: 13px; }
+  .colophon a { color: var(--link); }
+</style>
+</head>
+<body>
+<nav class="page-banner">
+  <a href="/">Home</a><span class="sep">›</span><a href="/reports/">Reports</a><span class="sep">›</span><a href="/reports/ahm/">Andover, Hebron &amp; Marlborough</a><span class="sep">›</span><a href="../">Per-Pupil Trends</a><span class="sep">›</span><span class="current">Explore</span>
+</nav>
+<div class="container">
+  <h1>Explore the Per-Pupil Data</h1>
+  <p class="subtitle">The interactive companion to
+    <a href="../">Spending, Students, and Per-Pupil Costs</a>: pick a town, a
+    regional district, or build your own region, and see the same map, chart,
+    and table the report uses — from the same data and the same code.</p>
+
+  <div class="basis-box" id="basisBox"></div>
+
+  <div class="controls">
+    <div class="row">
+      <label for="preset">Selection</label>
+      <select id="preset"></select>
+      <button id="addRing" title="Add every town sharing a land boundary with the current selection">Add ring</button>
+      <button id="clearSel">Clear</button>
+    </div>
+    <div class="row">
+      <label for="y0">From</label><select id="y0"></select>
+      <label for="y1">to</label><select id="y1"></select>
+      <label for="weighting">Weighting</label>
+      <select id="weighting">
+        <option value="enrollment">Enrollment-weighted</option>
+        <option value="equal" disabled>Equal (reserved)</option>
+      </select>
+    </div>
+    <div class="row">
+      <input type="text" id="shareUrl" readonly aria-label="Shareable link">
+      <button id="copyLink">Copy link</button>
+      <button id="dlCsv">Data (CSV)</button>
+      <button id="dlChart">Chart (PNG)</button>
+      <button id="dlMap">Map (PNG)</button>
+    </div>
+  </div>
+  <p class="hint">Click any town on the map to start a custom selection; click
+  again to remove it. Selecting a town that belongs to a regional district
+  brings the whole district along — that keeps every student and dollar
+  counted exactly once.</p>
+
+  <div id="messages"></div>
+
+  <div class="output">
+    <div class="maparea">
+      <div id="map"></div>
+      <svg id="mapOverlay" viewBox="0 0 960 500" aria-hidden="true"></svg>
+    </div>
+    <div id="chart"></div>
+    <div id="tablewrap"></div>
+  </div>
+
+  <footer class="colophon">
+    <p><strong>About this tool.</strong> Every figure is computed in your
+    browser from the report's published data files
+    (<a href="../dataset.json">dataset.json</a>,
+    <a href="../cpi_fy.json">cpi_fy.json</a>) using the same rendering code
+    that built the report, so the two cannot disagree. Methodology, caveats,
+    and sources are documented in
+    <a href="../#a-note-on-the-numbers">the report</a>. Maintained by
+    <a href="mailto:scott@sauyet.com">Scott Sauyet</a>; not an official town
+    document.</p>
+  </footer>
+</div>
+
+<script src="directives.js"></script>
+<script>
+'use strict';
+(async function () {
+  const [data, cpi, geo] = await Promise.all([
+    fetch('../dataset.json').then(r => r.json()),
+    fetch('../cpi_fy.json').then(r => r.json()),
+    fetch('geo.json').then(r => r.json()),
+  ]);
+  const D = window.Directives;
+  const ctx = { data, cpi, geo };
+  const $ = id => document.getElementById(id);
+
+  // ---- state -------------------------------------------------------------
+  const DEF = { y0: 2013, y1: 2023, w: 'enrollment' };
+  const state = { kind: 'preset', g: 'core', seeds: [], ...DEF };
+  let newerVersion = false;
+
+  // ---- basis box (the honesty note travels with every view) --------------
+  $('basisBox').innerHTML = data.basis +
+    ' Levels on this basis are <em>not</em> comparable to the state’s NCEP' +
+    ' figures or to town budget appropriations — see the' +
+    ' <a href="../#a-note-on-the-numbers">report’s methodology</a>.';
+
+  // ---- fragment codec ----------------------------------------------------
+  function readHash() {
+    const h = location.hash.replace(/^#/, '');
+    if (!h) return;
+    const p = new URLSearchParams(h);
+    if (p.get('v') && p.get('v') !== '1') { newerVersion = true; return; }
+    const y0 = parseInt(p.get('y0'), 10), y1 = parseInt(p.get('y1'), 10);
+    if (data.years.includes(y0)) state.y0 = y0;
+    if (data.years.includes(y1)) state.y1 = y1;
+    if (state.y0 >= state.y1) { state.y0 = DEF.y0; state.y1 = DEF.y1; }
+    if (p.get('w')) state.w = p.get('w');
+    if (p.get('g') && data.groups[p.get('g')]) {
+      state.kind = 'preset'; state.g = p.get('g');
+    } else if (p.get('u')) {
+      state.kind = 'custom';
+      state.seeds = p.get('u').split(',').map(s => s.trim()).filter(Boolean);
+    }
+  }
+  function writeHash() {
+    const p = new URLSearchParams();
+    p.set('v', '1');
+    if (state.kind === 'preset') p.set('g', state.g);
+    else p.set('u', state.seeds.join(','));
+    p.set('y0', state.y0); p.set('y1', state.y1); p.set('w', state.w);
+    history.replaceState(null, '', '#' + p.toString());
+    $('shareUrl').value = location.href;
+  }
+
+  // ---- selection model ---------------------------------------------------
+  // Region closure (single pass; closure-added towns do not seed rings):
+  // any selected member town of a regional district pulls in the district's
+  // remaining towns and the district itself.
+  function closure(seedTowns) {
+    const towns = new Set(seedTowns), regions = [], msgs = [];
+    for (const [name, u] of Object.entries(data.units)) {
+      if (u.type !== 'region') continue;
+      const hit = (u.members || []).filter(m => towns.has(m));
+      if (!hit.length) continue;
+      regions.push(name);
+      const added = (u.members || []).filter(m => !towns.has(m));
+      added.forEach(m => towns.add(m));
+      if (added.length)
+        msgs.push(`${hit.join(' and ')}${hit.length > 1 ? ' belong' : ' belongs'} to ${name}, ` +
+          `so ${added.join(' and ')} joined to complete the district.`);
+    }
+    return { towns, regions, msgs };
+  }
+
+  function currentSelection() {
+    if (state.kind === 'preset')
+      return { groupId: state.g, closureMsgs: [] };
+    const { towns, regions, msgs } = closure(state.seeds);
+    const seeds = state.seeds;
+    const label = seeds.length <= 3 && seeds.length > 0
+      ? seeds.join(' + ') + (regions.length ? ' + ' + regions.map(r => shortRegion(r)).join(' + ') : '')
+      : `Custom selection (${towns.size} towns)`;
+    data.groups._sel = { label, members: [...[...towns].sort(), ...regions] };
+    return { groupId: '_sel', closureMsgs: msgs };
+  }
+  const shortRegion = n => n.replace(/ \(.*\)$/, '');
+
+  function seedTownsOfPreset(gid) {
+    const out = [];
+    for (const m of data.groups[gid].members) {
+      const u = data.units[m];
+      if (!u || u.type === 'town') out.push(m);
+      else if (u.type === 'region')
+        for (const t of u.members || []) if (!out.includes(t)) out.push(t);
+    }
+    return out;
+  }
+
+  // ---- grade-span caveat -------------------------------------------------
+  function gradeSpanKinds(resolved) {
+    const kinds = new Set();
+    for (const n of resolved.included) {
+      const u = data.units[n];
+      if (u.type === 'state') continue;
+      if (u.type === 'region') kinds.add(`regional (grades ${u.grades})`);
+      else if ((u.regions || []).length) kinds.add('elementary-only');
+      else kinds.add('K-12');
+    }
+    return kinds;
+  }
+
+  // ---- markdown table -> HTML --------------------------------------------
+  function tableHtml(md) {
+    const lines = md.split('\n');
+    const tbl = lines.filter(l => l.startsWith('|'));
+    const notes = lines.filter(l => l.startsWith('>')).map(l => l.replace(/^> ?/, '')).join(' ');
+    const cells = l => l.replace(/^\||\|$/g, '').split('|').map(c => c.trim());
+    const head = cells(tbl[0]);
+    const rows = tbl.slice(2).map(cells);
+    const cls = i => i >= 2 ? ' class="num"' : '';
+    let h = '<table><thead><tr>' +
+      head.map((c, i) => `<th${cls(i)}>${c}</th>`).join('') + '</tr></thead><tbody>' +
+      rows.map(r => '<tr>' + r.map((c, i) => `<td${cls(i)}>${c}</td>`).join('') + '</tr>').join('') +
+      '</tbody></table>';
+    if (notes) h += '<blockquote class="notes">' +
+      notes.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') + '</blockquote>';
+    return h;
+  }
+
+  // ---- interactive overlay (registers exactly over the locmap frame) -----
+  function buildOverlay() {
+    const sw = geo.viewW, sh = geo.viewH;
+    const s = Math.min((960 - 40) / sw, (500 - 70) / sh);
+    const ox = (960 - sw * s) / 2, oy = 56 + (500 - 70 - sh * s) / 2;
+    const svg = $('mapOverlay');
+    const parts = [];
+    for (const [town, rings] of Object.entries(geo.coarse)) {
+      const inData = !!data.units[town];
+      for (const ring of rings) {
+        const pts = ring.map(pt =>
+          `${(pt[0] * s + ox).toFixed(1)},${(pt[1] * s + oy).toFixed(1)}`).join(' ');
+        parts.push(`<polygon points="${pts}" data-town="${town.replace(/"/g, '&quot;')}">` +
+          `<title>${town}${inData ? '' : ' (not in this dataset)'}</title></polygon>`);
+      }
+    }
+    svg.innerHTML = parts.join('');
+    svg.style.pointerEvents = 'none';
+    svg.querySelectorAll('polygon').forEach(p => {
+      p.addEventListener('click', () => toggleTown(p.getAttribute('data-town')));
+    });
+  }
+  function setOverlayActive(on) {
+    const svg = $('mapOverlay');
+    svg.style.pointerEvents = on ? 'auto' : 'none';
+    svg.querySelectorAll('polygon').forEach(p => { p.style.pointerEvents = on ? 'all' : 'none'; });
+  }
+
+  function toggleTown(town) {
+    if (state.kind === 'preset') {
+      state.seeds = state.g === 'ct_statewide' ? [] : seedTownsOfPreset(state.g);
+      state.kind = 'custom';
+    }
+    const i = state.seeds.indexOf(town);
+    if (i >= 0) state.seeds.splice(i, 1); else state.seeds.push(town);
+    render();
+  }
+
+  // ---- rendering ---------------------------------------------------------
+  function message(html, warn) {
+    const div = document.createElement('div');
+    div.className = 'msg' + (warn ? ' warn' : '');
+    div.innerHTML = html;
+    $('messages').appendChild(div);
+  }
+
+  function render() {
+    $('messages').innerHTML = '';
+    writeHash();
+    $('preset').value = state.kind === 'preset' ? state.g : '_custom';
+    if (newerVersion) {
+      message('This link was made with a newer version of this tool than the ' +
+        'one you are viewing; showing the default view instead.', true);
+      newerVersion = false;
+    }
+    const { groupId, closureMsgs } = currentSelection();
+    if (state.kind === 'custom' && !state.seeds.length) {
+      $('map').innerHTML = ''; $('chart').innerHTML = ''; $('tablewrap').innerHTML = '';
+      renderEmptyMap();
+      message('Nothing selected — click towns on the map, or choose a preset.');
+      return;
+    }
+    let resolved;
+    try {
+      resolved = D.resolveGroup(data, groupId);
+      const win = `${state.y0}:${state.y1}`;
+      $('map').innerHTML = D.locmap(ctx, groupId);
+      $('chart').innerHTML = D.decomp(ctx, groupId, { window: win, weighting: state.w });
+      $('tablewrap').innerHTML = tableHtml(D.datatable(ctx, groupId, { window: win }));
+    } catch (e) {
+      $('chart').innerHTML = ''; $('tablewrap').innerHTML = '';
+      if (!$('map').innerHTML) renderEmptyMap();
+      message('Cannot chart this selection: ' + e.message, true);
+      return;
+    }
+    setOverlayActive(groupId !== 'ct_statewide' ||
+      !resolved.included.some(n => data.units[n].type === 'state'));
+    closureMsgs.forEach(m => message(m));
+    const kinds = gradeSpanKinds(resolved);
+    if (kinds.size > 1)
+      message('This selection mixes districts with different grade spans (' +
+        [...kinds].sort().join(', ') + '). Every student and dollar is counted ' +
+        'once, but the per-pupil level blends different grade ranges.');
+  }
+
+  function renderEmptyMap() {
+    data.groups._blank = { label: 'Connecticut', members: [] };
+    try { $('map').innerHTML = D.locmap(ctx, '_blank'); } catch (e) { /* none */ }
+    setOverlayActive(true);
+  }
+
+  // ---- downloads ---------------------------------------------------------
+  function currentId() {
+    return state.kind === 'preset' ? state.g
+      : 'custom-' + state.seeds.slice(0, 3).join('-').toLowerCase().replace(/[^a-z0-9-]+/g, '');
+  }
+  function downloadBlob(blob, name) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+  }
+  function svgToPng(container, name) {
+    const svg = container.querySelector('svg');
+    if (!svg) return;
+    const xml = new XMLSerializer().serializeToString(svg);
+    const url = URL.createObjectURL(new Blob([xml], { type: 'image/svg+xml' }));
+    const img = new Image();
+    img.onload = () => {
+      const vb = svg.viewBox.baseVal, k = 2;
+      const canvas = document.createElement('canvas');
+      canvas.width = vb.width * k; canvas.height = vb.height * k;
+      const c = canvas.getContext('2d');
+      c.fillStyle = '#FBF8F1'; c.fillRect(0, 0, canvas.width, canvas.height);
+      c.drawImage(img, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(url);
+      canvas.toBlob(b => downloadBlob(b, name), 'image/png');
+    };
+    img.src = url;
+  }
+  $('dlChart').addEventListener('click', () => svgToPng($('chart'), `per-pupil-${currentId()}-chart.png`));
+  $('dlMap').addEventListener('click', () => svgToPng($('map'), `per-pupil-${currentId()}-map.png`));
+  $('dlCsv').addEventListener('click', () => {
+    const { groupId } = currentSelection();
+    let rows;
+    try { rows = D.seriesFor(data, D.resolveGroup(data, groupId), state.y0, state.y1, state.w); }
+    catch (e) { message('Cannot export: ' + e.message, true); return; }
+    const csv = ['fiscal_year,school_year,students,total_current_spending,per_pupil']
+      .concat(rows.map(r =>
+        `${r.fy},${r.fy - 1}-${String(r.fy).slice(2)},${r.enr},${Math.round(r.exp)},${Math.round(r.pp)}`))
+      .join('\n');
+    downloadBlob(new Blob([csv], { type: 'text/csv' }), `per-pupil-${currentId()}.csv`);
+  });
+  $('copyLink').addEventListener('click', async () => {
+    const el = $('shareUrl');
+    el.select();
+    try { await navigator.clipboard.writeText(el.value); }
+    catch (e) { document.execCommand('copy'); }
+    $('copyLink').textContent = 'Copied ✓';
+    setTimeout(() => { $('copyLink').textContent = 'Copy link'; }, 1500);
+  });
+
+  // ---- controls ----------------------------------------------------------
+  const presetSel = $('preset');
+  for (const [id, g] of Object.entries(data.groups)) {
+    if (id.startsWith('_')) continue;
+    const o = document.createElement('option');
+    o.value = id; o.textContent = g.label;
+    presetSel.appendChild(o);
+  }
+  const custom = document.createElement('option');
+  custom.value = '_custom'; custom.textContent = 'Custom selection';
+  presetSel.appendChild(custom);
+  presetSel.addEventListener('change', () => {
+    if (presetSel.value === '_custom') {
+      state.kind = 'custom';
+      if (!state.seeds.length && state.g !== 'ct_statewide')
+        state.seeds = seedTownsOfPreset(state.g);
+    } else { state.kind = 'preset'; state.g = presetSel.value; }
+    render();
+  });
+  $('addRing').addEventListener('click', () => {
+    if (state.kind === 'preset') {
+      if (state.g === 'ct_statewide') return;
+      state.seeds = seedTownsOfPreset(state.g);
+      state.kind = 'custom';
+    }
+    const grown = new Set(state.seeds);
+    for (const t of state.seeds)
+      for (const n of geo.adjacency[t] || []) grown.add(n);
+    const added = grown.size - state.seeds.length;
+    state.seeds = [...grown];
+    render();
+    if (added) message(`Ring added ${added} adjacent town${added === 1 ? '' : 's'}.`);
+  });
+  $('clearSel').addEventListener('click', () => {
+    state.kind = 'custom'; state.seeds = [];
+    render();
+  });
+  const years = data.years.filter(y => y >= 1992);
+  for (const sel of [$('y0'), $('y1')])
+    for (const y of years) {
+      const o = document.createElement('option');
+      o.value = y; o.textContent = 'FY' + y;
+      sel.appendChild(o);
+    }
+  $('y0').addEventListener('change', () => {
+    state.y0 = +$('y0').value;
+    if (state.y0 >= state.y1) { state.y1 = Math.min(years[years.length - 1], state.y0 + 1); $('y1').value = state.y1; }
+    render();
+  });
+  $('y1').addEventListener('change', () => {
+    state.y1 = +$('y1').value;
+    if (state.y1 <= state.y0) { state.y0 = Math.max(years[0], state.y1 - 1); $('y0').value = state.y0; }
+    render();
+  });
+  $('weighting').addEventListener('change', () => { state.w = $('weighting').value; render(); });
+
+  // ---- boot --------------------------------------------------------------
+  readHash();
+  $('y0').value = state.y0; $('y1').value = state.y1; $('weighting').value = state.w;
+  buildOverlay();
+  render();
+  window.addEventListener('hashchange', () => { readHash(); render(); });
+})();
+</script>
+</body>
+</html>
