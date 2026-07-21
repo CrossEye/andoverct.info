@@ -6,6 +6,8 @@ const PAL = {
   grid: '#E3DDCE', green: '#1f7a3d', gold: '#B8860B', goldText: '#9a6f08',
   purple: '#7a4b8a', slate: '#5b7a99', ringFill: '#2e8b57',
   boundary: '#d9d2c0', townEdge: '#6a6453', hatchFill: '#efe9da',
+  // Concentric-ring shades, darkest (core) outward; consistent across maps.
+  rings: ['#1f7a3d', '#4f9c62', '#82bd8f', '#b5dcbc'],
 };
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

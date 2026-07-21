@@ -154,7 +154,7 @@ absorbing the loss of nearly a third of its students.
 
 ### The four districts combined, FY 2013 – FY 2023 ✓ *Computed from NCES/Census F-33* ###
 
-<% datatable core %>
+<% datatable core basis=skip %>
 
 
 
@@ -182,7 +182,7 @@ children.
 
 ### Andover, FY 2013 – FY 2023 ✓ *Computed from NCES/Census F-33* ###
 
-<% datatable andover %>
+<% datatable andover basis=skip %>
 
 
 
@@ -203,7 +203,7 @@ decline, while severe, was the shallowest of the three towns.
 
 ### Hebron, FY 2013 – FY 2023 ✓ *Computed from NCES/Census F-33* ###
 
-<% datatable hebron %>
+<% datatable hebron basis=skip %>
 
 
 
@@ -222,7 +222,7 @@ line and the spending line diverge almost entirely because of the denominator.
 
 ### Marlborough, FY 2013 – FY 2023 ✓ *Computed from NCES/Census F-33* ###
 
-<% datatable marlborough %>
+<% datatable marlborough basis=skip %>
 
 
 
@@ -249,7 +249,7 @@ towns' elementary counts have begun to stabilize.
 
 ### RHAM, FY 2013 – FY 2023 ✓ *Computed from NCES/Census F-33* ###
 
-<% datatable rham %>
+<% datatable rham basis=skip %>
 
 
 
@@ -259,9 +259,10 @@ Part 6 — Block 1: The Region and Its Neighbors
 The remaining sections widen the lens for context. Block 1 adds every town
 sharing a land boundary with the core: Bolton, Colchester, Columbia, Coventry,
 East Hampton, Glastonbury, and Lebanon, eleven districts in all. On the maps
-that follow, green fills are districts in the aggregate; blue-gray fills are
-towns counted through a regional district in the aggregate; hatched towns are
-named in the section and excluded from the figures.
+that follow, green fills are districts in the aggregate, darkest in the core
+and one shade lighter with each added ring; blue-gray fills are towns counted
+through a regional district in the aggregate; hatched towns are named in the
+section and excluded from the figures.
 
 <% locmap block1 %>
 
@@ -275,7 +276,7 @@ Enrollment fell 17 percent. Per-pupil cost rose 55 percent.
 
 ### Block 1, FY 2013 – FY 2023 ✓ *Computed from NCES/Census F-33* ###
 
-<% datatable block1 %>
+<% datatable block1 basis=skip %>
 
 
 
@@ -300,7 +301,7 @@ until its other member town, Killingworth, arrives in block 3.
 
 ### Block 2, FY 2013 – FY 2023 ✓ *Computed from NCES/Census F-33* ###
 
-<% datatable block2 %>
+<% datatable block2 basis=skip %>
 
 
 
@@ -325,7 +326,7 @@ Lyme, lie beyond every ring.
 
 ### Block 3, FY 2013 – FY 2023 ✓ *Computed from NCES/Census F-33* ###
 
-<% datatable block3 %>
+<% datatable block3 basis=skip %>
 
 
 
@@ -349,7 +350,7 @@ elementary districts.
 
 ### The 45 peers, FY 2013 – FY 2023 ✓ *Computed from NCES/Census F-33* ###
 
-<% datatable peers45 %>
+<% datatable peers45 basis=skip %>
 
 
 
@@ -372,7 +373,7 @@ near lockstep.
 
 ### Connecticut statewide, FY 2013 – FY 2023 ✓ *Computed from NCES/Census F-33* ###
 
-<% datatable ct_statewide %>
+<% datatable ct_statewide basis=skip %>
 
 
 

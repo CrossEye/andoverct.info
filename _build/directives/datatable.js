@@ -1,6 +1,10 @@
 'use strict';
-// <% datatable <group> [window=FY0:FY1] %>
-// Emits an aligned markdown table plus the Notes blockquote.
+// <% datatable <group> [window=FY0:FY1] [basis=skip] %>
+// Emits an aligned markdown table plus the Notes blockquote. By default the
+// Notes open with the shared data-basis sentence so each table is
+// self-contained (the mode a standalone generator wants); basis=skip omits it
+// for documents that state the basis once in their methodology, and the
+// blockquote disappears entirely when no group-specific notes remain.
 
 const { resolveGroup, seriesFor } = require('./resolve');
 const money = v => '$' + Math.round(v).toLocaleString('en-US');
@@ -22,16 +26,19 @@ function datatable(ctx, groupId, args = {}) {
     (i >= 2 ? '-'.repeat(n + 1) + ':' : '-'.repeat(n + 2))).join('|') + '|';
 
   const md = [line(header), rule, ...body.map(line)].join('\n');
-  let notes = `> **Notes:** ${data.basis} Per pupil is combined spending divided ` +
-    'by combined students, which weights each district by its enrollment.';
+  const parts = [];
+  if (args.basis !== 'skip')
+    parts.push(`${data.basis} Per pupil is combined spending divided ` +
+      'by combined students, which weights each district by its enrollment.');
   if (g.represented && g.represented.length)
-    notes += ' ' + g.represented.map(r =>
+    parts.push(g.represented.map(r =>
       `${r.name} has no local district but is fully represented through ` +
-      `${r.via}, included above`).join('; ') + '.';
+      `${r.via}, included above`).join('; ') + '.');
   if (g.excluded.length)
-    notes += ' Excluded from the aggregate: ' + g.excluded.map(e =>
-      `${e.name} (${e.reason})`).join('; ') + '.';
-  return md + '\n\n' + notes;
+    parts.push('Excluded from the aggregate: ' + g.excluded.map(e =>
+      `${e.name} (${e.reason})`).join('; ') + '.');
+  if (!parts.length) return md;
+  return md + '\n\n' + `> **Notes:** ${parts.join(' ')}`;
 }
 
 module.exports = datatable;
