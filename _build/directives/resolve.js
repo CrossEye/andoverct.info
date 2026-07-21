@@ -4,20 +4,34 @@
 function resolveGroup(data, groupId) {
   const g = data.groups[groupId];
   if (!g) throw new Error(`Unknown group '${groupId}'`);
-  const included = [], excluded = [];
+  const included = [], noLocal = [];
   for (const name of g.members) {
     const u = data.units[name];
-    if (!u) { excluded.push({ name, reason: 'not in dataset' }); continue; }
+    if (!u) { noLocal.push({ name, reason: 'not in dataset' }); continue; }
     if (u.type === 'town' && u.local_district === false) {
-      const regs = (u.regions || []).join(', ');
-      excluded.push({ name, reason: regs
-        ? `no local district; member of ${regs}` : 'no local district' });
+      noLocal.push({ name, regions: u.regions || [] });
       continue;
     }
     included.push(name);
   }
+  // A town with no local district is only truly excluded when no included
+  // regional district covers it; a covered town (e.g. Haddam once Region 17
+  // joins) is fully represented through that region.
+  const coveredBy = name => included.find(n => {
+    const u = data.units[n];
+    return u.type === 'region' && (u.members || []).includes(name);
+  });
+  const excluded = [], represented = [];
+  for (const e of noLocal) {
+    const via = coveredBy(e.name);
+    if (via) represented.push({ name: e.name, via });
+    else excluded.push({ name: e.name,
+      reason: e.reason || (e.regions.length
+        ? `no local district; member of ${e.regions.join(', ')}`
+        : 'no local district') });
+  }
   return { id: groupId, label: g.label, definition: g.definition || '',
-           included, excluded };
+           included, excluded, represented };
 }
 
 // weighting: 'enrollment' (combined exp / combined enr). 'equal' reserved.

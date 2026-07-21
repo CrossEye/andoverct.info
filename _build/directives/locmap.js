@@ -27,6 +27,8 @@ function classify(data, g) {
 function locmap(ctx, groupId) {
   const { data, geo } = ctx;
   const g = resolveGroup(data, groupId);
+  if (g.included.some(n => data.units[n].type === 'state'))
+    return stateMap(ctx, g);
   const { local, viaRegion, hatched } = classify(data, g);
   const color = t =>
     hatched.has(t) ? null :
@@ -107,6 +109,31 @@ function locmap(ctx, groupId) {
   out.push(el('rect', { x: insX, y: insY, width: insW, height: insH,
     fill: 'none', stroke: PAL.ink, 'stroke-width': 1.4 }));
   out.push(text(12, 30, g.label, { 'font-size': 20, 'font-weight': 'bold', fill: PAL.ink }));
+  out.push('</svg>');
+  return out.join('');
+}
+
+function stateMap(ctx, g) {
+  const { geo } = ctx;
+  const { PAL: P } = require('./svg');
+  const FW2 = 960, FH2 = 500;
+  const sw = geo.viewW, sh = geo.viewH;
+  const s = Math.min((FW2 - 40) / sw, (FH2 - 70) / sh);
+  const ox = (FW2 - sw * s) / 2, oy = 56 + (FH2 - 70 - sh * s) / 2;
+  const T = pt => `${r1(pt[0] * s + ox)},${r1(pt[1] * s + oy)}`;
+  const out = [];
+  out.push(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${FW2} ${FH2}" ` +
+    `font-family="Verdana,Geneva,sans-serif" role="img" aria-label="Map: ${g.label}">`);
+  out.push(el('rect', { width: FW2, height: FH2, fill: P.cream }));
+  const src = geo.coarse || geo.towns;
+  for (const rings of Object.values(src))
+    for (const ring of rings)
+      out.push(el('polygon', { points: ring.map(T).join(' '),
+        fill: '#dceadf', stroke: '#b9cfc0', 'stroke-width': 0.4 }));
+  for (const ring of geo.state)
+    out.push(el('polygon', { points: ring.map(T).join(' '),
+      fill: 'none', stroke: P.faint, 'stroke-width': 1.3 }));
+  out.push(text(12, 30, g.label, { 'font-size': 20, 'font-weight': 'bold', fill: P.ink }));
   out.push('</svg>');
   return out.join('');
 }

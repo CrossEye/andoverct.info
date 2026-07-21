@@ -24,6 +24,10 @@ function datatable(ctx, groupId, args = {}) {
   const md = [line(header), rule, ...body.map(line)].join('\n');
   let notes = `> **Notes:** ${data.basis} Per pupil is combined spending divided ` +
     'by combined students, which weights each district by its enrollment.';
+  if (g.represented && g.represented.length)
+    notes += ' ' + g.represented.map(r =>
+      `${r.name} has no local district but is fully represented through ` +
+      `${r.via}, included above`).join('; ') + '.';
   if (g.excluded.length)
     notes += ' Excluded from the aggregate: ' + g.excluded.map(e =>
       `${e.name} (${e.reason})`).join('; ') + '.';

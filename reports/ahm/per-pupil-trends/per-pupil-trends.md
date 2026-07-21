@@ -258,7 +258,10 @@ Part 6 — Block 1: The Region and Its Neighbors
 
 The remaining sections widen the lens for context. Block 1 adds every town
 sharing a land boundary with the core: Bolton, Colchester, Columbia, Coventry,
-East Hampton, Glastonbury, and Lebanon, eleven districts in all.
+East Hampton, Glastonbury, and Lebanon, eleven districts in all. On the maps
+that follow, green fills are districts in the aggregate; blue-gray fills are
+towns counted through a regional district in the aggregate; hatched towns are
+named in the section and excluded from the figures.
 
 <% locmap block1 %>
 
@@ -288,6 +291,10 @@ percent, barely moves: across every widening of the lens, per-pupil growth stays
 in a narrow band while its composition shifts from enrollment loss toward
 spending growth.
 
+One town is hatched on the map and absent from the figures: Haddam, which runs
+no local district. Its schools belong to Region 17, which cannot join the block
+until its other member town, Killingworth, arrives in block 3.
+
 <% decomp block2 %>
 
 
@@ -306,6 +313,12 @@ Block 3 reaches roughly 96,000 students across forty-three districts, including
 two more regional districts (17 and 19) whose member towns fall entirely inside
 the block. The figures are now close to the statewide pattern: spending up 31.7
 percent, enrollment down 12.1 percent, per-pupil up 49.8 percent.
+
+Growing the block heals the Haddam gap: with Killingworth now inside, Region 17
+joins, and both of its towns are fully counted through it (they render in
+blue-gray rather than hatching). Two towns remain hatched and outside the
+figures, Durham and Lyme, because their regional partners, Middlefield and Old
+Lyme, lie beyond every ring.
 
 <% decomp block3 %>
 
