@@ -163,10 +163,20 @@ function decomp(ctx, groupId, args = {}) {
   pts(pp).forEach(p => out.push(el('circle',
     { cx: p[0], cy: p[1], r: 4.6, fill: PAL.green, stroke: '#fff', 'stroke-width': 1.2 })));
 
-  // x axis labels
-  for (const r of rows)
+  // x axis labels, thinned to a stride that fits the plot width so long
+  // windows (the explore tool allows ~30-year spans) stay readable. Short
+  // windows show every year; the first and last are always labelled.
+  const plotW = FW - M.l - M.r;
+  const maxTicks = Math.max(2, Math.floor(plotW / 48));
+  const stride = Math.max(1, Math.ceil(rows.length / maxTicks));
+  const showYear = i =>
+    i === 0 || i === rows.length - 1 ||
+    (i % stride === 0 && i <= rows.length - 1 - stride);
+  rows.forEach((r, i) => {
+    if (!showYear(i)) return;
     out.push(text(X(r.fy), FH - M.b + 22, 'FY' + r.fy,
       { 'text-anchor': 'middle', 'font-size': 11.5, fill: '#5a5446' }));
+  });
 
   // end labels with simple collision spreading
   const last = a => a[a.length - 1];
