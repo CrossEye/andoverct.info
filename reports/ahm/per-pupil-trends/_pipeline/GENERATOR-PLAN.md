@@ -94,8 +94,13 @@ CSV, assembled client-side.
 Deferred, Deliberately
 ----------------------
 
-- Equal weighting (define as mean of member per-pupil values when it
-  lands; document the choice).
+- ~~Equal weighting~~ — implemented 2026-07-21. Defined as the plain mean
+  of member districts' own per-pupil figures (one district, one vote).
+  Because a group's member set is constant across the years returned, the
+  student and spending totals (and their percent-change lines) are
+  identical to enrollment weighting; only the per-pupil measure moves. The
+  table Notes warn that per pupil no longer equals total spending over
+  total students.
 - Full-resolution inset geometry in the browser (fetch-on-demand per
   selection, or accept coarse insets in v1).
 - Full-state dataset (pipeline extension documented in PIPELINE.md).

@@ -74,23 +74,35 @@ function resolveGroup(data, groupId) {
            included, excluded, represented };
 }
 
-// weighting: 'enrollment' (combined exp / combined enr). 'equal' reserved.
+// weighting:
+//   'enrollment' — per pupil is combined spending / combined students, so
+//                  larger districts dominate (matches the underlying totals).
+//   'equal'      — per pupil is the plain mean of each member district's own
+//                  per-pupil figure: one district, one vote. Because a group's
+//                  member set is constant across the years actually returned
+//                  (a year missing any member is dropped whole), the students
+//                  and spending totals — and thus their percent-change lines —
+//                  are identical either way; only `pp` differs.
 function seriesFor(data, resolved, fy0, fy1, weighting) {
-  if (weighting && weighting !== 'enrollment')
-    throw new Error(`weighting '${weighting}' not implemented (v1 supports 'enrollment')`);
+  weighting = weighting || 'enrollment';
+  if (weighting !== 'enrollment' && weighting !== 'equal')
+    throw new Error(`weighting '${weighting}' not implemented (supported: 'enrollment', 'equal')`);
   const yi = new Map(data.years.map((y, i) => [y, i]));
   const rows = [];
   for (let y = fy0; y <= fy1; y++) {
     const i = yi.get(y);
     if (i === undefined) continue;
-    let enr = 0, exp = 0, ok = true;
+    let enr = 0, exp = 0, ppSum = 0, n = 0, ok = true;
     for (const name of resolved.included) {
       const u = data.units[name];
       const e = u.enr && u.enr[i], x = u.exp && u.exp[i];
       if (e == null || x == null) { ok = false; break; }
       enr += e; exp += x;
+      if (e > 0) { ppSum += x / e; n++; }
     }
-    if (ok && enr > 0) rows.push({ fy: y, enr, exp, pp: exp / enr });
+    if (ok && enr > 0)
+      rows.push({ fy: y, enr, exp,
+        pp: weighting === 'equal' && n > 0 ? ppSum / n : exp / enr });
   }
   if (!rows.length) throw new Error(`No complete years for '${resolved.id}' in ${fy0}-${fy1}`);
   return rows;
@@ -355,7 +367,8 @@ function datatable(ctx, groupId, args = {}) {
   const { data } = ctx;
   const g = resolveGroup(data, groupId);
   const [fy0, fy1] = (args.window || '2013:2023').split(':').map(Number);
-  const rows = seriesFor(data, g, fy0, fy1, 'enrollment');
+  const weighting = args.weighting || 'enrollment';
+  const rows = seriesFor(data, g, fy0, fy1, weighting);
 
   const header = ['Fiscal year', 'School year', 'Students', 'Total current spending', 'Per pupil'];
   const body = rows.map(r => [String(r.fy),
@@ -368,9 +381,16 @@ function datatable(ctx, groupId, args = {}) {
 
   const md = [line(header), rule, ...body.map(line)].join('\n');
   const parts = [];
-  if (args.basis !== 'skip')
-    parts.push(`${data.basis} Per pupil is combined spending divided ` +
-      'by combined students, which weights each district by its enrollment.');
+  if (args.basis !== 'skip') {
+    const multi = g.included.length > 1;
+    const ppNote = weighting === 'equal'
+      ? 'Per pupil is the plain average of the member districts’ own ' +
+        'per-pupil figures (equal weighting: one district, one vote)' +
+        (multi ? ', so it does not equal total spending divided by total students.' : '.')
+      : 'Per pupil is combined spending divided by combined students, ' +
+        'which weights each district by its enrollment.';
+    parts.push(`${data.basis} ${ppNote}`);
+  }
   if (g.represented && g.represented.length)
     parts.push(g.represented.map(r =>
       `${r.name} has no local district but is fully represented through ` +

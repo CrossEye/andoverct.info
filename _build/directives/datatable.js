@@ -14,7 +14,8 @@ function datatable(ctx, groupId, args = {}) {
   const { data } = ctx;
   const g = resolveGroup(data, groupId);
   const [fy0, fy1] = (args.window || '2013:2023').split(':').map(Number);
-  const rows = seriesFor(data, g, fy0, fy1, 'enrollment');
+  const weighting = args.weighting || 'enrollment';
+  const rows = seriesFor(data, g, fy0, fy1, weighting);
 
   const header = ['Fiscal year', 'School year', 'Students', 'Total current spending', 'Per pupil'];
   const body = rows.map(r => [String(r.fy),
@@ -27,9 +28,16 @@ function datatable(ctx, groupId, args = {}) {
 
   const md = [line(header), rule, ...body.map(line)].join('\n');
   const parts = [];
-  if (args.basis !== 'skip')
-    parts.push(`${data.basis} Per pupil is combined spending divided ` +
-      'by combined students, which weights each district by its enrollment.');
+  if (args.basis !== 'skip') {
+    const multi = g.included.length > 1;
+    const ppNote = weighting === 'equal'
+      ? 'Per pupil is the plain average of the member districts’ own ' +
+        'per-pupil figures (equal weighting: one district, one vote)' +
+        (multi ? ', so it does not equal total spending divided by total students.' : '.')
+      : 'Per pupil is combined spending divided by combined students, ' +
+        'which weights each district by its enrollment.';
+    parts.push(`${data.basis} ${ppNote}`);
+  }
   if (g.represented && g.represented.length)
     parts.push(g.represented.map(r =>
       `${r.name} has no local district but is fully represented through ` +

@@ -93,7 +93,7 @@
       <label for="weighting">Weighting</label>
       <select id="weighting">
         <option value="enrollment">Enrollment-weighted</option>
-        <option value="equal" disabled>Equal (reserved)</option>
+        <option value="equal">Equal (one district, one vote)</option>
       </select>
     </div>
     <div class="row">
@@ -328,7 +328,7 @@
       const win = `${state.y0}:${state.y1}`;
       $('map').innerHTML = D.locmap(ctx, groupId);
       $('chart').innerHTML = D.decomp(ctx, groupId, { window: win, weighting: state.w });
-      $('tablewrap').innerHTML = tableHtml(D.datatable(ctx, groupId, { window: win }));
+      $('tablewrap').innerHTML = tableHtml(D.datatable(ctx, groupId, { window: win, weighting: state.w }));
     } catch (e) {
       $('chart').innerHTML = ''; $('tablewrap').innerHTML = '';
       if (!$('map').innerHTML) renderEmptyMap();
