@@ -119,7 +119,7 @@ if (!priv_is_authorized($sub)) {
     exit;
 }
 
-priv_serve_content($sub, $rest);
+priv_serve_content($sub, $rest, $meta);
 
 
 // ===========================================================================
@@ -297,15 +297,25 @@ function priv_admin_mintlink() {
     priv_redirect(PRIV_BASE_PATH . '/admin');
 }
 
+// Pick a directory index: a dynamic index.php (executed) takes precedence over
+// a static index.html, so a subsection can opt into server-side rendering just
+// by shipping an index.php.
+function priv_dir_index($dir) {
+    return is_file(rtrim($dir, '/') . '/index.php') ? 'index.php' : 'index.html';
+}
+
 // Stream a protected file after the auth check, with path-traversal containment
-// modeled on idx.php. $rest is the path within the subsection ('' => index.html).
-function priv_serve_content($sub, $rest) {
+// modeled on idx.php. $rest is the path within the subsection ('' => dir index).
+// A .php target is executed in-process (see below) rather than streamed.
+function priv_serve_content($sub, $rest, $meta = array()) {
     $base = realpath(PRIV_SUBS_DIR . '/' . $sub);
     if ($base === false) {
         priv_render_notice('Not found', 'Missing content.', 'err', 404);
         exit;
     }
-    if ($rest === '' || substr($rest, -1) === '/') { $rest .= 'index.html'; }
+    if ($rest === '' || substr($rest, -1) === '/') {
+        $rest .= priv_dir_index($base . '/' . $rest);
+    }
     if (strpos($rest, "\0") !== false || strpos($rest, '..') !== false) {
         priv_render_notice('Bad request', 'Invalid path.', 'err', 400);
         exit;
@@ -313,7 +323,7 @@ function priv_serve_content($sub, $rest) {
 
     $target = realpath($base . '/' . $rest);
     if ($target !== false && is_dir($target)) {
-        $target = realpath($target . '/index.html');
+        $target = realpath($target . '/' . priv_dir_index($target));
     }
     // must exist, be a regular file, and stay inside the subsection dir
     if ($target === false || !is_file($target)
@@ -328,6 +338,30 @@ function priv_serve_content($sub, $rest) {
     }
 
     $ext = strtolower(pathinfo($target, PATHINFO_EXTENSION));
+
+    // Dynamic page: execute owner-authored PHP in-process so it can read the
+    // session (priv_current_is_owner(), priv_current_email()) and $meta. This
+    // content is deployed by the owner over FTP — same trust boundary as
+    // _gate.php, never user-uploaded — so include() is safe here. Executing
+    // (rather than streaming) .php also prevents leaking the source as bytes.
+    // Buffered so we can honor HEAD and set Content-Length; a page may still
+    // override headers (e.g. Content-Type) while output is buffered.
+    if ($ext === 'php') {
+        if (!headers_sent()) {
+            header('Content-Type: text/html; charset=utf-8');
+            header('Cache-Control: private, no-store');
+            header('X-Content-Type-Options: nosniff');
+            header('Referrer-Policy: no-referrer');
+            header('X-Frame-Options: DENY');
+        }
+        ob_start();
+        include $target;
+        $out = ob_get_clean();
+        if (!headers_sent()) { header('Content-Length: ' . strlen($out)); }
+        if ($_SERVER['REQUEST_METHOD'] !== 'HEAD') { echo $out; }
+        exit;
+    }
+
     $mimes = array(
         'html' => 'text/html; charset=utf-8', 'htm' => 'text/html; charset=utf-8',
         'css'  => 'text/css; charset=utf-8',  'js'  => 'application/javascript; charset=utf-8',
