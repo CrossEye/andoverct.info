@@ -196,7 +196,7 @@ function priv_render_admin_console($subs, $flash = null, $link = null) {
         $users = isset($s['users']) ? $s['users'] : array();
         $n = count($users);
         $countLabel = $n . ' ' . ($n === 1 ? 'email' : 'emails');
-        $subUrl = priv_h(PRIV_BASE_PATH . '/' . $s['id']);
+        $subUrl = priv_h(PRIV_BASE_PATH . '/' . $s['id'] . '/');
         $body .= '<details class="card" id="' . $sid . '"><summary>'
                . '<span class="ttl">' . priv_h($s['title']) . '</span> '
                . '<span class="sid">(<a href="' . $subUrl . '" '
