@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>The line, drawn and erased — A Town Asset</title>
+<style>
+:root {
+  
+  --bg:             #fafaf7;   
+  --bg-page:        #ffffff;   
+  --bg-soft:        #f5f3ed;   
+  --ink:            #1a1a1a;   
+  --ink-soft:       #333333;   
+  --ink-mute:       #5a5a5a;   
+  --ink-faint:      #888888;   
+  --rule:           #e0ddd5;   
+  --accent:         #b8a878;   
+  --accent-2:       #2c3e50;   
+  --banner-bg:      #2c3e50;   
+  --banner-ink:     #ecf0f1;   
+  --crumb-link:       #b9c4cf; 
+  --crumb-link-hover: #ffffff;
+  --crumb-current:    #ffffff; 
+  --link:           #1a5490;
+  --link-hover:     #0d3a6b;
+  --link-underline: #c5d3e2;
+  --anchor:         #b8b3a4;   
+  --anchor-hover:   #6c7480;
+  --confirm:        #5a8a5a;   
+  --confirm-strong: #2e7d32;
+
+  
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:  "SF Mono", Monaco, Menlo, Consolas, monospace;
+
+  
+  --base-size:  11pt;    
+  --measure:    780px;   
+  --gutter:     30px;    
+  --title-size: 28pt;
+  --h2-size:    18pt;
+  --h3-size:    13pt;
+}
+
+:root {
+  
+  --bg:             #f4f6f9;
+  --bg-page:        #ffffff;
+  --bg-soft:        #eef4fb;   
+  --rule:           #e3e8ef;   
+  --ink:            #19222e;
+  --ink-soft:       #2b3744;
+  --ink-mute:       #5b6775;
+  --ink-faint:      #8a94a1;
+  --accent:         #e8a800;   
+  --accent-2:       #0f2a4a;   
+  --banner-bg:      linear-gradient(180deg, #0f2a4a, #143862);
+  --banner-border:  3px solid #e8a800;
+  --banner-ink:     #dde8f5;   
+  --crumb-link:       #e8a800; 
+  --crumb-link-hover: #ffffff; 
+  --crumb-current:    #ffffff; 
+  --link:           #245c95;   
+  --link-hover:     #1c4e80;   
+  --link-underline: #cfe0f2;
+  --confirm:        #2f8f5b;
+  --confirm-strong: #1f7d49;
+
+  
+  --font-serif: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans:  Georgia, "Times New Roman", serif;
+
+  --measure: 860px;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner a { color: inherit; text-decoration: none; }
+.page-banner a:hover { text-decoration: underline; }
+
+.page-banner .crumbs a {
+    color: var(--crumb-link, var(--banner-ink));
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover, #fff);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current {
+    color: var(--crumb-current, #fff);
+}
+
+.container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+}
+
+.container img { cursor: zoom-in; }
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vmin;
+    background: rgba(0, 0, 0, 0.85);
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+.lightbox-overlay.open { opacity: 1; }
+.lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    margin: 0;
+    cursor: zoom-out;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+    background: #fff;
+}
+
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-attribution {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    color: var(--ink-faint);
+    margin: 0 0 24px 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+.report-attribution a {
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+}
+.report-attribution a:hover {
+    color: var(--link);
+    border-bottom-color: var(--link);
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.methodology-header {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 0 0 36px 0;
+    line-height: 1.55;
+}
+
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 36px 0 4px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+h3 {
+    font-family: var(--font-sans);
+    font-size: var(--h3-size);
+    font-weight: 600;
+    margin: 28px 0 10px 0;
+    color: var(--accent-2);
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+
+.header-anchor {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.2em;
+    color: var(--anchor);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.85em;
+    vertical-align: baseline;
+    cursor: pointer;
+    user-select: none;
+}
+h2:hover .header-anchor,
+h3:hover .header-anchor,
+.header-anchor:focus {
+    opacity: 1;
+}
+.header-anchor:hover {
+    color: var(--anchor-hover);
+}
+.header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+}
+.header-anchor.copied::after {
+    content: " copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+}
+@media print {
+    .header-anchor {
+        display: none;
+    }
+}
+
+p {
+    margin: 0 0 14px 0;
+    orphans: 3;
+    widows: 3;
+}
+p.intro-table {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+strong { font-weight: 700; color: var(--ink); }
+em { font-style: italic; }
+
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+li {
+    margin: 0 0 6px 0;
+    line-height: 1.55;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-before: avoid;
+    break-before: avoid;
+}
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 9.5pt;
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--accent);
+}
+tbody tr:hover { background: var(--bg); }
+
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+tbody tr:last-child td {
+    border-bottom: 2px solid var(--accent);
+}
+
+blockquote {
+    margin: 14px 0 18px 0;
+    padding: 14px 20px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+blockquote p { margin: 0 0 8px 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ol, blockquote ul {
+    margin: 8px 0;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+}
+
+code {
+    font-family: var(--font-mono);
+    font-size: 9.5pt;
+    background: var(--bg-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: var(--accent-2);
+    overflow-wrap: break-word;
+}
+
+.formats-section {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+}
+.format-cards {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.format-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.format-cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media screen and (max-width: 700px) {
+    .format-cards.cols-3,
+    .format-cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+.format-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    padding: 14px;
+    text-align: left;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+.format-card-icon { font-size: 18pt; margin-bottom: 4px; }
+.format-card-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+.format-card-desc { font-size: 9pt; color: var(--ink-mute); line-height: 1.4; }
+.format-card a { display: block; }
+
+.page-footer {
+    max-width: var(--measure);
+    margin: 32px auto 60px;
+    padding: 24px var(--gutter);
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 9.5pt;
+    font-family: var(--font-sans);
+    border-top: 1px solid var(--rule);
+}
+
+h3 .conf-mark {
+    color: var(--confirm);
+    font-size: 11pt;
+    margin-right: 4px;
+}
+
+.piece-body h1 { margin: 0 0 4px; }
+.piece-dek { font-size: 1.06rem; color: var(--ink-mute); margin: 0 0 28px; font-family: var(--font-sans); font-style: italic; }
+.piece-body p { margin: 0 0 1em; }
+.piece-body sup { font-size: 0.72em; }
+.piece-body sup a { text-decoration: none; }
+.ta-index h3 { margin: 1.6em 0 0.3em; }
+.ta-index h3 a { color: var(--accent-2); text-decoration: none; }
+.ta-index h3 a:hover { text-decoration: underline; }
+.ta-article h2 { margin: 2.2em 0 0.6em; }
+h2.sources-h { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-mute); font-family: var(--font-serif); margin: 40px 0 10px; padding-top: 14px; border-top: 3px solid var(--accent); }
+h2.sources-h + ol { margin: 0 0 1em; padding-left: 1.4em; font-size: 0.92rem; }
+h2.sources-h + ol li { margin: 0 0 8px; }
+p.collection-footer { margin: 26px 0 0; padding: 14px 16px; background: var(--bg-soft); border-radius: 8px; font-size: 0.95rem; }
+
+p.seam {
+    padding-left: 1.25em;
+    border-left: 3px solid var(--accent);
+    margin: 4em 2em 2em;
+    font-style: italic;
+}
+</style>
+</head>
+<body>
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/series/">Series</a><span class="sep">›</span><a href="/series/town-asset/">A Town Asset</a><span class="sep">›</span><span class="current">The line, drawn and erased</span>
+  </nav>
+</div>
+<div class="container">
+<article class="piece-body"><h1>The line, drawn and erased</h1>
+<p class="piece-dek">In February 2022 he told a resident the selectmen have nothing to do with the school. In June 2023 he told the Board of Education the school is a town asset. Everything since has followed from the second sentence.</p>
+<p>On the night of February 15, 2022, a resident stood up at the Board of
+Selectmen and asked about the mask mandate at the elementary school. The
+presiding First Selectman cut the question off before it got going. He was
+not unkind about it. He was clear.</p>
+<p>This board, he said, does not have anything to do with the school mandate or
+how it is addressed. That is the Board of Education. And then, so that everyone
+understood where the boundary ran, he listed what the selectmen do control:
+the town hall, the library, the museum, and facilities of that kind <sup class="src"><a href="/reference/video/transcripts/8Y8S8zglWek.html#t8379" title="at 2:19:39 in the recording">[1]</a></sup>.</p>
+<p>The school was not on the list.</p>
+<p>He was right, and he was saying something ordinary. Connecticut towns run this
+way. A board of education is not a department of the town. It is a separately
+elected board with its own statutory duties, and one of them is the care and
+operation of the school buildings and grounds. The First Selectman knew that,
+and said so, from the chair, to a room full of residents.</p>
+<p>Sixteen months later he was sitting at the Board of Education&#8217;s table saying
+the opposite.</p>
+<p>On June 14, 2023 he came to the school board to talk about the community
+center. He answered their written questions. Then he took up the memorandum of
+understanding the board had asked its attorney to draft, and he set out the
+town&#8217;s position. The town of Andover, he said, is the school district. The town
+owns all the land. The town owns all the buildings. The town is the owner of
+everything. There are no deeded properties to a school or to a board of
+education <sup class="src"><a href="/reference/video/transcripts/boe-2023-06-14.html#t2310" title="at 38:30 in the recording">[2]</a></sup>.</p>
+<p>The board&#8217;s memorandum, he said, was not necessary.</p>
+<p>Asked whether the school should simply budget to pave its own upper parking
+lot, he said it should go to CIP, the town&#8217;s capital improvement committee,
+because it is a town asset. This building, he said, is a town asset. And a few
+minutes earlier, on how the money should be thought about: it is all town
+money, and he does not split hairs <sup class="src"><a href="/reference/video/transcripts/boe-2023-06-14.html#t3241" title="at 54:01 in the recording">[2a]</a></sup><sup class="src"><a href="/reference/video/transcripts/boe-2023-06-14.html#t3055" title="at 50:55 in the recording">[2b]</a></sup>.</p>
+<p>He said other things at that meeting too, and they belong here. He said he does
+not come over and tell the board of education how to spend its money. He said
+he was not going to kill their budget. He took responsibility for not having
+put a board member on the building committee. He is not a man who came to that
+table to declare war, and this article is not going to pretend he did.</p>
+<p>But the position had moved, and it did not move back. In December 2024, at a
+meeting of all three boards, he told the Board of Education that the school is
+not a board of education building, it is a town asset, it is part of the
+capital, and that the school&#8217;s capital projects would have to route through the
+town&#8217;s committee <sup class="src"><a href="/reference/video/transcripts/-B9O-4anXqk.html#t662" title="at 11:02 in the recording">[3a]</a></sup><sup class="src"><a href="/reference/video/transcripts/-B9O-4anXqk.html#t796" title="at 13:16 in the recording">[3b]</a></sup>. The board pointed out, on the record, what that
+actually meant: the capital committee makes recommendations, and those
+recommendations go to the Board of Selectmen for approval <sup class="src"><a href="/reference/video/transcripts/-B9O-4anXqk.html#t957" title="at 15:57 in the recording">[3]</a></sup>. In June
+2025 the same framing came back again when he challenged what the school had
+done with its own unspent money <sup class="src"><a href="/reference/video/transcripts/K3GrgL3yEMM.html#t173" title="at 2:53 in the recording">[4a]</a></sup><sup class="src"><a href="/reference/video/transcripts/K3GrgL3yEMM.html#t328" title="at 5:28 in the recording">[4b]</a></sup>.</p>
+<p>It is worth being precise about what has and has not been shown here.</p>
+<p>The town does own the land. The assessor&#8217;s record is unambiguous, and it has
+been true since the 1960s <sup class="src"><a href="https://gis.vgsi.com/andoverct/Parcel.aspx?pid=988">[5]</a></sup>. Nobody took anything from anybody. And in
+February 2022 he was answering a question about a mask mandate, not delivering
+an opinion on property law.</p>
+<p>But that is the point, not a problem with it. He was not making a legal
+argument in 2022. He was telling a resident where his board&#8217;s authority
+stopped.</p>
+<p>He knew where the line was.</p>
+<p>Then he moved it, and he has been governing from the other side of it ever
+since.</p>
+<p>It is all town money. He does not split hairs.</p>
+<h2 class="sources-h">Sources</h2>
+<ol>
+<li><a href="/links/1073/">Board of Selectmen meeting, February 15, 2022 &#8211; the First Selectman on the board&#8217;s authority over the school</a> (2022-02-15)</li>
+<li><a href="/links/1050/">Board of Education meeting, June 14, 2023 &#8211; the First Selectman before the school board on the community center and the memorandum of understanding</a> (2023-06-14)</li>
+<li><a href="/links/1040/">Tri-Board meeting, December 4, 2024 &#8211; who controls the elementary school&#8217;s capital projects</a> (2024-12-04)</li>
+<li><a href="/links/1031/">Board of Selectmen, June 9 and 12, 2025 &#8211; the First Selectman challenges the transfer of the school&#8217;s unexpended funds</a> (2025-06-12)</li>
+<li><a href="/links/1028/">Andover assessor&#8217;s records &#8211; the School Road parcels are owned by the Town of Andover</a> (2026-07-10)</li>
+</ol>
+<p class="collection-footer">Every source cited above is gathered at <a href="/links/1152/">the source collection for this piece</a>.</p>
+</article>
+</div>
+<div class="page-footer">
+andoverct.info link registry
+</div>
+</body>
+</html>
