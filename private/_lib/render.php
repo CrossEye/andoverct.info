@@ -64,6 +64,20 @@ function priv_css() {
   .topbar button:hover{background:#eef4fb;}
   .card{background:#fff;border:1px solid var(--rule);border-radius:10px;padding:18px 18px 8px;margin:18px 0;}
   .card h2{font-size:1rem;color:var(--navy);margin:0 0 12px;}
+  details.card{padding:18px;}
+  details.card[open]{padding-bottom:8px;}
+  details.card>summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;
+    align-items:baseline;gap:6px;margin:0;}
+  details.card[open]>summary{margin:0 0 12px;}
+  details.card>summary::-webkit-details-marker{display:none;}
+  details.card>summary::before{content:"\\25B8";color:var(--mute);font-size:.85em;
+    margin-right:2px;}
+  details.card[open]>summary::before{content:"\\25BE";}
+  details.card>summary .ttl{font-size:1rem;color:var(--navy);font-weight:700;}
+  details.card>summary .sid{color:#5b6775;font-weight:400;}
+  details.card>summary .sid a{color:#5b6775;}
+  details.card>summary .count{color:var(--mute);font-weight:400;}
+  details.card[open]>summary .count{display:none;}
   .ulist{list-style:none;margin:0 0 12px;padding:0;}
   .ulist li{display:flex;justify-content:space-between;align-items:center;
     padding:7px 0;border-bottom:1px solid var(--rule);font-size:14px;}
@@ -179,9 +193,15 @@ function priv_render_admin_console($subs, $flash = null, $link = null) {
 
     foreach ($subs as $s) {
         $sid = priv_h($s['id']);
-        $body .= '<div class="card"><h2>' . priv_h($s['title'])
-               . ' <span style="color:#5b6775;font-weight:400">(' . $sid . ')</span></h2>';
         $users = isset($s['users']) ? $s['users'] : array();
+        $n = count($users);
+        $countLabel = $n . ' ' . ($n === 1 ? 'email' : 'emails');
+        $subUrl = priv_h(PRIV_BASE_PATH . '/' . $s['id']);
+        $body .= '<details class="card" id="' . $sid . '"><summary>'
+               . '<span class="ttl">' . priv_h($s['title']) . '</span> '
+               . '<span class="sid">(<a href="' . $subUrl . '" '
+               . 'onclick="event.stopPropagation()">' . $sid . '</a>)</span> '
+               . '<span class="count">(' . $countLabel . ')</span></summary>';
         $body .= '<ul class="ulist">';
         if (!$users) {
             $body .= '<li class="none">No users yet.</li>';
@@ -203,7 +223,7 @@ function priv_render_admin_console($subs, $flash = null, $link = null) {
                . '<input type="hidden" name="sub" value="' . $sid . '">'
                . '<input type="email" name="email" placeholder="add email…" required>'
                . '<button type="submit">Add</button></form>';
-        $body .= '</div>';
+        $body .= '</details>';
     }
     // Publishing console (neutral label), set off from the allowlist cards.
     $body .= '<div class="card"><h2 style="margin-bottom:12px"><a href="'
