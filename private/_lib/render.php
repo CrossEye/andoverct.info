@@ -164,7 +164,7 @@ function priv_render_admin_login($notice = null, $prefill = '') {
 
 // Admin console: per-subsection allowlist management. $subs is the list from
 // priv_list_subsections(); each augmented with a 'users' array.
-function priv_render_admin_console($subs, $flash = null, $link = null) {
+function priv_render_admin_console($subs, $flash = null, $link = null, $openSub = null) {
     $csrf = priv_csrf_field();
     $addBase = priv_h(PRIV_BASE_PATH . '/admin/add');
     $rmBase = priv_h(PRIV_BASE_PATH . '/admin/remove');
@@ -197,7 +197,8 @@ function priv_render_admin_console($subs, $flash = null, $link = null) {
         $n = count($users);
         $countLabel = $n . ' ' . ($n === 1 ? 'email' : 'emails');
         $subUrl = priv_h(PRIV_BASE_PATH . '/' . $s['id'] . '/');
-        $body .= '<details class="card" id="' . $sid . '"><summary>'
+        $openAttr = ($openSub !== null && $s['id'] === $openSub) ? ' open' : '';
+        $body .= '<details class="card" id="' . $sid . '"' . $openAttr . '><summary>'
                . '<span class="ttl">' . priv_h($s['title']) . '</span> '
                . '<span class="sid">(<a href="' . $subUrl . '" '
                . 'onclick="event.stopPropagation()">' . $sid . '</a>)</span> '

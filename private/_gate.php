@@ -211,7 +211,12 @@ function priv_handle_admin($path) {
         $link = $_SESSION['admin_link'];
         unset($_SESSION['admin_link']);
     }
-    priv_render_admin_console($subs, $flash, $link);
+    $open = null;
+    if (!empty($_SESSION['admin_open'])) {
+        $open = $_SESSION['admin_open'];
+        unset($_SESSION['admin_open']);
+    }
+    priv_render_admin_console($subs, $flash, $link, $open);
 }
 
 // Owner-only: email an admin-scoped magic link. Same no-enumeration discipline.
@@ -268,7 +273,10 @@ function priv_admin_mutate($action) {
         priv_audit('admin-remove', $sub . ' ' . $email);
         $_SESSION['admin_flash'] = array('type' => 'ok', 'msg' => 'Removed ' . $email . ' from ' . $sub . '.');
     }
-    priv_redirect(PRIV_BASE_PATH . '/admin');
+    // Keep the section the owner just edited expanded after the redirect (the
+    // fragment scrolls to it; admin_open re-opens it since sections default shut).
+    $_SESSION['admin_open'] = $sub;
+    priv_redirect(PRIV_BASE_PATH . '/admin#' . $sub);
 }
 
 // Owner-only: mint a real single-use sign-in link for an allowlisted user and
@@ -294,7 +302,8 @@ function priv_admin_mintlink() {
         'sub'   => $sub,
     );
     priv_audit('admin-mintlink', $sub . ' ' . $email);
-    priv_redirect(PRIV_BASE_PATH . '/admin');
+    $_SESSION['admin_open'] = $sub;
+    priv_redirect(PRIV_BASE_PATH . '/admin#' . $sub);
 }
 
 // Pick a directory index: a dynamic index.php (executed) takes precedence over
