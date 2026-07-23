@@ -96,6 +96,17 @@ if (!preg_match('/^[a-z0-9-]+$/', $sub)
 $meta = priv_json_read(PRIV_SUBS_DIR . '/' . $sub . '/_meta.json', array());
 $rest = implode('/', array_slice($segs, 1));
 
+// Canonicalize a bare subsection root to a trailing slash. Served content is a
+// directory index (index.html) whose relative links (./x/, pieces/…) resolve
+// against the request URL's "directory": without the slash the browser treats
+// /private/ as the base and the links escape the subsection. A GET/HEAD of the
+// slashless root gets one 301 to the slashed form; auth and content are handled
+// there. (Sub-paths and POSTs — e.g. request-link — are left alone.)
+if ($rest === '' && substr($path, -1) !== '/'
+    && ($_SERVER['REQUEST_METHOD'] === 'GET' || $_SERVER['REQUEST_METHOD'] === 'HEAD')) {
+    priv_redirect(PRIV_BASE_PATH . '/' . $sub . '/', 301);
+}
+
 // subsection endpoint: request a magic link
 if ($rest === 'request-link') {
     priv_handle_request_link($sub, $meta);
@@ -132,8 +143,8 @@ function priv_route_path() {
     return $u;
 }
 
-function priv_redirect($to) {
-    if (!headers_sent()) { header('Location: ' . $to, true, 302); }
+function priv_redirect($to, $status = 302) {
+    if (!headers_sent()) { header('Location: ' . $to, true, $status); }
     exit;
 }
 
