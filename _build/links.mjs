@@ -343,7 +343,32 @@ export function crumbsHtml(currentTitle) {
     .join('<span class="sep">›</span>');
 }
 
-export function pageShell({ pageTitle, og, crumbs, body }, css) {
+/* The site footer, in two parts.
+ *
+ * Line 1 (.footer-id) is CONSTANT SITE-WIDE and is the whole point of the
+ * consolidation: who wrote this, how to reach him, and what it is not —
+ * official communication of the Town, of Region 8 (RHAM), or of any party or
+ * town committee, and not legal advice. Do not fork it per section.
+ *
+ * Line 2 (.footer-note) is the optional per-page slot: sources, method, the
+ * "authoritative sources are the Charter and the statutes" line, an edition
+ * note. Pass plain HTML; pass nothing and only line 1 renders.
+ */
+export const SITE_FOOTER_ID =
+  '<strong>Personal work of Scott Sauyet</strong> '
+  + '<a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · '
+  + 'Independent civic reference, not official communication of the Town of '
+  + 'Andover, Region 8 (RHAM), or any party or town committee, and not legal '
+  + 'advice · Corrections welcome';
+
+export function siteFooterHtml(note) {
+  return '<div class="page-footer">\n'
+    + `<p class="footer-id">${SITE_FOOTER_ID}</p>`
+    + (note ? `\n<p class="footer-note">${note}</p>` : "")
+    + '\n</div>';
+}
+
+export function pageShell({ pageTitle, og, crumbs, body, footerNote }, css) {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -364,9 +389,7 @@ ${og}
 <div class="container">
 ${body}
 </div>
-<div class="page-footer">
-andoverct.info link registry
-</div>
+${siteFooterHtml(footerNote)}
 </body>
 </html>`;
 }

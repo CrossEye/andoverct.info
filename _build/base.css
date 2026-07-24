@@ -364,7 +364,10 @@ code {
 .format-card-desc { font-size: 9pt; color: var(--ink-mute); line-height: 1.4; }
 .format-card a { display: block; }
 
-/* ---- Footer ---- */
+/* ---- Footer ----
+   Two parts: .footer-id is the site-wide identity/disclaimer line, identical
+   on every page; .footer-note is the optional per-page line (sources, method,
+   "not a lawyer"). See siteFooterHtml() in _build/links.mjs. */
 .page-footer {
     max-width: var(--measure);
     margin: 32px auto 60px;
@@ -375,6 +378,10 @@ code {
     font-family: var(--font-sans);
     border-top: 1px solid var(--rule);
 }
+.page-footer p { margin: 0 auto; max-width: 62ch; }
+.page-footer .footer-note { margin-top: 8px; font-style: italic; }
+.page-footer a { color: inherit; border-bottom: 1px solid var(--rule); }
+.page-footer a:hover { color: var(--link); border-bottom-color: var(--link); }
 
 /* ---- Confirmation glyphs ---- */
 h3 .conf-mark {

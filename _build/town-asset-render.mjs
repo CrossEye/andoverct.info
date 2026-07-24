@@ -86,6 +86,11 @@ const SERIES_TITLE = "A Town Asset";
 const SERIES_DESC =
   "An account drawn entirely from Andover's own public record: the minutes, "
   + "the packets, and the recordings of its own meetings.";
+// The footer's optional second line for series pages (the constant identity
+// line comes from siteFooterHtml). Links pages pass none: line 1 says it all.
+const SERIES_FOOTER_NOTE =
+  "Drawn entirely from Andover&rsquo;s own minutes, packets and meeting "
+  + "recordings. Every claim carries its source.";
 
 const crumb = (parts, current) =>
   parts.map((c) => `<a href="${c.href}">${escapeHtml(c.label)}</a>`)
@@ -195,6 +200,7 @@ for (const step of stepNums) {
     og: og(SERIES_TITLE, SERIES_DESC, "/series/town-asset/"),
     crumbs: crumb([{ label: "Home", href: "/" }, { label: "Series", href: "/series/" }], SERIES_TITLE),
     body: parentBody,
+    footerNote: SERIES_FOOTER_NOTE,
   }, seriesCss), "utf8");
 
   // --- the pieces published so far ---
@@ -213,6 +219,7 @@ for (const step of stepNums) {
         { label: SERIES_TITLE, href: "/series/town-asset/" },
       ], piece.title),
       body: `<article class="piece-body">${html}</article>`,
+      footerNote: SERIES_FOOTER_NOTE,
     }, seriesCss), "utf8");
   }
 
@@ -297,6 +304,7 @@ for (const piece of finalMeta.pieces) {
       { label: SERIES_TITLE, href: "/series/town-asset/" },
     ], piece.title),
     body: `<article class="piece-body">${html}</article>`,
+    footerNote: SERIES_FOOTER_NOTE,
   }, seriesCss), "utf8");
 }
 mkdirSync(join(pv, "article"), { recursive: true });
@@ -304,6 +312,7 @@ writeFileSync(join(pv, "article", "index.html"), pageShell({
   pageTitle: SERIES_TITLE, og: "",
   crumbs: crumb([{ label: "Home", href: "/" }, { label: "Series", href: "/series/" }], SERIES_TITLE),
   body: `<article class="piece-body ta-article">${mdToHtml(readFileSync(join(finalSd, "index.md"), "utf8"))}</article>`,
+  footerNote: SERIES_FOOTER_NOTE,
 }, seriesCss), "utf8");
 
 // The FB console: build it from the campaign sources and copy it in.
