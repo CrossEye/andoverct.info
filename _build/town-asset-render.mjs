@@ -68,6 +68,14 @@ const TA_CSS = `
 .ta-index h3 a { color: var(--accent-2); text-decoration: none; }
 .ta-index h3 a:hover { text-decoration: underline; }
 .ta-article h2 { margin: 2.2em 0 0.6em; }
+/* Section titles are links to the standalone pieces: no underline, inherit the
+   heading colour, and a link-away arrow that fades in on hover (its space is
+   always reserved, so hovering causes no reflow). */
+.ta-article h2 a.section-link { color: inherit; text-decoration: none; border-bottom: none; }
+.ta-article h2 a.section-link::after { content: "\\2197"; font-size: 0.6em; vertical-align: super; margin-left: 0.14em; opacity: 0; transition: opacity 0.12s ease; }
+.ta-article h2 a.section-link:hover::after { opacity: 0.75; }
+p.fb-note { margin: 40px 0 6px; padding: 14px 18px; background: var(--bg-soft); border-radius: 8px; font-size: 0.95rem; color: var(--ink-soft); }
+p.fb-note a { font-weight: 600; }
 h2.sources-h { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-mute); font-family: var(--font-serif); margin: 40px 0 10px; padding-top: 14px; border-top: 3px solid var(--accent); }
 h2.sources-h + ol { margin: 0 0 1em; padding-left: 1.4em; font-size: 0.92rem; }
 h2.sources-h + ol li { margin: 0 0 8px; }
