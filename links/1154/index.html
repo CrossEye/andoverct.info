@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="A Town Asset -- sources for &quot;A permit for its own lot, on its own money&quot;">
+<meta property="og:description" content="The public records cited in this section, in the order they appear: the minutes, packets and recordings of Andover&#39;s own meetings.">
+<meta property="og:url" content="https://andoverct.info/links/1154/">
+<meta property="og:image" content="https://andoverct.info/logo.png">
+<link rel="canonical" href="https://andoverct.info/links/1154/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>A Town Asset -- sources for &quot;A permit for its own lot, on its own money&quot; — andoverct.info</title>
+<style>/* Default civic-report theme.
+ *
+ * A theme is just this set of CSS custom properties. To experiment, copy this
+ * file to _build/themes/<name>.css, change what you like, and point at it from
+ * _build/report.config.json ({"theme":"<name>"}) for all reports, or from a
+ * single report's front matter (theme: <name>). A non-default theme is layered
+ * ON TOP of this one, so it only needs to list the variables it changes.
+ *
+ * Scope: colors, fonts, and small size/width/gap tweaks — not layout changes.
+ */
+:root {
+  /* ---- Palette ---- */
+  --bg:             #fafaf7;   /* page background */
+  --bg-page:        #ffffff;   /* the white content card */
+  --bg-soft:        #f5f3ed;   /* callouts, table headers, inline code */
+  --ink:            #1a1a1a;   /* body text, main headings */
+  --ink-soft:       #333333;   /* blockquote / methodology text */
+  --ink-mute:       #5a5a5a;   /* subtitle, card descriptions */
+  --ink-faint:      #888888;   /* attribution, footer, captions */
+  --rule:           #e0ddd5;   /* hairline borders */
+  --accent:         #b8a878;   /* gold accent rules */
+  --accent-2:       #2c3e50;   /* slate: h3, table-header & code text */
+  --banner-bg:      #2c3e50;   /* top banner background */
+  --banner-ink:     #ecf0f1;   /* top banner text */
+  --crumb-link:       #b9c4cf; /* breadcrumb links in the banner */
+  --crumb-link-hover: #ffffff;
+  --crumb-current:    #ffffff; /* deepest crumb (current page), not a link */
+  --link:           #1a5490;
+  --link-hover:     #0d3a6b;
+  --link-underline: #c5d3e2;
+  --anchor:         #b8b3a4;   /* the ¶ header anchor */
+  --anchor-hover:   #6c7480;
+  --confirm:        #5a8a5a;   /* green ✓ confirmation mark */
+  --confirm-strong: #2e7d32;
+
+  /* ---- Fonts ---- */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:  "SF Mono", Monaco, Menlo, Consolas, monospace;
+
+  /* ---- Sizes (small tweaks only; no layout restructuring) ---- */
+  --base-size:  11pt;    /* body text */
+  --measure:    780px;   /* content column width */
+  --gutter:     30px;    /* horizontal padding / banner & footer gaps */
+  --title-size: 28pt;
+  --h2-size:    18pt;
+  --h3-size:    13pt;
+}
+
+/* bluegold — mirrors the light-mode look of the 55th campaign site
+ * (C:\Users\scott\Dev\Andover\55th, e.g. localhost:8080/reports): cool
+ * blue-gray paper, a dark navy banner with a gold underline, navy serif
+ * headings over a sans body, gold accent rules, and blue links.
+ *
+ * Note the deliberate font swap: base.css uses --font-serif for body text and
+ * --font-sans for headings/labels, so to match the campaign look (sans body,
+ * serif display) we put the SANS stack in --font-serif and the SERIF stack in
+ * --font-sans.
+ *
+ * Layered on default.css. Uses --banner-border (in base.css) for the gold rule
+ * under the banner. */
+:root {
+  /* Palette */
+  --bg:             #f4f6f9;
+  --bg-page:        #ffffff;
+  --bg-soft:        #eef4fb;   /* blue-050 tint for callouts / table headers */
+  --rule:           #e3e8ef;   /* hairlines */
+  --ink:            #19222e;
+  --ink-soft:       #2b3744;
+  --ink-mute:       #5b6775;
+  --ink-faint:      #8a94a1;
+  --accent:         #e8a800;   /* signature gold rules */
+  --accent-2:       #0f2a4a;   /* blue-900: headings, table-header & code text */
+  --banner-bg:      linear-gradient(180deg, #0f2a4a, #143862);
+  --banner-border:  3px solid #e8a800;
+  --banner-ink:     #dde8f5;   /* blue-100 */
+  --crumb-link:       #e8a800; /* gold breadcrumb links */
+  --crumb-link-hover: #ffffff; /* hover to white + underline */
+  --crumb-current:    #ffffff; /* current page, not a link */
+  --link:           #245c95;   /* blue-600 */
+  --link-hover:     #1c4e80;   /* blue-700 */
+  --link-underline: #cfe0f2;
+  --confirm:        #2f8f5b;
+  --confirm-strong: #1f7d49;
+
+  /* Type: sans body + serif display headings (see note above) */
+  --font-serif: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans:  Georgia, "Times New Roman", serif;
+
+  --measure: 860px;
+}
+
+/* Structural base styles for civic reports — theme-independent.
+ * Colors, fonts, and sizes come from the active theme (CSS custom properties
+ * in _build/themes/<name>.css), which is loaded BEFORE this file. */
+
+/* ---- Reset & base ---- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Layout ---- */
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner a { color: inherit; text-decoration: none; }
+.page-banner a:hover { text-decoration: underline; }
+
+/* ---- Breadcrumb (in the banner) ---- */
+.page-banner .crumbs a {
+    color: var(--crumb-link, var(--banner-ink));
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover, #fff);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current {
+    color: var(--crumb-current, #fff);
+}
+
+.container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* ---- Images / figures ---- */
+/* Scale charts and figures to the column (and the printed page box) rather
+   than overflowing at their intrinsic pixel/point size. */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+}
+
+/* ---- Lightbox (screen only; overlay is built at runtime by the viewer
+   script, so it never appears in the PDF). Click a chart to enlarge it. ---- */
+.container img { cursor: zoom-in; }
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vmin;
+    background: rgba(0, 0, 0, 0.85);
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+.lightbox-overlay.open { opacity: 1; }
+.lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    margin: 0;
+    cursor: zoom-out;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+    background: #fff;
+}
+
+/* ---- Title block ---- */
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-attribution {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    color: var(--ink-faint);
+    margin: 0 0 24px 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+.report-attribution a {
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+}
+.report-attribution a:hover {
+    color: var(--link);
+    border-bottom-color: var(--link);
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.methodology-header {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 0 0 36px 0;
+    line-height: 1.55;
+}
+
+/* ---- Section labels (small uppercase tags above h2) ---- */
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 36px 0 4px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+/* ---- Headings ---- */
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+h3 {
+    font-family: var(--font-sans);
+    font-size: var(--h3-size);
+    font-weight: 600;
+    margin: 28px 0 10px 0;
+    color: var(--accent-2);
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+
+/* ---- Header anchor links (HTML only; hidden in print) ---- */
+.header-anchor {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.2em;
+    color: var(--anchor);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.85em;
+    vertical-align: baseline;
+    cursor: pointer;
+    user-select: none;
+}
+h2:hover .header-anchor,
+h3:hover .header-anchor,
+.header-anchor:focus {
+    opacity: 1;
+}
+.header-anchor:hover {
+    color: var(--anchor-hover);
+}
+.header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+}
+.header-anchor.copied::after {
+    content: " copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+}
+@media print {
+    .header-anchor {
+        display: none;
+    }
+}
+
+/* ---- Body text ---- */
+p {
+    margin: 0 0 14px 0;
+    orphans: 3;
+    widows: 3;
+}
+p.intro-table {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+strong { font-weight: 700; color: var(--ink); }
+em { font-style: italic; }
+
+/* ---- Links ---- */
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* ---- Lists ---- */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+li {
+    margin: 0 0 6px 0;
+    line-height: 1.55;
+}
+
+/* ---- Tables ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-before: avoid;
+    break-before: avoid;
+}
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 9.5pt;
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--accent);
+}
+tbody tr:hover { background: var(--bg); }
+
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+tbody tr:last-child td {
+    border-bottom: 2px solid var(--accent);
+}
+
+/* ---- Blockquotes (source notes, verbatim quotes) ---- */
+blockquote {
+    margin: 14px 0 18px 0;
+    padding: 14px 20px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+blockquote p { margin: 0 0 8px 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ol, blockquote ul {
+    margin: 8px 0;
+}
+
+/* ---- HR ---- */
+hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+}
+
+/* ---- Inline code ---- */
+code {
+    font-family: var(--font-mono);
+    font-size: 9.5pt;
+    background: var(--bg-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: var(--accent-2);
+    overflow-wrap: break-word;
+}
+
+/* ---- Other Formats footer ---- */
+.formats-section {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+}
+.format-cards {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.format-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.format-cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media screen and (max-width: 700px) {
+    .format-cards.cols-3,
+    .format-cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+.format-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    padding: 14px;
+    text-align: left;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+.format-card-icon { font-size: 18pt; margin-bottom: 4px; }
+.format-card-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+.format-card-desc { font-size: 9pt; color: var(--ink-mute); line-height: 1.4; }
+.format-card a { display: block; }
+
+/* ---- Footer ----
+   Two parts: .footer-id is the site-wide identity/disclaimer line, identical
+   on every page; .footer-note is the optional per-page line (sources, method,
+   "not a lawyer"). See siteFooterHtml() in _build/links.mjs. */
+.page-footer {
+    max-width: var(--measure);
+    margin: 32px auto 60px;
+    padding: 24px var(--gutter);
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 9.5pt;
+    font-family: var(--font-sans);
+    border-top: 1px solid var(--rule);
+}
+.page-footer p { margin: 0 auto; max-width: 62ch; }
+.page-footer .footer-note { margin-top: 8px; font-style: italic; }
+.page-footer a { color: inherit; border-bottom: 1px solid var(--rule); }
+.page-footer a:hover { color: var(--link); border-bottom-color: var(--link); }
+
+/* ---- Confirmation glyphs ---- */
+h3 .conf-mark {
+    color: var(--confirm);
+    font-size: 11pt;
+    margin-right: 4px;
+}
+
+.link-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin: 0 0 14px 0;
+    scroll-margin-top: 16px;
+}
+.link-card:target {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent);
+}
+.link-card-title {
+    font-family: var(--font-sans);
+    font-size: 12pt;
+    font-weight: 700;
+    margin: 0;
+}
+.link-card-title .ext-mark {
+    margin-left: 0.35em;
+    font-size: 9pt;
+    color: var(--ink-faint);
+}
+.link-card-desc {
+    margin: 6px 0 0 0;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+}
+.link-card-meta {
+    font-family: var(--font-sans);
+    margin: 8px 0 0 0;
+    font-size: 9pt;
+    color: var(--ink-faint);
+}
+.link-group-desc {
+    color: var(--ink-mute);
+    margin: 0 0 14px 0;
+}
+.links-count {
+    font-family: var(--font-sans);
+    margin-top: 28px;
+    font-size: 9pt;
+    color: var(--ink-faint);
+}
+</style>
+</head>
+<body>
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/links/">Links</a><span class="sep">›</span><span class="current">A Town Asset -- sources for &quot;A permit for its own lot, on its own money&quot;</span>
+  </nav>
+</div>
+<div class="container">
+<h1 class="report-title">A Town Asset -- sources for &quot;A permit for its own lot, on its own money&quot;</h1>
+<p class="report-subtitle">The public records cited in this section, in the order they appear: the minutes, packets and recordings of Andover&#39;s own meetings.</p>
+<hr class="report-header-rule">
+<div class="link-card" id="link-1050">
+  <div class="link-card-title"><a href="https://andoverct.info/reference/video/transcripts/boe-2023-06-14.html">Board of Education meeting, June 14, 2023 -- the First Selectman before the school board on the community center and the memorandum of understanding</a><span class="ext-mark" title="external link">&#8599;</span></div>
+  <p class="link-card-desc">First Selectman Jeff Maguire and Selectwoman Paula King came to the June 14, 2023 Board of Education meeting for a conversation about the community center; the minutes record the chair welcoming them by name. He answered the board&#39;s written safety questions, then took up the memorandum of understanding the board&#39;s attorney had drafted. On the record he set out the town&#39;s position: &quot;The town of Andover is the school district... The town owns all the land. The town owns all the buildings. The town is the owner of everything. There are no deeded properties to a school or to a board of education&quot; (~38:30). Of the memorandum he said &quot;it&#39;s not necessary that we really do that,&quot; while agreeing to review it, and said the town would go to planning and zoning and move forward (~39:38). Asked whether the school should budget to pave its own upper parking lot, he answered: &quot;It should go to CIP... It&#39;s a town asset. This building is a town asset&quot; (~54:01), and earlier, &quot;It&#39;s all town money. I don&#39;t split hairs&quot; (~50:58). He also told the board he does not tell the Board of Education how to spend its money, that he was not going to kill their budget, that he took responsibility for not having invited a board member onto the building committee, and he agreed to quarterly meetings between the boards. The board chair replied that there is a deeded school line on the site-plan map and that the board has statutory control of school property (~1:05:04). Official minutes: https://www.andoverelementaryct.org/images/boe/Minutes/BOE_Minutes_61423.pdf</p>
+  <p class="link-card-meta">2023-06-14</p>
+</div>
+<div class="link-card" id="link-1052">
+  <div class="link-card-title"><a href="https://andoverct.info/reference/video/transcripts/boe-2023-08-09.html">Board of Education meeting, August 9, 2023 -- the superintendent&#39;s account of the denied paving permit</a><span class="ext-mark" title="external link">&#8599;</span></div>
+  <p class="link-card-desc">At the August 9, 2023 Board of Education meeting the superintendent gave a detailed, contemporaneous account of what had happened to the school&#39;s paving project since the board voted 5-0 on June 14 to appropriate up to $120,000 to repave the upper parking lot and basketball court as a safety matter (~23:13). On July 27 the school&#39;s contractor applied for a standard town right-of-way permit and it was denied, on the grounds that the school needed to go through planning and zoning and wetlands. The planning and zoning chair then told her and the board chair that it was not a planning and zoning matter and they did not need to come before the commission; the wetlands commission wrote that it was not a wetlands matter. On July 31, at the First Selectman&#39;s request, the school met with the paver and public works, after which the town administrator sent new conditions: no permit unless the project was approved at a Board of Selectmen meeting, town-hired laboratories to test soil and asphalt compaction, paving-thickness monitoring, Cape Cod curbing, and public-works backfill. The paver, of forty years&#39; experience, said he had not seen such conditions on a job this size. On August 4 the superintendent sent the town administrator and the First Selectman the sections of the town charter that except the board of education from those requirements, and received no reply. With the administrator away, she was told the only official who could issue the permit in his absence was the First Selectman; the board chair called him, and no permit issued. The board closed the upper lot for the school year (~23:41-36:02).</p>
+  <p class="link-card-meta">2023-08-09</p>
+</div>
+<div class="link-card" id="link-1058">
+  <div class="link-card-title"><a href="https://andoverct.info/reference/video/transcripts/io6H5hMo5nQ.html">Board of Selectmen meeting, August 14, 2023 -- the town authorizes a conditioned paving permit</a><span class="ext-mark" title="external link">&#8599;</span></div>
+  <p class="link-card-desc">At the August 14, 2023 Board of Selectmen meeting First Selectman Jeff Maguire, presiding, took up the elementary school&#39;s upper parking lot. He reported meeting with the school board chair and the finance board chair, and set out the terms: the project would use the new town-held fund that the town administrator and the Board of Finance had established for the school&#39;s capital projects, and his one condition was that the work be performed to specifications laid out by the director of public works and the town engineer (~10:15). He said he had no objection to the project itself: if it is done in accordance with the engineer and public works, &quot;I have no problem with the project moving forward,&quot; though he added it might not be the most useful project to do at the school (~11:41). The town administrator then set out the technical conditions at length: basin tops, reclamation depth, tack coating, indemnification, performance bonding, compaction and thickness testing, and public-works backfill.</p>
+  <p class="link-card-meta">2023-08-14</p>
+</div>
+<div class="link-card" id="link-1059">
+  <div class="link-card-title"><a href="https://andoverct.info/reference/video/transcripts/Ftj5jJ8nLss.html">Board of Finance special meeting, August 17, 2023 -- who controls the school&#39;s capital fund</a><span class="ext-mark" title="external link">&#8599;</span></div>
+  <p class="link-card-desc">Three days after the selectmen conditioned the paving permit, the Board of Finance held a special meeting to move the money. Asked directly by a Board of Education member whether the new fund was the school&#39;s or the town&#39;s, the town administrator answered: the &quot;account is on the town side. The town controls that money as it rolls back. It was just designated. It comes back into the town and then becomes designated for a capital fund.&quot; Pressed further -- that it sounded as though the town would be in charge of what it was used for, rather than it being a capital account for the school -- he answered: &quot;Correct... it&#39;s not at the complete discretion of the school&quot; (~3:29-3:55 of part 2; the meeting was recorded in two parts, and this entry links the part carrying the exchange). Two things the town did in the school&#39;s favour at the same meeting: it agreed to pay for the materials- testing laboratory, the proctor and the monitoring, and to backfill behind the curbing at its own cost (part 1, ~15:37); and the finance board convened a special meeting on short notice specifically to keep the project moving. Part 1 transcript (public speak, the discussion, and the 4-0-1 vote): https://andoverct.info/reference/video/transcripts/zHh2bYvxWcI.html</p>
+  <p class="link-card-meta">2023-08-17</p>
+</div>
+<div class="link-card" id="link-1053">
+  <div class="link-card-title"><a href="https://andoverct.info/reference/video/transcripts/boe-2023-09-13.html">Board of Education meeting, September 13, 2023 -- the terms on which the paving could proceed</a><span class="ext-mark" title="external link">&#8599;</span></div>
+  <p class="link-card-desc">At the September 13, 2023 Board of Education meeting the board learned the terms on which its paving project could go ahead. The town would not accept a check made out to the contractor; the money had to be payable to the Town of Andover. The mechanism, as the town administrator relayed it from the town attorney and the auditor: the school must vote to unencumber its own budgeted funds and return them to the town, &quot;they have to put it in their general fund, and then they have to spend the money. It becomes their money first,&quot; after which the town would book the work as an education-related capital expense and pay the bill (~1:21:58, ~1:47:45). The school&#39;s own budget would then close the year showing a surplus of roughly $125,000 that it had not in fact saved (~1:49:43). The board chair said on the record: &quot;it is ridiculous what has happened with regard to the denial of a permit with regard to paving in a spot in our school that is under our jurisdiction that requires that it be done for safety purposes and could have been done months ago before the school year even started&quot; (~1:29:04). The board voted 4-3 to comply.</p>
+  <p class="link-card-meta">2023-09-13</p>
+</div>
+<div class="link-card" id="link-1060">
+  <div class="link-card-title"><a href="https://andoverct.info/reference/video/transcripts/OhuIRMOCASY.html">Board of Finance meeting, November 29, 2023 -- the authority to spend the school&#39;s money</a><span class="ext-mark" title="external link">&#8599;</span></div>
+  <p class="link-card-desc">At the November 29, 2023 Board of Finance meeting, with the auditor present, the board worked through the statutory design of the new AES capital fund and stated the consequence plainly. On the difference between the school&#39;s existing 2 percent non-lapsing account and the new town-held capital fund: &quot;I think what changes in terms of the statute is the authority to spend. So under the 2%, it should be the Board of Education&quot; -- &quot;under the capital, that would be the Board of Finance&quot; (~24:41). The board noted that the school could have paid for the parking lot out of its own non-lapsing account, &quot;we certainly could have done the parking lot and paid for it out of that account with their blessing,&quot; but that the school wanted to keep that as its reserve; and acknowledged that with the new fund &quot;the downside with the schools [is] they don&#39;t have as much authority over that&quot; (~28:04-28:59).</p>
+  <p class="link-card-meta">2023-11-29</p>
+</div>
+<div class="link-card" id="link-1054">
+  <div class="link-card-title"><a href="https://andoverct.info/reference/video/transcripts/boe-2023-10-12.html">Tri-Board meeting, October 12, 2023 -- the boards are asked whether the town has interfered</a><span class="ext-mark" title="external link">&#8599;</span></div>
+  <p class="link-card-desc">At the October 12, 2023 joint meeting of the three boards, a moderator asked the Board of Education directly whether the town had interfered in the application of its role. The board answered: &quot;We were not able to get a permit to pave our upper parking lot over the summer, and therefore it is still sitting unpaved and dangerous for people to walk on,&quot; and &quot;we were told about four different reasons for why we were not able to have that permit before we finally gave [in to] an agreement that we would give the money to the town&quot; (~1:04:37-1:04:57). The town&#39;s answer, from the First Selectman: the town had not interfered on an operational level, and the issue was &quot;the fact that we did not acquiesce [to] the way that you want to do a capital improvement project&quot; (~1:06:59). He said the only condition requested was that public works and the town administrator create specifications so the job was done correctly, &quot;that&#39;s what you and your board failed to do when you went around the [proper] process&quot; (~1:39:25). The town administrator then set out the engineering substance behind the conditions.</p>
+  <p class="link-card-meta">2023-10-12</p>
+</div>
+<div class="link-card" id="link-1040">
+  <div class="link-card-title"><a href="https://andoverct.info/reference/video/transcripts/-B9O-4anXqk.html">Tri-Board meeting, December 4, 2024 -- who controls the elementary school&#39;s capital projects</a><span class="ext-mark" title="external link">&#8599;</span></div>
+  <p class="link-card-desc">At the December 4, 2024 joint meeting of the selectmen, the finance board and the school board, the dispute over the elementary school&#39;s capital projects played out at length. First Selectman Jeff Maguire told the Board of Education the school &quot;is not a board of education building, it&#39;s a town asset, it&#39;s part of the capital,&quot; and that state law &quot;says that the town owns the assets inside this building,&quot; while the board has &quot;total control how you educate children&quot; (~11:02-11:52). He demanded a five-year capital plan routed through the town&#39;s capital improvement committee, &quot;just like every other group within this community&quot; (~13:16). The Board of Education answered that the committee makes recommendations which then go to the selectmen for approval, so what was being proposed was that the school seek the selectmen&#39;s approval for its own capital money (~15:57). The superintendent set out the statutory position: by law the board of education &quot;shall have the care, maintenance and operation of buildings, lands,&quot; and in other towns school capital does not go to the selectmen for approval (~28:47-43:07). Video: https://www.youtube.com/watch?v=-B9O-4anXqk</p>
+  <p class="link-card-meta">2024-12-04</p>
+</div>
+<div class="link-card" id="link-1045">
+  <div class="link-card-title"><a href="https://andoverct.info/reference/video/transcripts/o_WS6c5a2TY.html">Board of Selectmen meeting, September 9, 2024 -- the town administrator on the parking lot&#39;s status</a><span class="ext-mark" title="external link">&#8599;</span></div>
+  <p class="link-card-desc">Reviewing the town&#39;s project list at the September 9, 2024 Board of Selectmen meeting, the town administrator gave an account of the elementary school&#39;s upper parking lot. He said the school board still very much wanted to redo it; that the previous year&#39;s bid put it at roughly $135,000; that &quot;right now there would be the money set aside to do that&quot;; but that &quot;the school board has prioritized doing the internal work, plumbing work, to restore the bathrooms that have failed in the upper part of the building.&quot; The parking lot, he said, &quot;could be done essentially at any time, we could schedule that for next spring, we just have to make sure that we have the funding to pay for it&quot; (~32:18).</p>
+  <p class="link-card-meta">2024-09-09</p>
+</div>
+<div class="link-card" id="link-1049">
+  <div class="link-card-title"><a href="https://andoverct.info/reference/video/transcripts/IWg1jevtqx8.html">Board of Finance meeting, March 27, 2024 -- the parking-lot money, and the plumbing becoming the school&#39;s first priority</a><span class="ext-mark" title="external link">&#8599;</span></div>
+  <p class="link-card-desc">At the March 27, 2024 Board of Finance meeting the town administrator recounted the mechanics of the school&#39;s parking-lot money. He said that when the school wanted to do the parking lot the previous summer, what was agreed was that it transfer a check; that the town requested $130,000; that the school &quot;originally wrote a check for like 124... which they then took back because they didn&#39;t actually have 124 to write&quot;; and that the final figure was about $112,000 (~2:58). Board members confirmed the arrangement: the school transfers the money to the town, into the town-held capital account, with the town&#39;s $100,000 budget contribution added to it, because, as one member put it, the town &quot;controls the account&quot; (~5:55). Later in the meeting the board discussed the school&#39;s plumbing failure -- seventy-year-old cast iron pipe, three unusable bathrooms -- and concluded it was significantly more expensive and much more pressing than a parking lot, so it moved to first priority.</p>
+  <p class="link-card-meta">2024-03-27</p>
+</div>
+
+</div>
+<div class="page-footer">
+<p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>
+</div>
+</body>
+</html>
