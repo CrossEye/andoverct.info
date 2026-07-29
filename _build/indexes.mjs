@@ -23,6 +23,7 @@ const ROOT = join(HERE, "..");
 
 const TREE = JSON.parse(readFileSync(join(HERE, "site-index.json"), "utf8"));
 const REPORTS = JSON.parse(readFileSync(join(ROOT, "reports", "reports.json"), "utf8"));
+const EDITIONS = JSON.parse(readFileSync(join(ROOT, "the-facts", "editions.json"), "utf8"));
 
 const FONTS = `    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -134,7 +135,149 @@ ${scripts}  </body>
 `;
 }
 
+// --- cards layout (the home page) --------------------------------------------
+
+function formatDate(iso) {
+  const p = String(iso).split("-");
+  if (p.length !== 3) return iso;
+  const M = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+  const m = parseInt(p[1], 10) - 1;
+  return m < 0 || m > 11 ? iso : `${M[m]} ${parseInt(p[2], 10)}, ${p[0]}`;
+}
+
+function cardHtml(it) {
+  const meta = (it.meta || [])
+    .map((x, i) => (it.flag && i === 0) ? `<span class="flag">${escapeHtml(x)}</span>` : escapeHtml(x))
+    .join(' <span class="dot">·</span> ');
+  return '<article class="card">'
+    + (meta ? `<p class="meta">${meta}</p>` : "")
+    + `<h3><a href="${escapeHtml(it.href)}">${escapeHtml(it.title)}</a></h3>`
+    + (it.desc ? `<p class="desc">${escapeHtml(it.desc)}</p>` : "")
+    + "</article>";
+}
+
+// A collapsed disclosure of compact title chips (series beats, charter guides,
+// previous editions) — hidden by default, one click to reveal.
+function discloseHtml(d) {
+  if (!d) return "";
+  const chips = d.items.map((x) =>
+    `<a class="chip" href="${escapeHtml(x.href)}"${x.gloss ? ` title="${escapeHtml(x.gloss)}"` : ""}>${escapeHtml(x.title)}</a>`
+  ).join("");
+  return `<details class="disclose"><summary>${escapeHtml(d.label)} <span class="count">${d.items.length}</span></summary>\n<div class="chip-row">${chips}</div></details>`;
+}
+
+// Reports render as one labelled card cluster per section, in reports.json order.
+function reportsCards() {
+  return Object.keys(REPORTS.sections).map((key) => {
+    const sec = REPORTS.sections[key];
+    const inSec = REPORTS.reports.filter((r) => r.section === key && r.featured !== false && !r.hidden);
+    if (!inSec.length) return "";
+    const cards = inSec.map((r) => cardHtml({ meta: r.meta || [], title: r.title, href: r.url, desc: r.summary || "" })).join("\n");
+    return `<div class="cardgroup"><p class="group-label"><a href="${escapeHtml(sec.url)}">${escapeHtml(sec.label)} <span class="arrow">→</span></a></p>\n<div class="cardgrid">${cards}</div></div>`;
+  }).filter(Boolean).join("\n");
+}
+
+// The Facts: the current edition as a card, older ones collapsed below.
+function factsCards() {
+  const eds = Object.entries(EDITIONS.editions)
+    .map(([id, e]) => ({ id, ...e }))
+    .filter((e) => !e.hidden)
+    .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+  const hrefFor = (e) => (e.id === EDITIONS.current ? "/the-facts/" : `/the-facts/editions/${e.id}/`);
+  const [latest, ...prev] = eds;
+  let html = `<div class="cardgrid">${cardHtml({
+    meta: ["Current edition", formatDate(latest.date)], flag: true,
+    title: latest.title, href: hrefFor(latest), desc: latest.description || latest.subtitle || "",
+  })}</div>`;
+  if (prev.length) {
+    html += discloseHtml({
+      label: "Previous editions",
+      items: prev.map((e) => ({ title: e.title, gloss: `${formatDate(e.date)}${e.subtitle ? " — " + e.subtitle : ""}`, href: hrefFor(e) })),
+    });
+  }
+  return html;
+}
+
+function cardsSectionHtml(s) {
+  let body;
+  if (s.source === "reports") body = reportsCards();
+  else if (s.source === "editions") body = factsCards();
+  else {
+    body = s.items ? `<div class="cardgrid">${s.items.map(cardHtml).join("\n")}</div>` : "";
+    if (s.aside) body += `\n<div class="aside-note">${s.aside}</div>`;
+    if (s.disclose) body += "\n" + discloseHtml(s.disclose);
+  }
+  return `<section class="group" id="sec-${s.id}" data-sec="${s.id}">
+      <p class="section-label">§ ${s.num} · ${escapeHtml(s.label)}</p>
+      <h2 class="section-title"><a href="${escapeHtml(s.href)}">${escapeHtml(s.title)} <span class="arrow">→</span></a></h2>
+      <p class="section-blurb">${escapeHtml(s.blurb)}</p>
+      ${body}
+    </section>`;
+}
+
+const HOME_SCROLLSPY = `<script>
+(function () {
+  var rail = document.querySelector('.home-rail'); if (!rail) return;
+  var links = {}; [].forEach.call(rail.querySelectorAll('a'), function (l) { links[l.getAttribute('href').slice(5)] = l; });
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      for (var k in links) links[k].classList.remove('on');
+      var l = links[e.target.id.slice(4)]; if (l) l.classList.add('on');
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  [].forEach.call(document.querySelectorAll('section.group'), function (s) { io.observe(s); });
+})();
+</script>`;
+
+function railCount(s) {
+  if (s.source === "reports") return REPORTS.reports.filter((r) => r.featured !== false && !r.hidden).length;
+  if (s.source === "editions") return Object.values(EDITIONS.editions).filter((e) => !e.hidden).length;
+  return s.items ? s.items.length : 0;
+}
+
+function renderCardsNode(node) {
+  const rail = node.sections
+    .map((s) => `<a href="#sec-${s.id}">${escapeHtml(s.label)}<span class="rail-n">${railCount(s)}</span></a>`)
+    .join("");
+  const sections = node.sections.map(cardsSectionHtml).join("\n");
+  return `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>${escapeHtml(node.pageTitle)}</title>
+    <meta name="description" content="${escapeHtml(node.description)}">
+
+${FONTS}
+    <link rel="stylesheet" href="${cssPathFor(node.out)}">
+  </head>
+
+  <body class="${node.theme || "dark"} home">
+    <main class="page">
+      <header class="home-mast">
+        <p class="eyebrow">${escapeHtml(node.eyebrow)}</p>
+        <h1 class="title">${escapeHtml(node.h1)}</h1>
+        <p class="lede">${escapeHtml(node.lede)}</p>
+      </header>
+
+      <nav class="home-rail" aria-label="Sections">${rail}</nav>
+
+${sections}
+
+      ${siteFooterHtml(node.footerNote)}
+    </main>
+    ${HOME_SCROLLSPY}
+  </body>
+</html>
+`;
+}
+
 function renderNode(node) {
+  if (node.layout === "cards") return renderCardsNode(node);
   if (node.contentFile) return renderContentNode(node);
   const cssPath = cssPathFor(node.out);
   const crumbsHtml = buildCrumbs(node.trail);
