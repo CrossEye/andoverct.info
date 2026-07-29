@@ -167,14 +167,25 @@ function discloseHtml(d) {
   return `<details class="disclose"><summary>${escapeHtml(d.label)} <span class="count">${d.items.length}</span></summary>\n<div class="chip-row">${chips}</div></details>`;
 }
 
-// Reports render as one labelled card cluster per section, in reports.json order.
+// A labelled card cluster: a linked heading, a grid of cards, and an optional
+// collapsed disclosure. Used both for report families (aes, rham, …) and for
+// individual series (town-asset, …) — a section can hold several.
+function cardGroupHtml(g) {
+  const cards = g.items.map(cardHtml).join("\n");
+  return `<div class="cardgroup"><p class="group-label"><a href="${escapeHtml(g.href)}">${escapeHtml(g.label)} <span class="arrow">→</span></a></p>\n`
+    + `<div class="cardgrid">${cards}</div>`
+    + (g.disclose ? "\n" + discloseHtml(g.disclose) : "")
+    + "</div>";
+}
+
+// Reports render as one cluster per section, in reports.json order.
 function reportsCards() {
   return Object.keys(REPORTS.sections).map((key) => {
     const sec = REPORTS.sections[key];
-    const inSec = REPORTS.reports.filter((r) => r.section === key && r.featured !== false && !r.hidden);
-    if (!inSec.length) return "";
-    const cards = inSec.map((r) => cardHtml({ meta: r.meta || [], title: r.title, href: r.url, desc: r.summary || "" })).join("\n");
-    return `<div class="cardgroup"><p class="group-label"><a href="${escapeHtml(sec.url)}">${escapeHtml(sec.label)} <span class="arrow">→</span></a></p>\n<div class="cardgrid">${cards}</div></div>`;
+    const items = REPORTS.reports
+      .filter((r) => r.section === key && r.featured !== false && !r.hidden)
+      .map((r) => ({ meta: r.meta || [], title: r.title, href: r.url, desc: r.summary || "" }));
+    return items.length ? cardGroupHtml({ label: sec.label, href: sec.url, items }) : "";
   }).filter(Boolean).join("\n");
 }
 
@@ -205,6 +216,7 @@ function cardsSectionHtml(s) {
   else if (s.source === "editions") body = factsCards();
   else {
     body = s.items ? `<div class="cardgrid">${s.items.map(cardHtml).join("\n")}</div>` : "";
+    if (s.groups) body += (body ? "\n" : "") + s.groups.map(cardGroupHtml).join("\n");
     if (s.aside) body += `\n<div class="aside-note">${s.aside}</div>`;
     if (s.disclose) body += "\n" + discloseHtml(s.disclose);
   }
@@ -234,7 +246,9 @@ const HOME_SCROLLSPY = `<script>
 function railCount(s) {
   if (s.source === "reports") return REPORTS.reports.filter((r) => r.featured !== false && !r.hidden).length;
   if (s.source === "editions") return Object.values(EDITIONS.editions).filter((e) => !e.hidden).length;
-  return s.items ? s.items.length : 0;
+  let n = s.items ? s.items.length : 0;
+  if (s.groups) n += s.groups.reduce((a, g) => a + g.items.length, 0);
+  return n;
 }
 
 function renderCardsNode(node) {
