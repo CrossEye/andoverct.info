@@ -26,6 +26,7 @@ import {
 } from "node:fs";
 import { join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
+import { crumbs as buildCrumbs } from "./chrome.js";
 import { marked } from "marked";
 import { markedSmartypants } from "marked-smartypants";
 import {
@@ -100,10 +101,7 @@ const SERIES_FOOTER_NOTE =
   "Drawn entirely from Andover&rsquo;s own minutes, packets and meeting "
   + "recordings. Every claim carries its source.";
 
-const crumb = (parts, current) =>
-  parts.map((c) => `<a href="${c.href}">${escapeHtml(c.label)}</a>`)
-    .concat(`<span class="current">${escapeHtml(current)}</span>`)
-    .join('<span class="sep">›</span>');
+const crumb = (parts, current) => buildCrumbs([...parts, { label: current }]);
 
 // Markdown -> body HTML, with the two known shapes given their site classes.
 function mdToHtml(md) {

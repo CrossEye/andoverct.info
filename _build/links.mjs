@@ -42,6 +42,10 @@ import {
 import { join, resolve, relative, sep } from "node:path";
 import { pathToFileURL } from "node:url";
 import { load as parseYaml } from "js-yaml";
+import {
+  escapeHtml, siteFooterHtml, crumbs as buildCrumbs, banner as pageBanner,
+  footer as FOOTER,
+} from "./chrome.js";
 
 const HERE = import.meta.dirname;
 const ROOT = resolve(HERE, "..");
@@ -106,14 +110,9 @@ export const LINKS_CSS = `
 // Helpers shared with report.mjs (copied — report.mjs exports nothing)
 // ---------------------------------------------------------------------------
 
-export function escapeHtml(s) {
-  return String(s)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
+// escapeHtml and siteFooterHtml now live in the shared chrome module; re-export
+// them so existing importers (e.g. town-asset-render.mjs) keep working.
+export { escapeHtml, siteFooterHtml };
 
 export function loadConfig() {
   const p = join(HERE, "report.config.json");
@@ -337,10 +336,7 @@ export function crumbsHtml(currentTitle) {
     trail.push({ label: "Links", href: "/links/" });
     current = currentTitle;
   }
-  return trail
-    .map((c) => `<a href="${c.href}">${escapeHtml(c.label)}</a>`)
-    .concat(`<span class="current">${escapeHtml(current)}</span>`)
-    .join('<span class="sep">›</span>');
+  return buildCrumbs([...trail, { label: current }]);
 }
 
 /* The site footer, in two parts.
@@ -354,20 +350,9 @@ export function crumbsHtml(currentTitle) {
  * "authoritative sources are the Charter and the statutes" line, an edition
  * note. Pass plain HTML; pass nothing and only line 1 renders.
  */
-// The canonical identity string lives in _build/footer.json — the one place it
-// is allowed to appear in the repo — so the CommonJS generators (the-facts,
-// town-charter, transcripts) can share the exact same text without an ESM/CJS
-// module boundary to disagree about. This module re-exports it unchanged.
-const FOOTER = JSON.parse(readFileSync(join(HERE, "footer.json"), "utf8"));
-
+// The canonical identity string and the footer/crumb/banner helpers now live in
+// the shared chrome module (_build/chrome.js), sourced from footer.json.
 export const SITE_FOOTER_ID = FOOTER.id;
-
-export function siteFooterHtml(note) {
-  return '<footer class="page-footer">\n'
-    + `<p class="footer-id">${SITE_FOOTER_ID}</p>`
-    + (note ? `\n<p class="${FOOTER.noteClass}">${note}</p>` : "")
-    + '\n</footer>';
-}
 
 export function pageShell({ pageTitle, og, crumbs, body, footerNote }, css) {
   return `<!DOCTYPE html>
@@ -382,11 +367,7 @@ ${og}
 <style>${css}</style>
 </head>
 <body>
-<div class="page-banner">
-  <nav class="page-banner-inner crumbs">
-    ${crumbs}
-  </nav>
-</div>
+${pageBanner(crumbs)}
 <div class="container">
 ${body}
 </div>

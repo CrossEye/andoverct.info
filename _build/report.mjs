@@ -44,6 +44,9 @@ import { markedSmartypants } from "marked-smartypants";
 import matter from "gray-matter";
 import { buildContractsBundle } from "./contracts.mjs";
 import { buildScatterPlot } from "./scatter.mjs";
+import {
+  escapeHtml, siteFooterHtml, crumbs as buildCrumbs, banner as pageBanner, SEP,
+} from "./chrome.js";
 import { buildResearchPages } from "./research.mjs";
 
 marked.use(markedSmartypants());
@@ -54,17 +57,8 @@ const BASE_CSS = readFileSync(join(HERE, "base.css"), "utf8");
 const PRINT_CSS = readFileSync(join(HERE, "print.css"), "utf8");
 const DRAFT_CSS = readFileSync(join(HERE, "draft.css"), "utf8");
 
-// Shared site footer. Line 1 (identity + disclaimer) is the canonical string
-// from _build/footer.json — the one place it may appear; only the optional
-// italic note differs per report (provenance). Mirrors siteFooterHtml() in
-// _build/links.mjs so the identity text never drifts across surfaces.
-const SITE_FOOTER = JSON.parse(readFileSync(join(HERE, "footer.json"), "utf8"));
-function siteFooterHtml(note) {
-  return '<footer class="page-footer">\n'
-    + `<p class="footer-id">${SITE_FOOTER.id}</p>`
-    + (note ? `\n<p class="${SITE_FOOTER.noteClass}">${note}</p>` : "")
-    + '\n</footer>';
-}
+// Site footer (siteFooterHtml), breadcrumbs, banner and escapeHtml come from the
+// shared chrome module (_build/chrome.js), sourced from footer.json.
 
 // Private-report chrome: an unmistakable "not public" banner. Layered onto the
 // screen CSS only when a report's front matter sets `private: true`.
@@ -122,14 +116,6 @@ function stripTags(html) {
 // HTML helpers
 // ---------------------------------------------------------------------------
 
-function escapeHtml(s) {
-  return String(s)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
 
 // ---------------------------------------------------------------------------
 // Markdown -> HTML body
@@ -434,10 +420,7 @@ function breadcrumbHtml(meta, sections) {
   ];
   const sec = meta.section && sections[meta.section];
   if (sec) trail.push({ label: sec.label, href: sec.url });
-  return trail
-    .map((c) => `<a href="${c.href}">${escapeHtml(c.label)}</a>`)
-    .concat(`<span class="current">${escapeHtml(meta.title)}</span>`)
-    .join('<span class="sep">›</span>');
+  return buildCrumbs([...trail, { label: meta.title }]);
 }
 
 // Private reports get no public trail — just a loud PRIVATE badge and the title.
@@ -445,7 +428,7 @@ function privateBreadcrumbHtml(meta) {
   return (
     '<span class="private-badge">🔒 PRIVATE</span>' +
     '<span class="private-note">Not for public distribution</span>' +
-    '<span class="sep">›</span>' +
+    SEP +
     `<span class="current">${escapeHtml(meta.title)}</span>`
   );
 }
@@ -585,11 +568,7 @@ ${siteFooterHtml(meta.footerNote ?? meta.footer)}
 <style>${css}</style>
 </head>
 <body${bodyAttr}>
-<div class="page-banner${isPrivate ? " private-banner" : ""}">
-  <nav class="page-banner-inner crumbs">
-    ${breadcrumb}
-  </nav>
-</div>
+${pageBanner(breadcrumb, isPrivate ? { extraClass: "private-banner" } : undefined)}
 <div class="container">
 ${titleBlock}
 ${rest}
