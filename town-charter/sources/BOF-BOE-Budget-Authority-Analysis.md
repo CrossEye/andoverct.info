@@ -26,7 +26,3 @@ This is a genuinely hard question. Having read the charter text carefully alongs
 **On balance**, I think the structural reading is more persuasive. A charter should be read as a coherent whole, and the Shipman reading creates a system where 802F's "incorporates any recommended changes" is largely meaningless for the biggest single item in the budget, and where no elected body other than the BOE itself can set the BOE appropriation level. That's an odd result for a town that chose to route its budget through a Board of Finance, a Town Meeting, *and* a referendum — three layers of democratic oversight that would all be toothless with respect to the largest line item.
 
 But I want to emphasize: the Charter language genuinely is ambiguous, and reasonable attorneys can disagree. This is exactly the kind of question that, if it ever went to court, could go either way depending on how much weight the judge gives to plain text versus structural coherence.
-
-----------
-
-*This document represents the opinion of [Scott Sauyet](mailto:scott@sauyet.com).  I am not a lawyer; this is not legal advice. The authoritative sources are the [Andover Town Charter](https://charter2024.andoverct.info) and the [Connecticut General Statutes](https://www.cga.ct.gov/current/pub/titles.htm).*

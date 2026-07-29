@@ -6,6 +6,18 @@ const { marked } = require('marked');
 
 const pages = require('./pages.json');
 
+// Shared site footer. Line 1 (identity + disclaimer) is the canonical string
+// from _build/footer.json — the one place it may appear; line 2 is this page's
+// own note (the "not a lawyer / authoritative sources" line, per pages.json).
+// Mirrors siteFooterHtml() in _build/links.mjs so the identity never drifts.
+const SITE_FOOTER = require('../_build/footer.json');
+function siteFooterHtml(note) {
+  return '<footer class="page-footer">\n'
+    + `<p class="footer-id">${SITE_FOOTER.id}</p>`
+    + (note ? `\n<p class="${SITE_FOOTER.noteClass}">${note}</p>` : '')
+    + '\n</footer>';
+}
+
 // --- Path resolution ---------------------------------------------------------
 
 const rootDir = __dirname;
@@ -142,6 +154,8 @@ function buildPage(page) {
 
   const crumbs = crumbsFor(page);
 
+  const footer = siteFooterHtml(page.note);
+
   // Section home: dark theme, trail inside the article.
   if (page.dest === 'index.html') {
     return `${head}
@@ -150,6 +164,7 @@ function buildPage(page) {
 ${crumbs}
 ${body}
   </article>
+${footer}
 </body>
 </html>`;
   }
@@ -161,6 +176,7 @@ ${crumbs}
   <article>
 ${body}
   </article>
+${footer}
 </body>
 </html>`;
 }

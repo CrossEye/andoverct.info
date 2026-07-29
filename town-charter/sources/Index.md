@@ -42,7 +42,3 @@ How Andover's appointed officials are selected (Board of Selectmen by majority v
 --------------------------
 
 Which offices are elected, when, and for how long. Covers the current election schedule — most boards elected at the biennial November election, the Board of Selectmen and Town Clerk on a four-year cycle beginning in November 2027 — along with some changes introduced by the 2024 revision. The guide also maps out all the boards elected at the biennial November elections (Board of Finance, Planning and Zoning, Zoning Board of Appeals, Board of Education, Fire Commission, and others), explains the three different minority-representation frameworks that apply to different boards, and covers how tied elections are broken (including the coin-toss option, which requires candidate consent).
-
-----------
-
-*These documents were written by [Scott Sauyet](mailto:scott@sauyet.com). I am not a lawyer; nothing here is legal advice. The authoritative sources are the [Andover Town Charter](https://charter2024.andoverct.info) and the [Connecticut General Statutes](https://www.cga.ct.gov/current/pub/titles.htm).*

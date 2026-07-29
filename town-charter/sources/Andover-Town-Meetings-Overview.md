@@ -219,7 +219,3 @@ Key State Statutes Referenced
 
 - **[C.G.S. 7-3](https://www.cga.ct.gov/current/pub/chap_090.htm#sec_7-3)** — Calling of town meetings
 - **[C.G.S. 7-7](https://www.cga.ct.gov/current/pub/chap_090.htm#sec_7-7)** — General town meeting procedures (explicitly excluded from the Annual Town Budget Meeting)
-
-----------
-
-*This document is intended as an informational overview for residents and officials. It was written by [Scott Sauyet](mailto:scott@sauyet.com). I am not a lawyer; this is not legal advice. The authoritative sources are the [Andover Town Charter](https://charter2024.andoverct.info) and the [Connecticut General Statutes](https://www.cga.ct.gov/current/pub/titles.htm).*

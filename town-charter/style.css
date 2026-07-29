@@ -168,15 +168,25 @@ pre code { background: none; padding: 0; }
 .toc a { color: var(--link); border-bottom: none; }
 .toc a:hover { border-bottom: 1px solid var(--link); }
 
-/* Italic disclaimer at end of an article */
-article > p:last-child > em:only-child {
-  display: block;
-  font-size: 0.85rem;
+/* ===== Site footer =====
+   Shared identity line (.footer-id, canonical string from _build/footer.json)
+   plus an optional per-page note (.footer-note, e.g. the "not a lawyer /
+   authoritative sources" line). Sits below the article card. */
+.page-footer {
+  max-width: 46rem;
+  margin: 1.5rem auto 3rem;
+  padding: 0 2.6rem;
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  line-height: 1.55;
   color: var(--ink-faint);
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--rule);
 }
+.page-footer p { margin: 0 auto 0.5rem; max-width: 62ch; }
+.page-footer .footer-note { margin-top: 0.6rem; font-style: italic; }
+.page-footer strong { color: var(--ink-soft); font-weight: 600; }
+.page-footer a { color: var(--ink-soft); border-bottom: 1px solid var(--rule); }
+.page-footer a:hover { color: var(--link); border-bottom-color: var(--link); }
 
 /* ===================================================================
    Dark variant — the charter home page (<body class="dark">), matching
@@ -216,10 +226,10 @@ body.dark a { color: var(--accent); border-bottom: none; }
 body.dark a:hover { color: #fff; }
 body.dark strong { color: #fff; }
 body.dark hr { border-top-color: rgba(221,232,245,0.18); }
-body.dark article > p:last-child > em:only-child {
-  color: #95a9c4;
-  border-top-color: rgba(221,232,245,0.18);
-}
+body.dark .page-footer { color: #95a9c4; }
+body.dark .page-footer strong { color: #eef4fb; }
+body.dark .page-footer a { color: #b9c4cf; border-bottom-color: rgba(221,232,245,0.28); }
+body.dark .page-footer a:hover { color: #fff; border-bottom-color: #fff; }
 
 /* ===== Responsive ===== */
 @media (max-width: 640px) {

@@ -220,7 +220,3 @@ Key State Statutes Referenced
 - **[C.G.S. 9-167a](https://www.cga.ct.gov/current/pub/chap_146.htm#sec_9-167a)** — Minority representation for appointed boards
 - **[C.G.S. 9-332](https://www.cga.ct.gov/current/pub/chap_149.htm#sec_9-332)** — Adjourned elections for tied contests
 - **[C.G.S. 10-46](https://www.cga.ct.gov/current/pub/chap_164.htm#sec_10-46)** — Regional Board of Education elections
-
-----------
-
-*This document is intended as an informational overview for residents and officials. It was written by [Scott Sauyet](mailto:scott@sauyet.com). I am not a lawyer; this is not legal advice. The authoritative sources are the [Andover Town Charter](https://charter2024.andoverct.info) and the [Connecticut General Statutes](https://www.cga.ct.gov/current/pub/titles.htm).*

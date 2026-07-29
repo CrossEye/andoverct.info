@@ -196,7 +196,3 @@ Key State Statutes Referenced
 
 - **[C.G.S. 9-1](https://www.cga.ct.gov/current/pub/chap_141.htm#sec_9-1)** — Definition of "elector" (relevant to the 15% turnout requirement for bond referenda)
 - **[C.G.S. 10-222](https://www.cga.ct.gov/current/pub/chap_170.htm#sec_10-222)** — Board of Education discretion over internal spending of its appropriation
-
-----------
-
-*This document is intended as an informational overview for residents and officials. It was written by [Scott Sauyet](mailto:scott@sauyet.com). I am not a lawyer; this is not legal advice. The authoritative sources are the [Andover Town Charter](https://charter2024.andoverct.info) and the [Connecticut General Statutes](https://www.cga.ct.gov/current/pub/titles.htm).*

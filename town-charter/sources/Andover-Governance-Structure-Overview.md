@@ -208,7 +208,3 @@ Key Charter Sections Referenced
 - **[Section 806B](https://charter2024.andoverct.info/#Section806B)** — Approval and payment of claims
 - **[Section 807](https://charter2024.andoverct.info/#Section807)** — Purchasing policies and the CIP Committee
 - **[Section 809](https://charter2024.andoverct.info/#Section809)** — Emergency appropriations
-
-----------
-
-*This document is intended as an informational overview for residents and officials. It was written by [Scott Sauyet](mailto:scott@sauyet.com). I am not a lawyer; this is not legal advice. The authoritative sources are the [Andover Town Charter](https://charter2024.andoverct.info) and the [Connecticut General Statutes](https://www.cga.ct.gov/current/pub/titles.htm).*

@@ -133,7 +133,3 @@ It's worth emphasizing what this package does **not** change:
 - **The Minimum Budget Requirement (MBR)** under state law continues to set a floor below which the BOE appropriation cannot fall, regardless of what the BOF, Town Meeting, or referendum decide.
 
 The changes simply make explicit what is currently implied: that the BOF's role as the municipal fiscal authority includes setting the total BOE appropriation as part of a balanced overall budget, while respecting the BOE's autonomy over how that appropriation is spent.
-
-----------
-
-*This document was written by [Scott Sauyet](mailto:scott@sauyet.com).  I am not a lawyer; this is not legal advice. These suggestions are offered for discussion purposes. Any charter revision would need to go through the formal Charter Revision Commission process and voter approval at referendum.*
