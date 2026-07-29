@@ -172,21 +172,26 @@ pre code { background: none; padding: 0; }
    Shared identity line (.footer-id, canonical string from _build/footer.json)
    plus an optional per-page note (.footer-note, e.g. the "not a lawyer /
    authoritative sources" line). Sits below the article card. */
+/* @footer-css:start — generated from _build/footer.css; do not edit here, run: npm run sync:footer-css */
 .page-footer {
-  max-width: 46rem;
-  margin: 1.5rem auto 3rem;
-  padding: 0 2.6rem;
-  text-align: center;
-  font-family: var(--sans);
-  font-size: 0.8125rem;
+  /* max-width + horizontal padding are px (not rem/ch) so a page's root
+     font-size can't rescale the wrap — the line breaks are identical everywhere. */
+  max-width: 512px;
+  margin: 3rem auto;
+  padding: 1.75rem 20px 0;
+  border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
   line-height: 1.55;
-  color: var(--ink-faint);
+  text-align: center;
+  color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
 }
-.page-footer p { margin: 0 auto 0.5rem; max-width: 62ch; }
+.page-footer p { margin: 0 auto 0.5rem; max-width: none; }
 .page-footer .footer-note { margin-top: 0.6rem; font-style: italic; }
-.page-footer strong { color: var(--ink-soft); font-weight: 600; }
-.page-footer a { color: var(--ink-soft); border-bottom: 1px solid var(--rule); }
-.page-footer a:hover { color: var(--link); border-bottom-color: var(--link); }
+.page-footer strong { color: var(--ink-soft, inherit); font-weight: 600; }
+.page-footer a { color: var(--ink-soft, inherit); border-bottom: 1px solid var(--rule, currentColor); }
+.page-footer a:hover { color: var(--accent, var(--link, var(--burgundy, currentColor))); border-bottom-color: var(--accent, var(--link, var(--burgundy, currentColor))); }
+/* @footer-css:end */
 
 /* ===================================================================
    Dark variant — the charter home page (<body class="dark">), matching

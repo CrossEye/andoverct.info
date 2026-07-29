@@ -343,25 +343,29 @@ footer.colophon a:hover {
   border-bottom-color: var(--accent);
 }
 
-/* Shared site footer (canonical identity line + optional italic per-page
-   note). Same two-part structure as the inline base.css version used by the
-   links/series pages; identity string comes from _build/footer.json. */
+/* Shared site footer. Metrics are the canonical block from _build/footer.css
+   (kept in sync by _build/sync-footer-css.mjs); colours resolve from this
+   stylesheet's palette vars. */
+/* @footer-css:start — generated from _build/footer.css; do not edit here, run: npm run sync:footer-css */
 .page-footer {
-  margin: 4rem auto 3rem;
-  max-width: 62ch;
-  padding-top: 2rem;
-  border-top: 1px solid var(--rule);
-  font-family: var(--sans);
-  font-size: 0.8125rem;
-  color: var(--ink-mute);
+  /* max-width + horizontal padding are px (not rem/ch) so a page's root
+     font-size can't rescale the wrap — the line breaks are identical everywhere. */
+  max-width: 512px;
+  margin: 3rem auto;
+  padding: 1.75rem 20px 0;
+  border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
   line-height: 1.55;
   text-align: center;
+  color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
 }
-.page-footer p { margin: 0 auto 0.5rem; max-width: 62ch; }
+.page-footer p { margin: 0 auto 0.5rem; max-width: none; }
 .page-footer .footer-note { margin-top: 0.6rem; font-style: italic; }
-.page-footer strong { color: var(--ink-soft); font-weight: 500; }
-.page-footer a { color: var(--ink-soft); border-bottom: 1px solid var(--rule); }
-.page-footer a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.page-footer strong { color: var(--ink-soft, inherit); font-weight: 600; }
+.page-footer a { color: var(--ink-soft, inherit); border-bottom: 1px solid var(--rule, currentColor); }
+.page-footer a:hover { color: var(--accent, var(--link, var(--burgundy, currentColor))); border-bottom-color: var(--accent, var(--link, var(--burgundy, currentColor))); }
+/* @footer-css:end */
 
 /* ——— Download links (tool files) ——— */
 

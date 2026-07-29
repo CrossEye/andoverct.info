@@ -502,23 +502,29 @@
     color: var(--blue);
   }
 
-  /* Shared site footer: canonical identity line (.footer-id, from
-     _build/footer.json) + optional per-edition note (.footer-note, the
-     "ongoing series / permanent URLs" colophon). */
-  .page-footer {
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid var(--gold-soft);
-    font-size: 13px;
-    color: var(--ink-faint);
-    line-height: 1.6;
-    text-align: center;
-  }
-  .page-footer p { margin: 0 auto 8px; max-width: 62ch; }
-  .page-footer .footer-note { margin-top: 10px; font-style: italic; }
-  .page-footer strong { color: var(--ink-soft); font-weight: 700; }
-  .page-footer a { color: var(--ink-soft); border-bottom: 1px solid var(--gold-soft); }
-  .page-footer a:hover { color: var(--burgundy); border-bottom-color: var(--burgundy); }
+  /* Shared site footer — metrics from _build/footer.css (synced); the-facts
+     keeps its softer gold rule below the markers (its --rule is brighter). */
+  /* @footer-css:start — generated from _build/footer.css; do not edit here, run: npm run sync:footer-css */
+.page-footer {
+  /* max-width + horizontal padding are px (not rem/ch) so a page's root
+     font-size can't rescale the wrap — the line breaks are identical everywhere. */
+  max-width: 512px;
+  margin: 3rem auto;
+  padding: 1.75rem 20px 0;
+  border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  text-align: center;
+  color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+}
+.page-footer p { margin: 0 auto 0.5rem; max-width: none; }
+.page-footer .footer-note { margin-top: 0.6rem; font-style: italic; }
+.page-footer strong { color: var(--ink-soft, inherit); font-weight: 600; }
+.page-footer a { color: var(--ink-soft, inherit); border-bottom: 1px solid var(--rule, currentColor); }
+.page-footer a:hover { color: var(--accent, var(--link, var(--burgundy, currentColor))); border-bottom-color: var(--accent, var(--link, var(--burgundy, currentColor))); }
+/* @footer-css:end */
+  .page-footer, .page-footer a { border-color: var(--gold-soft); }
 
   /* ---------- Mobile ---------- */
   @media (max-width: 600px) {
