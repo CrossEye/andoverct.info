@@ -354,18 +354,19 @@ export function crumbsHtml(currentTitle) {
  * "authoritative sources are the Charter and the statutes" line, an edition
  * note. Pass plain HTML; pass nothing and only line 1 renders.
  */
-export const SITE_FOOTER_ID =
-  '<strong>Personal work of Scott Sauyet</strong> '
-  + '<a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · '
-  + 'Independent civic reference, not official communication of the Town of '
-  + 'Andover, Region 8 (RHAM), or any party or town committee, and not legal '
-  + 'advice · Corrections welcome';
+// The canonical identity string lives in _build/footer.json — the one place it
+// is allowed to appear in the repo — so the CommonJS generators (the-facts,
+// town-charter, transcripts) can share the exact same text without an ESM/CJS
+// module boundary to disagree about. This module re-exports it unchanged.
+const FOOTER = JSON.parse(readFileSync(join(HERE, "footer.json"), "utf8"));
+
+export const SITE_FOOTER_ID = FOOTER.id;
 
 export function siteFooterHtml(note) {
-  return '<div class="page-footer">\n'
+  return '<footer class="page-footer">\n'
     + `<p class="footer-id">${SITE_FOOTER_ID}</p>`
-    + (note ? `\n<p class="footer-note">${note}</p>` : "")
-    + '\n</div>';
+    + (note ? `\n<p class="${FOOTER.noteClass}">${note}</p>` : "")
+    + '\n</footer>';
 }
 
 export function pageShell({ pageTitle, og, crumbs, body, footerNote }, css) {
