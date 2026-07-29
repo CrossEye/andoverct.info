@@ -8,7 +8,7 @@ attribution: 'A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.
 banner:
   left: '<a href="http://andoverct.info/">Town of Andover, CT</a> · Scott Sauyet''s Reports'
   right: RHAM · Class Size in Context
-footer: 'Personal work of <a href="mailto:scott@sauyet.com">Scott Sauyet</a> · Compiled April 27, 2026<br> Data from RHAM master schedule, RHAM budget documents, CT Mirror, and NCES. Not an official Region 8 document.'
+footerNote: 'Compiled April 27, 2026 · Data from RHAM master schedule, RHAM budget documents, CT Mirror, and NCES.'
 pdf:
   author: Personal work of Scott Sauyet · scott@sauyet.com
   footer: andoverct.info/reports/rham/class-size/

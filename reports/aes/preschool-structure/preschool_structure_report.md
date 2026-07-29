@@ -8,7 +8,7 @@ attribution: 'A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.
 banner:
   left: '<a href="http://andoverct.info/">Town of Andover, CT</a> · Scott Sauyet''s Reports'
   right: AES Preschool · Structural analysis
-footer: 'Personal work of <a href="mailto:scott@sauyet.com">Scott Sauyet</a> · Compiled May 10, 2026<br>Diagram data drawn from Dr. Valerie Bruneau''s May 7, 2026 video update. Not an official town document.'
+footerNote: 'Compiled May 10, 2026 · Diagram data drawn from Dr. Valerie Bruneau''s May 7, 2026 video update.'
 pdf:
   author: Personal work of Scott Sauyet · scott@sauyet.com
   footer: andoverct.info/reports/aes/preschool-structure/

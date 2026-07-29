@@ -8,7 +8,7 @@ attribution: 'A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.
 banner:
   left: CT 55th House District · Scott Sauyet's Reports
   right: Weir voting record · 2023–2026
-footer: 'Personal work of <a href="mailto:scott@sauyet.com">Scott Sauyet</a> · Compiled June 11, 2026<br>Data from the Connecticut General Assembly, the Connecticut Secretary of the State, and U.S. Census geography. Not an official town document.'
+footerNote: 'Compiled June 11, 2026 · Data from the Connecticut General Assembly, the Connecticut Secretary of the State, and U.S. Census geography.'
 pdf:
   author: Personal work of Scott Sauyet · scott@sauyet.com
   footer: andoverct.info/reports/55th/weir-position/

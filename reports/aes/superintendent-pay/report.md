@@ -5,7 +5,7 @@ pageTitle: 'Superintendent Pay in Context — Town of Andover, CT'
 title: Superintendent Pay in Context
 subtitle: 'Andover, CT · Dr. Valerie Bruneau and her Connecticut peers · FY 2025–26'
 attribution: 'A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Not an official town document'
-footer: 'Personal work of <a href="mailto:scott@sauyet.com">Scott Sauyet</a> · Compiled June 29, 2026<br>Data from public CT town and school district websites, OCR''d scanned PDFs, and contracts supplied directly by town clerks in response to §10-244c records requests. Not an official town document.'
+footerNote: 'Compiled June 29, 2026 · Data from public CT town and school district websites, OCR''d scanned PDFs, and contracts supplied directly by town clerks in response to §10-244c records requests.'
 pdf:
   author: Personal work of Scott Sauyet · scott@sauyet.com
   footer: andoverct.info/reports/aes/superintendent-pay/

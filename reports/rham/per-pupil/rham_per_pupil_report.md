@@ -8,7 +8,7 @@ attribution: 'A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.
 banner:
   left: '<a href="http://andoverct.info/">Town of Andover, CT</a> · Scott Sauyet''s Reports'
   right: 'RHAM (Region 8) · Per-pupil spending, decade trend'
-footer: 'Personal work of <a href="mailto:scott@sauyet.com">Scott Sauyet</a> · Compiled May 3, 2026<br>Data from CT State Department of Education NCEP reports, Bureau of Labor Statistics, and the Social Security Administration. Not an official town document.'
+footerNote: 'Compiled May 3, 2026 · Data from CT State Department of Education NCEP reports, Bureau of Labor Statistics, and the Social Security Administration.'
 pdf:
   author: Personal work of Scott Sauyet · scott@sauyet.com
   footer: andoverct.info/reports/rham/per-pupil/

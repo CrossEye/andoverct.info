@@ -4,7 +4,7 @@ pageTitle: "Filling Board of Selectmen Vacancies — PRIVATE · Andover, CT"
 title: Filling Board of Selectmen Vacancies in Andover
 subtitle: "Andover, CT · Board of Selectmen · Charter and CGS §9-222"
 attribution: "Private analysis by Scott Sauyet · Not for public distribution"
-footer: "Private material — please don't forward or republish."
+footerNote: "Private material — please don't forward or republish."
 sectionLabels:
   - ["executive summary", "Summary"]
   - ["the situation", "Background"]

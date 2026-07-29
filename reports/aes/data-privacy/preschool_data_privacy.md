@@ -8,7 +8,7 @@ attribution: 'A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.
 banner:
   left: '<a href="http://andoverct.info/">Town of Andover, CT</a> · Scott Sauyet''s Reports'
   right: Student & Staff Privacy
-footer: 'Personal work of <a href="mailto:scott@sauyet.com">Scott Sauyet</a> · Compiled June 6, 2026<br>A civic explainer drawing on federal statute and guidance and Connecticut law. Not legal advice and not an official town document.'
+footerNote: 'Compiled June 6, 2026 · A civic explainer drawing on federal statute and guidance and Connecticut law.'
 pdf:
   author: Personal work of Scott Sauyet · scott@sauyet.com
   footer: andoverct.info/reports/aes/data-privacy/

@@ -8,7 +8,7 @@ attribution: 'A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.
 banner:
   left: '<a href="http://andoverct.info/">Town of Andover, CT</a> · Scott Sauyet''s Reports'
   right: Steve Weir · Business Holdings
-footer: 'Personal work of <a href="mailto:scott@sauyet.com">Scott Sauyet</a> · Compiled May 7, 2026<br>Data from CT Secretary of State filings, Glastonbury and Hebron assessor records, CT Mirror and NBC Connecticut reporting, and Weir''s own public statements. Not an official town document.'
+footerNote: 'Compiled May 7, 2026 · Data from CT Secretary of State filings, Glastonbury and Hebron assessor records, CT Mirror and NBC Connecticut reporting, and Weir''s own public statements.'
 pdf:
   author: Personal work of Scott Sauyet · scott@sauyet.com
   footer: andoverct.info/reports/55th/weir-businesses/

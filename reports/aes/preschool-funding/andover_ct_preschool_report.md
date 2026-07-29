@@ -8,7 +8,7 @@ attribution: 'A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.
 banner:
   left: '<a href="http://andoverct.info/">Town of Andover, CT</a> · Scott Sauyet''s Reports'
   right: AES Preschool · Financial Analysis
-footer: 'Personal work of <a href="mailto:scott@sauyet.com">Scott Sauyet</a> · Compiled May 2, 2026; Updated May 10, 2026<br>Data from official town and state sources, with Superintendent confirmation where noted. Not an official town document.'
+footerNote: 'Compiled May 2, 2026; Updated May 10, 2026 · Data from official town and state sources, with Superintendent confirmation where noted.'
 pdf:
   author: Personal work of Scott Sauyet · scott@sauyet.com
   footer: andoverct.info/reports/aes/preschool-funding/

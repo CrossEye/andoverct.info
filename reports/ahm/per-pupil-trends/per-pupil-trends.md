@@ -5,7 +5,7 @@ pageTitle: 'Spending, Students, and Per-Pupil Costs — Andover, Hebron, Marlbor
 title: Spending, Students, and Per-Pupil Costs
 subtitle: 'Andover, Hebron, Marlborough & RHAM · FY 2013 – FY 2023 · What ten years of federal school-finance data say about rising per-pupil costs'
 attribution: 'A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Not an official town document'
-footer: 'Personal work of <a href="mailto:scott@sauyet.com">Scott Sauyet</a> · Compiled July 20, 2026<br>Data from the NCES/Census F-33 school district finance survey, BLS CPI-U, and U.S. Census geography. Not an official town document.'
+footerNote: 'Compiled July 20, 2026 · Data from the NCES/Census F-33 school district finance survey, BLS CPI-U, and U.S. Census geography.'
 pdf:
   author: Personal work of Scott Sauyet · scott@sauyet.com
   footer: andoverct.info/reports/ahm/per-pupil-trends/

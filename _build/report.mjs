@@ -54,6 +54,18 @@ const BASE_CSS = readFileSync(join(HERE, "base.css"), "utf8");
 const PRINT_CSS = readFileSync(join(HERE, "print.css"), "utf8");
 const DRAFT_CSS = readFileSync(join(HERE, "draft.css"), "utf8");
 
+// Shared site footer. Line 1 (identity + disclaimer) is the canonical string
+// from _build/footer.json — the one place it may appear; only the optional
+// italic note differs per report (provenance). Mirrors siteFooterHtml() in
+// _build/links.mjs so the identity text never drifts across surfaces.
+const SITE_FOOTER = JSON.parse(readFileSync(join(HERE, "footer.json"), "utf8"));
+function siteFooterHtml(note) {
+  return '<footer class="page-footer">\n'
+    + `<p class="footer-id">${SITE_FOOTER.id}</p>`
+    + (note ? `\n<p class="${SITE_FOOTER.noteClass}">${note}</p>` : "")
+    + '\n</footer>';
+}
+
 // Private-report chrome: an unmistakable "not public" banner. Layered onto the
 // screen CSS only when a report's front matter sets `private: true`.
 const PRIVATE_CSS = `
@@ -557,6 +569,7 @@ async function buildHtml(mdText, meta, { forPdf, extraCss, plugin, themeCss, bre
 ${titleBlock}
 ${rest}
 </div>
+${siteFooterHtml(meta.footerNote ?? meta.footer)}
 </body>
 </html>`;
   }
@@ -581,9 +594,7 @@ ${rest}
 ${titleBlock}
 ${rest}
 </div>
-<div class="page-footer">
-${isPrivate ? meta.footer : `${meta.footer} ·\n<a href="${meta.publicUrl}">${meta.pdf.footer}</a>`}
-</div>
+${siteFooterHtml(meta.footerNote ?? meta.footer)}
 <script>${CLIPBOARD_SCRIPT}</script>
 <script>${LIGHTBOX_SCRIPT}</script>
 </body>
@@ -595,19 +606,30 @@ ${isPrivate ? meta.footer : `${meta.footer} ·\n<a href="${meta.publicUrl}">${me
 // ---------------------------------------------------------------------------
 
 function validateMeta(meta, mdPath) {
+  // The footer identity line is now the canonical string from footer.json; the
+  // per-report field carries only the optional provenance note. Prefer the new
+  // `footerNote:`; still accept a legacy combined `footer:` for one release so a
+  // stale, not-yet-migrated report keeps building.
+  const hasNote = meta.footerNote !== undefined || meta.footer !== undefined;
   if (meta.private) {
     // Private reports are screen-only (no PDF/format cards/public URL).
-    const required = ["pageTitle", "title", "footer"];
+    const required = ["pageTitle", "title"];
     const missing = required.filter((k) => meta[k] === undefined);
     if (missing.length) {
       throw new Error(`${mdPath}: missing front-matter field(s): ${missing.join(", ")}`);
     }
+    if (!hasNote) {
+      throw new Error(`${mdPath}: missing front-matter field: footerNote`);
+    }
     return;
   }
-  const required = ["publicUrl", "pageTitle", "title", "subtitle", "attribution", "footer", "pdf"];
+  const required = ["publicUrl", "pageTitle", "title", "subtitle", "attribution", "pdf"];
   const missing = required.filter((k) => meta[k] === undefined);
   if (missing.length) {
     throw new Error(`${mdPath}: missing front-matter field(s): ${missing.join(", ")}`);
+  }
+  if (!hasNote) {
+    throw new Error(`${mdPath}: missing front-matter field: footerNote`);
   }
   if (!meta.pdf.author || !meta.pdf.footer) {
     throw new Error(`${mdPath}: pdf.author and pdf.footer are required`);
