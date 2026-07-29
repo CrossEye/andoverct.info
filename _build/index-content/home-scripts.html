@@ -1,0 +1,99 @@
+    <script>
+      // Populate the "The Facts" section from /the-facts/editions.json.
+      // Renders the most recent edition as a full entry; older editions, if
+      // any, appear in a "Previous editions" expandable list below.
+      (function () {
+        var container = document.getElementById('the-facts-editions');
+        if (!container) return;
+
+        fetch('/the-facts/editions.json', { cache: 'no-cache' })
+          .then(function (r) {
+            if (!r.ok) throw new Error('editions.json fetch failed: ' + r.status);
+            return r.json();
+          })
+          .then(function (data) { render(data); })
+          .catch(function (err) {
+            if (window.console && console.warn) {
+              console.warn('the-facts index render failed:', err);
+            }
+          });
+
+        function render(data) {
+          var entries = Object.keys(data.editions)
+            .map(function (id) {
+              var e = data.editions[id];
+              return {
+                id: id,
+                title: e.title,
+                subtitle: e.subtitle,
+                date: e.date,
+                description: e.description,
+                hidden: !!e.hidden
+              };
+            })
+            .filter(function (e) { return !e.hidden; })
+            .sort(function (a, b) {
+              return a.date < b.date ? 1 : a.date > b.date ? -1 : 0;
+            });
+
+          if (!entries.length) {
+            container.innerHTML = '';
+            return;
+          }
+
+          var latest = entries[0];
+          var previous = entries.slice(1);
+          var html = '';
+
+          var metaBits = [escapeHtml(formatDate(latest.date))];
+          if (latest.subtitle) metaBits.push(escapeHtml(latest.subtitle));
+
+          html += '<article class="entry">';
+          html += '<p class="meta">' + metaBits.join(' <span class="dot">·</span> ') + '</p>';
+          html += '<h3><a href="' + hrefFor(data, latest) + '">' + escapeHtml(latest.title) + '</a></h3>';
+          if (latest.description) {
+            html += '<p>' + escapeHtml(latest.description) + '</p>';
+          }
+
+          if (previous.length) {
+            html += '<details class="sublist"><summary>Previous editions</summary><ul>';
+            previous.forEach(function (e) {
+              html += '<li><a href="' + hrefFor(data, e) + '">' + escapeHtml(e.title) + '</a>';
+              html += '<span class="gloss">' + escapeHtml(formatDate(e.date)) + '</span></li>';
+            });
+            html += '</ul></details>';
+          }
+
+          html += '</article>';
+          container.innerHTML = html;
+        }
+
+        function hrefFor(data, e) {
+          // The current edition lives at /the-facts/ (rewritten by .htaccess);
+          // archived editions live at /the-facts/editions/<id>/.
+          return (e.id === data.current)
+            ? '/the-facts/'
+            : '/the-facts/editions/' + encodeURIComponent(e.id) + '/';
+        }
+
+        function formatDate(iso) {
+          var parts = String(iso).split('-');
+          if (parts.length !== 3) return iso;
+          var months = ['January','February','March','April','May','June',
+                        'July','August','September','October','November','December'];
+          var y = parts[0], m = parseInt(parts[1], 10) - 1, d = parseInt(parts[2], 10);
+          if (m < 0 || m > 11) return iso;
+          return months[m] + ' ' + d + ', ' + y;
+        }
+
+        function escapeHtml(s) {
+          return String(s)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+        }
+      })();
+    </script>
+    <script src="/reports/reports.js"></script>

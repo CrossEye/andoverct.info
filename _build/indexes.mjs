@@ -95,9 +95,48 @@ function listHtml(list) {
 
 // --- page assembly -----------------------------------------------------------
 
+function cssPathFor(out) {
+  const depth = out.split("/").length - 1;
+  return (depth > 0 ? "../".repeat(depth) : "./") + "style.css";
+}
+
+// Bespoke content pages (home, reference, tools): the generator owns the head,
+// page shell, shared footer and script placement; the authored <main> content
+// (masthead + entries) is injected verbatim from a fragment file, so migrating
+// these onto the shared chrome can't disturb their hand-written bodies.
+function renderContentNode(node) {
+  const content = readFileSync(join(ROOT, node.contentFile), "utf8").replace(/\s+$/, "");
+  const scripts = node.scriptsFile
+    ? "\n" + readFileSync(join(ROOT, node.scriptsFile), "utf8").replace(/\s+$/, "") + "\n"
+    : "";
+  return `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>${escapeHtml(node.pageTitle)}</title>
+    <meta name="description" content="${escapeHtml(node.description)}">
+
+${node.fonts || FONTS}
+    <link rel="stylesheet" href="${cssPathFor(node.out)}">
+  </head>
+
+  <body class="${node.theme || "dark"}">
+    <main class="page">
+${content}
+
+      ${siteFooterHtml(node.footerNote)}
+    </main>
+${scripts}  </body>
+</html>
+`;
+}
+
 function renderNode(node) {
-  const depth = node.out.split("/").length - 1;
-  const cssPath = (depth > 0 ? "../".repeat(depth) : "./") + "style.css";
+  if (node.contentFile) return renderContentNode(node);
+  const cssPath = cssPathFor(node.out);
   const crumbsHtml = buildCrumbs(node.trail);
   const crumbsNav = `<nav class="crumbs">\n          ${crumbsHtml}\n        </nav>`;
 
