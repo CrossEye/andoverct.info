@@ -489,7 +489,32 @@ function formatDateShort(dateStr) {
 // Paragraph building (handles speaker changes when present)
 // ---------------------------------------------------------------------------
 
-function buildParagraphs(cues) {
+// Deterministic paragraphing. The paragraph-break threshold is jittered for a
+// more interesting-to-scan rhythm, but that jitter must be REPRODUCIBLE or every
+// rebuild reshuffles every transcript. So we seed a per-transcript PRNG from the
+// meeting's stable id (mulberry32 over an FNV-1a hash) instead of Math.random().
+// A meeting may carry an optional `paraSeed` in meetings.json to override the
+// derived seed — bump it if a particular transcript's paragraphing reads badly.
+function hashToSeed(str) {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  return h >>> 0;
+}
+
+function mulberry32(seed) {
+  let a = seed >>> 0;
+  return function () {
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function buildParagraphs(cues, rng) {
   // First pass: split on speaker changes (YouTube cues have speakerChange flag)
   const speakerGroups = [];
   let current = [];
@@ -509,7 +534,7 @@ function buildParagraphs(cues) {
   for (const group of speakerGroups) {
     let chunk = [];
     let words = 0;
-    let threshold = TARGET + Math.floor((Math.random() - 0.5) * TARGET);
+    let threshold = TARGET + Math.floor((rng() - 0.5) * TARGET);
     if (threshold < MIN) threshold = MIN;
 
     for (const cue of group.cues) {
@@ -521,7 +546,7 @@ function buildParagraphs(cues) {
         chunk = [];
         words = 0;
         group.isSpeakerChange = false;
-        threshold = TARGET + Math.floor((Math.random() - 0.5) * TARGET);
+        threshold = TARGET + Math.floor((rng() - 0.5) * TARGET);
         if (threshold < MIN) threshold = MIN;
       }
     }
@@ -551,7 +576,11 @@ function convertVttToHtml(meeting, vttText) {
     cues = dedupeCues(parseYouTubeVtt(vttText));
   }
 
-  const paragraphs = buildParagraphs(cues);
+  // Fresh PRNG per transcript, seeded from the stable meeting id (or an explicit
+  // paraSeed override) — so paragraphing is identical on every rebuild and does
+  // not depend on how many transcripts ran before this one.
+  const rng = mulberry32(meeting.paraSeed != null ? (meeting.paraSeed >>> 0) : hashToSeed(meeting.id));
+  const paragraphs = buildParagraphs(cues, rng);
   const videoUrl = meeting.link;
 
   // Assign time-based ids: t133, t133-1, t133-2, etc.
