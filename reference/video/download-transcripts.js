@@ -40,6 +40,17 @@ const TRANSCRIPTS_DIR = path.join(OUTPUT_DIR, "transcripts");
 const VIDEO_DIR = path.join(OUTPUT_DIR, "video");
 const MEETINGS_FILE = path.join(__dirname, "meetings.json");
 
+// Shared site footer. The canonical identity line lives in _build/footer.json
+// (Node reads JSON natively); only the italic per-page note differs per surface.
+// Mirrors siteFooterHtml() in _build/links.mjs so the text never drifts.
+const SITE_FOOTER = require("../../_build/footer.json");
+function siteFooterHtml(note) {
+  return '<footer class="page-footer">\n'
+    + `<p class="footer-id">${SITE_FOOTER.id}</p>`
+    + (note ? `\n<p class="${SITE_FOOTER.noteClass}">${note}</p>` : "")
+    + "\n</footer>";
+}
+
 // REBUILD via env var, or --rebuild=html|index|all on the command line (npm
 // scripts on Windows can't set env vars inline).
 const rebuildArg = process.argv.find((a) => a.startsWith("--rebuild="));
@@ -645,6 +656,9 @@ function convertVttToHtml(meeting, vttText) {
     .para.speaker { border-top: 1px solid var(--rule-soft); margin-top: 0.6em; padding-top: 1em; }
     .para.speaker:first-child { border-top: none; margin-top: 0; }
 
+    /* Machine-generation warning above the transcript body. */
+    .transcript-warning { margin: 0 0 1.4rem; font-family: var(--sans); font-size: 0.8rem; font-style: italic; color: var(--ink-mute); }
+
     .timestamp {
       flex: 0 0 5em; text-align: right;
       color: var(--ink-mute); font-family: var(--sans);
@@ -703,14 +717,13 @@ function convertVttToHtml(meeting, vttText) {
 
     <hr class="rule">
 
+    <p class="transcript-warning">Machine-generated transcript &mdash; check the ${isZoom ? "recording" : "video"} if in doubt.</p>
+
     <div class="transcript">
 ${paraHtml}
     </div>
 
-    <footer class="colophon">
-      <p><strong>About this transcript.</strong> ${disclaimerSource} Names, numbers, and other details may be inaccurate &mdash; please refer to the ${isZoom ? "recording" : "video"} for authoritative content.</p>
-      <p>Part of <code>andoverct.info</code>, an independent civic-reference site &mdash; not an official site of the Town of Andover. Compiled by <a href="mailto:scott@sauyet.com">Scott Sauyet</a>.</p>
-    </footer>
+    ${siteFooterHtml(`${disclaimerSource} Names, numbers, and other details may be inaccurate; the ${isZoom ? "recording" : "video"} is authoritative.`)}
   </main>
 
   <div id="overlay">
@@ -965,10 +978,7 @@ ${rows}
       </tbody>
     </table>
 
-    <footer class="colophon">
-      <p><strong>About these transcripts.</strong> ${disclaimerText} Names, numbers, and other details may be inaccurate &mdash; please refer to the videos for authoritative content.</p>
-      <p>Part of <code>andoverct.info</code>, an independent civic-reference site &mdash; not an official site of the Town of Andover. Compiled by <a href="mailto:scott@sauyet.com">Scott Sauyet</a>.</p>
-    </footer>
+    ${siteFooterHtml(`${disclaimerText} Names, numbers, and other details may be inaccurate; the videos are authoritative.`)}
   </main>${filterScript}${copyScript}
 </body>
 </html>
