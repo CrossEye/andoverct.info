@@ -40,15 +40,19 @@ const TRANSCRIPTS_DIR = path.join(OUTPUT_DIR, "transcripts");
 const VIDEO_DIR = path.join(OUTPUT_DIR, "video");
 const MEETINGS_FILE = path.join(__dirname, "meetings.json");
 
-// Shared site footer. The canonical identity line lives in _build/footer.json
-// (Node reads JSON natively); only the italic per-page note differs per surface.
-// Mirrors siteFooterHtml() in _build/links.mjs so the text never drifts.
-const SITE_FOOTER = require("../../_build/footer.json");
-function siteFooterHtml(note) {
-  return '<footer class="page-footer">\n'
-    + `<p class="footer-id">${SITE_FOOTER.id}</p>`
-    + (note ? `\n<p class="${SITE_FOOTER.noteClass}">${note}</p>` : "")
-    + "\n</footer>";
+// Shared page chrome (footer, breadcrumbs, banner) from chrome.js. NOTE: the
+// transcript *body* keeps its own escapeHtml below — spoken text is full of
+// apostrophes and does not need them entity-encoded (chrome's escapeHtml does).
+const { siteFooterHtml, crumbs: buildCrumbs, banner: pageBanner } = require("../../_build/chrome.js");
+
+// Body/cue escaping for transcript text: escapes &<>" but deliberately NOT '
+// (apostrophes are valid in text content and encoding them bloats every page).
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 // REBUILD via env var, or --rebuild=html|index|all on the command line (npm
@@ -468,13 +472,6 @@ function formatTimestamp(timeStr) {
   return `${m}:${String(s).padStart(2, "0")}`;
 }
 
-function escapeHtml(str) {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
 
 function formatDateLong(dateStr) {
   const [y, m, d] = dateStr.split("-").map(Number);
@@ -703,11 +700,12 @@ function convertVttToHtml(meeting, vttText) {
   </style>
 </head>
 <body class="bluegold">
-  <div class="page-banner">
-    <nav class="page-banner-inner crumbs">
-      <a href="/">Home</a><span class="sep">›</span><a href="/reference/">Reference</a><span class="sep">›</span><a href="../index.html">Video</a><span class="sep">›</span><span class="current">${escapeHtml(meeting.meeting)} (${formatDateShort(meeting.date)})</span>
-    </nav>
-  </div>
+${pageBanner(buildCrumbs([
+    { label: "Home", href: "/" },
+    { label: "Reference", href: "/reference/" },
+    { label: "Video", href: "../index.html" },
+    { label: `${meeting.meeting} (${formatDateShort(meeting.date)})` },
+  ]), { indent: "  " })}
   <main class="page">
     <header>
       <p class="eyebrow">Meeting transcript</p>
@@ -949,7 +947,11 @@ ${passcodeStyles}
 <body class="dark">
   <main class="page">
     <nav class="crumbs">
-      <a href="/">Home</a><span class="sep">›</span><a href="/reference/">Reference</a><span class="sep">›</span><span class="current">Video</span>
+      ${buildCrumbs([
+        { label: "Home", href: "/" },
+        { label: "Reference", href: "/reference/" },
+        { label: "Video" },
+      ])}
     </nav>
 
     <header>

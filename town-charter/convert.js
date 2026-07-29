@@ -6,17 +6,9 @@ const { marked } = require('marked');
 
 const pages = require('./pages.json');
 
-// Shared site footer. Line 1 (identity + disclaimer) is the canonical string
-// from _build/footer.json — the one place it may appear; line 2 is this page's
-// own note (the "not a lawyer / authoritative sources" line, per pages.json).
-// Mirrors siteFooterHtml() in _build/links.mjs so the identity never drifts.
-const SITE_FOOTER = require('../_build/footer.json');
-function siteFooterHtml(note) {
-  return '<footer class="page-footer">\n'
-    + `<p class="footer-id">${SITE_FOOTER.id}</p>`
-    + (note ? `\n<p class="${SITE_FOOTER.noteClass}">${note}</p>` : '')
-    + '\n</footer>';
-}
+// Shared page chrome (footer, breadcrumbs, banner) from _build/chrome.js — the
+// footer's line 1 is the canonical identity string; line 2 is this page's note.
+const { siteFooterHtml, crumbs: buildCrumbs, banner: pageBanner } = require('../_build/chrome.js');
 
 // --- Path resolution ---------------------------------------------------------
 
@@ -91,7 +83,6 @@ function generateToc(markdown) {
 
 // Absolute base path where town-charter is served.
 const SECTION_BASE = '/town-charter/';
-const SEP = '<span class="sep">›</span>';
 
 // Map dest -> short breadcrumb label (pages.json `crumb`, falling back to title).
 const crumbByDest = {};
@@ -102,24 +93,24 @@ for (const p of pages) crumbByDest[p.dest] = p.crumb || p.title;
 // article; every other (light) page gets a dark breadcrumb banner above the
 // article with the full Home › Town Charter › … trail.
 function crumbsFor(page) {
+  const homeLabel = crumbByDest['index.html'];
+  // The section home (dark) keeps its crumbs inside the article, no banner rail.
   if (page.dest === 'index.html') {
-    return `<nav class="crumbs"><a href="/">Home</a>${SEP}<span class="current">${crumbByDest['index.html']}</span></nav>`;
+    return `<nav class="crumbs">${buildCrumbs([{ label: 'Home', href: '/' }, { label: homeLabel }])}</nav>`;
   }
   const segs = page.dest.split('/').slice(0, -1); // drop trailing index.html
-  const parts = [
-    '<a href="/">Home</a>',
-    `<a href="${SECTION_BASE}">${crumbByDest['index.html']}</a>`,
+  const trail = [
+    { label: 'Home', href: '/' },
+    { label: homeLabel, href: SECTION_BASE },
   ];
   segs.forEach((seg, i) => {
     const sub = segs.slice(0, i + 1).join('/');
     const label = crumbByDest[`${sub}/index.html`] || seg;
-    parts.push(
-      i === segs.length - 1
-        ? `<span class="current">${label}</span>`
-        : `<a href="${SECTION_BASE}${sub}/">${label}</a>`
-    );
+    trail.push(i === segs.length - 1
+      ? { label }
+      : { label, href: `${SECTION_BASE}${sub}/` });
   });
-  return `<div class="page-banner">\n  <nav class="page-banner-inner crumbs">${parts.join(SEP)}</nav>\n</div>`;
+  return pageBanner(buildCrumbs(trail));
 }
 
 function buildPage(page) {

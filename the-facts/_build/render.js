@@ -30,13 +30,8 @@ const EDITIONS_DIR = path.resolve(__dirname, '..', 'editions');
 // from _build/footer.json — the one place it may appear; line 2 is this
 // edition's own note (the "ongoing series / permanent URLs" colophon). Mirrors
 // siteFooterHtml() in _build/links.mjs so the identity never drifts.
-const SITE_FOOTER = require('../../_build/footer.json');
-function siteFooterHtml(note) {
-  return '<footer class="page-footer">\n'
-    + `    <p class="footer-id">${SITE_FOOTER.id}</p>`
-    + (note ? `\n    <p class="${SITE_FOOTER.noteClass}">${note}</p>` : '')
-    + '\n  </footer>';
-}
+// Shared page chrome (footer, breadcrumbs, escapeHtml) from _build/chrome.js.
+const { escapeHtml, siteFooterHtml, crumbs: buildCrumbs } = require('../../_build/chrome.js');
 
 function main() {
   const args = process.argv.slice(2);
@@ -133,11 +128,11 @@ function buildPageTitle(titlePlain, fm) {
 // Home › The Facts › <edition title>. "The Facts" links to /the-facts/ (the
 // current edition); the edition title is the non-link current node.
 function buildBreadcrumb(titlePlain) {
-  return [
-    '<a href="/">Home</a>',
-    '<a href="/the-facts/">The Facts</a>',
-    '<span class="current">' + escapeHtml(titlePlain) + '</span>',
-  ].join('<span class="sep">›</span>');
+  return buildCrumbs([
+    { label: 'Home', href: '/' },
+    { label: 'The Facts', href: '/the-facts/' },
+    { label: titlePlain },
+  ]);
 }
 
 /* ------------------------------------------------------------------ *
@@ -602,14 +597,6 @@ function renderInline(md) {
   return marked.parseInline(String(md || ''));
 }
 
-function escapeHtml(s) {
-  return String(s)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
 
 function escapeAttr(s) {
   return escapeHtml(s);
