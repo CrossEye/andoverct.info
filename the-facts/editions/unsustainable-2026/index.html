@@ -502,15 +502,23 @@
     color: var(--blue);
   }
 
-  .colophon {
-    margin-top: 28px;
-    padding-top: 18px;
+  /* Shared site footer: canonical identity line (.footer-id, from
+     _build/footer.json) + optional per-edition note (.footer-note, the
+     "ongoing series / permanent URLs" colophon). */
+  .page-footer {
+    margin-top: 40px;
+    padding-top: 20px;
     border-top: 1px solid var(--gold-soft);
     font-size: 13px;
     color: var(--ink-faint);
-    line-height: 1.5;
-    font-style: italic;
+    line-height: 1.6;
+    text-align: center;
   }
+  .page-footer p { margin: 0 auto 8px; max-width: 62ch; }
+  .page-footer .footer-note { margin-top: 10px; font-style: italic; }
+  .page-footer strong { color: var(--ink-soft); font-weight: 700; }
+  .page-footer a { color: var(--ink-soft); border-bottom: 1px solid var(--gold-soft); }
+  .page-footer a:hover { color: var(--burgundy); border-bottom-color: var(--burgundy); }
 
   /* ---------- Mobile ---------- */
   @media (max-width: 600px) {
@@ -753,10 +761,11 @@ was 23.3 percent and the Consumer Price Index rose 23.1 percent.
 </li>
 </ul>
 
-    <div class="colophon">
-      Compiled by Scott Sauyet, Andover. Posted at andoverct.info/the-facts. This page is part of an ongoing series; new editions appear at the same URL as the local conversation evolves. Earlier editions remain accessible at their permanent URLs (use the menu to navigate).
-    </div>
   </div>
+  <footer class="page-footer">
+    <p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>
+    <p class="footer-note">Posted at andoverct.info/the-facts. This page is part of an ongoing series; new editions appear at the same URL as the local conversation evolves. Earlier editions remain accessible at their permanent URLs (use the menu to navigate).</p>
+  </footer>
 </div>
 
 <script>

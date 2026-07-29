@@ -14,7 +14,7 @@ cta:
   body: |
     Every House vote, 2023&ndash;2026, searchable &nbsp;&middot;&nbsp; [andoverct.info/reports/55th/weir-votes](http://andoverct.info/reports/55th/weir-votes/)
 colophon: |
-  Compiled by Scott Sauyet, Andover. Posted at andoverct.info/the-facts. This page is part of an ongoing series; new editions appear at the same URL as the local conversation evolves. Earlier editions remain accessible at their permanent URLs (use the menu to navigate).
+  Posted at andoverct.info/the-facts. This page is part of an ongoing series; new editions appear at the same URL as the local conversation evolves. Earlier editions remain accessible at their permanent URLs (use the menu to navigate).
 ---
 
 Rep. Weir's post makes two factual claims: perfect attendance, and voting with

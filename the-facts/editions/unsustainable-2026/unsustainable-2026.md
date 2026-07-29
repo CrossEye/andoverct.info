@@ -11,7 +11,7 @@ cta:
     Andover Town Hall &nbsp;&middot;&nbsp; 17 School Road
     Polls open 6:00 AM &ndash; 8:00 PM
 colophon: |
-  Compiled by Scott Sauyet, Andover. Posted at andoverct.info/the-facts. This page is part of an ongoing series; new editions appear at the same URL as the local conversation evolves. Earlier editions remain accessible at their permanent URLs (use the menu to navigate).
+  Posted at andoverct.info/the-facts. This page is part of an ongoing series; new editions appear at the same URL as the local conversation evolves. Earlier editions remain accessible at their permanent URLs (use the menu to navigate).
 ---
 
 Andover's First Selectman has sent another mailer, this one urging a NO vote

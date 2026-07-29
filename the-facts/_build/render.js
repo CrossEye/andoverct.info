@@ -26,6 +26,18 @@ const { marked } = require('marked');
 const TEMPLATE_PATH = path.join(__dirname, 'template.html');
 const EDITIONS_DIR = path.resolve(__dirname, '..', 'editions');
 
+// Shared site footer. Line 1 (identity + disclaimer) is the canonical string
+// from _build/footer.json — the one place it may appear; line 2 is this
+// edition's own note (the "ongoing series / permanent URLs" colophon). Mirrors
+// siteFooterHtml() in _build/links.mjs so the identity never drifts.
+const SITE_FOOTER = require('../../_build/footer.json');
+function siteFooterHtml(note) {
+  return '<footer class="page-footer">\n'
+    + `    <p class="footer-id">${SITE_FOOTER.id}</p>`
+    + (note ? `\n    <p class="${SITE_FOOTER.noteClass}">${note}</p>` : '')
+    + '\n  </footer>';
+}
+
 function main() {
   const args = process.argv.slice(2);
   if (args.length === 0) {
@@ -84,11 +96,16 @@ function renderToHtml({ frontmatter, body }) {
   const breadcrumbHtml = buildBreadcrumb(titlePlain);
 
   const bodyHtmlAll = renderBody(body);
-  const extracted = extractReferences(bodyHtmlAll, fm.colophon);
+  // The colophon is no longer tacked onto the Sources block; it becomes the
+  // per-page note of the shared site footer instead.
+  const extracted = extractReferences(bodyHtmlAll, null);
   // Anchors are injected last, after references are split out, so the
   // extraction regex matches clean (anchor-free) headings.
   const bodyMain = addHeadingAnchors(extracted.bodyMain);
   const references = addHeadingAnchors(extracted.references);
+  const footerNote = fm.colophon
+    ? renderInline(String(fm.colophon).trim()).replace(/\n/g, '<br>\n      ')
+    : '';
 
   const heroImageHtml = renderHeroImage(fm.hero_image);
   const ctaHtml = renderCta(fm.cta);
@@ -103,7 +120,8 @@ function renderToHtml({ frontmatter, body }) {
     .replace('{{HERO_IMAGE}}', heroImageHtml)
     .replace('{{BODY}}', bodyMain)
     .replace('{{CTA}}', ctaHtml)
-    .replace('{{REFERENCES}}', references);
+    .replace('{{REFERENCES}}', references)
+    .replace('{{FOOTER}}', siteFooterHtml(footerNote));
 }
 
 function buildPageTitle(titlePlain, fm) {
