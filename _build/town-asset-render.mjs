@@ -81,6 +81,11 @@ h2.sources-h { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.
 h2.sources-h + ol { margin: 0 0 1em; padding-left: 1.4em; font-size: 0.92rem; }
 h2.sources-h + ol li { margin: 0 0 8px; }
 p.collection-footer { margin: 26px 0 0; padding: 14px 16px; background: var(--bg-soft); border-radius: 8px; font-size: 0.95rem; }
+/* Inline corrections (rule 4: additive, dated, never a silent edit). Italic
+   with a navy left border, distinct from the gold narrative seam. Appears in
+   both the standalone piece and the assembled article, since it lives in the
+   beat body. */
+p.correction { margin: 1.6em 0; padding: 0.1em 0 0.1em 1.1em; border-left: 3px solid var(--accent-2); font-style: italic; font-size: 0.95rem; color: var(--ink-soft); }
 
 /* SEAM_CSS — decided at stage 0; keep after .piece-body p (specificity tie). */
 p.seam {
@@ -246,8 +251,23 @@ for (const step of stepNums) {
   const union = new Map(site.docs);
   for (const [id, doc] of camp.docs) {
     if (union.has(id)) {
-      fail(`duplicate link id "${id}": ${join("links/_src", id + ".yaml")} (repo) vs `
-        + `${join(sd, "links", id + ".yaml")} (campaign). Every id must be unique.`);
+      // Once a series is finalized (reconcile --finalize), its register entries
+      // live in the repo's links/_src AND still come from the campaign output.
+      // An IDENTICAL duplicate is that expected overlap, not a clash; only a
+      // DIFFERING one is a real id conflict. This keeps rebuild:town-asset
+      // (build-from-source maintenance) working after finalization, while a
+      // fresh series still catches genuine collisions. (A register entry edited
+      // at the source will differ until reconciled into links/_src — reconcile
+      // it, then re-render.)
+      const repoYaml = join(ROOT, "links", "_src", id + ".yaml");
+      const campYaml = join(sd, "links", id + ".yaml");
+      const identical = existsSync(repoYaml) && existsSync(campYaml)
+        && readFileSync(repoYaml, "utf8") === readFileSync(campYaml, "utf8");
+      if (!identical) {
+        fail(`conflicting link id "${id}": links/_src/${id}.yaml (repo) differs from `
+          + `${join(sd, "links", id + ".yaml")} (campaign). Reconcile or resolve the id.`);
+      }
+      continue;  // identical; keep the repo copy
     }
     union.set(id, doc);
   }
