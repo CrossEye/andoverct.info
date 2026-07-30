@@ -157,14 +157,24 @@ function cardHtml(it) {
     + "</article>";
 }
 
-// A collapsed disclosure of compact title chips (series beats, charter guides,
-// previous editions) — hidden by default, one click to reveal.
+// A collapsed disclosure, hidden by default. `ordered: true` renders a numbered
+// list (for sequences — series parts, guides read in order); otherwise a compact
+// chip row (for loose sets like previous editions).
 function discloseHtml(d) {
   if (!d) return "";
-  const chips = d.items.map((x) =>
-    `<a class="chip" href="${escapeHtml(x.href)}"${x.gloss ? ` title="${escapeHtml(x.gloss)}"` : ""}>${escapeHtml(x.title)}</a>`
-  ).join("");
-  return `<details class="disclose"><summary>${escapeHtml(d.label)} <span class="count">${d.items.length}</span></summary>\n<div class="chip-row">${chips}</div></details>`;
+  let body;
+  if (d.ordered) {
+    const lis = d.items.map((x) =>
+      `<li><a href="${escapeHtml(x.href)}">${escapeHtml(x.title)}</a>${x.gloss ? `<span class="g">${escapeHtml(x.gloss)}</span>` : ""}</li>`
+    ).join("\n");
+    body = `<ol class="disclose-list">${lis}</ol>`;
+  } else {
+    const chips = d.items.map((x) =>
+      `<a class="chip" href="${escapeHtml(x.href)}"${x.gloss ? ` title="${escapeHtml(x.gloss)}"` : ""}>${escapeHtml(x.title)}</a>`
+    ).join("");
+    body = `<div class="chip-row">${chips}</div>`;
+  }
+  return `<details class="disclose"><summary>${escapeHtml(d.label)} <span class="count">${d.items.length}</span></summary>\n${body}</details>`;
 }
 
 // A labelled card cluster: a linked heading, a grid of cards, and an optional
@@ -220,9 +230,11 @@ function cardsSectionHtml(s) {
     if (s.aside) body += `\n<div class="aside-note">${s.aside}</div>`;
     if (s.disclose) body += "\n" + discloseHtml(s.disclose);
   }
+  const h2 = s.title
+    ? `\n      <h2 class="section-title"><a href="${escapeHtml(s.href)}">${escapeHtml(s.title)} <span class="arrow">→</span></a></h2>`
+    : "";
   return `<section class="group" id="sec-${s.id}" data-sec="${s.id}">
-      <p class="section-label">§ ${s.num} · ${escapeHtml(s.label)}</p>
-      <h2 class="section-title"><a href="${escapeHtml(s.href)}">${escapeHtml(s.title)} <span class="arrow">→</span></a></h2>
+      <p class="section-label">§ ${s.num} · ${escapeHtml(s.label)}</p>${h2}
       <p class="section-blurb">${escapeHtml(s.blurb)}</p>
       ${body}
     </section>`;
@@ -243,12 +255,14 @@ const HOME_SCROLLSPY = `<script>
 })();
 </script>`;
 
+// The rail count is what a reader perceives as top-level entries in a section:
+// individual reports/editions for those, but the number of series/document groups
+// for grouped sections (1 series, not its 2 cards; 2 charter docs, not their parts).
 function railCount(s) {
   if (s.source === "reports") return REPORTS.reports.filter((r) => r.featured !== false && !r.hidden).length;
   if (s.source === "editions") return Object.values(EDITIONS.editions).filter((e) => !e.hidden).length;
-  let n = s.items ? s.items.length : 0;
-  if (s.groups) n += s.groups.reduce((a, g) => a + g.items.length, 0);
-  return n;
+  if (s.groups) return s.groups.length;
+  return s.items ? s.items.length : 0;
 }
 
 function renderCardsNode(node) {
