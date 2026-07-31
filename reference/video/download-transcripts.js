@@ -732,14 +732,14 @@ function convertVttToHtml(meeting, vttText) {
 ${pageBanner(buildCrumbs([
     { label: "Home", href: "/" },
     { label: "Reference", href: "/reference/" },
-    { label: "Video", href: "../index.html" },
+    { label: "Video", href: "../" },
     { label: `${meeting.meeting} (${formatDateShort(meeting.date)})` },
   ]), { indent: "  " })}
   <main class="page">
     <header>
       <p class="eyebrow">Meeting transcript</p>
       <h1 class="title">${escapeHtml(meeting.meeting)}</h1>
-      <p class="subtitle">${formatDateLong(meeting.date)} &middot; <a href="${videoUrl}" ${videoTarget}${isZoom && meeting.passcode ? ' id="top-watch-zoom"' : ""}>${videoLinkText}</a> &middot; <a href="../index.html">All meetings</a></p>
+      <p class="subtitle">${formatDateLong(meeting.date)} &middot; <a href="${videoUrl}" ${videoTarget}${isZoom && meeting.passcode ? ' id="top-watch-zoom"' : ""}>${videoLinkText}</a> &middot; <a href="../">All meetings</a></p>
     </header>
 
     <hr class="rule">
