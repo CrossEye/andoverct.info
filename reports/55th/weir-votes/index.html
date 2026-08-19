@@ -85,12 +85,23 @@
     border-bottom: 3px solid var(--accent);
     padding-bottom: 0.35em;
   }
+  section.session { margin-top: 2.5em; }
+  /* Session heading sticks while its section scrolls; the table header row
+     sticks 43px lower — exactly the h2's box height (8 + 28 + 6 + 1), so the
+     two stack with no gap. Keep those metrics in lockstep. The p.summary in
+     between scrolls away underneath. */
   h2 {
     font-family: var(--font-display);
+    font-size: 20px;
+    line-height: 28px;
     color: var(--ink);
-    margin-top: 2em;
+    margin: 0;
+    padding: 8px 0 6px;
     border-bottom: 1px solid var(--rule);
-    padding-bottom: 0.2em;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background: var(--bg-page);
   }
   .summary { color: var(--ink-mute); }
   table { border-collapse: collapse; width: 100%; margin-top: 1em; font-size: 14px; }
@@ -101,7 +112,7 @@
     font-family: var(--font-display);
     font-weight: 600;
     position: sticky;
-    top: 0;
+    top: 43px;
   }
   td.num { text-align: right; font-variant-numeric: tabular-nums; color: var(--ink-mute); }
   td.date { white-space: nowrap; color: var(--ink-mute); font-variant-numeric: tabular-nums; }
