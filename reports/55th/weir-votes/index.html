@@ -2,55 +2,156 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>Steve Weir (R-55) — CT House floor votes</title>
 <style>
+  /* bluegold site palette (mirrors _build/themes/bluegold.css), plus the
+     vote-table colors this page keeps for itself. Dark gold #8a6d2a is used
+     where small text needs an accent — the signature gold is too light to
+     read on white. */
   :root {
-    --fg: #222;
-    --bg: #fbfaf6;
-    --muted: #777;
-    --border: #ddd6c8;
-    --accent: #8a6d2a;
-    --y: #2a7a3f;
+    --bg: #f4f6f9;
+    --bg-page: #ffffff;
+    --bg-soft: #eef4fb;
+    --rule: #e3e8ef;
+    --ink: #19222e;
+    --ink-soft: #2b3744;
+    --ink-mute: #5b6775;
+    --ink-faint: #8a94a1;
+    --accent: #e8a800;
+    --accent-2: #0f2a4a;
+    --banner-bg: linear-gradient(180deg, #0f2a4a, #143862);
+    --banner-ink: #dde8f5;
+    --link: #245c95;
+    --link-hover: #1c4e80;
+    --y: #1f7d49;
     --n: #b3382e;
-    --x: #888;
+    --x: #8a94a1;
+    --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-display: Georgia, "Times New Roman", serif;
+    /* Wider than the 860px report measure: this page is one big table. */
+    --measure: 1200px;
+    --gutter: 30px;
   }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    color: var(--fg);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink);
     background: var(--bg);
-    max-width: 1100px;
-    margin: 2em auto;
-    padding: 0 1em;
-    line-height: 1.45;
+    margin: 0;
+    padding: 0;
   }
-  h1 { border-bottom: 2px solid var(--accent); padding-bottom: 0.3em; }
-  h2 { margin-top: 2em; border-bottom: 1px solid var(--border); padding-bottom: 0.2em; }
-  .summary { color: var(--muted); }
+  a { color: var(--link); }
+  a:hover { color: var(--link-hover); }
+
+  /* Page banner + breadcrumbs — same chrome classes as _build/base.css. */
+  .page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: 3px solid var(--accent);
+    padding: 14px 0;
+    font-family: var(--font-display);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+  }
+  .page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .page-banner .crumbs a { color: var(--accent); text-decoration: none; }
+  .page-banner .crumbs a:hover { color: #fff; text-decoration: underline; }
+  .page-banner .crumbs .sep { color: var(--banner-ink); opacity: 0.5; margin: 0 0.45em; }
+  .page-banner .crumbs .current { color: #fff; }
+
+  .container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0 0 12px;
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 0.35em;
+  }
+  h2 {
+    font-family: var(--font-display);
+    color: var(--ink);
+    margin-top: 2em;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.2em;
+  }
+  .summary { color: var(--ink-mute); }
   table { border-collapse: collapse; width: 100%; margin-top: 1em; font-size: 14px; }
-  th, td { padding: 0.45em 0.6em; border-bottom: 1px solid var(--border); vertical-align: top; text-align: left; }
-  th { background: #f0ebd9; position: sticky; top: 0; }
-  td.num { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
-  td.date { white-space: nowrap; color: var(--muted); font-variant-numeric: tabular-nums; }
+  th, td { padding: 0.45em 0.6em; border-bottom: 1px solid var(--rule); vertical-align: top; text-align: left; }
+  th {
+    background: var(--bg-soft);
+    color: var(--accent-2);
+    font-family: var(--font-display);
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+  }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; color: var(--ink-mute); }
+  td.date { white-space: nowrap; color: var(--ink-mute); font-variant-numeric: tabular-nums; }
   td.bill { max-width: 460px; }
-  td.bill .title { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
-  td.bill .suffix { font-size: 11px; color: var(--accent); margin-left: 0.5em; }
+  td.bill .title { font-size: 12.5px; color: var(--ink-mute); margin-top: 2px; }
+  td.bill .suffix { font-size: 11px; color: #8a6d2a; margin-left: 0.5em; }
   td.bill .links { font-size: 11.5px; margin-top: 4px; }
   td.weir { text-align: center; }
   td.totals { white-space: nowrap; font-variant-numeric: tabular-nums; }
-  td.totals .dim { color: var(--muted); font-size: 11px; }
+  td.totals .dim { color: var(--ink-mute); font-size: 11px; }
   td.splits { white-space: nowrap; font-variant-numeric: tabular-nums; font-size: 12.5px; }
   .v { display: inline-block; min-width: 1.6em; padding: 2px 4px; border-radius: 3px; font-weight: 600; }
-  .v-y { background: #e3f1e5; color: var(--y); }
-  .v-n { background: #f7e0dd; color: var(--n); }
-  .v-x { background: #ececec; color: var(--x); }
-  .v-a { background: #efe7d4; color: var(--accent); }
-  .v-na { color: var(--muted); }
+  .v-y { background: #e5f1e9; color: var(--y); }
+  .v-n { background: #f7e3e0; color: var(--n); }
+  .v-x { background: #edf0f4; color: var(--x); }
+  .v-a { background: #fbf0d2; color: #8a6d2a; }
+  .v-na { color: var(--ink-mute); }
   tr.rc-against-r td.weir .v { outline: 2px solid var(--accent); }
-  nav { font-size: 14px; }
-  nav a { margin-right: 1em; }
+  nav.jump { font-size: 14px; }
+  nav.jump a { margin-right: 1em; }
+
+  /* @footer-css:start — generated from _build/footer.css; do not edit here, run: npm run sync:footer-css */
+.page-footer {
+  /* max-width + horizontal padding are px (not rem/ch) so a page's root
+     font-size can't rescale the wrap — the line breaks are identical everywhere. */
+  max-width: 512px;
+  margin: 3rem auto;
+  padding: 1.75rem 20px 0;
+  border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  text-align: center;
+  color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+}
+.page-footer p { margin: 0 auto 0.5rem; max-width: none; }
+.page-footer .footer-note { margin-top: 0.6rem; font-style: italic; }
+.page-footer strong { color: var(--ink-soft, inherit); font-weight: 600; }
+.page-footer a { color: var(--ink-soft, inherit); border-bottom: 1px solid var(--rule, currentColor); }
+.page-footer a:hover { color: var(--accent, var(--link, var(--burgundy, currentColor))); border-bottom-color: var(--accent, var(--link, var(--burgundy, currentColor))); }
+/* @footer-css:end */
 </style>
 </head>
 <body>
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/reports/">Reports</a><span class="sep">›</span><a href="/reports/55th/">55th District</a><span class="sep">›</span><span class="current">Steve Weir&#39;s House Floor Votes, 2023–2026</span>
+  </nav>
+</div>
+<div class="container">
 <h1>State Rep. Steve Weir (R-55) — Connecticut House floor votes</h1>
 <p>
   Compiled from roll-call PDFs published by the Connecticut General Assembly.
@@ -58,7 +159,7 @@
   (where available) the bill text. Rows where Weir voted against the majority
   of his party caucus are outlined.
 </p>
-<nav>
+<nav class="jump">
   Jump to: <a href="#2023-regular">2023 Regular Session</a><a href="#2024-regular">2024 Regular Session</a><a href="#2025-regular">2025 Regular Session</a><a href="#2026-regular">2026 Regular Session</a>
 </nav>
 
@@ -25744,14 +25845,10 @@
         </table>
       </section>
     
-<footer>
-  <hr>
-  <p style="font-size: 12px; color: var(--muted)">
-    Generated 2026-06-01 from
-    <code>data\parsed\all-votes.json</code>. Total 1293 votes across
-    4 session(s).
-    Vote codes: Y = Yea, N = Nay, X = Absent / not voting, A = Abstain.
-  </p>
+</div>
+<footer class="page-footer">
+<p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>
+<p class="footer-note">Generated 2026-06-01 from the Connecticut General Assembly&#39;s roll-call PDFs · 1,293 votes across 4 sessions · Vote codes: Y = Yea, N = Nay, X = Absent / not voting, A = Abstain</p>
 </footer>
 </body>
 </html>
