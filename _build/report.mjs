@@ -557,11 +557,17 @@ ${siteFooterHtml(meta.footerNote ?? meta.footer)}
 </html>`;
   }
 
+  // `noindex: true` front matter keeps an unlisted report out of search
+  // engines while it's live-but-not-yet-announced; drop it at release time.
+  const robotsMeta = meta.noindex
+    ? '\n<meta name="robots" content="noindex">'
+    : "";
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">${robotsMeta}
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>${meta.pageTitle}</title>
