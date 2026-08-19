@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Steve Weir's Voting Record — CT 55th House District</title>
+<style>/* Default civic-report theme.
+ *
+ * A theme is just this set of CSS custom properties. To experiment, copy this
+ * file to _build/themes/<name>.css, change what you like, and point at it from
+ * _build/report.config.json ({"theme":"<name>"}) for all reports, or from a
+ * single report's front matter (theme: <name>). A non-default theme is layered
+ * ON TOP of this one, so it only needs to list the variables it changes.
+ *
+ * Scope: colors, fonts, and small size/width/gap tweaks — not layout changes.
+ */
+:root {
+  /* ---- Palette ---- */
+  --bg:             #fafaf7;   /* page background */
+  --bg-page:        #ffffff;   /* the white content card */
+  --bg-soft:        #f5f3ed;   /* callouts, table headers, inline code */
+  --ink:            #1a1a1a;   /* body text, main headings */
+  --ink-soft:       #333333;   /* blockquote / methodology text */
+  --ink-mute:       #5a5a5a;   /* subtitle, card descriptions */
+  --ink-faint:      #888888;   /* attribution, footer, captions */
+  --rule:           #e0ddd5;   /* hairline borders */
+  --accent:         #b8a878;   /* gold accent rules */
+  --accent-2:       #2c3e50;   /* slate: h3, table-header & code text */
+  --banner-bg:      #2c3e50;   /* top banner background */
+  --banner-ink:     #ecf0f1;   /* top banner text */
+  --crumb-link:       #b9c4cf; /* breadcrumb links in the banner */
+  --crumb-link-hover: #ffffff;
+  --crumb-current:    #ffffff; /* deepest crumb (current page), not a link */
+  --link:           #1a5490;
+  --link-hover:     #0d3a6b;
+  --link-underline: #c5d3e2;
+  --anchor:         #b8b3a4;   /* the ¶ header anchor */
+  --anchor-hover:   #6c7480;
+  --confirm:        #5a8a5a;   /* green ✓ confirmation mark */
+  --confirm-strong: #2e7d32;
+
+  /* ---- Fonts ---- */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:  "SF Mono", Monaco, Menlo, Consolas, monospace;
+
+  /* ---- Sizes (small tweaks only; no layout restructuring) ---- */
+  --base-size:  11pt;    /* body text */
+  --measure:    780px;   /* content column width */
+  --gutter:     30px;    /* horizontal padding / banner & footer gaps */
+  --title-size: 28pt;
+  --h2-size:    18pt;
+  --h3-size:    13pt;
+}
+
+/* bluegold — mirrors the light-mode look of the 55th campaign site
+ * (C:\Users\scott\Dev\Andover\55th, e.g. localhost:8080/reports): cool
+ * blue-gray paper, a dark navy banner with a gold underline, navy serif
+ * headings over a sans body, gold accent rules, and blue links.
+ *
+ * Note the deliberate font swap: base.css uses --font-serif for body text and
+ * --font-sans for headings/labels, so to match the campaign look (sans body,
+ * serif display) we put the SANS stack in --font-serif and the SERIF stack in
+ * --font-sans.
+ *
+ * Layered on default.css. Uses --banner-border (in base.css) for the gold rule
+ * under the banner. */
+:root {
+  /* Palette */
+  --bg:             #f4f6f9;
+  --bg-page:        #ffffff;
+  --bg-soft:        #eef4fb;   /* blue-050 tint for callouts / table headers */
+  --rule:           #e3e8ef;   /* hairlines */
+  --ink:            #19222e;
+  --ink-soft:       #2b3744;
+  --ink-mute:       #5b6775;
+  --ink-faint:      #8a94a1;
+  --accent:         #e8a800;   /* signature gold rules */
+  --accent-2:       #0f2a4a;   /* blue-900: headings, table-header & code text */
+  --banner-bg:      linear-gradient(180deg, #0f2a4a, #143862);
+  --banner-border:  3px solid #e8a800;
+  --banner-ink:     #dde8f5;   /* blue-100 */
+  --crumb-link:       #e8a800; /* gold breadcrumb links */
+  --crumb-link-hover: #ffffff; /* hover to white + underline */
+  --crumb-current:    #ffffff; /* current page, not a link */
+  --link:           #245c95;   /* blue-600 */
+  --link-hover:     #1c4e80;   /* blue-700 */
+  --link-underline: #cfe0f2;
+  --confirm:        #2f8f5b;
+  --confirm-strong: #1f7d49;
+
+  /* Type: sans body + serif display headings (see note above) */
+  --font-serif: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans:  Georgia, "Times New Roman", serif;
+
+  --measure: 860px;
+}
+
+/* Structural base styles for civic reports — theme-independent.
+ * Colors, fonts, and sizes come from the active theme (CSS custom properties
+ * in _build/themes/<name>.css), which is loaded BEFORE this file. */
+
+/* ---- Reset & base ---- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Layout ---- */
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner a { color: inherit; text-decoration: none; }
+.page-banner a:hover { text-decoration: underline; }
+
+/* ---- Breadcrumb (in the banner) ---- */
+.page-banner .crumbs a {
+    color: var(--crumb-link, var(--banner-ink));
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover, #fff);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current {
+    color: var(--crumb-current, #fff);
+}
+
+.container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* ---- Images / figures ---- */
+/* Scale charts and figures to the column (and the printed page box) rather
+   than overflowing at their intrinsic pixel/point size. */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+}
+
+/* ---- Lightbox (screen only; overlay is built at runtime by the viewer
+   script, so it never appears in the PDF). Click a chart to enlarge it. ---- */
+.container img { cursor: zoom-in; }
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vmin;
+    background: rgba(0, 0, 0, 0.85);
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+.lightbox-overlay.open { opacity: 1; }
+.lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    margin: 0;
+    cursor: zoom-out;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+    background: #fff;
+}
+
+/* ---- Title block ---- */
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-attribution {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    color: var(--ink-faint);
+    margin: 0 0 24px 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+.report-attribution a {
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+}
+.report-attribution a:hover {
+    color: var(--link);
+    border-bottom-color: var(--link);
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.methodology-header {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 0 0 36px 0;
+    line-height: 1.55;
+}
+
+/* ---- Section labels (small uppercase tags above h2) ---- */
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 36px 0 4px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+/* ---- Headings ---- */
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+h3 {
+    font-family: var(--font-sans);
+    font-size: var(--h3-size);
+    font-weight: 600;
+    margin: 28px 0 10px 0;
+    color: var(--accent-2);
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+
+/* ---- Header anchor links (HTML only; hidden in print) ---- */
+.header-anchor {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.2em;
+    color: var(--anchor);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.85em;
+    vertical-align: baseline;
+    cursor: pointer;
+    user-select: none;
+}
+h2:hover .header-anchor,
+h3:hover .header-anchor,
+.header-anchor:focus {
+    opacity: 1;
+}
+.header-anchor:hover {
+    color: var(--anchor-hover);
+}
+.header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+}
+.header-anchor.copied::after {
+    content: " copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+}
+@media print {
+    .header-anchor {
+        display: none;
+    }
+}
+
+/* ---- Body text ---- */
+p {
+    margin: 0 0 14px 0;
+    orphans: 3;
+    widows: 3;
+}
+p.intro-table {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+strong { font-weight: 700; color: var(--ink); }
+em { font-style: italic; }
+
+/* ---- Links ---- */
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* ---- Lists ---- */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+li {
+    margin: 0 0 6px 0;
+    line-height: 1.55;
+}
+
+/* ---- Tables ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-before: avoid;
+    break-before: avoid;
+}
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 9.5pt;
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--accent);
+}
+tbody tr:hover { background: var(--bg); }
+
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+tbody tr:last-child td {
+    border-bottom: 2px solid var(--accent);
+}
+
+/* ---- Blockquotes (source notes, verbatim quotes) ---- */
+blockquote {
+    margin: 14px 0 18px 0;
+    padding: 14px 20px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+blockquote p { margin: 0 0 8px 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ol, blockquote ul {
+    margin: 8px 0;
+}
+
+/* ---- HR ---- */
+hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+}
+
+/* ---- Inline code ---- */
+code {
+    font-family: var(--font-mono);
+    font-size: 9.5pt;
+    background: var(--bg-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: var(--accent-2);
+    overflow-wrap: break-word;
+}
+
+/* ---- Other Formats footer ---- */
+.formats-section {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+}
+.format-cards {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.format-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.format-cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media screen and (max-width: 700px) {
+    .format-cards.cols-3,
+    .format-cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+.format-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    padding: 14px;
+    text-align: left;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+.format-card-icon { font-size: 18pt; margin-bottom: 4px; }
+.format-card-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+.format-card-desc { font-size: 9pt; color: var(--ink-mute); line-height: 1.4; }
+.format-card a { display: block; }
+
+/* ---- Footer ----
+   Two parts: .footer-id is the site-wide identity/disclaimer line, identical
+   on every page; .footer-note is the optional per-page line (sources, method,
+   "not a lawyer"). See siteFooterHtml() in _build/links.mjs. */
+/* @footer-css:start — generated from _build/footer.css; do not edit here, run: npm run sync:footer-css */
+.page-footer {
+  /* max-width + horizontal padding are px (not rem/ch) so a page's root
+     font-size can't rescale the wrap — the line breaks are identical everywhere. */
+  max-width: 512px;
+  margin: 3rem auto;
+  padding: 1.75rem 20px 0;
+  border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  text-align: center;
+  color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+}
+.page-footer p { margin: 0 auto 0.5rem; max-width: none; }
+.page-footer .footer-note { margin-top: 0.6rem; font-style: italic; }
+.page-footer strong { color: var(--ink-soft, inherit); font-weight: 600; }
+.page-footer a { color: var(--ink-soft, inherit); border-bottom: 1px solid var(--rule, currentColor); }
+.page-footer a:hover { color: var(--accent, var(--link, var(--burgundy, currentColor))); border-bottom-color: var(--accent, var(--link, var(--burgundy, currentColor))); }
+/* @footer-css:end */
+
+/* ---- Confirmation glyphs ---- */
+h3 .conf-mark {
+    color: var(--confirm);
+    font-size: 11pt;
+    margin-right: 4px;
+}
+</style>
+</head>
+<body>
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/reports/">Reports</a><span class="sep">›</span><a href="/reports/55th/">55th District</a><span class="sep">›</span><span class="current">Steve Weir&#39;s Voting Record</span>
+  </nav>
+</div>
+<div class="container">
+<h1 class="report-title">Steve Weir's Voting Record</h1>
+<p class="report-subtitle">Connecticut House of Representatives, 55th District · 2023 through May 2026 · A pattern analysis of 1,293 roll-call votes</p>
+<p class="report-attribution">A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Not an official document</p>
+<hr class="report-header-rule">
+<p class="methodology-header">Compiled May 9, 2026 from the Connecticut General Assembly&#8217;s official roll-call
+records covering the 2023, 2024, 2025, and 2026 regular sessions. The dataset
+includes every recorded House vote in which Rep. Weir participated — 1,293 roll
+calls covering 1,104 unique bills, resolutions, and confirmations. For each
+vote, the dataset captures Weir&#8217;s position, the chamber-wide totals, and the
+breakdown by party. The analysis distinguishes near-unanimous votes (which carry
+no ideological signal) from partisan votes (where the two parties&#8217; positions
+diverge), and within partisan votes asks where Weir positioned himself: with the
+Democratic majority, with the Republican caucus&#8217;s majority, or to the right of
+his own caucus.</p>
+<hr>
+<p class="section-label">Introduction</p>
+<h2 id="overview">Overview<a class="header-anchor" href="#overview" aria-label="Link to this section">¶</a></h2>
+<p>Steve Weir has represented the 55th Assembly District — Andover, Bolton,
+Glastonbury, Hebron, and Marlborough — since January 2023. He is the Ranking
+Member of the Labor and Public Employees Committee and serves on the Housing and
+Higher Education committees. He sits on the board of the Connecticut Apartment
+Association, a landlord trade group, and is the immediate past chair of the CT
+River Valley Chamber of Commerce.</p>
+<p>A casual reading of his record might describe him as &#8220;a typical Republican in a
+heavily Democratic legislature.&#8221; This report documents that the casual reading
+understates the case. Across four legislative sessions:</p>
+<ol>
+<li><p>On the 337 partisan roll calls where the two parties were on opposite sides,
+Weir voted with the Republican position <strong>95–98% of the time, every year</strong> —
+a level of partisan loyalty that is consistent rather than situational.</p>
+</li>
+<li><p>On 95 separate roll calls, Weir voted &#8220;no&#8221; while a majority of House
+Republicans voted &#8220;yes.&#8221; These are votes where he positioned himself to the
+right of his own caucus&#8217;s center of gravity. They include child-safety
+measures, judicial confirmations, state-land conveyances, and bills
+designating state symbols.</p>
+</li>
+<li><p>Genuine bipartisan votes — bills where Weir broke from a strong Republican
+consensus to side with Democrats — number <strong>three</strong> in 1,293 roll calls.</p>
+</li>
+</ol>
+<p>The report walks through the topical pattern (Part 1), the year-over-year
+stability (Part 2), the &#8220;right of his own caucus&#8221; record (Part 3), the rare
+crossover votes (Part 4), and the bills that most clearly expose where Weir&#8217;s
+positions diverge from his stated platform (Part 5).</p>
+<hr>
+<p class="section-label before-part">Findings</p>
+<h2 id="part-1-issue-by-issue-record-on-contested-partisan-votes">Part 1 — Issue-by-issue record on contested partisan votes<a class="header-anchor" href="#part-1-issue-by-issue-record-on-contested-partisan-votes" aria-label="Link to this section">¶</a></h2>
+<p>A &#8220;partisan vote&#8221; here means a roll call where the two parties&#8217; majorities took
+opposite positions and at least five members of each party were voting. Among
+337 such votes, Weir&#8217;s record is overwhelmingly aligned with the Republican
+position. The table below shows his record by topic. Each topic includes only
+contested partisan votes — near-unanimous bills and procedural votes that don&#8217;t
+reveal an ideological position are excluded.</p>
+<h3 id="by-topic">By topic<a class="header-anchor" href="#by-topic" aria-label="Link to this section">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Topic</th>
+<th align="right" class="num">Partisan votes</th>
+<th align="right" class="num">With R position</th>
+<th align="right" class="num">With D position</th>
+<th align="right" class="num">% R-aligned</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Reproductive rights</td>
+<td align="right" class="num">3</td>
+<td align="right" class="num">3</td>
+<td align="right" class="num">0</td>
+<td align="right" class="num">100%</td>
+</tr>
+<tr>
+<td>Guns / firearms</td>
+<td align="right" class="num">10</td>
+<td align="right" class="num">10</td>
+<td align="right" class="num">0</td>
+<td align="right" class="num">100%</td>
+</tr>
+<tr>
+<td>Civil rights / antidiscrimination</td>
+<td align="right" class="num">2</td>
+<td align="right" class="num">2</td>
+<td align="right" class="num">0</td>
+<td align="right" class="num">100%</td>
+</tr>
+<tr>
+<td>Voting / elections</td>
+<td align="right" class="num">36</td>
+<td align="right" class="num">36</td>
+<td align="right" class="num">0</td>
+<td align="right" class="num">100%</td>
+</tr>
+<tr>
+<td>Housing</td>
+<td align="right" class="num">22</td>
+<td align="right" class="num">22</td>
+<td align="right" class="num">0</td>
+<td align="right" class="num">100%</td>
+</tr>
+<tr>
+<td>Healthcare / public health</td>
+<td align="right" class="num">32</td>
+<td align="right" class="num">31</td>
+<td align="right" class="num">1</td>
+<td align="right" class="num">97%</td>
+</tr>
+<tr>
+<td>Immigration</td>
+<td align="right" class="num">3</td>
+<td align="right" class="num">3</td>
+<td align="right" class="num">0</td>
+<td align="right" class="num">100%</td>
+</tr>
+<tr>
+<td>Consumer protection</td>
+<td align="right" class="num">15</td>
+<td align="right" class="num">15</td>
+<td align="right" class="num">0</td>
+<td align="right" class="num">100%</td>
+</tr>
+<tr>
+<td>Taxes / revenue</td>
+<td align="right" class="num">2</td>
+<td align="right" class="num">2</td>
+<td align="right" class="num">0</td>
+<td align="right" class="num">100%</td>
+</tr>
+<tr>
+<td>Transit / transportation</td>
+<td align="right" class="num">11</td>
+<td align="right" class="num">11</td>
+<td align="right" class="num">0</td>
+<td align="right" class="num">100%</td>
+</tr>
+<tr>
+<td>Budget / appropriations</td>
+<td align="right" class="num">17</td>
+<td align="right" class="num">17</td>
+<td align="right" class="num">0</td>
+<td align="right" class="num">100%</td>
+</tr>
+<tr>
+<td>Environment / climate</td>
+<td align="right" class="num">29</td>
+<td align="right" class="num">29</td>
+<td align="right" class="num">0</td>
+<td align="right" class="num">100%</td>
+</tr>
+<tr>
+<td>Criminal justice</td>
+<td align="right" class="num">31</td>
+<td align="right" class="num">30</td>
+<td align="right" class="num">1</td>
+<td align="right" class="num">97%</td>
+</tr>
+<tr>
+<td>Education</td>
+<td align="right" class="num">40</td>
+<td align="right" class="num">38</td>
+<td align="right" class="num">2</td>
+<td align="right" class="num">95%</td>
+</tr>
+<tr>
+<td>State employees / nominations</td>
+<td align="right" class="num">41</td>
+<td align="right" class="num">38</td>
+<td align="right" class="num">3</td>
+<td align="right" class="num">93%</td>
+</tr>
+<tr>
+<td>Labor / workers</td>
+<td align="right" class="num">47</td>
+<td align="right" class="num">43</td>
+<td align="right" class="num">4</td>
+<td align="right" class="num">91%</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> Topics are assigned by keyword classification of bill titles; bills
+can match multiple topics. Counts are roll calls, not unique bills, since
+major bills typically generate several roll calls (initial passage,
+amendments, motion to recommit, final passage). The &#8220;% R-aligned&#8221; column
+reflects how often Weir voted with whichever side a majority of the Republican
+caucus took. Source: Connecticut General Assembly roll-call PDFs, 2023–2026
+sessions.</p>
+<p><em>Because a bill can match several topics, the Partisan-votes column intentionally
+exceeds the 337-vote total and should be read as indicative, not exact. The
+original keyword-classification step is not independently reproducible, so —
+unlike the per-bill counts and the by-year totals in this report — these topic
+groupings are <strong>not independently confirmed</strong>; treat the per-bill and by-year
+figures as authoritative.</em></p>
+</blockquote>
+<p>The most striking feature of this table is that Weir&#8217;s R-alignment exceeds 92%
+in every category. There is no issue area where his record reflects meaningful
+independence from his party. The 9% of labor votes in which he sided with
+Democrats are concentrated in a handful of bills involving state employee
+bargaining agreements, where some Republicans cross over routinely.</p>
+<h3 id="reproductive-rights">Reproductive rights<a class="header-anchor" href="#reproductive-rights" aria-label="Link to this section">¶</a></h3>
+<p>Weir voted &#8220;no&#8221; on every contested reproductive-rights bill that came before the
+chamber:</p>
+<ul>
+<li><strong>SB-1108 (2023)</strong> — Access to reproductive health care for students at public
+colleges and universities. Final passage 114–34. Republican caucus split
+25–29; Weir was among the no votes despite nearly half of his caucus voting
+yes.</li>
+<li><strong>HB-7213 (2025)</strong> — Access to reproductive health care more broadly. Final
+passage 117–27. Republican caucus voted 25–23 in favor — narrowly supporting
+the bill — and Weir was among the 23 voting no.</li>
+<li><strong>SB-7 (2025)</strong> — Protections for access to health care and equitable delivery
+of health care services, including reproductive provisions. Final passage
+92–55. Voted no with the entire Republican caucus.</li>
+</ul>
+<h3 id="guns-and-firearms">Guns and firearms<a class="header-anchor" href="#guns-and-firearms" aria-label="Link to this section">¶</a></h3>
+<p>Voted no on every major gun-related bill:</p>
+<ul>
+<li><strong>HB-6667 (2023)</strong> — Omnibus bill addressing gun violence. Final passage
+96–51. Voted no.</li>
+<li><strong>HB-7042 (2025)</strong> — Implementation of the Firearm Industry Responsibility
+Act, firearm permit and eligibility standards, and self-defense provisions.
+Final passage 100–46. Voted no.</li>
+<li><strong>HB-5043 (2026)</strong> — Convertible pistols, unfinished frames or unfinished
+lower receivers (i.e., &#8220;ghost gun&#8221; components), voluntary firearm
+relinquishment, and refundability of permits. Final passage 86–64. Voted no.</li>
+<li><strong>HB-5317 (2024)</strong> — A <em>study</em> on the effectiveness of the community gun
+violence intervention and prevention program. Voted no.</li>
+</ul>
+<h3 id="voting-and-elections">Voting and elections<a class="header-anchor" href="#voting-and-elections" aria-label="Link to this section">¶</a></h3>
+<p>Voted no on every major voting-access expansion:</p>
+<ul>
+<li><strong>HB-5004 (2023)</strong> — Implementing early voting (the enabling legislation after
+Connecticut voters approved early voting via constitutional amendment). Final
+passage 107–35. Voted no.</li>
+<li><strong>HJ-1 (2023)</strong> — Resolution to put a no-excuse absentee voting constitutional
+amendment on the ballot. Final passage 113–38; the entire Democratic caucus
+(97–0) voted yes. Voted no.</li>
+<li><strong>HB-5001 (2026)</strong> — Absentee voting for all and various reforms related to
+the administration of elections. Final passage 101–49. Voted no.</li>
+<li><strong>HB-7242 (2025)</strong> — Studying methods to increase voter participation and
+authorizing municipal pilot programs. Voted no.</li>
+</ul>
+<h3 id="housing">Housing<a class="header-anchor" href="#housing" aria-label="Link to this section">¶</a></h3>
+<p>This pattern was identified in earlier analysis as the most consistent in Weir&#8217;s
+record — an alignment with landlords against tenants. The 2023–2026 data
+confirms this and extends it to nearly every contested housing measure:</p>
+<ul>
+<li><strong>HB-7035 (2025)</strong> — Prohibiting municipalities from implementing a ban on
+multifamily housing development. Final passage 94–54. Voted no.</li>
+<li><strong>HB-5474 (2024)</strong> — Municipal approvals for housing development, fines for
+violations of local ordinances, regulation of short-term rentals, rental
+assistance program administration, notices of rent increases. Final passage
+99–51. Voted no.</li>
+<li><strong>HB-5002 (2025)</strong> — Housing and the needs of homeless persons. Voted no on
+every one of 10 separate roll calls.</li>
+<li><strong>HB-5288 (2026)</strong> — Utility connections for accessory dwelling units (ADUs).
+Voted no — Republican caucus voted 36–13 in favor; Weir was among the 13.</li>
+<li><strong>SB-1444 (2025)</strong> — Conversion of commercial real property for residential
+use. Voted no.</li>
+<li><strong>SB-988 (2023)</strong> — Resident purchase of mobile manufactured home parks. Voted
+no.</li>
+<li><strong>SB-1336 (2025)</strong> — Mortgage foreclosures and undischarged mortgages. Voted
+no — R caucus 42–6 in favor.</li>
+<li><strong>HB-5572 (2025)</strong> — Real estate wholesalers regulation. Voted no — R caucus
+42–6 in favor.</li>
+<li><strong>HB-5390 (2024)</strong> — Transit-oriented communities. Voted no.</li>
+</ul>
+<p>His position on the board of the Connecticut Apartment Association is relevant
+context for this pattern: the Apartment Association is a landlord trade group,
+and Weir&#8217;s voting record on housing-related questions is consistent with that
+affiliation.</p>
+<h3 id="environment-and-climate">Environment and climate<a class="header-anchor" href="#environment-and-climate" aria-label="Link to this section">¶</a></h3>
+<p>Voted no on essentially every climate or clean-energy bill of consequence:</p>
+<ul>
+<li><strong>HB-6397 (2023)</strong> — Zero-carbon emissions. Final passage 95–53; D 93–1, R
+2–52. Voted no.</li>
+<li><strong>HB-5004 (2024)</strong> — Implementation of certain climate change measures. Final
+passage 94–56. Voted no.</li>
+<li><strong>HB-5004 (2025)</strong> — Protection of the environment and development of
+renewable energy sources and associated job sectors. Voted no.</li>
+<li><strong>HB-5340 (2026)</strong> — Renewable power generation. Voted no.</li>
+<li><strong>HB-5232 (2024)</strong> — Solar projects throughout the state. Voted no.</li>
+<li><strong>HB-7087 (2025)</strong> — Community solar energy generating systems. Voted no.</li>
+<li><strong>HB-6486 (2023)</strong> and <strong>HB-5157 (2026)</strong> — Tire stewardship / extended
+producer responsibility for tires. Voted no on both. The 2026 vote put him to
+the right of most Republicans, who split 29–21 in favor.</li>
+<li><strong>SB-1147 (2023)</strong> — DEEP Environmental Justice Program. Voted no.</li>
+<li><strong>HB-6813 (2023)</strong> — Seabird and shorebird protection program. Voted no.</li>
+<li><strong>HB-7248 (2025)</strong> — Well water quality. Voted no.</li>
+</ul>
+<h3 id="labor-and-workers-8217-rights">Labor and workers&#8217; rights<a class="header-anchor" href="#labor-and-workers-8217-rights" aria-label="Link to this section">¶</a></h3>
+<p>This is the area where Weir&#8217;s voting record most directly contradicts his stated
+portfolio. As Ranking Member of the Labor and Public Employees Committee, he is
+his caucus&#8217;s lead voice on labor questions. His record on contested labor bills
+is overwhelmingly anti-labor:</p>
+<ul>
+<li><strong>SB-8 (2025)</strong> — Protections for workers and enhancements to workers&#8217; rights.
+Final passage 87–59. Voted no.</li>
+<li><strong>HB-5005 (2024)</strong> — Expanding paid sick days in the state. Final passage
+88–61. Voted no.</li>
+<li><strong>SB-222 (2024)</strong> — Changes to the Paid Family and Medical Leave statutes.
+Final passage 108–41. Voted no even though nine Republicans crossed over to
+support it.</li>
+<li><strong>HB-6907 (2025)</strong> — Limits on the use of productivity quotas by warehouse
+distribution centers (an Amazon-style productivity-monitoring restriction).
+Voted no.</li>
+<li><strong>SB-1123 (2023)</strong> — Codification of prevailing-wage contract rates. Voted no.</li>
+<li><strong>SB-268 (2026)</strong> — Authorizing the Comptroller to withhold payment for
+prevailing-wage violations. Voted no.</li>
+<li><strong>SB-1396 (2025)</strong> — Earned but unpaid wage or salary income advances
+(consumer protection on wage advance products). Voted no.</li>
+</ul>
+<p>State employee bargaining agreements and arbitration awards are a related
+category. Weir voted against state union contracts and arbitration awards
+approximately half the time — including agreements that most Senate Republicans
+supported. His no vote on HR-31 (2023), a stipulated agreement with the State
+Police Union, came on a vote where the Republican caucus voted 49–5 in favor.</p>
+<h3 id="civil-rights-and-antidiscrimination">Civil rights and antidiscrimination<a class="header-anchor" href="#civil-rights-and-antidiscrimination" aria-label="Link to this section">¶</a></h3>
+<ul>
+<li><strong>HB-6638 (2023)</strong> — Revising the state&#8217;s antidiscrimination statutes. The
+Republican caucus voted <strong>36–17 in favor</strong>. Weir voted no — putting him with
+the harder-right minority of his own party on a vote where his caucus&#8217;s
+majority voted with Democrats.</li>
+<li><strong>HB-6866 (2023)</strong> — Studying the addition of a nonbinary gender option on
+state forms. Republican caucus voted 27–26 in favor — narrowly supporting the
+bill; Weir was among the 26 voting no.</li>
+<li><strong>HB-6569 (2023)</strong> — Raising the minimum age to marry to 18 with no
+exceptions. This bill ended child marriage in Connecticut, making it the 9th
+state to do so. The Senate passed it unanimously. Weir voted no.</li>
+<li><strong>HB-6872 (2025)</strong> — Revising and consolidating the state&#8217;s hate crimes
+statutes. Voted no.</li>
+<li><strong>HJ-34 (2023)</strong> — Resolution exonerating individuals convicted of witchcraft
+in colonial Connecticut. Voted no.</li>
+</ul>
+<hr>
+<p class="section-label before-part">Trend</p>
+<h2 id="part-2-year-over-year-stability">Part 2 — Year-over-year stability<a class="header-anchor" href="#part-2-year-over-year-stability" aria-label="Link to this section">¶</a></h2>
+<p>Some legislators evolve over time — they vote with their party more often as a
+freshman and more independently as they gain experience, or vice versa. Weir&#8217;s
+record shows no such evolution. His R-alignment on partisan votes has been
+remarkably stable across all four sessions:</p>
+<h3 id="partisan-vote-alignment-by-year">Partisan-vote alignment by year <span class="conf-mark">✓</span> <em>Confirmed</em><a class="header-anchor" href="#partisan-vote-alignment-by-year" aria-label="Link to this section">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Session</th>
+<th align="right" class="num">Partisan votes</th>
+<th align="right" class="num">With R majority</th>
+<th align="right" class="num">With D majority</th>
+<th align="right" class="num">% R-aligned</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2023</td>
+<td align="right" class="num">97</td>
+<td align="right" class="num">93</td>
+<td align="right" class="num">4</td>
+<td align="right" class="num">95.9%</td>
+</tr>
+<tr>
+<td>2024</td>
+<td align="right" class="num">62</td>
+<td align="right" class="num">61</td>
+<td align="right" class="num">1</td>
+<td align="right" class="num">98.4%</td>
+</tr>
+<tr>
+<td>2025</td>
+<td align="right" class="num">118</td>
+<td align="right" class="num">114</td>
+<td align="right" class="num">4</td>
+<td align="right" class="num">96.6%</td>
+</tr>
+<tr>
+<td>2026 (May)</td>
+<td align="right" class="num">60</td>
+<td align="right" class="num">57</td>
+<td align="right" class="num">3</td>
+<td align="right" class="num">95.0%</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td align="right" class="num"><strong>337</strong></td>
+<td align="right" class="num"><strong>325</strong></td>
+<td align="right" class="num"><strong>12</strong></td>
+<td align="right" class="num"><strong>96.4%</strong></td>
+</tr>
+</tbody></table>
+<p>The variation between years is small enough to be statistical noise. There is no
+trend line that would suggest Weir is becoming more independent, more
+bipartisan, or more (or less) ideological as he gains seniority.</p>
+<hr>
+<p class="section-label before-part">Analysis</p>
+<h2 id="part-3-bills-where-weir-voted-to-the-right-of-his-own-caucus">Part 3 — Bills where Weir voted to the right of his own caucus<a class="header-anchor" href="#part-3-bills-where-weir-voted-to-the-right-of-his-own-caucus" aria-label="Link to this section">¶</a></h2>
+<p>The 96.4% R-alignment number captures Weir&#8217;s loyalty to his party. It does not
+capture the more striking pattern: that on 95 separate roll calls, Weir voted
+&#8220;no&#8221; while a majority of House Republicans voted &#8220;yes.&#8221; On these votes, he was
+not just disagreeing with Democrats — he was disagreeing with his own caucus.</p>
+<h3 id="most-striking-cases">Most striking cases <span class="conf-mark">✓</span> <em>Confirmed from roll-call records</em><a class="header-anchor" href="#most-striking-cases" aria-label="Link to this section">¶</a></h3>
+<p class="intro-table">The list below shows the bills where Weir was the most isolated within his own
+party. The &#8220;R vote&#8221; column shows how Connecticut House Republicans voted; the
+higher the yes count, the more Weir was alone among Republicans on that vote.</p>
+<table>
+<thead>
+<tr>
+<th class="num">Year</th>
+<th>Bill</th>
+<th class="num">R vote</th>
+<th>Title</th>
+</tr>
+</thead>
+<tbody><tr>
+<td class="num">2024</td>
+<td>HB-5350</td>
+<td class="num">52–1</td>
+<td>Boating-law enforcement near RI/MA/NY borders (Weir was the lone R &#8220;no&#8221;)</td>
+</tr>
+<tr>
+<td class="num">2025</td>
+<td>HJ-31</td>
+<td class="num">45–2</td>
+<td>Confirming Hon. Elizabeth A. Bozzuto to be a Superior Court judge</td>
+</tr>
+<tr>
+<td class="num">2023</td>
+<td>SB-905</td>
+<td class="num">49–4</td>
+<td>Alcoholic liquor permits and tobacco bars</td>
+</tr>
+<tr>
+<td class="num">2025</td>
+<td>HB-6970</td>
+<td class="num">46–3</td>
+<td>Adoption of amendments to the Uniform Commercial Code</td>
+</tr>
+<tr>
+<td class="num">2026</td>
+<td>HB-5467</td>
+<td class="num">45–4</td>
+<td>DECD employee for concierge services to small businesses</td>
+</tr>
+<tr>
+<td class="num">2025</td>
+<td>HJ-38</td>
+<td class="num">43–4</td>
+<td>Confirming Hon. Margaret M. Murphy to be a Superior Court judge</td>
+</tr>
+<tr>
+<td class="num">2023</td>
+<td>HR-31</td>
+<td class="num">49–5</td>
+<td>State Police Union (NP-1) stipulated agreement</td>
+</tr>
+<tr>
+<td class="num">2024</td>
+<td>HB-5196</td>
+<td class="num">48–5</td>
+<td>Expanding the podiatric scope of practice</td>
+</tr>
+<tr>
+<td class="num">2025</td>
+<td>HB-6438</td>
+<td class="num">43–5</td>
+<td>Recognizing and honoring military service of CT veterans</td>
+</tr>
+<tr>
+<td class="num">2025</td>
+<td>HJ-30</td>
+<td class="num">41–5</td>
+<td>Confirming Hon. Barry F. Armata to be a Superior Court judge</td>
+</tr>
+<tr>
+<td class="num">2025</td>
+<td>SJ-28</td>
+<td class="num">40–5</td>
+<td>Confirming Hon. Gerard I. Adelman to be a State Referee</td>
+</tr>
+<tr>
+<td class="num">2025</td>
+<td>HB-7233</td>
+<td class="num">40–7</td>
+<td>Establishing a Parkinson&#8217;s Disease Research Account</td>
+</tr>
+<tr>
+<td class="num">2025</td>
+<td>SB-1336</td>
+<td class="num">42–6</td>
+<td>Mortgage foreclosures and undischarged mortgages</td>
+</tr>
+<tr>
+<td class="num">2025</td>
+<td>HB-5572</td>
+<td class="num">42–6</td>
+<td>Real estate wholesaler regulation</td>
+</tr>
+<tr>
+<td class="num">2023</td>
+<td>SB-1069</td>
+<td class="num">47–7</td>
+<td>Domestic-animal-related statute revisions</td>
+</tr>
+<tr>
+<td class="num">2023</td>
+<td>HB-6787</td>
+<td class="num">43–10</td>
+<td>Modifying sentences for certain cannabis-related offenses</td>
+</tr>
+<tr>
+<td class="num">2024</td>
+<td>SB-181</td>
+<td class="num">44–9</td>
+<td>Emergency department crowding</td>
+</tr>
+<tr>
+<td class="num">2024</td>
+<td>HB-5361</td>
+<td class="num">42–12</td>
+<td>Siting of renewable energy sources</td>
+</tr>
+<tr>
+<td class="num">2023</td>
+<td>HB-6678</td>
+<td class="num">42–10</td>
+<td>Nursing home transparency</td>
+</tr>
+<tr>
+<td class="num">2023</td>
+<td>HB-6805</td>
+<td class="num">41–11</td>
+<td>Solar installations in condominiums and cooperatives</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> This is a partial list. The full list of 95 right-of-caucus roll
+calls is available as a downloadable spreadsheet (see Other Formats below).
+Several of these involve judicial confirmations that the Republican caucus
+supports as a matter of routine professional courtesy; Weir&#8217;s no votes on them
+are unusual within his own party. Source: CGA roll-call PDFs.</p>
+</blockquote>
+<p>A few of these warrant individual mention:</p>
+<p><strong>Judicial confirmations.</strong> Weir voted no on 15 of 75 judicial nominations
+during this period. Many of those no votes came on confirmations the Republican
+caucus broadly supported — confirmations like Judge Bozzuto&#8217;s (R 45–2) or Judge
+Murphy&#8217;s (R 43–4) where he was one of only a handful of Republican no votes. The
+pattern is consistent enough across four years to read as reflexive opposition
+rather than principled review of individual nominees.</p>
+<p><strong>Routine bipartisan housekeeping.</strong> HB-5350 (boating laws on the RI/MA/NY
+borders) was a technical enforcement bill where Weir was the lone Republican no
+vote on a 52–1 caucus vote. HB-6970 (adoption of UCC amendments) is the kind of
+statutory housekeeping that virtually never draws partisan opposition; the
+Republican caucus voted 46–3 in favor and Weir was among the three.</p>
+<p><strong>Public-health and child-safety measures.</strong> HB-6678 (nursing home transparency,
+R 42–10), SB-181 (emergency department crowding, R 44–9), HB-6587 (a task force
+study on Medicaid coverage of diapers, R 35–16), and HB-5169 (swimming pool
+barriers, where most Republicans actually opposed but the bill is worth noting
+because it&#8217;s a child drowning prevention measure) all show a willingness to vote
+no on health- and safety-related bills that even his own caucus broadly
+supports.</p>
+<p><strong>State-land conveyances.</strong> Routine conveyances of state-owned land to specific
+municipalities — bills that ordinarily pass with broad bipartisan support — drew
+Weir no votes throughout 2025. On three of them the Republican caucus voted in
+favor and Weir did not: HB-7280 (Danbury, R 36–11), HB-7281 (Southbury, R 42–6),
+and HB-7284 (Preston, R 34–14). He also voted no on HB-7283 (CRDA) and HB-7285
+(Hamden), but a majority of Republicans opposed those too, so they are not
+right-of-caucus votes.</p>
+<hr>
+<p class="section-label before-part">Analysis</p>
+<h2 id="part-4-the-crossover-votes">Part 4 — The crossover votes<a class="header-anchor" href="#part-4-the-crossover-votes" aria-label="Link to this section">¶</a></h2>
+<p>In four years and 1,293 roll calls, Weir voted &#8220;yes&#8221; while a strong Republican
+majority voted &#8220;no&#8221; — and the Democratic caucus voted yes — on <strong>three</strong> votes.
+These are his only genuine crossover moments:</p>
+<h3 id="the-complete-list">The complete list <span class="conf-mark">✓</span> <em>Confirmed</em><a class="header-anchor" href="#the-complete-list" aria-label="Link to this section">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th class="num">Year</th>
+<th>Bill</th>
+<th>Title</th>
+<th class="num">D vote</th>
+<th class="num">R vote</th>
+</tr>
+</thead>
+<tbody><tr>
+<td class="num">2023</td>
+<td>HB-6738</td>
+<td>Compassionate or medical parole and credits awarded for release during an emergency</td>
+<td class="num">87–7</td>
+<td class="num">15–38</td>
+</tr>
+<tr>
+<td class="num">2023</td>
+<td>SB-913</td>
+<td>Expanding workers&#8217; compensation coverage for post-traumatic stress injuries for all employees</td>
+<td class="num">94–0</td>
+<td class="num">10–44</td>
+</tr>
+<tr>
+<td class="num">2025</td>
+<td>HR-15</td>
+<td>Collective bargaining agreement between Charter Oak State College and a UAW local</td>
+<td class="num">96–0</td>
+<td class="num">13–34</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> &#8220;Crossover&#8221; here means a vote where the Democratic caucus voted yes
+by at least 85%, the Republican caucus voted no by at least 70%, and Weir
+voted yes. These are the most demanding criteria for identifying a genuine
+break from caucus position. Other Weir &#8220;yes&#8221; votes that diverged from a
+Republican majority no exist (144 in total) but most of those were on
+procedural votes, amendments, or bills where the Republican opposition was
+narrow rather than overwhelming. Source: CGA roll-call PDFs.</p>
+</blockquote>
+<p>The pattern of these three crossover votes is worth noting. Two of them — SB-913
+and HR-15 — are labor-adjacent measures that benefit specific defined
+constituencies (first responders, university employees) rather than general
+workforce protections. The third — HB-6738 — is a narrowly tailored
+emergency-related parole adjustment, not a broader criminal-justice reform.
+There is no crossover vote in the dataset on a high-profile partisan issue
+(reproductive rights, climate, voting rights, housing, gun safety,
+antidiscrimination, paid leave). On the visible signature issues that
+distinguish the two parties, Weir&#8217;s record shows zero examples of crossing the
+aisle.</p>
+<hr>
+<p class="section-label before-part">Analysis</p>
+<h2 id="part-5-voting-record-vs-stated-platform">Part 5 — Voting record vs. stated platform<a class="header-anchor" href="#part-5-voting-record-vs-stated-platform" aria-label="Link to this section">¶</a></h2>
+<p>Weir&#8217;s campaign materials and official site describe him as a &#8220;staunch supporter
+of equal protection under law, public safety, free markets, limiting government
+intrusion and protecting individual & property rights.&#8221; The voting record
+contains tensions with several of these claims.</p>
+<h3 id="8220-equal-protection-under-law-8221">&#8220;Equal protection under law&#8221;<a class="header-anchor" href="#8220-equal-protection-under-law-8221" aria-label="Link to this section">¶</a></h3>
+<p>Weir voted no on HB-6638 (2023), the bill revising Connecticut&#8217;s
+antidiscrimination statutes. The Republican caucus voted 36–17 in favor. Weir
+voted no on HB-6866 (2023), which would have studied adding a nonbinary gender
+option to state forms. He voted no on HB-6872 (2025), revising and consolidating
+the state&#8217;s hate-crimes statutes. He voted no on the resolution to exonerate
+colonial witchcraft convictions.</p>
+<h3 id="8220-public-safety-8221">&#8220;Public safety&#8221;<a class="header-anchor" href="#8220-public-safety-8221" aria-label="Link to this section">¶</a></h3>
+<p>Weir voted no on HB-6667 (2023), the omnibus gun-violence bill. He voted no on
+HB-7042 (2025), the firearm-industry responsibility legislation. He voted no on
+HB-5043 (2026), which addressed convertible pistols and ghost-gun frames. He
+voted no on HB-5317 (2024), which would have studied the effectiveness of
+community gun-violence intervention programs — a study, not a regulation. On
+HB-5169 (2024), requiring swimming-pool barriers as a child drowning-prevention
+measure, he voted no.</p>
+<h3 id="8220-free-markets-limiting-government-intrusion-8221">&#8220;Free markets / limiting government intrusion&#8221;<a class="header-anchor" href="#8220-free-markets-limiting-government-intrusion-8221" aria-label="Link to this section">¶</a></h3>
+<p>This is the framing most consistent with Weir&#8217;s record on regulation, taxes, and
+spending. But his record on housing — where his stated platform&#8217;s logic would
+call for <em>reducing</em> municipal restrictions on building — runs in the opposite
+direction. He voted no on HB-7035 (2025), which prohibited municipalities from
+banning multifamily housing development. He voted no on HB-5288 (2026), which
+authorized utility connections for accessory dwelling units. He voted no on
+SB-1444 (2025), which would have facilitated converting underused commercial
+buildings to housing. These are exactly the deregulatory housing reforms that
+&#8220;free market&#8221; advocates typically support; Weir voted with municipalities and
+existing landowners rather than with the bills&#8217; market-liberalization logic.</p>
+<h3 id="8220-protecting-individual-rights-8221">&#8220;Protecting individual rights&#8221;<a class="header-anchor" href="#8220-protecting-individual-rights-8221" aria-label="Link to this section">¶</a></h3>
+<p>Weir voted no on HB-6569 (2023), which raised the minimum marriage age to 18
+with no exceptions. The bill ended child marriage in Connecticut. He voted no on
+bills protecting access to reproductive health care for college students
+(SB-1108, 2023) and for residents broadly (HB-7213, 2025). On SB-1071 (2023),
+prohibiting deceptive or coercive police interrogation tactics — a measure that
+protects individuals against state coercion — he voted no, though he later
+supported a similar measure on a different roll call.</p>
+<p>The pattern that emerges from these tensions is not random ideological
+inconsistency. It tracks closely with the orthodoxies of the contemporary
+national Republican coalition: opposition to expanded reproductive rights,
+opposition to gun regulation, opposition to housing-market liberalization that
+would change suburban neighborhoods, opposition to expanded voting access, and
+skepticism of climate and clean-energy policy. Where Weir&#8217;s stated platform
+language (&#8220;free markets,&#8221; &#8220;individual rights,&#8221; &#8220;equal protection&#8221;) would predict
+a different vote, the partisan position consistently wins.</p>
+<hr>
+<p class="section-label">At a glance</p>
+<h2 id="summary-table">Summary table<a class="header-anchor" href="#summary-table" aria-label="Link to this section">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Total roll calls 2023–2026</td>
+<td>1,293 (covering 1,104 unique bills/resolutions)</td>
+</tr>
+<tr>
+<td>Weir&#8217;s overall vote distribution</td>
+<td>1,013 yes, 280 no</td>
+</tr>
+<tr>
+<td>Partisan votes (parties on opposite sides)</td>
+<td>337</td>
+</tr>
+<tr>
+<td>Weir&#8217;s R-alignment on partisan votes</td>
+<td>96.4% (325 with R, 12 with D)</td>
+</tr>
+<tr>
+<td>Year-over-year R-alignment range</td>
+<td>95.0% to 98.4%</td>
+</tr>
+<tr>
+<td>Roll calls right of his own caucus (R majority Y, Weir N)</td>
+<td>95</td>
+</tr>
+<tr>
+<td>Genuine crossover votes (D≥85% Y, R≤30% Y, Weir Y)</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Reproductive-rights position on contested votes</td>
+<td>0% with the D side</td>
+</tr>
+<tr>
+<td>Gun-safety position on contested votes</td>
+<td>0% with the D side</td>
+</tr>
+<tr>
+<td>Voting-access position on contested votes</td>
+<td>0% with the D side</td>
+</tr>
+<tr>
+<td>Housing position on contested votes</td>
+<td>0% with the D side</td>
+</tr>
+<tr>
+<td>Labor position on contested votes</td>
+<td>~8% with the D side (his most independent topic)</td>
+</tr>
+</tbody></table>
+<hr>
+<p class="section-label">Analysis</p>
+<h2 id="key-observations">Key observations<a class="header-anchor" href="#key-observations" aria-label="Link to this section">¶</a></h2>
+<p><strong>Weir is not an &#8220;in-name-only&#8221; Republican on any major issue.</strong> The evenness of
+his R-alignment across topic areas (92% on the <em>low</em> end, in labor) is the
+strongest single finding. There is no issue area where his voting behavior
+diverges from his caucus position in a way that would suggest independent
+ideological commitment.</p>
+<p><strong>He is meaningfully to the right of his own caucus.</strong> The 95 votes where he
+opposed bills that his caucus&#8217;s majority supported is a substantial pattern. It
+is not noise. Many of these votes are on routine matters — judicial
+confirmations, state-land conveyances, statutory housekeeping — where reflexive
+opposition has no obvious policy justification.</p>
+<p><strong>His committee assignments do not predict his votes.</strong> Weir is the Ranking
+Member of the Labor and Public Employees Committee. On 50 partisan labor votes,
+he sided with the Democratic position 4 times. He sits on the Housing Committee.
+On 30 partisan housing votes, he sided with the Democratic position 0 times.</p>
+<p><strong>He has voted against several bills that distinguish him from mainstream
+Connecticut public opinion.</strong> The child-marriage ban (HB-6569, 2023) became law
+and made Connecticut the 9th state to fully end the practice. Weir voted no. The
+bipartisan early-voting implementation legislation (HB-5004, 2023) followed a
+constitutional amendment that voters had already approved. Weir voted no. The
+reproductive-health-care access bill (HB-7213, 2025) passed with 22 Republicans
+(half the caucus) voting yes. Weir voted no.</p>
+<p><strong>The &#8220;free markets&#8221; framing in his stated platform conflicts with his housing
+record.</strong> Bills like HB-7035 (prohibiting municipal multifamily-housing bans),
+HB-5288 (utility connections for ADUs), and SB-1444 (commercial-to-residential
+conversion) are deregulatory housing-supply reforms. Weir voted no on each. The
+pattern is more readily explained by his board membership at the Connecticut
+Apartment Association than by free-market commitments.</p>
+<p><strong>The stability is the story.</strong> Across four sessions, two re-election cycles,
+and a wide variety of bill types, Weir has voted with his party position 95–98%
+of the time on contested questions. This is a consistent ideological profile,
+not a situational pattern that reflects the salience of particular issues.</p>
+<hr>
+<p class="section-label">Caveats</p>
+<h2 id="what-this-report-does-not-show">What this report does not show<a class="header-anchor" href="#what-this-report-does-not-show" aria-label="Link to this section">¶</a></h2>
+<p>This report analyzes Weir&#8217;s recorded floor votes. It does not analyze:</p>
+<ul>
+<li><strong>Committee work</strong> — proposals he sponsored, amendments he offered, testimony
+he gave in his role as Ranking Member of Labor and Public Employees, or
+whether he successfully shaped legislation that other members carried.</li>
+<li><strong>Procedural strategy</strong> — votes are presented as binary yes/no positions on
+bills, but a &#8220;no&#8221; on an amendment can mean &#8220;I support the underlying bill but
+oppose this change&#8221; or &#8220;I oppose the bill regardless of amendments.&#8221; The
+dataset does not distinguish.</li>
+<li><strong>Floor speeches</strong> — what Weir said about specific bills, only how he voted.</li>
+<li><strong>Constituent service</strong> — much of a state legislator&#8217;s value comes from
+helping individual constituents navigate state agencies. That work is not in
+this dataset.</li>
+<li><strong>Bills that didn&#8217;t make it to a roll call</strong> — bills that died in committee or
+were never brought up for a vote produced no recorded vote either way.</li>
+<li><strong>Comparison to other legislators</strong> — the report describes Weir&#8217;s record in
+absolute terms (&#8220;96% R-aligned&#8221;) rather than relative to his peers. A
+comparable analysis of, say, Rep. Devin Carney or Rep. Holly Cheeseman would
+show different numbers; the question of where Weir sits relative to his
+colleagues is a useful next step but is outside this report&#8217;s scope.</li>
+</ul>
+<p>The report&#8217;s claim is bounded: it documents how Weir voted on 1,293 specific
+roll calls, what topical patterns those votes show, and where the patterns sit
+relative to his stated platform.</p>
+<hr>
+<p class="section-label">Documentation</p>
+<h2 id="sources">Sources<a class="header-anchor" href="#sources" aria-label="Link to this section">¶</a></h2>
+<p>The underlying dataset is derived from the Connecticut General Assembly&#8217;s
+official roll-call vote records.</p>
+<p><strong>Vote records:</strong></p>
+<ul>
+<li>Connecticut General Assembly roll-call records, 2023, 2024, 2025, and 2026
+regular sessions</li>
+<li><a href="https://www.cga.ct.gov/asp/menu/CGAFindIt.asp">Connecticut General Assembly bill-tracking
+system</a></li>
+<li>Individual roll-call PDFs are linked from each row of the accompanying
+spreadsheet</li>
+</ul>
+<p><strong>Biographical and platform information:</strong></p>
+<ul>
+<li><a href="https://www.cthousegop.com/weir/about">State Rep. Steve Weir&#8217;s official page at the CT House Republicans
+site</a></li>
+<li><a href="https://steveweirforct.com/">Weir&#8217;s campaign site, steveweirforct.com</a></li>
+<li><a href="https://www.cga.ct.gov/asp/CGABillStatus/CGAMemberBills.asp?dist_code=055">Connecticut General Assembly member
+page</a></li>
+<li><a href="https://ballotpedia.org/Steve_Weir">Steve Weir at Ballotpedia</a></li>
+<li><a href="https://ctmirror.org/representative/steve-weir/">Steve Weir at CT Mirror</a></li>
+</ul>
+<p><strong>Specific bill background:</strong></p>
+<ul>
+<li>HB-6569 (2023) Connecticut child marriage ban: <a href="https://ctmirror.org/2023/06/02/ct-child-marriage-age-legal-ban-bill/">CT Mirror coverage, June 2,
+2023</a></li>
+<li>Public Act 23-44 (HB-6569 enacted): <a href="https://www.cga.ct.gov/2023/sum/pdf/2023SUM00044-R01HB-06569-SUM.pdf">CGA Public Act
+summary</a></li>
+</ul>
+<hr>
+
+<p class="section-label">Download</p>
+<h2 id="other-formats">Other Formats<a class="header-anchor" href="#other-formats" aria-label="Link to this section">¶</a></h2>
+<p>This report is available in four formats, all located alongside this page:</p>
+
+<div class="format-cards cols-4">
+  <div class="format-card">
+    <div class="format-card-icon">🌐</div>
+    <div class="format-card-title"><a href="./">HTML</a></div>
+    <div class="format-card-desc">Interactive version with formatted tables; best for on-screen reading and sharing.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📄</div>
+    <div class="format-card-title"><a href="weir_55th_voting_record.md">Markdown</a></div>
+    <div class="format-card-desc">Plain-text version; readable in any editor, ideal for copying into other documents.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📑</div>
+    <div class="format-card-title"><a href="weir_55th_voting_record.pdf">PDF</a></div>
+    <div class="format-card-desc">Print-ready version with all tables, footnotes, and source citations.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📊</div>
+    <div class="format-card-title"><a href="weir_right_of_caucus.xlsx">Excel</a></div>
+    <div class="format-card-desc">The 95 right-of-caucus votes with bill numbers, dates, vote counts, and links to each roll-call PDF.</div>
+  </div>
+</div>
+
+</div>
+<footer class="page-footer">
+<p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>
+<p class="footer-note">Compiled May 9, 2026 · Data from the Connecticut General Assembly's official roll-call records. Not an official document.</p>
+</footer>
+<script>
+document.addEventListener('click', function(e) {
+    const anchor = e.target.closest('.header-anchor');
+    if (!anchor) return;
+    const heading = anchor.parentElement;
+    const id = heading.id;
+    if (!id) return;
+    const url = window.location.origin + window.location.pathname + '#' + id;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function() {
+            anchor.classList.add('copied');
+            setTimeout(function() { anchor.classList.remove('copied'); }, 1400);
+        }).catch(function() {});
+    }
+});
+</script>
+<script>
+(function() {
+    var imgs = document.querySelectorAll('.container img');
+    if (!imgs.length) return;
+    var overlay = null;
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    function close() {
+        if (!overlay) return;
+        var o = overlay;
+        overlay = null;
+        o.classList.remove('open');
+        document.removeEventListener('keydown', onKey);
+        setTimeout(function() { if (o.parentNode) o.parentNode.removeChild(o); }, 200);
+    }
+    function open(src, alt) {
+        overlay = document.createElement('div');
+        overlay.className = 'lightbox-overlay';
+        var big = document.createElement('img');
+        big.src = src;
+        big.alt = alt || '';
+        overlay.appendChild(big);
+        overlay.addEventListener('click', close);
+        document.body.appendChild(overlay);
+        overlay.offsetWidth; // force reflow so the fade-in transition runs
+        overlay.classList.add('open');
+        document.addEventListener('keydown', onKey);
+    }
+    imgs.forEach(function(img) {
+        img.addEventListener('click', function() { open(img.currentSrc || img.src, img.alt); });
+    });
+})();
+</script>
+</body>
+</html>

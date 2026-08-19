@@ -57,7 +57,7 @@ The Bills Even His Own Party Supported
 covering the 2023, 2024, 2025, and 2026 regular sessions. This report focuses on
 a single, narrow pattern: bills where Rep. Steve Weir voted "no" while a
 majority of his own party's caucus voted "yes." It is a companion to the broader
-[voting record analysis](http://55th.ahmdems.org/reports/weir-analysis/), which establishes that Weir voted
+[voting record analysis](../weir-analysis/), which establishes that Weir voted
 with the Republican caucus position on 96.4% of partisan roll calls. The pattern
 documented here describes the remaining cases — votes where Weir broke from his
 caucus, but in the opposite direction from what bipartisanship would imply.*
@@ -71,7 +71,7 @@ Overview
 
 Across four sessions of the Connecticut House of Representatives, Rep. Steve
 Weir voted with his own party's majority on contested questions 96.4% of the
-time. The companion report [Steve Weir's Voting Record](http://55th.ahmdems.org/reports/weir-analysis/)
+time. The companion report [Steve Weir's Voting Record](../weir-analysis/)
 covers that pattern in detail, including issue-by-issue alignment and the rare
 crossover votes.
 
@@ -335,7 +335,7 @@ supported.
 ### Environment and clean energy (6 bills) ###
 
 In addition to the broader environmental record covered in the [companion
-report](http://55th.ahmdems.org/reports/weir-analysis/), several environmental and energy-siting bills drew
+report](../weir-analysis/), several environmental and energy-siting bills drew
 right-of-caucus opposition:
 
 - **HB-6805 (2023)** — Solar installations in condominiums and cooperatives
@@ -581,7 +581,7 @@ majority of House Republicans voted "yes." It does not address:
 
 - **The 1,198 other roll calls** in the dataset, where Weir voted with his
   caucus's position. The companion report, [Steve Weir's Voting
-  Record](http://55th.ahmdems.org/reports/weir-analysis/), covers that broader pattern.
+  Record](../weir-analysis/), covers that broader pattern.
 - **Why Weir voted no on each bill.** The dataset captures votes, not
   justifications. Weir may have given floor speeches or issued press releases
   explaining specific dissents; that material would need to be gathered
@@ -620,7 +620,7 @@ Sources
 
 **Companion report:**
 
-- [Steve Weir's Voting Record](http://55th.ahmdems.org/reports/weir-analysis/) — broader pattern analysis
+- [Steve Weir's Voting Record](../weir-analysis/) — broader pattern analysis
   covering all 1,293 roll calls
 
 **Biographical and platform information:**
