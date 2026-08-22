@@ -118,28 +118,69 @@ async function ensureYouTubeAudio(meeting) {
   }
   fs.mkdirSync(VIDEO_DIR, { recursive: true });
   const { execFile } = require("node:child_process");
-  const run = () =>
-    new Promise((resolve, reject) => {
-      // --js-runtimes node: without a JS runtime yt-dlp falls back to a client
-      // that reports many valid (especially older) videos as "not available".
-      execFile(
-        YT_DLP,
-        ["-f", "bestaudio[ext=m4a]/bestaudio", "--js-runtimes", "node",
-         "-o", path.join(VIDEO_DIR, `${meeting.id}.%(ext)s`), meeting.link],
-        { maxBuffer: 16 * 1024 * 1024 },
-        (err) => (err ? reject(err) : resolve())
-      );
-    });
+  const exec = (cmd, args) =>
+    new Promise((resolve, reject) =>
+      execFile(cmd, args, { maxBuffer: 16 * 1024 * 1024 }, (err, stdout, stderr) =>
+        err ? reject(err) : resolve({ stdout, stderr })));
+
+  // Since mid-2026 YouTube serves deliberately garbled DASH audio (m4a/webm)
+  // to clients it considers suspicious; ffprobe sees a well-formed container
+  // but the AAC/Opus packets are junk and Deepgram rejects the upload as
+  // "corrupt or unsupported data". The HLS audio renditions come down clean,
+  // so prefer those, and decode-scan whatever we get before trusting it.
+  const FORMATS = [
+    "bestaudio[protocol*=m3u8][ext=mp4]",
+    "bestaudio[ext=m4a]",
+    "bestaudio",
+  ];
+  const stem = path.join(VIDEO_DIR, `${meeting.id}.dl`);
+  const cleanupDl = () =>
+    fs.readdirSync(VIDEO_DIR)
+      .filter((f) => f.startsWith(`${meeting.id}.dl.`))
+      .forEach((f) => fs.rmSync(path.join(VIDEO_DIR, f), { force: true }));
+  const download = (fmt) =>
+    // --js-runtimes node: without a JS runtime yt-dlp falls back to a client
+    // that reports many valid (especially older) videos as "not available".
+    exec(YT_DLP, ["-f", fmt, "--js-runtimes", "node", "--no-warnings",
+      "-o", `${stem}.%(ext)s`, meeting.link]);
+  const decodeErrors = async (file) => {
+    const { stderr } = await exec("ffmpeg", ["-v", "error", "-i", file, "-f", "null", "-"])
+      .catch((err) => ({ stderr: String(err.stderr || err.message) }));
+    return stderr.split("\n").filter((l) => l.trim()).length;
+  };
+
   console.log(`  [audio] downloading via yt-dlp…`);
-  try {
-    await run();
-  } catch (err) {
-    // YouTube 403s and "not available" errors are frequently transient — one
-    // immediate retry cures nearly all of them.
-    console.log(`  [audio] retrying after: ${String(err.message || err).split("\n").pop().slice(0, 120)}`);
-    await run();
+  let good = null;
+  for (const fmt of FORMATS) {
+    cleanupDl();
+    try {
+      await download(fmt);
+    } catch (err) {
+      // YouTube 403s and "not available" errors are frequently transient — one
+      // immediate retry cures nearly all of them.
+      const msg = String(err.message || err).split("\n").pop().slice(0, 120);
+      if (/Requested format is not available/.test(msg)) { console.log(`  [audio] ${fmt}: not available`); continue; }
+      console.log(`  [audio] ${fmt}: retrying after: ${msg}`);
+      try { await download(fmt); } catch (err2) {
+        console.log(`  [audio] ${fmt}: failed: ${String(err2.message || err2).split("\n").pop().slice(0, 120)}`);
+        continue;
+      }
+    }
+    const file = fs.readdirSync(VIDEO_DIR).find((f) => f.startsWith(`${meeting.id}.dl.`));
+    if (!file) { console.log(`  [audio] ${fmt}: produced no file`); continue; }
+    const errs = await decodeErrors(path.join(VIDEO_DIR, file));
+    if (errs > 2) { console.log(`  [audio] ${fmt}: ${errs} decode errors — stream is garbled, trying next`); continue; }
+    good = path.join(VIDEO_DIR, file);
+    break;
   }
-  if (!fs.existsSync(m4a)) throw new Error("yt-dlp produced no .m4a");
+  if (!good) { cleanupDl(); throw new Error("yt-dlp produced no usable audio (all formats garbled or unavailable)"); }
+
+  // Normalise to a plain .m4a: stream-copy when already AAC, else transcode.
+  const { stdout: codec } = await exec("ffprobe", ["-v", "error", "-select_streams", "a:0",
+    "-show_entries", "stream=codec_name", "-of", "csv=p=0", good]);
+  const acodec = codec.trim() === "aac" ? ["-c:a", "copy"] : ["-c:a", "aac", "-b:a", "128k"];
+  await exec("ffmpeg", ["-v", "error", "-y", "-i", good, "-vn", ...acodec, "-movflags", "+faststart", m4a]);
+  cleanupDl();
   console.log(`  [audio] saved ${path.basename(m4a)}`);
   return m4a;
 }
