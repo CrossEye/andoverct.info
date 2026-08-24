@@ -176,7 +176,7 @@ roll-call record in [a separate analysis on this site](http://andoverct.info/rep
 <div class="data-section" markdown="1">
 
 - **11th** — Rep. Weir's rank among the House's most conservative members
-- **19th** — House Republican Leader Vincent Candelora, on the same scale
+- **22nd** — House Republican Leader Vincent Candelora, on the same scale
 - **54.5%** — the 55th District's two-party Democratic share in top-of-the-ticket races
 
 </div>

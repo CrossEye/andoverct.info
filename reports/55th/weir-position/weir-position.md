@@ -8,7 +8,7 @@ attribution: 'A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.
 banner:
   left: CT 55th House District · Scott Sauyet's Reports
   right: Weir voting record · 2023–2026
-footerNote: 'Compiled June 11, 2026 · Data from the Connecticut General Assembly, the Connecticut Secretary of the State, and U.S. Census geography.'
+footerNote: 'Compiled June 11, 2026; rankings and chart recomputed August 23, 2026 on the re-derived roll-call record · Data from the Connecticut General Assembly, the Connecticut Secretary of the State, and U.S. Census geography.'
 pdf:
   author: Personal work of Scott Sauyet · scott@sauyet.com
   footer: andoverct.info/reports/55th/weir-position/
@@ -115,7 +115,7 @@ locates a member within this chamber, for this period, not against any fixed or
 national yardstick. And it is **earned from the hard votes**: near-unanimous and
 lopsided votes carry little information and are set aside, so a member's
 position is driven by the contested votes where the chamber actually divided.
-For the 2025-2026 term that left 285 contested votes among the members scored.
+For the 2025-2026 term that left 305 contested votes among the members scored.
 
 
 
@@ -125,18 +125,18 @@ Part 2 — Where Weir ranks in the House
 Of the 153 representatives who served in the 2025-2026 term and cast enough
 recorded votes to be placed, **Weir ranks 11th most conservative** — inside the
 most conservative seven percent of the chamber. His position is essentially
-unchanged from the prior term: in 2023-2024 he ranked 9th of 154, also inside
+unchanged from the prior term: in 2023-2024 he ranked 8th of 152, also inside
 the top six percent. Across both terms he sits at the right edge of the House.
 
 He also votes to the right of his own caucus's leadership. **House Minority
-Leader Vincent Candelora ranks 19th; Weir ranks 11th**, more conservative than
+Leader Vincent Candelora ranks 22nd; Weir ranks 11th**, more conservative than
 the leader of the House Republicans. The same was true in the prior term, when
-Candelora ranked 28th and Weir 9th.
+Candelora ranked 29th and Weir 8th.
 
 Within the Republican caucus itself, Weir is not in the middle. Of the 49
 Republicans placed in the current term, **he is the 11th most conservative**,
 roughly the top fifth of the caucus, and well to the right of the Republican
-caucus median. His nearest neighbors on the scale are Reps. Vail, Anderson,
+caucus median. His nearest neighbors on the scale are Reps. Anderson, Vail,
 DeCaprio, and Canino.
 
 
@@ -168,13 +168,13 @@ partisan lean; the vertical axis is the representative's W-NOMINATE coordinate,
 with the raw scale shown. Weir sits in the lower-right: a conservative voting
 record in a Democratic-leaning district.*
 
-Weir is not unique in this. About twenty Republicans hold seats that lean
+Weir is not unique in this. Twenty-two Republicans hold seats that lean
 Democratic in top-of-the-ticket voting, which is in part simply what it means to
 be a Republican in a Democratic-leaning state. What distinguishes the 55th is
 the combination: among those Republicans in Democratic-leaning seats, **only two
 (Reps. Fishbein and Pavalock-D'Amato) have more conservative voting records than
 Weir.** Measured as the distance between a member's record and what their
-district's lean would predict, the 55th is among the three or four widest gaps
+district's lean would predict, the 55th is among the four or five widest gaps
 in the House.
 
 
@@ -185,9 +185,9 @@ Summary Table
 | Measure                                           | Value                             |
 | ------------------------------------------------- | --------------------------------- |
 | Weir's rank among all members, 2025-2026          | 11th most conservative of 153     |
-| Weir's rank among all members, 2023-2024          | 9th most conservative of 154      |
+| Weir's rank among all members, 2023-2024          | 8th most conservative of 152      |
 | Weir's rank within the Republican caucus, 2025-26 | 11th of 49                        |
-| Weir vs. the House Minority Leader (Candelora)    | More conservative (11th vs. 19th) |
+| Weir vs. the House Minority Leader (Candelora)    | More conservative (11th vs. 22nd) |
 | 55th District two-party Democratic share          | ~54.5% (about D+9)                |
 | Districts more Republican-leaning than the 55th   | 45 of 151                         |
 | Republicans in Democratic-leaning seats more      | 2 (Fishbein, Pavalock-D'Amato)    |
@@ -199,12 +199,12 @@ Key Observations
 ----------------
 
 **Weir's record is consistently among the most conservative in the House.** He
-ranks 11th of 153 in the current term and 9th of 154 in the prior one — the same
+ranks 11th of 153 in the current term and 8th of 152 in the prior one — the same
 position in any meaningful sense, at the right edge of the chamber, across both
 terms he has served.
 
 **He votes to the right of his own party's leadership.** The House Minority
-Leader ranks 19th; Weir ranks 11th. This is a statement about voting records,
+Leader ranks 22nd; Weir ranks 11th. This is a statement about voting records,
 not about formal roles.
 
 **The 55th District leans Democratic in top-of-the-ticket elections.** Over
@@ -281,7 +281,11 @@ Data and methods
 ----------------
 
 Every input and output behind this report is included in this folder so the
-analysis can be reproduced or audited. The scaling was run in R; the data
+analysis can be reproduced or audited. The roll-call matrices were
+regenerated on August 23, 2026 from the re-derived record (every grid
+reconciled against its official PDF; special sessions included), the
+scaling re-run in R, and the merge and chart rebuilt with the two scripts
+beside this report (`merge-lean.py`, `make-chart.py`). The scaling was run in R; the data
 preparation and aggregation in Python and Node.
 
 - [`scale-ct-house.R`](scale-ct-house.R) — the R script that scales the vote
