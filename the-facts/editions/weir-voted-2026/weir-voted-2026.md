@@ -20,7 +20,7 @@ colophon: |
 Rep. Weir's post makes two factual claims: perfect attendance, and voting with
 the majority 77 percent of the time. Both are offered as evidence that he is
 doing the work and that the parties mostly agree. We pulled the complete
-public roll-call record for the 2025&ndash;2026 term, all 650 recorded House
+public roll-call record for the 2025&ndash;2026 term, all 704 recorded House
 votes, and checked. The claims are essentially true. What they measure is the
 question.
 
@@ -30,30 +30,35 @@ Showing up is the job
 
 *The attendance claim is verified, and to his credit. It is also not rare.*
 
-Across the entire two-year term, all 650 recorded floor votes, Rep. Weir was
-never absent. The record confirms it, and it deserves to be said plainly:
-that is diligence, and it is real.
+Across the 697 recorded floor votes of the two regular sessions, Rep. Weir
+was never absent, and the post's 316 for 316 this session is exactly what the
+record holds. The record confirms it, and it deserves to be said plainly:
+that is diligence, and it is real. (The full term also includes a one-day
+special session in November 2025; he missed the last two of its seven roll
+calls, including final passage of the housing bill. Both are counted
+below.)
 
 It is also shared.
 
 <div class="data-section" markdown="1">
 
-- **0** — Rep. Weir's absences, all 650 roll calls
-- **37** — members of the House who can say the same
+- **0** — Rep. Weir's absences, all 697 regular-session roll calls
+- **37** — members of the House who missed none of the term's 704
 - **1 in 4** — roughly, the share of the chamber with a perfect record
 
 </div>
 
-Thirty-seven members served the entire term without missing a single recorded
-vote, including Speaker Matt Ritter and Rep. Tim Ackert, whose district
-borders ours. Eight more missed exactly one: Rep. Case's entire attendance
-shortfall over two years, for instance, is a single roll call that passed 140
-to 0. All told, forty-five members, nearly a third of the House, missed at
-most one vote, and the median member missed just nine of 650.
+Thirty-seven members served the entire term, special session included,
+without missing a single recorded vote, among them Speaker Matt Ritter and
+Rep. Tim Ackert, whose district borders ours. Eleven more missed exactly
+one: Rep. Case's entire attendance shortfall over two years, for instance,
+is a single roll call that passed 141 to 0. All told, forty-eight members,
+nearly a third of the House, missed at most one vote, and the median
+full-term member missed just nine of 704.
 
 And the gap between perfect and nearly perfect never had a chance to matter.
-The closest roll call of the entire term was decided by six votes. Not one of
-the 650 was close enough for any single member's absence to change the
+The closest roll call of the entire term was decided by five votes. Not one of
+the 704 was close enough for any single member's absence to change the
 outcome. Perfect attendance is what much of the House delivers as a matter of
 course. It is the baseline of the job, not a distinction, and no one sends a
 mailer about the other thirty-six.
@@ -69,13 +74,13 @@ you have to know what most House votes look like. They are not close.
 
 <div class="data-section" markdown="1">
 
-- **73%** — share of this session's roll calls with 90 percent or more of the chamber on one side
+- **74%** — share of this session's roll calls with 90 percent or more of the chamber on one side
 - **98%** — how often Rep. Weir voted with the majority on those
-- **97.8%** — how often the *median member* of the House voted with the majority overall
+- **97.6%** — how often the *median member* of the House voted with the majority overall
 
 </div>
 
-This session, 196 of the 269 recorded votes were lopsided, with nine in ten
+This session, 233 of the 316 recorded votes were lopsided, with nine in ten
 members or more on the same side. Nearly half the term's votes were literally
 unanimous. Everyone votes with the majority on those, because there is no
 disagreement to be had, and Rep. Weir did too, 98 percent of the time.
@@ -86,7 +91,7 @@ this House, counting every vote the same way Rep. Weir's post does, lands
 near 98 percent. Which makes 77 a number that invites a different question:
 not how high it is, but why it is so low.
 
-Even the consensus votes carry a signal, though. Across the term's 435
+Even the consensus votes carry a signal, though. Across the term's 473
 lopsided roll calls, the median member of the House landed on the
 tiny-minority side of one. Once, in two years. Rep. Weir landed there
 twenty-three times, the eighth most of any of the chamber's 151 members.
@@ -102,15 +107,15 @@ The votes that divide the House
 *On the votes where the chamber actually split, the picture inverts.*
 
 Set aside the lopsided votes and look only at the ones where the House
-genuinely divided, the 73 roll calls this session where the losing side held
+genuinely divided, the 83 roll calls this session where the losing side held
 at least ten percent of the chamber. These are the votes where a member's
 choice tells you something.
 
 <div class="data-section" markdown="1">
 
-- **12%** — Rep. Weir with the majority on this session's divided votes (9 of 73)
-- **13%** — same measure across the full two-year term (28 of 215)
-- **19%** — the median for his own Republican caucus over the term
+- **16%** — Rep. Weir with the majority on this session's divided votes (13 of 83)
+- **14%** — same measure across the full two-year term (33 of 230)
+- **21%** — the median for his own Republican caucus over the term
 
 </div>
 
@@ -120,7 +125,7 @@ number is pulled down. That is fair, and it is exactly why the caucus
 comparison matters. The typical House Republican still ended up with the
 majority on about one divided vote in five, because a meaningful share of
 contested bills pass with Republican support. Rep. Weir ended up there
-roughly one time in eight. On the votes that separate the members from one
+roughly one time in seven. On the votes that separate the members from one
 another, he separates further than most of his own party.
 
 
@@ -139,13 +144,13 @@ often.*
 </div>
 
 Three seats changed hands during the term, so 154 people in all cast House
-votes across its 650 roll calls. His post's 77 percent covers this session;
-measured the same way on this session's 269 recorded roll calls, the figure
-is 74.7 percent, and over the full two-year term it is 67.7 percent, since
+votes across its 704 roll calls. His post's 77 percent covers this session;
+measured the same way on this session's 316 recorded roll calls, the figure
+is 76.6 percent, and over the full two-year term it is 68.7 percent, since
 the 2025 long session carried far more of the contested legislation. On the
-full term, Rep. Weir voted with the majority 67.7 percent of the time,
+full term, Rep. Weir voted with the majority 68.7 percent of the time,
 placing him 8th from the bottom of all 154. The chamber
-median was 97.8 percent. His own caucus's median was 72.6 percent, and within
+median was 97.6 percent. His own caucus's median was 73.2 percent, and within
 the Republican caucus he ranks 8th from the bottom as well.
 
 The seven members below him are Reps. Dauphinais, Mastrofrancesco, Fishbein,
@@ -214,16 +219,25 @@ chooses is the part the post leaves out.
 > and every partial-term member ranks above him, so the count does not depend
 > on how mid-term arrivals and departures are treated. "Divided" votes are
 > those where the losing side held at least ten percent of votes cast; the
-> conclusions are unchanged at a five- or twenty-percent threshold. Rep.
-> Weir's post counts 316 votes this session where the public roll-call matrix
-> used here records 269; his figure may count items beyond the recorded floor
-> roll calls. Nothing turns on the difference: his perfect attendance holds
-> across every vote in the record, and we quote his 77 percent figure as he
-> gave it. On the matrix's 269 votes, the comparable figure is 74.7 percent;
-> ranked on this session alone he places 16th from the bottom of 151, so the
-> neighborhood of his ranking does not depend on the window. Vote margins are
+> conclusions are unchanged at a five- or twenty-percent threshold. The 316
+> votes Rep. Weir's post counts are exactly the 316 roll calls the record
+> holds for the 2026 session, and we quote his 77 percent figure as he gave
+> it; on those 316 the comparable figure is 76.6 percent, and ranked on this
+> session alone he places 15th from the bottom of 151, so the neighborhood
+> of his ranking does not depend on the window. "The term" means every
+> recorded House roll call from January 2025 through May 2026, including the
+> seven cast at the November 12, 2025 special session. Vote margins are
 > counted from the same matrix; the closest roll call of the term was decided
-> by six votes, so no single member's absence could have changed any outcome.
+> by five votes, so no single member's absence could have changed any
+> outcome.
+>
+> *Revised August 23, 2026.* This page first ran on July 16 with figures
+> computed on a 650-vote matrix that stopped at May 5, 2026 and carried two
+> parsing errors. The roll-call record has since been re-derived directly
+> from every official PDF, with the final session day and the special
+> session added; every figure above was recomputed on that record. Every
+> conclusion survived. The numbers moved by a point or two, and the
+> attendance paragraph now notes the two special-session absences.
 > The consensus-vote comparison counts, for each member, the lopsided roll
 > calls on which that member voted opposite the ninety-percent-or-more side,
 > over the votes they cast.
@@ -238,7 +252,7 @@ Sources and further reading
   [andoverct.info/reports/55th/weir-votes](http://andoverct.info/reports/55th/weir-votes/).
   The full member-by-vote matrix used for every count on this page is
   downloadable as a spreadsheet:
-  [ct-house-2025-2026-votematrix.csv](http://andoverct.info/reports/55th/weir-position/ct-house-2025-2026-votematrix.csv).
+  [ct-house-2025-2026-votematrix.csv](http://andoverct.info/reports/55th/weir-votes/ct-house-2025-2026-votematrix.csv).
   Each vote traces to its official record at
   [cga.ct.gov](https://www.cga.ct.gov/).
 
