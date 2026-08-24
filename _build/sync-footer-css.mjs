@@ -25,7 +25,7 @@ const TARGETS = [
   "town-charter/style.css",
   "the-facts/_build/template.html",
   "series/town-asset/explanation/index.html",
-  "reports/55th/weir-votes/index.html",
+  "_build/templates/weir-votes.html",
 ];
 
 const rules = readFileSync(join(ROOT, "_build/footer.css"), "utf8")
