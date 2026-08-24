@@ -700,8 +700,9 @@ Sources
   Gilead St (residence + 1 building).
 - Connecticut General Assembly House roll-call records, 2023, 2024, 2025, and
   2026 sessions. Compiled from the official roll-call PDFs published at
-  [cga.ct.gov](https://www.cga.ct.gov/) and indexed by bill number. 1,293 House
-  floor votes for Rep. Weir across the four sessions.
+  [cga.ct.gov](https://www.cga.ct.gov/) and indexed by bill number. 1,351 House
+  floor votes for Rep. Weir across the four regular sessions and the special
+  sessions of September 2023, June 2024, and November 2025.
 - Connecticut Secretary of the State, Annual Report for ICE NEW ENGLAND
   ENTERPRISES, LLC, filing number 0012854627, filed October 14, 2025. Lists
   Stephen J. Weir as manager and registered agent, NAICS code 441120 (Used Car
