@@ -1,6 +1,6 @@
 # Steve Weir (R-55) — CT House floor votes
 
-Generated 2026-08-23. 1351 votes total.
+Generated 2026-08-24. 1351 votes total.
 
 ## 2023 Regular Session
 
@@ -46,7 +46,8 @@ Generated 2026-08-23. 1351 votes total.
 | 28 | 2023-05-03 | [HJR-286](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HJR-286&which_year=2023) | RESOLUTION CONFIRMING THE NOMINATION OF GREGORY C. DAVIS, ESQUIRE, OF BLOOMFIELD | Y | 143–0 | 94–0 | 49–0 |
 | 29 | 2023-05-03 | [HB-6652](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6652&which_year=2023) | AN ACT CONCERNING THE LEGISLATIVE COMMISSIONERS' RECOMMENDATIONS FOR TECHNICAL R | Y | 145–0 | 95–0 | 50–0 |
 | 30 | 2023-05-03 | [HB-5796](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5796&which_year=2023) | AN ACT ESTABLISHING A TASK FORCE TO STUDY MANDATORY PUBLIC COMMENT PERIODS AT PU | Y | 146–0 | 96–0 | 50–0 |
-| 31 | 2023-05-03 | [HB-6751](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6751&which_year=2023) | AN ACT CONCERNING THE ASSIGNMENT OF TAX LIENS. | Y | 146–0 | 96–0 | 50–0 |
+| 31 | 2023-05-03 | [HB-6751](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6751&which_year=2023) | AN ACT CONCERNING THE ASSIGNMENT OF TAX LIENS.
+            To (1) reduce the int | Y | 146–0 | 96–0 | 50–0 |
 | 32 | 2023-05-03 | [HB-6689](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6689&which_year=2023) | AN ACT CONCERNING A CONNECTICUT HIGHER EDUCATION SUPPLEMENTAL LOAN AUTHORITY REF | N | 121–23 | 95–0 | 26–23 |
 | 33 | 2023-05-03 | [HB-6631](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6631&which_year=2023) | AN ACT CONCERNING THE COMMON INTEREST OWNERSHIP ACT.
             To specify that | Y | 146–0 | 96–0 | 50–0 |
@@ -58,7 +59,8 @@ Generated 2026-08-23. 1351 votes total.
             To define lactation consult | Y | 143–0 | 93–0 | 50–0 |
 | 37 | 2023-05-03 | [HB-6729](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6729&which_year=2023) | AN ACT CONCERNING THE DEPARTMENT OF MENTAL HEALTH AND ADDICTION SERVICES' RECOMM | Y | 144–0 | 94–0 | 50–0 |
 | 38 | 2023-05-03 | [HB-6587](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6587&which_year=2023) | AN ACT CONCERNING A TASK FORCE TO STUDY MEDICAID COVERAGE OF DIAPERS AND OTHER H | N | 129–16 | 95–0 | 34–16 |
-| 39 | 2023-05-03 | [HB-6479](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6479&which_year=2023) | AN ACT CONCERNING CLIMATE RESILIENCY FUNDS AND PROJECTS. | Y | 146–0 | 96–0 | 50–0 |
+| 39 | 2023-05-03 | [HB-6479](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6479&which_year=2023) | AN ACT CONCERNING CLIMATE RESILIENCY FUNDS AND PROJECTS.
+            To authoriz | Y | 146–0 | 96–0 | 50–0 |
 | 40 | 2023-05-03 | [HB-6480](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6480&which_year=2023) | AN ACT ESTABLISHING A WORKING GROUP ON THE RESTORATION OF EEL GRASS.
             | Y | 146–0 | 96–0 | 50–0 |
 | 41 | 2023-05-03 | [HB-5575](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5575&which_year=2023) | AN ACT REQUIRING THE DEPARTMENT OF AGRICULTURE TO REVISE MUNICIPAL ANIMAL SHELTE | Y | 144–2 | 96–0 | 48–2 |
@@ -80,7 +82,8 @@ Generated 2026-08-23. 1351 votes total.
 | 53 | 2023-05-04 | [HJR-94](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HJR-94&which_year=2023) | RESOLUTION VACATING THE DECISIONS OF THE CLAIMS COMMISSIONER TO DISMISS THE CLAI | Y | 139–0 | 89–0 | 50–0 |
 | 54 | 2023-05-04 | [HB-6797](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6797&which_year=2023) | AN ACT CONCERNING PLANS FOR THE TREATMENT OF WORKPLACE INJURIES AND ILLNESSES AN | Y | 141–0 | 91–0 | 50–0 |
 | 55 | 2023-05-04 | [HB-6688](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6688&which_year=2023) | AN ACT CONCERNING MORTGAGES, THE RESIDENTIAL HEATING EQUIPMENT FINANCING PROGRAM | Y | 139–0 | 89–0 | 50–0 |
-| 56 | 2023-05-04 | [HB-6752](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6752&which_year=2023) | AN ACT CONCERNING DIGITAL ASSETS. | Y | 129–14 | 88–4 | 41–10 |
+| 56 | 2023-05-04 | [HB-6752](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6752&which_year=2023) | AN ACT CONCERNING DIGITAL ASSETS.
+            To: (1) Authorize the Banking Comm | Y | 129–14 | 88–4 | 41–10 |
 | 57 | 2023-05-04 | [HB-6795](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6795&which_year=2023) | AN ACT MAKING TECHNICAL CORRECTIONS TO PUBLIC SAFETY STATUTES AND REPEALING AN O | Y | 143–0 | 92–0 | 51–0 |
 | 58 | 2023-05-04 | [HB-6722](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6722&which_year=2023) | AN ACT CONCERNING POLICE ASSISTANCE AGREEMENTS AND REQUESTS FOR AID.
             | Y | 143–0 | 92–0 | 51–0 |
@@ -93,23 +96,37 @@ Generated 2026-08-23. 1351 votes total.
 | 64 | 2023-05-04 | [HB-6607](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6607&which_year=2023) | AN ACT CONCERNING THE NIGHTTIME LIGHTING OF STATE-OWNED BUILDINGS AT CERTAIN TIM | Y | 142–0 | 91–0 | 51–0 |
 | 65 | 2023-05-04 | [HB-6573](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6573&which_year=2023) | AN ACT CONCERNING ACCESS TO DIAPER CHANGING TABLES IN PUBLIC BUILDINGS AND PLACE | N | 119–23 | 91–0 | 28–23 |
 | 66 | 2023-05-04 | [HB-6831](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6831&which_year=2023) | AN ACT CONCERNING THE OVERRIDE OF STEP THERAPY FOR CERTAIN MENTAL HEALTH CONDITI | Y | 143–0 | 92–0 | 51–0 |
-| 67 | 2023-05-04 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2023) | AN ACT IMPLEMENTING EARLY VOTING. | Y | 51–94 | 0–94 | 51–0 |
-| 68 | 2023-05-04 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2023) | AN ACT IMPLEMENTING EARLY VOTING. | Y | 50–94 | 0–94 | 50–0 |
-| 69 | 2023-05-04 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2023) | AN ACT IMPLEMENTING EARLY VOTING. | Y | 50–94 | 0–94 | 50–0 |
-| 70 | 2023-05-04 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2023) | AN ACT IMPLEMENTING EARLY VOTING. | Y | 50–93 | 0–93 | 50–0 |
-| 71 | 2023-05-04 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2023) | AN ACT IMPLEMENTING EARLY VOTING. | Y | 50–92 | 0–92 | 50–0 |
-| 72 | 2023-05-04 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2023) | AN ACT IMPLEMENTING EARLY VOTING. | Y | 50–91 | 0–91 | 50–0 |
-| 73 | 2023-05-04 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2023) | AN ACT IMPLEMENTING EARLY VOTING. | N | 107–35 | 92–0 | 15–35 |
-| 74 | 2023-05-09 | [HB-6699](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6699&which_year=2023) | AN ACT CONCERNING CANNABIS REGULATION. | N | 28–121 | 0–97 | 28–24 |
-| 75 | 2023-05-09 | [HB-6699](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6699&which_year=2023) | AN ACT CONCERNING CANNABIS REGULATION. | Y | 148–1 | 97–0 | 51–1 |
-| 76 | 2023-05-09 | [HB-6614](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6614&which_year=2023) | AN ACT CONCERNING DEBIT CARDS AND CASH DISCOUNTS FOR GASOLINE PURCHASES. | N | 91–57 | 90–6 | 1–51 |
-| 77 | 2023-05-09 | [HB-6614](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6614&which_year=2023) | AN ACT CONCERNING DEBIT CARDS AND CASH DISCOUNTS FOR GASOLINE PURCHASES. | Y | 53–94 | 1–94 | 52–0 |
-| 78 | 2023-05-09 | [HB-6614](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6614&which_year=2023) | AN ACT CONCERNING DEBIT CARDS AND CASH DISCOUNTS FOR GASOLINE PURCHASES. | Y | 52–96 | 0–96 | 52–0 |
-| 79 | 2023-05-09 | [HB-6614](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6614&which_year=2023) | AN ACT CONCERNING DEBIT CARDS AND CASH DISCOUNTS FOR GASOLINE PURCHASES. | N | 94–55 | 93–4 | 1–51 |
+| 67 | 2023-05-04 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2023) | AN ACT IMPLEMENTING EARLY VOTING.
+            To (1) establish early voting begi | Y | 51–94 | 0–94 | 51–0 |
+| 68 | 2023-05-04 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2023) | AN ACT IMPLEMENTING EARLY VOTING.
+            To (1) establish early voting begi | Y | 50–94 | 0–94 | 50–0 |
+| 69 | 2023-05-04 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2023) | AN ACT IMPLEMENTING EARLY VOTING.
+            To (1) establish early voting begi | Y | 50–94 | 0–94 | 50–0 |
+| 70 | 2023-05-04 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2023) | AN ACT IMPLEMENTING EARLY VOTING.
+            To (1) establish early voting begi | Y | 50–93 | 0–93 | 50–0 |
+| 71 | 2023-05-04 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2023) | AN ACT IMPLEMENTING EARLY VOTING.
+            To (1) establish early voting begi | Y | 50–92 | 0–92 | 50–0 |
+| 72 | 2023-05-04 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2023) | AN ACT IMPLEMENTING EARLY VOTING.
+            To (1) establish early voting begi | Y | 50–91 | 0–91 | 50–0 |
+| 73 | 2023-05-04 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2023) | AN ACT IMPLEMENTING EARLY VOTING.
+            To (1) establish early voting begi | N | 107–35 | 92–0 | 15–35 |
+| 74 | 2023-05-09 | [HB-6699](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6699&which_year=2023) | AN ACT CONCERNING CANNABIS REGULATION.
+            To: (1) Define "edible cannab | N | 28–121 | 0–97 | 28–24 |
+| 75 | 2023-05-09 | [HB-6699](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6699&which_year=2023) | AN ACT CONCERNING CANNABIS REGULATION.
+            To: (1) Define "edible cannab | Y | 148–1 | 97–0 | 51–1 |
+| 76 | 2023-05-09 | [HB-6614](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6614&which_year=2023) | AN ACT CONCERNING DEBIT CARDS AND CASH DISCOUNTS FOR GASOLINE PURCHASES.
+        | N | 91–57 | 90–6 | 1–51 |
+| 77 | 2023-05-09 | [HB-6614](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6614&which_year=2023) | AN ACT CONCERNING DEBIT CARDS AND CASH DISCOUNTS FOR GASOLINE PURCHASES.
+        | Y | 53–94 | 1–94 | 52–0 |
+| 78 | 2023-05-09 | [HB-6614](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6614&which_year=2023) | AN ACT CONCERNING DEBIT CARDS AND CASH DISCOUNTS FOR GASOLINE PURCHASES.
+        | Y | 52–96 | 0–96 | 52–0 |
+| 79 | 2023-05-09 | [HB-6614](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6614&which_year=2023) | AN ACT CONCERNING DEBIT CARDS AND CASH DISCOUNTS FOR GASOLINE PURCHASES.
+        | N | 94–55 | 93–4 | 1–51 |
 | 80 | 2023-05-09 | [HB-6877](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6877&which_year=2023) | AN ACT CONCERNING RISK PROTECTION ORDERS OR WARRANTS AND DISQUALIFIERS FOR FIREA | Y | 138–11 | 95–2 | 43–9 |
 | 81 | 2023-05-09 | [HB-6638](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6638&which_year=2023) | AN ACT REVISING THE STATE'S ANTIDISCRIMINATION STATUTES.
             To provide  | N | 132–17 | 97–0 | 35–17 |
-| 82 | 2023-05-09 | [HB-6714](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6714&which_year=2023) | AN ACT CONCERNING CRUELTY TO ANIMALS. | Y | 149–0 | 97–0 | 52–0 |
+| 82 | 2023-05-09 | [HB-6714](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6714&which_year=2023) | AN ACT CONCERNING CRUELTY TO ANIMALS.
+            To (1) redefine the crime of s | Y | 149–0 | 97–0 | 52–0 |
 | 83 | 2023-05-09 | [HB-6642](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6642&which_year=2023) | AN ACT CONCERNING A TITLE IX COMPLIANCE TOOLKIT FOR SCHOOL DISTRICTS.
            | Y | 53–94 | 3–93 | 50–1 |
 | 84 | 2023-05-09 | [HB-6642](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6642&which_year=2023) | AN ACT CONCERNING A TITLE IX COMPLIANCE TOOLKIT FOR SCHOOL DISTRICTS.
@@ -137,15 +154,19 @@ Generated 2026-08-23. 1351 votes total.
        | N | 118–32 | 98–0 | 20–32 |
 | 100 | 2023-05-10 | [HB-6672](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6672&which_year=2023) | AN ACT CONCERNING ENDOMETRIOSIS.
             To require school nurses to receive | Y | 150–0 | 98–0 | 52–0 |
-| 101 | 2023-05-10 | [HB-6590](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6590&which_year=2023) | AN ACT CONCERNING CERTAIN PROTECTIONS FOR GROUP AND FAMILY CHILD CARE HOMES. | N | 107–42 | 97–0 | 10–42 |
+| 101 | 2023-05-10 | [HB-6590](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6590&which_year=2023) | AN ACT CONCERNING CERTAIN PROTECTIONS FOR GROUP AND FAMILY CHILD CARE HOMES.
+    | N | 107–42 | 97–0 | 10–42 |
 | 102 | 2023-05-10 | [HB-6779](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6779&which_year=2023) | AN ACT ESTABLISHING A TASK FORCE TO STUDY A HOUSING OPPORTUNITIES TAX CREDIT, A  | Y | 144–6 | 98–0 | 46–6 |
 | 103 | 2023-05-10 | [HB-6585](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6585&which_year=2023) | AN ACT CONCERNING A STUDY TO PROMOTE WORKFORCE DEVELOPMENT USING THE GLOBAL ENTR | Y | 150–0 | 98–0 | 52–0 |
 | 104 | 2023-05-16 | [HB-6801](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6801&which_year=2023) | AN ACT CONCERNING THE SUBMISSION OF INCOME AND EXPENSE INFORMATION IN CONNECTION | Y | 147–0 | 94–0 | 53–0 |
 | 105 | 2023-05-16 | [HB-6807](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6807&which_year=2023) | AN ACT CONCERNING THE ISSUANCE OF LOCAL CAPITAL IMPROVEMENT PROJECT GRANTS.
      | Y | 147–0 | 94–0 | 53–0 |
-| 106 | 2023-05-16 | [HB-6892](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6892&which_year=2023) | AN ACT CONCERNING MUNICIPAL BLIGHT ORDINANCES AND THE FINE FOR LITTERING. | N | 98–53 | 98–0 | 0–53 |
-| 107 | 2023-05-16 | [HB-6892](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6892&which_year=2023) | AN ACT CONCERNING MUNICIPAL BLIGHT ORDINANCES AND THE FINE FOR LITTERING. | Y | 53–98 | 0–98 | 53–0 |
-| 108 | 2023-05-16 | [HB-6892](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6892&which_year=2023) | AN ACT CONCERNING MUNICIPAL BLIGHT ORDINANCES AND THE FINE FOR LITTERING. | N | 108–43 | 98–0 | 10–43 |
+| 106 | 2023-05-16 | [HB-6892](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6892&which_year=2023) | AN ACT CONCERNING MUNICIPAL BLIGHT ORDINANCES AND THE FINE FOR LITTERING.
+       | N | 98–53 | 98–0 | 0–53 |
+| 107 | 2023-05-16 | [HB-6892](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6892&which_year=2023) | AN ACT CONCERNING MUNICIPAL BLIGHT ORDINANCES AND THE FINE FOR LITTERING.
+       | Y | 53–98 | 0–98 | 53–0 |
+| 108 | 2023-05-16 | [HB-6892](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6892&which_year=2023) | AN ACT CONCERNING MUNICIPAL BLIGHT ORDINANCES AND THE FINE FOR LITTERING.
+       | N | 108–43 | 98–0 | 10–43 |
 | 109 | 2023-05-16 | [HB-6775](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6775&which_year=2023) | AN ACT CONCERNING MANDATED REPORTERS.
             To add additional mandated rep | Y | 151–0 | 98–0 | 53–0 |
 | 110 | 2023-05-16 | [HB-6872](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6872&which_year=2023) | AN ACT CONCERNING FAITHLESS PRESIDENTIAL ELECTORS AND AUTHORIZING MANDAMUS ACTIO | Y | 53–98 | 0–98 | 53–0 |
@@ -164,7 +185,8 @@ Generated 2026-08-23. 1351 votes total.
 | 120 | 2023-05-17 | [HB-5314](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5314&which_year=2023) | AN ACT CONCERNING CONSUMER AGREEMENTS, CONSUMER BILLS, TELECOMMUNICATIONS AND TI | Y | 148–3 | 98–0 | 50–3 |
 | 121 | 2023-05-17 | [HB-6489](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6489&which_year=2023) | AN ACT CONCERNING RETIREE MEMBERS OF THE TEACHERS' RETIREMENT BOARD.
             | Y | 151–0 | 98–0 | 53–0 |
-| 122 | 2023-05-17 | [HB-6746](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6746&which_year=2023) | AN ACT CONCERNING WRONG-WAY DRIVING DETECTION AND PREVENTION. | Y | 151–0 | 98–0 | 53–0 |
+| 122 | 2023-05-17 | [HB-6746](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6746&which_year=2023) | AN ACT CONCERNING WRONG-WAY DRIVING DETECTION AND PREVENTION.
+            To req | Y | 151–0 | 98–0 | 53–0 |
 | 123 | 2023-05-17 | [HB-5902](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5902&which_year=2023) | AN ACT REQUIRING FOOD ALLERGY AWARENESS IN RESTAURANTS.
             To develop g | N | 101–50 | 94–4 | 7–46 |
 | 124 | 2023-05-17 | [HB-5902](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5902&which_year=2023) | AN ACT REQUIRING FOOD ALLERGY AWARENESS IN RESTAURANTS.
@@ -174,7 +196,8 @@ Generated 2026-08-23. 1351 votes total.
 | 127 | 2023-05-17 | [HB-6077](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6077&which_year=2023) | AN ACT ESTABLISHING A PROCESS FOR THE ADDITION OF STATUES TO THE STATE CAPITOL B | N | 109–41 | 98–0 | 11–41 |
 | 128 | 2023-05-17 | [HB-6866](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6866&which_year=2023) | AN ACT CONCERNING AN ASSESSMENT OF THE UPDATING OF STATE FORMS AND APPLICATIONS  | N | 124–26 | 98–0 | 26–26 |
 | 129 | 2023-05-17 | [HB-6903](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6903&which_year=2023) | AN ACT CONCERNING OVERSIGHT OF AND REQUIREMENTS FOR CERTAIN CONTRACTS OF THE CON | Y | 149–0 | 97–0 | 52–0 |
-| 130 | 2023-05-17 | [HB-6871](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6871&which_year=2023) | AN ACT CONCERNING ELECTION RECANVASS PROCEDURES. | Y | 149–0 | 97–0 | 52–0 |
+| 130 | 2023-05-17 | [HB-6871](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6871&which_year=2023) | AN ACT CONCERNING ELECTION RECANVASS PROCEDURES.
+            To (1) require that | Y | 149–0 | 97–0 | 52–0 |
 | 131 | 2023-05-17 | [HB-6914](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6914&which_year=2023) | AN ACT CONCERNING THE USE OF FUNDS IN THE OPIOID AND TOBACCO SETTLEMENT FUNDS AN | Y | 149–0 | 97–0 | 52–0 |
 | 132 | 2023-05-17 | [HB-6721](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6721&which_year=2023) | AN ACT CONCERNING WORKERS' COMPENSATION AND PORTAL-TO-PORTAL COVERAGE FOR TELECO | Y | 149–0 | 97–0 | 52–0 |
 | 133 | 2023-05-17 | [HB-6552](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6552&which_year=2023) | AN ACT CONCERNING THE CONNECTICUT RETIREMENT SECURITY PROGRAM.
@@ -197,7 +220,8 @@ Generated 2026-08-23. 1351 votes total.
 | 143 | 2023-05-18 | [HB-6718](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6718&which_year=2023) | AN ACT CONCERNING THE SAFE STORAGE AND DISPOSAL OF CERTAIN PRESCRIPTION DRUGS, I | Y | 128–21 | 97–0 | 31–21 |
 | 144 | 2023-05-18 | [HB-6718](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6718&which_year=2023) | AN ACT CONCERNING THE SAFE STORAGE AND DISPOSAL OF CERTAIN PRESCRIPTION DRUGS, I | N | 129–19 | 96–0 | 33–19 |
 | 145 | 2023-05-18 | [HB-6787](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6787&which_year=2023) | AN ACT CONCERNING MODIFICATION OF SENTENCES FOR CERTAIN CANNABIS-RELATED OFFENSE | N | 138–10 | 96–0 | 42–10 |
-| 146 | 2023-05-18 | [HB-6677](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6677&which_year=2023) | AN ACT CONCERNING ADULT DAY CENTERS. | Y | 149–0 | 97–0 | 52–0 |
+| 146 | 2023-05-18 | [HB-6677](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6677&which_year=2023) | AN ACT CONCERNING ADULT DAY CENTERS.
+            To (1) require the Commissioner | Y | 149–0 | 97–0 | 52–0 |
 | 147 | 2023-05-18 | [HB-6756](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6756&which_year=2023) | AN ACT ESTABLISHING A WORKING GROUP TO STUDY THE STATE HISTORIC PRESERVATION OFF | Y | 145–3 | 93–3 | 52–0 |
 | 148 | 2023-05-18 | [HB-6898](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6898&which_year=2023) | AN ACT CONCERNING EXPENDITURE OF FUNDS FROM THE JUUL LABS SETTLEMENT.
            | Y | 148–0 | 96–0 | 52–0 |
@@ -213,7 +237,8 @@ Generated 2026-08-23. 1351 votes total.
              | Y | 44–105 | 0–96 | 44–9 |
 | 157 | 2023-05-23 | [HB-5917](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5917&which_year=2023) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE VISION ZERO COUNCIL.
              | N | 104–46 | 88–9 | 16–37 |
-| 158 | 2023-05-23 | [HB-6880](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6880&which_year=2023) | AN ACT CONCERNING TEACHERS AND PARAEDUCATORS. | N | 112–37 | 96–0 | 16–37 |
+| 158 | 2023-05-23 | [HB-6880](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6880&which_year=2023) | AN ACT CONCERNING TEACHERS AND PARAEDUCATORS.
+            To (1) require boards  | N | 112–37 | 96–0 | 16–37 |
 | 159 | 2023-05-23 | [HB-6769](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6769&which_year=2023) | AN ACT CONCERNING THE DEPARTMENT OF CONSUMER PROTECTION'S RECOMMENDATIONS REGARD | Y | 148–0 | 95–0 | 53–0 |
 | 160 | 2023-05-23 | [HB-6767](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6767&which_year=2023) | AN ACT CONCERNING THE DEPARTMENT OF CONSUMER PROTECTION'S RECOMMENDATIONS REGARD | Y | 148–0 | 95–0 | 53–0 |
 | 161 | 2023-05-23 | [HB-6694](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6694&which_year=2023) | AN ACT CONCERNING CANNABIS CULTIVATION, DISPENSARY FACILITY AND HYBRID RETAILER  | N | 93–54 | 93–1 | 0–53 |
@@ -247,7 +272,8 @@ Generated 2026-08-23. 1351 votes total.
 | 181 | 2023-05-25 | [HB-6733](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6733&which_year=2023) | AN ACT CONCERNING THE DEPARTMENT OF PUBLIC HEALTH'S RECOMMENDATIONS REGARDING VA | Y | 144–3 | 95–0 | 49–3 |
 | 182 | 2023-05-30 | [SB-1196](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1196&which_year=2023) | AN ACT CONCERNING THE TRANSFER OF PERSONS WHO ARE INCARCERATED BETWEEN CORRECTIO | Y | 125–18 | 90–0 | 35–18 |
 | 183 | 2023-05-30 | [SB-1117](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1117&which_year=2023) | AN ACT IMPLEMENTING ADDITIONAL MEASURES TO PREVENT TRAFFICKING IN PERSONS AND EX | Y | 147–0 | 94–0 | 53–0 |
-| 184 | 2023-05-30 | [SB-1072](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1072&which_year=2023) | AN ACT CONCERNING REVISIONS TO THE COMMON INTEREST OWNERSHIP ACT. | N | 108–39 | 91–3 | 17–36 |
+| 184 | 2023-05-30 | [SB-1072](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1072&which_year=2023) | AN ACT CONCERNING REVISIONS TO THE COMMON INTEREST OWNERSHIP ACT.
+            To | N | 108–39 | 91–3 | 17–36 |
 | 185 | 2023-05-30 | [SB-1017](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1017&which_year=2023) | AN ACT ESTABLISHING A TASK FORCE ON THE SHORTAGE OF FIREFIGHTERS AND EMERGENCY M | Y | 146–0 | 93–0 | 53–0 |
 | 186 | 2023-05-30 | [SB-1018](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1018&which_year=2023) | AN ACT CONCERNING CASH REFUNDS FOR GIFT CARD BALANCES.
             To (1) increa | Y | 53–94 | 0–94 | 53–0 |
@@ -284,8 +310,10 @@ Generated 2026-08-23. 1351 votes total.
 | 207 | 2023-05-30 | [HB-6651](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6651&which_year=2023) | AN ACT ESTABLISHING A TASK FORCE TO STUDY THE IMPACT OF UNCLAIMED OR ABANDONED R | Y | 150–0 | 97–0 | 53–0 |
 | 208 | 2023-05-31 | [SB-1040](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1040&which_year=2023) | AN ACT CONCERNING REMOTE NOTARIAL ACTS.
             To permit a notary public to | Y | 132–1 | 82–0 | 50–1 |
-| 209 | 2023-05-31 | [SB-1070](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1070&which_year=2023) | AN ACT CONCERNING PROSECUTORIAL ACCOUNTABILITY. | Y | 52–89 | 0–89 | 52–0 |
-| 210 | 2023-05-31 | [SB-1070](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1070&which_year=2023) | AN ACT CONCERNING PROSECUTORIAL ACCOUNTABILITY. | N | 88–56 | 88–4 | 0–52 |
+| 209 | 2023-05-31 | [SB-1070](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1070&which_year=2023) | AN ACT CONCERNING PROSECUTORIAL ACCOUNTABILITY.
+            To shorten the term  | Y | 52–89 | 0–89 | 52–0 |
+| 210 | 2023-05-31 | [SB-1070](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1070&which_year=2023) | AN ACT CONCERNING PROSECUTORIAL ACCOUNTABILITY.
+            To shorten the term  | N | 88–56 | 88–4 | 0–52 |
 | 211 | 2023-05-31 | [HB-6876](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6876&which_year=2023) | AN ACT CONCERNING THE ADMINISTRATION OF THE OFFICE OF THE CLAIMS COMMISSIONER.
   | Y | 146–0 | 94–0 | 52–0 |
 | 212 | 2023-05-31 | [SB-1127](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1127&which_year=2023) | AN ACT EXTENDING THE DEADLINES APPLICABLE TO THE TASK FORCE TO EXAMINE THE MOTOR | Y | 147–0 | 94–0 | 53–0 |
@@ -303,7 +331,7 @@ Generated 2026-08-23. 1351 votes total.
 | 220 | 2023-06-01 | [SB-956](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-956&which_year=2023) | AN ACT REQUIRING DISCHARGE STANDARDS REGARDING FOLLOW-UP APPOINTMENTS AND PRESCR | Y | 146–0 | 93–0 | 53–0 |
 | 221 | 2023-06-01 | [HB-6901](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6901&which_year=2023) | AN ACT CONCERNING A STUDENT LOAN REIMBURSEMENT PROGRAM.
             To establish | N | 114–33 | 94–0 | 20–33 |
-| 222 | 2023-06-01 | [SB-994](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-994&which_year=2023) | Resolution Act | Y | 147–0 | 94–0 | 53–0 |
+| 222 | 2023-06-01 | [SB-994](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-994&which_year=2023) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE DEPARTMENT OF MOTOR VEHICLES, STU | Y | 147–0 | 94–0 | 53–0 |
 | 223 | 2023-06-01 | [HB-6762](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6762&which_year=2023) | AN ACT CONCERNING EARLY CHILDHOOD EDUCATION, AN AUDIT OF THE STATE-WIDE MASTERY  | Y | 45–102 | 0–94 | 45–8 |
 | 224 | 2023-06-01 | [HB-6762](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6762&which_year=2023) | AN ACT CONCERNING EARLY CHILDHOOD EDUCATION, AN AUDIT OF THE STATE-WIDE MASTERY  | N | 129–19 | 95–0 | 34–19 |
 | 225 | 2023-06-01 | [SB-913](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-913&which_year=2023) | AN ACT EXPANDING WORKERS' COMPENSATION COVERAGE FOR POST-TRAUMATIC STRESS INJURI | Y | 104–44 | 95–0 | 9–44 |
@@ -329,7 +357,8 @@ Generated 2026-08-23. 1351 votes total.
 | 238 | 2023-06-01 | [HB-6796](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6796&which_year=2023) | AN ACT CONCERNING INTERSTATE AGREEMENTS TO COMBAT CATALYTIC CONVERTER THEFTS AND | Y | 147–0 | 94–0 | 53–0 |
 | 239 | 2023-06-01 | [HB-6839](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6839&which_year=2023) | AN ACT CONCERNING TEMPORARY STATE PERMITS TO CARRY A PISTOL OR REVOLVER ISSUED B | Y | 148–0 | 95–0 | 53–0 |
 | 240 | 2023-06-01 | [HB-5360](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5360&which_year=2023) | AN ACT CONCERNING FIREARM INCIDENT REPORTS AND A TASK FORCE ON RECRUITMENT AND R | Y | 148–0 | 95–0 | 53–0 |
-| 241 | 2023-06-02 | [SB-971](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-971&which_year=2023) | AN ACT REVISING VARIOUS GAMING STATUTES. | Y | 140–0 | 87–0 | 53–0 |
+| 241 | 2023-06-02 | [SB-971](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-971&which_year=2023) | AN ACT REVISING VARIOUS GAMING STATUTES.
+            To make revisions to statut | Y | 140–0 | 87–0 | 53–0 |
 | 242 | 2023-06-02 | [SB-869](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-869&which_year=2023) | AN ACT CONCERNING ADDITIONAL CAREER TRAINING OPPORTUNITIES OFFERED BY THE OFFICE | Y | 142–2 | 91–0 | 51–2 |
 | 243 | 2023-06-02 | [HB-6570](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6570&which_year=2023) | AN ACT CONCERNING DAMAGES TO PERSON OR PROPERTY CAUSED BY THE NEGLIGENT OPERATIO | Y | 146–0 | 93–0 | 53–0 |
 | 244 | 2023-06-02 | [SB-9](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-9&which_year=2023) | AN ACT CONCERNING HEALTH AND WELLNESS FOR CONNECTICUT RESIDENTS.
@@ -346,8 +375,10 @@ Generated 2026-08-23. 1351 votes total.
 | 253 | 2023-06-02 | [SB-1148](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1148&which_year=2023) | AN ACT AUTHORIZING CERTAIN KILLING OF BLACK BEAR AND PROHIBITING INTENTIONAL FEE | Y | 115–32 | 67–27 | 48–5 |
 | 254 | 2023-06-02 | [HB-6397](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6397&which_year=2023) | AN ACT CONCERNING ZERO-CARBON EMISSIONS.
             To create policies and acco | N | 95–53 | 94–1 | 1–52 |
-| 255 | 2023-06-02 | [HB-6726](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6726&which_year=2023) | AN ACT CONCERNING THE REGULATION OF LIVESTOCK. | N | 109–39 | 94–1 | 15–38 |
-| 256 | 2023-06-02 | [HB-6726](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6726&which_year=2023) | AN ACT CONCERNING THE REGULATION OF LIVESTOCK. | Y | 144–4 | 95–0 | 49–4 |
+| 255 | 2023-06-02 | [HB-6726](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6726&which_year=2023) | AN ACT CONCERNING THE REGULATION OF LIVESTOCK.
+            To provide enhanced p | N | 109–39 | 94–1 | 15–38 |
+| 256 | 2023-06-02 | [HB-6726](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6726&which_year=2023) | AN ACT CONCERNING THE REGULATION OF LIVESTOCK.
+            To provide enhanced p | Y | 144–4 | 95–0 | 49–4 |
 | 257 | 2023-06-02 | [SB-1157](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1157&which_year=2023) | AN ACT CONCERNING REVISIONS TO THE FREEDOM OF INFORMATION ACT CONCERNING EMPLOYE | N | 84–64 | 84–11 | 0–53 |
 | 258 | 2023-06-02 | [HB-6936](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6936&which_year=2023) | AN ACT CONVEYING PARCELS OF STATE LAND TO THE NEW HAVEN PORT AUTHORITY.
          | Y | 148–0 | 95–0 | 53–0 |
@@ -365,7 +396,8 @@ Generated 2026-08-23. 1351 votes total.
 | 267 | 2023-06-02 | [HB-5608](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5608&which_year=2023) | AN ACT CONCERNING CERTAIN SOLAR PHOTOVOLTAIC FACILITIES LOCATED ON PRIME FARMLAN | Y | 146–0 | 95–0 | 51–0 |
 | 268 | 2023-06-03 | [SB-998](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-998&which_year=2023) | AN ACT ESTABLISHING A TAX ABATEMENT FOR CERTAIN CONSERVATION EASEMENTS AND ADDRE | N | 76–70 | 76–18 | 0–52 |
 | 269 | 2023-06-03 | [SB-998](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-998&which_year=2023) | AN ACT ESTABLISHING A TAX ABATEMENT FOR CERTAIN CONSERVATION EASEMENTS AND ADDRE | N | 78–68 | 78–16 | 0–52 |
-| 270 | 2023-06-03 | [SB-3](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-3&which_year=2023) | AN ACT CONCERNING ONLINE PRIVACY, DATA AND SAFETY PROTECTIONS. | Y | 142–0 | 91–0 | 51–0 |
+| 270 | 2023-06-03 | [SB-3](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-3&which_year=2023) | AN ACT CONCERNING ONLINE PRIVACY, DATA AND SAFETY PROTECTIONS.
+            To (1 | Y | 142–0 | 91–0 | 51–0 |
 | 271 | 2023-06-05 | [HB-6855](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6855&which_year=2023) | AN ACT ESTABLISHING A TASK FORCE TO STUDY MINIMUM STANDARDS FOR TIMELY REPAIR OF | Y | 135–0 | 84–0 | 51–0 |
 | 272 | 2023-06-05 | [SB-977](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-977&which_year=2023) | AN ACT CONCERNING MEDICAL ASSISTANCE FOR SURGERY AND MEDICAL SERVICES RELATED TO | N | 98–44 | 90–0 | 8–44 |
 | 273 | 2023-06-05 | [HB-5317](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5317&which_year=2023) | AN ACT CONCERNING ONLINE BUILDING PERMIT APPLICATIONS.
@@ -407,7 +439,8 @@ Generated 2026-08-23. 1351 votes total.
 | 298 | 2023-06-06 | [SB-1058](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1058&which_year=2023) | AN ACT CONCERNING CHARITABLE ORGANIZATIONS, TELECOMMUNICATIONS AND THE ATTORNEY  | Y | 151–0 | 98–0 | 53–0 |
 | 299 | 2023-06-06 | [SB-1088](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1088&which_year=2023) | AN ACT CONCERNING FINANCIAL EXPLOITATION OF SENIOR CITIZENS.
             To esta | Y | 150–0 | 97–0 | 53–0 |
-| 300 | 2023-06-06 | [SB-1033](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1033&which_year=2023) | AN ACT CONCERNING VARIOUS REVISIONS TO THE BANKING STATUTES. | Y | 150–0 | 98–0 | 52–0 |
+| 300 | 2023-06-06 | [SB-1033](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1033&which_year=2023) | AN ACT CONCERNING VARIOUS REVISIONS TO THE BANKING STATUTES.
+            To (1)  | Y | 150–0 | 98–0 | 52–0 |
 | 301 | 2023-06-06 | [SB-988](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-988&which_year=2023) | AN ACT CONCERNING THE PURCHASE OF A MOBILE MANUFACTURED HOME PARK BY ITS RESIDEN | N | 112–37 | 97–0 | 15–37 |
 | 302 | 2023-06-06 | [SB-1124](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1124&which_year=2023) | AN ACT CONCERNING A STUDY OF PATHWAYS TO STATE EMPLOYMENT.
             To requir | Y | 148–0 | 96–0 | 52–0 |
@@ -415,14 +448,16 @@ Generated 2026-08-23. 1351 votes total.
             To (1) expand the applicability  | Y | 52–97 | 0–97 | 52–0 |
 | 304 | 2023-06-06 | [SB-1035](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1035&which_year=2023) | AN ACT CONCERNING STOP WORK ORDERS.
             To (1) expand the applicability  | N | 98–50 | 96–0 | 2–50 |
-| 305 | 2023-06-06 | [SB-974](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-974&which_year=2023) | AN ACT CONCERNING AUTOMATED KIOSKS FOR CONSUMER ELECTRONICS. | Y | 149–0 | 97–0 | 52–0 |
+| 305 | 2023-06-06 | [SB-974](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-974&which_year=2023) | AN ACT CONCERNING AUTOMATED KIOSKS FOR CONSUMER ELECTRONICS.
+            To: (1) | Y | 149–0 | 97–0 | 52–0 |
 | 306 | 2023-06-06 | [HB-6805](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6805&which_year=2023) | AN ACT CONCERNING SOLAR INSTALLATIONS IN CONDOMINIUMS AND COOPERATIVES.
          | N | 136–12 | 96–1 | 40–11 |
 | 307 | 2023-06-06 | [HB-5641](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5641&which_year=2023) | AN ACT CONCERNING NOTIFICATION OF UTILITY SERVICE TERMINATIONS AT CERTAIN RENTAL | Y | 148–0 | 96–0 | 52–0 |
 | 308 | 2023-06-06 | [HB-6741](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6741&which_year=2023) | AN ACT IMPROVING THE SAFETY OF HEALTH CARE PROVIDERS AND PATIENTS.
             T | Y | 149–0 | 97–0 | 52–0 |
 | 309 | 2023-06-06 | [SB-975](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-975&which_year=2023) | AN ACT CONCERNING THE LEGISLATIVE COMMISSIONERS' RECOMMENDATIONS FOR MINOR AND T | Y | 148–0 | 96–0 | 52–0 |
-| 310 | 2023-06-06 | [HB-6888](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6888&which_year=2023) | AN ACT CONCERNING JUVENILE JUSTICE. | N | 96–54 | 96–2 | 0–52 |
+| 310 | 2023-06-06 | [HB-6888](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6888&which_year=2023) | AN ACT CONCERNING JUVENILE JUSTICE.
+            To implement various juvenile ju | N | 96–54 | 96–2 | 0–52 |
 | 311 | 2023-06-06 | [HB-6669](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6669&which_year=2023) | AN ACT PROTECTING PATIENTS AND PROHIBITING UNNECESSARY HEALTH CARE COSTS.
        | Y | 147–3 | 97–0 | 50–3 |
 | 312 | 2023-06-06 | [HB-6567](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6567&which_year=2023) | AN ACT REQUIRING PUBLIC INSTITUTIONS OF HIGHER EDUCATION TO ESTABLISH A POLICY R | Y | 99–51 | 46–51 | 53–0 |
@@ -487,20 +522,23 @@ Generated 2026-08-23. 1351 votes total.
 | 353 | 2023-06-07 | [SB-1221](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1221&which_year=2023) | AN ACT CONCERNING THE ENFORCEMENT OF VIOLATIONS OF THE FREEDOM OF INFORMATION AC | Y | 108–41 | 88–9 | 20–32 |
 | 354 | 2023-06-07 | [SB-1002](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1002&which_year=2023) | AN ACT CONCERNING ZONING ENFORCEMENT OFFICER CERTIFICATION.
             To chang | Y | 146–3 | 97–0 | 49–3 |
-| 355 | 2023-06-07 | [SB-1143](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1143&which_year=2023) | AN ACT CONCERNING SOLID WASTE MANAGEMENT THROUGHOUT THE STATE. | Y | 150–0 | 98–0 | 52–0 |
+| 355 | 2023-06-07 | [SB-1143](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1143&which_year=2023) | AN ACT CONCERNING SOLID WASTE MANAGEMENT THROUGHOUT THE STATE.
+            To re | Y | 150–0 | 98–0 | 52–0 |
 | 356 | 2023-06-07 | [SB-1146](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1146&which_year=2023) | AN ACT CONCERNING REVISIONS TO VARIOUS PROGRAMS OF THE DEPARTMENT OF ENERGY AND  | Y | 149–0 | 97–0 | 52–0 |
-| 357 | 2023-06-07 | [HB-6942](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6942&which_year=2023) | Resolution Act | Y | 145–4 | 98–0 | 47–4 |
+| 357 | 2023-06-07 | [HB-6942](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6942&which_year=2023) | AN ACT AUTHORIZING AND ADJUSTING BONDS OF THE STATE AND CONCERNING CERTAIN GRANT | Y | 145–4 | 98–0 | 47–4 |
 | 358 | 2023-06-07 | [SB-969](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-969&which_year=2023) | AN ACT CONCERNING VERIFICATION OF THE RESIDENTIAL ADDRESS OF A REGISTERED SEX OF | Y | 149–0 | 97–0 | 52–0 |
 | 359 | 2023-06-07 | [SB-1123](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1123&which_year=2023) | AN ACT AMENDING CODIFICATION OF PREVAILING WAGE CONTRACT RATES.
             To i | N | 133–17 | 98–0 | 35–17 |
 | 360 | 2023-06-07 | [SB-1119](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1119&which_year=2023) | AN ACT CONCERNING BUSINESS REGISTRATIONS WITH THE OFFICE OF THE SECRETARY OF THE | N | 125–25 | 98–0 | 27–25 |
-| 361 | 2023-06-07 | [SB-1154](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1154&which_year=2023) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE AUDITORS OF PUBLIC ACCOUNTS. | N | 95–55 | 91–7 | 4–48 |
+| 361 | 2023-06-07 | [SB-1154](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1154&which_year=2023) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE AUDITORS OF PUBLIC ACCOUNTS.
+     | N | 95–55 | 91–7 | 4–48 |
 | 362 | 2023-06-07 | [HB-6895](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6895&which_year=2023) | AN ACT CONCERNING FIREARMS AND STREET TAKEOVERS.
             To require a study  | Y | 149–0 | 97–0 | 52–0 |
 | 363 | 2023-06-07 | [HB-6846](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6846&which_year=2023) | AN ACT CONCERNING A STUDY OF THE EFFECTIVENESS OF THE IMPLEMENTATION OF CRISIS R | Y | 149–0 | 97–0 | 52–0 |
 | 364 | 2023-06-07 | [HB-5641](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5641&which_year=2023) | AN ACT CONCERNING NOTIFICATION OF UTILITY SERVICE TERMINATIONS AT CERTAIN RENTAL | Y | 148–0 | 96–0 | 52–0 |
 | 365 | 2023-06-07 | [HB-6774](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6774&which_year=2023) | AN ACT CONCERNING THE EXAMINATION REQUIREMENT FOR A CERTIFIED PUBLIC ACCOUNTANT  | Y | 148–0 | 96–0 | 52–0 |
-| 366 | 2023-06-07 | [SB-1023](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1023&which_year=2023) | AN ACT CONCERNING PROBATE COURT OPERATIONS. | Y | 135–14 | 83–14 | 52–0 |
+| 366 | 2023-06-07 | [SB-1023](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1023&which_year=2023) | AN ACT CONCERNING PROBATE COURT OPERATIONS.
+            To: (1) Update language  | Y | 135–14 | 83–14 | 52–0 |
 | 367 | 2023-06-07 | [SB-1248](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1248&which_year=2023) | AN ACT CONVEYING A PARCEL OF STATE LAND IN THE TOWN OF EAST HADDAM.
              | Y | 149–0 | 97–0 | 52–0 |
 | 368 | 2023-06-07 | [SB-933](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-933&which_year=2023) | AN ACT ESTABLISHING A CYBERSECURITY TASK FORCE.
@@ -540,8 +578,10 @@ Generated 2026-08-23. 1351 votes total.
 | 12 | 2024-03-25 | [SJR-204](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SJR-204&which_year=2024) | RESOLUTION CONFIRMING THE NOMINATION OF TAMAR R. BIRCKHEAD, ESQUIRE, OF HARTFORD | Y | 145–3 | 95–0 | 50–3 |
 | 13 | 2024-04-17 | [HJR-218](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HJR-218&which_year=2024) | RESOLUTION CONFIRMING THE NOMINATION OF JESSICA W. SIMPSON, ESQUIRE, OF WINDSOR  | Y | 146–0 | 96–0 | 50–0 |
 | 14 | 2024-04-17 | [HB-5419](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5419&which_year=2024) | AN ACT CONCERNING THE AUTHORITY OF THE ATTORNEY GENERAL TO INITIATE LEGAL ACTION | N | 117–28 | 94–0 | 23–28 |
-| 15 | 2024-04-17 | [HB-5413](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5413&which_year=2024) | AN ACT CONCERNING THE ILLEGAL USE OF CERTAIN VEHICLES AND STREET TAKEOVERS. | Y | 137–10 | 96–0 | 41–10 |
-| 16 | 2024-04-17 | [HB-5413](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5413&which_year=2024) | AN ACT CONCERNING THE ILLEGAL USE OF CERTAIN VEHICLES AND STREET TAKEOVERS. | Y | 148–0 | 97–0 | 51–0 |
+| 15 | 2024-04-17 | [HB-5413](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5413&which_year=2024) | AN ACT CONCERNING THE ILLEGAL USE OF CERTAIN VEHICLES AND STREET TAKEOVERS.
+     | Y | 137–10 | 96–0 | 41–10 |
+| 16 | 2024-04-17 | [HB-5413](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5413&which_year=2024) | AN ACT CONCERNING THE ILLEGAL USE OF CERTAIN VEHICLES AND STREET TAKEOVERS.
+     | Y | 148–0 | 97–0 | 51–0 |
 | 17 | 2024-04-17 | [HB-5412](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5412&which_year=2024) | AN ACT CONCERNING IDENTIFICATION AND CITIZENSHIP STATUS INFORMATION REQUESTED IN | N | 109–39 | 97–0 | 12–39 |
 | 18 | 2024-04-17 | [HB-5169](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5169&which_year=2024) | AN ACT CONCERNING THE REQUIREMENT TO INSTALL SWIMMING POOL BARRIERS.
             | Y | 51–95 | 0–95 | 51–0 |
@@ -551,7 +591,8 @@ Generated 2026-08-23. 1351 votes total.
 | 21 | 2024-04-17 | [HB-5170](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5170&which_year=2024) | AN ACT CONCERNING TRAINING FOR MEMBERS AND EMPLOYEES OF INLAND WETLANDS AGENCIES | N | 116–30 | 95–0 | 21–30 |
 | 22 | 2024-04-17 | [HB-5274](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5274&which_year=2024) | AN ACT REVISING THE CHARTER OF THE SECRET LAKE ASSOCIATION.
             To revis | Y | 144–0 | 93–0 | 51–0 |
-| 23 | 2024-04-17 | [HB-5277](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5277&which_year=2024) | AN ACT AMENDING THE CHARTER OF THE SOUTH CENTRAL CONNECTICUT WATER AUTHORITY. | Y | 145–0 | 94–0 | 51–0 |
+| 23 | 2024-04-17 | [HB-5277](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5277&which_year=2024) | AN ACT AMENDING THE CHARTER OF THE SOUTH CENTRAL CONNECTICUT WATER AUTHORITY.
+   | Y | 145–0 | 94–0 | 51–0 |
 | 24 | 2024-04-18 | [HB-5168](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5168&which_year=2024) | AN ACT CONCERNING SOLAR INSTALLATIONS IN CERTAIN COMMON INTEREST OWNERSHIP COMMU | Y | 50–93 | 0–93 | 50–0 |
 | 25 | 2024-04-18 | [HB-5168](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5168&which_year=2024) | AN ACT CONCERNING SOLAR INSTALLATIONS IN CERTAIN COMMON INTEREST OWNERSHIP COMMU | N | 106–37 | 92–0 | 14–37 |
 | 26 | 2024-04-18 | [HB-5224](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5224&which_year=2024) | AN ACT CONCERNING SHARK FINNING.
@@ -576,16 +617,22 @@ Generated 2026-08-23. 1351 votes total.
             To include a sexual abuse and  | Y | 142–0 | 91–0 | 51–0 |
 | 36 | 2024-04-18 | [HB-5409](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5409&which_year=2024) | AN ACT DESIGNATING VARIOUS DAYS, WEEKS AND MONTHS.
             To designate vari | N | 125–16 | 90–0 | 35–16 |
-| 37 | 2024-04-23 | [HB-5149](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5149&which_year=2024) | AN ACT CONCERNING CAFE AND PACKAGE STORE PERMITTEES. | Y | 144–3 | 91–3 | 53–0 |
+| 37 | 2024-04-23 | [HB-5149](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5149&which_year=2024) | AN ACT CONCERNING CAFE AND PACKAGE STORE PERMITTEES.
+            To allow (1) be | Y | 144–3 | 91–3 | 53–0 |
 | 38 | 2024-04-23 | [HR-14](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HR-14&which_year=2024) | RESOLUTION PROPOSING APPROVAL OF AN AGREEMENT BETWEEN THE UNIVERSITY OF CONNECTI | N | 126–24 | 97–0 | 29–24 |
 | 39 | 2024-04-23 | [HR-15](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HR-15&which_year=2024) | RESOLUTION PROPOSING APPROVAL OF AN AGREEMENT BETWEEN THE STATE OF CONNECTICUT A | N | 106–44 | 97–0 | 9–44 |
-| 40 | 2024-04-23 | [HB-5308](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5308&which_year=2024) | AN ACT CONCERNING ABSENTEE VOTING FOR CERTAIN PATIENTS OF NURSING HOMES. | Y | 55–95 | 2–95 | 53–0 |
-| 41 | 2024-04-23 | [HB-5308](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5308&which_year=2024) | AN ACT CONCERNING ABSENTEE VOTING FOR CERTAIN PATIENTS OF NURSING HOMES. | Y | 150–0 | 97–0 | 53–0 |
+| 40 | 2024-04-23 | [HB-5308](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5308&which_year=2024) | AN ACT CONCERNING ABSENTEE VOTING FOR CERTAIN PATIENTS OF NURSING HOMES.
+        | Y | 55–95 | 2–95 | 53–0 |
+| 41 | 2024-04-23 | [HB-5308](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5308&which_year=2024) | AN ACT CONCERNING ABSENTEE VOTING FOR CERTAIN PATIENTS OF NURSING HOMES.
+        | Y | 150–0 | 97–0 | 53–0 |
 | 42 | 2024-04-23 | [HB-5343](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5343&which_year=2024) | AN ACT CONCERNING A STUDY ON THE FEASIBILITY OF ESTABLISHING A PREPAID COLLEGE T | N | 118–32 | 97–0 | 21–32 |
-| 43 | 2024-04-23 | [HB-5146](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5146&which_year=2024) | AN ACT CONCERNING DISCLOSURES OF FINANCIAL RECORDS. | N | 124–26 | 97–0 | 27–26 |
+| 43 | 2024-04-23 | [HB-5146](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5146&which_year=2024) | AN ACT CONCERNING DISCLOSURES OF FINANCIAL RECORDS.
+            To: (1) Require  | N | 124–26 | 97–0 | 27–26 |
 | 44 | 2024-04-23 | [HB-5237](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5237&which_year=2024) | AN ACT REQUIRING STUDENT SURVEYS DURING EVALUATION OF A PRIVATE CAREER SCHOOL TO | Y | 150–0 | 97–0 | 53–0 |
-| 45 | 2024-04-23 | [HB-5288](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5288&which_year=2024) | AN ACT ALIGNING STATE LAW WITH FEDERAL LAW CONCERNING SERVICE ANIMALS. | Y | 52–98 | 1–96 | 51–2 |
-| 46 | 2024-04-23 | [HB-5288](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5288&which_year=2024) | AN ACT ALIGNING STATE LAW WITH FEDERAL LAW CONCERNING SERVICE ANIMALS. | Y | 150–0 | 97–0 | 53–0 |
+| 45 | 2024-04-23 | [HB-5288](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5288&which_year=2024) | AN ACT ALIGNING STATE LAW WITH FEDERAL LAW CONCERNING SERVICE ANIMALS.
+          | Y | 52–98 | 1–96 | 51–2 |
+| 46 | 2024-04-23 | [HB-5288](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5288&which_year=2024) | AN ACT ALIGNING STATE LAW WITH FEDERAL LAW CONCERNING SERVICE ANIMALS.
+          | Y | 150–0 | 97–0 | 53–0 |
 | 47 | 2024-04-23 | [HB-5317](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5317&which_year=2024) | AN ACT REQUIRING A STUDY CONCERNING THE FUNDING FOR THE COMMUNITY GUN VIOLENCE I | N | 108–40 | 93–2 | 15–38 |
 | 48 | 2024-04-23 | [HB-5257](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5257&which_year=2024) | AN ACT CONCERNING LIABILITY FOR DAMAGE TO PERSON OR PROPERTY CAUSED BY A DOG.
    | Y | 149–0 | 96–0 | 53–0 |
@@ -604,7 +651,8 @@ Generated 2026-08-23. 1351 votes total.
             To p | Y | 55–94 | 2–94 | 53–0 |
 | 57 | 2024-04-25 | [HB-5261](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5261&which_year=2024) | AN ACT CONCERNING THE CONSUMPTION OF ENERGY DRINKS BY CHILDREN.
             To p | N | 85–64 | 84–12 | 1–52 |
-| 58 | 2024-04-25 | [HB-5352](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5352&which_year=2024) | AN ACT CONCERNING MINOR REVISIONS TO THE TIRE STEWARDSHIP PROGRAM. | Y | 149–0 | 96–0 | 53–0 |
+| 58 | 2024-04-25 | [HB-5352](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5352&which_year=2024) | AN ACT CONCERNING MINOR REVISIONS TO THE TIRE STEWARDSHIP PROGRAM.
+            T | Y | 149–0 | 96–0 | 53–0 |
 | 59 | 2024-04-25 | [HB-5467](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5467&which_year=2024) | AN ACT CONCERNING FIREARMS BACKGROUND CHECKS.
             To ensure employees an | Y | 58–90 | 5–90 | 53–0 |
 | 60 | 2024-04-25 | [HB-5467](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5467&which_year=2024) | AN ACT CONCERNING FIREARMS BACKGROUND CHECKS.
@@ -614,9 +662,12 @@ Generated 2026-08-23. 1351 votes total.
 | 63 | 2024-04-25 | [HB-5157](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5157&which_year=2024) | AN ACT REPEALING PROVISIONS CONCERNING THE STATE-ASSISTED HOUSING SUSTAINABILITY | Y | 146–0 | 94–0 | 52–0 |
 | 64 | 2024-04-25 | [HB-5153](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5153&which_year=2024) | AN ACT CONCERNING ELIGIBILITY FOR WORKFORCE HOUSING DEVELOPMENT PROJECTS.
        | Y | 147–0 | 95–0 | 52–0 |
-| 65 | 2024-04-25 | [HB-5232](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5232&which_year=2024) | AN ACT CONCERNING SOLAR PROJECTS THROUGHOUT THE STATE. | N | 117–30 | 95–0 | 22–30 |
-| 66 | 2024-04-25 | [HB-5232](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5232&which_year=2024) | AN ACT CONCERNING SOLAR PROJECTS THROUGHOUT THE STATE. | Y | 52–95 | 0–95 | 52–0 |
-| 67 | 2024-04-25 | [HB-5232](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5232&which_year=2024) | AN ACT CONCERNING SOLAR PROJECTS THROUGHOUT THE STATE. | N | 98–49 | 95–0 | 3–49 |
+| 65 | 2024-04-25 | [HB-5232](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5232&which_year=2024) | AN ACT CONCERNING SOLAR PROJECTS THROUGHOUT THE STATE.
+            To (1) establ | N | 117–30 | 95–0 | 22–30 |
+| 66 | 2024-04-25 | [HB-5232](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5232&which_year=2024) | AN ACT CONCERNING SOLAR PROJECTS THROUGHOUT THE STATE.
+            To (1) establ | Y | 52–95 | 0–95 | 52–0 |
+| 67 | 2024-04-25 | [HB-5232](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5232&which_year=2024) | AN ACT CONCERNING SOLAR PROJECTS THROUGHOUT THE STATE.
+            To (1) establ | N | 98–49 | 95–0 | 3–49 |
 | 68 | 2024-04-25 | [HB-5318](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5318&which_year=2024) | AN ACT REQUIRING THE LICENSURE OF LACTATION CONSULTANTS.
             To require  | N | 109–37 | 90–4 | 19–33 |
 | 69 | 2024-04-25 | [HB-5318](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5318&which_year=2024) | AN ACT REQUIRING THE LICENSURE OF LACTATION CONSULTANTS.
@@ -659,17 +710,20 @@ Generated 2026-08-23. 1351 votes total.
 | 94 | 2024-04-29 | [HB-5222](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5222&which_year=2024) | AN ACT ESTABLISHING A NO-WAKE ZONE ON THE PAWCATUCK RIVER AND AUTHORIZING THE PU | Y | 148–0 | 96–0 | 52–0 |
 | 95 | 2024-04-30 | [HJR-217](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HJR-217&which_year=2024) | RESOLUTION RATIFYING THE PROPOSED AMENDMENT TO THE CONSTITUTION OF THE UNITED ST | N | 88–56 | 86–7 | 2–49 |
 | 96 | 2024-04-30 | [HB-5279](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5279&which_year=2024) | AN ACT CONCERNING AUTHORITY TO DECLARE THAT A FIREFIGHTER, POLICE OFFICER OR EME | Y | 147–0 | 95–0 | 52–0 |
-| 97 | 2024-04-30 | [HB-5399](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5399&which_year=2024) | AN ACT CONCERNING THE CRIMINAL JUSTICE RESPONSE TO VICTIMS OF SEXUAL ASSAULT. | Y | 147–0 | 95–0 | 52–0 |
+| 97 | 2024-04-30 | [HB-5399](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5399&which_year=2024) | AN ACT CONCERNING THE CRIMINAL JUSTICE RESPONSE TO VICTIMS OF SEXUAL ASSAULT.
+   | Y | 147–0 | 95–0 | 52–0 |
 | 98 | 2024-04-30 | [HB-5003](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5003&which_year=2024) | AN ACT CONCERNING CHILD AND FAMILY NUTRITION.
             To ensure that childre | Y | 148–0 | 96–0 | 52–0 |
-| 99 | 2024-04-30 | [HB-5150](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5150&which_year=2024) | AN ACT CONCERNING CANNABIS AND HEMP REGULATION. | Y | 130–16 | 91–4 | 39–12 |
+| 99 | 2024-04-30 | [HB-5150](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5150&which_year=2024) | AN ACT CONCERNING CANNABIS AND HEMP REGULATION.
+            To: (1) Redefine "hi | Y | 130–16 | 91–4 | 39–12 |
 | 100 | 2024-04-30 | [HB-5235](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5235&which_year=2024) | AN ACT CONCERNING THE DEPARTMENT OF CONSUMER PROTECTION'S RECOMMENDATIONS REGARD | Y | 138–8 | 95–0 | 43–8 |
 | 101 | 2024-04-30 | [HB-5172](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5172&which_year=2024) | AN ACT CONCERNING THE ASSESSMENT OF MOTOR VEHICLES FOR PROPERTY TAXATION.
        | N | 108–39 | 95–1 | 13–38 |
 | 102 | 2024-04-30 | [HB-5432](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5432&which_year=2024) | AN ACT ESTABLISHING A WORKING GROUP TO DEVELOP AN ECONOMIC DEVELOPMENT AND TOURI | Y | 144–3 | 96–0 | 48–3 |
 | 103 | 2024-04-30 | [SB-257](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-257&which_year=2024) | AN ACT CONCERNING CERTIFICATION OF AND CASTING OF BALLOTS BY PRESIDENTIAL ELECTO | Y | 146–0 | 95–0 | 51–0 |
 | 104 | 2024-04-30 | [HB-5483](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5483&which_year=2024) | AN ACT ESTABLISHING AND TRANSFERRING VARIOUS FUNCTIONS TO A DIVISION OF FIRE SER | Y | 146–0 | 95–0 | 51–0 |
-| 105 | 2024-04-30 | [HB-5422](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5422&which_year=2024) | AN ACT CONCERNING HATE AND BIAS CRIMES. | Y | 140–6 | 95–0 | 45–6 |
+| 105 | 2024-04-30 | [HB-5422](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5422&which_year=2024) | AN ACT CONCERNING HATE AND BIAS CRIMES.
+            To mandate for any person co | Y | 140–6 | 95–0 | 45–6 |
 | 106 | 2024-04-30 | [HB-5171](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5171&which_year=2024) | AN ACT CONCERNING THE WAIVER OF INTEREST ON CERTAIN DELINQUENT PROPERTY TAX PAYM | Y | 146–0 | 95–0 | 51–0 |
 | 107 | 2024-05-01 | [HB-5508](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5508&which_year=2024) | AN ACT CONCERNING RECOMMENDATIONS FROM THE JUVENILE JUSTICE POLICY AND OVERSIGHT | Y | 139–0 | 87–0 | 52–0 |
 | 108 | 2024-05-01 | [HB-5226](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5226&which_year=2024) | AN ACT ESTABLISHING AN EXTENDED PRODUCER RESPONSIBILITY PROGRAM FOR CONSUMER BAT | Y | 145–0 | 92–0 | 53–0 |
@@ -683,10 +737,14 @@ Generated 2026-08-23. 1351 votes total.
 | 114 | 2024-05-01 | [HB-5430](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5430&which_year=2024) | AN ACT CONCERNING A STUDY OF MIGRAINE TREATMENT FOR WOMEN AND VETERANS.
          | Y | 145–5 | 97–0 | 48–5 |
 | 115 | 2024-05-01 | [HB-5223](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5223&which_year=2024) | AN ACT CONCERNING MINOR REVISIONS TO AGRICULTURE RELATED STATUTES AND TO OPEN SP | Y | 150–0 | 97–0 | 53–0 |
-| 116 | 2024-05-01 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2024) | AN ACT CONCERNING THE IMPLEMENTATION OF CERTAIN CLIMATE CHANGE MEASURES. | Y | 52–96 | 0–96 | 52–0 |
-| 117 | 2024-05-01 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2024) | AN ACT CONCERNING THE IMPLEMENTATION OF CERTAIN CLIMATE CHANGE MEASURES. | Y | 52–98 | 0–98 | 52–0 |
-| 118 | 2024-05-01 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2024) | AN ACT CONCERNING THE IMPLEMENTATION OF CERTAIN CLIMATE CHANGE MEASURES. | Y | 52–97 | 0–97 | 52–0 |
-| 119 | 2024-05-01 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2024) | AN ACT CONCERNING THE IMPLEMENTATION OF CERTAIN CLIMATE CHANGE MEASURES. | N | 94–56 | 94–4 | 0–52 |
+| 116 | 2024-05-01 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2024) | AN ACT CONCERNING THE IMPLEMENTATION OF CERTAIN CLIMATE CHANGE MEASURES.
+        | Y | 52–96 | 0–96 | 52–0 |
+| 117 | 2024-05-01 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2024) | AN ACT CONCERNING THE IMPLEMENTATION OF CERTAIN CLIMATE CHANGE MEASURES.
+        | Y | 52–98 | 0–98 | 52–0 |
+| 118 | 2024-05-01 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2024) | AN ACT CONCERNING THE IMPLEMENTATION OF CERTAIN CLIMATE CHANGE MEASURES.
+        | Y | 52–97 | 0–97 | 52–0 |
+| 119 | 2024-05-01 | [HB-5004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5004&which_year=2024) | AN ACT CONCERNING THE IMPLEMENTATION OF CERTAIN CLIMATE CHANGE MEASURES.
+        | N | 94–56 | 94–4 | 0–52 |
 | 120 | 2024-05-01 | [HB-5355](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5355&which_year=2024) | AN ACT CONCERNING THE WATER RESOURCES OF THE UPPER FARMINGTON RIVER VALLEY.
      | Y | 150–0 | 98–0 | 52–0 |
 | 121 | 2024-05-01 | [HB-5256](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5256&which_year=2024) | AN ACT CONCERNING LIABILITY FOR INJURIES INHERENT IN CAMPING WHILE AT A PRIVATE  | Y | 138–11 | 86–11 | 52–0 |
@@ -706,9 +764,12 @@ Generated 2026-08-23. 1351 votes total.
 | 130 | 2024-05-02 | [HB-5437](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5437&which_year=2024) | AN ACT CONCERNING EDUCATION MANDATE RELIEF, SCHOOL DISCIPLINE AND DISCONNECTED Y | N | 129–20 | 98–0 | 31–20 |
 | 131 | 2024-05-02 | [HB-5200](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5200&which_year=2024) | AN ACT CONCERNING HEALTH CARE ACCESSIBILITY FOR PERSONS WITH A DISABILITY.
       | Y | 144–5 | 98–0 | 46–5 |
-| 132 | 2024-05-02 | [SB-222](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-222&which_year=2024) | AN ACT CONCERNING CHANGES TO THE PAID FAMILY AND MEDICAL LEAVE STATUTES. | Y | 49–100 | 0–98 | 49–2 |
-| 133 | 2024-05-02 | [SB-222](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-222&which_year=2024) | AN ACT CONCERNING CHANGES TO THE PAID FAMILY AND MEDICAL LEAVE STATUTES. | Y | 51–98 | 0–98 | 51–0 |
-| 134 | 2024-05-02 | [SB-222](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-222&which_year=2024) | AN ACT CONCERNING CHANGES TO THE PAID FAMILY AND MEDICAL LEAVE STATUTES. | N | 108–41 | 98–0 | 10–41 |
+| 132 | 2024-05-02 | [SB-222](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-222&which_year=2024) | AN ACT CONCERNING CHANGES TO THE PAID FAMILY AND MEDICAL LEAVE STATUTES.
+        | Y | 49–100 | 0–98 | 49–2 |
+| 133 | 2024-05-02 | [SB-222](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-222&which_year=2024) | AN ACT CONCERNING CHANGES TO THE PAID FAMILY AND MEDICAL LEAVE STATUTES.
+        | Y | 51–98 | 0–98 | 51–0 |
+| 134 | 2024-05-02 | [SB-222](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-222&which_year=2024) | AN ACT CONCERNING CHANGES TO THE PAID FAMILY AND MEDICAL LEAVE STATUTES.
+        | N | 108–41 | 98–0 | 10–41 |
 | 135 | 2024-05-02 | [HB-5330](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5330&which_year=2024) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE DEPARTMENT OF TRANSPORTATION AND  | N | 136–13 | 98–0 | 38–13 |
 | 136 | 2024-05-02 | [HB-5283](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5283&which_year=2024) | AN ACT CONCERNING THE CLASSIFICATION OF PAROLE OFFICERS AS PEACE OFFICERS.
       | Y | 145–4 | 94–4 | 51–0 |
@@ -716,13 +777,19 @@ Generated 2026-08-23. 1351 votes total.
 | 138 | 2024-05-02 | [HB-5199](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5199&which_year=2024) | AN ACT ESTABLISHING A TASK FORCE TO STUDY THE SHORTAGE OF ATHLETIC TRAINERS IN T | Y | 147–1 | 96–1 | 51–0 |
 | 139 | 2024-05-03 | [SB-123](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-123&which_year=2024) | AN ACT CONCERNING COERCED DEBT.
             To (1) provide that no individual sh | Y | 149–0 | 96–0 | 53–0 |
-| 140 | 2024-05-03 | [HB-5211](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5211&which_year=2024) | AN ACT CONCERNING VIRTUAL CURRENCY AND MONEY TRANSMISSION. | Y | 149–0 | 96–0 | 53–0 |
+| 140 | 2024-05-03 | [HB-5211](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5211&which_year=2024) | AN ACT CONCERNING VIRTUAL CURRENCY AND MONEY TRANSMISSION.
+            To: (1) R | Y | 149–0 | 96–0 | 53–0 |
 | 141 | 2024-05-03 | [HB-5498](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5498&which_year=2024) | AN ACT CONCERNING ELECTION SECURITY AND TRANSPARENCY, THE COUNTING OF ABSENTEE B | Y | 150–0 | 97–0 | 53–0 |
-| 142 | 2024-05-03 | [HB-5361](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5361&which_year=2024) | AN ACT CONCERNING THE SITING OF RENEWABLE ENERGY SOURCES IN THE STATE. | N | 119–30 | 77–19 | 42–11 |
-| 143 | 2024-05-03 | [HB-5002](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5002&which_year=2024) | AN ACT CONCERNING EARLY CHILDHOOD CARE AND EDUCATION. | Y | 151–0 | 98–0 | 53–0 |
-| 144 | 2024-05-03 | [HB-5390](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5390&which_year=2024) | AN ACT CONCERNING TRANSIT-ORIENTED COMMUNITIES. | N | 98–53 | 98–0 | 0–53 |
-| 145 | 2024-05-03 | [HB-5390](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5390&which_year=2024) | AN ACT CONCERNING TRANSIT-ORIENTED COMMUNITIES. | N | 90–61 | 89–9 | 1–52 |
-| 146 | 2024-05-03 | [SB-368](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-368&which_year=2024) | AN ACT CONCERNING SOURCE PLASMA DONATION CENTERS. | Y | 149–0 | 97–0 | 52–0 |
+| 142 | 2024-05-03 | [HB-5361](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5361&which_year=2024) | AN ACT CONCERNING THE SITING OF RENEWABLE ENERGY SOURCES IN THE STATE.
+          | N | 119–30 | 77–19 | 42–11 |
+| 143 | 2024-05-03 | [HB-5002](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5002&which_year=2024) | AN ACT CONCERNING EARLY CHILDHOOD CARE AND EDUCATION.
+            To establish ( | Y | 151–0 | 98–0 | 53–0 |
+| 144 | 2024-05-03 | [HB-5390](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5390&which_year=2024) | AN ACT CONCERNING TRANSIT-ORIENTED COMMUNITIES.
+            To (1) provide finan | N | 98–53 | 98–0 | 0–53 |
+| 145 | 2024-05-03 | [HB-5390](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5390&which_year=2024) | AN ACT CONCERNING TRANSIT-ORIENTED COMMUNITIES.
+            To (1) provide finan | N | 90–61 | 89–9 | 1–52 |
+| 146 | 2024-05-03 | [SB-368](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-368&which_year=2024) | AN ACT CONCERNING SOURCE PLASMA DONATION CENTERS.
+            To require the Com | Y | 149–0 | 97–0 | 52–0 |
 | 147 | 2024-05-03 | [HB-5474](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5474&which_year=2024) | AN ACT CONCERNING MUNICIPAL APPROVALS FOR HOUSING DEVELOPMENT, FINES FOR VIOLATI | N | 99–51 | 97–1 | 2–50 |
 | 148 | 2024-05-03 | [HB-5369](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5369&which_year=2024) | AN ACT CONCERNING A BENEFITS CLIFF STUDY.
             To establish a pilot progr | Y | 150–0 | 98–0 | 52–0 |
@@ -750,10 +817,12 @@ Generated 2026-08-23. 1351 votes total.
             To require the presid | Y | 149–0 | 96–0 | 53–0 |
 | 167 | 2024-05-06 | [SB-183](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-183&which_year=2024) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE DEPARTMENT OF MOTOR VEHICLES AND  | Y | 58–93 | 5–93 | 53–0 |
 | 168 | 2024-05-06 | [SB-183](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-183&which_year=2024) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE DEPARTMENT OF MOTOR VEHICLES AND  | Y | 132–19 | 98–0 | 34–19 |
-| 169 | 2024-05-06 | [SB-184](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-184&which_year=2024) | AN ACT CONCERNING THE RENTING OR LEASING OF PASSENGER MOTOR VEHICLES. | Y | 151–0 | 98–0 | 53–0 |
+| 169 | 2024-05-06 | [SB-184](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-184&which_year=2024) | AN ACT CONCERNING THE RENTING OR LEASING OF PASSENGER MOTOR VEHICLES.
+           | Y | 151–0 | 98–0 | 53–0 |
 | 170 | 2024-05-06 | [HB-5046](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5046&which_year=2024) | AN ACT PROMOTING NURSING HOME RESIDENT QUALITY OF LIFE.
             To implement | Y | 143–7 | 97–0 | 46–7 |
-| 171 | 2024-05-06 | [HB-5236](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5236&which_year=2024) | AN ACT CONCERNING RECOMMENDATIONS BY THE DEPARTMENT OF CONSUMER PROTECTION. | Y | 133–14 | 95–0 | 38–14 |
+| 171 | 2024-05-06 | [HB-5236](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5236&which_year=2024) | AN ACT CONCERNING RECOMMENDATIONS BY THE DEPARTMENT OF CONSUMER PROTECTION.
+     | Y | 133–14 | 95–0 | 38–14 |
 | 172 | 2024-05-06 | [HB-5290](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5290&which_year=2024) | AN ACT CONCERNING VARIOUS REVISIONS TO THE PUBLIC HEALTH STATUTES.
             T | N | 131–16 | 95–0 | 36–16 |
 | 173 | 2024-05-06 | [HB-5055](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5055&which_year=2024) | AN ACT STRENGTHENING POLICE DATA REPORTING REQUIREMENTS.
@@ -790,8 +859,10 @@ Generated 2026-08-23. 1351 votes total.
 | 196 | 2024-05-07 | [HB-5511](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5511&which_year=2024) | AN ACT CONCERNING THE OPIOID SETTLEMENT ADVISORY COMMITTEE.
             To expan | Y | 147–0 | 95–0 | 52–0 |
 | 197 | 2024-05-07 | [HB-5285](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5285&which_year=2024) | AN ACT CONCERNING VETERANS' SPECIALTY LICENSE PLATES AND DRIVER'S LICENSES FOR C | Y | 148–0 | 96–0 | 52–0 |
-| 198 | 2024-05-07 | [HB-5426](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5426&which_year=2024) | AN ACT CONCERNING ENERGY ASSISTANCE STUDIES AND FUEL VENDOR REIMBURSEMENT. | Y | 147–0 | 95–0 | 52–0 |
-| 199 | 2024-05-07 | [HB-5452](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5452&which_year=2024) | AN ACT CONCERNING VARIOUS CAMPAIGN FINANCE REFORMS. | Y | 147–1 | 95–1 | 52–0 |
+| 198 | 2024-05-07 | [HB-5426](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5426&which_year=2024) | AN ACT CONCERNING ENERGY ASSISTANCE STUDIES AND FUEL VENDOR REIMBURSEMENT.
+      | Y | 147–0 | 95–0 | 52–0 |
+| 199 | 2024-05-07 | [HB-5452](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5452&which_year=2024) | AN ACT CONCERNING VARIOUS CAMPAIGN FINANCE REFORMS.
+            To (1) require e | Y | 147–1 | 95–1 | 52–0 |
 | 200 | 2024-05-07 | [HB-5410](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5410&which_year=2024) | AN ACT EXEMPTING INFORMATION CONCERNING CERTAIN VULNERABLE INDIVIDUALS FROM DISC | Y | 148–0 | 96–0 | 52–0 |
 | 201 | 2024-05-07 | [HB-5507](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5507&which_year=2024) | AN ACT CONCERNING CERTAIN PROCEEDINGS RELATING TO ELECTRIC TRANSMISSION LINES AN | N | 115–29 | 91–3 | 24–26 |
 | 202 | 2024-05-07 | [SB-333](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-333&which_year=2024) | AN ACT CONCERNING LOCAL CHARTER REVISIONS.
@@ -803,14 +874,16 @@ Generated 2026-08-23. 1351 votes total.
 | 205 | 2024-05-07 | [HB-5393](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5393&which_year=2024) | AN ACT CONCERNING CERTAIN ADJUSTMENTS TO GROSS ASSESSMENTS OF TAXABLE REAL PROPE | Y | 64–81 | 13–81 | 51–0 |
 | 206 | 2024-05-07 | [SB-253](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-253&which_year=2024) | AN ACT CONCERNING FOREIGN POLITICAL SPENDING.
             To prevent foreign int | Y | 145–0 | 94–0 | 51–0 |
-| 207 | 2024-05-07 | [SB-215](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-215&which_year=2024) | AN ACT CONCERNING YOUTH CAMPS. | Y | 144–0 | 93–0 | 51–0 |
+| 207 | 2024-05-07 | [SB-215](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-215&which_year=2024) | AN ACT CONCERNING YOUTH CAMPS.
+            To impose requirements on how youth c | Y | 144–0 | 93–0 | 51–0 |
 | 208 | 2024-05-07 | [SB-292](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-292&which_year=2024) | AN ACT CONCERNING THE USE OF PFAS IN CERTAIN PRODUCTS.
             To prohibit t | Y | 145–0 | 94–0 | 51–0 |
 | 209 | 2024-05-07 | [SB-304](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-304&which_year=2024) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE CONNECTICUT HIGHER EDUCATION SUPP | Y | 123–22 | 94–0 | 29–22 |
 | 210 | 2024-05-07 | [SB-107](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-107&which_year=2024) | AN ACT UPDATING REQUIREMENTS FOR CONSTRUCTION MANAGEMENT OVERSIGHT AT THE UNIVER | Y | 119–26 | 94–0 | 25–26 |
 | 211 | 2024-05-07 | [SB-109](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-109&which_year=2024) | AN ACT MODIFYING THE CONNECTICUT AUTOMATIC ADMISSIONS PROGRAM.
             To ch | Y | 145–0 | 94–0 | 51–0 |
-| 212 | 2024-05-07 | [SB-283](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-283&which_year=2024) | AN ACT CONCERNING THE EMERGENCY MORTGAGE ASSISTANCE PROGRAM. | Y | 143–0 | 93–0 | 50–0 |
+| 212 | 2024-05-07 | [SB-283](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-283&which_year=2024) | AN ACT CONCERNING THE EMERGENCY MORTGAGE ASSISTANCE PROGRAM.
+            To (1)  | Y | 143–0 | 93–0 | 50–0 |
 | 213 | 2024-05-07 | [SB-117](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-117&which_year=2024) | AN ACT CONCERNING MARTIN LUTHER KING, JR. CORRIDORS.
             To require the  | Y | 144–0 | 94–0 | 50–0 |
 | 214 | 2024-05-07 | [SB-121](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-121&which_year=2024) | AN ACT CONCERNING THE ATTORNEY GENERAL, THE BANKING COMMISSIONER, THE DODD-FRANK | N | 130–13 | 93–0 | 37–13 |
@@ -839,23 +912,27 @@ Generated 2026-08-23. 1351 votes total.
      | Y | 144–0 | 92–0 | 52–0 |
 | 229 | 2024-05-08 | [SB-14](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-14&which_year=2024) | AN ACT ASSISTING SCHOOL DISTRICTS IN IMPROVING EDUCATIONAL OUTCOMES, IMPLEMENTIN | Y | 57–89 | 5–89 | 52–0 |
 | 230 | 2024-05-08 | [SB-14](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-14&which_year=2024) | AN ACT ASSISTING SCHOOL DISTRICTS IN IMPROVING EDUCATIONAL OUTCOMES, IMPLEMENTIN | Y | 147–0 | 95–0 | 52–0 |
-| 231 | 2024-05-08 | [SB-3](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-3&which_year=2024) | AN ACT CONCERNING CONSUMER PROTECTION. | Y | 52–95 | 0–95 | 52–0 |
+| 231 | 2024-05-08 | [SB-3](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-3&which_year=2024) | AN ACT CONCERNING CONSUMER PROTECTION.
+            To (1) declare the state's po | Y | 52–95 | 0–95 | 52–0 |
 | 232 | 2024-05-08 | [HB-5223](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5223&which_year=2024) | AN ACT CONCERNING MINOR REVISIONS TO AGRICULTURE RELATED STATUTES AND TO OPEN SP | Y | 143–0 | 91–0 | 52–0 |
 | 233 | 2024-05-08 | [SB-457](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-457&which_year=2024) | AN ACT CONCERNING THE RECONVEYANCE OF A PARCEL OF STATE LAND IN THE CITY OF MIDD | N | 107–39 | 93–1 | 14–38 |
 | 234 | 2024-05-08 | [SB-460](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-460&which_year=2024) | AN ACT CONCERNING THE CONVEYANCE OF A PARCEL OF STATE LAND IN THE TOWN OF ENFIEL | Y | 145–1 | 93–1 | 52–0 |
 | 235 | 2024-05-08 | [SB-461](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-461&which_year=2024) | AN ACT CONCERNING THE CONVEYANCE OF A PARCEL OF STATE LAND IN THE TOWN OF SOMERS | Y | 145–1 | 93–1 | 52–0 |
 | 236 | 2024-05-08 | [SB-459](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-459&which_year=2024) | AN ACT CONCERNING A CONVEYANCE OF A PARCEL OF STATE LAND IN THE CITY OF BRIDGEPO | Y | 147–0 | 95–0 | 52–0 |
 | 237 | 2024-05-08 | [SB-201](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-201&which_year=2024) | AN ACT CONCERNING UNFAIR REAL ESTATE LISTING AGREEMENTS AND THE CONNECTICUT UNFA | Y | 144–2 | 94–0 | 50–2 |
-| 238 | 2024-05-08 | [SB-133](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-133&which_year=2024) | AN ACT CONCERNING REGULATION OF PRESCRIPTION DRUGS AND RELATED PROFESSIONS. | Y | 147–0 | 95–0 | 52–0 |
+| 238 | 2024-05-08 | [SB-133](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-133&which_year=2024) | AN ACT CONCERNING REGULATION OF PRESCRIPTION DRUGS AND RELATED PROFESSIONS.
+     | Y | 147–0 | 95–0 | 52–0 |
 | 239 | 2024-05-08 | [SB-202](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-202&which_year=2024) | AN ACT CONCERNING THE DEPARTMENT OF CONSUMER PROTECTION'S RECOMMENDATIONS REGARD | Y | 144–2 | 94–0 | 50–2 |
 | 240 | 2024-05-08 | [SB-126](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-126&which_year=2024) | AN ACT CONCERNING HOME VISITS AND EVALUATIONS CONDUCTED BY THE DEPARTMENT OF CHI | Y | 147–0 | 95–0 | 52–0 |
 | 241 | 2024-05-08 | [SB-127](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-127&which_year=2024) | AN ACT CONCERNING THE RECOMMENDATIONS OF THE DEPARTMENT OF CHILDREN AND FAMILIES | Y | 147–0 | 95–0 | 52–0 |
 | 242 | 2024-05-08 | [SB-336](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-336&which_year=2024) | AN ACT CONCERNING THE METROPOLITAN DISTRICT OF HARTFORD COUNTY'S INDEPENDENT CON | Y | 147–0 | 95–0 | 52–0 |
-| 243 | 2024-05-08 | [SB-432](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-432&which_year=2024) | AN ACT CONCERNING STATE CONTRACTS WITH NONPROFIT HUMAN SERVICES PROVIDERS. | Y | 147–0 | 95–0 | 52–0 |
+| 243 | 2024-05-08 | [SB-432](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-432&which_year=2024) | AN ACT CONCERNING STATE CONTRACTS WITH NONPROFIT HUMAN SERVICES PROVIDERS.
+      | Y | 147–0 | 95–0 | 52–0 |
 | 244 | 2024-05-08 | [SB-234](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-234&which_year=2024) | AN ACT EXEMPTING CERTAIN LAW ENFORCEMENT RECORDS FROM DISCLOSURE UNDER THE FREED | Y | 147–0 | 95–0 | 52–0 |
 | 245 | 2024-05-08 | [SB-235](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-235&which_year=2024) | AN ACT CONCERNING MILITARY LEAVE PROVISIONS UNDER THE STATE PERSONNEL ACT.
       | Y | 147–0 | 95–0 | 52–0 |
-| 246 | 2024-05-08 | [SB-238](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-238&which_year=2024) | AN ACT EXPANDING ELIGIBILITY FOR GRANTS FROM THE MILITARY RELIEF FUND. | Y | 146–0 | 94–0 | 52–0 |
+| 246 | 2024-05-08 | [SB-238](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-238&which_year=2024) | AN ACT EXPANDING ELIGIBILITY FOR GRANTS FROM THE MILITARY RELIEF FUND.
+          | Y | 146–0 | 94–0 | 52–0 |
 | 247 | 2024-05-08 | [SB-192](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-192&which_year=2024) | AN ACT CONCERNING DAM SAFETY.
             To enable the Department of Energy and | Y | 147–0 | 95–0 | 52–0 |
 | 248 | 2024-05-08 | [SB-194](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-194&which_year=2024) | AN ACT CONCERNING CERTAIN FARMING PROGRAMS OF THE DEPARTMENT OF AGRICULTURE.
@@ -874,7 +951,8 @@ Generated 2026-08-23. 1351 votes total.
 | 258 | 2024-05-08 | [HB-5471](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5471&which_year=2024) | AN ACT CONCERNING LOCAL GOVERNMENT.
             To clarify certain responsibilit | Y | 145–1 | 93–1 | 52–0 |
 | 259 | 2024-05-08 | [SB-360](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-360&which_year=2024) | AN ACT CONCERNING THE TRANSCRIPT FEES CHARGED BY OFFICIAL COURT REPORTERS AND CO | Y | 137–9 | 94–0 | 43–9 |
-| 260 | 2024-05-08 | [SB-439](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-439&which_year=2024) | AN ACT CONCERNING COMPENSATION FOR PERSONS WHO ARE WRONGFULLY INCARCERATED. | Y | 146–0 | 94–0 | 52–0 |
+| 260 | 2024-05-08 | [SB-439](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-439&which_year=2024) | AN ACT CONCERNING COMPENSATION FOR PERSONS WHO ARE WRONGFULLY INCARCERATED.
+     | Y | 146–0 | 94–0 | 52–0 |
 | 261 | 2024-05-08 | [SB-339](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-339&which_year=2024) | AN ACT REQUIRING RESTITUTION WHEN A POLICE ANIMAL OR DOG IN A VOLUNTEER CANINE S | Y | 146–0 | 94–0 | 52–0 |
 | 262 | 2024-05-08 | [SB-396](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-396&which_year=2024) | AN ACT IMPLEMENTING TASK FORCE RECOMMENDATIONS FOR THE ELDERLY NUTRITION PROGRAM | Y | 146–0 | 94–0 | 52–0 |
 | 263 | 2024-05-08 | [SB-13](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-13&which_year=2024) | AN ACT INCENTIVIZING STUDENT LOAN REPAYMENT ASSISTANCE.
@@ -962,8 +1040,10 @@ Generated 2026-08-23. 1351 votes total.
 | 43 | 2025-04-09 | [HB-7129](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7129&which_year=2025) | AN ACT CONCERNING THE TRANSFER TO MUNICIPAL OFFICIALS OF VOTING TABULATORS AND A | Y | 147–0 | 100–0 | 47–0 |
 | 44 | 2025-04-09 | [SB-1553](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1553&which_year=2025) | AN ACT EXCLUDING APRIL 20, 2025, FROM THE PERIOD OF EARLY VOTING PRIOR TO THE DA | Y | 145–2 | 100–0 | 45–2 |
 | 45 | 2025-04-28 | [SJR-79](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SJR-79&which_year=2025) | RESOLUTION CONFIRMING THE NOMINATION OF DEVAUGHN L. WARD OF HARTFORD TO BE CORRE | N | 126–9 | 89–0 | 37–9 |
-| 46 | 2025-04-28 | [HB-7081](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7081&which_year=2025) | AN ACT CONCERNING LICENSURE PORTABILITY FOR MARRIAGE AND FAMILY THERAPISTS. | Y | 144–0 | 98–0 | 46–0 |
-| 47 | 2025-04-28 | [HB-7020](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7020&which_year=2025) | AN ACT CONCERNING CERTIFIED PUBLIC ACCOUNTANTS. | Y | 145–0 | 99–0 | 46–0 |
+| 46 | 2025-04-28 | [HB-7081](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7081&which_year=2025) | AN ACT CONCERNING LICENSURE PORTABILITY FOR MARRIAGE AND FAMILY THERAPISTS.
+     | Y | 144–0 | 98–0 | 46–0 |
+| 47 | 2025-04-28 | [HB-7020](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7020&which_year=2025) | AN ACT CONCERNING CERTIFIED PUBLIC ACCOUNTANTS.
+            To modify (1) the ed | Y | 145–0 | 99–0 | 46–0 |
 | 48 | 2025-04-28 | [HB-7102](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7102&which_year=2025) | AN ACT CONCERNING MATERNAL AND INFANT HEALTH CARE.
             To develop a stra | Y | 145–0 | 99–0 | 46–0 |
 | 49 | 2025-04-28 | [HB-6877](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6877&which_year=2025) | AN ACT CONCERNING THE BANKING COMMISSIONER'S APPROVAL OF CERTAIN BANK REAL ESTAT | Y | 145–0 | 99–0 | 46–0 |
@@ -1000,7 +1080,8 @@ Generated 2026-08-23. 1351 votes total.
           | N | 97–48 | 97–2 | 0–46 |
 | 73 | 2025-05-07 | [HB-6897](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6897&which_year=2025) | AN ACT EXTENDING THE SUNSET DATE FOR PERSONAL RISK INSURANCE RATE FILINGS.
       | Y | 144–1 | 99–0 | 45–1 |
-| 74 | 2025-05-07 | [SB-1426](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1426&which_year=2025) | AN ACT MAKING CHANGES TO THE FIREFIGHTERS CANCER RELIEF PROGRAM. | Y | 144–0 | 98–0 | 46–0 |
+| 74 | 2025-05-07 | [SB-1426](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1426&which_year=2025) | AN ACT MAKING CHANGES TO THE FIREFIGHTERS CANCER RELIEF PROGRAM.
+            To  | Y | 144–0 | 98–0 | 46–0 |
 | 75 | 2025-05-08 | [SB-1404](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1404&which_year=2025) | AN ACT CONCERNING CONFORMING ADJUSTMENTS TO SUPPORT THE TRANSITION TO A RELEASED | Y | 140–0 | 93–0 | 47–0 |
 | 76 | 2025-05-08 | [HB-5008](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5008&which_year=2025) | AN ACT ESTABLISHING THE CONNECTICUT-PUERTO RICO TRADE COMMISSION.
             To | Y | 141–0 | 94–0 | 47–0 |
@@ -1009,7 +1090,7 @@ Generated 2026-08-23. 1351 votes total.
 | 79 | 2025-05-08 | [HB-6771](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6771&which_year=2025) | AN ACT ESTABLISHING AN ALZHEIMER'S DISEASE AND DEMENTIA TASK FORCE, REQUIRING HE | Y | 147–0 | 100–0 | 47–0 |
 | 80 | 2025-05-08 | [HB-6995](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6995&which_year=2025) | AN ACT CONCERNING THE CHARTER OF THE METROPOLITAN DISTRICT OF HARTFORD COUNTY.
   | Y | 147–0 | 101–0 | 46–0 |
-| 81 | 2025-05-08 | [HB-6957](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6957&which_year=2025) | Resolution Act | N | 134–9 | 95–2 | 39–7 |
+| 81 | 2025-05-08 | [HB-6957](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6957&which_year=2025) | AN ACT ALLOWING A TOWN TO DESIGNATE ITSELF A CITY, ESTABLISHING A TASK FORCE TO  | N | 134–9 | 95–2 | 39–7 |
 | 82 | 2025-05-08 | [HB-6913](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6913&which_year=2025) | AN ACT PROHIBITING LONG-TERM CARE FACILITIES FROM DISCRIMINATING AGAINST LONG-TE | Y | 124–19 | 97–0 | 27–19 |
 | 83 | 2025-05-08 | [HB-7132](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7132&which_year=2025) | AN ACT CONCERNING NON-SAFETY-RELATED TRAFFIC STOPS, DRIVING WHILE CONSUMING CANN | Y | 63–79 | 17–79 | 46–0 |
 | 84 | 2025-05-08 | [HB-7132](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7132&which_year=2025) | AN ACT CONCERNING NON-SAFETY-RELATED TRAFFIC STOPS, DRIVING WHILE CONSUMING CANN | Y | 143–0 | 97–0 | 46–0 |
@@ -1017,7 +1098,7 @@ Generated 2026-08-23. 1351 votes total.
 | 86 | 2025-05-08 | [HB-5605](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5605&which_year=2025) | AN ACT CONCERNING MINOR REVISIONS TO THE WORKERS' COMPENSATION ACT.
              | Y | 141–0 | 95–0 | 46–0 |
 | 87 | 2025-05-08 | [HB-6990](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6990&which_year=2025) | AN ACT CONCERNING THE SEIZURE AND FORFEITURE OF VIRTUAL CURRENCY AND VIRTUAL CUR | Y | 140–0 | 94–0 | 46–0 |
-| 88 | 2025-05-13 | [HB-7009](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7009&which_year=2025) | Resolution Act | N | 128–20 | 100–0 | 28–20 |
+| 88 | 2025-05-13 | [HB-7009](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7009&which_year=2025) | AN ACT CONCERNING THE ESTABLISHMENT OF THE CONNECTICUT STATE SEAL OF CIVICS EDUC | N | 128–20 | 100–0 | 28–20 |
 | 89 | 2025-05-13 | [SB-1286](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1286&which_year=2025) | AN ACT CONCERNING THE LEGISLATIVE COMMISSIONERS' RECOMMENDATIONS FOR TECHNICAL R | Y | 148–0 | 100–0 | 48–0 |
 | 90 | 2025-05-13 | [SB-1282](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1282&which_year=2025) | AN ACT CONCERNING THE MINIMUM QUARANTINE FOR CERTAIN DOGS AND CATS EXPOSED TO RA | Y | 148–0 | 100–0 | 48–0 |
 | 91 | 2025-05-13 | [HB-5012](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5012&which_year=2025) | AN ACT PROHIBITING THE PRACTICE OF SHARK FINNING.
@@ -1051,20 +1132,25 @@ Generated 2026-08-23. 1351 votes total.
 | 109 | 2025-05-14 | [HB-7043](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7043&which_year=2025) | AN ACT CONCERNING FOSTER CARE MAINTENANCE PAYMENTS.
             To require the C | Y | 145–0 | 98–0 | 47–0 |
 | 110 | 2025-05-14 | [HB-6841](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6841&which_year=2025) | AN ACT ESTABLISHING A WORKING GROUP TO STUDY METHODS AND PROGRAMS FOR REDUCING R | N | 110–37 | 100–0 | 10–37 |
-| 111 | 2025-05-14 | [HB-7182](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7182&which_year=2025) | AN ACT CONCERNING ENTERTAINMENT EVENT TICKETS. | Y | 147–0 | 100–0 | 47–0 |
+| 111 | 2025-05-14 | [HB-7182](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7182&which_year=2025) | AN ACT CONCERNING ENTERTAINMENT EVENT TICKETS.
+            To (1) define various | Y | 147–0 | 100–0 | 47–0 |
 | 112 | 2025-05-14 | [HB-7139](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7139&which_year=2025) | AN ACT CONCERNING THE DUTIES OF STATE MARSHALS AND THE ACTIVITIES UNDERTAKEN BY  | Y | 147–0 | 100–0 | 47–0 |
 | 113 | 2025-05-14 | [HB-7082](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7082&which_year=2025) | AN ACT CONCERNING VARIOUS REVISIONS TO THE MONEY TRANSMISSION STATUTES, STATE PA | N | 105–42 | 100–0 | 5–42 |
 | 114 | 2025-05-14 | [HB-7082](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7082&which_year=2025) | AN ACT CONCERNING VARIOUS REVISIONS TO THE MONEY TRANSMISSION STATUTES, STATE PA | Y | 146–0 | 100–0 | 46–0 |
 | 115 | 2025-05-14 | [HB-6183](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6183&which_year=2025) | AN ACT CONCERNING THE APPOINTMENT OF THE CHILD ADVOCATE.
             To modify t | Y | 147–0 | 100–0 | 47–0 |
-| 116 | 2025-05-14 | [HB-7248](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7248&which_year=2025) | AN ACT CONCERNING WELL WATER QUALITY. | Y | 54–93 | 7–93 | 47–0 |
-| 117 | 2025-05-14 | [HB-7248](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7248&which_year=2025) | AN ACT CONCERNING WELL WATER QUALITY. | N | 101–46 | 100–0 | 1–46 |
+| 116 | 2025-05-14 | [HB-7248](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7248&which_year=2025) | AN ACT CONCERNING WELL WATER QUALITY.
+            To allow (1) the Commissioner  | Y | 54–93 | 7–93 | 47–0 |
+| 117 | 2025-05-14 | [HB-7248](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7248&which_year=2025) | AN ACT CONCERNING WELL WATER QUALITY.
+            To allow (1) the Commissioner  | N | 101–46 | 100–0 | 1–46 |
 | 118 | 2025-05-14 | [HB-6477](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6477&which_year=2025) | AN ACT REQUIRING A PLAN FOR THE TRANSLATION AND REVIEW OF FORMS AND APPLICATIONS | N | 100–46 | 99–0 | 1–46 |
 | 119 | 2025-05-14 | [HB-7053](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7053&which_year=2025) | AN ACT ESTABLISHING A WORKING GROUP TO DEVELOP UNIFORM STATUTORY DEFINITIONS OF  | Y | 147–0 | 100–0 | 47–0 |
-| 120 | 2025-05-14 | [HB-7056](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7056&which_year=2025) | AN ACT CONCERNING FIREARM PERMITS AND TRANSFERS. | Y | 144–3 | 97–3 | 47–0 |
+| 120 | 2025-05-14 | [HB-7056](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7056&which_year=2025) | AN ACT CONCERNING FIREARM PERMITS AND TRANSFERS.
+            To (1) modify statu | Y | 144–3 | 97–3 | 47–0 |
 | 121 | 2025-05-15 | [HB-6918](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6918&which_year=2025) | AN ACT PROHIBITING FIRST COUSIN MARRIAGE.
             To prohibit marriage betwe | Y | 139–0 | 93–0 | 46–0 |
-| 122 | 2025-05-15 | [HB-7236](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7236&which_year=2025) | AN ACT CONCERNING HUMAN TRAFFICKING AND SEXUAL ASSAULT VICTIMS. | Y | 139–4 | 95–0 | 44–4 |
+| 122 | 2025-05-15 | [HB-7236](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7236&which_year=2025) | AN ACT CONCERNING HUMAN TRAFFICKING AND SEXUAL ASSAULT VICTIMS.
+            To a | Y | 139–4 | 95–0 | 44–4 |
 | 123 | 2025-05-15 | [HB-7158](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7158&which_year=2025) | AN ACT CONCERNING THE SECURE TRANSMISSION OF MINOR PATIENT SAFETY PLANS TO SCHOO | N | 105–42 | 99–0 | 6–42 |
 | 124 | 2025-05-15 | [SB-1234](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1234&which_year=2025) | AN ACT PROHIBITING LIBRARIES FROM AGREEING TO CERTAIN TERMS IN ELECTRONIC BOOK A | Y | 48–97 | 0–97 | 48–0 |
 | 125 | 2025-05-15 | [SB-1234](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1234&which_year=2025) | AN ACT PROHIBITING LIBRARIES FROM AGREEING TO CERTAIN TERMS IN ELECTRONIC BOOK A | Y | 47–97 | 0–97 | 47–0 |
@@ -1110,15 +1196,24 @@ Generated 2026-08-23. 1351 votes total.
             To implement the r | Y | 141–5 | 98–2 | 43–3 |
 | 160 | 2025-05-20 | [HB-7214](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7214&which_year=2025) | AN ACT CONCERNING MATERNAL HEALTH.
             To (1) establish a task force to  | Y | 138–3 | 96–0 | 42–3 |
-| 161 | 2025-05-21 | [HB-7259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7259&which_year=2025) | AN ACT CONCERNING REVISIONS TO VARIOUS STATUTES CONCERNING CRIMINAL JUSTICE. | N | 90–49 | 90–2 | 0–47 |
-| 162 | 2025-05-21 | [HB-7259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7259&which_year=2025) | AN ACT CONCERNING REVISIONS TO VARIOUS STATUTES CONCERNING CRIMINAL JUSTICE. | Y | 48–97 | 0–97 | 48–0 |
-| 163 | 2025-05-21 | [HB-7259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7259&which_year=2025) | AN ACT CONCERNING REVISIONS TO VARIOUS STATUTES CONCERNING CRIMINAL JUSTICE. | Y | 48–97 | 0–97 | 48–0 |
-| 164 | 2025-05-21 | [HB-7259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7259&which_year=2025) | AN ACT CONCERNING REVISIONS TO VARIOUS STATUTES CONCERNING CRIMINAL JUSTICE. | Y | 48–98 | 0–98 | 48–0 |
-| 165 | 2025-05-21 | [HB-7259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7259&which_year=2025) | AN ACT CONCERNING REVISIONS TO VARIOUS STATUTES CONCERNING CRIMINAL JUSTICE. | Y | 48–97 | 0–97 | 48–0 |
-| 166 | 2025-05-21 | [HB-7259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7259&which_year=2025) | AN ACT CONCERNING REVISIONS TO VARIOUS STATUTES CONCERNING CRIMINAL JUSTICE. | Y | 59–86 | 11–86 | 48–0 |
-| 167 | 2025-05-21 | [HB-7259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7259&which_year=2025) | AN ACT CONCERNING REVISIONS TO VARIOUS STATUTES CONCERNING CRIMINAL JUSTICE. | Y | 50–95 | 2–95 | 48–0 |
-| 168 | 2025-05-21 | [HB-7259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7259&which_year=2025) | AN ACT CONCERNING REVISIONS TO VARIOUS STATUTES CONCERNING CRIMINAL JUSTICE. | Y | 57–89 | 9–89 | 48–0 |
-| 169 | 2025-05-21 | [HB-7259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7259&which_year=2025) | AN ACT CONCERNING REVISIONS TO VARIOUS STATUTES CONCERNING CRIMINAL JUSTICE. | N | 96–51 | 96–3 | 0–48 |
+| 161 | 2025-05-21 | [HB-7259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7259&which_year=2025) | AN ACT CONCERNING REVISIONS TO VARIOUS STATUTES CONCERNING CRIMINAL JUSTICE.
+    | N | 90–49 | 90–2 | 0–47 |
+| 162 | 2025-05-21 | [HB-7259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7259&which_year=2025) | AN ACT CONCERNING REVISIONS TO VARIOUS STATUTES CONCERNING CRIMINAL JUSTICE.
+    | Y | 48–97 | 0–97 | 48–0 |
+| 163 | 2025-05-21 | [HB-7259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7259&which_year=2025) | AN ACT CONCERNING REVISIONS TO VARIOUS STATUTES CONCERNING CRIMINAL JUSTICE.
+    | Y | 48–97 | 0–97 | 48–0 |
+| 164 | 2025-05-21 | [HB-7259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7259&which_year=2025) | AN ACT CONCERNING REVISIONS TO VARIOUS STATUTES CONCERNING CRIMINAL JUSTICE.
+    | Y | 48–98 | 0–98 | 48–0 |
+| 165 | 2025-05-21 | [HB-7259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7259&which_year=2025) | AN ACT CONCERNING REVISIONS TO VARIOUS STATUTES CONCERNING CRIMINAL JUSTICE.
+    | Y | 48–97 | 0–97 | 48–0 |
+| 166 | 2025-05-21 | [HB-7259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7259&which_year=2025) | AN ACT CONCERNING REVISIONS TO VARIOUS STATUTES CONCERNING CRIMINAL JUSTICE.
+    | Y | 59–86 | 11–86 | 48–0 |
+| 167 | 2025-05-21 | [HB-7259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7259&which_year=2025) | AN ACT CONCERNING REVISIONS TO VARIOUS STATUTES CONCERNING CRIMINAL JUSTICE.
+    | Y | 50–95 | 2–95 | 48–0 |
+| 168 | 2025-05-21 | [HB-7259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7259&which_year=2025) | AN ACT CONCERNING REVISIONS TO VARIOUS STATUTES CONCERNING CRIMINAL JUSTICE.
+    | Y | 57–89 | 9–89 | 48–0 |
+| 169 | 2025-05-21 | [HB-7259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7259&which_year=2025) | AN ACT CONCERNING REVISIONS TO VARIOUS STATUTES CONCERNING CRIMINAL JUSTICE.
+    | N | 96–51 | 96–3 | 0–48 |
 | 170 | 2025-05-21 | [HB-7041](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7041&which_year=2025) | AN ACT CONCERNING THE COMPOSITION OF THE JUDICIAL SELECTION COMMISSION AND DECIS | Y | 147–0 | 99–0 | 48–0 |
 | 171 | 2025-05-22 | [SB-1405](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1405&which_year=2025) | AN ACT MODIFYING CAMPAIGN FINANCE LAWS AND THE POWERS OF THE STATE ELECTIONS ENF | Y | 92–46 | 45–46 | 47–0 |
 | 172 | 2025-05-22 | [SB-721](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-721&which_year=2025) | AN ACT DESIGNATING NATIONAL WOMEN VETERANS RECOGNITION DAY.
@@ -1129,7 +1224,8 @@ Generated 2026-08-23. 1351 votes total.
 | 176 | 2025-05-22 | [HB-7045](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7045&which_year=2025) | AN ACT CONCERNING THE LEGISLATIVE COMMISSIONERS' RECOMMENDATIONS FOR MINOR AND T | Y | 147–0 | 99–0 | 48–0 |
 | 177 | 2025-05-22 | [SB-1506](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1506&which_year=2025) | AN ACT CONCERNING RACIAL AND ETHNIC IMPACT STATEMENTS.
             To provide fo | Y | 141–6 | 99–0 | 42–6 |
-| 178 | 2025-05-22 | [SB-1284](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1284&which_year=2025) | AN ACT CONCERNING THE ILLEGAL USE OF CERTAIN VEHICLES AND STREET TAKEOVERS. | Y | 48–100 | 0–100 | 48–0 |
+| 178 | 2025-05-22 | [SB-1284](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1284&which_year=2025) | AN ACT CONCERNING THE ILLEGAL USE OF CERTAIN VEHICLES AND STREET TAKEOVERS.
+     | Y | 48–100 | 0–100 | 48–0 |
 | 179 | 2025-05-22 | [SB-1114](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1114&which_year=2025) | AN ACT CONCERNING THE LEGISLATIVE COMMISSIONERS' RECOMMENDATIONS FOR TECHNICAL R | Y | 146–2 | 98–2 | 48–0 |
 | 180 | 2025-05-22 | [SB-1297](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1297&which_year=2025) | AN ACT CONCERNING MINOR REVISIONS TO THE HIGHER EDUCATION STATUTES CONCERNING TH | Y | 146–0 | 98–0 | 48–0 |
 | 181 | 2025-05-22 | [HB-7108](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7108&which_year=2025) | AN ACT CONCERNING AUTISM AND INTELLECTUAL DISABILITY SERVICES AND ABUSE AND NEGL | Y | 147–0 | 99–0 | 48–0 |
@@ -1171,26 +1267,36 @@ Generated 2026-08-23. 1351 votes total.
             To authorize hun | Y | 101–45 | 54–45 | 47–0 |
 | 202 | 2025-05-28 | [HB-6835](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6835&which_year=2025) | AN ACT ADOPTING THE PHYSICIAN ASSISTANT LICENSURE COMPACT.
             To adopt  | Y | 148–0 | 101–0 | 47–0 |
-| 203 | 2025-05-28 | [SB-1284](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1284&which_year=2025) | AN ACT CONCERNING THE ILLEGAL USE OF CERTAIN VEHICLES AND STREET TAKEOVERS. | Y | 144–4 | 101–0 | 43–4 |
+| 203 | 2025-05-28 | [SB-1284](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1284&which_year=2025) | AN ACT CONCERNING THE ILLEGAL USE OF CERTAIN VEHICLES AND STREET TAKEOVERS.
+     | Y | 144–4 | 101–0 | 43–4 |
 | 204 | 2025-05-28 | [HB-7276](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7276&which_year=2025) | AN ACT CONCERNING THE MUNICIPAL EMPLOYEES RETIREMENT SYSTEM AND GROUP LIFE INSUR | Y | 149–0 | 102–0 | 47–0 |
-| 205 | 2025-05-28 | [HB-5428](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5428&which_year=2025) | AN ACT CONCERNING MOBILE MANUFACTURED HOME PARKS. | Y | 47–100 | 0–100 | 47–0 |
-| 206 | 2025-05-28 | [HB-5428](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5428&which_year=2025) | AN ACT CONCERNING MOBILE MANUFACTURED HOME PARKS. | Y | 47–100 | 0–100 | 47–0 |
-| 207 | 2025-05-28 | [HB-5428](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5428&which_year=2025) | AN ACT CONCERNING MOBILE MANUFACTURED HOME PARKS. | Y | 47–100 | 0–100 | 47–0 |
+| 205 | 2025-05-28 | [HB-5428](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5428&which_year=2025) | AN ACT CONCERNING MOBILE MANUFACTURED HOME PARKS.
+            To (1) cap rent in | Y | 47–100 | 0–100 | 47–0 |
+| 206 | 2025-05-28 | [HB-5428](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5428&which_year=2025) | AN ACT CONCERNING MOBILE MANUFACTURED HOME PARKS.
+            To (1) cap rent in | Y | 47–100 | 0–100 | 47–0 |
+| 207 | 2025-05-28 | [HB-5428](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5428&which_year=2025) | AN ACT CONCERNING MOBILE MANUFACTURED HOME PARKS.
+            To (1) cap rent in | Y | 47–100 | 0–100 | 47–0 |
 | 208 | 2025-05-28 | [HB-7134](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7134&which_year=2025) | AN ACT CONCERNING ENHANCED PROTECTIONS AVAILABLE UNDER THE STATE'S ANTI-SLAPP ST | Y | 148–0 | 101–0 | 47–0 |
 | 209 | 2025-05-28 | [HB-7085](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7085&which_year=2025) | AN ACT CONCERNING A REVIEW OF AND A TRANSITION TO THE RELEASE-BASED CLEANUP PROG | Y | 147–0 | 100–0 | 47–0 |
 | 210 | 2025-05-28 | [HB-6999](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6999&which_year=2025) | AN ACT REQUIRING A STUDY OF MULTIPLE EMPLOYER WELFARE ARRANGEMENTS FOR TRADE ASS | Y | 116–32 | 70–32 | 46–0 |
-| 211 | 2025-05-28 | [HB-6887](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6887&which_year=2025) | AN ACT CONCERNING HIGHER EDUCATION MANAGEMENT AND FISCAL ACCOUNTABILITY. | Y | 147–0 | 101–0 | 46–0 |
-| 212 | 2025-05-28 | [HB-7013](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7013&which_year=2025) | AN ACT CONCERNING ENHANCEMENTS TO THE LOCAL FOOD FOR SCHOOLS INCENTIVE PROGRAM. | Y | 146–0 | 100–0 | 46–0 |
-| 213 | 2025-05-28 | [SB-1410](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1410&which_year=2025) | AN ACT ESTABLISHING A TASK FORCE TO SUPPORT PROMISE PROGRAMS IN THE STATE. | Y | 147–0 | 101–0 | 46–0 |
-| 214 | 2025-05-28 | [HB-7092](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7092&which_year=2025) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE AUDITORS OF PUBLIC ACCOUNTS. | Y | 147–0 | 101–0 | 46–0 |
+| 211 | 2025-05-28 | [HB-6887](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6887&which_year=2025) | AN ACT CONCERNING HIGHER EDUCATION MANAGEMENT AND FISCAL ACCOUNTABILITY.
+        | Y | 147–0 | 101–0 | 46–0 |
+| 212 | 2025-05-28 | [HB-7013](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7013&which_year=2025) | AN ACT CONCERNING ENHANCEMENTS TO THE LOCAL FOOD FOR SCHOOLS INCENTIVE PROGRAM.
+ | Y | 146–0 | 100–0 | 46–0 |
+| 213 | 2025-05-28 | [SB-1410](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1410&which_year=2025) | AN ACT ESTABLISHING A TASK FORCE TO SUPPORT PROMISE PROGRAMS IN THE STATE.
+      | Y | 147–0 | 101–0 | 46–0 |
+| 214 | 2025-05-28 | [HB-7092](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7092&which_year=2025) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE AUDITORS OF PUBLIC ACCOUNTS.
+     | Y | 147–0 | 101–0 | 46–0 |
 | 215 | 2025-05-28 | [SB-1238](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1238&which_year=2025) | AN ACT CONCERNING THE LEGISLATIVE COMMISSIONERS' RECOMMENDATIONS FOR MINOR AND T | Y | 147–0 | 101–0 | 46–0 |
 | 216 | 2025-05-28 | [SB-1501](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1501&which_year=2025) | AN ACT CONCERNING PROBATE COURT OPERATIONS.
             To: (1) Make various sta | Y | 145–0 | 99–0 | 46–0 |
 | 217 | 2025-05-28 | [SB-1328](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1328&which_year=2025) | AN ACT PROHIBITING THE PRIVATE OWNERSHIP, OPERATION OR MANAGEMENT OF STATE CORRE | N | 109–37 | 100–0 | 9–37 |
 | 218 | 2025-05-28 | [HB-6854](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6854&which_year=2025) | AN ACT CONCERNING THE DEPARTMENT OF CONSUMER PROTECTION'S RECOMMENDATIONS REGARD | Y | 146–0 | 100–0 | 46–0 |
 | 219 | 2025-05-28 | [SB-1465](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1465&which_year=2025) | AN ACT AUTHORIZING THE COMMISSIONER OF CONSUMER PROTECTION TO ALLOW CERTAIN SKIL | Y | 147–0 | 101–0 | 46–0 |
-| 220 | 2025-05-29 | [SB-3](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-3&which_year=2025) | AN ACT CONCERNING CONSUMER PROTECTION AND SAFETY. | Y | 47–96 | 0–96 | 47–0 |
-| 221 | 2025-05-29 | [SB-3](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-3&which_year=2025) | AN ACT CONCERNING CONSUMER PROTECTION AND SAFETY. | N | 112–34 | 99–0 | 13–34 |
+| 220 | 2025-05-29 | [SB-3](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-3&which_year=2025) | AN ACT CONCERNING CONSUMER PROTECTION AND SAFETY.
+            To (1) require fee | Y | 47–96 | 0–96 | 47–0 |
+| 221 | 2025-05-29 | [SB-3](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-3&which_year=2025) | AN ACT CONCERNING CONSUMER PROTECTION AND SAFETY.
+            To (1) require fee | N | 112–34 | 99–0 | 13–34 |
 | 222 | 2025-05-29 | [SB-7](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-7&which_year=2025) | AN ACT CONCERNING PROTECTIONS FOR ACCESS TO HEALTH CARE AND THE EQUITABLE DELIVE | Y | 47–100 | 0–100 | 47–0 |
 | 223 | 2025-05-29 | [SB-7](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-7&which_year=2025) | AN ACT CONCERNING PROTECTIONS FOR ACCESS TO HEALTH CARE AND THE EQUITABLE DELIVE | Y | 47–101 | 0–101 | 47–0 |
 | 224 | 2025-05-29 | [SB-7](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-7&which_year=2025) | AN ACT CONCERNING PROTECTIONS FOR ACCESS TO HEALTH CARE AND THE EQUITABLE DELIVE | Y | 54–94 | 7–94 | 47–0 |
@@ -1212,7 +1318,7 @@ Generated 2026-08-23. 1351 votes total.
             To dis | Y | 147–0 | 100–0 | 47–0 |
 | 236 | 2025-05-30 | [SB-8](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-8&which_year=2025) | AN ACT CONCERNING PROTECTIONS FOR WORKERS AND ENHANCEMENTS TO WORKERS' RIGHTS.
   | N | 87–59 | 86–13 | 1–46 |
-| 237 | 2025-05-30 | [HB-7160](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7160&which_year=2025) | Resolution Act | Y | 114–31 | 98–0 | 16–31 |
+| 237 | 2025-05-30 | [HB-7160](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7160&which_year=2025) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE DEPARTMENT OF MOTOR VEHICLES AND  | Y | 114–31 | 98–0 | 16–31 |
 | 238 | 2025-05-30 | [HB-6932](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6932&which_year=2025) | AN ACT CONCERNING THE ESTABLISHMENT OF A STATE INTERPRETING STANDARDS BOARD.
     | Y | 148–0 | 101–0 | 47–0 |
 | 239 | 2025-05-30 | [HB-7079](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7079&which_year=2025) | AN ACT CONCERNING INSURANCE REGULATION IN THE STATE.
@@ -1235,13 +1341,14 @@ Generated 2026-08-23. 1351 votes total.
         | Y | 45–100 | 0–100 | 45–0 |
 | 251 | 2025-05-31 | [SB-1](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1&which_year=2025) | AN ACT INCREASING RESOURCES FOR STUDENTS, SCHOOLS AND SPECIAL EDUCATION.
         | N | 101–45 | 101–0 | 0–45 |
-| 252 | 2025-05-31 | [HB-7160](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7160&which_year=2025) | Resolution Act | Y | 140–5 | 100–0 | 40–5 |
-| 253 | 2025-05-31 | [SB-1377](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1377&which_year=2025) | Resolution Act | N | 110–34 | 99–0 | 11–34 |
+| 252 | 2025-05-31 | [HB-7160](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7160&which_year=2025) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE DEPARTMENT OF MOTOR VEHICLES AND  | Y | 140–5 | 100–0 | 40–5 |
+| 253 | 2025-05-31 | [SB-1377](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1377&which_year=2025) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE DEPARTMENT OF TRANSPORTATION AND  | N | 110–34 | 99–0 | 11–34 |
 | 254 | 2025-05-31 | [HB-7157](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7157&which_year=2025) | AN ACT CONCERNING VARIOUS REVISIONS TO THE PUBLIC HEALTH STATUTES.
             T | Y | 145–0 | 100–0 | 45–0 |
 | 255 | 2025-05-31 | [HB-5003](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5003&which_year=2025) | AN ACT CONCERNING EARLY CHILDHOOD CARE AND EDUCATION.
             To make use of | N | 133–10 | 98–0 | 35–10 |
-| 256 | 2025-05-31 | [HB-7202](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7202&which_year=2025) | AN ACT CONCERNING LAW ENFORCEMENT TRAINING. | Y | 143–0 | 98–0 | 45–0 |
+| 256 | 2025-05-31 | [HB-7202](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7202&which_year=2025) | AN ACT CONCERNING LAW ENFORCEMENT TRAINING.
+            To (1) establish a Law E | Y | 143–0 | 98–0 | 45–0 |
 | 257 | 2025-05-31 | [HB-7285](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7285&which_year=2025) | AN ACT CONVEYING A PARCEL OF STATE LAND TO THE TOWN OF HAMDEN AND REPEALING A PR | N | 116–28 | 98–0 | 18–28 |
 | 258 | 2025-05-31 | [HB-7278](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7278&which_year=2025) | AN ACT REPEALING A PRIOR CONVEYANCE OF A PARCEL OF STATE LAND TO THE TOWN OF EAS | Y | 142–1 | 97–0 | 45–1 |
 | 259 | 2025-05-31 | [HB-7280](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7280&which_year=2025) | AN ACT CONVEYING A PARCEL OF STATE LAND TO THE CITY OF DANBURY.
@@ -1262,14 +1369,16 @@ Generated 2026-08-23. 1351 votes total.
 | 270 | 2025-05-31 | [HB-6011](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6011&which_year=2025) | AN ACT REQUIRING THE ONLINE POSTING OF STATUTORILY REQUIRED STATE AGENCY REPORTS | Y | 142–0 | 95–0 | 47–0 |
 | 271 | 2025-06-02 | [SB-10](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-10&which_year=2025) | AN ACT CONCERNING HEALTH INSURANCE AND PATIENT PROTECTION. | Y | 47–99 | 0–99 | 47–0 |
 | 272 | 2025-06-02 | [SB-10](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-10&which_year=2025) | AN ACT CONCERNING HEALTH INSURANCE AND PATIENT PROTECTION. | N | 122–26 | 101–0 | 21–26 |
-| 273 | 2025-06-02 | [HB-6951](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6951&which_year=2025) | AN ACT CONCERNING CHILDREN'S BEHAVIORAL HEALTH SERVICES. | N | 125–23 | 101–0 | 24–23 |
+| 273 | 2025-06-02 | [HB-6951](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6951&which_year=2025) | AN ACT CONCERNING CHILDREN'S BEHAVIORAL HEALTH SERVICES.
+            To (1) requ | N | 125–23 | 101–0 | 24–23 |
 | 274 | 2025-06-02 | [SB-1434](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1434&which_year=2025) | AN ACT IMPLEMENTING THE TREASURER'S RECOMMENDATIONS FOR REVISIONS CONCERNING UNC | Y | 148–0 | 101–0 | 47–0 |
 | 275 | 2025-06-02 | [HB-6978](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6978&which_year=2025) | AN ACT CONCERNING THE DEPARTMENT OF PUBLIC HEALTH'S RECOMMENDATIONS REGARDING VA | Y | 148–0 | 101–0 | 47–0 |
 | 276 | 2025-06-02 | [HB-6900](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6900&which_year=2025) | AN ACT ESTABLISHING A TASK FORCE TO STUDY CHILD DEVELOPMENT AND PERINATAL DEPRES | Y | 147–0 | 100–0 | 47–0 |
 | 277 | 2025-06-02 | [HB-7026](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7026&which_year=2025) | AN ACT CONCERNING EXCEPTIONS TO THE NURSING HOME BED MORATORIUM.
             To  | Y | 147–0 | 100–0 | 47–0 |
 | 278 | 2025-06-02 | [HB-7223](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7223&which_year=2025) | AN ACT CONCERNING THE ORDER OF GUBERNATORIAL SUCCESSION UNDER CERTAIN PERMANENT  | Y | 147–0 | 100–0 | 47–0 |
-| 279 | 2025-06-02 | [HB-6875](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6875&which_year=2025) | AN ACT CONCERNING THE CONNECTICUT UNIFORM SECURITIES ACT. | Y | 147–0 | 100–0 | 47–0 |
+| 279 | 2025-06-02 | [HB-6875](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6875&which_year=2025) | AN ACT CONCERNING THE CONNECTICUT UNIFORM SECURITIES ACT.
+            To: (1) Ex | Y | 147–0 | 100–0 | 47–0 |
 | 280 | 2025-06-02 | [HB-6855](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6855&which_year=2025) | AN ACT CONCERNING THE DEPARTMENT OF CONSUMER PROTECTION'S RECOMMENDATIONS REGARD | Y | 146–0 | 100–0 | 46–0 |
 | 281 | 2025-06-02 | [HB-7000](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7000&which_year=2025) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE OFFICE OF POLICY AND MANAGEMENT C | N | 136–12 | 101–0 | 35–12 |
 | 282 | 2025-06-02 | [HB-6859](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6859&which_year=2025) | AN ACT CONCERNING THE DEPARTMENT OF EMERGENCY SERVICES AND PUBLIC PROTECTION'S R | Y | 148–0 | 101–0 | 47–0 |
@@ -1288,10 +1397,12 @@ Generated 2026-08-23. 1351 votes total.
 | 294 | 2025-06-03 | [HB-7004](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7004&which_year=2025) | AN ACT AUTHORIZING MUNICIPAL REFERENDA TO CHALLENGE CERTAIN PERMIT APPROVALS.
    | Y | 104–43 | 62–38 | 42–5 |
 | 295 | 2025-06-03 | [HB-7181](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7181&which_year=2025) | AN ACT CONCERNING THE REGULATION OF TOBACCO, CANNABIS, HEMP AND RELATED PRODUCTS | N | 116–22 | 87–7 | 29–15 |
-| 296 | 2025-06-03 | [SB-1312](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1312&which_year=2025) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE LABOR DEPARTMENT. | N | 96–42 | 94–0 | 2–42 |
+| 296 | 2025-06-03 | [SB-1312](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1312&which_year=2025) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE LABOR DEPARTMENT.
+            To  | N | 96–42 | 94–0 | 2–42 |
 | 297 | 2025-06-03 | [SB-1527](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1527&which_year=2025) | AN ACT IMPLEMENTING A RECOMMENDATION OF THE AUDITORS OF PUBLIC ACCOUNTS REGARDIN | Y | 140–1 | 96–0 | 44–1 |
 | 298 | 2025-06-03 | [HB-6445](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6445&which_year=2025) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE OFFICE OF HIGHER EDUCATION, EXPAN | Y | 142–1 | 97–0 | 45–1 |
-| 299 | 2025-06-03 | [HB-7087](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7087&which_year=2025) | AN ACT CONCERNING COMMUNITY SOLAR ENERGY GENERATING SYSTEMS. | N | 103–42 | 96–3 | 7–39 |
+| 299 | 2025-06-03 | [HB-7087](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7087&which_year=2025) | AN ACT CONCERNING COMMUNITY SOLAR ENERGY GENERATING SYSTEMS.
+            To (1)  | N | 103–42 | 96–3 | 7–39 |
 | 300 | 2025-06-03 | [SB-1235](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1235&which_year=2025) | AN ACT CONCERNING THE DEPARTMENT OF CONSUMER PROTECTION'S RECOMMENDATIONS REGARD | Y | 146–0 | 100–0 | 46–0 |
 | 301 | 2025-06-03 | [SB-1357](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1357&which_year=2025) | AN ACT CONCERNING THE DEPARTMENT OF CONSUMER PROTECTION'S RECOMMENDATIONS REGARD | Y | 147–1 | 102–0 | 45–1 |
 | 302 | 2025-06-03 | [HB-6921](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6921&which_year=2025) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE OFFICE OF EARLY CHILDHOOD, DEPART | Y | 134–12 | 101–0 | 33–12 |
@@ -1305,7 +1416,8 @@ Generated 2026-08-23. 1351 votes total.
             To raise t | N | 99–49 | 93–9 | 6–40 |
 | 308 | 2025-06-03 | [HB-6872](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6872&which_year=2025) | AN ACT REVISING AND CONSOLIDATING THE HATE CRIMES STATUTES.
             To imple | N | 102–46 | 102–0 | 0–46 |
-| 309 | 2025-06-03 | [HB-5428](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5428&which_year=2025) | AN ACT CONCERNING MOBILE MANUFACTURED HOME PARKS. | Y | 132–16 | 102–0 | 30–16 |
+| 309 | 2025-06-03 | [HB-5428](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5428&which_year=2025) | AN ACT CONCERNING MOBILE MANUFACTURED HOME PARKS.
+            To (1) cap rent in | Y | 132–16 | 102–0 | 30–16 |
 | 310 | 2025-06-03 | [SB-1444](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1444&which_year=2025) | AN ACT CONCERNING THE CONVERSION OF COMMERCIAL REAL PROPERTY FOR RESIDENTIAL USE | N | 105–43 | 96–6 | 9–37 |
 | 311 | 2025-06-03 | [SB-1562](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1562&which_year=2025) | AN ACT CHANGING THE AUTHORIZED USE OF A PARCEL OF STATE LAND PREVIOUSLY CONVEYED | Y | 145–0 | 99–0 | 46–0 |
 | 312 | 2025-06-03 | [SB-4](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-4&which_year=2025) | AN ACT CONCERNING ENERGY AFFORDABILITY, ACCESS AND ACCOUNTABILITY.
@@ -1317,14 +1429,17 @@ Generated 2026-08-23. 1351 votes total.
 | 315 | 2025-06-03 | [SB-1525](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1525&which_year=2025) | AN ACT CONCERNING THE TEACHERS' RETIREMENT BOARD'S RECOMMENDATIONS FOR CHANGES T | Y | 148–0 | 102–0 | 46–0 |
 | 316 | 2025-06-03 | [SB-1450](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1450&which_year=2025) | AN ACT CONCERNING RECRUITMENT AND RETENTION OF THE HEALTH CARE WORKFORCE.
        | Y | 147–0 | 101–0 | 46–0 |
-| 317 | 2025-06-03 | [HB-7200](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7200&which_year=2025) | AN ACT CONCERNING BLEEDING CONTROL TRAINING AND KITS. | Y | 146–2 | 100–2 | 46–0 |
+| 317 | 2025-06-03 | [HB-7200](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7200&which_year=2025) | AN ACT CONCERNING BLEEDING CONTROL TRAINING AND KITS.
+            To require (1) | Y | 146–2 | 100–2 | 46–0 |
 | 318 | 2025-06-03 | [HB-7090](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7090&which_year=2025) | AN ACT CONCERNING THE TIMING AND SCOPE OF AUDITS BY THE AUDITORS OF PUBLIC ACCOU | Y | 146–2 | 102–0 | 44–2 |
 | 319 | 2025-06-03 | [SB-1402](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1402&which_year=2025) | AN ACT MODIFYING THE REGULATORY FLEXIBILITY ANALYSIS OF REGULATIONS AFFECTING SM | Y | 148–0 | 102–0 | 46–0 |
 | 320 | 2025-06-03 | [SB-1311](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1311&which_year=2025) | AN ACT CONCERNING THE RECOMMENDATIONS OF THE DEPARTMENT OF CHILDREN AND FAMILIES | Y | 148–0 | 102–0 | 46–0 |
 | 321 | 2025-06-03 | [HB-7222](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7222&which_year=2025) | AN ACT CONCERNING VARIOUS CAMPAIGN FINANCE REFORMS. | Y | 148–0 | 102–0 | 46–0 |
 | 322 | 2025-06-03 | [HB-6435](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6435&which_year=2025) | AN ACT CONCERNING THE INSURANCE DEPARTMENT'S AUTOMOBILE PHYSICAL AND PROPERTY DA | Y | 148–0 | 102–0 | 46–0 |
-| 323 | 2025-06-03 | [HB-6436](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6436&which_year=2025) | AN ACT CONCERNING REVISIONS TO THE HEALTH INSURANCE STATUTES. | Y | 147–1 | 101–1 | 46–0 |
-| 324 | 2025-06-03 | [HB-6433](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6433&which_year=2025) | AN ACT CONCERNING CAPTIVE INSURANCE. | Y | 148–0 | 102–0 | 46–0 |
+| 323 | 2025-06-03 | [HB-6436](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6436&which_year=2025) | AN ACT CONCERNING REVISIONS TO THE HEALTH INSURANCE STATUTES.
+            To: (1 | Y | 147–1 | 101–1 | 46–0 |
+| 324 | 2025-06-03 | [HB-6433](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6433&which_year=2025) | AN ACT CONCERNING CAPTIVE INSURANCE.
+            To: (1) Expand the applicabilit | Y | 148–0 | 102–0 | 46–0 |
 | 325 | 2025-06-03 | [SB-59](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-59&which_year=2025) | AN ACT REQUIRING A PLAN FOR BENEFICIAL USE DREDGING.
             To improve navi | Y | 147–0 | 101–0 | 46–0 |
 | 326 | 2025-06-03 | [HB-7046](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7046&which_year=2025) | AN ACT MAKING REVISIONS TO THE SECOND INJURY FUND.
@@ -1347,8 +1462,10 @@ Generated 2026-08-23. 1351 votes total.
 | 338 | 2025-06-03 | [SB-1330](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1330&which_year=2025) | AN ACT CONCERNING AN ACCIDENTAL FAILURE TO FILE AN ACTION.
             To provid | Y | 147–0 | 101–0 | 46–0 |
 | 339 | 2025-06-04 | [SB-1295](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1295&which_year=2025) | AN ACT CONCERNING BROADBAND INTERNET, GAMING, SOCIAL MEDIA, ONLINE SERVICES AND  | N | 127–15 | 96–0 | 31–15 |
-| 340 | 2025-06-04 | [HB-6917](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6917&which_year=2025) | AN ACT CONCERNING THE MANAGEMENT OF SOLID WASTE IN THE STATE. | Y | 138–0 | 93–0 | 45–0 |
-| 341 | 2025-06-04 | [SB-1468](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1468&which_year=2025) | AN ACT CONCERNING GOVERNMENT ACCOUNTABILITY REGARDING AGENCY PURCHASE CARD USE. | Y | 138–0 | 92–0 | 46–0 |
+| 340 | 2025-06-04 | [HB-6917](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6917&which_year=2025) | AN ACT CONCERNING THE MANAGEMENT OF SOLID WASTE IN THE STATE.
+            To pro | Y | 138–0 | 93–0 | 45–0 |
+| 341 | 2025-06-04 | [SB-1468](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1468&which_year=2025) | AN ACT CONCERNING GOVERNMENT ACCOUNTABILITY REGARDING AGENCY PURCHASE CARD USE.
+ | Y | 138–0 | 92–0 | 46–0 |
 | 342 | 2025-06-04 | [HB-7151](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7151&which_year=2025) | AN ACT REQUIRING THE OFFICE OF POLICY AND MANAGEMENT TO PROVIDE TECHNICAL ASSIST | Y | 145–0 | 98–0 | 47–0 |
 | 343 | 2025-06-04 | [SB-1179](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1179&which_year=2025) | AN ACT ESTABLISHING THE CONNECTICUT COMMUNITY MAKERSPACE INITIATIVE PROGRAM.
     | N | 139–6 | 99–0 | 40–6 |
@@ -1386,7 +1503,8 @@ Generated 2026-08-23. 1351 votes total.
           | Y | 150–0 | 102–0 | 48–0 |
 | 371 | 2025-06-04 | [SB-1563](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1563&which_year=2025) | AN ACT CONVEYING PARCELS OF STATE LAND KNOWN AS CAMP BROOK GREENWAY IN THE TOWN  | Y | 150–0 | 102–0 | 48–0 |
 | 372 | 2025-06-04 | [SB-1564](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1564&which_year=2025) | AN ACT AMENDING A PRIOR CONVEYANCE OF A PARCEL OF STATE LAND TO THE CATHERINE VI | Y | 149–0 | 101–0 | 48–0 |
-| 373 | 2025-06-04 | [HB-6437](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6437&which_year=2025) | AN ACT CONCERNING INSURANCE MARKET CONDUCT AND LICENSING. | Y | 150–0 | 102–0 | 48–0 |
+| 373 | 2025-06-04 | [HB-6437](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6437&which_year=2025) | AN ACT CONCERNING INSURANCE MARKET CONDUCT AND LICENSING.
+            To: (1) Al | Y | 150–0 | 102–0 | 48–0 |
 | 374 | 2025-06-04 | [SB-1490](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1490&which_year=2025) | AN ACT CONCERNING THE SALE OF BATTERY-POWERED SMOKE DETECTORS IN THE STATE.
      | N | 122–28 | 98–4 | 24–24 |
 | 375 | 2025-06-04 | [HB-6859](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6859&which_year=2025) | AN ACT CONCERNING THE DEPARTMENT OF EMERGENCY SERVICES AND PUBLIC PROTECTION'S R | Y | 149–0 | 101–0 | 48–0 |
@@ -1398,7 +1516,7 @@ Generated 2026-08-23. 1351 votes total.
 | 379 | 2025-06-04 | [HB-7003](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-7003&which_year=2025) | AN ACT CONCERNING PLANNING AND DEVELOPMENT.
             To clarify certain publi | Y | 80–70 | 32–70 | 48–0 |
 | 380 | 2025-06-04 | [HB-6921](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-6921&which_year=2025) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE OFFICE OF EARLY CHILDHOOD, DEPART | Y | 147–0 | 101–0 | 46–0 |
-| 381 | 2025-06-04 | [SB-1529](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1529&which_year=2025) | Resolution Act | Y | 144–1 | 96–1 | 48–0 |
+| 381 | 2025-06-04 | [SB-1529](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1529&which_year=2025) | AN ACT REVISING THE EFFECTIVE DATES OF PROVISIONS REGARDING CERTAIN MUNICIPAL RE | Y | 144–1 | 96–1 | 48–0 |
 
 ## 2025 Special Session
 
@@ -1497,14 +1615,17 @@ Generated 2026-08-23. 1351 votes total.
 | 46 | 2026-04-08 | [HB-5240](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5240&which_year=2026) | AN ACT CONCERNING THE DEPARTMENT OF DEVELOPMENTAL SERVICES' RECOMMENDATIONS REGA | Y | 144–0 | 95–0 | 49–0 |
 | 47 | 2026-04-08 | [HB-5157](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5157&which_year=2026) | AN ACT CONCERNING THE TIRE STEWARDSHIP PROGRAM.
             To give retailers un | N | 124–21 | 96–0 | 28–21 |
-| 48 | 2026-04-08 | [HB-5509](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5509&which_year=2026) | AN ACT CONCERNING JUSTICES OF THE PEACE. | Y | 144–0 | 95–0 | 49–0 |
+| 48 | 2026-04-08 | [HB-5509](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5509&which_year=2026) | AN ACT CONCERNING JUSTICES OF THE PEACE.
+            To (1) require the Secretar | Y | 144–0 | 95–0 | 49–0 |
 | 49 | 2026-04-08 | [HB-5215](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5215&which_year=2026) | AN ACT CONCERNING THE LEGISLATIVE COMMISSIONERS' RECOMMENDATIONS FOR TECHNICAL R | Y | 143–0 | 94–0 | 49–0 |
 | 50 | 2026-04-08 | [HB-5287](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5287&which_year=2026) | AN ACT CONCERNING THE LEGISLATIVE COMMISSIONERS' RECOMMENDATIONS FOR TECHNICAL R | Y | 144–0 | 95–0 | 49–0 |
 | 51 | 2026-04-08 | [HB-5383](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5383&which_year=2026) | AN ACT CONCERNING THE LEGISLATIVE COMMISSIONERS' RECOMMENDATIONS FOR MINOR AND T | Y | 145–0 | 96–0 | 49–0 |
 | 52 | 2026-04-08 | [HB-5126](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5126&which_year=2026) | AN ACT CONCERNING THE LEGISLATIVE COMMISSIONERS' RECOMMENDATIONS FOR MINOR AND T | Y | 145–0 | 96–0 | 49–0 |
-| 53 | 2026-04-08 | [HB-5314](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5314&which_year=2026) | AN ACT CONCERNING THE "HOMES FOR CT" LOAN PROGRAM. | Y | 145–0 | 96–0 | 49–0 |
+| 53 | 2026-04-08 | [HB-5314](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5314&which_year=2026) | AN ACT CONCERNING THE "HOMES FOR CT" LOAN PROGRAM.
+            To (1) establish  | Y | 145–0 | 96–0 | 49–0 |
 | 54 | 2026-04-08 | [HB-5163](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5163&which_year=2026) | AN ACT ESTABLISHING A TASK FORCE TO STUDY METHODS AND PROGRAMS FOR IMPROVING AFF | Y | 144–0 | 95–0 | 49–0 |
-| 55 | 2026-04-08 | [HB-5125](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5125&which_year=2026) | AN ACT CONCERNING ENTERTAINMENT EVENT TICKETS. | Y | 145–0 | 96–0 | 49–0 |
+| 55 | 2026-04-08 | [HB-5125](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5125&which_year=2026) | AN ACT CONCERNING ENTERTAINMENT EVENT TICKETS.
+            To (1) specify the ci | Y | 145–0 | 96–0 | 49–0 |
 | 56 | 2026-04-08 | [HB-5333](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5333&which_year=2026) | AN ACT CONCERNING THE REGULATION OF STRIPED BASS FISHING IN THE STATE., A WORKIN | N | 133–10 | 93–3 | 40–7 |
 | 57 | 2026-04-09 | [HB-5399](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5399&which_year=2026) | AN ACT CONCERNING DENTISTRY.
             To make various revisions to the statut | Y | 129–5 | 85–1 | 44–4 |
@@ -1549,11 +1670,15 @@ Generated 2026-08-23. 1351 votes total.
 | 89 | 2026-04-22 | [HB-5001](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5001&which_year=2026) | AN ACT CONCERNING ABSENTEE VOTING FOR ALL AND VARIOUS OTHER REFORMS RELATED TO T | Y | 48–98 | 0–98 | 48–0 |
 | 90 | 2026-04-22 | [HB-5001](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5001&which_year=2026) | AN ACT CONCERNING ABSENTEE VOTING FOR ALL AND VARIOUS OTHER REFORMS RELATED TO T | Y | 48–99 | 0–99 | 48–0 |
 | 91 | 2026-04-22 | [HB-5001](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5001&which_year=2026) | AN ACT CONCERNING ABSENTEE VOTING FOR ALL AND VARIOUS OTHER REFORMS RELATED TO T | Y | 49–98 | 1–98 | 48–0 |
-| 92 | 2026-04-23 | [HB-5127](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5127&which_year=2026) | AN ACT CONCERNING CREDIT CARDS AND HEALTH AND VETERINARY CARE SERVICES. | Y | 141–6 | 96–3 | 45–3 |
+| 92 | 2026-04-23 | [HB-5127](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5127&which_year=2026) | AN ACT CONCERNING CREDIT CARDS AND HEALTH AND VETERINARY CARE SERVICES.
+         | Y | 141–6 | 96–3 | 45–3 |
 | 93 | 2026-04-23 | [HB-5467](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5467&which_year=2026) | AN ACT CONCERNING THE DESIGNATION OF A DEPARTMENT OF ECONOMIC AND COMMUNITY DEVE | N | 143–4 | 99–0 | 44–4 |
-| 94 | 2026-04-23 | [HB-5377](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5377&which_year=2026) | AN ACT CONCERNING RETURN OF HEALTH CARE PROVIDER PAYMENTS. | Y | 148–0 | 99–0 | 49–0 |
-| 95 | 2026-04-23 | [HB-5374](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5374&which_year=2026) | AN ACT CONCERNING HEALTH COVERAGE MANDATES FOR CERTAIN HEALTH CONDITIONS. | N | 15–134 | 0–100 | 15–34 |
-| 96 | 2026-04-23 | [HB-5374](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5374&which_year=2026) | AN ACT CONCERNING HEALTH COVERAGE MANDATES FOR CERTAIN HEALTH CONDITIONS. | Y | 140–8 | 98–1 | 42–7 |
+| 94 | 2026-04-23 | [HB-5377](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5377&which_year=2026) | AN ACT CONCERNING RETURN OF HEALTH CARE PROVIDER PAYMENTS.
+            To: (1) S | Y | 148–0 | 99–0 | 49–0 |
+| 95 | 2026-04-23 | [HB-5374](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5374&which_year=2026) | AN ACT CONCERNING HEALTH COVERAGE MANDATES FOR CERTAIN HEALTH CONDITIONS.
+       | N | 15–134 | 0–100 | 15–34 |
+| 96 | 2026-04-23 | [HB-5374](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5374&which_year=2026) | AN ACT CONCERNING HEALTH COVERAGE MANDATES FOR CERTAIN HEALTH CONDITIONS.
+       | Y | 140–8 | 98–1 | 42–7 |
 | 97 | 2026-04-23 | [HB-5001](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5001&which_year=2026) | AN ACT CONCERNING ABSENTEE VOTING FOR ALL AND VARIOUS OTHER REFORMS RELATED TO T | N | 101–49 | 101–0 | 0–49 |
 | 98 | 2026-04-23 | [HB-5468](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5468&which_year=2026) | AN ACT CONCERNING THE PROVISION OF PARENT-MANAGED LEARNING.
             To addre | Y | 49–100 | 0–100 | 49–0 |
@@ -1568,7 +1693,8 @@ Generated 2026-08-23. 1351 votes total.
             To ma | Y | 150–0 | 102–0 | 48–0 |
 | 104 | 2026-04-27 | [HB-5143](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5143&which_year=2026) | AN ACT REQUIRING TRAINING FOR HOMEMAKER-COMPANION AGENCY EMPLOYEES.
              | Y | 149–1 | 102–0 | 47–1 |
-| 105 | 2026-04-27 | [HB-5155](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5155&which_year=2026) | AN ACT CONCERNING PESTICIDE REPORTING MODERNIZATION. | Y | 149–0 | 101–0 | 48–0 |
+| 105 | 2026-04-27 | [HB-5155](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5155&which_year=2026) | AN ACT CONCERNING PESTICIDE REPORTING MODERNIZATION.
+            To require the  | Y | 149–0 | 101–0 | 48–0 |
 | 106 | 2026-04-27 | [HB-5525](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5525&which_year=2026) | AN ACT CONCERNING A RAPID RESPONSE PROGRAM FOR CERTAIN AQUATIC INVASIVE SPECIES. | Y | 150–0 | 102–0 | 48–0 |
 | 107 | 2026-04-27 | [HB-5243](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5243&which_year=2026) | AN ACT ESTABLISHING A WORKING GROUP TO DEVELOP AN ECONOMIC DEVELOPMENT AND TOURI | Y | 149–0 | 101–0 | 48–0 |
 | 108 | 2026-04-27 | [HB-5288](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5288&which_year=2026) | AN ACT CONCERNING UTILITY CONNECTIONS FOR ACCESSORY DWELLING UNITS.
@@ -1592,9 +1718,12 @@ Generated 2026-08-23. 1351 votes total.
     | Y | 47–100 | 0–100 | 47–0 |
 | 120 | 2026-04-28 | [HB-5003](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5003&which_year=2026) | AN ACT CONCERNING WORKFORCE DEVELOPMENT AND WORKING CONDITIONS IN THE STATE.
     | Y | 117–29 | 94–5 | 23–24 |
-| 121 | 2026-04-28 | [SB-259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-259&which_year=2026) | AN ACT CONCERNING FEMALE GENITAL MUTILATION. | Y | 145–0 | 98–0 | 47–0 |
-| 122 | 2026-04-28 | [HB-5226](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5226&which_year=2026) | AN ACT CONCERNING MOBILE MANUFACTURED HOMES AND MOBILE MANUFACTURED HOME PARKS. | Y | 138–7 | 98–0 | 40–7 |
-| 123 | 2026-04-28 | [HB-5531](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5531&which_year=2026) | AN ACT CONCERNING FAITHFUL PRESIDENTIAL ELECTORS. | N | 102–43 | 98–0 | 4–43 |
+| 121 | 2026-04-28 | [SB-259](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-259&which_year=2026) | AN ACT CONCERNING FEMALE GENITAL MUTILATION.
+            To (1) establish the cr | Y | 145–0 | 98–0 | 47–0 |
+| 122 | 2026-04-28 | [HB-5226](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5226&which_year=2026) | AN ACT CONCERNING MOBILE MANUFACTURED HOMES AND MOBILE MANUFACTURED HOME PARKS.
+ | Y | 138–7 | 98–0 | 40–7 |
+| 123 | 2026-04-28 | [HB-5531](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5531&which_year=2026) | AN ACT CONCERNING FAITHFUL PRESIDENTIAL ELECTORS.
+            To (1) require can | N | 102–43 | 98–0 | 4–43 |
 | 124 | 2026-04-28 | [HB-5558](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5558&which_year=2026) | AN ACT CONCERNING THE DEPARTMENT OF DEVELOPMENTAL SERVICES' ABUSE AND NEGLECT IN | Y | 145–0 | 97–0 | 48–0 |
 | 125 | 2026-04-28 | [HB-5381](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5381&which_year=2026) | AN ACT CONCERNING UNLAWFUL FUNERAL SERVICE PRACTICES.
             To compensate  | Y | 146–0 | 98–0 | 48–0 |
@@ -1604,11 +1733,12 @@ Generated 2026-08-23. 1351 votes total.
             T | Y | 142–4 | 98–0 | 44–4 |
 | 129 | 2026-04-28 | [HB-5324](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5324&which_year=2026) | AN ACT CONCERNING EDUCATION MANDATE RELIEF.
             To repeal and reduce edu | Y | 142–4 | 94–4 | 48–0 |
-| 130 | 2026-04-29 | [HB-5464](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5464&which_year=2026) | Resolution Act | Y | 54–96 | 5–96 | 49–0 |
-| 131 | 2026-04-29 | [HB-5464](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5464&which_year=2026) | Resolution Act | N | 99–51 | 99–3 | 0–48 |
+| 130 | 2026-04-29 | [HB-5464](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5464&which_year=2026) | AN ACT IMPLEMENTING RECOMMENDATIONS FROM THE DEPARTMENT OF TRANSPORTATION AND CO | Y | 54–96 | 5–96 | 49–0 |
+| 131 | 2026-04-29 | [HB-5464](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5464&which_year=2026) | AN ACT IMPLEMENTING RECOMMENDATIONS FROM THE DEPARTMENT OF TRANSPORTATION AND CO | N | 99–51 | 99–3 | 0–48 |
 | 132 | 2026-04-29 | [SB-89](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-89&which_year=2026) | AN ACT UPDATING PRISON RAPE ELIMINATION STANDARDS.
             To implement the  | Y | 150–0 | 102–0 | 48–0 |
-| 133 | 2026-04-29 | [HB-5567](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5567&which_year=2026) | AN ACT CONCERNING HEALTH CARE IN THE DEPARTMENT OF CORRECTION FACILITIES. | Y | 148–2 | 102–0 | 46–2 |
+| 133 | 2026-04-29 | [HB-5567](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5567&which_year=2026) | AN ACT CONCERNING HEALTH CARE IN THE DEPARTMENT OF CORRECTION FACILITIES.
+       | Y | 148–2 | 102–0 | 46–2 |
 | 134 | 2026-04-29 | [HB-5421](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5421&which_year=2026) | AN ACT ESTABLISHING AN ACCOUNT TO PROVIDE PATIENT LIFTS TO CERTAIN HEALTH CARE O | Y | 149–0 | 100–0 | 49–0 |
 | 135 | 2026-04-29 | [HB-5394](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5394&which_year=2026) | AN ACT CONCERNING THE UNIFORM RELOCATION ASSISTANCE ACT.
             To clarify  | Y | 149–0 | 100–0 | 49–0 |
@@ -1652,7 +1782,8 @@ Generated 2026-08-23. 1351 votes total.
             To c | Y | 149–0 | 101–0 | 48–0 |
 | 162 | 2026-04-30 | [HB-5572](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5572&which_year=2026) | AN ACT CONVEYING A PARCEL OF STATE LAND TO THE TOWN OF WOODBURY.
             To  | Y | 149–0 | 101–0 | 48–0 |
-| 163 | 2026-04-30 | [HB-5577](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5577&which_year=2026) | AN ACT AMENDING A CONVEYANCE OF A PARCEL OF LAND TO THE TOWN OF SOMERS. | Y | 149–0 | 101–0 | 48–0 |
+| 163 | 2026-04-30 | [HB-5577](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5577&which_year=2026) | AN ACT AMENDING A CONVEYANCE OF A PARCEL OF LAND TO THE TOWN OF SOMERS.
+         | Y | 149–0 | 101–0 | 48–0 |
 | 164 | 2026-04-30 | [HB-5573](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5573&which_year=2026) | AN ACT CONVEYING A PARCEL OF STATE LAND TO THE CITY OF TORRINGTON.
             T | Y | 149–0 | 101–0 | 48–0 |
 | 165 | 2026-04-30 | [SB-397](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-397&which_year=2026) | AN ACT CONCERNING DEMOCRACY AND GOVERNMENT ACCOUNTABILITY.
@@ -1681,7 +1812,8 @@ Generated 2026-08-23. 1351 votes total.
 | 177 | 2026-05-01 | [HB-5491](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5491&which_year=2026) | AN ACT CONCERNING CENTRALIZATION OF WORKFORCE DEVELOPMENT INFORMATION.
           | Y | 146–0 | 98–0 | 48–0 |
 | 178 | 2026-05-01 | [HB-5432](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5432&which_year=2026) | AN ACT CONCERNING THE RECEIPT OF FEES BY A PARTY TO A CIVIL ACTION AFFECTING TIT | Y | 147–0 | 99–0 | 48–0 |
-| 179 | 2026-05-01 | [HB-5523](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5523&which_year=2026) | AN ACT CONCERNING A TRIBAL WILDLIFE AND FISHERIES ADVISORY COUNCIL. | Y | 144–3 | 99–0 | 45–3 |
+| 179 | 2026-05-01 | [HB-5523](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5523&which_year=2026) | AN ACT CONCERNING A TRIBAL WILDLIFE AND FISHERIES ADVISORY COUNCIL.
+             | Y | 144–3 | 99–0 | 45–3 |
 | 180 | 2026-05-01 | [HB-5312](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5312&which_year=2026) | AN ACT ESTABLISHING A CIVIL ACTION FOR THE OFFICE OF THE ATTORNEY GENERAL AND A  | Y | 148–0 | 100–0 | 48–0 |
 | 181 | 2026-05-01 | [HB-5362](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5362&which_year=2026) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE MAJORITY LEADER'S ROUNDTABLE.
     | N | 89–58 | 89–10 | 0–48 |
@@ -1692,13 +1824,16 @@ Generated 2026-08-23. 1351 votes total.
   | Y | 129–12 | 94–0 | 35–12 |
 | 185 | 2026-05-01 | [HB-5518](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5518&which_year=2026) | AN ACT CONCERNING THE DEPARTMENT OF PUBLIC HEALTH'S RECOMMENDATIONS REGARDING VA | Y | 132–10 | 94–1 | 38–9 |
 | 186 | 2026-05-01 | [HB-5373](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5373&which_year=2026) | AN ACT CONCERNING THE INSURANCE DEPARTMENT'S RECOMMENDATIONS FOR REVISIONS TO TH | Y | 141–0 | 94–0 | 47–0 |
-| 187 | 2026-05-01 | [HB-5340](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5340&which_year=2026) | AN ACT CONCERNING RENEWABLE POWER GENERATION. | Y | 49–90 | 3–90 | 46–0 |
-| 188 | 2026-05-01 | [HB-5340](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5340&which_year=2026) | AN ACT CONCERNING RENEWABLE POWER GENERATION. | N | 99–43 | 96–0 | 3–43 |
+| 187 | 2026-05-01 | [HB-5340](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5340&which_year=2026) | AN ACT CONCERNING RENEWABLE POWER GENERATION.
+            To (1) require the Pub | Y | 49–90 | 3–90 | 46–0 |
+| 188 | 2026-05-01 | [HB-5340](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5340&which_year=2026) | AN ACT CONCERNING RENEWABLE POWER GENERATION.
+            To (1) require the Pub | N | 99–43 | 96–0 | 3–43 |
 | 189 | 2026-05-01 | [HB-5295](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5295&which_year=2026) | AN ACT NAMING THE CONNECTICUT NATIONAL GUARD READINESS CENTER IN THE TOWN OF PUT | Y | 143–0 | 96–0 | 47–0 |
 | 190 | 2026-05-01 | [HB-5153](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5153&which_year=2026) | AN ACT CONCERNING MINOR REVISIONS TO DEPARTMENT OF ENERGY AND ENVIRONMENTAL PROT | Y | 143–0 | 96–0 | 47–0 |
 | 191 | 2026-05-01 | [HB-5485](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5485&which_year=2026) | AN ACT CONCERNING SUPPORTED DECISION-MAKING.
             To require businesses,  | Y | 143–0 | 96–0 | 47–0 |
-| 192 | 2026-05-01 | [HB-5460](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5460&which_year=2026) | AN ACT CONCERNING STATE-WIDE FIRE PROTECTION. | Y | 143–0 | 96–0 | 47–0 |
+| 192 | 2026-05-01 | [HB-5460](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5460&which_year=2026) | AN ACT CONCERNING STATE-WIDE FIRE PROTECTION.
+            To establish various s | Y | 143–0 | 96–0 | 47–0 |
 | 193 | 2026-05-01 | [HB-5331](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5331&which_year=2026) | AN ACT CONCERNING THE AIR PERMITS OF CERTAIN CREMATORIES.
             To authori | Y | 140–3 | 96–0 | 44–3 |
 | 194 | 2026-05-01 | [HB-5493](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5493&which_year=2026) | AN ACT REQUIRING A STUDY TO ESTABLISH A PROGRAM TO PROVIDE STIPENDS FOR THE CONN | Y | 143–0 | 96–0 | 47–0 |
@@ -1712,15 +1847,22 @@ Generated 2026-08-23. 1351 votes total.
 | 200 | 2026-05-01 | [HB-5498](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5498&which_year=2026) | AN ACT CONCERNING REVISIONS TO STATUTES RELATING TO MUNICIPAL TAX COLLECTION.
    | Y | 143–0 | 96–0 | 47–0 |
 | 201 | 2026-05-01 | [SB-233](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-233&which_year=2026) | AN ACT CONCERNING CONSUMER PROTECTIONS REGARDING RESIDENTIAL SOLAR AND ENERGY ST | Y | 142–0 | 96–0 | 46–0 |
-| 202 | 2026-05-02 | [SB-1](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1&which_year=2026) | AN ACT CONCERNING AFFORDABILITY. | Y | 49–99 | 0–99 | 49–0 |
-| 203 | 2026-05-02 | [SB-1](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1&which_year=2026) | AN ACT CONCERNING AFFORDABILITY. | Y | 48–100 | 0–100 | 48–0 |
-| 204 | 2026-05-02 | [SB-1](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1&which_year=2026) | AN ACT CONCERNING AFFORDABILITY. | N | 127–21 | 100–0 | 27–21 |
-| 205 | 2026-05-04 | [SB-4](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-4&which_year=2026) | AN ACT CONCERNING CONSUMER PRIVACY AND PROTECTION. | Y | 141–6 | 98–0 | 43–6 |
-| 206 | 2026-05-04 | [HB-5229](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5229&which_year=2026) | AN ACT CONCERNING GAMING. | Y | 145–4 | 100–0 | 45–4 |
-| 207 | 2026-05-04 | [HB-5476](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5476&which_year=2026) | AN ACT CONCERNING OVERSIGHT OF EFFORTS TO PREVENT HUMAN TRAFFICKING. | Y | 149–0 | 100–0 | 49–0 |
+| 202 | 2026-05-02 | [SB-1](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1&which_year=2026) | AN ACT CONCERNING AFFORDABILITY.
+            To (1) exempt from the sales and us | Y | 49–99 | 0–99 | 49–0 |
+| 203 | 2026-05-02 | [SB-1](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1&which_year=2026) | AN ACT CONCERNING AFFORDABILITY.
+            To (1) exempt from the sales and us | Y | 48–100 | 0–100 | 48–0 |
+| 204 | 2026-05-02 | [SB-1](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-1&which_year=2026) | AN ACT CONCERNING AFFORDABILITY.
+            To (1) exempt from the sales and us | N | 127–21 | 100–0 | 27–21 |
+| 205 | 2026-05-04 | [SB-4](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-4&which_year=2026) | AN ACT CONCERNING CONSUMER PRIVACY AND PROTECTION.
+            To (1) provide fo | Y | 141–6 | 98–0 | 43–6 |
+| 206 | 2026-05-04 | [HB-5229](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5229&which_year=2026) | AN ACT CONCERNING GAMING.
+            To restrict gaming advertising at college  | Y | 145–4 | 100–0 | 45–4 |
+| 207 | 2026-05-04 | [HB-5476](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5476&which_year=2026) | AN ACT CONCERNING OVERSIGHT OF EFFORTS TO PREVENT HUMAN TRAFFICKING.
+            | Y | 149–0 | 100–0 | 49–0 |
 | 208 | 2026-05-04 | [SB-9](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-9&which_year=2026) | AN ACT SUPPORTING COMMUTERS AND MICROTRANSIT SERVICES.
             To provide fu | N | 137–13 | 101–0 | 36–13 |
-| 209 | 2026-05-04 | [SB-413](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-413&which_year=2026) | AN ACT REVISING VARIOUS MOTOR VEHICLE STATUTES. | Y | 147–2 | 100–0 | 47–2 |
+| 209 | 2026-05-04 | [SB-413](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-413&which_year=2026) | AN ACT REVISING VARIOUS MOTOR VEHICLE STATUTES.
+            To revise various mo | Y | 147–2 | 100–0 | 47–2 |
 | 210 | 2026-05-04 | [HR-11](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HR-11&which_year=2026) | RESOLUTION PROPOSING APPROVAL OF A COLLECTIVE BARGAINING AGREEMENT BETWEEN THE U | N | 119–29 | 99–0 | 20–29 |
 | 211 | 2026-05-04 | [HB-5241](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5241&which_year=2026) | AN ACT ESTABLISHING A TRIPLE BOTTOM LINE JUSTICE DEMONSTRATION PILOT PROGRAM.
    | Y | 148–0 | 99–0 | 49–0 |
@@ -1741,8 +1883,10 @@ Generated 2026-08-23. 1351 votes total.
 | 221 | 2026-05-04 | [HB-5385](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5385&which_year=2026) | AN ACT ESTABLISHING A TASK FORCE TO STUDY UNDUE DELAY IN WORKERS' COMPENSATION C | Y | 147–0 | 98–0 | 49–0 |
 | 222 | 2026-05-04 | [HB-5145](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5145&which_year=2026) | AN ACT CONCERNING THE PUBLIC HEARING REQUIREMENT FOR CERTAIN WATER COMPANIES REQ | N | 128–20 | 96–3 | 32–17 |
 | 223 | 2026-05-04 | [HB-5453](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5453&which_year=2026) | AN ACT REQUIRING A STUDY REGARDING STATE-WIDE ESSENTIAL WORKER AND FIRST RESPOND | Y | 149–0 | 100–0 | 49–0 |
-| 224 | 2026-05-04 | [SB-423](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-423&which_year=2026) | AN ACT CONCERNING OVERSIGHT OVER HIGHER EDUCATION. | Y | 149–0 | 100–0 | 49–0 |
-| 225 | 2026-05-04 | [HB-5563](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5563&which_year=2026) | AN ACT CONCERNING VARIOUS CRIMINAL LAW PROPOSALS. | Y | 149–0 | 100–0 | 49–0 |
+| 224 | 2026-05-04 | [SB-423](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-423&which_year=2026) | AN ACT CONCERNING OVERSIGHT OVER HIGHER EDUCATION.
+            To require the Bo | Y | 149–0 | 100–0 | 49–0 |
+| 225 | 2026-05-04 | [HB-5563](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5563&which_year=2026) | AN ACT CONCERNING VARIOUS CRIMINAL LAW PROPOSALS.
+            To (1) modify stat | Y | 149–0 | 100–0 | 49–0 |
 | 226 | 2026-05-04 | [HB-5557](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5557&which_year=2026) | AN ACT CONCERNING ELIGIBILITY DETERMINATIONS BY THE DEPARTMENT OF DEVELOPMENTAL  | Y | 149–0 | 100–0 | 49–0 |
 | 227 | 2026-05-04 | [HB-5332](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5332&which_year=2026) | AN ACT CONCERNING CERTAIN BOATING REGULATIONS.
             To prohibit the act o | Y | 137–12 | 88–12 | 49–0 |
@@ -1779,7 +1923,8 @@ Generated 2026-08-23. 1351 votes total.
 | 252 | 2026-05-05 | [SB-472](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-472&which_year=2026) | AN ACT CONCERNING THE ELECTRONIC SURVEILLANCE OF EMPLOYEES.
             To requi | Y | 150–0 | 101–0 | 49–0 |
 | 253 | 2026-05-05 | [HB-5222](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5222&which_year=2026) | AN ACT CONCERNING THE DEPARTMENT OF CONSUMER PROTECTION'S RECOMMENDATIONS REGARD | Y | 145–5 | 101–0 | 44–5 |
-| 254 | 2026-05-05 | [SB-116](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-116&which_year=2026) | AN ACT CONCERNING THE PREVENTION OF HUMAN TRAFFICKING. | Y | 151–0 | 102–0 | 49–0 |
+| 254 | 2026-05-05 | [SB-116](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-116&which_year=2026) | AN ACT CONCERNING THE PREVENTION OF HUMAN TRAFFICKING.
+            To (1) requir | Y | 151–0 | 102–0 | 49–0 |
 | 255 | 2026-05-05 | [HB-5292](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5292&which_year=2026) | AN ACT EXEMPTING CERTAIN SALES TO MILITARY AND VETERANS-RELATED ORGANIZATIONS FR | Y | 151–0 | 102–0 | 49–0 |
 | 256 | 2026-05-05 | [SB-488](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-488&which_year=2026) | AN ACT IMPLEMENTING THE TREASURER'S RECOMMENDATIONS FOR REVISIONS TO THE UNCLAIM | N | 127–22 | 100–0 | 27–22 |
 | 257 | 2026-05-05 | [SB-349](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-349&which_year=2026) | AN ACT CONCERNING MODIFICATIONS TO THE FIREFIGHTERS CANCER RELIEF FUND.
@@ -1819,32 +1964,36 @@ Generated 2026-08-23. 1351 votes total.
 | 279 | 2026-05-06 | [SB-518](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-518&which_year=2026) | AN ACT AMENDING A CONVEYANCE OF A PARCEL OF STATE LAND IN THE CITY OF MIDDLETOWN | Y | 145–5 | 101–0 | 44–5 |
 | 280 | 2026-05-06 | [HB-5565](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5565&which_year=2026) | AN ACT CONCERNING A STUDY OF THE CIVIL AND CRIMINAL LAWS OF THIS STATE.
          | Y | 150–0 | 101–0 | 49–0 |
-| 281 | 2026-05-06 | [SB-125](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-125&which_year=2026) | Resolution Act | Y | 138–11 | 100–0 | 38–11 |
+| 281 | 2026-05-06 | [SB-125](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-125&which_year=2026) | AN ACT REQUIRING NURSING HOMES TO ANNUALLY REPORT CERTAIN OWNERSHIP INFORMATION  | Y | 138–11 | 100–0 | 38–11 |
 | 282 | 2026-05-06 | [SB-87](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-87&which_year=2026) | AN ACT ESTABLISHING A NONPROFIT PROVIDER ADVISORY BOARD AND PROHIBITING AUTO INS | N | 122–27 | 101–0 | 21–27 |
 | 283 | 2026-05-06 | [SB-306](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-306&which_year=2026) | AN ACT CONCERNING ECONOMIC DEVELOPMENT AND COMPREHENSIVE ENERGY STRATEGY.
        | Y | 148–2 | 101–0 | 47–2 |
 | 284 | 2026-05-06 | [HB-5497](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5497&which_year=2026) | AN ACT ESTABLISHING A TASK FORCE TO STUDY THE EFFECTS OF ARTIFICIAL INTELLIGENCE | Y | 150–0 | 101–0 | 49–0 |
-| 285 | 2026-05-06 | [SB-370](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-370&which_year=2026) | AN ACT CONCERNING THE HOURLY COMPENSATION FOR ADJUNCT FIRE INSTRUCTORS. | Y | 150–0 | 101–0 | 49–0 |
+| 285 | 2026-05-06 | [SB-370](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-370&which_year=2026) | AN ACT CONCERNING THE HOURLY COMPENSATION FOR ADJUNCT FIRE INSTRUCTORS.
+         | Y | 150–0 | 101–0 | 49–0 |
 | 286 | 2026-05-06 | [SB-277](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-277&which_year=2026) | AN ACT IMPLEMENTING THE DEPARTMENT OF ADMINISTRATIVE SERVICES' RECOMMENDATIONS R | Y | 150–0 | 101–0 | 49–0 |
 | 287 | 2026-05-06 | [SB-134](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-134&which_year=2026) | AN ACT ESTABLISHING AN AIRPORT DEVELOPMENT ZONE IN THE TOWN OF PLAINVILLE.
       | Y | 150–0 | 101–0 | 49–0 |
 | 288 | 2026-05-06 | [SB-191](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-191&which_year=2026) | AN ACT CONCERNING THE PSYCHEDELIC-ASSISTED THERAPY PILOT PROGRAM.
             To | N | 122–27 | 92–8 | 30–19 |
-| 289 | 2026-05-06 | [SB-457](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-457&which_year=2026) | AN ACT CONCERNING THE STATE'S BOTTLE BILL. | Y | 138–11 | 100–0 | 38–11 |
+| 289 | 2026-05-06 | [SB-457](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-457&which_year=2026) | AN ACT CONCERNING THE STATE'S BOTTLE BILL.
+            To (1) require the develo | Y | 138–11 | 100–0 | 38–11 |
 | 290 | 2026-05-06 | [SB-367](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-367&which_year=2026) | AN ACT ESTABLISHING A WORKING GROUP TO STUDY ROADSIDE SAFETY CONCERNS ASSOCIATED | Y | 150–0 | 101–0 | 49–0 |
 | 291 | 2026-05-06 | [SB-375](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-375&which_year=2026) | AN ACT CONCERNING SCHOOL MAPPING DATA SERVICES.
             To establish a schoo | Y | 150–0 | 101–0 | 49–0 |
 | 292 | 2026-05-06 | [SB-282](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-282&which_year=2026) | AN ACT APPROPRIATING FUNDS TO THE NEGLECTED CEMETERY ACCOUNT AND CONCERNING CARE | Y | 150–0 | 101–0 | 49–0 |
 | 293 | 2026-05-06 | [SB-307](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-307&which_year=2026) | AN ACT CONCERNING THE DEPARTMENT OF ECONOMIC AND COMMUNITY DEVELOPMENT'S RECOMME | Y | 149–0 | 100–0 | 49–0 |
 | 294 | 2026-05-06 | [HB-5224](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5224&which_year=2026) | AN ACT CONCERNING THE DEPARTMENT OF CONSUMER PROTECTION'S RECOMMENDATIONS REGARD | Y | 150–0 | 101–0 | 49–0 |
-| 295 | 2026-05-06 | [HB-5563](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5563&which_year=2026) | AN ACT CONCERNING VARIOUS CRIMINAL LAW PROPOSALS. | Y | 150–0 | 101–0 | 49–0 |
+| 295 | 2026-05-06 | [HB-5563](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5563&which_year=2026) | AN ACT CONCERNING VARIOUS CRIMINAL LAW PROPOSALS.
+            To (1) modify stat | Y | 150–0 | 101–0 | 49–0 |
 | 296 | 2026-05-06 | [SB-449](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-449&which_year=2026) | AN ACT CONCERNING THE RECOMMENDATIONS OF THE INTERGOVERNMENTAL POLICY AND PLANNI | Y | 147–0 | 98–0 | 49–0 |
 | 297 | 2026-05-06 | [HB-5281](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5281&which_year=2026) | AN ACT CONCERNING PLANNING AND DEVELOPMENT.
             To clarify certain publi | Y | 77–72 | 30–70 | 47–2 |
 | 298 | 2026-05-06 | [HB-5281](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5281&which_year=2026) | AN ACT CONCERNING PLANNING AND DEVELOPMENT.
             To clarify certain publi | Y | 85–64 | 37–64 | 48–0 |
 | 299 | 2026-05-06 | [HB-5521](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5521&which_year=2026) | AN ACT CONCERNING STERILE CULTIVARS, APPLICATION REQUIREMENTS FOR THE USE OF CER | Y | 131–19 | 82–19 | 49–0 |
-| 300 | 2026-05-06 | [SB-318](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-318&which_year=2026) | AN ACT CONCERNING ANIMAL WELFARE. | Y | 150–0 | 101–0 | 49–0 |
+| 300 | 2026-05-06 | [SB-318](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-318&which_year=2026) | AN ACT CONCERNING ANIMAL WELFARE.
+            To identify resources for persons  | Y | 150–0 | 101–0 | 49–0 |
 | 301 | 2026-05-06 | [SB-137](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-137&which_year=2026) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE OFFICE OF EARLY CHILDHOOD.
        | Y | 149–0 | 100–0 | 49–0 |
 | 302 | 2026-05-06 | [SB-138](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-138&which_year=2026) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE DEPARTMENT OF EDUCATION.
@@ -1852,7 +2001,8 @@ Generated 2026-08-23. 1351 votes total.
 | 303 | 2026-05-06 | [SB-147](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-147&which_year=2026) | AN ACT CONCERNING A STUDY ON THE NEED FOR EXTENDED PRODUCER RESPONSIBILITY FOR E | Y | 150–0 | 101–0 | 49–0 |
 | 304 | 2026-05-06 | [SB-470](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-470&which_year=2026) | AN ACT CONCERNING THE LEGISLATIVE COMMISSIONERS' RECOMMENDATIONS FOR TECHNICAL A | Y | 149–1 | 100–1 | 49–0 |
 | 305 | 2026-05-06 | [HB-5349](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=HB-5349&which_year=2026) | AN ACT CONCERNING A POLICE OFFICER TRAINING PROGRAM AND THE ROUNDING OF CERTAIN  | Y | 148–0 | 99–0 | 49–0 |
-| 306 | 2026-05-06 | [SB-247](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-247&which_year=2026) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE AUDITORS OF PUBLIC ACCOUNTS. | Y | 149–0 | 100–0 | 49–0 |
+| 306 | 2026-05-06 | [SB-247](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-247&which_year=2026) | AN ACT IMPLEMENTING THE RECOMMENDATIONS OF THE AUDITORS OF PUBLIC ACCOUNTS.
+     | Y | 149–0 | 100–0 | 49–0 |
 | 307 | 2026-05-06 | [SB-430](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-430&which_year=2026) | AN ACT ADOPTING THE INTEGRATED SETTING STANDARD OF THE AMERICANS WITH DISABILITI | Y | 150–0 | 101–0 | 49–0 |
 | 308 | 2026-05-06 | [SB-317](https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB-317&which_year=2026) | AN ACT CONCERNING RESOURCE RECOVERY FACILITIES IN THE STATE.
             To enab | Y | 149–0 | 100–0 | 49–0 |

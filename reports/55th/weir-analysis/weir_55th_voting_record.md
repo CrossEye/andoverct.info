@@ -383,7 +383,7 @@ higher the yes count, the more Weir was alone among Republicans on that vote.
 | 2025 | SJ-27   | 38–6   | Confirming Hon. Holly Abery-Wetstone to be a State Referee               |
 | 2023 | SB-1069 | 46–7   | Domestic-animal-related statute revisions                                |
 | 2026 | HB-5333 | 40–7   | Regulation of striped bass fishing                                       |
-| 2025 | HB-6957 | 39–7   | Inland wetlands and watercourses (resolution act)                        |
+| 2025 | HB-6957 | 39–7   | Municipal omnibus (city designation, inland-wetlands training, zoning)                        |
 | 2025 | HB-7233 | 39–7   | Establishing a Parkinson's Disease Research Account                      |
 
 > **Notes:** This is a partial list. The full list of 95 right-of-caucus roll

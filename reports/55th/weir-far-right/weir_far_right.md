@@ -375,8 +375,8 @@ Valley Chamber of Commerce:
   (139–6, R caucus 40–6)
 - **HB-7233 (2025)** — Parkinson's Disease Research Account (141–7, R caucus
   39–7)
-- **HB-6957 (2025)** — A "Resolution Act" passed by the chamber (134–9, R caucus
-  39–7)
+- **HB-6957 (2025)** — Municipal omnibus act (city designation, inland-wetlands
+  training, zoning; 134–9, R caucus 39–7)
 - **HB-5467 (2026)** — DECD employee designated for concierge services to small
   businesses (143–4, R caucus 44–4)
 - **SB-488 (2026)** — Treasurer's recommendations for the Unclaimed Property
