@@ -4,9 +4,9 @@ publicUrl: 'http://andoverct.info/reports/55th/weir-analysis/'
 noindex: true
 pageTitle: "Steve Weir's Voting Record — CT 55th House District"
 title: "Steve Weir's Voting Record"
-subtitle: 'Connecticut House of Representatives, 55th District · 2023 through May 2026 · A pattern analysis of 1,293 roll-call votes'
+subtitle: 'Connecticut House of Representatives, 55th District · 2023 through 2026 · A pattern analysis of 1,351 roll-call votes'
 attribution: 'A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Not an official document'
-footerNote: 'Compiled May 9, 2026 · Data from the Connecticut General Assembly''s official roll-call records. Not an official document.'
+footerNote: 'Compiled May 9, 2026; revised August 23, 2026 on the re-derived roll-call record (regular and special sessions) · Data from the Connecticut General Assembly''s official roll-call records. Not an official document.'
 theme: bluegold
 pdf:
   author: Personal work of Scott Sauyet · scott@sauyet.com
@@ -55,10 +55,10 @@ formats:
 Steve Weir's Voting Record
 ==========================
 
-*Compiled May 9, 2026 from the Connecticut General Assembly's official roll-call
+*Compiled May 9, 2026, and revised August 23, 2026 on the re-derived record (which adds the special sessions and corrects every caucus split by one member), from the Connecticut General Assembly's official roll-call
 records covering the 2023, 2024, 2025, and 2026 regular sessions. The dataset
-includes every recorded House vote in which Rep. Weir participated — 1,293 roll
-calls covering 1,104 unique bills, resolutions, and confirmations. For each
+includes every recorded House vote in which Rep. Weir participated — 1,351 roll
+calls covering 1,152 unique bills, resolutions, and confirmations. For each
 vote, the dataset captures Weir's position, the chamber-wide totals, and the
 breakdown by party. The analysis distinguishes near-unanimous votes (which carry
 no ideological signal) from partisan votes (where the two parties' positions
@@ -84,7 +84,7 @@ A casual reading of his record might describe him as "a typical Republican in a
 heavily Democratic legislature." This report documents that the casual reading
 understates the case. Across four legislative sessions:
 
-1. On the 337 partisan roll calls where the two parties were on opposite sides,
+1. On the 351 partisan roll calls where the two parties were on opposite sides,
    Weir voted with the Republican position **95–98% of the time, every year** —
    a level of partisan loyalty that is consistent rather than situational.
 
@@ -95,7 +95,7 @@ understates the case. Across four legislative sessions:
    designating state symbols.
 
 3. Genuine bipartisan votes — bills where Weir broke from a strong Republican
-   consensus to side with Democrats — number **three** in 1,293 roll calls.
+   consensus to side with Democrats — number **three** in 1,351 roll calls.
 
 The report walks through the topical pattern (Part 1), the year-over-year
 stability (Part 2), the "right of his own caucus" record (Part 3), the rare
@@ -113,7 +113,7 @@ Part 1 — Issue-by-issue record on contested partisan votes
 
 A "partisan vote" here means a roll call where the two parties' majorities took
 opposite positions and at least five members of each party were voting. Among
-337 such votes, Weir's record is overwhelmingly aligned with the Republican
+351 such votes, Weir's record is overwhelmingly aligned with the Republican
 position. The table below shows his record by topic. Each topic includes only
 contested partisan votes — near-unanimous bills and procedural votes that don't
 reveal an ideological position are excluded.
@@ -149,11 +149,13 @@ reveal an ideological position are excluded.
 > sessions.
 >
 > *Because a bill can match several topics, the Partisan-votes column intentionally
-> exceeds the 337-vote total and should be read as indicative, not exact. The
+> exceeds the partisan-vote total and should be read as indicative, not exact. The
 > original keyword-classification step is not independently reproducible, so —
 > unlike the per-bill counts and the by-year totals in this report — these topic
 > groupings are **not independently confirmed**; treat the per-bill and by-year
-> figures as authoritative.*
+> figures as authoritative. This table still reflects the May 2026
+> classification of the earlier 1,293-vote dataset; it was not rebuilt in the
+> August 23 revision, so its rows do not sum to the revised 351.*
 
 The most striking feature of this table is that Weir's R-alignment exceeds 92%
 in every category. There is no issue area where his record reflects meaningful
@@ -169,10 +171,10 @@ chamber:
 
 - **SB-1108 (2023)** — Access to reproductive health care for students at public
   colleges and universities. Final passage 114–34. Republican caucus split
-  25–29; Weir was among the no votes despite nearly half of his caucus voting
+  24–29; Weir was among the no votes despite nearly half of his caucus voting
   yes.
 - **HB-7213 (2025)** — Access to reproductive health care more broadly. Final
-  passage 117–27. Republican caucus voted 25–23 in favor — narrowly supporting
+  passage 117–27. Republican caucus voted 24–23 in favor — narrowly supporting
   the bill — and Weir was among the 23 voting no.
 - **SB-7 (2025)** — Protections for access to health care and equitable delivery
   of health care services, including reproductive provisions. Final passage
@@ -204,7 +206,7 @@ Voted no on every major voting-access expansion:
   passage 107–35. Voted no.
 - **HJ-1 (2023)** — Resolution to put a no-excuse absentee voting constitutional
   amendment on the ballot. Final passage 113–38; the entire Democratic caucus
-  (97–0) voted yes. Voted no.
+  (98–0) voted yes. Voted no.
 - **HB-5001 (2026)** — Absentee voting for all and various reforms related to
   the administration of elections. Final passage 101–49. Voted no.
 - **HB-7242 (2025)** — Studying methods to increase voter participation and
@@ -226,15 +228,15 @@ confirms this and extends it to nearly every contested housing measure:
 - **HB-5002 (2025)** — Housing and the needs of homeless persons. Voted no on
   every one of 10 separate roll calls.
 - **HB-5288 (2026)** — Utility connections for accessory dwelling units (ADUs).
-  Voted no — Republican caucus voted 36–13 in favor; Weir was among the 13.
+  Voted no — Republican caucus voted 35–13 in favor; Weir was among the 13.
 - **SB-1444 (2025)** — Conversion of commercial real property for residential
   use. Voted no.
 - **SB-988 (2023)** — Resident purchase of mobile manufactured home parks. Voted
   no.
 - **SB-1336 (2025)** — Mortgage foreclosures and undischarged mortgages. Voted
-  no — R caucus 42–6 in favor.
+  no — R caucus 41–6 in favor.
 - **HB-5572 (2025)** — Real estate wholesalers regulation. Voted no — R caucus
-  42–6 in favor.
+  41–6 in favor.
 - **HB-5390 (2024)** — Transit-oriented communities. Voted no.
 
 His position on the board of the Connecticut Apartment Association is relevant
@@ -247,8 +249,8 @@ affiliation.
 
 Voted no on essentially every climate or clean-energy bill of consequence:
 
-- **HB-6397 (2023)** — Zero-carbon emissions. Final passage 95–53; D 93–1, R
-  2–52. Voted no.
+- **HB-6397 (2023)** — Zero-carbon emissions. Final passage 95–53; D 94–1, R
+  1–52. Voted no.
 - **HB-5004 (2024)** — Implementation of certain climate change measures. Final
   passage 94–56. Voted no.
 - **HB-5004 (2025)** — Protection of the environment and development of
@@ -258,7 +260,7 @@ Voted no on essentially every climate or clean-energy bill of consequence:
 - **HB-7087 (2025)** — Community solar energy generating systems. Voted no.
 - **HB-6486 (2023)** and **HB-5157 (2026)** — Tire stewardship / extended
   producer responsibility for tires. Voted no on both. The 2026 vote put him to
-  the right of most Republicans, who split 29–21 in favor.
+  the right of most Republicans, who split 28–21 in favor.
 - **SB-1147 (2023)** — DEEP Environmental Justice Program. Voted no.
 - **HB-6813 (2023)** — Seabird and shorebird protection program. Voted no.
 - **HB-7248 (2025)** — Well water quality. Voted no.
@@ -291,17 +293,17 @@ State employee bargaining agreements and arbitration awards are a related
 category. Weir voted against state union contracts and arbitration awards
 approximately half the time — including agreements that most Senate Republicans
 supported. His no vote on HR-31 (2023), a stipulated agreement with the State
-Police Union, came on a vote where the Republican caucus voted 49–5 in favor.
+Police Union, came on a vote where the Republican caucus voted 48–5 in favor.
 
 
 ### Civil rights and antidiscrimination ###
 
 - **HB-6638 (2023)** — Revising the state's antidiscrimination statutes. The
-  Republican caucus voted **36–17 in favor**. Weir voted no — putting him with
+  Republican caucus voted **35–17 in favor**. Weir voted no — putting him with
   the harder-right minority of his own party on a vote where his caucus's
   majority voted with Democrats.
 - **HB-6866 (2023)** — Studying the addition of a nonbinary gender option on
-  state forms. Republican caucus voted 27–26 in favor — narrowly supporting the
+  state forms. Republican caucus voted 26–26 in favor — narrowly supporting the
   bill; Weir was among the 26 voting no.
 - **HB-6569 (2023)** — Raising the minimum age to marry to 18 with no
   exceptions. This bill ended child marriage in Connecticut, making it the 9th
@@ -330,11 +332,11 @@ remarkably stable across all four sessions:
 
 | Session    | Partisan votes | With R majority | With D majority | % R-aligned |
 | ---------- | -------------: | --------------: | --------------: | ----------: |
-| 2023       | 97             | 93              | 4               | 95.9%       |
-| 2024       | 62             | 61              | 1               | 98.4%       |
-| 2025       | 118            | 114             | 4               | 96.6%       |
-| 2026 (May) | 60             | 57              | 3               | 95.0%       |
-| **Total**  | **337**        | **325**         | **12**          | **96.4%**   |
+| 2023       | 98             | 94              | 4               | 95.9%       |
+| 2024       | 63             | 62              | 1               | 98.4%       |
+| 2025       | 123            | 118             | 4               | 96.7%       |
+| 2026       | 67             | 64              | 3               | 95.5%       |
+| **Total**  | **351**        | **338**         | **12**          | **96.6%**   |
 
 The variation between years is small enough to be statistical noise. There is no
 trend line that would suggest Weir is becoming more independent, more
@@ -349,7 +351,7 @@ bipartisan, or more (or less) ideological as he gains seniority.
 Part 3 — Bills where Weir voted to the right of his own caucus
 --------------------------------------------------------------
 
-The 96.4% R-alignment number captures Weir's loyalty to his party. It does not
+The 96.6% R-alignment number captures Weir's loyalty to his party. It does not
 capture the more striking pattern: that on 95 separate roll calls, Weir voted
 "no" while a majority of House Republicans voted "yes." On these votes, he was
 not just disagreeing with Democrats — he was disagreeing with his own caucus.
@@ -363,26 +365,26 @@ higher the yes count, the more Weir was alone among Republicans on that vote.
 
 | Year | Bill    | R vote | Title                                                                    |
 | ---- | ------- | ------ | ------------------------------------------------------------------------ |
-| 2024 | HB-5350 | 52–1   | Boating-law enforcement near RI/MA/NY borders (Weir was the lone R "no") |
-| 2025 | HJ-31   | 45–2   | Confirming Hon. Elizabeth A. Bozzuto to be a Superior Court judge        |
-| 2023 | SB-905  | 49–4   | Alcoholic liquor permits and tobacco bars                                |
-| 2025 | HB-6970 | 46–3   | Adoption of amendments to the Uniform Commercial Code                    |
-| 2026 | HB-5467 | 45–4   | DECD employee for concierge services to small businesses                 |
-| 2025 | HJ-38   | 43–4   | Confirming Hon. Margaret M. Murphy to be a Superior Court judge          |
-| 2023 | HR-31   | 49–5   | State Police Union (NP-1) stipulated agreement                           |
-| 2024 | HB-5196 | 48–5   | Expanding the podiatric scope of practice                                |
-| 2025 | HB-6438 | 43–5   | Recognizing and honoring military service of CT veterans                 |
-| 2025 | HJ-30   | 41–5   | Confirming Hon. Barry F. Armata to be a Superior Court judge             |
-| 2025 | SJ-28   | 40–5   | Confirming Hon. Gerard I. Adelman to be a State Referee                  |
-| 2025 | HB-7233 | 40–7   | Establishing a Parkinson's Disease Research Account                      |
-| 2025 | SB-1336 | 42–6   | Mortgage foreclosures and undischarged mortgages                         |
-| 2025 | HB-5572 | 42–6   | Real estate wholesaler regulation                                        |
-| 2023 | SB-1069 | 47–7   | Domestic-animal-related statute revisions                                |
-| 2023 | HB-6787 | 43–10   | Modifying sentences for certain cannabis-related offenses                |
-| 2024 | SB-181  | 44–9   | Emergency department crowding                                            |
-| 2024 | HB-5361 | 42–12  | Siting of renewable energy sources                                       |
-| 2023 | HB-6678 | 42–10  | Nursing home transparency                                                |
-| 2023 | HB-6805 | 41–11  | Solar installations in condominiums and cooperatives                     |
+| 2024 | HB-5350 | 51–1   | Boating-law enforcement near RI/MA/NY borders (Weir was the lone R "no") |
+| 2025 | HJ-31   | 44–2   | Confirming Hon. Elizabeth A. Bozzuto to be a Superior Court judge        |
+| 2025 | HB-6970 | 45–3   | Adoption of amendments to the Uniform Commercial Code                    |
+| 2023 | SB-905  | 48–4   | Alcoholic liquor permits and tobacco bars                                |
+| 2026 | HB-5467 | 44–4   | DECD employee for concierge services to small businesses                 |
+| 2025 | HJ-38   | 42–4   | Confirming Hon. Margaret M. Murphy to be a Superior Court judge          |
+| 2023 | HR-31   | 48–5   | State Police Union (NP-1) stipulated agreement                           |
+| 2024 | HB-5196 | 47–5   | Expanding the podiatric scope of practice                                |
+| 2025 | HB-6438 | 42–5   | Recognizing and honoring military service of CT veterans                 |
+| 2025 | HJ-30   | 40–5   | Confirming Hon. Barry F. Armata to be a Superior Court judge             |
+| 2025 | SJ-28   | 39–5   | Confirming Hon. Gerard I. Adelman to be a State Referee                  |
+| 2025 | SB-1336 | 41–6   | Mortgage foreclosures and undischarged mortgages                         |
+| 2025 | HB-5572 | 41–6   | Real estate wholesaler regulation                                        |
+| 2025 | HB-7281 | 41–6   | Conveyance of state land to the Town of Southbury (amendment of prior conveyance) |
+| 2025 | SB-1179 | 40–6   | Connecticut Community Makerspace Initiative Program                      |
+| 2025 | SJ-27   | 38–6   | Confirming Hon. Holly Abery-Wetstone to be a State Referee               |
+| 2023 | SB-1069 | 46–7   | Domestic-animal-related statute revisions                                |
+| 2026 | HB-5333 | 40–7   | Regulation of striped bass fishing                                       |
+| 2025 | HB-6957 | 39–7   | Inland wetlands and watercourses (resolution act)                        |
+| 2025 | HB-7233 | 39–7   | Establishing a Parkinson's Disease Research Account                      |
 
 > **Notes:** This is a partial list. The full list of 95 right-of-caucus roll
 > calls is available as a downloadable spreadsheet (see Other Formats below).
@@ -403,7 +405,7 @@ rather than principled review of individual nominees.
 borders) was a technical enforcement bill where Weir was the lone Republican no
 vote on a 52–1 caucus vote. HB-6970 (adoption of UCC amendments) is the kind of
 statutory housekeeping that virtually never draws partisan opposition; the
-Republican caucus voted 46–3 in favor and Weir was among the three.
+Republican caucus voted 45–3 in favor and Weir was among the three.
 
 **Public-health and child-safety measures.** HB-6678 (nursing home transparency,
 R 42–10), SB-181 (emergency department crowding, R 44–9), HB-6587 (a task force
@@ -416,8 +418,8 @@ supports.
 **State-land conveyances.** Routine conveyances of state-owned land to specific
 municipalities — bills that ordinarily pass with broad bipartisan support — drew
 Weir no votes throughout 2025. On three of them the Republican caucus voted in
-favor and Weir did not: HB-7280 (Danbury, R 36–11), HB-7281 (Southbury, R 42–6),
-and HB-7284 (Preston, R 34–14). He also voted no on HB-7283 (CRDA) and HB-7285
+favor and Weir did not: HB-7280 (Danbury, R 35–11), HB-7281 (Southbury, R 41–6),
+and HB-7284 (Preston, R 33–14). He also voted no on HB-7283 (CRDA) and HB-7285
 (Hamden), but a majority of Republicans opposed those too, so they are not
 right-of-caucus votes.
 
@@ -430,7 +432,7 @@ right-of-caucus votes.
 Part 4 — The crossover votes
 ----------------------------
 
-In four years and 1,293 roll calls, Weir voted "yes" while a strong Republican
+In four years and 1,351 roll calls, Weir voted "yes" while a strong Republican
 majority voted "no" — and the Democratic caucus voted yes — on **three** votes.
 These are his only genuine crossover moments:
 
@@ -439,8 +441,8 @@ These are his only genuine crossover moments:
 
 | Year | Bill    | Title                                                                                         | D vote | R vote |
 | ---- | ------- | --------------------------------------------------------------------------------------------- | ------ | ------ |
-| 2023 | HB-6738 | Compassionate or medical parole and credits awarded for release during an emergency           | 87–7   | 15–38  |
-| 2023 | SB-913  | Expanding workers' compensation coverage for post-traumatic stress injuries for all employees | 94–0   | 10–44   |
+| 2023 | HB-6738 | Compassionate or medical parole and credits awarded for release during an emergency           | 88–7   | 14–38  |
+| 2023 | SB-913  | Expanding workers' compensation coverage for post-traumatic stress injuries for all employees | 95–0   | 9–44   |
 | 2025 | HR-15   | Collective bargaining agreement between Charter Oak State College and a UAW local             | 96–0   | 13–34  |
 
 > **Notes:** "Crossover" here means a vote where the Democratic caucus voted yes
@@ -480,7 +482,7 @@ contains tensions with several of these claims.
 ### "Equal protection under law" ###
 
 Weir voted no on HB-6638 (2023), the bill revising Connecticut's
-antidiscrimination statutes. The Republican caucus voted 36–17 in favor. Weir
+antidiscrimination statutes. The Republican caucus voted 35–17 in favor. Weir
 voted no on HB-6866 (2023), which would have studied adding a nonbinary gender
 option to state forms. He voted no on HB-6872 (2025), revising and consolidating
 the state's hate-crimes statutes. He voted no on the resolution to exonerate
@@ -542,11 +544,11 @@ Summary table
 
 | Question                                                  | Answer                                          |
 | --------------------------------------------------------- | ----------------------------------------------- |
-| Total roll calls 2023–2026                                | 1,293 (covering 1,104 unique bills/resolutions) |
-| Weir's overall vote distribution                          | 1,013 yes, 280 no                               |
-| Partisan votes (parties on opposite sides)                | 337                                             |
-| Weir's R-alignment on partisan votes                      | 96.4% (325 with R, 12 with D)                   |
-| Year-over-year R-alignment range                          | 95.0% to 98.4%                                  |
+| Total roll calls 2023–2026                                | 1,351 (covering 1,152 unique bills/resolutions) |
+| Weir's overall vote distribution                          | 1,062 yes, 287 no, 2 not voting                 |
+| Partisan votes (parties on opposite sides)                | 351                                             |
+| Weir's R-alignment on partisan votes                      | 96.6% (338 with R, 12 with D)                   |
+| Year-over-year R-alignment range                          | 95.5% to 98.4%                                  |
 | Roll calls right of his own caucus (R majority Y, Weir N) | 95                                              |
 | Genuine crossover votes (D≥85% Y, R≤30% Y, Weir Y)        | 3                                               |
 | Reproductive-rights position on contested votes           | 0% with the D side                              |
@@ -631,7 +633,7 @@ This report analyzes Weir's recorded floor votes. It does not analyze:
   show different numbers; the question of where Weir sits relative to his
   colleagues is a useful next step but is outside this report's scope.
 
-The report's claim is bounded: it documents how Weir voted on 1,293 specific
+The report's claim is bounded: it documents how Weir voted on 1,351 specific
 roll calls, what topical patterns those votes show, and where the patterns sit
 relative to his stated platform.
 
