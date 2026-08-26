@@ -18,11 +18,34 @@ AddDefaultCharset UTF-8
 # Route /<anything>/idx through the directory-index helper.
 RewriteEngine On
 
+# ---------------------------------------------------------------------------
+# Redirect scheme correction (see the note at the end of this file).
+#
+# Apache cannot tell https from http here, so any redirect it builds itself
+# comes out as http:// and costs an extra hop through the front end — or traps
+# strict clients in a loop. Both redirects this site emits are therefore given
+# an explicit absolute https target, scoped to the live hostname so the plain
+# -http dev box (andoverct.local) keeps Apache's default behaviour.
+
+# Directories: emit the trailing-slash redirect ourselves, before mod_dir can
+# emit a scheme-downgrading one. Requests for /<dir>/idx are unaffected (the
+# path is not a directory, so the -d test fails and the idx rule below wins).
+RewriteCond %{HTTP_HOST} ^andoverct\.info$ [NC]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_URI} !/$
+RewriteRule ^(.*)$ https://andoverct.info/$1/ [R=301,L]
+
 # Strip Facebook's click-tracking parameter from inbound links. Facebook appends
 # ?fbclid=... (sometimes fbid=...) to outbound URLs; when present, 301 to the same
 # path with the query string dropped. The trailing "?" in the target discards the
 # query string. Written in the same plain style as the idx rule below so the
 # host's mod_rewrite accepts it.
+RewriteCond %{QUERY_STRING} (^|&)fbclid= [NC,OR]
+RewriteCond %{QUERY_STRING} (^|&)fbid= [NC]
+RewriteCond %{HTTP_HOST} ^andoverct\.info$ [NC]
+RewriteRule ^(.*)$ https://andoverct.info/$1? [R=301,L]
+
+# Same, for any other hostname (dev): relative target, no scheme forced.
 RewriteCond %{QUERY_STRING} (^|&)fbclid= [NC,OR]
 RewriteCond %{QUERY_STRING} (^|&)fbid= [NC]
 RewriteRule ^(.*)$ /$1? [R=301,L]
@@ -31,4 +54,22 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*/)?idx/?$ /idx.php?dir=$1 [L,QSA]
 
-
+# ---------------------------------------------------------------------------
+# Why the redirects above name their scheme explicitly
+# ---------------------------------------------------------------------------
+# TLS is terminated by the SSL front end, which proxies to Apache over plain
+# HTTP and passes no protocol signal at all. Probed 2026-08-26 with a temporary
+# mod_rewrite rule reflecting the request environment:
+#
+#   X-Forwarded-Proto: (absent)   X-Forwarded-Ssl: (absent)
+#   Front-End-Https:   (absent)   HTTPS: off   SERVER_PORT: 80
+#
+# So the usual `SetEnvIf X-Forwarded-Proto https HTTPS=on` fix cannot work —
+# there is no header to key on. Until the front end is configured to send one,
+# any self-referential redirect must state https:// itself.
+#
+# The symptom this fixes: https://andoverct.info/reports (no trailing slash)
+# used to 301 to http://andoverct.info/reports/, which the front end then 301'd
+# back to https. Browsers and curl follow both hops; clients that refuse a
+# downgrade — Anthropic's web fetcher among them — reported "too many
+# redirects" and could not read the site at all.

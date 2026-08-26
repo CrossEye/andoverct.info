@@ -27,6 +27,15 @@ ErrorDocument 403 /private/_gate.php
 
 RewriteEngine On
 
+# Directories: emit the trailing-slash redirect ourselves, naming the scheme,
+# because Apache sits behind the SSL front end and cannot tell https from http
+# (see the note at the end of the document-root .htaccess). Declaring
+# RewriteEngine here means the root's copy of this rule is not inherited.
+RewriteCond %{HTTP_HOST} ^andoverct\.info$ [NC]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_URI} !/$
+RewriteRule ^ https://andoverct.info%{REQUEST_URI}/ [R=301,L]
+
 # Re-declare the doc-root idx helper (enabling RewriteEngine stops inheritance).
 RewriteRule ^(.*/)?idx/?$ /idx.php?dir=private/$1 [L,QSA]
 

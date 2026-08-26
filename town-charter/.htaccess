@@ -5,8 +5,17 @@
 # already arrive via andoverct.info/town-charter/ untouched (no loop).
 
 RewriteEngine On
+
+# Directories: emit the trailing-slash redirect ourselves, naming the scheme,
+# because Apache sits behind the SSL front end and cannot tell https from http
+# (see the note at the end of the document-root .htaccess). Declaring
+# RewriteEngine here means the root's copy of this rule is not inherited.
+RewriteCond %{HTTP_HOST} ^andoverct\.info$ [NC]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_URI} !/$
+RewriteRule ^ https://andoverct.info%{REQUEST_URI}/ [R=301,L]
 RewriteCond %{HTTP_HOST} ^(www\.)?charter\.andoverct\.info$ [NC]
-RewriteRule ^(.*)$ %{REQUEST_SCHEME}://andoverct.info/town-charter/$1 [R=301,L,QSA]
+RewriteRule ^(.*)$ https://andoverct.info/town-charter/$1 [R=301,L,QSA]
 
 # Let the document-root /idx directory helper work inside town-charter too.
 # This .htaccess declares its own RewriteEngine, so the root /idx rule is NOT
