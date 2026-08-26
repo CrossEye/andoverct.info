@@ -25,6 +25,14 @@ AddType application/json .json
 # Route /<anything>/idx through the directory-index helper.
 RewriteEngine On
 
+# Canonicalise www to the apex, first, so every rule below only ever sees
+# either andoverct.info or a dev hostname. Without this, www falls through the
+# host-scoped rules to the scheme-less fallbacks and gets redirected to http://
+# -- the same downgrade the rules below exist to prevent. QSA keeps the query
+# string; the fbclid rules then run on the apex.
+RewriteCond %{HTTP_HOST} ^www\.andoverct\.info$ [NC]
+RewriteRule ^(.*)$ https://andoverct.info/$1 [R=301,L,QSA]
+
 # ---------------------------------------------------------------------------
 # Redirect scheme correction (see the note at the end of this file).
 #
@@ -52,7 +60,9 @@ RewriteCond %{QUERY_STRING} (^|&)fbid= [NC]
 RewriteCond %{HTTP_HOST} ^andoverct\.info$ [NC]
 RewriteRule ^(.*)$ https://andoverct.info/$1? [R=301,L]
 
-# Same, for any other hostname (dev): relative target, no scheme forced.
+# Same, for any other hostname (dev): relative target, no scheme forced. The
+# dev box is plain http, so forcing https here would break it.
+# htaccess-check: allow-relative
 RewriteCond %{QUERY_STRING} (^|&)fbclid= [NC,OR]
 RewriteCond %{QUERY_STRING} (^|&)fbid= [NC]
 RewriteRule ^(.*)$ /$1? [R=301,L]
