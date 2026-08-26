@@ -13,6 +13,10 @@
 // Usage:
 //   node download-transcripts.js
 //
+// Writes, besides the transcripts themselves: output/index.html and
+// meetings-with-transcripts.json (meetings.json + a public transcript URL per
+// meeting). Both are regenerated on every run, including --rebuild=index.
+//
 // Environment variables:
 //   REBUILD=all    — re-download everything and rebuild all HTML
 //   REBUILD=html   — keep existing VTTs, regenerate all HTML + index
@@ -39,6 +43,12 @@ const VTT_DIR = path.join(OUTPUT_DIR, "vtt");
 const TRANSCRIPTS_DIR = path.join(OUTPUT_DIR, "transcripts");
 const VIDEO_DIR = path.join(OUTPUT_DIR, "video");
 const MEETINGS_FILE = path.join(__dirname, "meetings.json");
+// meetings.json plus a resolved public transcript URL per meeting, regenerated
+// alongside index.html so it never drifts from what is actually published.
+const MEETINGS_WITH_TRANSCRIPTS_FILE = path.join(__dirname, "meetings-with-transcripts.json");
+// output/transcripts/ deploys to /reference/video/transcripts/ (see
+// _build/site.manifest.json, area "video").
+const PUBLIC_TRANSCRIPT_BASE = "https://andoverct.info/reference/video/transcripts/";
 
 // Shared page chrome (footer, breadcrumbs, banner) from chrome.js. NOTE: the
 // transcript *body* keeps its own escapeHtml below — spoken text is full of
@@ -1017,6 +1027,28 @@ ${rows}
 }
 
 // ---------------------------------------------------------------------------
+// meetings-with-transcripts.json
+// ---------------------------------------------------------------------------
+
+// Mirror of meetings.json with a `transcription` field appended to each entry:
+// the public URL when that meeting's transcript page exists, otherwise null
+// (three meetings have no page — two are skipTranscribe, one has no link).
+// Key order of the original entry is preserved; transcription goes last.
+function writeMeetingsWithTranscripts(meetings, transcriptFiles) {
+  const pages = new Set(transcriptFiles);
+  let linked = 0;
+  const rows = meetings.map((m) => {
+    const has = pages.has(`${m.id}.html`);
+    if (has) linked++;
+    return { ...m, transcription: has ? `${PUBLIC_TRANSCRIPT_BASE}${m.id}.html` : null };
+  });
+  fs.writeFileSync(MEETINGS_WITH_TRANSCRIPTS_FILE, JSON.stringify(rows, null, 2) + "\n");
+  console.log(
+    `Wrote meetings-with-transcripts.json (${linked} of ${rows.length} with a transcript link)`
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 
@@ -1029,6 +1061,7 @@ async function main() {
     const transcriptFiles = fs.readdirSync(TRANSCRIPTS_DIR);
     fs.writeFileSync(path.join(OUTPUT_DIR, "index.html"), generateIndex(meetings, transcriptFiles));
     console.log("Generated index.html");
+    writeMeetingsWithTranscripts(meetings, transcriptFiles);
     return;
   }
 
@@ -1132,11 +1165,12 @@ async function main() {
   const transcriptFiles = fs.readdirSync(TRANSCRIPTS_DIR);
   fs.writeFileSync(path.join(OUTPUT_DIR, "index.html"), generateIndex(meetings, transcriptFiles));
   console.log("Generated index.html");
+  writeMeetingsWithTranscripts(meetings, transcriptFiles);
 }
 
 // Exported so targeted build scripts (e.g. temp/build-boe-vtt.js) can reuse the
 // converter without re-running the full download/transcribe pipeline.
-module.exports = { convertVttToHtml, generateIndex, downloadYouTubeVtt, ensureYtDlp, OUTPUT_DIR, VTT_DIR, TRANSCRIPTS_DIR, MEETINGS_FILE };
+module.exports = { convertVttToHtml, generateIndex, writeMeetingsWithTranscripts, downloadYouTubeVtt, ensureYtDlp, OUTPUT_DIR, VTT_DIR, TRANSCRIPTS_DIR, MEETINGS_FILE };
 
 if (require.main === module) {
   main().catch(console.error);

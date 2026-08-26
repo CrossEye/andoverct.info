@@ -33,7 +33,7 @@
 
 const fs = require("node:fs");
 const path = require("node:path");
-const { convertVttToHtml, generateIndex } = require("./download-transcripts.js");
+const { convertVttToHtml, generateIndex, writeMeetingsWithTranscripts } = require("./download-transcripts.js");
 
 const ROOT = __dirname;
 const OUTPUT_DIR = path.join(ROOT, "output");
@@ -394,6 +394,7 @@ async function main() {
     const transcriptFiles = fs.readdirSync(TRANSCRIPTS_DIR);
     fs.writeFileSync(path.join(OUTPUT_DIR, "index.html"), generateIndex(meetings, transcriptFiles));
     console.log("Regenerated output/index.html");
+    writeMeetingsWithTranscripts(meetings, transcriptFiles);
   }
   console.log(`\nDone ${done.length}: ${done.join(", ") || "(none)"}`);
   if (failed.length) console.log(`Failed ${failed.length}: ${failed.join(", ")}`);

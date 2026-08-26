@@ -60,6 +60,9 @@ does the acquisition; Deepgram only replaces the transcription step.
 download-transcripts.js   YouTube pipeline + the shared VTT→HTML renderer
 transcribe-deepgram.js    BOE (Zoom) transcription via Deepgram (replaces Whisper)
 meetings.json             The master list of meetings — the input to everything
+meetings-with-transcripts.json  Generated: meetings.json + a public transcript
+                          URL per meeting (null where none exists). Rewritten
+                          whenever index.html is, so it cannot drift.
 .env.sample               Copy to .env (gitignored) and add your DEEPGRAM_API_KEY
 output/
   index.html              Generated landing page (the meeting list)
