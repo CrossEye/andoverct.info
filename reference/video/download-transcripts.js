@@ -411,7 +411,16 @@ function dedupeCues(cues) {
     const maxOverlap = Math.min(prev.length, text.length);
     let overlap = 0;
     for (let len = maxOverlap; len > 0; len--) {
-      if (text.startsWith(prev.slice(-len))) { overlap = len; break; }
+      if (!text.startsWith(prev.slice(-len))) continue;
+      // The overlap has to be whole words: it must begin at a word boundary in
+      // prev and end at one in text. YouTube's scroll-repeat always repeats
+      // complete words, so a match that splits one is a coincidence, not an
+      // overlap — and stripping it eats the start of a real word. Without this
+      // test, a previous cue ending in "t" followed by "totally" matched at
+      // len 1 and rendered "otally".
+      const startsAtWord = len === prev.length || /\s/.test(prev[prev.length - len - 1]);
+      const endsAtWord = len === text.length || /\s/.test(text[len]);
+      if (startsAtWord && endsAtWord) { overlap = len; break; }
     }
     if (overlap > 0) text = text.slice(overlap).trim();
     if (text) {
