@@ -15,6 +15,13 @@ ErrorDocument 404 /404.html
 # back to the browser's Latin-1 default and mojibakes.
 AddDefaultCharset UTF-8
 
+# The host serves .json as text/plain, which contradicts the
+# <link rel="alternate" type="application/json"> on the transcript pages and
+# makes strict consumers refuse to parse the machine-readable transcripts.
+# mod_mime directives, unlike mod_rewrite rulesets, are inherited by
+# subdirectories, so this one declaration covers the whole site.
+AddType application/json .json
+
 # Route /<anything>/idx through the directory-index helper.
 RewriteEngine On
 
