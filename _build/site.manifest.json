@@ -1,112 +1,118 @@
 {
-  "remote": {
-    "host": "pup.phpwebhosting.com",
-    "port": 21,
-    "secure": false,
-    "user": "crosseye",
-    "passwordEnv": "FTP_PASSWORD",
-    "root": "/www"
+ "remote": {
+  "host": "pup.phpwebhosting.com",
+  "port": 21,
+  "secure": false,
+  "user": "crosseye",
+  "passwordEnv": "FTP_PASSWORD",
+  "root": "/www"
+ },
+ "ignore": [
+  "**/node_modules/**",
+  "**/.git/**",
+  "**/.DS_Store",
+  "**/Thumbs.db",
+  "**/*.log",
+  "**/.~lock.*#",
+  "**/.env",
+  "**/.env.*",
+  "**/*.py"
+ ],
+ "areas": [
+  {
+   "id": "root",
+   "src": ".",
+   "remote": "",
+   "include": [
+    "index.html",
+    "404.html",
+    "idx.php",
+    "style.css",
+    "favicon.ico",
+    "favicon.svg",
+    "logo.png",
+    ".htaccess"
+   ]
   },
-  "ignore": [
-    "**/node_modules/**",
-    "**/.git/**",
-    "**/.DS_Store",
-    "**/Thumbs.db",
-    "**/*.log",
-    "**/.~lock.*#",
-    "**/.env",
-    "**/.env.*",
-    "**/*.py"
-  ],
-  "areas": [
-    {
-      "id": "root",
-      "src": ".",
-      "remote": "",
-      "include": [
-        "index.html",
-        "404.html",
-        "idx.php",
-        "style.css",
-        "favicon.ico",
-        "favicon.svg",
-        "logo.png",
-        ".htaccess"
-      ]
-    },
-    {
-      "id": "tools",
-      "src": "tools",
-      "remote": "tools"
-    },
-    {
-      "id": "private",
-      "src": "private",
-      "remote": "private",
-      "exclude": [
-        "**/*.md",
-        "**/_notes/**",
-        "install.php"
-      ]
-    },
-    {
-      "id": "the-facts",
-      "src": "the-facts",
-      "remote": "the-facts",
-      "exclude": [
-        "_build/**",
-        "**/*.md"
-      ]
-    },
-    {
-      "id": "reports",
-      "src": "reports",
-      "remote": "reports",
-      "exclude": [
-        "civic-report.zip",
-        "civic-report.skill",
-        "**/XXX-old-*.md",
-        "**/*_1.md",
-        "**/_resources/**/*.md"
-      ]
-    },
-    {
-      "id": "town-charter",
-      "src": "town-charter",
-      "remote": "town-charter",
-      "exclude": [
-        "convert.js",
-        "package.json",
-        "package-lock.json",
-        "**/*.md"
-      ]
-    },
-    {
-      "id": "links",
-      "src": "links",
-      "remote": "links"
-    },
-    {
-      "id": "reference",
-      "src": "reference",
-      "remote": "reference",
-      "exclude": [
-        "video/**"
-      ]
-    },
-    {
-      "id": "video",
-      "src": "reference/video/output",
-      "remote": "reference/video",
-      "exclude": [
-        "vtt/**",
-        "video/**"
-      ]
-    },
-    {
-      "id": "series",
-      "src": "series",
-      "remote": "series"
-    }
-  ]
+  {
+   "id": "tools",
+   "src": "tools",
+   "remote": "tools"
+  },
+  {
+   "id": "private",
+   "src": "private",
+   "remote": "private",
+   "exclude": [
+    "**/*.md",
+    "**/_notes/**",
+    "install.php"
+   ]
+  },
+  {
+   "id": "the-facts",
+   "src": "the-facts",
+   "remote": "the-facts",
+   "exclude": [
+    "_build/**",
+    "**/*.md"
+   ]
+  },
+  {
+   "id": "reports",
+   "src": "reports",
+   "remote": "reports",
+   "exclude": [
+    "civic-report.zip",
+    "civic-report.skill",
+    "**/XXX-old-*.md",
+    "**/*_1.md",
+    "**/_resources/**/*.md"
+   ]
+  },
+  {
+   "id": "town-charter",
+   "src": "town-charter",
+   "remote": "town-charter",
+   "exclude": [
+    "convert.js",
+    "package.json",
+    "package-lock.json",
+    "**/*.md"
+   ]
+  },
+  {
+   "id": "links",
+   "src": "links",
+   "remote": "links"
+  },
+  {
+   "id": "reference",
+   "src": "reference",
+   "remote": "reference",
+   "exclude": [
+    "video/**"
+   ]
+  },
+  {
+   "id": "video",
+   "src": "reference/video/output",
+   "remote": "reference/video",
+   "exclude": [
+    "vtt/**",
+    "video/**"
+   ]
+  },
+  {
+   "id": "series",
+   "src": "series",
+   "remote": "series"
+  },
+  {
+   "id": "temp",
+   "src": "temp",
+   "remote": "temp",
+   "_note": "TEMPORARY: diagnostic reproduction for the phpwebhosting support ticket about the missing X-Forwarded-Proto header. Remove this area and delete temp/ (locally and on the server) once the ticket is closed."
+  }
+ ]
 }

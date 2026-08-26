@@ -87,6 +87,12 @@ function hasDirectoryRedirect(text) {
 // text, so the pragma is visible.
 const ALLOW_RELATIVE = /^\s*#\s*htaccess-check:\s*allow-relative\b/i;
 
+// A whole file can opt out with `# htaccess-check: exempt — why`. Used by the
+// deliberately-unfixed /temp diagnostic, which has to reproduce the bug for the
+// host's support team. Exemptions are reported, not silently skipped, so an
+// abandoned one stays visible.
+const EXEMPT = /^\s*#\s*htaccess-check:\s*exempt\b[\s—:-]*(.*)$/im;
+
 function relativeRedirects(text) {
   const found = [];
   let hostScoped = false;
@@ -120,6 +126,7 @@ function relativeRedirects(text) {
 const files = (await findHtaccess(ROOT)).sort();
 let failures = 0;
 let warnings = 0;
+let exemptions = 0;
 
 console.log(`\n  Checking ${files.length} .htaccess file(s) for the https redirect rule\n`);
 
@@ -130,6 +137,13 @@ for (const file of files) {
 
   if (!rewrites) {
     console.log(`  ·  ${rel}  — no RewriteEngine, inherits the root ruleset`);
+    continue;
+  }
+
+  const exempt = text.match(EXEMPT);
+  if (exempt) {
+    exemptions++;
+    console.log(`  ~  ${rel}  — EXEMPT: ${exempt[1].trim() || "no reason given"}`);
     continue;
   }
 
@@ -163,6 +177,13 @@ if (failures) {
 `);
 } else {
   console.log(`\n  All rewrite-enabled .htaccess files carry the rule.\n`);
+}
+
+if (exemptions) {
+  console.log(`  ${exemptions} file(s) exempt by declaration. An exemption is a standing promise that
+  the directory is meant to behave differently; if the reason no longer holds,
+  delete the pragma (or the directory) rather than leaving it.
+`);
 }
 
 if (warnings) {
