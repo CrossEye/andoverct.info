@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <link rel="alternate" type="application/json" href="PE9HFHvjHKA.json" title="Transcript as JSON">
   <style>
     /* Transcript-specific components. Theme, palette, and page chrome
        (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
@@ -22,6 +23,18 @@
 
     /* Machine-generation warning above the transcript body. */
     .transcript-warning { margin: 0 0 1.4rem; font-family: var(--sans); font-size: 0.8rem; font-style: italic; color: var(--ink-mute); }
+
+    /* Format switch. The plain-text panel is built from the DOM on first use
+       (assets/transcripts.js), so the text is not duplicated into the page. */
+    .formats { display: flex; align-items: baseline; gap: 1.1em; flex-wrap: wrap;
+               margin: 0 0 1.2rem; font-family: var(--sans); font-size: 0.82rem; }
+    .formats .tabs { display: flex; gap: 0.4em; }
+    .formats button { font: inherit; cursor: pointer; padding: 0.3em 0.85em; border-radius: 999px;
+                      border: 1px solid var(--rule-soft); background: transparent; color: var(--ink-mute); }
+    .formats button[aria-selected="true"] { background: var(--ink); color: var(--bg-page, #fff); border-color: var(--ink); }
+    .formats .machine { color: var(--ink-mute); }
+    .plaintext { white-space: pre-wrap; font-family: var(--sans); font-size: 0.9rem; line-height: 1.55;
+                 background: color-mix(in srgb, var(--ink) 4%, transparent); border-radius: 6px; padding: 1em; }
 
     .timestamp {
       flex: 0 0 5em; text-align: right;
@@ -83,7 +96,15 @@
 
     <p class="transcript-warning">Machine-generated transcript &mdash; check the video if in doubt.</p>
 
-    <div class="transcript">
+    <div class="formats">
+      <div class="tabs" role="tablist" aria-label="Transcript format">
+        <button id="tab-formatted" role="tab" aria-selected="true" aria-controls="panel-formatted">Transcript</button>
+        <button id="tab-plain" role="tab" aria-selected="false" aria-controls="panel-plain">Plain text</button>
+      </div>
+      <span class="machine">Machine-readable: <a href="PE9HFHvjHKA.json">JSON</a></span>
+    </div>
+
+    <div class="transcript" id="panel-formatted" role="tabpanel" aria-labelledby="tab-formatted">
       <div class="para speaker">
         <div class="timestamp" data-default-label="0:00" data-default-t="0">0:00</div>
         <div class="text"><span class="cue" id="t0" data-cue="t0" data-t="0" data-label="0:00">Talking my clock. I'm just gonna check to make sure we have a quorum. What's your so are you ready, Linda? I'm all set.</span> <span class="cue" id="t9" data-cue="t9" data-t="9" data-label="0:09">Do we lose Linda?</span> <span class="cue" id="t11" data-cue="t11" data-t="11" data-label="0:11">I'm all set. Oh, okay. Great. All right. So then</span> <span class="cue" id="t16" data-cue="t16" data-t="16" data-label="0:16">it is 07:01 by my computer. It's 08/31/2020.</span> <span class="cue" id="t22" data-cue="t22" data-t="22" data-label="0:22">I'm Megan Lally. I'm going to call the special meeting of the town of Andover's Inland Wetlands and Water Forces Commission to order.</span> <span class="cue" id="t30" data-cue="t30" data-t="30" data-label="0:30">Ask that everybody</span> <span class="cue" id="t32" data-cue="t32" data-t="32" data-label="0:32">please mute themselves.</span> <span class="cue" id="t36" data-cue="t36" data-t="36" data-label="0:36">The commissioners are requested to keep their video on throughout the meeting.</span> <span class="cue" id="t40" data-cue="t40" data-t="40" data-label="0:40">Members of the public, it's optional, though it is preferable if you go to speak to turn your video on just helps</span> <span class="cue" id="t47" data-cue="t47" data-t="47" data-label="0:47">clarify.</span> <span class="cue" id="t53" data-cue="t53" data-t="53" data-label="0:53">So I'm going go ahead and make sure that people who aren't muted and just in case they're walking around their houses I'm going to mute them. Okay,</span> <span class="cue" id="t61" data-cue="t61" data-t="61" data-label="1:01">so believe everyone is on mute.</span> <span class="cue" id="t64" data-cue="t64" data-t="64" data-label="1:04">Okay, so we'll do a quick unmute of the Commissioners in order to do roll call.</span> <span class="cue" id="t71" data-cue="t71" data-t="71" data-label="1:11">All right.</span> <span class="cue" id="t73" data-cue="t73" data-t="73" data-label="1:13">Megan Halley, chair, obviously present. Vice Chairman George Elliott is present.</span> <span class="cue" id="t79" data-cue="t79" data-t="79" data-label="1:19">I see Commissioner</span> <span class="cue" id="t81" data-cue="t81" data-t="81" data-label="1:21">Ed Smith, Commissioner Jim Halsey, and Commissioner Jed Larson. So we have all of our regular commissioners in attendance.</span> <span class="cue" id="t90" data-cue="t90" data-t="90" data-label="1:30">She has not yet been appointed</span> <span class="cue" id="t93" data-cue="t93" data-t="93" data-label="1:33">to</span> <span class="cue" id="t94" data-cue="t94" data-t="94" data-label="1:34">the</span> <span class="cue" id="t95" data-cue="t95" data-t="95" data-label="1:35">commission, but we will be submitting a</span> <span class="cue" id="t98" data-cue="t98" data-t="98" data-label="1:38">recommendation to the board as recommended to do so. But Gabrielle Anderson is also on the meeting today,</span> <span class="cue" id="t104" data-cue="t104" data-t="104" data-label="1:44">listening in.</span> <span class="cue" id="t106" data-cue="t106" data-t="106" data-label="1:46">Don't have any</span> <span class="cue" id="t108" data-cue="t108" data-t="108" data-label="1:48">commentary or voting privileges during this meeting. And then is William</span> <span class="cue" id="t113" data-cue="t113" data-t="113" data-label="1:53">Paul?</span> <span class="cue" id="t116" data-cue="t116" data-t="116" data-label="1:56">Yes. Oh,</span> <span class="cue" id="t120" data-cue="t120" data-t="120" data-label="2:00">I see you. Okay. Great.</span> <span class="cue" id="t122" data-cue="t122" data-t="122" data-label="2:02">Allison's iPad. Got it. Alright.</span> <span class="cue" id="t124" data-cue="t124" data-t="124" data-label="2:04">So mister Monroe has also expressed interest in the commission. I invited him to listen</span></div>
@@ -860,6 +881,7 @@
       </div>
       <div class="para-gap" aria-hidden="true">&nbsp;</div>
     </div>
+    <div class="plaintext" id="panel-plain" role="tabpanel" aria-labelledby="tab-plain" hidden></div>
 
     <footer class="page-footer">
 <p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>

@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <link rel="alternate" type="application/json" href="m82Moi7HX-8.json" title="Transcript as JSON">
   <style>
     /* Transcript-specific components. Theme, palette, and page chrome
        (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
@@ -22,6 +23,18 @@
 
     /* Machine-generation warning above the transcript body. */
     .transcript-warning { margin: 0 0 1.4rem; font-family: var(--sans); font-size: 0.8rem; font-style: italic; color: var(--ink-mute); }
+
+    /* Format switch. The plain-text panel is built from the DOM on first use
+       (assets/transcripts.js), so the text is not duplicated into the page. */
+    .formats { display: flex; align-items: baseline; gap: 1.1em; flex-wrap: wrap;
+               margin: 0 0 1.2rem; font-family: var(--sans); font-size: 0.82rem; }
+    .formats .tabs { display: flex; gap: 0.4em; }
+    .formats button { font: inherit; cursor: pointer; padding: 0.3em 0.85em; border-radius: 999px;
+                      border: 1px solid var(--rule-soft); background: transparent; color: var(--ink-mute); }
+    .formats button[aria-selected="true"] { background: var(--ink); color: var(--bg-page, #fff); border-color: var(--ink); }
+    .formats .machine { color: var(--ink-mute); }
+    .plaintext { white-space: pre-wrap; font-family: var(--sans); font-size: 0.9rem; line-height: 1.55;
+                 background: color-mix(in srgb, var(--ink) 4%, transparent); border-radius: 6px; padding: 1em; }
 
     .timestamp {
       flex: 0 0 5em; text-align: right;
@@ -83,7 +96,15 @@
 
     <p class="transcript-warning">Machine-generated transcript &mdash; check the video if in doubt.</p>
 
-    <div class="transcript">
+    <div class="formats">
+      <div class="tabs" role="tablist" aria-label="Transcript format">
+        <button id="tab-formatted" role="tab" aria-selected="true" aria-controls="panel-formatted">Transcript</button>
+        <button id="tab-plain" role="tab" aria-selected="false" aria-controls="panel-plain">Plain text</button>
+      </div>
+      <span class="machine">Machine-readable: <a href="m82Moi7HX-8.json">JSON</a></span>
+    </div>
+
+    <div class="transcript" id="panel-formatted" role="tabpanel" aria-labelledby="tab-formatted">
       <div class="para speaker">
         <div class="timestamp" data-default-label="1:47" data-default-t="107">1:47</div>
         <div class="text"><span class="cue" id="t107" data-cue="t107" data-t="107" data-label="1:47">So</span> <span class="cue" id="t120" data-cue="t120" data-t="120" data-label="2:00">my name is Mark McCrack, Chairman of the Board of Finance and</span> <span class="cue" id="t124" data-cue="t124" data-t="124" data-label="2:04">most of the former are in attendance with us tonight. A couple of couldn't be. We've all worked very hard on this. I know there's been a lot of people providing input</span> <span class="cue" id="t133" data-cue="t133" data-t="133" data-label="2:13">and</span> <span class="cue" id="t200" data-cue="t200" data-t="200" data-label="3:20">detail.</span> <span class="cue" id="t255" data-cue="t255" data-t="255" data-label="4:15">Tonight.</span> <span class="cue" id="t257" data-cue="t257" data-t="257" data-label="4:17">And then also just as the no point of interest, May 2 is also the RAM budget.</span> <span class="cue" id="t262" data-cue="t262" data-t="262" data-label="4:22">So just as a point of interest, most of you probably realize this, but the RAM school budget is not part of</span> <span class="cue" id="t294" data-cue="t294" data-t="294" data-label="4:54">Okay, just a quick view of the budget breakdown by entity.</span> <span class="cue" id="t343" data-cue="t343" data-t="343" data-label="5:43">Year, twenty twenty two, twenty twenty three fiscal year, which will end at June 30. And</span> <span class="cue" id="t349" data-cue="t349" data-t="349" data-label="5:49">so this is an overall spending decrease of about 200</span> <span class="cue" id="t381" data-cue="t381" data-t="381" data-label="6:21">RAM budget, which fortunately</span> <span class="cue" id="t383" data-cue="t383" data-t="383" data-label="6:23">for us,</span> <span class="cue" id="t385" data-cue="t385" data-t="385" data-label="6:25">it is going down this year.</span> <span class="cue" id="t387" data-cue="t387" data-t="387" data-label="6:27">And the only reason it's going down is that we have a lower percentage of handover students at RAM this year, just like last year. So that's a fortunate situation in terms of our finances.</span></div>
@@ -150,6 +171,7 @@
       </div>
       <div class="para-gap" aria-hidden="true">&nbsp;</div>
     </div>
+    <div class="plaintext" id="panel-plain" role="tabpanel" aria-labelledby="tab-plain" hidden></div>
 
     <footer class="page-footer">
 <p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>

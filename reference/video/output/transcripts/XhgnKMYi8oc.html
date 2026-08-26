@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <link rel="alternate" type="application/json" href="XhgnKMYi8oc.json" title="Transcript as JSON">
   <style>
     /* Transcript-specific components. Theme, palette, and page chrome
        (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
@@ -22,6 +23,18 @@
 
     /* Machine-generation warning above the transcript body. */
     .transcript-warning { margin: 0 0 1.4rem; font-family: var(--sans); font-size: 0.8rem; font-style: italic; color: var(--ink-mute); }
+
+    /* Format switch. The plain-text panel is built from the DOM on first use
+       (assets/transcripts.js), so the text is not duplicated into the page. */
+    .formats { display: flex; align-items: baseline; gap: 1.1em; flex-wrap: wrap;
+               margin: 0 0 1.2rem; font-family: var(--sans); font-size: 0.82rem; }
+    .formats .tabs { display: flex; gap: 0.4em; }
+    .formats button { font: inherit; cursor: pointer; padding: 0.3em 0.85em; border-radius: 999px;
+                      border: 1px solid var(--rule-soft); background: transparent; color: var(--ink-mute); }
+    .formats button[aria-selected="true"] { background: var(--ink); color: var(--bg-page, #fff); border-color: var(--ink); }
+    .formats .machine { color: var(--ink-mute); }
+    .plaintext { white-space: pre-wrap; font-family: var(--sans); font-size: 0.9rem; line-height: 1.55;
+                 background: color-mix(in srgb, var(--ink) 4%, transparent); border-radius: 6px; padding: 1em; }
 
     .timestamp {
       flex: 0 0 5em; text-align: right;
@@ -83,7 +96,15 @@
 
     <p class="transcript-warning">Machine-generated transcript &mdash; check the video if in doubt.</p>
 
-    <div class="transcript">
+    <div class="formats">
+      <div class="tabs" role="tablist" aria-label="Transcript format">
+        <button id="tab-formatted" role="tab" aria-selected="true" aria-controls="panel-formatted">Transcript</button>
+        <button id="tab-plain" role="tab" aria-selected="false" aria-controls="panel-plain">Plain text</button>
+      </div>
+      <span class="machine">Machine-readable: <a href="XhgnKMYi8oc.json">JSON</a></span>
+    </div>
+
+    <div class="transcript" id="panel-formatted" role="tabpanel" aria-labelledby="tab-formatted">
       <div class="para speaker">
         <div class="timestamp" data-default-label="5:19" data-default-t="319">5:19</div>
         <div class="text"><span class="cue" id="t319" data-cue="t319" data-t="319" data-label="5:19">I'm thinking that this septic here is your standby, your reserve area. Okay.</span> <span class="cue" id="t322" data-cue="t322" data-t="322" data-label="5:22">So, we're we're doing the septic up</span> <span class="cue" id="t325" data-cue="t325" data-t="325" data-label="5:25">there and then these</span> <span class="cue" id="t332" data-cue="t332" data-t="332" data-label="5:32">two areas right here that you're collecting the rain from the</span> <span class="cue" id="t359" data-cue="t359" data-t="359" data-label="5:59">[Music] engineer head</span> <span class="cue" id="t388" data-cue="t388" data-t="388" data-label="6:28">Do you want it going up on a certain area or</span> <span class="cue" id="t390" data-cue="t390" data-t="390" data-label="6:30">Well, so yeah, I'd like to So you need</span> <span class="cue" id="t396" data-cue="t396" data-t="396" data-label="6:36">to see this this and the house site</span> <span class="cue" id="t399" data-cue="t399" data-t="399" data-label="6:39">development. You might be But I could</span> <span class="cue" id="t402" data-cue="t402" data-t="402" data-label="6:42">talk to you here just a little.</span> <span class="cue" id="t404" data-cue="t404" data-t="404" data-label="6:44">So</span> <span class="cue" id="t419" data-cue="t419" data-t="419" data-label="6:59">picturey out there and so I said</span> <span class="cue" id="t422" data-cue="t422" data-t="422" data-label="7:02">[Music]</span> <span class="cue" id="t425" data-cue="t425" data-t="425" data-label="7:05">okay</span> <span class="cue" id="t426" data-cue="t426" data-t="426" data-label="7:06">we</span> <span class="cue" id="t432" data-cue="t432" data-t="432" data-label="7:12">nt I think it was going pretty much up else</span> <span class="cue" id="t438" data-cue="t438" data-t="438" data-label="7:18">Yeah, you know the point of the house on the</span> <span class="cue" id="t444" data-cue="t444" data-t="444" data-label="7:24">left. Okay, I was looking at it. But what we what I didn't see in</span> <span class="cue" id="t463" data-cue="t463" data-t="463" data-label="7:43">that I'm going to start one of my favorite little things</span></div>
@@ -105,6 +126,7 @@
       </div>
       <div class="para-gap" aria-hidden="true">&nbsp;</div>
     </div>
+    <div class="plaintext" id="panel-plain" role="tabpanel" aria-labelledby="tab-plain" hidden></div>
 
     <footer class="page-footer">
 <p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>

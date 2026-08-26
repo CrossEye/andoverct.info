@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <link rel="alternate" type="application/json" href="MDIgE6O1HoU.json" title="Transcript as JSON">
   <style>
     /* Transcript-specific components. Theme, palette, and page chrome
        (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
@@ -22,6 +23,18 @@
 
     /* Machine-generation warning above the transcript body. */
     .transcript-warning { margin: 0 0 1.4rem; font-family: var(--sans); font-size: 0.8rem; font-style: italic; color: var(--ink-mute); }
+
+    /* Format switch. The plain-text panel is built from the DOM on first use
+       (assets/transcripts.js), so the text is not duplicated into the page. */
+    .formats { display: flex; align-items: baseline; gap: 1.1em; flex-wrap: wrap;
+               margin: 0 0 1.2rem; font-family: var(--sans); font-size: 0.82rem; }
+    .formats .tabs { display: flex; gap: 0.4em; }
+    .formats button { font: inherit; cursor: pointer; padding: 0.3em 0.85em; border-radius: 999px;
+                      border: 1px solid var(--rule-soft); background: transparent; color: var(--ink-mute); }
+    .formats button[aria-selected="true"] { background: var(--ink); color: var(--bg-page, #fff); border-color: var(--ink); }
+    .formats .machine { color: var(--ink-mute); }
+    .plaintext { white-space: pre-wrap; font-family: var(--sans); font-size: 0.9rem; line-height: 1.55;
+                 background: color-mix(in srgb, var(--ink) 4%, transparent); border-radius: 6px; padding: 1em; }
 
     .timestamp {
       flex: 0 0 5em; text-align: right;
@@ -83,7 +96,15 @@
 
     <p class="transcript-warning">Machine-generated transcript &mdash; check the video if in doubt.</p>
 
-    <div class="transcript">
+    <div class="formats">
+      <div class="tabs" role="tablist" aria-label="Transcript format">
+        <button id="tab-formatted" role="tab" aria-selected="true" aria-controls="panel-formatted">Transcript</button>
+        <button id="tab-plain" role="tab" aria-selected="false" aria-controls="panel-plain">Plain text</button>
+      </div>
+      <span class="machine">Machine-readable: <a href="MDIgE6O1HoU.json">JSON</a></span>
+    </div>
+
+    <div class="transcript" id="panel-formatted" role="tabpanel" aria-labelledby="tab-formatted">
       <div class="para speaker">
         <div class="timestamp" data-default-label="0:09" data-default-t="9">0:09</div>
         <div class="text"><span class="cue" id="t9" data-cue="t9" data-t="9" data-label="0:09">roll call and the seaing of alternates I see an CR is with us Leanne</span> <span class="cue" id="t27" data-cue="t27" data-t="27" data-label="0:27">here I don't see Steve Nelson</span> <span class="cue" id="t34" data-cue="t34" data-t="34" data-label="0:34">and I don't see Scott psan Scott may be at the at the</span> <span class="cue" id="t36" data-cue="t36" data-t="36" data-label="0:36">community center</span> <span class="cue" id="t38" data-cue="t38" data-t="38" data-label="0:38">meeting okay yeah I talked to him</span> <span class="cue" id="t41" data-cue="t41" data-t="41" data-label="0:41">earlier he thought that he would be here</span> <span class="cue" id="t43" data-cue="t43" data-t="43" data-label="0:43">but but be that as it may and so with</span> <span class="cue" id="t48" data-cue="t48" data-t="48" data-label="0:48">that Susan I'm going to see see you</span> <span class="cue" id="t51" data-cue="t51" data-t="51" data-label="0:51">as an alternate for</span> <span class="cue" id="t54" data-cue="t54" data-t="54" data-label="0:54">Scott</span> <span class="cue" id="t87" data-cue="t87" data-t="87" data-label="1:27">so anyhow that's that's our lineup for tonight an Leanne Susan and</span> <span class="cue" id="t92" data-cue="t92" data-t="92" data-label="1:32">me additions or changes to the agenda</span> <span class="cue" id="t97" data-cue="t97" data-t="97" data-label="1:37">Allan we we were starting to talk</span> <span class="cue" id="t100" data-cue="t100" data-t="100" data-label="1:40">just a little bit about the</span> <span class="cue" id="t102" data-cue="t102" data-t="102" data-label="1:42">sequencing sequencing of events we as</span> <span class="cue" id="t106" data-cue="t106" data-t="106" data-label="1:46">you know we got a proposed</span> <span class="cue" id="t109" data-cue="t109" data-t="109" data-label="1:49">amendment to the original application</span> <span class="cue" id="t112" data-cue="t112" data-t="112" data-label="1:52">with respect to a restoration plan that</span> <span class="cue" id="t116" data-cue="t116" data-t="116" data-label="1:56">came in</span> <span class="cue" id="t117" data-cue="t117" data-t="117" data-label="1:57">late last week and maybe maybe</span> <span class="cue" id="t122" data-cue="t122" data-t="122" data-label="2:02">some early this week that we got to see</span> <span class="cue" id="t127" data-cue="t127" data-t="127" data-label="2:07">all that so</span> <span class="cue" id="t136" data-cue="t136" data-t="136" data-label="2:16">we've got that I I would think that we would accept that as an item Allen</span> <span class="cue" id="t139" data-cue="t139" data-t="139" data-label="2:19">and then go into executive session and</span> <span class="cue" id="t141" data-cue="t141" data-t="141" data-label="2:21">discuss the way</span> <span class="cue" id="t143" data-cue="t143" data-t="143" data-label="2:23">ahead yeah that sounds</span> <span class="cue" id="t151" data-cue="t151" data-t="151" data-label="2:31">reasonable Okay so what what I'll do is make a motion to</span> <span class="cue" id="t155" data-cue="t155" data-t="155" data-label="2:35">change the</span> <span class="cue" id="t156" data-cue="t156" data-t="156" data-label="2:36">agenda by eliminating item</span> <span class="cue" id="t161" data-cue="t161" data-t="161" data-label="2:41">five the executive</span> <span class="cue" id="t164" data-cue="t164" data-t="164" data-label="2:44">session will under new business we will</span> <span class="cue" id="t167" data-cue="t167" data-t="167" data-label="2:47">put receive amendment to Gravel Pit</span></div>
@@ -300,6 +321,7 @@
       </div>
       <div class="para-gap" aria-hidden="true">&nbsp;</div>
     </div>
+    <div class="plaintext" id="panel-plain" role="tabpanel" aria-labelledby="tab-plain" hidden></div>
 
     <footer class="page-footer">
 <p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>

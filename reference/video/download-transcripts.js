@@ -571,7 +571,10 @@ function buildParagraphs(cues, rng) {
 // VTT → HTML conversion (adapts to YouTube vs Zoom)
 // ---------------------------------------------------------------------------
 
-function convertVttToHtml(meeting, vttText) {
+// Parse a VTT into the paragraphs both renderers share, with time-based cue
+// ids already assigned (t133, t133-1, …). Split out of convertVttToHtml so the
+// HTML page and its JSON sibling are guaranteed to describe the same text.
+function transcriptParagraphs(meeting, vttText) {
   const isZoom = meeting.type === "Zoom";
   // Meetings transcribed by Deepgram (rather than YouTube auto-captions) carry
   // transcriber: "deepgram" — their VTTs use Whisper-style clean cues with ">>"
@@ -591,12 +594,10 @@ function convertVttToHtml(meeting, vttText) {
   // not depend on how many transcripts ran before this one.
   const rng = mulberry32(meeting.paraSeed != null ? (meeting.paraSeed >>> 0) : hashToSeed(meeting.id));
   const paragraphs = buildParagraphs(cues, rng);
-  const videoUrl = meeting.link;
 
   // Assign time-based ids: t133, t133-1, t133-2, etc.
   const idCounts = {};
-  const allCues = paragraphs.flatMap((p) => p.cues);
-  for (const cue of allCues) {
+  for (const cue of paragraphs.flatMap((p) => p.cues)) {
     cue._t = Math.floor(cue.seconds);
     cue._label = formatTimestamp(cue.start);
     const key = cue._t;
@@ -608,6 +609,65 @@ function convertVttToHtml(meeting, vttText) {
       cue._id = `t${key}-${idCounts[key]}`;
     }
   }
+  return { paragraphs, isZoom, isDeepgram };
+}
+
+// Encode a paragraph's caption cues as offsets into its own text, e.g.
+// "3202:0|3204-1:37". Storing the words once and pointing into them keeps the
+// phrase-level timing at about a fifth of what a second copy of the text would
+// cost, and rules out a paragraph whose `text` and cues could disagree. The
+// key is the cue's page anchor with the leading "t" dropped.
+function encodeCues(cues) {
+  let offset = 0;
+  return cues
+    .map((cue) => {
+      const at = offset;
+      offset += cue.text.length + 1; // +1 for the space `text` is joined with
+      return `${cue._id.slice(1)}:${at}`;
+    })
+    .join("|");
+}
+
+const CUES_FORMAT =
+  'Pipe-separated caption cues, each "time[-n]:offset": time is seconds from ' +
+  "the start of the recording, the optional -n disambiguates cues landing in " +
+  "the same second, and offset is where the cue begins as a character " +
+  "(Unicode code point) index into this paragraph's `text`. A cue runs to the " +
+  "next cue's offset minus one, or to the end of `text`. The full form, e.g. " +
+  "t3204-1, is the cue's anchor on the transcript page: <transcriptPage>#t3204-1.";
+
+// The machine-readable sibling: <id>.json next to <id>.html. Self-describing —
+// an agent that fetches only this file still knows which meeting it is, where
+// the recording lives, and how to read `cues`. `transcript` is a flat array of
+// paragraphs in order; each carries its own start time plus the phrase-level
+// cue offsets, so a consumer can filter to any window and still cite a precise
+// timestamp or deep-link straight to the phrase.
+function convertVttToJson(meeting, vttText) {
+  const { paragraphs, isZoom, isDeepgram } = transcriptParagraphs(meeting, vttText);
+  return {
+    id: meeting.id,
+    meeting: meeting.meeting,
+    date: meeting.date,
+    type: meeting.type,
+    recording: meeting.link || null,
+    transcriptPage: `${PUBLIC_TRANSCRIPT_BASE}${meeting.id}.html`,
+    source: isDeepgram ? "Deepgram" : isZoom ? "OpenAI Whisper" : "YouTube auto-captions",
+    note: "Machine-generated transcript; the recording is authoritative. Times are seconds from the start of the recording.",
+    cuesFormat: CUES_FORMAT,
+    paragraphCount: paragraphs.length,
+    transcript: paragraphs.map((para) => ({
+      t: para.cues[0]._t,
+      time: para.cues[0]._label,
+      speakerTurn: !!para.isSpeakerChange,
+      text: para.cues.map((c) => c.text).join(" "),
+      cues: encodeCues(para.cues),
+    })),
+  };
+}
+
+function convertVttToHtml(meeting, vttText) {
+  const { paragraphs, isZoom, isDeepgram } = transcriptParagraphs(meeting, vttText);
+  const videoUrl = meeting.link;
 
   const paraHtml = paragraphs
     .map((para) => {
@@ -682,6 +742,7 @@ function convertVttToHtml(meeting, vttText) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <link rel="alternate" type="application/json" href="${escapeHtml(meeting.id)}.json" title="Transcript as JSON">
   <style>
     /* Transcript-specific components. Theme, palette, and page chrome
        (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
@@ -694,6 +755,18 @@ function convertVttToHtml(meeting, vttText) {
 
     /* Machine-generation warning above the transcript body. */
     .transcript-warning { margin: 0 0 1.4rem; font-family: var(--sans); font-size: 0.8rem; font-style: italic; color: var(--ink-mute); }
+
+    /* Format switch. The plain-text panel is built from the DOM on first use
+       (assets/transcripts.js), so the text is not duplicated into the page. */
+    .formats { display: flex; align-items: baseline; gap: 1.1em; flex-wrap: wrap;
+               margin: 0 0 1.2rem; font-family: var(--sans); font-size: 0.82rem; }
+    .formats .tabs { display: flex; gap: 0.4em; }
+    .formats button { font: inherit; cursor: pointer; padding: 0.3em 0.85em; border-radius: 999px;
+                      border: 1px solid var(--rule-soft); background: transparent; color: var(--ink-mute); }
+    .formats button[aria-selected="true"] { background: var(--ink); color: var(--bg-page, #fff); border-color: var(--ink); }
+    .formats .machine { color: var(--ink-mute); }
+    .plaintext { white-space: pre-wrap; font-family: var(--sans); font-size: 0.9rem; line-height: 1.55;
+                 background: color-mix(in srgb, var(--ink) 4%, transparent); border-radius: 6px; padding: 1em; }
 
     .timestamp {
       flex: 0 0 5em; text-align: right;
@@ -756,9 +829,18 @@ ${pageBanner(buildCrumbs([
 
     <p class="transcript-warning">Machine-generated transcript &mdash; check the ${isZoom ? "recording" : "video"} if in doubt.</p>
 
-    <div class="transcript">
+    <div class="formats">
+      <div class="tabs" role="tablist" aria-label="Transcript format">
+        <button id="tab-formatted" role="tab" aria-selected="true" aria-controls="panel-formatted">Transcript</button>
+        <button id="tab-plain" role="tab" aria-selected="false" aria-controls="panel-plain">Plain text</button>
+      </div>
+      <span class="machine">Machine-readable: <a href="${escapeHtml(meeting.id)}.json">JSON</a></span>
+    </div>
+
+    <div class="transcript" id="panel-formatted" role="tabpanel" aria-labelledby="tab-formatted">
 ${paraHtml}
     </div>
+    <div class="plaintext" id="panel-plain" role="tabpanel" aria-labelledby="tab-plain" hidden></div>
 
     ${siteFooterHtml(`${disclaimerSource} Names, numbers, and other details may be inaccurate; the ${isZoom ? "recording" : "video"} is authoritative.`)}
   </main>
@@ -1156,6 +1238,10 @@ async function main() {
     const vttText = fs.readFileSync(path.join(VTT_DIR, vttFile), "utf-8");
     const html = convertVttToHtml(meeting, vttText);
     fs.writeFileSync(htmlFile, html);
+    fs.writeFileSync(
+      path.join(TRANSCRIPTS_DIR, `${id}.json`),
+      JSON.stringify(convertVttToJson(meeting, vttText), null, 1) + "\n"
+    );
     console.log(`[${id}] Converted to HTML`);
     converted++;
   }
@@ -1170,7 +1256,7 @@ async function main() {
 
 // Exported so targeted build scripts (e.g. temp/build-boe-vtt.js) can reuse the
 // converter without re-running the full download/transcribe pipeline.
-module.exports = { convertVttToHtml, generateIndex, writeMeetingsWithTranscripts, downloadYouTubeVtt, ensureYtDlp, OUTPUT_DIR, VTT_DIR, TRANSCRIPTS_DIR, MEETINGS_FILE };
+module.exports = { convertVttToHtml, convertVttToJson, encodeCues, transcriptParagraphs, generateIndex, writeMeetingsWithTranscripts, downloadYouTubeVtt, ensureYtDlp, OUTPUT_DIR, VTT_DIR, TRANSCRIPTS_DIR, MEETINGS_FILE };
 
 if (require.main === module) {
   main().catch(console.error);

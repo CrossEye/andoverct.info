@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <link rel="alternate" type="application/json" href="Skm7yZQXQi0.json" title="Transcript as JSON">
   <style>
     /* Transcript-specific components. Theme, palette, and page chrome
        (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
@@ -22,6 +23,18 @@
 
     /* Machine-generation warning above the transcript body. */
     .transcript-warning { margin: 0 0 1.4rem; font-family: var(--sans); font-size: 0.8rem; font-style: italic; color: var(--ink-mute); }
+
+    /* Format switch. The plain-text panel is built from the DOM on first use
+       (assets/transcripts.js), so the text is not duplicated into the page. */
+    .formats { display: flex; align-items: baseline; gap: 1.1em; flex-wrap: wrap;
+               margin: 0 0 1.2rem; font-family: var(--sans); font-size: 0.82rem; }
+    .formats .tabs { display: flex; gap: 0.4em; }
+    .formats button { font: inherit; cursor: pointer; padding: 0.3em 0.85em; border-radius: 999px;
+                      border: 1px solid var(--rule-soft); background: transparent; color: var(--ink-mute); }
+    .formats button[aria-selected="true"] { background: var(--ink); color: var(--bg-page, #fff); border-color: var(--ink); }
+    .formats .machine { color: var(--ink-mute); }
+    .plaintext { white-space: pre-wrap; font-family: var(--sans); font-size: 0.9rem; line-height: 1.55;
+                 background: color-mix(in srgb, var(--ink) 4%, transparent); border-radius: 6px; padding: 1em; }
 
     .timestamp {
       flex: 0 0 5em; text-align: right;
@@ -83,7 +96,15 @@
 
     <p class="transcript-warning">Machine-generated transcript &mdash; check the video if in doubt.</p>
 
-    <div class="transcript">
+    <div class="formats">
+      <div class="tabs" role="tablist" aria-label="Transcript format">
+        <button id="tab-formatted" role="tab" aria-selected="true" aria-controls="panel-formatted">Transcript</button>
+        <button id="tab-plain" role="tab" aria-selected="false" aria-controls="panel-plain">Plain text</button>
+      </div>
+      <span class="machine">Machine-readable: <a href="Skm7yZQXQi0.json">JSON</a></span>
+    </div>
+
+    <div class="transcript" id="panel-formatted" role="tabpanel" aria-labelledby="tab-formatted">
       <div class="para speaker">
         <div class="timestamp" data-default-label="11:11" data-default-t="671">11:11</div>
         <div class="text"><span class="cue" id="t671" data-cue="t671" data-t="671" data-label="11:11">So</span> <span class="cue" id="t672" data-cue="t672" data-t="672" data-label="11:12">the way it's done</span> <span class="cue" id="t674" data-cue="t674" data-t="674" data-label="11:14">on our town budgets is it's on the revenue tab</span> <span class="cue" id="t678" data-cue="t678" data-t="678" data-label="11:18">as a credit against how much in taxes we have to raise,</span> <span class="cue" id="t682" data-cue="t682" data-t="682" data-label="11:22">so it offsets both RAM and</span> <span class="cue" id="t684" data-cue="t684" data-t="684" data-label="11:24">AES.</span> <span class="cue" id="t686" data-cue="t686" data-t="686" data-label="11:26">On the third commitment, is that how would you care? No, and it's</span> <span class="cue" id="t690" data-cue="t690" data-t="690" data-label="11:30">done this way for a couple different reasons. So I don't know if you remember in the past that ECS funding has been held hostage by the state multiple times over the years.</span> <span class="cue" id="t700" data-cue="t700" data-t="700" data-label="11:40">And so</span> <span class="cue" id="t701" data-cue="t701" data-t="701" data-label="11:41">if we put it in the school as a revenue item,</span> <span class="cue" id="t705" data-cue="t705" data-t="705" data-label="11:45">either school,</span> <span class="cue" id="t706" data-cue="t706" data-t="706" data-label="11:46">we would be behind</span> <span class="cue" id="t709" data-cue="t709" data-t="709" data-label="11:49">then to pay RAM,</span> <span class="cue" id="t711" data-cue="t711" data-t="711" data-label="11:51">and behind</span> <span class="cue" id="t712" data-cue="t712" data-t="712" data-label="11:52">then to pay the school,</span> <span class="cue" id="t714" data-cue="t714" data-t="714" data-label="11:54">because they'd be waiting on those dollars when the state holds them hostage.</span> <span class="cue" id="t718" data-cue="t718" data-t="718" data-label="11:58">So what we actually do is simply say, this is how much money we got to educate our children</span> <span class="cue" id="t723" data-cue="t723" data-t="723" data-label="12:03">under education cost sharing.</span> <span class="cue" id="t725" data-cue="t725" data-t="725" data-label="12:05">And also keep in mind, it literally goes up and down every year.</span> <span class="cue" id="t729" data-cue="t729" data-t="729" data-label="12:09">So by doing it this way,</span> <span class="cue" id="t732" data-cue="t732" data-t="732" data-label="12:12">the school gets their money in</span> <span class="cue" id="t734" data-cue="t734" data-t="734" data-label="12:14">lump sums. So they get a big payout</span> <span class="cue" id="t737" data-cue="t737" data-t="737" data-label="12:17">August,</span> <span class="cue" id="t738" data-cue="t738" data-t="738" data-label="12:18">and they get another large payout</span></div>
@@ -105,6 +126,7 @@
       </div>
       <div class="para-gap" aria-hidden="true">&nbsp;</div>
     </div>
+    <div class="plaintext" id="panel-plain" role="tabpanel" aria-labelledby="tab-plain" hidden></div>
 
     <footer class="page-footer">
 <p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>

@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <link rel="alternate" type="application/json" href="bYLOmtE6aTU.json" title="Transcript as JSON">
   <style>
     /* Transcript-specific components. Theme, palette, and page chrome
        (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
@@ -22,6 +23,18 @@
 
     /* Machine-generation warning above the transcript body. */
     .transcript-warning { margin: 0 0 1.4rem; font-family: var(--sans); font-size: 0.8rem; font-style: italic; color: var(--ink-mute); }
+
+    /* Format switch. The plain-text panel is built from the DOM on first use
+       (assets/transcripts.js), so the text is not duplicated into the page. */
+    .formats { display: flex; align-items: baseline; gap: 1.1em; flex-wrap: wrap;
+               margin: 0 0 1.2rem; font-family: var(--sans); font-size: 0.82rem; }
+    .formats .tabs { display: flex; gap: 0.4em; }
+    .formats button { font: inherit; cursor: pointer; padding: 0.3em 0.85em; border-radius: 999px;
+                      border: 1px solid var(--rule-soft); background: transparent; color: var(--ink-mute); }
+    .formats button[aria-selected="true"] { background: var(--ink); color: var(--bg-page, #fff); border-color: var(--ink); }
+    .formats .machine { color: var(--ink-mute); }
+    .plaintext { white-space: pre-wrap; font-family: var(--sans); font-size: 0.9rem; line-height: 1.55;
+                 background: color-mix(in srgb, var(--ink) 4%, transparent); border-radius: 6px; padding: 1em; }
 
     .timestamp {
       flex: 0 0 5em; text-align: right;
@@ -83,7 +96,15 @@
 
     <p class="transcript-warning">Machine-generated transcript &mdash; check the video if in doubt.</p>
 
-    <div class="transcript">
+    <div class="formats">
+      <div class="tabs" role="tablist" aria-label="Transcript format">
+        <button id="tab-formatted" role="tab" aria-selected="true" aria-controls="panel-formatted">Transcript</button>
+        <button id="tab-plain" role="tab" aria-selected="false" aria-controls="panel-plain">Plain text</button>
+      </div>
+      <span class="machine">Machine-readable: <a href="bYLOmtE6aTU.json">JSON</a></span>
+    </div>
+
+    <div class="transcript" id="panel-formatted" role="tabpanel" aria-labelledby="tab-formatted">
       <div class="para speaker">
         <div class="timestamp" data-default-label="0:12" data-default-t="12">0:12</div>
         <div class="text"><span class="cue" id="t12" data-cue="t12" data-t="12" data-label="0:12">I'm going to call to order the Town of Andover Board of Selectmen regular</span> <span class="cue" id="t14" data-cue="t14" data-t="14" data-label="0:14">meeting for Monday, June 9th, 2025</span> <span class="cue" id="t18" data-cue="t18" data-t="18" data-label="0:18">at 700 p.m. Our first item of order is</span> <span class="cue" id="t22" data-cue="t22" data-t="22" data-label="0:22">to recite the pledge of allegiance.</span> <span class="cue" id="t26" data-cue="t26" data-t="26" data-label="0:26">I pledge allegiance to the flag of the</span> <span class="cue" id="t29" data-cue="t29" data-t="29" data-label="0:29">United States of America to the republic</span> <span class="cue" id="t32" data-cue="t32" data-t="32" data-label="0:32">for which it stands one nation</span> <span class="cue" id="t37" data-cue="t37" data-t="37" data-label="0:37">with liberty and justice for all. All</span> <span class="cue" id="t40" data-cue="t40" data-t="40" data-label="0:40">right. Thank you very much. Item two, a</span> <span class="cue" id="t43" data-cue="t43" data-t="43" data-label="0:43">public speak. Kathy Palazi.</span> <span class="cue" id="t55" data-cue="t55" data-t="55" data-label="0:55">Thank you. we have nothing this evening.</span> <span class="cue" id="t56" data-cue="t56" data-t="56" data-label="0:56">Okay, Diane Grineer.</span> <span class="cue" id="t64" data-cue="t64" data-t="64" data-label="1:04">thank you. just a couple of things. One is I'm saddened to hear</span> <span class="cue" id="t67" data-cue="t67" data-t="67" data-label="1:07">about the resignations of Jay Tuttle and</span> <span class="cue" id="t70" data-cue="t70" data-t="70" data-label="1:10">Rick Kaufman. I think they served the</span> <span class="cue" id="t72" data-cue="t72" data-t="72" data-label="1:12">town well and it'll be a loss to see</span> <span class="cue" id="t75" data-cue="t75" data-t="75" data-label="1:15">both of those guys leave. also I'd</span> <span class="cue" id="t79" data-cue="t79" data-t="79" data-label="1:19">like to comment again as I have often</span> <span class="cue" id="t81" data-cue="t81" data-t="81" data-label="1:21">about I'm delighted to to be able to</span> <span class="cue" id="t84" data-cue="t84" data-t="84" data-label="1:24">read the town administrator's report</span> <span class="cue" id="t87" data-cue="t87" data-t="87" data-label="1:27">that's always attached to the</span> <span class="cue" id="t90" data-cue="t90" data-t="90" data-label="1:30">meetings here. I think it provides me</span> <span class="cue" id="t93" data-cue="t93" data-t="93" data-label="1:33">with a plethora of information that</span> <span class="cue" id="t96" data-cue="t96" data-t="96" data-label="1:36">very easy to obtain and I I love</span> <span class="cue" id="t100" data-cue="t100" data-t="100" data-label="1:40">seeing it. So I thank you for that. And</span> <span class="cue" id="t102" data-cue="t102" data-t="102" data-label="1:42">the third thing is I'm still sort of</span> <span class="cue" id="t104" data-cue="t104" data-t="104" data-label="1:44">looking to see on your agenda at some</span> <span class="cue" id="t107" data-cue="t107" data-t="107" data-label="1:47">point an update on the Bernap clock</span> <span class="cue" id="t111" data-cue="t111" data-t="111" data-label="1:51">where it is and just an update what what</span> <span class="cue" id="t114" data-cue="t114" data-t="114" data-label="1:54">happened to it. it just sort of seems</span> <span class="cue" id="t116" data-cue="t116" data-t="116" data-label="1:56">to have fallen off the the chart here.</span> <span class="cue" id="t118" data-cue="t118" data-t="118" data-label="1:58">So some</span> <span class="cue" id="t120" data-cue="t120" data-t="120" data-label="2:00">some point in time if you could just</span></div>
@@ -770,6 +791,7 @@
       </div>
       <div class="para-gap" aria-hidden="true">&nbsp;</div>
     </div>
+    <div class="plaintext" id="panel-plain" role="tabpanel" aria-labelledby="tab-plain" hidden></div>
 
     <footer class="page-footer">
 <p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>

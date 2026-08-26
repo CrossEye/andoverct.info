@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <link rel="alternate" type="application/json" href="Tkdj8Dj-Eq8.json" title="Transcript as JSON">
   <style>
     /* Transcript-specific components. Theme, palette, and page chrome
        (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
@@ -22,6 +23,18 @@
 
     /* Machine-generation warning above the transcript body. */
     .transcript-warning { margin: 0 0 1.4rem; font-family: var(--sans); font-size: 0.8rem; font-style: italic; color: var(--ink-mute); }
+
+    /* Format switch. The plain-text panel is built from the DOM on first use
+       (assets/transcripts.js), so the text is not duplicated into the page. */
+    .formats { display: flex; align-items: baseline; gap: 1.1em; flex-wrap: wrap;
+               margin: 0 0 1.2rem; font-family: var(--sans); font-size: 0.82rem; }
+    .formats .tabs { display: flex; gap: 0.4em; }
+    .formats button { font: inherit; cursor: pointer; padding: 0.3em 0.85em; border-radius: 999px;
+                      border: 1px solid var(--rule-soft); background: transparent; color: var(--ink-mute); }
+    .formats button[aria-selected="true"] { background: var(--ink); color: var(--bg-page, #fff); border-color: var(--ink); }
+    .formats .machine { color: var(--ink-mute); }
+    .plaintext { white-space: pre-wrap; font-family: var(--sans); font-size: 0.9rem; line-height: 1.55;
+                 background: color-mix(in srgb, var(--ink) 4%, transparent); border-radius: 6px; padding: 1em; }
 
     .timestamp {
       flex: 0 0 5em; text-align: right;
@@ -83,7 +96,15 @@
 
     <p class="transcript-warning">Machine-generated transcript &mdash; check the video if in doubt.</p>
 
-    <div class="transcript">
+    <div class="formats">
+      <div class="tabs" role="tablist" aria-label="Transcript format">
+        <button id="tab-formatted" role="tab" aria-selected="true" aria-controls="panel-formatted">Transcript</button>
+        <button id="tab-plain" role="tab" aria-selected="false" aria-controls="panel-plain">Plain text</button>
+      </div>
+      <span class="machine">Machine-readable: <a href="Tkdj8Dj-Eq8.json">JSON</a></span>
+    </div>
+
+    <div class="transcript" id="panel-formatted" role="tabpanel" aria-labelledby="tab-formatted">
       <div class="para speaker">
         <div class="timestamp" data-default-label="0:00" data-default-t="0">0:00</div>
         <div class="text"><span class="cue" id="t0" data-cue="t0" data-t="0" data-label="0:00">I'll take it from you.</span> <span class="cue" id="t66" data-cue="t66" data-t="66" data-label="1:06">Good evening, everybody. We're</span> <span class="cue" id="t68" data-cue="t68" data-t="68" data-label="1:08">gonna get started. It's 07:00,</span> <span class="cue" id="t70" data-cue="t70" data-t="70" data-label="1:10">and it appears that we have the</span> <span class="cue" id="t73" data-cue="t73" data-t="73" data-label="1:13">minimum of 25 residents that would be able to both be in this town meeting. So</span> <span class="cue" id="t82" data-cue="t82" data-t="82" data-label="1:22">I'll tell you we're here for two purposes. One is to vote on</span> <span class="cue" id="t87" data-cue="t87" data-t="87" data-label="1:27">the Ram</span> <span class="cue" id="t89" data-cue="t89" data-t="89" data-label="1:29">member from the town of Andover to</span> <span class="cue" id="t93" data-cue="t93" data-t="93" data-label="1:33">fill the vacated position, and the other one is to vote on a series of ordinances</span> <span class="cue" id="t99" data-cue="t99" data-t="99" data-label="1:39">that we have in front of us.</span> <span class="cue" id="t101" data-cue="t101" data-t="101" data-label="1:41">I hope everyone had the opportunity to read those ordinances,</span> <span class="cue" id="t105" data-cue="t105" data-t="105" data-label="1:45">and we'll get started.</span> <span class="cue" id="t107" data-cue="t107" data-t="107" data-label="1:47">So</span> <span class="cue" id="t109" data-cue="t109" data-t="109" data-label="1:49">we're gonna go through to</span> <span class="cue" id="t114" data-cue="t114" data-t="114" data-label="1:54">to hold the public hearing led by the board of selectmen,</span> <span class="cue" id="t118" data-cue="t118" data-t="118" data-label="1:58">pursuing by the town charter section four zero four regarding</span> <span class="cue" id="t121" data-cue="t121" data-t="121" data-label="2:01">the proposed ordinances,</span> <span class="cue" id="t123" data-cue="t123" data-t="123" data-label="2:03">proposed amendment to the town ordinances,</span> <span class="cue" id="t126" data-cue="t126" data-t="126" data-label="2:06">the pro proposed repeal ordinances to be considered by the town meeting.</span> <span class="cue" id="t150" data-cue="t150" data-t="150" data-label="2:30">And to</span> <span class="cue" id="t151" data-cue="t151" data-t="151" data-label="2:31">vote to replace and and or a member of the RAM Board of Education. Okay. It's actually so we're</span> <span class="cue" id="t160" data-cue="t160" data-t="160" data-label="2:40">gonna get started. The first section is to choose a moderator for the special town meeting.</span> <span class="cue" id="t166" data-cue="t166" data-t="166" data-label="2:46">Any nominations?</span> <span class="cue" id="t171" data-cue="t171" data-t="171" data-label="2:51">I'll nominate</span></div>
@@ -670,6 +691,7 @@
       </div>
       <div class="para-gap" aria-hidden="true">&nbsp;</div>
     </div>
+    <div class="plaintext" id="panel-plain" role="tabpanel" aria-labelledby="tab-plain" hidden></div>
 
     <footer class="page-footer">
 <p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>

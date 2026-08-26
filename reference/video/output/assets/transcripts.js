@@ -134,3 +134,54 @@
   overlay.addEventListener("click", function (e) { if (e.target === overlay) closeOverlay(); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeOverlay(); });
 })();
+
+// ---------------------------------------------------------------------------
+// Format tabs: the styled transcript, or the same text as plain prose.
+//
+// The plain-text panel is built from the DOM the first time it is shown, so the
+// transcript text exists once in the page (these files already run to a quarter
+// of a megabyte). Each paragraph becomes "m:ss  text", which is what someone
+// selecting-and-copying, or a naive scraper, actually wants.
+// ---------------------------------------------------------------------------
+(function () {
+  var tabFormatted = document.getElementById("tab-formatted");
+  var tabPlain = document.getElementById("tab-plain");
+  var panelFormatted = document.getElementById("panel-formatted");
+  var panelPlain = document.getElementById("panel-plain");
+  if (!tabFormatted || !tabPlain || !panelFormatted || !panelPlain) return;
+
+  function buildPlainText() {
+    var out = [];
+    var paras = panelFormatted.querySelectorAll(".para");
+    for (var i = 0; i < paras.length; i++) {
+      var ts = paras[i].querySelector(".timestamp");
+      var text = paras[i].querySelector(".text");
+      if (!text) continue;
+      var label = ts ? ts.getAttribute("data-default-label") || ts.textContent.trim() : "";
+      // textContent collapses the per-phrase spans back into one string; the
+      // spans are separated by real spaces in the markup, so nothing is glued.
+      var body = text.textContent.replace(/\s+/g, " ").trim();
+      if (paras[i].classList.contains("speaker") && out.length) out.push("");
+      out.push(label ? label + "  " + body : body);
+    }
+    return out.join("\n\n");
+  }
+
+  function select(which) {
+    var plain = which === "plain";
+    if (plain && !panelPlain.textContent) panelPlain.textContent = buildPlainText();
+    panelFormatted.hidden = plain;
+    panelPlain.hidden = !plain;
+    tabFormatted.setAttribute("aria-selected", plain ? "false" : "true");
+    tabPlain.setAttribute("aria-selected", plain ? "true" : "false");
+  }
+
+  tabFormatted.addEventListener("click", function () { select("formatted"); });
+  tabPlain.addEventListener("click", function () { select("plain"); });
+
+  // A deep link to a cue (…/x.html#t320) must land on the styled view, which is
+  // the only one with the anchors.
+  window.addEventListener("hashchange", function () {
+    if (location.hash && panelPlain.hidden === false) select("formatted");
+  });
+})();

@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <link rel="alternate" type="application/json" href="IZVj2Z7rbXQ.json" title="Transcript as JSON">
   <style>
     /* Transcript-specific components. Theme, palette, and page chrome
        (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
@@ -22,6 +23,18 @@
 
     /* Machine-generation warning above the transcript body. */
     .transcript-warning { margin: 0 0 1.4rem; font-family: var(--sans); font-size: 0.8rem; font-style: italic; color: var(--ink-mute); }
+
+    /* Format switch. The plain-text panel is built from the DOM on first use
+       (assets/transcripts.js), so the text is not duplicated into the page. */
+    .formats { display: flex; align-items: baseline; gap: 1.1em; flex-wrap: wrap;
+               margin: 0 0 1.2rem; font-family: var(--sans); font-size: 0.82rem; }
+    .formats .tabs { display: flex; gap: 0.4em; }
+    .formats button { font: inherit; cursor: pointer; padding: 0.3em 0.85em; border-radius: 999px;
+                      border: 1px solid var(--rule-soft); background: transparent; color: var(--ink-mute); }
+    .formats button[aria-selected="true"] { background: var(--ink); color: var(--bg-page, #fff); border-color: var(--ink); }
+    .formats .machine { color: var(--ink-mute); }
+    .plaintext { white-space: pre-wrap; font-family: var(--sans); font-size: 0.9rem; line-height: 1.55;
+                 background: color-mix(in srgb, var(--ink) 4%, transparent); border-radius: 6px; padding: 1em; }
 
     .timestamp {
       flex: 0 0 5em; text-align: right;
@@ -83,7 +96,15 @@
 
     <p class="transcript-warning">Machine-generated transcript &mdash; check the video if in doubt.</p>
 
-    <div class="transcript">
+    <div class="formats">
+      <div class="tabs" role="tablist" aria-label="Transcript format">
+        <button id="tab-formatted" role="tab" aria-selected="true" aria-controls="panel-formatted">Transcript</button>
+        <button id="tab-plain" role="tab" aria-selected="false" aria-controls="panel-plain">Plain text</button>
+      </div>
+      <span class="machine">Machine-readable: <a href="IZVj2Z7rbXQ.json">JSON</a></span>
+    </div>
+
+    <div class="transcript" id="panel-formatted" role="tabpanel" aria-labelledby="tab-formatted">
       <div class="para speaker">
         <div class="timestamp" data-default-label="0:00" data-default-t="0">0:00</div>
         <div class="text"><span class="cue" id="t0" data-cue="t0" data-t="0" data-label="0:00">And if.</span> <span class="cue" id="t2" data-cue="t2" data-t="2" data-label="0:02">Looks like.</span> <span class="cue" id="t4" data-cue="t4" data-t="4" data-label="0:04">We don't have enough people for a quorum yet.</span> <span class="cue" id="t11" data-cue="t11" data-t="11" data-label="0:11">So I can see</span> <span class="cue" id="t12" data-cue="t12" data-t="12" data-label="0:12">if I can give Shannon a call and see if she was going to join us. I haven't heard from her that she wasn't coming, so I</span> <span class="cue" id="t19" data-cue="t19" data-t="19" data-label="0:19">know.</span> <span class="cue" id="t21" data-cue="t21" data-t="21" data-label="0:21">Bill Warner isn't coming.</span> <span class="cue" id="t23" data-cue="t23" data-t="23" data-label="0:23">So I'll give her a call.</span> <span class="cue" id="t78" data-cue="t78" data-t="78" data-label="1:18">Okay, she's coming. She said she wanted about five minutes.</span> <span class="cue" id="t117" data-cue="t117" data-t="117" data-label="1:57">I</span> <span class="cue" id="t118" data-cue="t118" data-t="118" data-label="1:58">can do that, you bet. All right, thanks.</span> <span class="cue" id="t186" data-cue="t186" data-t="186" data-label="3:06">It was just one of those afternoons.</span></div>
@@ -535,6 +556,7 @@
       </div>
       <div class="para-gap" aria-hidden="true">&nbsp;</div>
     </div>
+    <div class="plaintext" id="panel-plain" role="tabpanel" aria-labelledby="tab-plain" hidden></div>
 
     <footer class="page-footer">
 <p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>

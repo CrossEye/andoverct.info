@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <link rel="alternate" type="application/json" href="aAu8Sm6KFDE.json" title="Transcript as JSON">
   <style>
     /* Transcript-specific components. Theme, palette, and page chrome
        (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
@@ -22,6 +23,18 @@
 
     /* Machine-generation warning above the transcript body. */
     .transcript-warning { margin: 0 0 1.4rem; font-family: var(--sans); font-size: 0.8rem; font-style: italic; color: var(--ink-mute); }
+
+    /* Format switch. The plain-text panel is built from the DOM on first use
+       (assets/transcripts.js), so the text is not duplicated into the page. */
+    .formats { display: flex; align-items: baseline; gap: 1.1em; flex-wrap: wrap;
+               margin: 0 0 1.2rem; font-family: var(--sans); font-size: 0.82rem; }
+    .formats .tabs { display: flex; gap: 0.4em; }
+    .formats button { font: inherit; cursor: pointer; padding: 0.3em 0.85em; border-radius: 999px;
+                      border: 1px solid var(--rule-soft); background: transparent; color: var(--ink-mute); }
+    .formats button[aria-selected="true"] { background: var(--ink); color: var(--bg-page, #fff); border-color: var(--ink); }
+    .formats .machine { color: var(--ink-mute); }
+    .plaintext { white-space: pre-wrap; font-family: var(--sans); font-size: 0.9rem; line-height: 1.55;
+                 background: color-mix(in srgb, var(--ink) 4%, transparent); border-radius: 6px; padding: 1em; }
 
     .timestamp {
       flex: 0 0 5em; text-align: right;
@@ -83,7 +96,15 @@
 
     <p class="transcript-warning">Machine-generated transcript &mdash; check the video if in doubt.</p>
 
-    <div class="transcript">
+    <div class="formats">
+      <div class="tabs" role="tablist" aria-label="Transcript format">
+        <button id="tab-formatted" role="tab" aria-selected="true" aria-controls="panel-formatted">Transcript</button>
+        <button id="tab-plain" role="tab" aria-selected="false" aria-controls="panel-plain">Plain text</button>
+      </div>
+      <span class="machine">Machine-readable: <a href="aAu8Sm6KFDE.json">JSON</a></span>
+    </div>
+
+    <div class="transcript" id="panel-formatted" role="tabpanel" aria-labelledby="tab-formatted">
       <div class="para speaker">
         <div class="timestamp" data-default-label="0:09" data-default-t="9">0:09</div>
         <div class="text"><span class="cue" id="t9" data-cue="t9" data-t="9" data-label="0:09">planning I'll call the regular meeting of the Planning and Zoning Commission of</span> <span class="cue" id="t11" data-cue="t11" data-t="11" data-label="0:11">the town of Andover to</span> <span class="cue" id="t21" data-cue="t21" data-t="21" data-label="0:21">rder first up is roll call and seing of</span> <span class="cue" id="t22" data-cue="t22" data-t="22" data-label="0:22">alets I see an</span> <span class="cue" id="t25" data-cue="t25" data-t="25" data-label="0:25">present Leanne is</span> <span class="cue" id="t28" data-cue="t28" data-t="28" data-label="0:28">present Steve Nelson's</span> <span class="cue" id="t37" data-cue="t37" data-t="37" data-label="0:37">present I do not see Scott pan</span> <span class="cue" id="t54" data-cue="t54" data-t="54" data-label="0:54">based on that at this point in Marie I will seat you as an alternate</span> <span class="cue" id="t56" data-cue="t56" data-t="56" data-label="0:56">for Scott</span> <span class="cue" id="t58" data-cue="t58" data-t="58" data-label="0:58">pan sounds</span> <span class="cue" id="t70" data-cue="t70" data-t="70" data-label="1:10">good and I am present as well I also see that Kevin</span> <span class="cue" id="t72" data-cue="t72" data-t="72" data-label="1:12">arneson is here as an alternate</span> <span class="cue" id="t81" data-cue="t81" data-t="81" data-label="1:21">tonight next up our additions or changes to the agenda and I have none does</span> <span class="cue" id="t85" data-cue="t85" data-t="85" data-label="1:25">anybody have any additions or</span> <span class="cue" id="t88" data-cue="t88" data-t="88" data-label="1:28">changes</span> <span class="cue" id="t98" data-cue="t98" data-t="98" data-label="1:38">okay next item up is public comment any comment from members of</span> <span class="cue" id="t103" data-cue="t103" data-t="103" data-label="1:43">the public that</span> <span class="cue" id="t105" data-cue="t105" data-t="105" data-label="1:45">on items other than what we've got on</span> <span class="cue" id="t108" data-cue="t108" data-t="108" data-label="1:48">the agenda</span> <span class="cue" id="t114" data-cue="t114" data-t="114" data-label="1:54">tonight Mr chairman this is Katherine Hutchinson andine I'm respectfully</span> <span class="cue" id="t117" data-cue="t117" data-t="117" data-label="1:57">requesting permission to speak when the</span> <span class="cue" id="t121" data-cue="t121" data-t="121" data-label="2:01">item comes up later on the in the agenda</span> <span class="cue" id="t124" data-cue="t124" data-t="124" data-label="2:04">under old business</span> <span class="cue" id="t126" data-cue="t126" data-t="126" data-label="2:06">6A understand yep thank</span> <span class="cue" id="t135" data-cue="t135" data-t="135" data-label="2:15">you okay moving on to new business and first up is a</span> <span class="cue" id="t139" data-cue="t139" data-t="139" data-label="2:19">town ordinance enabling the zoning</span> <span class="cue" id="t141" data-cue="t141" data-t="141" data-label="2:21">enforcement officer the authority to</span> <span class="cue" id="t143" data-cue="t143" data-t="143" data-label="2:23">access finds for zoning</span> <span class="cue" id="t145" data-cue="t145" data-t="145" data-label="2:25">violations and at this point I'd like to</span> <span class="cue" id="t148" data-cue="t148" data-t="148" data-label="2:28">turn over to Dennis O'Brien the</span> <span class="cue" id="t153" data-cue="t153" data-t="153" data-label="2:33">town's attorney to brief us on the</span> <span class="cue" id="t170" data-cue="t170" data-t="170" data-label="2:50">ordinance and Dennis I see that you are mut so we can't hear you</span> <span class="cue" id="t180" data-cue="t180" data-t="180" data-label="3:00">yet myself okay there you go okay okay you got it right I am Dennis O'Brien and</span></div>
@@ -475,6 +496,7 @@
       </div>
       <div class="para-gap" aria-hidden="true">&nbsp;</div>
     </div>
+    <div class="plaintext" id="panel-plain" role="tabpanel" aria-labelledby="tab-plain" hidden></div>
 
     <footer class="page-footer">
 <p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>

@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <link rel="alternate" type="application/json" href="CUkZhEP_kO0.json" title="Transcript as JSON">
   <style>
     /* Transcript-specific components. Theme, palette, and page chrome
        (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
@@ -22,6 +23,18 @@
 
     /* Machine-generation warning above the transcript body. */
     .transcript-warning { margin: 0 0 1.4rem; font-family: var(--sans); font-size: 0.8rem; font-style: italic; color: var(--ink-mute); }
+
+    /* Format switch. The plain-text panel is built from the DOM on first use
+       (assets/transcripts.js), so the text is not duplicated into the page. */
+    .formats { display: flex; align-items: baseline; gap: 1.1em; flex-wrap: wrap;
+               margin: 0 0 1.2rem; font-family: var(--sans); font-size: 0.82rem; }
+    .formats .tabs { display: flex; gap: 0.4em; }
+    .formats button { font: inherit; cursor: pointer; padding: 0.3em 0.85em; border-radius: 999px;
+                      border: 1px solid var(--rule-soft); background: transparent; color: var(--ink-mute); }
+    .formats button[aria-selected="true"] { background: var(--ink); color: var(--bg-page, #fff); border-color: var(--ink); }
+    .formats .machine { color: var(--ink-mute); }
+    .plaintext { white-space: pre-wrap; font-family: var(--sans); font-size: 0.9rem; line-height: 1.55;
+                 background: color-mix(in srgb, var(--ink) 4%, transparent); border-radius: 6px; padding: 1em; }
 
     .timestamp {
       flex: 0 0 5em; text-align: right;
@@ -83,7 +96,15 @@
 
     <p class="transcript-warning">Machine-generated transcript &mdash; check the video if in doubt.</p>
 
-    <div class="transcript">
+    <div class="formats">
+      <div class="tabs" role="tablist" aria-label="Transcript format">
+        <button id="tab-formatted" role="tab" aria-selected="true" aria-controls="panel-formatted">Transcript</button>
+        <button id="tab-plain" role="tab" aria-selected="false" aria-controls="panel-plain">Plain text</button>
+      </div>
+      <span class="machine">Machine-readable: <a href="CUkZhEP_kO0.json">JSON</a></span>
+    </div>
+
+    <div class="transcript" id="panel-formatted" role="tabpanel" aria-labelledby="tab-formatted">
       <div class="para speaker">
         <div class="timestamp" data-default-label="0:14" data-default-t="14">0:14</div>
         <div class="text"><span class="cue" id="t14" data-cue="t14" data-t="14" data-label="0:14">Wetland and water courses commission for March 3rd 2025</span> <span class="cue" id="t40" data-cue="t40" data-t="40" data-label="0:40">J like we have an option to add other</span> <span class="cue" id="t47" data-cue="t47" data-t="47" data-label="0:47">application today U we here two Woodside</span> <span class="cue" id="t52" data-cue="t52" data-t="52" data-label="0:52">Drive I don't have the application I</span> <span class="cue" id="t55" data-cue="t55" data-t="55" data-label="0:55">mean 255</span> <span class="cue" id="t90" data-cue="t90" data-t="90" data-label="1:30">seven approval of the minutes anybody see</span> <span class="cue" id="t92" data-cue="t92" data-t="92" data-label="1:32">anything regular minutes on January 6</span> <span class="cue" id="t95" data-cue="t95" data-t="95" data-label="1:35">that need to</span> <span class="cue" id="t105" data-cue="t105" data-t="105" data-label="1:45">Beed go back and everybody</span> <span class="cue" id="t109" data-cue="t109" data-t="109" data-label="1:49">hi</span> <span class="cue" id="t120" data-cue="t120" data-t="120" data-label="2:00">okay motion to add and so let's do that and who second is</span> <span class="cue" id="t124" data-cue="t124" data-t="124" data-label="2:04">it made I seconded and</span> <span class="cue" id="t127" data-cue="t127" data-t="127" data-label="2:07">then all in</span> <span class="cue" id="t139" data-cue="t139" data-t="139" data-label="2:19">favor minutes are fine nothing needs to be corrected on</span> <span class="cue" id="t141" data-cue="t141" data-t="141" data-label="2:21">those motion to approve minutes</span> <span class="cue" id="t144" data-cue="t144" data-t="144" data-label="2:24">presented</span> <span class="cue" id="t146" data-cue="t146" data-t="146" data-label="2:26">second all in favor I</span> <span class="cue" id="t170" data-cue="t170" data-t="170" data-label="2:50">here there is no old business so let's go to the new business</span> <span class="cue" id="t174" data-cue="t174" data-t="174" data-label="2:54">we have</span> <span class="cue" id="t175" data-cue="t175" data-t="175" data-label="2:55">a jurisdictional ruling review for iww</span> <span class="cue" id="t190" data-cue="t190" data-t="190" data-label="3:10">c251 Donald Bo 134 Wheeling Road a 25 acre Timber Harvest with a stream</span></div>
@@ -245,6 +266,7 @@
       </div>
       <div class="para-gap" aria-hidden="true">&nbsp;</div>
     </div>
+    <div class="plaintext" id="panel-plain" role="tabpanel" aria-labelledby="tab-plain" hidden></div>
 
     <footer class="page-footer">
 <p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>

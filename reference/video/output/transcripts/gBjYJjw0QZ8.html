@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <link rel="alternate" type="application/json" href="gBjYJjw0QZ8.json" title="Transcript as JSON">
   <style>
     /* Transcript-specific components. Theme, palette, and page chrome
        (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
@@ -22,6 +23,18 @@
 
     /* Machine-generation warning above the transcript body. */
     .transcript-warning { margin: 0 0 1.4rem; font-family: var(--sans); font-size: 0.8rem; font-style: italic; color: var(--ink-mute); }
+
+    /* Format switch. The plain-text panel is built from the DOM on first use
+       (assets/transcripts.js), so the text is not duplicated into the page. */
+    .formats { display: flex; align-items: baseline; gap: 1.1em; flex-wrap: wrap;
+               margin: 0 0 1.2rem; font-family: var(--sans); font-size: 0.82rem; }
+    .formats .tabs { display: flex; gap: 0.4em; }
+    .formats button { font: inherit; cursor: pointer; padding: 0.3em 0.85em; border-radius: 999px;
+                      border: 1px solid var(--rule-soft); background: transparent; color: var(--ink-mute); }
+    .formats button[aria-selected="true"] { background: var(--ink); color: var(--bg-page, #fff); border-color: var(--ink); }
+    .formats .machine { color: var(--ink-mute); }
+    .plaintext { white-space: pre-wrap; font-family: var(--sans); font-size: 0.9rem; line-height: 1.55;
+                 background: color-mix(in srgb, var(--ink) 4%, transparent); border-radius: 6px; padding: 1em; }
 
     .timestamp {
       flex: 0 0 5em; text-align: right;
@@ -83,7 +96,15 @@
 
     <p class="transcript-warning">Machine-generated transcript &mdash; check the video if in doubt.</p>
 
-    <div class="transcript">
+    <div class="formats">
+      <div class="tabs" role="tablist" aria-label="Transcript format">
+        <button id="tab-formatted" role="tab" aria-selected="true" aria-controls="panel-formatted">Transcript</button>
+        <button id="tab-plain" role="tab" aria-selected="false" aria-controls="panel-plain">Plain text</button>
+      </div>
+      <span class="machine">Machine-readable: <a href="gBjYJjw0QZ8.json">JSON</a></span>
+    </div>
+
+    <div class="transcript" id="panel-formatted" role="tabpanel" aria-labelledby="tab-formatted">
       <div class="para speaker">
         <div class="timestamp" data-default-label="0:00" data-default-t="0">0:00</div>
         <div class="text"><span class="cue" id="t0" data-cue="t0" data-t="0" data-label="0:00">Go through this process. It's all new. I'd really like to thank Linda and Amanda for doing an excellent job. Thank you very much. You're welcome. We're</span> <span class="cue" id="t8" data-cue="t8" data-t="8" data-label="0:08">all here for</span> <span class="cue" id="t10" data-cue="t10" data-t="10" data-label="0:10">a town special meeting. And</span> <span class="cue" id="t12" data-cue="t12" data-t="12" data-label="0:12">let me read the announcement for you all.</span> <span class="cue" id="t17" data-cue="t17" data-t="17" data-label="0:17">The electors and citizens qualified to vote in town meetings in</span> <span class="cue" id="t22" data-cue="t22" data-t="22" data-label="0:22">the town of Andover are hereby notified that a special town meeting for the town of Andover</span> <span class="cue" id="t27" data-cue="t27" data-t="27" data-label="0:27">will be virtually held on Tuesday, 06/30/2020</span> <span class="cue" id="t31" data-cue="t31" data-t="31" data-label="0:31">at 7PM</span> <span class="cue" id="t33" data-cue="t33" data-t="33" data-label="0:33">for the following purposes.</span> <span class="cue" id="t35" data-cue="t35" data-t="35" data-label="0:35">One, to choose a moderator for said meeting,</span> <span class="cue" id="t38" data-cue="t38" data-t="38" data-label="0:38">to elect a member to fill the vacancy on the Regent Eight Board of Education term ending 06/30/2023</span> <span class="cue" id="t46" data-cue="t46" data-t="46" data-label="0:46">and to adjourn.</span> <span class="cue" id="t48" data-cue="t48" data-t="48" data-label="0:48">Copies of the candidate synopsis of qualifications will be available on the TOM website at andoverct.org.</span> <span class="cue" id="t57" data-cue="t57" data-t="57" data-label="0:57">Dated at Andoverct,</span> <span class="cue" id="t58" data-cue="t58" data-t="58" data-label="0:58">the May</span> <span class="cue" id="t60" data-cue="t60" data-t="60" data-label="1:00">2020,</span> <span class="cue" id="t61" data-cue="t61" data-t="61" data-label="1:01">signed by the members of the Board of Selectmen.</span> <span class="cue" id="t65" data-cue="t65" data-t="65" data-label="1:05">So we're gonna get started. The first thing that we need to do is choose a moderator for said meeting.</span> <span class="cue" id="t71" data-cue="t71" data-t="71" data-label="1:11">I nominate Wally Barton.</span> <span class="cue" id="t74" data-cue="t74" data-t="74" data-label="1:14">I second it.</span></div>
@@ -680,6 +701,7 @@
       </div>
       <div class="para-gap" aria-hidden="true">&nbsp;</div>
     </div>
+    <div class="plaintext" id="panel-plain" role="tabpanel" aria-labelledby="tab-plain" hidden></div>
 
     <footer class="page-footer">
 <p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>

@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <link rel="alternate" type="application/json" href="bN9c3drdFjI.json" title="Transcript as JSON">
   <style>
     /* Transcript-specific components. Theme, palette, and page chrome
        (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
@@ -22,6 +23,18 @@
 
     /* Machine-generation warning above the transcript body. */
     .transcript-warning { margin: 0 0 1.4rem; font-family: var(--sans); font-size: 0.8rem; font-style: italic; color: var(--ink-mute); }
+
+    /* Format switch. The plain-text panel is built from the DOM on first use
+       (assets/transcripts.js), so the text is not duplicated into the page. */
+    .formats { display: flex; align-items: baseline; gap: 1.1em; flex-wrap: wrap;
+               margin: 0 0 1.2rem; font-family: var(--sans); font-size: 0.82rem; }
+    .formats .tabs { display: flex; gap: 0.4em; }
+    .formats button { font: inherit; cursor: pointer; padding: 0.3em 0.85em; border-radius: 999px;
+                      border: 1px solid var(--rule-soft); background: transparent; color: var(--ink-mute); }
+    .formats button[aria-selected="true"] { background: var(--ink); color: var(--bg-page, #fff); border-color: var(--ink); }
+    .formats .machine { color: var(--ink-mute); }
+    .plaintext { white-space: pre-wrap; font-family: var(--sans); font-size: 0.9rem; line-height: 1.55;
+                 background: color-mix(in srgb, var(--ink) 4%, transparent); border-radius: 6px; padding: 1em; }
 
     .timestamp {
       flex: 0 0 5em; text-align: right;
@@ -83,7 +96,15 @@
 
     <p class="transcript-warning">Machine-generated transcript &mdash; check the video if in doubt.</p>
 
-    <div class="transcript">
+    <div class="formats">
+      <div class="tabs" role="tablist" aria-label="Transcript format">
+        <button id="tab-formatted" role="tab" aria-selected="true" aria-controls="panel-formatted">Transcript</button>
+        <button id="tab-plain" role="tab" aria-selected="false" aria-controls="panel-plain">Plain text</button>
+      </div>
+      <span class="machine">Machine-readable: <a href="bN9c3drdFjI.json">JSON</a></span>
+    </div>
+
+    <div class="transcript" id="panel-formatted" role="tabpanel" aria-labelledby="tab-formatted">
       <div class="para speaker">
         <div class="timestamp" data-default-label="0:00" data-default-t="0">0:00</div>
         <div class="text"><span class="cue" id="t0" data-cue="t0" data-t="0" data-label="0:00">Can</span> <span class="cue" id="t3" data-cue="t3" data-t="3" data-label="0:03">all the questions raise your hand if you can hear me?</span> <span class="cue" id="t8" data-cue="t8" data-t="8" data-label="0:08">Okay, great. All</span> <span class="cue" id="t10" data-cue="t10" data-t="10" data-label="0:10">right, so then at 07:01,</span> <span class="cue" id="t12" data-cue="t12" data-t="12" data-label="0:12">Chairman Megan Lally, I'm going to call the April 6 regular meeting of the town of Andover Inland's Wetlands and Water Courses Commission meeting to order.</span> <span class="cue" id="t24" data-cue="t24" data-t="24" data-label="0:24">Everyone, this is Amanda Gibson. I'm the admin assistant to the town of Andover.</span> <span class="cue" id="t30" data-cue="t30" data-t="30" data-label="0:30">I just wanted to take a moment to</span> <span class="cue" id="t34" data-cue="t34" data-t="34" data-label="0:34">share sad news that we have lost a dedicated commission member,</span> <span class="cue" id="t40" data-cue="t40" data-t="40" data-label="0:40">Rick Osborne. He unfortunately has</span> <span class="cue" id="t43" data-cue="t43" data-t="43" data-label="0:43">passed away.</span> <span class="cue" id="t44" data-cue="t44" data-t="44" data-label="0:44">Very sad news.</span> <span class="cue" id="t46" data-cue="t46" data-t="46" data-label="0:46">We would like to just take a moment of silence</span> <span class="cue" id="t51" data-cue="t51" data-t="51" data-label="0:51">to send some love to his wife Karen and family and thank him for</span> <span class="cue" id="t56" data-cue="t56" data-t="56" data-label="0:56">his time.</span> <span class="cue" id="t70" data-cue="t70" data-t="70" data-label="1:10">Okay,</span> <span class="cue" id="t71" data-cue="t71" data-t="71" data-label="1:11">thank And</span> <span class="cue" id="t72" data-cue="t72" data-t="72" data-label="1:12">if you need anything throughout the meeting, please let me know. But I'm going to mute myself and let you all continue on.</span> <span class="cue" id="t81" data-cue="t81" data-t="81" data-label="1:21">Okay,</span></div>
@@ -1145,6 +1166,7 @@
       </div>
       <div class="para-gap" aria-hidden="true">&nbsp;</div>
     </div>
+    <div class="plaintext" id="panel-plain" role="tabpanel" aria-labelledby="tab-plain" hidden></div>
 
     <footer class="page-footer">
 <p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>

@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <link rel="alternate" type="application/json" href="9KvdE2Ym700.json" title="Transcript as JSON">
   <style>
     /* Transcript-specific components. Theme, palette, and page chrome
        (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
@@ -22,6 +23,18 @@
 
     /* Machine-generation warning above the transcript body. */
     .transcript-warning { margin: 0 0 1.4rem; font-family: var(--sans); font-size: 0.8rem; font-style: italic; color: var(--ink-mute); }
+
+    /* Format switch. The plain-text panel is built from the DOM on first use
+       (assets/transcripts.js), so the text is not duplicated into the page. */
+    .formats { display: flex; align-items: baseline; gap: 1.1em; flex-wrap: wrap;
+               margin: 0 0 1.2rem; font-family: var(--sans); font-size: 0.82rem; }
+    .formats .tabs { display: flex; gap: 0.4em; }
+    .formats button { font: inherit; cursor: pointer; padding: 0.3em 0.85em; border-radius: 999px;
+                      border: 1px solid var(--rule-soft); background: transparent; color: var(--ink-mute); }
+    .formats button[aria-selected="true"] { background: var(--ink); color: var(--bg-page, #fff); border-color: var(--ink); }
+    .formats .machine { color: var(--ink-mute); }
+    .plaintext { white-space: pre-wrap; font-family: var(--sans); font-size: 0.9rem; line-height: 1.55;
+                 background: color-mix(in srgb, var(--ink) 4%, transparent); border-radius: 6px; padding: 1em; }
 
     .timestamp {
       flex: 0 0 5em; text-align: right;
@@ -83,7 +96,15 @@
 
     <p class="transcript-warning">Machine-generated transcript &mdash; check the video if in doubt.</p>
 
-    <div class="transcript">
+    <div class="formats">
+      <div class="tabs" role="tablist" aria-label="Transcript format">
+        <button id="tab-formatted" role="tab" aria-selected="true" aria-controls="panel-formatted">Transcript</button>
+        <button id="tab-plain" role="tab" aria-selected="false" aria-controls="panel-plain">Plain text</button>
+      </div>
+      <span class="machine">Machine-readable: <a href="9KvdE2Ym700.json">JSON</a></span>
+    </div>
+
+    <div class="transcript" id="panel-formatted" role="tabpanel" aria-labelledby="tab-formatted">
       <div class="para speaker">
         <div class="timestamp" data-default-label="0:05" data-default-t="5">0:05</div>
         <div class="text"><span class="cue" id="t5" data-cue="t5" data-t="5" data-label="0:05">okay thank you everybody we're calling this meeting to order this is the town</span> <span class="cue" id="t7" data-cue="t7" data-t="7" data-label="0:07">of Andover regular Board of Finance</span> <span class="cue" id="t9" data-cue="t9" data-t="9" data-label="0:09">meeting for Wednesday February</span> <span class="cue" id="t12" data-cue="t12" data-t="12" data-label="0:12">26th we'll go ahead and start by</span> <span class="cue" id="t15" data-cue="t15" data-t="15" data-label="0:15">reciting the Pledge of Allegiance I</span> <span class="cue" id="t17" data-cue="t17" data-t="17" data-label="0:17">pledge allegiance to the flag the United</span> <span class="cue" id="t19" data-cue="t19" data-t="19" data-label="0:19">States of America and to the Republic</span> <span class="cue" id="t22" data-cue="t22" data-t="22" data-label="0:22">which it stands one</span> <span class="cue" id="t32" data-cue="t32" data-t="32" data-label="0:32">nation for all okay thank you our first order of business is public speak</span> <span class="cue" id="t35" data-cue="t35" data-t="35" data-label="0:35">see a couple potential members of the</span> <span class="cue" id="t38" data-cue="t38" data-t="38" data-label="0:38">public there we have a Katie</span> <span class="cue" id="t47" data-cue="t47" data-t="47" data-label="0:47">Dixon I'm all set thank you okay thank you and Wally</span> <span class="cue" id="t49" data-cue="t49" data-t="49" data-label="0:49">owner yeah that's me Mark I'm on for</span> <span class="cue" id="t53" data-cue="t53" data-t="53" data-label="0:53">what is it five fire chief fire fire</span> <span class="cue" id="t57" data-cue="t57" data-t="57" data-label="0:57">fire commission</span> <span class="cue" id="t58" data-cue="t58" data-t="58" data-label="0:58">sorry okay</span> <span class="cue" id="t61" data-cue="t61" data-t="61" data-label="1:01">right okay if that's it I think we we</span> <span class="cue" id="t64" data-cue="t64" data-t="64" data-label="1:04">can go on to the next item which is</span> <span class="cue" id="t67" data-cue="t67" data-t="67" data-label="1:07">changes or additions to the</span> <span class="cue" id="t69" data-cue="t69" data-t="69" data-label="1:09">agenda if I don't know if anybody has</span> <span class="cue" id="t72" data-cue="t72" data-t="72" data-label="1:12">any other changes they want to</span></div>
@@ -590,6 +611,7 @@
       </div>
       <div class="para-gap" aria-hidden="true">&nbsp;</div>
     </div>
+    <div class="plaintext" id="panel-plain" role="tabpanel" aria-labelledby="tab-plain" hidden></div>
 
     <footer class="page-footer">
 <p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>

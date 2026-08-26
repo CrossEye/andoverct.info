@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <link rel="alternate" type="application/json" href="KX148rzpG7k.json" title="Transcript as JSON">
   <style>
     /* Transcript-specific components. Theme, palette, and page chrome
        (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
@@ -22,6 +23,18 @@
 
     /* Machine-generation warning above the transcript body. */
     .transcript-warning { margin: 0 0 1.4rem; font-family: var(--sans); font-size: 0.8rem; font-style: italic; color: var(--ink-mute); }
+
+    /* Format switch. The plain-text panel is built from the DOM on first use
+       (assets/transcripts.js), so the text is not duplicated into the page. */
+    .formats { display: flex; align-items: baseline; gap: 1.1em; flex-wrap: wrap;
+               margin: 0 0 1.2rem; font-family: var(--sans); font-size: 0.82rem; }
+    .formats .tabs { display: flex; gap: 0.4em; }
+    .formats button { font: inherit; cursor: pointer; padding: 0.3em 0.85em; border-radius: 999px;
+                      border: 1px solid var(--rule-soft); background: transparent; color: var(--ink-mute); }
+    .formats button[aria-selected="true"] { background: var(--ink); color: var(--bg-page, #fff); border-color: var(--ink); }
+    .formats .machine { color: var(--ink-mute); }
+    .plaintext { white-space: pre-wrap; font-family: var(--sans); font-size: 0.9rem; line-height: 1.55;
+                 background: color-mix(in srgb, var(--ink) 4%, transparent); border-radius: 6px; padding: 1em; }
 
     .timestamp {
       flex: 0 0 5em; text-align: right;
@@ -83,7 +96,15 @@
 
     <p class="transcript-warning">Machine-generated transcript &mdash; check the video if in doubt.</p>
 
-    <div class="transcript">
+    <div class="formats">
+      <div class="tabs" role="tablist" aria-label="Transcript format">
+        <button id="tab-formatted" role="tab" aria-selected="true" aria-controls="panel-formatted">Transcript</button>
+        <button id="tab-plain" role="tab" aria-selected="false" aria-controls="panel-plain">Plain text</button>
+      </div>
+      <span class="machine">Machine-readable: <a href="KX148rzpG7k.json">JSON</a></span>
+    </div>
+
+    <div class="transcript" id="panel-formatted" role="tabpanel" aria-labelledby="tab-formatted">
       <div class="para speaker">
         <div class="timestamp" data-default-label="0:04" data-default-t="4">0:04</div>
         <div class="text"><span class="cue" id="t4" data-cue="t4" data-t="4" data-label="0:04">Okay, let's call the meeting of the Andover Board of Finance for September 28 to order at 07:02PM.</span> <span class="cue" id="t11" data-cue="t11" data-t="11" data-label="0:11">First item on the agenda is Pledge of Allegiance.</span> <span class="cue" id="t14" data-cue="t14" data-t="14" data-label="0:14">So,</span> <span class="cue" id="t15" data-cue="t15" data-t="15" data-label="0:15">pledge allegiance to the flag of The United States Of America</span> <span class="cue" id="t19" data-cue="t19" data-t="19" data-label="0:19">and to the Republic for which stands</span> <span class="cue" id="t22" data-cue="t22" data-t="22" data-label="0:22">one nation</span> <span class="cue" id="t23" data-cue="t23" data-t="23" data-label="0:23">under God, indivisible,</span> <span class="cue" id="t25" data-cue="t25" data-t="25" data-label="0:25">liberty and justice for all.</span> <span class="cue" id="t29" data-cue="t29" data-t="29" data-label="0:29">All right.</span> <span class="cue" id="t31" data-cue="t31" data-t="31" data-label="0:31">Nobody</span> <span class="cue" id="t34" data-cue="t34" data-t="34" data-label="0:34">heard this before, but I have a massive headache. So I'm gonna try to move the meeting along really quickly.</span> <span class="cue" id="t40" data-cue="t40" data-t="40" data-label="0:40">If I get off track, you can just put me back on track or if I talk gibberish, you can put me back on track because I can't think straight because my head is killing me.</span> <span class="cue" id="t49" data-cue="t49" data-t="49" data-label="0:49">All right, public speak. We have Colin McNamara on and he wanted to say hello to us. He is the new superintendent for Ram.</span></div>
@@ -1400,6 +1421,7 @@
       </div>
       <div class="para-gap" aria-hidden="true">&nbsp;</div>
     </div>
+    <div class="plaintext" id="panel-plain" role="tabpanel" aria-labelledby="tab-plain" hidden></div>
 
     <footer class="page-footer">
 <p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>

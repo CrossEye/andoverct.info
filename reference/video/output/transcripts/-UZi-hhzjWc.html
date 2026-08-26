@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <link rel="alternate" type="application/json" href="-UZi-hhzjWc.json" title="Transcript as JSON">
   <style>
     /* Transcript-specific components. Theme, palette, and page chrome
        (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
@@ -22,6 +23,18 @@
 
     /* Machine-generation warning above the transcript body. */
     .transcript-warning { margin: 0 0 1.4rem; font-family: var(--sans); font-size: 0.8rem; font-style: italic; color: var(--ink-mute); }
+
+    /* Format switch. The plain-text panel is built from the DOM on first use
+       (assets/transcripts.js), so the text is not duplicated into the page. */
+    .formats { display: flex; align-items: baseline; gap: 1.1em; flex-wrap: wrap;
+               margin: 0 0 1.2rem; font-family: var(--sans); font-size: 0.82rem; }
+    .formats .tabs { display: flex; gap: 0.4em; }
+    .formats button { font: inherit; cursor: pointer; padding: 0.3em 0.85em; border-radius: 999px;
+                      border: 1px solid var(--rule-soft); background: transparent; color: var(--ink-mute); }
+    .formats button[aria-selected="true"] { background: var(--ink); color: var(--bg-page, #fff); border-color: var(--ink); }
+    .formats .machine { color: var(--ink-mute); }
+    .plaintext { white-space: pre-wrap; font-family: var(--sans); font-size: 0.9rem; line-height: 1.55;
+                 background: color-mix(in srgb, var(--ink) 4%, transparent); border-radius: 6px; padding: 1em; }
 
     .timestamp {
       flex: 0 0 5em; text-align: right;
@@ -83,7 +96,15 @@
 
     <p class="transcript-warning">Machine-generated transcript &mdash; check the video if in doubt.</p>
 
-    <div class="transcript">
+    <div class="formats">
+      <div class="tabs" role="tablist" aria-label="Transcript format">
+        <button id="tab-formatted" role="tab" aria-selected="true" aria-controls="panel-formatted">Transcript</button>
+        <button id="tab-plain" role="tab" aria-selected="false" aria-controls="panel-plain">Plain text</button>
+      </div>
+      <span class="machine">Machine-readable: <a href="-UZi-hhzjWc.json">JSON</a></span>
+    </div>
+
+    <div class="transcript" id="panel-formatted" role="tabpanel" aria-labelledby="tab-formatted">
       <div class="para speaker">
         <div class="timestamp" data-default-label="0:06" data-default-t="6">0:06</div>
         <div class="text"><span class="cue" id="t6" data-cue="t6" data-t="6" data-label="0:06">Okay. 704 call to order the Donna boarding</span> <span class="cue" id="t11" data-cue="t11" data-t="11" data-label="0:11">special meeting for Thursday, April</span> <span class="cue" id="t14" data-cue="t14" data-t="14" data-label="0:14">24th. Our first order of business is the</span> <span class="cue" id="t16" data-cue="t16" data-t="16" data-label="0:16">pledge of</span> <span class="cue" id="t25" data-cue="t25" data-t="25" data-label="0:25">allegiance to the flag to the father stands one nation</span> <span class="cue" id="t53" data-cue="t53" data-t="53" data-label="0:53">individuals. Please be nice to employees.</span> <span class="cue" id="t55" data-cue="t55" data-t="55" data-label="0:55">Kathy Roger. Kathy Roger</span> <span class="cue" id="t59" data-cue="t59" data-t="59" data-label="0:59">232. I would like the board of select</span> <span class="cue" id="t63" data-cue="t63" data-t="63" data-label="1:03">to read in the letter from the</span> <span class="cue" id="t66" data-cue="t66" data-t="66" data-label="1:06">chairperson of the commission on aging.</span> <span class="cue" id="t71" data-cue="t71" data-t="71" data-label="1:11">I think that would be important</span> <span class="cue" id="t73" data-cue="t73" data-t="73" data-label="1:13">relevant to the people that are here.</span> <span class="cue" id="t75" data-cue="t75" data-t="75" data-label="1:15">have not received that all the selected</span> <span class="cue" id="t77" data-cue="t77" data-t="77" data-label="1:17">members.</span> <span class="cue" id="t99" data-cue="t99" data-t="99" data-label="1:39">be right now after I don't have it right with me.</span> <span class="cue" id="t106" data-cue="t106" data-t="106" data-label="1:46">So the purpose of this meeting is to discuss the</span> <span class="cue" id="t108" data-cue="t108" data-t="108" data-label="1:48">contracts of our</span> <span class="cue" id="t110" data-cue="t110" data-t="110" data-label="1:50">foreman and our community center person.</span> <span class="cue" id="t114" data-cue="t114" data-t="114" data-label="1:54">You take one at a time</span> <span class="cue" id="t115" data-cue="t115" data-t="115" data-label="1:55">or do both of them or how would you</span> <span class="cue" id="t118" data-cue="t118" data-t="118" data-label="1:58">process? You're in public speak. You do</span> <span class="cue" id="t120" data-cue="t120" data-t="120" data-label="2:00">what you want.</span> <span class="cue" id="t122" data-cue="t122" data-t="122" data-label="2:02">Okay. Well,</span> <span class="cue" id="t124" data-cue="t124" data-t="124" data-label="2:04">well, well, as I said at the budget</span> <span class="cue" id="t127" data-cue="t127" data-t="127" data-label="2:07">meeting, our public works department is</span> <span class="cue" id="t131" data-cue="t131" data-t="131" data-label="2:11">a little a little top heavy. For many</span> <span class="cue" id="t134" data-cue="t134" data-t="134" data-label="2:14">years, we operated with three public</span> <span class="cue" id="t138" data-cue="t138" data-t="138" data-label="2:18">works</span> <span class="cue" id="t139" data-cue="t139" data-t="139" data-label="2:19">people. Now, we have five that has</span> <span class="cue" id="t141" data-cue="t141" data-t="141" data-label="2:21">occurred in the last several years. And</span> <span class="cue" id="t144" data-cue="t144" data-t="144" data-label="2:24">now we have a $90,000 foreman and four</span></div>
@@ -325,6 +346,7 @@
       </div>
       <div class="para-gap" aria-hidden="true">&nbsp;</div>
     </div>
+    <div class="plaintext" id="panel-plain" role="tabpanel" aria-labelledby="tab-plain" hidden></div>
 
     <footer class="page-footer">
 <p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>

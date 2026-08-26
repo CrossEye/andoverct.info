@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <link rel="alternate" type="application/json" href="Nlc2XQzSxWk.json" title="Transcript as JSON">
   <style>
     /* Transcript-specific components. Theme, palette, and page chrome
        (.page / .crumbs / .eyebrow / .title / .subtitle / footer.colophon)
@@ -22,6 +23,18 @@
 
     /* Machine-generation warning above the transcript body. */
     .transcript-warning { margin: 0 0 1.4rem; font-family: var(--sans); font-size: 0.8rem; font-style: italic; color: var(--ink-mute); }
+
+    /* Format switch. The plain-text panel is built from the DOM on first use
+       (assets/transcripts.js), so the text is not duplicated into the page. */
+    .formats { display: flex; align-items: baseline; gap: 1.1em; flex-wrap: wrap;
+               margin: 0 0 1.2rem; font-family: var(--sans); font-size: 0.82rem; }
+    .formats .tabs { display: flex; gap: 0.4em; }
+    .formats button { font: inherit; cursor: pointer; padding: 0.3em 0.85em; border-radius: 999px;
+                      border: 1px solid var(--rule-soft); background: transparent; color: var(--ink-mute); }
+    .formats button[aria-selected="true"] { background: var(--ink); color: var(--bg-page, #fff); border-color: var(--ink); }
+    .formats .machine { color: var(--ink-mute); }
+    .plaintext { white-space: pre-wrap; font-family: var(--sans); font-size: 0.9rem; line-height: 1.55;
+                 background: color-mix(in srgb, var(--ink) 4%, transparent); border-radius: 6px; padding: 1em; }
 
     .timestamp {
       flex: 0 0 5em; text-align: right;
@@ -83,7 +96,15 @@
 
     <p class="transcript-warning">Machine-generated transcript &mdash; check the video if in doubt.</p>
 
-    <div class="transcript">
+    <div class="formats">
+      <div class="tabs" role="tablist" aria-label="Transcript format">
+        <button id="tab-formatted" role="tab" aria-selected="true" aria-controls="panel-formatted">Transcript</button>
+        <button id="tab-plain" role="tab" aria-selected="false" aria-controls="panel-plain">Plain text</button>
+      </div>
+      <span class="machine">Machine-readable: <a href="Nlc2XQzSxWk.json">JSON</a></span>
+    </div>
+
+    <div class="transcript" id="panel-formatted" role="tabpanel" aria-labelledby="tab-formatted">
       <div class="para speaker">
         <div class="timestamp" data-default-label="1:20" data-default-t="80">1:20</div>
         <div class="text"><span class="cue" id="t80" data-cue="t80" data-t="80" data-label="1:20">I'm waiting just another minute. I know that Scott Persson was</span> <span class="cue" id="t85" data-cue="t85" data-t="85" data-label="1:25">texting me with questions up to just a minute or two ago so I think he's got to be close by.</span> <span class="cue" id="t91" data-cue="t91" data-t="91" data-label="1:31">I didn't get to answer his questions because</span> <span class="cue" id="t94" data-cue="t94" data-t="94" data-label="1:34">I was busy trying to get signed on here but</span> <span class="cue" id="t98" data-cue="t98" data-t="98" data-label="1:38">I think he'll be joining us.</span> <span class="cue" id="t167" data-cue="t167" data-t="167" data-label="2:47">Okay, Scott, just disregard</span> <span class="cue" id="t170" data-cue="t170" data-t="170" data-label="2:50">the text I just sent you. I see you</span> <span class="cue" id="t173" data-cue="t173" data-t="173" data-label="2:53">popping in there.</span> <span class="cue" id="t182" data-cue="t182" data-t="182" data-label="3:02">And it's 701,</span> <span class="cue" id="t185" data-cue="t185" data-t="185" data-label="3:05">and I would like to call the public hearing to order.</span> <span class="cue" id="t189" data-cue="t189" data-t="189" data-label="3:09">And the first thing I'd like to do is we do have a couple of new folks joining us tonight.</span> <span class="cue" id="t195" data-cue="t195" data-t="195" data-label="3:15">I don't know who's on everybody else's screen, but Steve Nelson's got the prime spot on mine here. He's our newest member of the Planning and Zoning Commission</span> <span class="cue" id="t206" data-cue="t206" data-t="206" data-label="3:26">as of the July 1. So</span> <span class="cue" id="t209" data-cue="t209" data-t="209" data-label="3:29">he has taken over</span> <span class="cue" id="t211" data-cue="t211" data-t="211" data-label="3:31">a seat on the commission that was</span> <span class="cue" id="t214" data-cue="t214" data-t="214" data-label="3:34">vacated by Susan England who has gone off to be an alternate.</span> <span class="cue" id="t219" data-cue="t219" data-t="219" data-label="3:39">And we also have</span> <span class="cue" id="t221" data-cue="t221" data-t="221" data-label="3:41">Abby Winter</span> <span class="cue" id="t223" data-cue="t223" data-t="223" data-label="3:43">with us</span> <span class="cue" id="t225" data-cue="t225" data-t="225" data-label="3:45">tonight.</span> <span class="cue" id="t226" data-cue="t226" data-t="226" data-label="3:46">And</span> <span class="cue" id="t229" data-cue="t229" data-t="229" data-label="3:49">she is our</span> <span class="cue" id="t231" data-cue="t231" data-t="231" data-label="3:51">new</span> <span class="cue" id="t233" data-cue="t233" data-t="233" data-label="3:53">board clerk for the land use</span> <span class="cue" id="t236" data-cue="t236" data-t="236" data-label="3:56">department.</span> <span class="cue" id="t240" data-cue="t240" data-t="240" data-label="4:00">I'd like to thank</span> <span class="cue" id="t243" data-cue="t243" data-t="243" data-label="4:03">Mindy for all the great work that she's done over the last,</span> <span class="cue" id="t249" data-cue="t249" data-t="249" data-label="4:09">I don't know how long Mindy's</span> <span class="cue" id="t251" data-cue="t251" data-t="251" data-label="4:11">been with us,</span> <span class="cue" id="t253" data-cue="t253" data-t="253" data-label="4:13">but she's been here</span> <span class="cue" id="t254" data-cue="t254" data-t="254" data-label="4:14">for a little while now and has been</span> <span class="cue" id="t256" data-cue="t256" data-t="256" data-label="4:16">doing just an exceptional job.</span> <span class="cue" id="t259" data-cue="t259" data-t="259" data-label="4:19">I understand, I think she's living in South Windsor now, so the distance for if we went back to holding an in person meeting might be just a little excessive.</span></div>
@@ -1495,6 +1516,7 @@
       </div>
       <div class="para-gap" aria-hidden="true">&nbsp;</div>
     </div>
+    <div class="plaintext" id="panel-plain" role="tabpanel" aria-labelledby="tab-plain" hidden></div>
 
     <footer class="page-footer">
 <p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>
