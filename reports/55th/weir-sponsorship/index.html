@@ -1,0 +1,2254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Four Years of Bills — CT 55th House District</title>
+<style>/* Default civic-report theme.
+ *
+ * A theme is just this set of CSS custom properties. To experiment, copy this
+ * file to _build/themes/<name>.css, change what you like, and point at it from
+ * _build/report.config.json ({"theme":"<name>"}) for all reports, or from a
+ * single report's front matter (theme: <name>). A non-default theme is layered
+ * ON TOP of this one, so it only needs to list the variables it changes.
+ *
+ * Scope: colors, fonts, and small size/width/gap tweaks — not layout changes.
+ */
+:root {
+  /* ---- Palette ---- */
+  --bg:             #fafaf7;   /* page background */
+  --bg-page:        #ffffff;   /* the white content card */
+  --bg-soft:        #f5f3ed;   /* callouts, table headers, inline code */
+  --ink:            #1a1a1a;   /* body text, main headings */
+  --ink-soft:       #333333;   /* blockquote / methodology text */
+  --ink-mute:       #5a5a5a;   /* subtitle, card descriptions */
+  --ink-faint:      #888888;   /* attribution, footer, captions */
+  --rule:           #e0ddd5;   /* hairline borders */
+  --accent:         #b8a878;   /* gold accent rules */
+  --accent-2:       #2c3e50;   /* slate: h3, table-header & code text */
+  --banner-bg:      #2c3e50;   /* top banner background */
+  --banner-ink:     #ecf0f1;   /* top banner text */
+  --crumb-link:       #b9c4cf; /* breadcrumb links in the banner */
+  --crumb-link-hover: #ffffff;
+  --crumb-current:    #ffffff; /* deepest crumb (current page), not a link */
+  --link:           #1a5490;
+  --link-hover:     #0d3a6b;
+  --link-underline: #c5d3e2;
+  --anchor:         #b8b3a4;   /* the ¶ header anchor */
+  --anchor-hover:   #6c7480;
+  --confirm:        #5a8a5a;   /* green ✓ confirmation mark */
+  --confirm-strong: #2e7d32;
+
+  /* ---- Fonts ---- */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:  "SF Mono", Monaco, Menlo, Consolas, monospace;
+
+  /* ---- Sizes (small tweaks only; no layout restructuring) ---- */
+  --base-size:  11pt;    /* body text */
+  --measure:    780px;   /* content column width */
+  --gutter:     30px;    /* horizontal padding / banner & footer gaps */
+  --title-size: 28pt;
+  --h2-size:    18pt;
+  --h3-size:    13pt;
+}
+
+/* bluegold — mirrors the light-mode look of the 55th campaign site
+ * (C:\Users\scott\Dev\Andover\55th, e.g. localhost:8080/reports): cool
+ * blue-gray paper, a dark navy banner with a gold underline, navy serif
+ * headings over a sans body, gold accent rules, and blue links.
+ *
+ * Note the deliberate font swap: base.css uses --font-serif for body text and
+ * --font-sans for headings/labels, so to match the campaign look (sans body,
+ * serif display) we put the SANS stack in --font-serif and the SERIF stack in
+ * --font-sans.
+ *
+ * Layered on default.css. Uses --banner-border (in base.css) for the gold rule
+ * under the banner. */
+:root {
+  /* Palette */
+  --bg:             #f4f6f9;
+  --bg-page:        #ffffff;
+  --bg-soft:        #eef4fb;   /* blue-050 tint for callouts / table headers */
+  --rule:           #e3e8ef;   /* hairlines */
+  --ink:            #19222e;
+  --ink-soft:       #2b3744;
+  --ink-mute:       #5b6775;
+  --ink-faint:      #8a94a1;
+  --accent:         #e8a800;   /* signature gold rules */
+  --accent-2:       #0f2a4a;   /* blue-900: headings, table-header & code text */
+  --banner-bg:      linear-gradient(180deg, #0f2a4a, #143862);
+  --banner-border:  3px solid #e8a800;
+  --banner-ink:     #dde8f5;   /* blue-100 */
+  --crumb-link:       #e8a800; /* gold breadcrumb links */
+  --crumb-link-hover: #ffffff; /* hover to white + underline */
+  --crumb-current:    #ffffff; /* current page, not a link */
+  --link:           #245c95;   /* blue-600 */
+  --link-hover:     #1c4e80;   /* blue-700 */
+  --link-underline: #cfe0f2;
+  --confirm:        #2f8f5b;
+  --confirm-strong: #1f7d49;
+
+  /* Type: sans body + serif display headings (see note above) */
+  --font-serif: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans:  Georgia, "Times New Roman", serif;
+
+  --measure: 860px;
+}
+
+/* Structural base styles for civic reports — theme-independent.
+ * Colors, fonts, and sizes come from the active theme (CSS custom properties
+ * in _build/themes/<name>.css), which is loaded BEFORE this file. */
+
+/* ---- Reset & base ---- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Layout ---- */
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner a { color: inherit; text-decoration: none; }
+.page-banner a:hover { text-decoration: underline; }
+
+/* ---- Breadcrumb (in the banner) ---- */
+.page-banner .crumbs a {
+    color: var(--crumb-link, var(--banner-ink));
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover, #fff);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current {
+    color: var(--crumb-current, #fff);
+}
+
+.container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* ---- Images / figures ---- */
+/* Scale charts and figures to the column (and the printed page box) rather
+   than overflowing at their intrinsic pixel/point size. */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+}
+
+/* ---- Lightbox (screen only; overlay is built at runtime by the viewer
+   script, so it never appears in the PDF). Click a chart to enlarge it. ---- */
+.container img { cursor: zoom-in; }
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vmin;
+    background: rgba(0, 0, 0, 0.85);
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+.lightbox-overlay.open { opacity: 1; }
+.lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    margin: 0;
+    cursor: zoom-out;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+    background: #fff;
+}
+
+/* ---- Title block ---- */
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-attribution {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    color: var(--ink-faint);
+    margin: 0 0 24px 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+.report-attribution a {
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+}
+.report-attribution a:hover {
+    color: var(--link);
+    border-bottom-color: var(--link);
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.methodology-header {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 0 0 36px 0;
+    line-height: 1.55;
+}
+
+/* ---- Section labels (small uppercase tags above h2) ---- */
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 36px 0 4px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+/* ---- Headings ---- */
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+h3 {
+    font-family: var(--font-sans);
+    font-size: var(--h3-size);
+    font-weight: 600;
+    margin: 28px 0 10px 0;
+    color: var(--accent-2);
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+
+/* ---- Header anchor links (HTML only; hidden in print) ---- */
+.header-anchor {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.2em;
+    color: var(--anchor);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.85em;
+    vertical-align: baseline;
+    cursor: pointer;
+    user-select: none;
+}
+h2:hover .header-anchor,
+h3:hover .header-anchor,
+.header-anchor:focus {
+    opacity: 1;
+}
+.header-anchor:hover {
+    color: var(--anchor-hover);
+}
+.header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+}
+.header-anchor.copied::after {
+    content: " copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+}
+@media print {
+    .header-anchor {
+        display: none;
+    }
+}
+
+/* ---- Body text ---- */
+p {
+    margin: 0 0 14px 0;
+    orphans: 3;
+    widows: 3;
+}
+p.intro-table {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+strong { font-weight: 700; color: var(--ink); }
+em { font-style: italic; }
+
+/* ---- Links ---- */
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* ---- Lists ---- */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+li {
+    margin: 0 0 6px 0;
+    line-height: 1.55;
+}
+
+/* ---- Tables ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-before: avoid;
+    break-before: avoid;
+}
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 9.5pt;
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--accent);
+}
+tbody tr:hover { background: var(--bg); }
+
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+tbody tr:last-child td {
+    border-bottom: 2px solid var(--accent);
+}
+
+/* ---- Blockquotes (source notes, verbatim quotes) ---- */
+blockquote {
+    margin: 14px 0 18px 0;
+    padding: 14px 20px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+blockquote p { margin: 0 0 8px 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ol, blockquote ul {
+    margin: 8px 0;
+}
+
+/* ---- HR ---- */
+hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+}
+
+/* ---- Inline code ---- */
+code {
+    font-family: var(--font-mono);
+    font-size: 9.5pt;
+    background: var(--bg-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: var(--accent-2);
+    overflow-wrap: break-word;
+}
+
+/* ---- Other Formats footer ---- */
+.formats-section {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+}
+.format-cards {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.format-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.format-cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media screen and (max-width: 700px) {
+    .format-cards.cols-3,
+    .format-cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+.format-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    padding: 14px;
+    text-align: left;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+.format-card-icon { font-size: 18pt; margin-bottom: 4px; }
+.format-card-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+.format-card-desc { font-size: 9pt; color: var(--ink-mute); line-height: 1.4; }
+.format-card a { display: block; }
+
+/* ---- Footer ----
+   Two parts: .footer-id is the site-wide identity/disclaimer line, identical
+   on every page; .footer-note is the optional per-page line (sources, method,
+   "not a lawyer"). See siteFooterHtml() in _build/links.mjs. */
+/* @footer-css:start — generated from _build/footer.css; do not edit here, run: npm run sync:footer-css */
+.page-footer {
+  /* max-width + horizontal padding are px (not rem/ch) so a page's root
+     font-size can't rescale the wrap — the line breaks are identical everywhere. */
+  max-width: 512px;
+  margin: 3rem auto;
+  padding: 1.75rem 20px 0;
+  border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  text-align: center;
+  color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+}
+.page-footer p { margin: 0 auto 0.5rem; max-width: none; }
+.page-footer .footer-note { margin-top: 0.6rem; font-style: italic; }
+.page-footer strong { color: var(--ink-soft, inherit); font-weight: 600; }
+.page-footer a { color: var(--ink-soft, inherit); border-bottom: 1px solid var(--rule, currentColor); }
+.page-footer a:hover { color: var(--accent, var(--link, var(--burgundy, currentColor))); border-bottom-color: var(--accent, var(--link, var(--burgundy, currentColor))); }
+/* @footer-css:end */
+
+/* ---- Confirmation glyphs ---- */
+h3 .conf-mark {
+    color: var(--confirm);
+    font-size: 11pt;
+    margin-right: 4px;
+}
+</style>
+</head>
+<body>
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/reports/">Reports</a><span class="sep">›</span><a href="/reports/55th/">55th District</a><span class="sep">›</span><span class="current">Four Years of Bills</span>
+  </nav>
+</div>
+<div class="container">
+<h1 class="report-title">Four Years of Bills</h1>
+<p class="report-subtitle">Connecticut's 55th House District · Sponsorship record 2023–2026 · Every bill Rep. Steve Weir introduced or cosponsored, and what became of each</p>
+<p class="report-attribution">A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Not an official town document</p>
+<hr class="report-header-rule">
+<p class="methodology-header">This report itemizes every bill that Representative Steve Weir (R-55th)
+introduced or cosponsored across his four sessions in the Connecticut House
+(2023, 2024, 2025, and 2026), and records the disposition of each. The
+90-bill list comes from FastDemocracy&#8217;s legislator export (captured August
+29, 2026) and was independently cross-verified, bill for bill, against the
+LegiScan API&#8217;s sponsored-bills record for his legislator ID and against the
+General Assembly&#8217;s own member-bills page; all three sources agree exactly.
+Sponsorship roles and dispositions are taken from the Connecticut bulk
+legislative datasets published by LegiScan for the 2023, 2024, 2025, and
+2026 sessions, which carry each bill&#8217;s full sponsor list and action
+history; enactments are stated by public-act number and were confirmed
+against the chaptered texts on cga.ct.gov. Every row is resolved: no
+disposition in this report is pending. Part 4 compares his record with
+those of the 125 other House members who served the same four sessions,
+computed from the same datasets by the same rules; the underlying figures
+are published alongside this report as dataset.json. Part 5 also compares
+him with his 2023 freshman class and with the committee ranking members of
+each term, using rosters built from the Secretary of the State&#8217;s Register
+and Manual, the General Assembly&#8217;s 2023 committee bulletin, and election
+records, and checked against the 2021 and 2022 legislative datasets. Part 4
+draws on a
+separate public-records search of State Bond Commission agendas, state
+grant award lists, and Hebron municipal minutes. Readers can verify any
+row from the sources listed at the end.</p>
+<p class="section-label">Introduction</p>
+<h2 id="overview">Overview<a class="header-anchor" href="#overview" aria-label="Link to this section">¶</a></h2>
+<p>Connecticut&#8217;s 55th House District (Andover, Bolton, Glastonbury, Hebron,
+Marlborough) has been represented by Steve Weir (R-Hebron) since January
+2023. This report asks a narrow, checkable question about those four
+years: what bills carry his name, and what happened to each one?</p>
+<p>The answer divides cleanly along one line. Rep. Weir put his own name on
+41 bills as an introducer across the four sessions, and not one of them
+became law; 24 of those he filed entirely alone, and every one died in
+its committee of reference without a vote. Separately, he added his name
+as a cosponsor to 49 bills written and moved by others, and 33 of those
+did become law. On all 33, the primary sponsor of record is a legislative
+committee, not Rep. Weir and not any other individual member.</p>
+<p>That split is the whole of the record, and it supports two conclusions
+that pull in opposite directions. His name appears on a substantial body
+of enacted Connecticut law, more than a casual reader would expect. None
+of it is law he authored. Part 1 explains why that distinction is the one
+that matters in Hartford; Parts 2 and 3 present the record; Part 4 asks
+whether the district projects behind his local bills got funded anyway;
+Part 5 measures the whole record against every other member of the House
+who served the same four years, against the eleven Republicans who entered
+with him in 2023, and against the committee ranking members of each term.</p>
+<p class="section-label before-part">Process</p>
+<h2 id="part-1-how-a-name-gets-on-a-connecticut-bill">Part 1 — How a name gets on a Connecticut bill<a class="header-anchor" href="#part-1-how-a-name-gets-on-a-connecticut-bill" aria-label="Link to this section">¶</a></h2>
+<p>Reading a sponsorship record requires knowing that &#8220;sponsor&#8221; covers three
+very different roles in Hartford.</p>
+<p>An individual proposed bill is a short bill a single member files under
+their own name. It expresses the member&#8217;s own agenda. Almost all proposed
+bills die when the committee of reference declines to raise them; the few
+that advance do so by being absorbed into a committee bill.</p>
+<p>A committee bill (or raised bill) is introduced by one of the joint
+standing committees, drafted at the direction of its chairs, who under the
+current majority are Democrats. Individual legislators can attach their
+names as cosponsors. The committee, through its chairs, is the bill&#8217;s
+primary sponsor of record and the party that moves it.</p>
+<p>A cosponsorship is a signature added to someone else&#8217;s bill. Popular
+bipartisan bills accumulate dozens of cosponsors; signing on requires only
+a form. Cosponsoring is a statement of support, not authorship, and a
+cosponsor may ultimately vote against the amended bill.</p>
+<p>Because of this structure, the meaningful questions for any individual
+representative are: what did they file themselves, and did any of it move?
+On enacted bills carrying their name, were they the author and champion,
+or one signature among many?</p>
+<p>The tables below therefore separate the two. Within each session, bills
+Rep. Weir filed himself are listed apart from bills he cosponsored, and
+the cosponsored bills are split by whether they became law. Where a
+cosponsor count appears, it counts legislators only: the committee that
+holds the primary-sponsor slot is excluded, so &#8220;Cosponsor (2 of 4)&#8221; means
+he was the second of four members to sign a committee&#8217;s bill.</p>
+<p class="section-label before-part">The record</p>
+<h2 id="part-2-the-record-session-by-session">Part 2 — The record, session by session<a class="header-anchor" href="#part-2-the-record-session-by-session" aria-label="Link to this section">¶</a></h2>
+<p>Ninety bills carry Rep. Weir&#8217;s name across the four sessions: 34 in 2023,
+8 in 2024, 39 in 2025, and 9 in 2026.</p>
+<h3 id="2026-session-9-bills">2026 session (9 bills)<a class="header-anchor" href="#2026-session-9-bills" aria-label="Link to this section">¶</a></h3>
+<p class="intro-table">Filed himself (4):</p>
+<table>
+<thead>
+<tr>
+<th>Bill</th>
+<th>Subject (condensed)</th>
+<th>Role</th>
+<th>Disposition</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HB 5104</td>
+<td>Repeal 1% meals sales surtax</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 5105</td>
+<td>Sales-tax exemption, handicap ramps</td>
+<td>Introducer (1 of 2)</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 5106</td>
+<td>Sales-tax exemption, home hospital beds</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 5107</td>
+<td>Repeal highway use tax</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+</tbody></table>
+<p class="intro-table">Cosponsored, became law (5):</p>
+<table>
+<thead>
+<tr>
+<th>Bill</th>
+<th>Subject (condensed)</th>
+<th>Role</th>
+<th>Disposition</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HB 5493</td>
+<td>Civil Air Patrol stipend study</td>
+<td>Cosponsor (12 of 12)</td>
+<td>Became law; SA 26-31</td>
+</tr>
+<tr>
+<td>HB 5521</td>
+<td>Sterile cultivars / fill / housing statutes</td>
+<td>Cosponsor (2 of 4)</td>
+<td>Became law; PA 26-129</td>
+</tr>
+<tr>
+<td>SB 116</td>
+<td>Prevention of human trafficking</td>
+<td>Cosponsor (18 of 25)</td>
+<td>Became law; PA 26-98</td>
+</tr>
+<tr>
+<td>SB 349</td>
+<td>Firefighters Cancer Relief Fund reporting</td>
+<td>Cosponsor (22 of 22)</td>
+<td>Became law; PA 26-83</td>
+</tr>
+<tr>
+<td>SB 439</td>
+<td>Kiosk exemption, employee-lounge camera ban</td>
+<td>Cosponsor (5 of 5)</td>
+<td>Became law; PA 26-89</td>
+</tr>
+</tbody></table>
+<p class="intro-table">Cosponsored, did not become law (0):</p>
+<table>
+<thead>
+<tr>
+<th>Bill</th>
+<th>Subject (condensed)</th>
+<th>Role</th>
+<th>Disposition</th>
+</tr>
+</thead>
+</table>
+<blockquote>
+<p><strong>Notes:</strong> All five enacted bills are committee bills: the primary
+sponsor of record on each is a committee (General Law for SB 116;
+Labor and Public Employees, where Rep. Weir serves as ranking member,
+for SB 349, SB 439, and HB 5493; Environment for HB 5521), and his
+typed role on each is &#8220;Cosponsor.&#8221; PA 26-129&#8217;s sterile-cultivars
+content is a single section directing the Agricultural Experiment
+Station to deliver a report by January 2027; the remainder of the
+thirteen-page act concerns fill-materials permitting and revisions to
+housing statutes. On HB 5521 he is one of only four legislators to
+sign a bill led by the Environment Committee&#8217;s Democratic co-chair,
+Rep. Joseph Gresko.</p>
+</blockquote>
+<h3 id="2025-session-39-bills">2025 session (39 bills)<a class="header-anchor" href="#2025-session-39-bills" aria-label="Link to this section">¶</a></h3>
+<p class="intro-table">Filed himself (27):</p>
+<table>
+<thead>
+<tr>
+<th>Bill</th>
+<th>Subject (condensed)</th>
+<th>Role</th>
+<th>Disposition</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HB 5440</td>
+<td>Qualified immunity for police</td>
+<td>Introducer (1 of 2)</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 5449</td>
+<td>Reduce motor-vehicle mill rate cap</td>
+<td>Introducer (1 of 2)</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 5462</td>
+<td>Pontoon boat registration fee</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 5801</td>
+<td>1/3 state subsidy, retired teachers&#8217; health</td>
+<td>Introducer (1 of 2)</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 5855</td>
+<td>Building-trades grant for high schools</td>
+<td>Introducer (1 of 3)</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 5962</td>
+<td>Hospital beds tax exemption (refile)</td>
+<td>Introducer (1 of 3)</td>
+<td>Died in committee; hearing held, no vote</td>
+</tr>
+<tr>
+<td>HB 5963</td>
+<td>Repeal highway use tax (refile)</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 5964</td>
+<td>Repeal 1% meals surtax (refile)</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 5965</td>
+<td>Handicap ramps tax exemption (refile)</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 6025</td>
+<td>Repeal two regulations per new regulation</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 6035</td>
+<td>Small/minority business self-certification</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 6154</td>
+<td>&#8220;Parenting time&#8221; terminology</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 6177</td>
+<td>Governmental immunity, state officials</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 6321</td>
+<td>Reduce early-voting days</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 6412</td>
+<td>Prevailing wage rate predictability</td>
+<td>Introducer (2 of 2)</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 6416</td>
+<td>Sub-18 minimum wage reduction</td>
+<td>Introducer (1 of 3)</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 6417</td>
+<td>Raise prevailing wage thresholds</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 6538</td>
+<td>Raise sealed-bid threshold to $50K</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 6637</td>
+<td>Off-duty police carry on school grounds</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 6679</td>
+<td>Local bridge program, culvert grants</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 6680</td>
+<td>Name West St, Bolton, for Sgt Michael Clark</td>
+<td>Sole introducer</td>
+<td>Died in committee; content enacted in PA 25-65 § 51</td>
+</tr>
+<tr>
+<td>HB 6769</td>
+<td>Gold Star spouses property tax exemption</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>SB 625</td>
+<td>Define &#8220;day&#8221; in paid sick leave</td>
+<td>Introducer (2 of 3)</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>SB 925</td>
+<td>State bonds: RHAM generator/regional shelter</td>
+<td>Introducer (2 of 2)</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>SB 943</td>
+<td>State bonds: RHAM athletic fields</td>
+<td>Introducer (2 of 2)</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>SB 949</td>
+<td>State bonds: Hebron water lines</td>
+<td>Introducer (2 of 2)</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>SB 1078</td>
+<td>Marlborough Arts Center signage</td>
+<td>Introducer (2 of 2)</td>
+<td>Died in committee, no vote</td>
+</tr>
+</tbody></table>
+<p class="intro-table">Cosponsored, became law (3):</p>
+<table>
+<thead>
+<tr>
+<th>Bill</th>
+<th>Subject (condensed)</th>
+<th>Role</th>
+<th>Disposition</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HB 6075</td>
+<td>Airframe/powerplant program instructors</td>
+<td>Cosponsor (1 of 5)</td>
+<td>Became law; PA 25-128</td>
+</tr>
+<tr>
+<td>SB 721</td>
+<td>National Women Veterans Recognition Day</td>
+<td>Cosponsor (6 of 26)</td>
+<td>Became law; PA 25-20</td>
+</tr>
+<tr>
+<td>SB 1465</td>
+<td>Skilled-trade hiring ratio waivers</td>
+<td>Cosponsor (29 of 36)</td>
+<td>Became law; PA 25-47</td>
+</tr>
+</tbody></table>
+<p class="intro-table">Cosponsored, did not become law (9):</p>
+<table>
+<thead>
+<tr>
+<th>Bill</th>
+<th>Subject (condensed)</th>
+<th>Role</th>
+<th>Disposition</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HB 5026</td>
+<td>Sales-tax exemption, all aircraft</td>
+<td>Cosponsor (34 of 49)</td>
+<td>Died in committee; hearing held, no vote</td>
+</tr>
+<tr>
+<td>HB 5544</td>
+<td>EV registration fee and charging tax</td>
+<td>Cosponsor (10 of 12)</td>
+<td>Died in committee; hearing held, no vote</td>
+</tr>
+<tr>
+<td>HB 6338</td>
+<td>Squatter removal by police</td>
+<td>Cosponsor (5 of 7)</td>
+<td>Reported out; died without floor vote</td>
+</tr>
+<tr>
+<td>HB 6392</td>
+<td>Psychiatric Security Review Board standards</td>
+<td>Cosponsor (6 of 26)</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 7055</td>
+<td>Surviving-partner abatement + vol. stipends</td>
+<td>Cosponsor (12 of 30)</td>
+<td>Reported out; died without floor vote</td>
+</tr>
+<tr>
+<td>SB 647</td>
+<td>Consumer access to affordable electricity</td>
+<td>Cosponsor (25 of 38)</td>
+<td>Died in committee; hearing held, no vote</td>
+</tr>
+<tr>
+<td>SB 980</td>
+<td>Campus hate/harassment response training</td>
+<td>Cosponsor (3 of 3)</td>
+<td>Died in committee; hearing held, no vote</td>
+</tr>
+<tr>
+<td>SB 1276</td>
+<td>100% disabled vets + Gold Star spouses tax</td>
+<td>Cosponsor (2 of 23)</td>
+<td>Passed Senate; died in House</td>
+</tr>
+<tr>
+<td>SB 1310</td>
+<td>Hospital infant-surrender devices</td>
+<td>Cosponsor (9 of 12)</td>
+<td>Died in committee; hearing held, no vote</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> HB 6680 would have named West Street in Bolton for Sgt.
+Michael Clark. The bill itself died in the Transportation Committee
+without a hearing, but its substance became law: Section 51 of Public
+Act 25-65, the annual Department of Transportation act signed June 10,
+2025, designates the stretch of Route 85 (West Street) from School
+Road north to State Road 534 in Bolton as the &#8220;Sergeant Michael Clark
+Memorial Highway.&#8221; That is the ordinary route for road namings in
+Connecticut: 19 standalone naming bills were filed in the 2025 session,
+every one of them died as a standalone, and 15 of the 19 were folded
+into PA 25-65 the same way. The naming is a real result and a routine
+one. On HB 6075 (PA 25-128) Rep. Weir is the first legislator listed
+after the Higher Education Committee, the closest he comes in this
+session to the front of an enacted bill. SB 1276, the property tax
+exemption for totally disabled veterans and Gold Star spouses, passed
+the Senate 36-0 on May 29, 2025, was placed on the House calendar the
+next day, and never came to a House vote before adjournment.</p>
+</blockquote>
+<h3 id="2024-session-8-bills">2024 session (8 bills)<a class="header-anchor" href="#2024-session-8-bills" aria-label="Link to this section">¶</a></h3>
+<p class="intro-table">Filed himself (3):</p>
+<table>
+<thead>
+<tr>
+<th>Bill</th>
+<th>Subject (condensed)</th>
+<th>Role</th>
+<th>Disposition</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HB 5036</td>
+<td>Hospital beds tax exemption</td>
+<td>Introducer (1 of 2)</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 5116</td>
+<td>Reduce motor-vehicle mill rate cap</td>
+<td>Introducer (4 of 5)</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 5135</td>
+<td>1/3 subsidy, retired teachers&#8217; health</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+</tbody></table>
+<p class="intro-table">Cosponsored, became law (3):</p>
+<table>
+<thead>
+<tr>
+<th>Bill</th>
+<th>Subject (condensed)</th>
+<th>Role</th>
+<th>Disposition</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HB 5279</td>
+<td>Line-of-duty death declarations (fire/EMS)</td>
+<td>Cosponsor (40 of 58)</td>
+<td>Became law; PA 24-16</td>
+</tr>
+<tr>
+<td>HB 5491</td>
+<td>Veterans P&T disability tax exemption</td>
+<td>Cosponsor (97 of 118)</td>
+<td>Became law; PA 24-46</td>
+</tr>
+<tr>
+<td>SB 253</td>
+<td>Foreign political spending</td>
+<td>Cosponsor (4 of 11)</td>
+<td>Became law; PA 24-28</td>
+</tr>
+</tbody></table>
+<p class="intro-table">Cosponsored, did not become law (2):</p>
+<table>
+<thead>
+<tr>
+<th>Bill</th>
+<th>Subject (condensed)</th>
+<th>Role</th>
+<th>Disposition</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HB 5247</td>
+<td>Employee health benefit consortiums</td>
+<td>Cosponsor (17 of 35)</td>
+<td>Died in committee; hearing held, no vote</td>
+</tr>
+<tr>
+<td>HB 5413</td>
+<td>Street takeovers enforcement</td>
+<td>Cosponsor (26 of 44)</td>
+<td>Passed House; died in Senate</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> HB 5279, declaring line-of-duty deaths for firefighters,
+police officers, and emergency medical personnel, became Public Act
+24-16; Rep. Weir was one of 58 legislator cosponsors on a Public
+Safety Committee bill. HB 5413, the street-takeover enforcement bill,
+passed the House 148-0 but was never called in the Senate before
+adjournment, so its content did not become law in 2024.</p>
+</blockquote>
+<h3 id="2023-session-34-bills">2023 session (34 bills)<a class="header-anchor" href="#2023-session-34-bills" aria-label="Link to this section">¶</a></h3>
+<p class="intro-table">Filed himself (7):</p>
+<table>
+<thead>
+<tr>
+<th>Bill</th>
+<th>Subject (condensed)</th>
+<th>Role</th>
+<th>Disposition</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HB 5173</td>
+<td>Streamline agency regulations</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 5650</td>
+<td>Repeal highway use tax (first filing)</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 5651</td>
+<td>Repeal 1% meals surtax (first filing)</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 6276</td>
+<td>Sub-18 minimum wage reduction (first filing)</td>
+<td>Introducer (1 of 2)</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 6361</td>
+<td>Bar minimum-wage class actions</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 6404</td>
+<td>Brainard Airport development zone</td>
+<td>Introducer (2 of 3)</td>
+<td>Died in committee, no vote</td>
+</tr>
+<tr>
+<td>HB 6451</td>
+<td>Restore qualified immunity (first filing)</td>
+<td>Sole introducer</td>
+<td>Died in committee, no vote</td>
+</tr>
+</tbody></table>
+<p class="intro-table">Cosponsored, became law (22):</p>
+<table>
+<thead>
+<tr>
+<th>Bill</th>
+<th>Subject (condensed)</th>
+<th>Role</th>
+<th>Disposition</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HB 5001</td>
+<td>Services for persons with I/DD</td>
+<td>Cosponsor (83 of 93)</td>
+<td>Became law; PA 23-137</td>
+</tr>
+<tr>
+<td>HB 5049</td>
+<td>Military child-care licensing exemption</td>
+<td>Cosponsor (21 of 21)</td>
+<td>Became law; PA 23-29</td>
+</tr>
+<tr>
+<td>HB 5317</td>
+<td>Online building permit applications</td>
+<td>Cosponsor (6 of 7)</td>
+<td>Became law; PA 23-114</td>
+</tr>
+<tr>
+<td>HB 5510</td>
+<td>Add Space Force to &#8220;armed forces&#8221;</td>
+<td>Cosponsor (16 of 16)</td>
+<td>Became law; PA 23-71</td>
+</tr>
+<tr>
+<td>HB 5628</td>
+<td>Hydropower assets task force</td>
+<td>Cosponsor (15 of 16)</td>
+<td>Became law; SA 23-8</td>
+</tr>
+<tr>
+<td>HB 6489</td>
+<td>Retired members, Teachers&#8217; Retirement Board</td>
+<td>Cosponsor (35 of 49)</td>
+<td>Became law; PA 23-63</td>
+</tr>
+<tr>
+<td>HB 6549</td>
+<td>Labor Dept obsolete statute cleanup</td>
+<td>Cosponsor (2 of 2)</td>
+<td>Became law; PA 23-117</td>
+</tr>
+<tr>
+<td>HB 6621</td>
+<td>Surplus lines insurance renewals</td>
+<td>Cosponsor (2 of 3)</td>
+<td>Became law; PA 23-65</td>
+</tr>
+<tr>
+<td>HB 6631</td>
+<td>Common Interest Ownership Act notices</td>
+<td>Cosponsor (3 of 3)</td>
+<td>Became law; PA 23-119</td>
+</tr>
+<tr>
+<td>HB 6653</td>
+<td>Email notice, firearm permit expiration</td>
+<td>Cosponsor (6 of 6)</td>
+<td>Became law; PA 23-73</td>
+</tr>
+<tr>
+<td>HB 6714</td>
+<td>Animal cruelty reporting and penalties</td>
+<td>Cosponsor (34 of 48)</td>
+<td>Became law; PA 23-149</td>
+</tr>
+<tr>
+<td>HB 6725</td>
+<td>Agriculture/aquaculture program revisions</td>
+<td>Cosponsor (4 of 6)</td>
+<td>Became law; PA 23-184</td>
+</tr>
+<tr>
+<td>HB 6737</td>
+<td>Crime of harmful communication with a minor</td>
+<td>Cosponsor (26 of 32)</td>
+<td>Became law; PA 23-123</td>
+</tr>
+<tr>
+<td>HB 6746</td>
+<td>Wrong-way driving detection</td>
+<td>Cosponsor (34 of 39)</td>
+<td>Became law; PA 23-51</td>
+</tr>
+<tr>
+<td>HB 6756</td>
+<td>Historic preservation review working group</td>
+<td>Cosponsor (1 of 1)</td>
+<td>Became law; SA 23-15</td>
+</tr>
+<tr>
+<td>HB 6839</td>
+<td>Tribal police pistol permits</td>
+<td>Cosponsor (5 of 6)</td>
+<td>Became law; PA 23-130</td>
+</tr>
+<tr>
+<td>HB 6875</td>
+<td>ID cards at correctional discharge</td>
+<td>Cosponsor (15 of 23)</td>
+<td>Became law; PA 23-88</td>
+</tr>
+<tr>
+<td>HB 6895</td>
+<td>Firearms and street takeovers study</td>
+<td>Cosponsor (7 of 9)</td>
+<td>Became law; PA 23-203</td>
+</tr>
+<tr>
+<td>HB 6903</td>
+<td>Port Authority contract oversight</td>
+<td>Cosponsor (9 of 10)</td>
+<td>Became law; PA 23-91</td>
+</tr>
+<tr>
+<td>SB 2</td>
+<td>Children&#8217;s mental/physical wellness omnibus</td>
+<td>Cosponsor (37 of 45)</td>
+<td>Became law; PA 23-101</td>
+</tr>
+<tr>
+<td>SB 1017</td>
+<td>Firefighter/EMS shortage task force</td>
+<td>Cosponsor (16 of 23)</td>
+<td>Became law; SA 23-1</td>
+</tr>
+<tr>
+<td>SB 1133</td>
+<td>Child neglect finding limits</td>
+<td>Cosponsor (9 of 15)</td>
+<td>Became law; PA 23-176</td>
+</tr>
+</tbody></table>
+<p class="intro-table">Cosponsored, did not become law (5):</p>
+<table>
+<thead>
+<tr>
+<th>Bill</th>
+<th>Subject (condensed)</th>
+<th>Role</th>
+<th>Disposition</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HB 5048</td>
+<td>Free veterans&#8217; specialty plates</td>
+<td>Cosponsor (17 of 19)</td>
+<td>Passed House; died in Senate</td>
+</tr>
+<tr>
+<td>HB 5205</td>
+<td>Veterans Passport-to-Parks fee exemption</td>
+<td>Cosponsor (21 of 21)</td>
+<td>Passed House; died in Senate</td>
+</tr>
+<tr>
+<td>HB 6011</td>
+<td>Tax deduction, military funeral honor guard</td>
+<td>Cosponsor (21 of 21)</td>
+<td>Passed House; died in Senate</td>
+</tr>
+<tr>
+<td>HB 6567</td>
+<td>Campus free-expression policies</td>
+<td>Cosponsor (16 of 22)</td>
+<td>Passed House; died in Senate</td>
+</tr>
+<tr>
+<td>HB 6738</td>
+<td>Compassionate/medical parole reform</td>
+<td>Cosponsor (4 of 7)</td>
+<td>Passed House; died in Senate</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> 2023 is the session that produced most of Rep. Weir&#8217;s
+enacted-law footprint: 22 of the 33 laws bearing his name date from his
+first year. All 22 are committee bills he cosponsored. Two are unusually
+short-listed. On HB 6756, which became Special Act 23-15 and created a
+working group on the State Historic Preservation Officer&#8217;s role, he is
+the only legislator on the bill, cosponsoring a Commerce Committee bill
+nobody else signed. On HB 6549 (PA 23-117), a Labor Committee statute
+cleanup, he is one of two. SB 2, the Senate majority&#8217;s 2023 priority
+bill on children&#8217;s wellness, passed both chambers without a dissenting
+vote and was signed June 26, 2023; Section 2(i) of the enacted text,
+Public Act 23-101, bars a public library from receiving its state grant
+unless it maintains board-approved collection development, management,
+and reconsideration policies, and provides that &#8220;in the instance of a
+book challenge, these policies shall govern.&#8221; Rep. Weir is one of 45
+legislators who cosponsored that act.</p>
+</blockquote>
+<p class="section-label before-part">Patterns</p>
+<h2 id="part-3-patterns-in-the-record">Part 3 — Patterns in the record<a class="header-anchor" href="#part-3-patterns-in-the-record" aria-label="Link to this section">¶</a></h2>
+<h3 id="nothing-he-filed-himself-ever-moved">Nothing he filed himself ever moved<a class="header-anchor" href="#nothing-he-filed-himself-ever-moved" aria-label="Link to this section">¶</a></h3>
+<p>Across four sessions Rep. Weir put his name at the top of 41 bills. None
+received a floor vote in either chamber, and none became law. Of the 24
+he filed entirely alone, every one died in its committee of reference
+without so much as a public hearing. This is the single most consistent
+fact in the record, and it does not vary by session, subject, or
+committee.</p>
+<h3 id="refiling-did-not-change-the-outcome">Refiling did not change the outcome<a class="header-anchor" href="#refiling-did-not-change-the-outcome" aria-label="Link to this section">¶</a></h3>
+<p>Eight of his proposals were filed in two or three separate sessions and
+died each time: repeal of the highway use tax (2023, 2025, 2026), repeal
+of the 1% meals surtax (2023, 2025, 2026), the home-hospital-bed tax
+exemption (2024, 2025, 2026), the handicap-ramp exemption (2025, 2026),
+the retired-teachers insurance subsidy (2024, 2025), the motor-vehicle
+mill rate cap (2024, 2025), the sub-18 minimum wage reduction (2023,
+2025), and qualified immunity for police (2023, 2025). Whether a reader
+sees persistence or futility in that pattern, the legislative outcome is
+the same in every case.</p>
+<h3 id="his-enacted-footprint-is-real-and-it-is-entirely-cosponsorship">His enacted footprint is real, and it is entirely cosponsorship<a class="header-anchor" href="#his-enacted-footprint-is-real-and-it-is-entirely-cosponsorship" aria-label="Link to this section">¶</a></h3>
+<p>Thirty-three laws carry Rep. Weir&#8217;s name. That is a larger number than
+the shape of his own filings would suggest, and it is worth stating
+plainly rather than minimizing. On every one of the 33, the primary
+sponsor of record is a joint standing committee. On none of them is Rep.
+Weir, or any other individual legislator, the primary sponsor.</p>
+<p>The 33 vary widely in how crowded they are. At one end are mass-signed
+bipartisan measures where he is one signature among a hundred, such as
+PA 24-46 with 118 legislator cosponsors, or PA 23-137 with 93. At the
+other end are a handful of quiet committee bills with almost no one on
+them: Special Act 23-15, where he is the only legislator to sign a
+Commerce Committee bill; PA 23-117, where he is one of two on a Labor
+Committee cleanup; PA 25-128, where he is the first of five names after
+the Higher Education Committee; and PA 26-129, where he is one of four.
+These are the strongest associations between Rep. Weir and an enacted law
+that the record contains. They are also, in every case, bills a committee
+drafted and its majority chairs moved.</p>
+<h3 id="the-district-bills-split-two-ways">The district bills split two ways<a class="header-anchor" href="#the-district-bills-split-two-ways" aria-label="Link to this section">¶</a></h3>
+<p>The 2025 filings include four local items that died in committee without
+a vote: bond authorizations for a RHAM regional-shelter generator, RHAM
+athletic fields, and Hebron water lines, plus signage for the Marlborough
+Arts Center. On all four, Sen. Catherine Osten (D-19th) is the
+first-listed introducer and Rep. Weir the second name. Individual bond
+bills conventionally die this way, with projects funded, if at all,
+through the State Bond Commission. Part 4 traces what became of each of
+the four projects. The fifth
+local item, the naming of West Street in Bolton for Sgt. Michael Clark,
+did become law, as Section 51 of PA 25-65. Constituents who care about
+that naming got the result; the mechanism was the Transportation
+Committee&#8217;s annual omnibus, which absorbed 15 of the session&#8217;s 19 naming
+bills.</p>
+<p class="section-label before-part">The projects</p>
+<h2 id="part-4-the-district-projects-and-whether-they-got-funded">Part 4 — The district projects, and whether they got funded<a class="header-anchor" href="#part-4-the-district-projects-and-whether-they-got-funded" aria-label="Link to this section">¶</a></h2>
+<p>A bill dying is not the same as a project dying. Four of the 2025 filings
+carrying Rep. Weir&#8217;s name asked the state to pay for specific things in
+this district, and all four died in the Finance, Revenue and Bonding
+Committee without a vote. The question a resident actually cares about is
+whether the generator, the fields, the water line, and the signs happened
+anyway. This part answers that from public records.</p>
+<p>One structural point first. On all four of these bills the first-listed
+introducer is Sen. Catherine Osten (D-19th), whose district adjoins this
+one and includes part of the RHAM region; Rep. Weir is the second name.
+They are her bond bills, joined by him, rather than measures he
+originated. That is the ordinary way a House member attaches to a Senate
+bond filing, and it matters only because it bears on who could claim
+delivery if any of them had produced money.</p>
+<h3 id="the-four-projects">The four projects<a class="header-anchor" href="#the-four-projects" aria-label="Link to this section">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Project</th>
+<th>Bill</th>
+<th>State funding found</th>
+<th>What actually happened</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RHAM emergency generator, Hebron</td>
+<td>SB 925</td>
+<td>None</td>
+<td>Being built with town money, not state money</td>
+</tr>
+<tr>
+<td>RHAM athletic field improvements</td>
+<td>SB 943</td>
+<td>None</td>
+<td>No state award; a district-level procurement only</td>
+</tr>
+<tr>
+<td>Hebron water lines, Amston Village</td>
+<td>SB 949</td>
+<td>None</td>
+<td>STEAP application filed for $665,000; not awarded</td>
+</tr>
+<tr>
+<td>Marlborough Arts Center signage</td>
+<td>SB 1078</td>
+<td>None</td>
+<td>No state award found</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> &#8220;State funding found&#8221; means no State Bond Commission agenda
+item or minute, no STEAP or Community Investment Fund award, and no
+enacted bond-act line naming the project could be located in 2024-2026
+public records. Absence of a public record is strong evidence but not
+absolute proof; the standard that would reverse any row is stated at the
+end of this part.</p>
+</blockquote>
+<h3 id="the-generator-a-real-project-paid-for-locally">The generator: a real project, paid for locally<a class="header-anchor" href="#the-generator-a-real-project-paid-for-locally" aria-label="Link to this section">¶</a></h3>
+<p>The RHAM generator is the one project of the four that is actually being
+built, and its funding history is the clearest illustration in this report
+of what a failed bond bill does and does not accomplish.</p>
+<p>The state was asked three times. Sen. Osten first filed for it in 2022 as
+SB 95, seeking up to $2 million for the generator, installation, and
+related equipment; it moved from Appropriations to Finance and went no
+further. In 2025 she and Rep. Weir filed SB 925, which died in Finance
+without a hearing. In 2026 she filed the measure again, alone, as SB 141;
+Rep. Weir&#8217;s name is not on the 2026 refiling, and that bill died as well.
+The fact that the project needed refiling in 2026 &#8220;to complete the
+installation&#8221; is itself evidence that the earlier bills delivered no
+money.</p>
+<p>Meanwhile the work proceeded on local funds. The Hebron Public Building
+Committee is administering the generator upgrade on behalf of the Town of
+Hebron and Regional School District No. 8, with the Town pre-purchasing
+the generator itself. The Town Council awarded the Phase 1 construction
+bid to R & C Electric, LLC of Bristol in December 2025, and on April 9,
+2026 awarded a Phase 1 testing and inspection contract to Tri State
+Materials Testing Lab, LLC of Berlin, not to exceed $9,500.</p>
+<p>So the emergency shelter generator is getting installed, and Hebron
+taxpayers are paying for it. No legislator of either party has a
+verifiable public claim to having delivered state funding for it.</p>
+<h3 id="the-water-line-applied-for-not-awarded">The water line: applied for, not awarded<a class="header-anchor" href="#the-water-line-applied-for-not-awarded" aria-label="Link to this section">¶</a></h3>
+<p>Hebron did pursue the water-main project through the grant channel that
+exists for it. The Board of Selectmen approved a 2025 Small Town Economic
+Assistance Program application for the Amston Village Water Main Extension
+in the amount of $665,000. When the Governor announced the 2025 STEAP
+awards on May 28, 2025, releasing $30 million across 46 small towns,
+Hebron was not among them.</p>
+<p>One nearby award should not be confused with this one. The Department of
+Economic and Community Development awarded $2.1 million to the Town of
+Hebron to build community wells serving the Church Street Commons housing
+development. That is a different project with a different purpose, and it
+is not the Amston water main that SB 949 addressed.</p>
+<h3 id="how-a-reader-can-check-this">How a reader can check this<a class="header-anchor" href="#how-a-reader-can-check-this" aria-label="Link to this section">¶</a></h3>
+<p>The State Bond Commission, chaired by the Governor, approves STEAP grants
+and most local bond grants; the Office of Policy and Management serves as
+its secretary and publishes agendas and minutes. Those are the records to
+pull.</p>
+<ul>
+<li>Generator: Hebron Town Council minutes for December 2025 and April 9,
+2026, and the Public Building Committee&#8217;s generator solicitation on
+hebronct.com. For the state side, search Bond Commission agendas from
+2024 through 2026 for &#8220;Hebron,&#8221; &#8220;RHAM,&#8221; or &#8220;Region 8.&#8221;</li>
+<li>Athletic fields: the same Bond Commission agendas and the OPM award
+lists, searching &#8220;Region 8&#8221; or &#8220;RHAM.&#8221;</li>
+<li>Water line: the Board of Selectmen resolution approving the $665,000
+STEAP application, against the Governor&#8217;s May 28, 2025 award list.</li>
+<li>Signage: OPM and DECD grant announcements and Bond Commission agendas.</li>
+</ul>
+<p>Any one of three things would reverse a &#8220;none&#8221; in the table above: a Bond
+Commission agenda item naming the town, grantee, amount, and statutory
+authority; an OPM award-list entry; or an enacted bond-act section naming
+Hebron, Marlborough, or Region 8 for the specific project. Readers who
+find one should weigh it against this report, which is current as of late
+August 2026.</p>
+<p class="section-label before-part">Comparison</p>
+<h2 id="part-5-how-the-record-compares">Part 5 — How the record compares<a class="header-anchor" href="#part-5-how-the-record-compares" aria-label="Link to this section">¶</a></h2>
+<p>A count means nothing without a baseline. Rep. Weir filed 41 bills and none
+became law; whether that is a failing, a structural fact, or simply normal
+depends entirely on what happened to everyone else&#8217;s bills. So this part
+computes the same measures for his colleagues from the same data.</p>
+<p>The comparison group is every member of the House who served all four
+sessions, 2023 through 2026: 126 members, 43 Republicans and 83 Democrats.
+Holding tenure constant matters, because a member who arrived in 2025 has
+had half as many chances to file anything. Rep. Weir served exactly these
+four sessions, so every member of the cohort had exactly his opportunity.</p>
+<h3 id="almost-nobody-in-connecticut-is-the-lead-sponsor-of-a-law">Almost nobody in Connecticut is the lead sponsor of a law<a class="header-anchor" href="#almost-nobody-in-connecticut-is-the-lead-sponsor-of-a-law" aria-label="Link to this section">¶</a></h3>
+<p class="intro-table">Start with the measure that sounds most damning and turns out to be the
+least informative. Across the four sessions the General Assembly enacted
+793 bills. Here is who held the primary-sponsor slot on them.</p>
+<table>
+<thead>
+<tr>
+<th>Every law passed in the four sessions</th>
+<th class="num">Bills</th>
+<th class="num">Share</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Enacted 2023-2026</td>
+<td class="num">793</td>
+<td class="num"></td>
+</tr>
+<tr>
+<td>Primary sponsor is a committee</td>
+<td class="num">756</td>
+<td class="num">95.3%</td>
+</tr>
+<tr>
+<td>No primary sponsor recorded</td>
+<td class="num">19</td>
+<td class="num">2.4%</td>
+</tr>
+<tr>
+<td>Primary sponsor is a legislator</td>
+<td class="num">18</td>
+<td class="num">2.3%</td>
+</tr>
+</tbody></table>
+<p>The 18 exceptions are not ordinary legislation. They are the budget acts,
+the bonding acts, the federal-funds allocations, and the emergency-certified
+bills, and they carry the same four names each time: House Speaker Matthew
+Ritter, House Majority Leader Jason Rojas, Senate President Pro Tempore
+Martin Looney, and Senate Majority Leader Robert Duff. One of the 18,
+Public Act 23-1 on school lunch funding, adds the two Republican leaders,
+House Minority Leader Vincent Candelora and Senate Minority Leader Kevin
+Kelly.</p>
+<p>So six legislators out of roughly 180 have held the lead slot on any
+enacted bill in four years, and five of the six hold a chamber leadership
+title. &#8220;Never the lead sponsor of a law that passed&#8221; describes Rep. Weir.
+It also describes 42 of the 43 Republicans in his cohort, every rank-and-
+file Democrat, and every committee chair in the building. Readers should
+give the fact no weight at all as a measure of one member, and this report
+records it only because leaving it out would invite someone else to
+present it as though it meant something.</p>
+<h3 id="what-does-vary-is-how-far-a-member-8217-s-own-bills-travel">What does vary is how far a member&#8217;s own bills travel<a class="header-anchor" href="#what-does-vary-is-how-far-a-member-8217-s-own-bills-travel" aria-label="Link to this section">¶</a></h3>
+<p class="intro-table">The informative measure is what happens to bills a member files. Almost
+all of them die, for members of both parties. But they die at different
+stages, and the gap between the caucuses is the real finding.</p>
+<table>
+<thead>
+<tr>
+<th>What happened to bills members filed themselves</th>
+<th>Republicans (43)</th>
+<th>Democrats (83)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Bills filed</td>
+<td>2,626</td>
+<td>3,225</td>
+</tr>
+<tr>
+<td>Got a public hearing</td>
+<td>118 (4.5%)</td>
+<td>373 (11.6%)</td>
+</tr>
+<tr>
+<td>Reported out of committee</td>
+<td>0 (0.0%)</td>
+<td>2 (0.1%)</td>
+</tr>
+<tr>
+<td>Received a floor vote</td>
+<td>1 (0.0%)</td>
+<td>44 (1.4%)</td>
+</tr>
+<tr>
+<td>Signed into law</td>
+<td>1 (0.0%)</td>
+<td>36 (1.1%)</td>
+</tr>
+</tbody></table>
+<p>A Republican&#8217;s filed bill was less than half as likely as a Democrat&#8217;s to
+get so much as a public hearing, and past that point the Republican
+pipeline is essentially closed: zero of 2,626 bills reported out of
+committee, and the single Republican bill that reached the floor and became
+law is Public Act 23-1, the bipartisan emergency school-lunch bill led by
+all six chamber leaders. On the Democratic side the numbers are larger but
+concentrated rather than broad: the 36 enacted are the leadership vehicles
+described above, filed by Speaker Ritter and Majority Leader Rojas, not the
+work of 83 individual members.</p>
+<p>The honest reading is that in Connecticut an individual member&#8217;s own bill
+is not the instrument through which law gets made, in either party. Ideas
+that survive are absorbed into committee bills, and the committee becomes
+the sponsor of record. That is the system working as designed, and it is
+the strongest thing that can be said in Rep. Weir&#8217;s defense on this
+record.</p>
+<h3 id="within-his-own-caucus-his-numbers-are-ordinary">Within his own caucus, his numbers are ordinary<a class="header-anchor" href="#within-his-own-caucus-his-numbers-are-ordinary" aria-label="Link to this section">¶</a></h3>
+<p class="intro-table">Against the 43 Republicans who served the same four sessions:</p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th class="num">Weir</th>
+<th class="num">Cohort median</th>
+<th class="num">Cohort high</th>
+<th>His rank</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Bills filed himself</td>
+<td class="num">41</td>
+<td class="num">39</td>
+<td class="num">190</td>
+<td>19 of 43</td>
+</tr>
+<tr>
+<td>Of those, filed as first-listed introducer</td>
+<td class="num">33</td>
+<td class="num">28</td>
+<td class="num">125</td>
+<td>17 of 43</td>
+</tr>
+<tr>
+<td>Of those, filed entirely alone</td>
+<td class="num">24</td>
+<td class="num">16</td>
+<td class="num">69</td>
+<td>14 of 43</td>
+</tr>
+<tr>
+<td>Filed bills that got a public hearing</td>
+<td class="num">1</td>
+<td class="num">1</td>
+<td class="num">15</td>
+<td>21 of 43</td>
+</tr>
+<tr>
+<td>Filed bills reported out of committee</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td>all 43 at zero</td>
+</tr>
+<tr>
+<td>Filed bills that became law</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">1</td>
+<td>42 of 43 at zero</td>
+</tr>
+<tr>
+<td>Bills he cosponsored</td>
+<td class="num">49</td>
+<td class="num">74</td>
+<td class="num">689</td>
+<td>33 of 43</td>
+</tr>
+<tr>
+<td>Cosponsored bills that became law</td>
+<td class="num">33</td>
+<td class="num">32</td>
+<td class="num">263</td>
+<td>19 of 43</td>
+</tr>
+</tbody></table>
+<p>He files slightly more bills than the median Republican and stands 19th of
+43 in volume. He files alone more often than most, 14th of 43, which is
+consistent with a member working his own list rather than joining
+colleagues&#8217; bills. The outcome measures do not distinguish him from anyone,
+because the outcomes are zero across the caucus.</p>
+<p>The one measure on which he is genuinely below his caucus is cosponsorship:
+49 bills signed against a caucus median of 74, ranking 33rd of 43. Members
+who sign hundreds of bills accumulate large enacted-law counts without
+having done more legislative work, so a low number here is not a criticism
+and a high one is not an achievement. It does mean that Rep. Weir&#8217;s 33
+enacted cosponsorships came from a comparatively small number of
+signatures, and that his name appears on fewer of his colleagues&#8217; bills
+than most Republicans&#8217; do.</p>
+<h3 id="against-the-members-who-started-when-he-did">Against the members who started when he did<a class="header-anchor" href="#against-the-members-who-started-when-he-did" aria-label="Link to this section">¶</a></h3>
+<p class="intro-table">Eleven Republicans entered the House with Rep. Weir in January 2023, first
+elected that November with no prior House service. This is the tightest
+comparison the record allows: identical starting point, identical years,
+identical minority status. Three of the eleven lost in 2024 and served only
+the first term, so the four-session comparison runs across the eight who
+stayed.</p>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>District</th>
+<th class="num">Bills filed</th>
+<th class="num">Filed alone</th>
+<th class="num">Hearings</th>
+<th class="num">Became law</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Steve Weir</td>
+<td>HD-055</td>
+<td class="num">41</td>
+<td class="num">24</td>
+<td class="num">1</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td>Martin Foncello</td>
+<td>HD-107</td>
+<td class="num">40</td>
+<td class="num">22</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td>Joe Hoxha</td>
+<td>HD-078</td>
+<td class="num">39</td>
+<td class="num">31</td>
+<td class="num">1</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td>Seth Bronko</td>
+<td>HD-070</td>
+<td class="num">31</td>
+<td class="num">18</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td>Mark DeCaprio</td>
+<td>HD-048</td>
+<td class="num">25</td>
+<td class="num">12</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td>Tracy Marra</td>
+<td>HD-141</td>
+<td class="num">25</td>
+<td class="num">13</td>
+<td class="num">4</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td>Karen Reddington-Hughes</td>
+<td>HD-066</td>
+<td class="num">18</td>
+<td class="num">5</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td>Chris Aniskovich</td>
+<td>HD-035</td>
+<td class="num">14</td>
+<td class="num">1</td>
+<td class="num">2</td>
+<td class="num">0</td>
+</tr>
+</tbody></table>
+<p>He filed more bills than anyone else in his freshman class, and filed alone
+more often than all but one. On the outcome column the class is uniform:
+none of the eleven, in either the four-session group or the three who
+served one term, had a bill of their own become law.</p>
+<p>The freshman roster was assembled from election records and member
+biographies, then checked independently against the 2021 and 2022
+legislative datasets: every one of the eleven is absent from both earlier
+sessions, and no twelfth Republican in the 2023 House is missing from them.
+The two methods agree exactly.</p>
+<h3 id="does-a-ranking-member-post-change-anything">Does a ranking-member post change anything?<a class="header-anchor" href="#does-a-ranking-member-post-change-anything" aria-label="Link to this section">¶</a></h3>
+<p class="intro-table">Rep. Weir is the ranking Republican on the Labor and Public Employees
+Committee, the minority party&#8217;s senior position on that committee. He has
+held it since 2025. In the 2023-24 term the Labor ranking member was Rep.
+Tim Ackert of the 8th District, and Rep. Weir sat as a rank-and-file member
+of Labor, Housing, and Higher Education. Because the post changed hands
+partway through the period, the comparison has to run term by term.</p>
+<table>
+<thead>
+<tr>
+<th class="num">Term</th>
+<th>House Republicans</th>
+<th class="num">Members</th>
+<th class="num">Median bills filed</th>
+<th class="num">Hearings won</th>
+<th class="num">Bills enacted</th>
+</tr>
+</thead>
+<tbody><tr>
+<td class="num">2023-24</td>
+<td>With a ranking post</td>
+<td class="num">23</td>
+<td class="num">21</td>
+<td class="num">47</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="num">2023-24</td>
+<td>Without a ranking post</td>
+<td class="num">29</td>
+<td class="num">16</td>
+<td class="num">35</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="num">2025-26</td>
+<td>With a ranking post</td>
+<td class="num">27</td>
+<td class="num">22</td>
+<td class="num">28</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="num">2025-26</td>
+<td>Without a ranking post</td>
+<td class="num">22</td>
+<td class="num">17</td>
+<td class="num">18</td>
+<td class="num">0</td>
+</tr>
+</tbody></table>
+<p>Holding a ranking post is worth something, and not much. Ranking members
+file more bills than their colleagues without a post, about a third more at
+the median in both terms, and in 2023-24 they won more hearings. What the
+post does not do is get bills passed. The single enacted bill in the table
+is Public Act 23-1, the bipartisan emergency school-lunch act filed by
+House Minority Leader Vincent Candelora together with the other five
+chamber leaders. Across both terms, no other House Republican, with or
+without a ranking post, had a bill of their own signed into law.</p>
+<h3 id="his-own-two-terms-differ-more-than-his-cohort-does">His own two terms differ more than his cohort does<a class="header-anchor" href="#his-own-two-terms-differ-more-than-his-cohort-does" aria-label="Link to this section">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th class="num">Term</th>
+<th>His role</th>
+<th class="num">Bills filed</th>
+<th>Rank for filing</th>
+<th class="num">Bills cosponsored</th>
+<th>Rank for cosponsoring</th>
+<th class="num">Bills enacted</th>
+</tr>
+</thead>
+<tbody><tr>
+<td class="num">2023-24</td>
+<td>Rank-and-file</td>
+<td class="num">10</td>
+<td>37 of 52</td>
+<td class="num">32</td>
+<td>28 of 52</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="num">2025-26</td>
+<td>Labor ranking member</td>
+<td class="num">31</td>
+<td>14 of 49</td>
+<td class="num">17</td>
+<td>39 of 49</td>
+<td class="num">0</td>
+</tr>
+</tbody></table>
+<p>The clearest thing the roster data adds is a change in Rep. Weir himself.
+In his first term he was a low-volume filer, 37th of 52 House Republicans.
+In his second, holding the Labor ranking post, he filed three times as many
+bills and moved to 14th of 49, and 9th of the 27 ranking members. Whatever
+else the record shows, he became a markedly more active legislator after
+2024.</p>
+<p>His cosponsorship moved the other way, from 32 bills signed in the first
+term to 17 in the second, dropping from 28th to 39th among House
+Republicans. He is spending more effort on his own filings and less on
+signing his colleagues&#8217;. The enacted column stays at zero in both terms,
+as it does for almost everyone.</p>
+<h3 id="what-the-comparison-still-cannot-settle">What the comparison still cannot settle<a class="header-anchor" href="#what-the-comparison-still-cannot-settle" aria-label="Link to this section">¶</a></h3>
+<p>Two committee ranking-member posts for the 2023-24 term, Planning and
+Development and Veterans&#8217; Affairs, could not be established from the
+sources consulted and are absent from that term&#8217;s cohort of 23. Both are
+recoverable from the archived 2024 State Register and Manual. Neither could
+change the finding, because the enactment count for the entire House
+Republican caucus in that term is one bill, filed by the minority leader.</p>
+<p>Rep. Amy Romano, who won an April 2025 special election in the 113th
+District, is excluded from the 2025-26 cohorts because she served only part
+of the term and a partial tenure would not be comparable.</p>
+<p>Beyond that, sponsorship data cannot show why a bill died, what a member
+argued for in a closed committee negotiation, or whether an idea survived
+inside someone else&#8217;s bill.</p>
+<h3 id="the-exception-that-shows-what-driving-a-bill-looks-like">The exception that shows what driving a bill looks like<a class="header-anchor" href="#the-exception-that-shows-what-driving-a-bill-looks-like" aria-label="Link to this section">¶</a></h3>
+<p>Minority legislators are not barred from authoring law; they are only very
+unlikely to do it through their own filed bills. The clearest recent
+example touching this district&#8217;s news cycle is Senator Tony Hwang
+(R-Fairfield), the publicly credited champion of the 2025 library e-book
+licensing law (SB 1234, now Public Act 25-9), a first-in-the-nation measure
+he worked on for four years before its 35-1 Senate passage. That work is
+visible in committee records, testimony, and press coverage rather than in
+a sponsor field, which is precisely the point: the sponsorship data in this
+report can show that a member did not lead a bill to passage, but only
+narrative records can show that one did.</p>
+<p class="section-label">At a glance</p>
+<h2 id="summary">Summary<a class="header-anchor" href="#summary" aria-label="Link to this section">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Bills carrying Rep. Weir&#8217;s name, 2023-2026</td>
+<td>90 (34 + 8 + 39 + 9 by session)</td>
+</tr>
+<tr>
+<td>Bills he filed himself as an introducer</td>
+<td>41</td>
+</tr>
+<tr>
+<td>Of those, bills that became law</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Of those, bills that received any floor vote</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Bills he filed entirely alone</td>
+<td>24, all dead in committee without a hearing</td>
+</tr>
+<tr>
+<td>Bills he cosponsored</td>
+<td>49</td>
+</tr>
+<tr>
+<td>Of those, bills that became law</td>
+<td>33</td>
+</tr>
+<tr>
+<td>Enacted laws where he is the primary sponsor of record</td>
+<td>0; a committee holds that slot on all 33</td>
+</tr>
+<tr>
+<td>Enacted laws where he is the only legislator on the bill</td>
+<td>1 (SA 23-15, a Commerce Committee working group)</td>
+</tr>
+<tr>
+<td>His own proposals whose substance became law anyway</td>
+<td>1 (HB 6680, enacted as Sec. 51 of PA 25-65)</td>
+</tr>
+<tr>
+<td>Own proposals refiled in multiple sessions</td>
+<td>8 concepts, all died each time</td>
+</tr>
+<tr>
+<td>Dispositions still pending confirmation</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Laws enacted 2023-2026 with a legislator as lead sponsor</td>
+<td>18 of 793; six legislators, five of them leaders</td>
+</tr>
+<tr>
+<td>Bills filed by his 43-member cohort that became law</td>
+<td>1 of 2,626, a bipartisan emergency act</td>
+</tr>
+<tr>
+<td>His rank among those 43 for bills filed</td>
+<td>19th</td>
+</tr>
+<tr>
+<td>His rank among those 43 for bills cosponsored</td>
+<td>33rd, below the caucus median</td>
+</tr>
+<tr>
+<td>District projects in his 2025 bond bills</td>
+<td>4, all bills dead in committee</td>
+</tr>
+<tr>
+<td>Of those, projects with state funding found</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Of those, projects built anyway</td>
+<td>1, the RHAM generator, on Hebron town money</td>
+</tr>
+<tr>
+<td>Republicans who entered the House with him in 2023</td>
+<td>11; 8 served all four sessions</td>
+</tr>
+<tr>
+<td>His rank among those 8 for bills filed</td>
+<td>1st, the most of any of them</td>
+</tr>
+<tr>
+<td>Of those 8, members with a bill of their own enacted</td>
+<td>0</td>
+</tr>
+<tr>
+<td>His committee ranking post</td>
+<td>Labor and Public Employees, 2025-26 only</td>
+</tr>
+<tr>
+<td>His rank among House Republicans for filing, by term</td>
+<td>37th of 52 in 2023-24; 14th of 49 in 2025-26</td>
+</tr>
+</tbody></table>
+<p class="section-label">Takeaways</p>
+<h2 id="key-observations">Key Observations<a class="header-anchor" href="#key-observations" aria-label="Link to this section">¶</a></h2>
+<p><strong>The record&#8217;s headline is a clean split.</strong> Every bill Rep. Weir filed
+himself died, without exception and without a floor vote. Every law
+bearing his name is one he cosponsored, moved by a committee.</p>
+<p><strong>His enacted footprint is larger than the split implies.</strong> Thirty-three
+public and special acts carry his name, 22 of them from his first
+session. A reader told only that he &#8220;has no laws&#8221; would be misled; the
+accurate statement is that he has no laws he authored.</p>
+<p><strong>On a few enacted bills he is nearly alone.</strong> Special Act 23-15 carries
+one legislator&#8217;s name, his. PA 23-117 carries two. PA 25-128 lists him
+first among five. These are the closest he comes to an enacted bill, and
+each is still a committee&#8217;s bill.</p>
+<p><strong>The Bolton street naming succeeded.</strong> His bill for it died, but the
+naming is law, folded into the annual transportation act along with most
+of that session&#8217;s namings. It is the one instance in four years where
+something he filed reached the statute book in any form.</p>
+<p><strong>The district projects did not get state money.</strong> None of the four local
+projects behind his 2025 bond bills can be shown to have received a State
+Bond Commission approval, a state grant, or a bond-act line. The one that
+is being built, the RHAM emergency generator, is being paid for by the
+Town of Hebron. Hebron&#8217;s water-main application went in for $665,000 and
+was not among the 46 towns funded in the 2025 STEAP round.</p>
+<p><strong>The refiled tax bills define his own agenda, and its fate.</strong> Repealing
+the highway use tax and the meals surtax, and a set of targeted sales-tax
+exemptions, were filed session after session and never received a
+committee vote.</p>
+<p><strong>&#8220;Never the lead sponsor of a law&#8221; describes almost the whole
+legislature.</strong> Of 793 laws enacted in these four sessions, 756 are led by
+a committee. Just six legislators have ever held the lead slot, five of
+them chamber leaders, and only on budget and emergency bills. The fact is
+true of Rep. Weir and carries no information about him specifically.</p>
+<p><strong>What separates the caucuses is how far a member&#8217;s bill travels.</strong> A
+Republican&#8217;s filed bill was less than half as likely as a Democrat&#8217;s to
+receive a public hearing, and none of the 2,626 bills his cohort filed was
+reported out of committee. That is a structural finding about the minority
+party, not a personal one.</p>
+<p><strong>Within his caucus he is unremarkable.</strong> He files a little more than the
+median Republican, files alone more often than most, and ranks 19th of 43
+in volume. His zero enacted bills is the number 42 of his 43 colleagues
+also posted.</p>
+<p><strong>He files the most bills of anyone in his freshman class.</strong> Of the eight
+Republicans who entered with him in 2023 and served all four sessions, he
+filed the most, 41, and filed alone more often than all but one. None of
+the eight had a bill of their own become law.</p>
+<p><strong>He became substantially more active in his second term.</strong> As a
+rank-and-file member in 2023-24 he ranked 37th of 52 House Republicans for
+bills filed. Holding the Labor ranking post in 2025-26 he filed three times
+as many and ranked 14th of 49. The ranking post came with more filing, more
+hearings across the cohort, and no additional laws.</p>
+<p><strong>He signs onto fewer bills than most of his caucus.</strong> At 49
+cosponsorships against a median of 74, he ranks 33rd of 43. Cosponsorship
+volume measures willingness to sign, not legislative work, so this is
+neither credit nor criticism; it does mean his 33 enacted cosponsorships
+came from comparatively few signatures.</p>
+<p><strong>Structure explains much, but not all.</strong> Minority members rarely pass
+bills in Connecticut; some nonetheless do, by authoring and championing
+bipartisan measures over multiple years. No bill in this record shows
+Rep. Weir in that role.</p>
+<p class="section-label">Caveats</p>
+<h2 id="what-this-report-does-not-show">What this report does not show<a class="header-anchor" href="#what-this-report-does-not-show" aria-label="Link to this section">¶</a></h2>
+<ul>
+<li>Floor speeches, amendments offered, or committee negotiation, none of
+which appear in sponsorship data. A separate review of transcripts
+would be required to credit or rule out those forms of legislative
+work.</li>
+<li>Whether Rep. Weir advocated privately for any bill he did not sign, or
+for the projects behind his bond bills, which may be funded through the
+State Bond Commission without legislation.</li>
+<li>Two 2023-24 committee ranking posts, Planning and Development and
+Veterans&#8217; Affairs, which could not be established from the sources
+consulted and are missing from that term&#8217;s cohort. Part 5 explains why
+neither could change the finding.</li>
+<li>Why a given bill died. The data records that a bill stopped, not the
+negotiation, redrafting, or absorption into a committee bill that may
+lie behind it.</li>
+<li>Proof that the district projects received no state money. Part 4
+reports that no award could be found in the public records searched,
+which is strong evidence and not the same as proof of absence. The
+specific records that would reverse each finding are named there.</li>
+<li>Advocacy that leaves no paper trail. A legislator may press an agency
+or the Bond Commission for a project without appearing in any record
+this report can search.</li>
+<li>Constituent service, which is a real part of the job and invisible in
+bill records.</li>
+<li>Voting record and ideological position, covered in this site&#8217;s
+companion report on Rep. Weir&#8217;s roll-call votes.</li>
+<li>Whether cosponsoring a bill implies support for every provision of the
+final amended act; it does not, and cosponsors sometimes vote against
+amended bills.</li>
+</ul>
+<p class="section-label">Documentation</p>
+<h2 id="sources">Sources<a class="header-anchor" href="#sources" aria-label="Link to this section">¶</a></h2>
+<p>Sponsorship lists:</p>
+<ul>
+<li>FastDemocracy legislator export for Rep. Steve Weir, 90 entries, all
+sessions, captured August 29, 2026:
+<a href="https://fastdemocracy.com/bill-search/ct/legislators/CTL000385/">fastdemocracy.com</a></li>
+<li>LegiScan API getSponsoredList, people_id 23846, captured August 29,
+2026; identical 90-bill list (JSON on file):
+<a href="https://legiscan.com/CT/people/stephen-weir/id/23846">legiscan.com</a></li>
+<li>CGA member bills page, 2026 session, captured August 29, 2026:
+<a href="https://www.cga.ct.gov/asp/CGABillStatus/CGAMemberBills.asp?dist_code=055">cga.ct.gov</a></li>
+</ul>
+<p>Roles and dispositions:</p>
+<ul>
+<li>LegiScan Connecticut bulk datasets, JSON variant, for the 2023, 2024,
+2025, and 2026 General Assembly sessions (session IDs 2018, 2117,
+2174, 2244), which supply each bill&#8217;s sponsor list with sponsor type
+and order, its progress history, and its final status. Every row in
+the tables above derives from these files:
+<a href="https://legiscan.com/CT/datasets">legiscan.com/CT/datasets</a></li>
+</ul>
+<p>Peer comparison:</p>
+<ul>
+<li>dataset.json, published with this report: the cohort definitions, the
+per-member counts for all 126 four-session House members, and the list
+of every enacted bill with a legislator in the lead-sponsor slot. Every
+figure in Part 4 derives from this file.
+<a href="dataset.json">dataset.json</a></li>
+</ul>
+<p>Committee rosters and the freshman class (Part 5):</p>
+<ul>
+<li>Connecticut Secretary of the State, State Register and Manual,
+legislative committee assignments, for the 2025-26 ranking members:
+<a href="https://portal.ct.gov/SOTS/Register-Manual/Section-III/Committee-Assignments">portal.ct.gov/SOTS</a></li>
+<li>Connecticut General Assembly Bulletin No. 68, April 13, 2023, committee
+rosters carrying the ranking-member designations for 2023-24:
+<a href="https://www.cga.ct.gov/2023/bul/pdf/2023BUL00413-R00-BUL.pdf">cga.ct.gov</a></li>
+<li>CT News Junkie committee-leadership reports of December 12, 2022 and
+December 13, 2024, used to corroborate the ranking-member rows:
+<a href="https://ctnewsjunkie.com/2024/12/13/republican-leadership-announces-committee-assignments-for-upcoming-session/">ctnewsjunkie.com</a></li>
+<li>The 2023 freshman class was identified from election records and member
+biographies, then verified against the LegiScan Connecticut datasets for
+the 2021 and 2022 sessions: all eleven are absent from both, and no other
+2023 House Republican is.</li>
+</ul>
+<p>District project funding (Part 4):</p>
+<ul>
+<li>State Bond Commission agendas and minutes, published by the Office of
+Policy and Management, searched 2024-2026 for Hebron, Marlborough, RHAM
+and Region 8:
+<a href="https://portal.ct.gov/opm">portal.ct.gov/opm</a></li>
+<li>Governor&#8217;s announcement of the 2025 Small Town Economic Assistance
+Program awards, May 28, 2025, $30 million to 46 towns; Hebron does not
+appear:
+<a href="https://portal.ct.gov/governor">portal.ct.gov/governor</a></li>
+<li>Town of Hebron: Public Building Committee generator solicitation, and
+Town Council minutes of December 2025 (Phase 1 construction award to
+R & C Electric, LLC) and April 9, 2026 (Phase 1 testing and inspection
+award to Tri State Materials Testing Lab, LLC, not to exceed $9,500):
+<a href="https://www.hebronct.com">hebronct.com</a></li>
+<li>Hebron Board of Selectmen resolution approving the 2025 STEAP
+application for the Amston Village Water Main Extension, $665,000:
+<a href="https://www.hebronct.com">hebronct.com</a></li>
+</ul>
+<p>Enacted texts:</p>
+<ul>
+<li>Public Act 25-65 (SB 1377), Sec. 51, the Bolton naming:
+<a href="https://www.cga.ct.gov/2025/ACT/PA/PDF/2025PA-00065-R00SB-01377-PA.PDF">cga.ct.gov</a></li>
+<li>Public Act 23-101 (SB 2), Sec. 2(i), library collection-reconsideration
+policies:
+<a href="https://www.cga.ct.gov/2023/ACT/PA/PDF/2023PA-00101-R00SB-00002-PA.PDF">cga.ct.gov</a></li>
+<li>Public Act 26-129, chaptered text:
+<a href="https://www.cga.ct.gov/2026/ACT/PA/PDF/2026PA-00129-R00HB-05521-PA.PDF">cga.ct.gov</a></li>
+<li>Governor&#8217;s Bill Notification 2026-11 (SB 116 as PA 26-98):
+<a href="https://portal.ct.gov/governor/-/media/office-of-the-governor/bill-notifications/2026/bill-notification-2026-11.pdf?rev=ad8315ea7f1a4afda0d85c5c1f828d33">portal.ct.gov</a></li>
+</ul>
+
+<p class="section-label">Download</p>
+<h2 id="other-formats">Other Formats<a class="header-anchor" href="#other-formats" aria-label="Link to this section">¶</a></h2>
+<p>This report is available in four formats, all located alongside this page:</p>
+
+<div class="format-cards cols-4">
+  <div class="format-card">
+    <div class="format-card-icon">🌐</div>
+    <div class="format-card-title"><a href="./">HTML</a></div>
+    <div class="format-card-desc">Interactive version with formatted tables; best for on-screen reading and sharing.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📄</div>
+    <div class="format-card-title"><a href="weir-sponsorship.md">Markdown</a></div>
+    <div class="format-card-desc">Plain-text version; readable in any editor, ideal for copying into other documents.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📑</div>
+    <div class="format-card-title"><a href="weir-sponsorship.pdf">PDF</a></div>
+    <div class="format-card-desc">Print-ready version with all tables, footnotes, and source citations.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📊</div>
+    <div class="format-card-title"><a href="dataset.json">Data</a></div>
+    <div class="format-card-desc">The data layer behind Part 5: cohort definitions, per-member counts for all 126 four-session House members, the committee and freshman rosters, and every enacted bill with a legislator as lead sponsor.</div>
+  </div>
+</div>
+
+</div>
+<footer class="page-footer">
+<p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>
+<p class="footer-note">Personal work of <a href="mailto:scott@sauyet.com">Scott Sauyet</a> · Compiled August 29, 2026<br>Data from the Connecticut General Assembly, LegiScan, and FastDemocracy. Not an official town document.</p>
+</footer>
+<script>
+document.addEventListener('click', function(e) {
+    const anchor = e.target.closest('.header-anchor');
+    if (!anchor) return;
+    const heading = anchor.parentElement;
+    const id = heading.id;
+    if (!id) return;
+    const url = window.location.origin + window.location.pathname + '#' + id;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function() {
+            anchor.classList.add('copied');
+            setTimeout(function() { anchor.classList.remove('copied'); }, 1400);
+        }).catch(function() {});
+    }
+});
+</script>
+<script>
+(function() {
+    var imgs = document.querySelectorAll('.container img');
+    if (!imgs.length) return;
+    var overlay = null;
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    function close() {
+        if (!overlay) return;
+        var o = overlay;
+        overlay = null;
+        o.classList.remove('open');
+        document.removeEventListener('keydown', onKey);
+        setTimeout(function() { if (o.parentNode) o.parentNode.removeChild(o); }, 200);
+    }
+    function open(src, alt) {
+        overlay = document.createElement('div');
+        overlay.className = 'lightbox-overlay';
+        var big = document.createElement('img');
+        big.src = src;
+        big.alt = alt || '';
+        overlay.appendChild(big);
+        overlay.addEventListener('click', close);
+        document.body.appendChild(overlay);
+        overlay.offsetWidth; // force reflow so the fade-in transition runs
+        overlay.classList.add('open');
+        document.addEventListener('keydown', onKey);
+    }
+    imgs.forEach(function(img) {
+        img.addEventListener('click', function() { open(img.currentSrc || img.src, img.alt); });
+    });
+})();
+</script>
+</body>
+</html>

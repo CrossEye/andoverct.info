@@ -1,7 +1,6 @@
 ---
 section: 55th
 publicUrl: 'http://andoverct.info/reports/55th/weir-analysis/'
-noindex: true
 pageTitle: "Steve Weir's Voting Record — CT 55th House District"
 title: "Steve Weir's Voting Record"
 subtitle: 'Connecticut House of Representatives, 55th District · 2023 through 2026 · A pattern analysis of 1,351 roll-call votes'

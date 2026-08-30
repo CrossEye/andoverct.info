@@ -1,7 +1,6 @@
 ---
 section: 55th
 publicUrl: 'http://andoverct.info/reports/55th/weir-far-right/'
-noindex: true
 pageTitle: 'The Bills Even His Own Party Supported — CT 55th House District'
 title: The Bills Even His Own Party Supported
 subtitle: 'Steve Weir (R-Hebron), Connecticut House 55th District · 2023 through 2026 · The 94 bills where Rep. Weir voted "no" while a majority of House Republicans voted "yes"'
