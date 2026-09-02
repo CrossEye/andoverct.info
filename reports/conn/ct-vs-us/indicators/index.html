@@ -470,107 +470,79 @@ code {
    on every page; .footer-note is the optional per-page line (sources, method,
    "not a lawyer"). See siteFooterHtml() in _build/links.mjs. */
 /* @footer-css:start — generated from _build/footer.css; do not edit here, run: npm run sync:footer-css */
-.page-footer {
+.page-note {
   /* max-width + horizontal padding are px (not rem/ch) so a page's root
      font-size can't rescale the wrap — the line breaks are identical everywhere. */
   max-width: 512px;
-  margin: 3rem auto;
+  margin: 3rem auto 2.5rem;
   padding: 1.75rem 20px 0;
   border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-size: 13px;
   line-height: 1.55;
+  font-style: italic;
   text-align: center;
   color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
 }
-.page-footer p { margin: 0 auto 0.5rem; max-width: none; }
-.page-footer .footer-note { margin-top: 0.6rem; font-style: italic; }
-.page-footer strong { color: var(--ink-soft, inherit); font-weight: 600; }
-.page-footer a { color: var(--ink-soft, inherit); border-bottom: 1px solid var(--rule, currentColor); }
-.page-footer a:hover { color: var(--accent, var(--link, var(--burgundy, currentColor))); border-bottom-color: var(--accent, var(--link, var(--burgundy, currentColor))); }
-/* @footer-css:end */
-
-/* ---- Page note + site-footer bar -------------------------------------------
-   The old two-line .page-footer, split. Line 2 (the per-page provenance note)
-   stays in the page flow as .page-note and keeps the block above's metrics, so
-   its wrap is unchanged. Line 1 (the canonical identity string, constant
-   site-wide) moves into .site-footer: a full-width bar carrying the banner's
-   own background, mirroring the banner's gold rule onto its top edge so it
-   reads as a bookend to the header.
-
-   Sticking: body becomes a column flex container and the bar takes
-   margin-top:auto, so it drops to the viewport bottom on a page shorter than
-   the viewport and simply follows the content on a longer one — it never
-   reserves scrolling space. Screen only; print keeps plain block flow.
-
-   NOTE: the .page-footer rules above are still the synced canonical block and
-   are still live on the surfaces that have not migrated to this pair. They are
-   dead for reports. Don't delete them here — sync-footer-css.mjs rewrites that
-   marked region wholesale and needs the markers intact. ------------------- */
-.page-note {
-    max-width: 512px;
-    margin: 3rem auto 2.5rem;
-    padding: 1.75rem 20px 0;
-    border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    font-size: 13px;
-    line-height: 1.55;
-    font-style: italic;
-    text-align: center;
-    color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
-}
+.page-note a { color: inherit; }
 
 .site-footer {
-    background: var(--banner-bg, #2c3e50);
-    border-top: var(--banner-border, none);
-    color: var(--banner-ink, #ecf0f1);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    font-size: 13px;
-    line-height: 1.55;
+  background: var(--banner-bg, linear-gradient(180deg, #0f2a4a, #143862));
+  border-top: var(--banner-border, 3px solid #e8a800);
+  color: var(--banner-ink, #dde8f5);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
 }
 .site-footer-inner {
-    max-width: 512px;
-    margin: 0 auto;
-    padding: 1.15rem var(--gutter, 20px);
-    text-align: center;
+  max-width: 512px;
+  margin: 0 auto;
+  padding: 1.15rem var(--gutter, 20px);
+  text-align: center;
 }
-.site-footer strong { color: var(--crumb-current, #fff); font-weight: 600; }
+.site-footer strong { color: var(--crumb-current, #ffffff); font-weight: 600; }
 .site-footer a {
-    color: var(--crumb-link, var(--banner-ink, #ecf0f1));
-    border-bottom: 1px solid transparent;
+  color: var(--crumb-link, #e8a800);
+  border-bottom: 1px solid transparent;
+  text-decoration: none;
 }
 .site-footer a:hover {
-    color: var(--crumb-link-hover, #fff);
-    border-bottom-color: currentColor;
+  color: var(--crumb-link-hover, #ffffff);
+  border-bottom-color: currentColor;
 }
 
+/* Sticking: body becomes a column flex container and the bar takes
+   margin-top:auto, which absorbs only space that is genuinely free. So the bar
+   sits at the viewport bottom on a page shorter than the viewport, and simply
+   follows the content on a longer one — it never reserves scrolling space.
+   Screen only; print keeps plain block flow. */
 @media screen {
-    body {
-        min-height: 100vh;
-        min-height: 100svh;   /* excludes mobile browser chrome where supported */
-        display: flex;
-        flex-direction: column;
-    }
-    .site-footer { margin-top: auto; }
+  body {
+    min-height: 100vh;
+    min-height: 100svh;   /* excludes mobile browser chrome where supported */
+    display: flex;
+    flex-direction: column;
+  }
+  .site-footer { margin-top: auto; }
 }
 
 @media print {
-    /* On paper the split is undone: no full-bleed navy, and the note and the
-       identity line close back up into the single quiet block the PDF had
-       before, under one hairline. */
-    .site-footer {
-        background: none;
-        border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
-        color: var(--ink-mute, var(--ink-faint, #6b7280));
-    }
-    /* The note immediately above already drew that rule — a second one here
-       would stack two hairlines a few points apart. */
-    .page-note + .site-footer { border-top: none; }
-    .site-footer-inner { max-width: 512px; padding: 0; }
-    .page-note { margin-bottom: 0.6rem; }
-    .site-footer strong { color: var(--ink-soft, inherit); }
-    .site-footer a { color: inherit; }
+  /* On paper the split is undone: no full-bleed colour, and the note and the
+     identity close back up into the single quiet block the PDFs had before. */
+  .site-footer {
+    background: none;
+    border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+    color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+  }
+  /* The note immediately above already drew that rule — a second one here
+     would stack two hairlines a few points apart. */
+  .page-note + .site-footer { border-top: none; }
+  .site-footer-inner { max-width: 512px; padding: 0; }
+  .page-note { margin-bottom: 0.6rem; }
+  .site-footer strong { color: var(--ink-soft, inherit); }
+  .site-footer a { color: inherit; }
 }
+/* @footer-css:end */
 
 /* ---- Confirmation glyphs ---- */
 h3 .conf-mark {

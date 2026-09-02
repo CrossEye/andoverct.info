@@ -16,7 +16,7 @@
  */
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
-import { escapeHtml, crumbs as buildCrumbs, siteFooterHtml } from "./chrome.js";
+import { escapeHtml, crumbs as buildCrumbs, pageNoteHtml, siteFooterBarHtml } from "./chrome.js";
 
 const HERE = import.meta.dirname;
 const ROOT = join(HERE, "..");
@@ -128,8 +128,9 @@ ${node.fonts || FONTS}
     <main class="page">
 ${content}
 
-      ${siteFooterHtml(node.footerNote)}
+      ${pageNoteHtml(node.footerNote)}
     </main>
+${siteFooterBarHtml()}
 ${scripts}  </body>
 </html>
 `;
@@ -296,8 +297,9 @@ ${FONTS}
 
 ${sections}
 
-      ${siteFooterHtml(node.footerNote)}
+      ${pageNoteHtml(node.footerNote)}
     </main>
+${siteFooterBarHtml()}
     ${HOME_SCROLLSPY}
   </body>
 </html>
@@ -344,8 +346,9 @@ ${headerParts.join("\n")}
 
       ${listHtml(node.list)}
 
-      ${siteFooterHtml(node.footerNote)}
+      ${pageNoteHtml(node.footerNote)}
     </main>
+${siteFooterBarHtml()}
   </body>
 </html>
 `;

@@ -21,6 +21,7 @@ const CHECK = process.argv.includes("--check");
 
 const TARGETS = [
   "style.css",
+  "404.html",
   "_build/base.css",
   "town-charter/style.css",
   "the-facts/_build/template.html",

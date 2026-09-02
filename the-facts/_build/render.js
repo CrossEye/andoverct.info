@@ -29,9 +29,9 @@ const EDITIONS_DIR = path.resolve(__dirname, '..', 'editions');
 // Shared site footer. Line 1 (identity + disclaimer) is the canonical string
 // from _build/footer.json — the one place it may appear; line 2 is this
 // edition's own note (the "ongoing series / permanent URLs" colophon). Mirrors
-// siteFooterHtml() in _build/links.mjs so the identity never drifts.
+// the shared chrome helpers so the identity never drifts.
 // Shared page chrome (footer, breadcrumbs, escapeHtml) from _build/chrome.js.
-const { escapeHtml, siteFooterHtml, crumbs: buildCrumbs } = require('../../_build/chrome.js');
+const { escapeHtml, pageNoteHtml, siteFooterBarHtml, crumbs: buildCrumbs } = require('../../_build/chrome.js');
 
 function main() {
   const args = process.argv.slice(2);
@@ -116,7 +116,8 @@ function renderToHtml({ frontmatter, body }) {
     .replace('{{BODY}}', bodyMain)
     .replace('{{CTA}}', ctaHtml)
     .replace('{{REFERENCES}}', references)
-    .replace('{{FOOTER}}', siteFooterHtml(footerNote));
+    .replace('{{PAGE_NOTE}}', pageNoteHtml(footerNote))
+    .replace('{{SITE_FOOTER}}', siteFooterBarHtml());
 }
 
 function buildPageTitle(titlePlain, fm) {

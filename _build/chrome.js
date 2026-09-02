@@ -6,10 +6,10 @@
  * render.js, town-charter convert.js, transcripts download-transcripts.js) can
  * consume from one place.
  *
- * Shared here: crumb assembly + separator, the page banner, the site footer,
+ * Shared here: crumb assembly + separator, the page banner, the two-part footer,
  * and escapeHtml. NOT shared: each surface's CSS skin — this module only emits
- * stable class names (page-banner / page-banner-inner / crumbs / page-footer /
- * footer-id / footer-note) that every stylesheet keeps skinning its own way.
+ * stable class names (page-banner / page-banner-inner / crumbs / page-note /
+ * site-footer / site-footer-inner) that every stylesheet keeps skinning its own way.
  */
 "use strict";
 
@@ -64,32 +64,22 @@ function banner(crumbsHtml, opts) {
 }
 
 /*
- * The two-part site footer: line 1 (.footer-id) is the canonical identity /
- * disclaimer string from footer.json, constant site-wide; line 2 (.footer-note)
- * is the optional per-page note. Replaces the three-line helper each generator
- * used to keep its own copy of.
- */
-function siteFooterHtml(note) {
-  return '<footer class="page-footer">\n'
-    + `<p class="footer-id">${FOOTER.id}</p>`
-    + (note ? `\n<p class="${FOOTER.noteClass}">${note}</p>` : "")
-    + "\n</footer>";
-}
-
-/*
- * The same footer, split in two (2026-09-02). The canonical identity line moves
- * into a full-width bar that carries the banner's own background — a bookend to
- * the header — and the per-page note stays behind in the page flow, immediately
- * above it. A surface whose footer is already a direct child of <body> can emit
- * these two in sequence exactly where siteFooterHtml() used to go. A surface
- * whose footer sits inside a width-constrained <main> must put the note inside
- * that <main> and the bar AFTER it, or the bar cannot run full-bleed.
+ * The site footer, in two parts.
  *
- * siteFooterHtml() above is the pre-split form, still called by the surfaces not
- * yet migrated (indexes, links, the-facts, town-charter, transcripts, series,
- * weir-votes). It goes away once they all use the pair. Until then the two
- * shapes coexist on purpose: each surface skins its own footer, so they have to
- * migrate one at a time.
+ * .page-note is the optional per-page line — sources, method, an edition note.
+ * It stays in the page flow because it belongs to the document.
+ *
+ * .site-footer is the canonical identity/disclaimer from footer.json, constant
+ * site-wide. It renders as a full-width bar carrying the banner's background,
+ * with the banner's rule mirrored onto its top edge, so every page is bookended
+ * by the same chrome; each stylesheet skins it from its own palette vars.
+ *
+ * PLACEMENT: emit them in this order, and put the bar where it can run
+ * full-bleed. On a surface whose footer is a direct child of <body> that is
+ * simply where the old single footer went. On one whose content sits in a
+ * width-constrained wrapper (<main class="page">, the-facts' <div class="page">)
+ * the note goes INSIDE the wrapper and the bar AFTER it — inside, the bar
+ * inherits the wrapper's max-width and stops being full-width.
  */
 function pageNoteHtml(note) {
   return note ? `<p class="page-note">${note}</p>` : "";
@@ -103,6 +93,6 @@ function siteFooterBarHtml() {
 
 module.exports = {
   escapeHtml, SEP, crumbs, banner,
-  siteFooterHtml, pageNoteHtml, siteFooterBarHtml,
+  pageNoteHtml, siteFooterBarHtml,
   footer: FOOTER,
 };

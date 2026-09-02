@@ -8,7 +8,7 @@ const pages = require('./pages.json');
 
 // Shared page chrome (footer, breadcrumbs, banner) from _build/chrome.js — the
 // footer's line 1 is the canonical identity string; line 2 is this page's note.
-const { siteFooterHtml, crumbs: buildCrumbs, banner: pageBanner } = require('../_build/chrome.js');
+const { pageNoteHtml, siteFooterBarHtml, crumbs: buildCrumbs, banner: pageBanner } = require('../_build/chrome.js');
 
 // --- Path resolution ---------------------------------------------------------
 
@@ -145,7 +145,8 @@ function buildPage(page) {
 
   const crumbs = crumbsFor(page);
 
-  const footer = siteFooterHtml(page.note);
+  const footer = `${pageNoteHtml(page.note)}
+${siteFooterBarHtml()}`;
 
   // Section home: dark theme, trail inside the article.
   if (page.dest === 'index.html') {

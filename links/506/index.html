@@ -475,24 +475,78 @@ code {
    on every page; .footer-note is the optional per-page line (sources, method,
    "not a lawyer"). See siteFooterHtml() in _build/links.mjs. */
 /* @footer-css:start — generated from _build/footer.css; do not edit here, run: npm run sync:footer-css */
-.page-footer {
+.page-note {
   /* max-width + horizontal padding are px (not rem/ch) so a page's root
      font-size can't rescale the wrap — the line breaks are identical everywhere. */
   max-width: 512px;
-  margin: 3rem auto;
+  margin: 3rem auto 2.5rem;
   padding: 1.75rem 20px 0;
   border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-size: 13px;
   line-height: 1.55;
+  font-style: italic;
   text-align: center;
   color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
 }
-.page-footer p { margin: 0 auto 0.5rem; max-width: none; }
-.page-footer .footer-note { margin-top: 0.6rem; font-style: italic; }
-.page-footer strong { color: var(--ink-soft, inherit); font-weight: 600; }
-.page-footer a { color: var(--ink-soft, inherit); border-bottom: 1px solid var(--rule, currentColor); }
-.page-footer a:hover { color: var(--accent, var(--link, var(--burgundy, currentColor))); border-bottom-color: var(--accent, var(--link, var(--burgundy, currentColor))); }
+.page-note a { color: inherit; }
+
+.site-footer {
+  background: var(--banner-bg, linear-gradient(180deg, #0f2a4a, #143862));
+  border-top: var(--banner-border, 3px solid #e8a800);
+  color: var(--banner-ink, #dde8f5);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.site-footer-inner {
+  max-width: 512px;
+  margin: 0 auto;
+  padding: 1.15rem var(--gutter, 20px);
+  text-align: center;
+}
+.site-footer strong { color: var(--crumb-current, #ffffff); font-weight: 600; }
+.site-footer a {
+  color: var(--crumb-link, #e8a800);
+  border-bottom: 1px solid transparent;
+  text-decoration: none;
+}
+.site-footer a:hover {
+  color: var(--crumb-link-hover, #ffffff);
+  border-bottom-color: currentColor;
+}
+
+/* Sticking: body becomes a column flex container and the bar takes
+   margin-top:auto, which absorbs only space that is genuinely free. So the bar
+   sits at the viewport bottom on a page shorter than the viewport, and simply
+   follows the content on a longer one — it never reserves scrolling space.
+   Screen only; print keeps plain block flow. */
+@media screen {
+  body {
+    min-height: 100vh;
+    min-height: 100svh;   /* excludes mobile browser chrome where supported */
+    display: flex;
+    flex-direction: column;
+  }
+  .site-footer { margin-top: auto; }
+}
+
+@media print {
+  /* On paper the split is undone: no full-bleed colour, and the note and the
+     identity close back up into the single quiet block the PDFs had before. */
+  .site-footer {
+    background: none;
+    border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+    color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+  }
+  /* The note immediately above already drew that rule — a second one here
+     would stack two hairlines a few points apart. */
+  .page-note + .site-footer { border-top: none; }
+  .site-footer-inner { max-width: 512px; padding: 0; }
+  .page-note { margin-bottom: 0.6rem; }
+  .site-footer strong { color: var(--ink-soft, inherit); }
+  .site-footer a { color: inherit; }
+}
 /* @footer-css:end */
 
 /* ---- Confirmation glyphs ---- */
@@ -562,8 +616,9 @@ h3 .conf-mark {
   <p class="link-card-meta">2026-07-18</p>
 </div>
 </div>
-<footer class="page-footer">
-<p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>
+
+<footer class="site-footer">
+<div class="site-footer-inner"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</div>
 </footer>
 </body>
 </html>

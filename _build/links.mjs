@@ -43,7 +43,7 @@ import { join, resolve, relative, sep } from "node:path";
 import { pathToFileURL } from "node:url";
 import { load as parseYaml } from "js-yaml";
 import {
-  escapeHtml, siteFooterHtml, crumbs as buildCrumbs, banner as pageBanner,
+  escapeHtml, pageNoteHtml, siteFooterBarHtml, crumbs as buildCrumbs, banner as pageBanner,
   footer as FOOTER,
 } from "./chrome.js";
 
@@ -110,9 +110,10 @@ export const LINKS_CSS = `
 // Helpers shared with report.mjs (copied — report.mjs exports nothing)
 // ---------------------------------------------------------------------------
 
-// escapeHtml and siteFooterHtml now live in the shared chrome module; re-export
-// them so existing importers (e.g. town-asset-render.mjs) keep working.
-export { escapeHtml, siteFooterHtml };
+// escapeHtml and the footer helpers now live in the shared chrome module;
+// re-export them so existing importers (town-asset-render.mjs, weir-votes.mjs)
+// keep working.
+export { escapeHtml, pageNoteHtml, siteFooterBarHtml };
 
 export function loadConfig() {
   const p = join(HERE, "report.config.json");
@@ -339,16 +340,20 @@ export function crumbsHtml(currentTitle) {
   return buildCrumbs([...trail, { label: current }]);
 }
 
-/* The site footer, in two parts.
+/* The site footer, in two parts — now two separate elements.
  *
- * Line 1 (.footer-id) is CONSTANT SITE-WIDE and is the whole point of the
+ * .site-footer is CONSTANT SITE-WIDE and is the whole point of the
  * consolidation: who wrote this, how to reach him, and what it is not —
  * official communication of the Town, of Region 8 (RHAM), or of any party or
- * town committee, and not legal advice. Do not fork it per section.
+ * town committee, and not legal advice. Do not fork it per section. It renders
+ * as a full-width bar carrying the banner's background, so the page is
+ * bookended by the same chrome, and it sticks to the bottom of a short page.
  *
- * Line 2 (.footer-note) is the optional per-page slot: sources, method, the
+ * .page-note is the optional per-page slot: sources, method, the
  * "authoritative sources are the Charter and the statutes" line, an edition
- * note. Pass plain HTML; pass nothing and only line 1 renders.
+ * note. It stays in the page flow above the bar, because it belongs to the
+ * document rather than to the site. Pass plain HTML; pass nothing and only the
+ * bar renders.
  */
 // The canonical identity string and the footer/crumb/banner helpers now live in
 // the shared chrome module (_build/chrome.js), sourced from footer.json.
@@ -371,7 +376,8 @@ ${pageBanner(crumbs)}
 <div class="container">
 ${body}
 </div>
-${siteFooterHtml(footerNote)}
+${pageNoteHtml(footerNote)}
+${siteFooterBarHtml()}
 </body>
 </html>`;
 }

@@ -21,7 +21,7 @@
  */
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
-import { escapeHtml, siteFooterHtml } from "./links.mjs";
+import { escapeHtml, pageNoteHtml, siteFooterBarHtml } from "./links.mjs";
 
 const ROOT = join(import.meta.dirname, "..");
 const DIR = join(ROOT, "reports/55th/weir-votes");
@@ -165,7 +165,8 @@ const footerNote = `Generated ${generated} from the Connecticut General Assembly
 
 const template = readFileSync(TEMPLATE, "utf8");
 if (!template.includes("{{BODY}}") || !template.includes("{{FOOTER}}")) throw new Error("template lacks {{BODY}}/{{FOOTER}}");
-const html = template.replace("{{BODY}}", body).replace("{{FOOTER}}", siteFooterHtml(footerNote));
+const html = template.replace("{{BODY}}", body).replace("{{FOOTER}}", `${pageNoteHtml(footerNote)}
+${siteFooterBarHtml()}`);
 writeFileSync(join(DIR, "index.html"), html);
 
 // --------------- Markdown ---------------

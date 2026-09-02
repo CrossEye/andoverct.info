@@ -53,7 +53,7 @@ const PUBLIC_TRANSCRIPT_BASE = "https://andoverct.info/reference/video/transcrip
 // Shared page chrome (footer, breadcrumbs, banner) from chrome.js. NOTE: the
 // transcript *body* keeps its own escapeHtml below — spoken text is full of
 // apostrophes and does not need them entity-encoded (chrome's escapeHtml does).
-const { siteFooterHtml, crumbs: buildCrumbs, banner: pageBanner } = require("../../_build/chrome.js");
+const { pageNoteHtml, siteFooterBarHtml, crumbs: buildCrumbs, banner: pageBanner } = require("../../_build/chrome.js");
 
 // Body/cue escaping for transcript text: escapes &<>" but deliberately NOT '
 // (apostrophes are valid in text content and encoding them bloats every page).
@@ -851,8 +851,9 @@ ${paraHtml}
     </div>
     <div class="plaintext" id="panel-plain" role="tabpanel" aria-labelledby="tab-plain" hidden></div>
 
-    ${siteFooterHtml(`${disclaimerSource} Names, numbers, and other details may be inaccurate; the ${isZoom ? "recording" : "video"} is authoritative.`)}
+    ${pageNoteHtml(`${disclaimerSource} Names, numbers, and other details may be inaccurate; the ${isZoom ? "recording" : "video"} is authoritative.`)}
   </main>
+${siteFooterBarHtml()}
 
   <div id="overlay">
     <div class="dialog">
@@ -1110,8 +1111,9 @@ ${rows}
       </tbody>
     </table>
 
-    ${siteFooterHtml(`${disclaimerText} Names, numbers, and other details may be inaccurate; the videos are authoritative.`)}
-  </main>${filterScript}${copyScript}
+    ${pageNoteHtml(`${disclaimerText} Names, numbers, and other details may be inaccurate; the videos are authoritative.`)}
+  </main>
+${siteFooterBarHtml()}${filterScript}${copyScript}
 </body>
 </html>
 `;
