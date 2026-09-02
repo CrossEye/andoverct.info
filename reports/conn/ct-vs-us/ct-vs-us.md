@@ -4,8 +4,8 @@ publicUrl: 'http://andoverct.info/reports/conn/ct-vs-us/'
 pageTitle: 'The Whole Ledger — Connecticut vs. the Nation, 2010–2025'
 title: The Whole Ledger
 subtitle: "Connecticut vs. the nation, 2010–2025 · 26 indicators of how the state changed under unified government · every figure traced to a primary source"
-attribution: 'A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Not an official town document'
-footerNote: 'Compiled September 2, 2026 · Data from the Census Bureau, BEA, BLS, EIA, FBI, NCHS/CDC, NCES, and the other primary sources listed in Documentation. Not an official town document.'
+attribution: 'A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.com">scott@sauyet.com</a>'
+footerNote: 'Compiled September 2, 2026 · Data from the Census Bureau, BEA, BLS, EIA, FBI, NCHS/CDC, NCES, and the other primary sources listed in Documentation.'
 pdf:
   author: Personal work of Scott Sauyet · scott@sauyet.com
   footer: andoverct.info/reports/conn/ct-vs-us/
