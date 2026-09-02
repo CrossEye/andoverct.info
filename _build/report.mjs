@@ -32,6 +32,10 @@
  *   plugin: report.plugin.mjs  -> exports transform(html, ctx) run after numeric
  *                                 alignment and before confirmation marks
  *   theme: <name>         -> use _build/themes/<name>.css for this report
+ *   subpages: [...]       -> re-hosts an authored standalone HTML document
+ *                            (a big chart, a scripted table) as its own page
+ *                            on the report chrome, one breadcrumb level down;
+ *                            see _build/subpage.mjs
  */
 
 import { readFileSync, writeFileSync, existsSync, rmSync, globSync } from "node:fs";
@@ -48,6 +52,7 @@ import {
   escapeHtml, siteFooterHtml, crumbs as buildCrumbs, banner as pageBanner, SEP,
 } from "./chrome.js";
 import { buildResearchPages } from "./research.mjs";
+import { buildSubpages } from "./subpage.mjs";
 
 marked.use(markedSmartypants());
 marked.use({ gfm: true });
@@ -755,6 +760,11 @@ async function buildReport(mdPath) {
   // Optional: supplementary research pages (front-matter `research:`)
   if (meta.research) {
     await buildResearchPages(folder, meta, themeCss, BASE_CSS, breadcrumb);
+  }
+
+  // Optional: authored-HTML subpages (front-matter `subpages:`)
+  if (meta.subpages) {
+    await buildSubpages(folder, meta, themeCss, BASE_CSS, breadcrumb);
   }
 }
 

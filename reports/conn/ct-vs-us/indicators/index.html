@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="All 26 indicators from The Whole Ledger as trajectory charts on a single printable page: Connecticut against the nation, 2010–2025.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>The Whole Ledger — Companion Chart</title>
+<style>/* Default civic-report theme.
+ *
+ * A theme is just this set of CSS custom properties. To experiment, copy this
+ * file to _build/themes/<name>.css, change what you like, and point at it from
+ * _build/report.config.json ({"theme":"<name>"}) for all reports, or from a
+ * single report's front matter (theme: <name>). A non-default theme is layered
+ * ON TOP of this one, so it only needs to list the variables it changes.
+ *
+ * Scope: colors, fonts, and small size/width/gap tweaks — not layout changes.
+ */
+:root {
+  /* ---- Palette ---- */
+  --bg:             #fafaf7;   /* page background */
+  --bg-page:        #ffffff;   /* the white content card */
+  --bg-soft:        #f5f3ed;   /* callouts, table headers, inline code */
+  --ink:            #1a1a1a;   /* body text, main headings */
+  --ink-soft:       #333333;   /* blockquote / methodology text */
+  --ink-mute:       #5a5a5a;   /* subtitle, card descriptions */
+  --ink-faint:      #888888;   /* attribution, footer, captions */
+  --rule:           #e0ddd5;   /* hairline borders */
+  --accent:         #b8a878;   /* gold accent rules */
+  --accent-2:       #2c3e50;   /* slate: h3, table-header & code text */
+  --banner-bg:      #2c3e50;   /* top banner background */
+  --banner-ink:     #ecf0f1;   /* top banner text */
+  --crumb-link:       #b9c4cf; /* breadcrumb links in the banner */
+  --crumb-link-hover: #ffffff;
+  --crumb-current:    #ffffff; /* deepest crumb (current page), not a link */
+  --link:           #1a5490;
+  --link-hover:     #0d3a6b;
+  --link-underline: #c5d3e2;
+  --anchor:         #b8b3a4;   /* the ¶ header anchor */
+  --anchor-hover:   #6c7480;
+  --confirm:        #5a8a5a;   /* green ✓ confirmation mark */
+  --confirm-strong: #2e7d32;
+
+  /* ---- Fonts ---- */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:  "SF Mono", Monaco, Menlo, Consolas, monospace;
+
+  /* ---- Sizes (small tweaks only; no layout restructuring) ---- */
+  --base-size:  11pt;    /* body text */
+  --measure:    780px;   /* content column width */
+  --gutter:     30px;    /* horizontal padding / banner & footer gaps */
+  --title-size: 28pt;
+  --h2-size:    18pt;
+  --h3-size:    13pt;
+}
+
+/* bluegold — mirrors the light-mode look of the 55th campaign site
+ * (C:\Users\scott\Dev\Andover\55th, e.g. localhost:8080/reports): cool
+ * blue-gray paper, a dark navy banner with a gold underline, navy serif
+ * headings over a sans body, gold accent rules, and blue links.
+ *
+ * Note the deliberate font swap: base.css uses --font-serif for body text and
+ * --font-sans for headings/labels, so to match the campaign look (sans body,
+ * serif display) we put the SANS stack in --font-serif and the SERIF stack in
+ * --font-sans.
+ *
+ * Layered on default.css. Uses --banner-border (in base.css) for the gold rule
+ * under the banner. */
+:root {
+  /* Palette */
+  --bg:             #f4f6f9;
+  --bg-page:        #ffffff;
+  --bg-soft:        #eef4fb;   /* blue-050 tint for callouts / table headers */
+  --rule:           #e3e8ef;   /* hairlines */
+  --ink:            #19222e;
+  --ink-soft:       #2b3744;
+  --ink-mute:       #5b6775;
+  --ink-faint:      #8a94a1;
+  --accent:         #e8a800;   /* signature gold rules */
+  --accent-2:       #0f2a4a;   /* blue-900: headings, table-header & code text */
+  --banner-bg:      linear-gradient(180deg, #0f2a4a, #143862);
+  --banner-border:  3px solid #e8a800;
+  --banner-ink:     #dde8f5;   /* blue-100 */
+  --crumb-link:       #e8a800; /* gold breadcrumb links */
+  --crumb-link-hover: #ffffff; /* hover to white + underline */
+  --crumb-current:    #ffffff; /* current page, not a link */
+  --link:           #245c95;   /* blue-600 */
+  --link-hover:     #1c4e80;   /* blue-700 */
+  --link-underline: #cfe0f2;
+  --confirm:        #2f8f5b;
+  --confirm-strong: #1f7d49;
+
+  /* Type: sans body + serif display headings (see note above) */
+  --font-serif: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans:  Georgia, "Times New Roman", serif;
+
+  --measure: 860px;
+}
+
+/* Structural base styles for civic reports — theme-independent.
+ * Colors, fonts, and sizes come from the active theme (CSS custom properties
+ * in _build/themes/<name>.css), which is loaded BEFORE this file. */
+
+/* ---- Reset & base ---- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Layout ---- */
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner a { color: inherit; text-decoration: none; }
+.page-banner a:hover { text-decoration: underline; }
+
+/* ---- Breadcrumb (in the banner) ---- */
+.page-banner .crumbs a {
+    color: var(--crumb-link, var(--banner-ink));
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover, #fff);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current {
+    color: var(--crumb-current, #fff);
+}
+
+.container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* ---- Images / figures ---- */
+/* Scale charts and figures to the column (and the printed page box) rather
+   than overflowing at their intrinsic pixel/point size. */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+}
+
+/* ---- Lightbox (screen only; overlay is built at runtime by the viewer
+   script, so it never appears in the PDF). Click a chart to enlarge it. ---- */
+.container img { cursor: zoom-in; }
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vmin;
+    background: rgba(0, 0, 0, 0.85);
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+.lightbox-overlay.open { opacity: 1; }
+.lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    margin: 0;
+    cursor: zoom-out;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+    background: #fff;
+}
+
+/* ---- Title block ---- */
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-attribution {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    color: var(--ink-faint);
+    margin: 0 0 24px 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+.report-attribution a {
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+}
+.report-attribution a:hover {
+    color: var(--link);
+    border-bottom-color: var(--link);
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.methodology-header {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 0 0 36px 0;
+    line-height: 1.55;
+}
+
+/* ---- Section labels (small uppercase tags above h2) ---- */
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 36px 0 4px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+/* ---- Headings ---- */
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+h3 {
+    font-family: var(--font-sans);
+    font-size: var(--h3-size);
+    font-weight: 600;
+    margin: 28px 0 10px 0;
+    color: var(--accent-2);
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+
+/* ---- Header anchor links (HTML only; hidden in print) ---- */
+.header-anchor {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.2em;
+    color: var(--anchor);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.85em;
+    vertical-align: baseline;
+    cursor: pointer;
+    user-select: none;
+}
+h2:hover .header-anchor,
+h3:hover .header-anchor,
+.header-anchor:focus {
+    opacity: 1;
+}
+.header-anchor:hover {
+    color: var(--anchor-hover);
+}
+.header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+}
+.header-anchor.copied::after {
+    content: " copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+}
+@media print {
+    .header-anchor {
+        display: none;
+    }
+}
+
+/* ---- Body text ---- */
+p {
+    margin: 0 0 14px 0;
+    orphans: 3;
+    widows: 3;
+}
+p.intro-table {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+strong { font-weight: 700; color: var(--ink); }
+em { font-style: italic; }
+
+/* ---- Links ---- */
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* ---- Lists ---- */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+li {
+    margin: 0 0 6px 0;
+    line-height: 1.55;
+}
+
+/* ---- Tables ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-before: avoid;
+    break-before: avoid;
+}
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 9.5pt;
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--accent);
+}
+tbody tr:hover { background: var(--bg); }
+
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+tbody tr:last-child td {
+    border-bottom: 2px solid var(--accent);
+}
+
+/* ---- Blockquotes (source notes, verbatim quotes) ---- */
+blockquote {
+    margin: 14px 0 18px 0;
+    padding: 14px 20px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+blockquote p { margin: 0 0 8px 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ol, blockquote ul {
+    margin: 8px 0;
+}
+
+/* ---- HR ---- */
+hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+}
+
+/* ---- Inline code ---- */
+code {
+    font-family: var(--font-mono);
+    font-size: 9.5pt;
+    background: var(--bg-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: var(--accent-2);
+    overflow-wrap: break-word;
+}
+
+/* ---- Other Formats footer ---- */
+.formats-section {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+}
+.format-cards {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.format-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.format-cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media screen and (max-width: 700px) {
+    .format-cards.cols-3,
+    .format-cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+.format-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    padding: 14px;
+    text-align: left;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+.format-card-icon { font-size: 18pt; margin-bottom: 4px; }
+.format-card-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+.format-card-desc { font-size: 9pt; color: var(--ink-mute); line-height: 1.4; }
+.format-card a { display: block; }
+
+/* ---- Footer ----
+   Two parts: .footer-id is the site-wide identity/disclaimer line, identical
+   on every page; .footer-note is the optional per-page line (sources, method,
+   "not a lawyer"). See siteFooterHtml() in _build/links.mjs. */
+/* @footer-css:start — generated from _build/footer.css; do not edit here, run: npm run sync:footer-css */
+.page-footer {
+  /* max-width + horizontal padding are px (not rem/ch) so a page's root
+     font-size can't rescale the wrap — the line breaks are identical everywhere. */
+  max-width: 512px;
+  margin: 3rem auto;
+  padding: 1.75rem 20px 0;
+  border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  text-align: center;
+  color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+}
+.page-footer p { margin: 0 auto 0.5rem; max-width: none; }
+.page-footer .footer-note { margin-top: 0.6rem; font-style: italic; }
+.page-footer strong { color: var(--ink-soft, inherit); font-weight: 600; }
+.page-footer a { color: var(--ink-soft, inherit); border-bottom: 1px solid var(--rule, currentColor); }
+.page-footer a:hover { color: var(--accent, var(--link, var(--burgundy, currentColor))); border-bottom-color: var(--accent, var(--link, var(--burgundy, currentColor))); }
+/* @footer-css:end */
+
+/* ---- Confirmation glyphs ---- */
+h3 .conf-mark {
+    color: var(--confirm);
+    font-size: 11pt;
+    margin-right: 4px;
+}
+
+
+.subpage {
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+.subpage {margin:0;padding:24px 16px;background:#ffffff;color:#1a1a1a;font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}.subpage #wrap {max-width:720px;margin:0 auto;}.subpage h1 {font-size:22px;font-weight:600;margin:0 0 4px;}.subpage .sub {font-size:12px;color:#6b6a66;line-height:1.5;margin:0 0 14px;}.subpage .legend {display:flex;flex-wrap:wrap;gap:14px;font-size:11px;color:#52514e;margin:0 0 14px;align-items:center;}.subpage .legend span {display:flex;align-items:center;gap:5px;}.subpage .dot {width:9px;height:9px;border-radius:50%;background:#2a78d6;display:inline-block;}.subpage .hdot {width:9px;height:9px;border-radius:50%;border:2px solid #2a78d6;box-sizing:border-box;display:inline-block;}.subpage .pline {width:16px;border-top:1px dashed #898781;display:inline-block;}.subpage .sect {border:0.5px solid rgba(0,0,0,0.14);border-radius:8px;overflow:hidden;margin-bottom:14px;}.subpage .shead {padding:12px 14px 10px;font-size:17px;font-weight:500;background:#f7f6f3;}.subpage .indi {border-top:0.5px solid rgba(0,0,0,0.14);}.subpage .irow {display:grid;grid-template-columns:206px 340px minmax(0,1fr);gap:10px;align-items:center;padding:8px 0 0 14px;}.subpage .iname {font-size:13px;font-weight:500;line-height:1.3;}.subpage .icomp {font-size:11px;color:#6b6a66;line-height:1.3;}.subpage .chipcell {align-self:stretch;display:flex;align-items:center;padding:0 10px 0 2px;}.subpage .chip {font-size:11px;padding:2px 8px;border-radius:9px;display:inline-block;line-height:1.4;}.subpage .chip.t {background:#E1F5EE;color:#085041;}.subpage .chip.g {background:#F1EFE8;color:#444441;}.subpage .chip.a {background:#FAEEDA;color:#633806;}.subpage .chip.r {background:#FAECE7;color:#712B13;}.subpage .fine {padding:2px 14px 9px;font-size:11px;color:#6b6a66;line-height:1.45;}.subpage .footer {border:0.5px solid rgba(0,0,0,0.14);border-radius:8px;background:#f7f6f3;padding:12px 14px;font-size:11px;color:#52514e;line-height:1.55;margin-top:6px;}.subpage .footer p {margin:0 0 6px;}.subpage .footer .fh {font-size:13px;font-weight:500;color:#1a1a1a;margin-bottom:6px;}@media (max-width:640px) {.subpage .irow {grid-template-columns:1fr;gap:4px;padding-right:14px;}.subpage .chipcell {padding:2px 0 0;}}@media print {.subpage {padding:0;}.subpage #wrap {max-width:none;}.subpage .sect, .subpage .footer {break-inside:avoid;page-break-inside:avoid;}.subpage .indi {break-inside:avoid;page-break-inside:avoid;}.subpage * {-webkit-print-color-adjust:exact;print-color-adjust:exact;}@page {size:letter portrait;margin:0.6in;}
+}
+
+
+.subpage {
+    max-width: var(--measure);
+    margin-left: auto;
+    margin-right: auto;
+}
+@media print {
+    .page-banner, .page-footer { display: none; }
+    body { background: #fff; }
+    .subpage { max-width: none; box-shadow: none; }
+}
+</style>
+</head>
+<body>
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/reports/">Reports</a><span class="sep">›</span><a href="/reports/conn/">Connecticut</a><span class="sep">›</span><a href="../">The Whole Ledger</a><span class="sep">›</span><span class="current">Companion Chart</span>
+  </nav>
+</div>
+<div class="subpage">
+<div id="wrap">
+<h1>The Whole Ledger — Companion Chart</h1>
+<p class="sub">Connecticut vs. the nation, 2010–2025: trajectory gaps between Connecticut and its comparator (the US unless a row says otherwise), oriented so an upward slope always means Connecticut gaining ground. Ratios are marked &times;; percentage-point gaps carry a sign. Hollow markers denote the two derived values explained in the accompanying report.</p>
+<div class="legend">
+  <span><span class="dot"></span>verified</span>
+  <span><span class="hdot"></span>derived (see report)</span>
+  <span><span class="pline"></span>parity with comparator</span>
+</div>
+<div id="tbl"></div>
+<div class="footer">
+  <p>Companion chart to <em>The Whole Ledger</em>, a personal report by Scott Sauyet (andoverct.info/reports/conn/ct-vs-us/). Every plotted value is verified against a primary source &mdash; the Census Bureau, BEA, BLS, EIA, FBI, NCHS/CDC, NCES, CAWP, NASBO, the Tax Foundation, the SBA, the US Elections Project, and Connecticut state agencies &mdash; except the two hollow-marked points, whose derivations are described in the report&rsquo;s caveats section. Not an official town document.</p>
+</div>
+</div>
+<script>
+const rx=v=>v.toFixed(2)+"\u00d7", pp1=v=>(v>0?"+":"")+v.toFixed(1), pp0=v=>(v>0?"+":"")+Math.round(v);
+const D=[
+ {g:"Economy (vs US)"},
+ {n:"Median household income",c:"CT \u00f7 US, ACS",p:1,f:rx,v:[[1.28,1],[1.20,1],[1.18,1]],ch:"US caught up",cc:"a",note:"CT stays ~18% richer, but the edge narrowed from ~28%. CPS series (FRED) confirms: 1.34 \u2192 1.27 \u2192 1.19."},
+ {n:"Real GDP per capita",c:"CT \u00f7 US, BEA",p:1,f:rx,v:[[1.37,1],[1.22,1],[1.13,1]],x:["2010","2019","2024"],ch:"US caught up",cc:"a",note:"One vintage throughout (BEA SAGDP1 real GDP, chained 2017$, \u00f7 Census vintage populations): CT $74.5K vs US $54.3K (2010); $77.2K vs $63.1K (2019); $77.9K vs $68.7K (2024). All verified. CT's per-capita real growth since 2010 is +4.5%; the nation's is +26.5%."},
+ {n:"Unemployment rate",c:"US \u2212 CT, pp",p:0,f:pp1,v:[[0.5,1],[0.0,1],[0.4,1]],ch:"Tracked",cc:"g",note:"Rates track the nation; the jobs recovery itself took 16 years."},
+ {n:"Poverty rate",c:"US \u2212 CT, pp, ACS",p:0,f:pp1,v:[[5.2,1],[2.3,1],[1.9,1]],ch:"US caught up",cc:"a",note:"CT flat near 10% (US 15.3% in 2010, 12.3% in 2019, Census); the US cut its rate substantially."},
+ {n:"Population growth since 2010",c:"CT \u2212 US, cumulative pp",p:0,f:pp1,v:[[0,1],[-6.5,1],[-7.2,1]],ch:"Underperformed",cc:"r",note:"CT \u22120.4% vs US +6.1% through 2019 (Census vintage-2019 estimates: CT 3,565,287, US 328,239,523, verified); CT +2.7% vs US +9.9% through 2024 (Urban Inst.). Growth rests on international migration."},
+ {g:"Costs and housing (vs US)"},
+ {n:"State and local tax burden",c:"US avg \u2212 CT, pp, Tax Fdn",p:0,f:pp1,v:[[-2.5,1],[-1.9,1],[-4.2,1]],x:["2010","2019","2022"],ch:"Underperformed",cc:"r",note:"A V, not a slide: 12.3 vs 9.9 (2010), 12.8 vs 10.9 (2019), 15.4 vs 11.2 (2022). Post-2020 jump partly capital gains and a TF methodology revision."},
+ {n:"Residential electricity price",c:"US \u00f7 CT, EIA",p:1,f:rx,v:[[0.60,1],[0.57,1],[0.54,1]],ch:"Underperformed",cc:"r",note:"CT 19.25\u00a2 vs US 11.54\u00a2 in 2010 (EIA avgprice_annual workbook, verified); 29.88\u00a2 vs 16.00\u00a2 in 2023 (EIA Table 4); CT 28.75\u00a2 vs US 16.5\u00a2 in 2024. All verified. Ratio wobbles 0.53\u20130.60; CT stays ~65\u201385% above the national price the whole period."},
+ {n:"Median home value",c:"CT \u00f7 US, ACS",p:1,f:rx,v:[[1.62,1],[1.27,1],[1.10,1]],ch:"Ambiguous",cc:"g",note:"$291K vs $180K (2010) to $397K vs $361K (2024). Good for buyers, bad for owners; see permits row for the underlying wart. 2019 uses 5-yr estimates."},
+ {n:"Housing permits per capita",c:"CT \u00f7 US, Census BPS units",p:1,f:rx,v:[[0.54,1],[0.44,1],[0.41,1]],x:["2010","2019","2024"],ch:"Underperformed",cc:"r",note:"One basis throughout (Census BPS housing UNITS, Dec year-end workbooks, verified): CT 3,765 vs US 598,033 (2010) = 1.05 vs 1.93 per 1,000; CT 6,481 vs US 1,370,347 (2019); CT 6,499 vs US 1,471,367 (2024, preliminary year-end). CT authorizes at roughly two-fifths the national per-capita rate. Beware the permits-vs-units trap: DECD/CTData permit counts (a permit can cover many units) run far below BPS in CT's multifamily-heavy recent years and yield the harsher-looking 3\u20134\u00d7 claim; units is the supply-relevant measure."},
+ {g:"Quality of life (vs US)"},
+ {n:"Uninsured rate",c:"US \u2212 CT, pp",p:0,f:pp1,v:[[7.2,1],[3.3,1],[2.3,1]],ch:"US caught up",cc:"a",note:"CT among the lowest anywhere; the ACA shrank everyone's gap."},
+ {n:"Infant mortality",c:"US \u2212 CT, per 1,000 births",p:0,f:pp1,v:[[0.8,1],[1.2,1],[1.1,1]],x:["2010","2019","2023"],ch:"Tracked",cc:"g",note:"US 6.14 vs CT 5.30 (2010, 200 deaths, NVSR 62-8 Table C); US 5.58 vs CT 4.38 (2019, 150 deaths, NVSR 70-14 Table 5, one of 12 states significantly below the national rate); US 5.61 vs CT 4.5 (2023, 155 deaths). All verified. CT under 6 every year since 2010; ~150\u2013200 deaths/yr makes single years noisy, so multi-year averages are the defensible cite. Caution for any public use: CT's Black-to-white infant mortality ratio was 2.9 in 2008\u201310 (11.76 vs 4.00), among the five widest in the nation \u2014 the good average hides a large disparity."},
+ {n:"Drug overdose deaths",c:"US \u2212 CT, age-adj. per 100k",p:0,f:pp1,v:[[2.5,1],[-13.1,1],[-4.2,1]],x:["2010","2019","2023"],ch:"Underperformed",cc:"r",note:"CT 10.4 vs US 12.9 (2010) flipped to CT 34.7 vs US 21.6 (2019: 1,214 deaths, 6th-highest state rate, NCHS E-Stat, verified), converging to CT 33.3 vs US 29.1 (2023, CDC/CT DPH); ~13% above US in 2024 (USAFacts). Fentanyl hit New England early and hard; ~85% of CT deaths involve fentanyl."},
+ {n:"Child poverty",c:"US \u2212 CT, pp, ACS",p:0,f:pp1,v:[[8.8,1],[2.9,1],[2.6,1]],x:["2010","2019","2023/24"],ch:"US caught up",cc:"a",note:"CT 12.8% (2010, ACS) \u2192 14.1% (2019) \u2192 13.4% (2024) while the US fell 21.6% (2010, Census SAIPE, verified) \u2192 17% \u2192 16.0%. Unlike overall poverty, CT's own rate drifted up."},
+ {n:"Teen birth rate",c:"US \u00f7 CT, per 1,000 ages 15\u201319",p:1,f:rx,v:[[1.81,1],[2.14,1],[2.03,1]],x:["2010","2019","2023"],ch:"Outperformed",cc:"t",note:"US 34.2 vs CT 18.9 (2010; NCHS final data / Data Brief 89, which shows 34.3 from the weighted file \u2014 the ratio is 1.81 either way); US 16.7 vs CT 7.8 (2019, NVSS/CT DPH); US 13.2 vs CT 6.5 (2023, CDC). All verified. CT runs about half the national rate throughout; both fell dramatically (US \u221261%, CT \u221266%), and CT was already down 18% just from 2007 to 2010. Shown as a ratio because both rates collapsed."},
+ {n:"Violent crime rate",c:"US \u2212 CT, per 100k",p:0,f:pp0,v:[[98,1],[184,0],[229,1]],x:["2012","2019","2021"],ch:"Outperformed",cc:"t",note:"CT 289 \u2192 167 (2012 \u2192 2021, OPM/FBI); US 386.9 (2012) \u2192 366.7 (2019) \u2192 ~396, FBI UCR verified. CT 2019 \u2248 182\u2013184 by arithmetic: the FBI reported CT's 12.5% drop that year as the 2nd-largest in the nation, from 2018's 207.4. CT fell 40% over the decade while the US was flat. FBI tabulation puts CT 2012 at 283.5 (gap +103); the OPM report says 289 (+98) \u2014 source choice shifts a few points, direction identical. NIBRS transition clouds 2020\u201322."},
+ {n:"NAEP grade 8 reading",c:"CT \u2212 US, scale points",p:0,f:pp0,v:[[11,1],[8,1],[6,1]],x:["2011","2019","2024"],ch:"Tracked, lead eroding",cc:"g",note:"CT 275 vs nation 264 in 2011, tied with MA and NJ for highest in the country (NCES Digest, verified); 270 vs 262 in 2019 (verified); 263 vs 257 in 2024 (verified). Top-tier level; post-COVID losses not recovered."},
+ {n:"Bachelor's degree or higher",c:"CT \u2212 US, pp of adults 25+",p:0,f:pp1,v:[[7.3,1],[6.7,1],[5.7,1]],x:["2010","2019","2024"],ch:"Tracked, slight narrowing",cc:"g",note:"CT 35.5% vs US 28.2% (2010); 39.8% vs 33.1% (2019); 42.6% vs 36.9% (2024). Full CT series verified via Census/FRED. Both jumped sharply. Attainment is partly imported (CT attracts degree-holders); NAEP measures what the schools produce."},
+ {n:"Life expectancy",c:"CT \u2212 US, years",p:0,f:pp1,v:[[2.1,1],[1.7,1],[1.9,1]],x:["2010","2019","2022"],ch:"Tracked",cc:"g",note:"CT 80.4 vs US 78.7 in 2019 (CDC state life tables dataset, verified; CT ranked 6th); 79.4 vs 77.5 in 2022. CT holds a ~2-year edge through the COVID era, dipping slightly mid-decade."},
+ {g:"Fiscal health (vs median state / national aggregate)"},
+ {n:"Rainy day fund",c:"CT \u2212 median state, pp of GF",p:0,f:pp1,v:[[-2.0,1],[5.1,1],[3.5,1]],ch:"Outperformed",cc:"t",note:"From drained ($0) to the 18% cap; median state went 2.0% \u2192 7.9% \u2192 ~14.5% (NASBO)."},
+ {n:"Pension funded ratio (SERS)",c:"CT \u2212 natl aggregate, pp",p:0,f:pp0,v:[[-27,1],[-33,1],[-23,1]],x:["2011","2018","2025"],ch:"Gaining, still far behind",cc:"t",note:"SERS 48% (2011, OFA), 38% (2018), 59.6% (FY25) vs aggregates 75 / 71 / 82.5 (Pew, Equable). Mid-period dip partly honest accounting: assumed return cut 8% to 6.9%. Over $10B in supplemental payments since 2020."},
+ {n:"Credit rating (Moody's)",c:"CT vs most states",rating:1,ch:"Recovered",cc:"t",note:"Aa2 (2010) fell to A1 by 2017, back to Aa2 in Sept 2025 after 8 upgrades, the first since 2001. Most states rate Aa1 or higher; CT closed most of the gap."},
+ {g:"People and representation"},
+ {n:"Census Diversity Index",c:"CT \u2212 US, pp",p:0,f:pp1,v:[[-8.9,1],[-5.4,1],[-4.4,0]],x:["2010","2020","2022*"],ch:"Gaining",cc:"t",note:"CT 46% \u2192 55.7% while the US went 54.9% \u2192 61.1% (Census DI: chance two random residents differ by race/ethnicity; decennial points official and verified). The 2022 point (CT 57.0 vs US 61.4, ACS 2020\u201324) is derived by construction \u2014 the Census publishes the DI only at decennial censuses \u2014 and stays hollow until 2030 by the nature of the source."},
+ {n:"Women in the legislature",c:"CT \u2212 US state avg, pp",p:0,f:pp1,v:[[5.4,1],[4.6,1],[4.6,1]],x:["2011","2019","2025"],ch:"Tracked",cc:"g",note:"CT 29.9% vs US 24.5% (2011); 33.5% vs 28.9% (2019, CAWP: 2,132 of 7,383, verified); 37% vs 32.4% (2025). A few points ahead throughout."},
+ {n:"Presidential turnout",c:"CT \u2212 US, pp of eligible voters",p:0,f:pp1,v:[[2.8,1],[4.9,1],[3.0,1]],x:["2012","2020","2024"],ch:"Tracked",cc:"g",note:"Total ballots \u00f7 VEP, US Elections Project basis throughout: CT 61.4% vs US 58.6% (2012); 71.5% vs 66.6% (2020: 1,861,086 ballots \u00f7 VEP 2,603,327 per CGA OLR 2022-R-0154; Ballotpedia's 70.7% is EAC-based, a different count); 67.1% vs 64.1% (2024). All verified. Denominator trap, per OLR's own table: CT 2020 turnout runs 63.6%\u201380.6% depending on which pools you divide; the 76\u201380% figures usually quoted are % of registered voters. Never mix bases."},
+ {n:"Women-owned businesses",c:"CT vs US, level only, SBA/Census",biz:"w",ch:"Lags US (level)",cc:"r",note:"SBA 2024 profiles (ref. 2021, all businesses, equal+majority ownership): women own 41.8% of CT businesses vs 44.1% nationally. Adjusted for workforce share CT still lags: women own 0.87\u00d7 their share of CT workers vs 0.94\u00d7 nationally. No 2010 trend exists: the SBO (all firms, through 2012) and ABS (employer firms, 2018+) universes differ."},
+ {n:"Minority-owned businesses",c:"CT vs US, level only, SBA/Census",biz:"m",ch:"Lags US (level)",cc:"r",note:"Same source: racial minorities own 15.7% of CT businesses vs 22.1% nationally (Hispanics 11.6% vs 15.8%). Workforce-adjusted, CT owns 0.58\u00d7 vs 0.71\u00d7 nationally \u2014 the gap is real even given CT's demographics. Level-only for the same survey-break reason."}
+];
+const line="#2a78d6", ink="#52514e", mut="#898781", surf="#ffffff";
+function slope(d){
+ const W=340,H=72,X=[42,170,298],T=20,B=52;
+ const pts=d.v.map((p,i)=>({v:p[0],s:p[1],i:i})).filter(p=>p.v!==null);
+ const vals=pts.map(p=>p.v), par=d.p;
+ let lo=Math.min(...vals,par), hi=Math.max(...vals,par);
+ const pad=(hi-lo)*0.25||Math.abs(hi)*0.2||1; lo-=pad; hi+=pad;
+ const y=v=>B-(v-lo)/(hi-lo)*(B-T);
+ const xl=d.x||["2010","2019","2025"];
+ let s='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" role="img" aria-label="'+d.n+' trend"><title>'+d.n+'</title>';
+ s+='<line x1="18" x2="'+(W-18)+'" y1="'+y(par)+'" y2="'+y(par)+'" stroke="'+mut+'" stroke-width="1" stroke-dasharray="3 3" opacity="0.6"/>';
+ for(let k=0;k<3;k++){ if(xl[k]) s+='<text x="'+X[k]+'" y="'+(H-4)+'" text-anchor="middle" font-size="11" fill="'+mut+'">'+xl[k]+'</text>'; }
+ for(let k=0;k<pts.length-1;k++){ s+='<line x1="'+X[pts[k].i]+'" y1="'+y(pts[k].v)+'" x2="'+X[pts[k+1].i]+'" y2="'+y(pts[k+1].v)+'" stroke="'+line+'" stroke-width="2" stroke-linecap="round"'+(pts[k].s&&pts[k+1].s?'':' stroke-dasharray="5 4"')+'/>'; }
+ pts.forEach(p=>{ const cy=y(p.v);
+  s+=p.s?'<circle cx="'+X[p.i]+'" cy="'+cy+'" r="4.5" fill="'+line+'" stroke="'+surf+'" stroke-width="1.5"/>':'<circle cx="'+X[p.i]+'" cy="'+cy+'" r="4.5" fill="'+surf+'" stroke="'+line+'" stroke-width="1.5"/>';
+  s+='<text x="'+X[p.i]+'" y="'+(cy-9)+'" text-anchor="middle" font-size="12" fill="'+ink+'" font-weight="500">'+d.f(p.v)+(p.s?'':'*')+'</text>';
+ });
+ return s+'</svg>';
+}
+function ratingChart(){
+ const W=340,H=100,X=[74,180,286];
+ const ticks=["Aaa","Aa1","Aa2","Aa3","A1"];
+ const y=n=>14+n*16;
+ const ct=[2,4,2];
+ const xl=["2010","2019","2025"];
+ let s='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" role="img" aria-label="Moody\u2019s rating for Connecticut versus most states"><title>Credit rating</title>';
+ ticks.forEach((t,n)=>{ s+='<text x="38" y="'+(y(n)+4)+'" text-anchor="end" font-size="10" fill="'+mut+'">'+t+'</text>'; });
+ s+='<line x1="46" x2="'+(W-14)+'" y1="'+y(1)+'" y2="'+y(1)+'" stroke="'+mut+'" stroke-width="1" stroke-dasharray="3 3" opacity="0.6"/>';
+ s+='<text x="'+(W-22)+'" y="'+(y(1)-8)+'" text-anchor="middle" font-size="10" fill="'+mut+'">most states</text>';
+ for(let k=0;k<3;k++){ s+='<text x="'+X[k]+'" y="'+(H-4)+'" text-anchor="middle" font-size="11" fill="'+mut+'">'+xl[k]+'</text>'; }
+ for(let k=0;k<2;k++){ s+='<line x1="'+X[k]+'" y1="'+y(ct[k])+'" x2="'+X[k+1]+'" y2="'+y(ct[k+1])+'" stroke="'+line+'" stroke-width="2" stroke-linecap="round"/>'; }
+ ct.forEach((n,k)=>{ s+='<circle cx="'+X[k]+'" cy="'+y(n)+'" r="4.5" fill="'+line+'" stroke="'+surf+'" stroke-width="1.5"/>'; });
+ return s+'</svg>';
+}
+function bizChart(kind){
+ const W=340,H=52,yy=24;
+ const r=kind==="w"?{ct:41.8,us:44.1}:{ct:15.7,us:22.1};
+ const x=v=>34+(v/50)*(W-58);
+ let s='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" role="img" aria-label="Ownership share of businesses, Connecticut versus US"><title>Business ownership</title>';
+ s+='<line x1="'+x(0)+'" x2="'+x(50)+'" y1="'+yy+'" y2="'+yy+'" stroke="'+mut+'" stroke-width="1" opacity="0.35"/>';
+ s+='<line x1="'+x(r.ct)+'" x2="'+x(r.us)+'" y1="'+yy+'" y2="'+yy+'" stroke="'+line+'" stroke-width="2"/>';
+ s+='<circle cx="'+x(r.us)+'" cy="'+yy+'" r="4.5" fill="'+surf+'" stroke="'+mut+'" stroke-width="1.5"/>';
+ s+='<circle cx="'+x(r.ct)+'" cy="'+yy+'" r="4.5" fill="'+line+'" stroke="'+surf+'" stroke-width="1.5"/>';
+ s+='<text x="'+x(r.ct)+'" y="'+(yy-9)+'" text-anchor="middle" font-size="11" fill="'+ink+'" font-weight="500">CT '+r.ct+'%</text>';
+ s+='<text x="'+x(r.us)+'" y="'+(yy+18)+'" text-anchor="middle" font-size="11" fill="'+mut+'">US '+r.us+'%</text>';
+ s+='<text x="'+x(0)+'" y="'+(H-4)+'" text-anchor="middle" font-size="10" fill="'+mut+'">0%</text>';
+ s+='<text x="'+x(50)+'" y="'+(H-4)+'" text-anchor="middle" font-size="10" fill="'+mut+'">50%</text>';
+ return s+'</svg>';
+}
+const root=document.getElementById('tbl');
+let sect=null;
+D.forEach(d=>{
+ if(d.g){
+  sect=document.createElement('div');
+  sect.className='sect';
+  const h=document.createElement('div');
+  h.className='shead';
+  h.textContent=d.g;
+  sect.appendChild(h);
+  root.appendChild(sect);
+  return;
+ }
+ const blk=document.createElement('div');
+ blk.className='indi';
+ const r=document.createElement('div');
+ r.className='irow';
+ const vc=document.createElement('div');
+ vc.className='chipcell';
+ vc.innerHTML='<span class="chip '+d.cc+'">'+d.ch+'</span>';
+ r.innerHTML='<div><div class="iname">'+d.n+'</div><div class="icomp">'+d.c+'</div></div>'
+ +'<div>'+(d.rating?ratingChart():(d.biz?bizChart(d.biz):slope(d)))+'</div>';
+ r.appendChild(vc);
+ const fp=document.createElement('div');
+ fp.className='fine';
+ fp.textContent=d.note;
+ blk.appendChild(r); blk.appendChild(fp);
+ sect.appendChild(blk);
+});
+</script>
+</div>
+<footer class="page-footer">
+<p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>
+<p class="footer-note">Compiled September 2, 2026 · Data from the Census Bureau, BEA, BLS, EIA, FBI, NCHS/CDC, NCES, and the other primary sources listed in Documentation. Not an official town document.</p>
+</footer>
+</body>
+</html>

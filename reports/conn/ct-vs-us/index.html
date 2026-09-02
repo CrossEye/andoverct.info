@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>The Whole Ledger — Connecticut vs. the Nation, 2010–2025</title>
+<style>/* Default civic-report theme.
+ *
+ * A theme is just this set of CSS custom properties. To experiment, copy this
+ * file to _build/themes/<name>.css, change what you like, and point at it from
+ * _build/report.config.json ({"theme":"<name>"}) for all reports, or from a
+ * single report's front matter (theme: <name>). A non-default theme is layered
+ * ON TOP of this one, so it only needs to list the variables it changes.
+ *
+ * Scope: colors, fonts, and small size/width/gap tweaks — not layout changes.
+ */
+:root {
+  /* ---- Palette ---- */
+  --bg:             #fafaf7;   /* page background */
+  --bg-page:        #ffffff;   /* the white content card */
+  --bg-soft:        #f5f3ed;   /* callouts, table headers, inline code */
+  --ink:            #1a1a1a;   /* body text, main headings */
+  --ink-soft:       #333333;   /* blockquote / methodology text */
+  --ink-mute:       #5a5a5a;   /* subtitle, card descriptions */
+  --ink-faint:      #888888;   /* attribution, footer, captions */
+  --rule:           #e0ddd5;   /* hairline borders */
+  --accent:         #b8a878;   /* gold accent rules */
+  --accent-2:       #2c3e50;   /* slate: h3, table-header & code text */
+  --banner-bg:      #2c3e50;   /* top banner background */
+  --banner-ink:     #ecf0f1;   /* top banner text */
+  --crumb-link:       #b9c4cf; /* breadcrumb links in the banner */
+  --crumb-link-hover: #ffffff;
+  --crumb-current:    #ffffff; /* deepest crumb (current page), not a link */
+  --link:           #1a5490;
+  --link-hover:     #0d3a6b;
+  --link-underline: #c5d3e2;
+  --anchor:         #b8b3a4;   /* the ¶ header anchor */
+  --anchor-hover:   #6c7480;
+  --confirm:        #5a8a5a;   /* green ✓ confirmation mark */
+  --confirm-strong: #2e7d32;
+
+  /* ---- Fonts ---- */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:  "SF Mono", Monaco, Menlo, Consolas, monospace;
+
+  /* ---- Sizes (small tweaks only; no layout restructuring) ---- */
+  --base-size:  11pt;    /* body text */
+  --measure:    780px;   /* content column width */
+  --gutter:     30px;    /* horizontal padding / banner & footer gaps */
+  --title-size: 28pt;
+  --h2-size:    18pt;
+  --h3-size:    13pt;
+}
+
+/* bluegold — mirrors the light-mode look of the 55th campaign site
+ * (C:\Users\scott\Dev\Andover\55th, e.g. localhost:8080/reports): cool
+ * blue-gray paper, a dark navy banner with a gold underline, navy serif
+ * headings over a sans body, gold accent rules, and blue links.
+ *
+ * Note the deliberate font swap: base.css uses --font-serif for body text and
+ * --font-sans for headings/labels, so to match the campaign look (sans body,
+ * serif display) we put the SANS stack in --font-serif and the SERIF stack in
+ * --font-sans.
+ *
+ * Layered on default.css. Uses --banner-border (in base.css) for the gold rule
+ * under the banner. */
+:root {
+  /* Palette */
+  --bg:             #f4f6f9;
+  --bg-page:        #ffffff;
+  --bg-soft:        #eef4fb;   /* blue-050 tint for callouts / table headers */
+  --rule:           #e3e8ef;   /* hairlines */
+  --ink:            #19222e;
+  --ink-soft:       #2b3744;
+  --ink-mute:       #5b6775;
+  --ink-faint:      #8a94a1;
+  --accent:         #e8a800;   /* signature gold rules */
+  --accent-2:       #0f2a4a;   /* blue-900: headings, table-header & code text */
+  --banner-bg:      linear-gradient(180deg, #0f2a4a, #143862);
+  --banner-border:  3px solid #e8a800;
+  --banner-ink:     #dde8f5;   /* blue-100 */
+  --crumb-link:       #e8a800; /* gold breadcrumb links */
+  --crumb-link-hover: #ffffff; /* hover to white + underline */
+  --crumb-current:    #ffffff; /* current page, not a link */
+  --link:           #245c95;   /* blue-600 */
+  --link-hover:     #1c4e80;   /* blue-700 */
+  --link-underline: #cfe0f2;
+  --confirm:        #2f8f5b;
+  --confirm-strong: #1f7d49;
+
+  /* Type: sans body + serif display headings (see note above) */
+  --font-serif: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans:  Georgia, "Times New Roman", serif;
+
+  --measure: 860px;
+}
+
+/* Structural base styles for civic reports — theme-independent.
+ * Colors, fonts, and sizes come from the active theme (CSS custom properties
+ * in _build/themes/<name>.css), which is loaded BEFORE this file. */
+
+/* ---- Reset & base ---- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Layout ---- */
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner a { color: inherit; text-decoration: none; }
+.page-banner a:hover { text-decoration: underline; }
+
+/* ---- Breadcrumb (in the banner) ---- */
+.page-banner .crumbs a {
+    color: var(--crumb-link, var(--banner-ink));
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover, #fff);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current {
+    color: var(--crumb-current, #fff);
+}
+
+.container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* ---- Images / figures ---- */
+/* Scale charts and figures to the column (and the printed page box) rather
+   than overflowing at their intrinsic pixel/point size. */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+}
+
+/* ---- Lightbox (screen only; overlay is built at runtime by the viewer
+   script, so it never appears in the PDF). Click a chart to enlarge it. ---- */
+.container img { cursor: zoom-in; }
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vmin;
+    background: rgba(0, 0, 0, 0.85);
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+.lightbox-overlay.open { opacity: 1; }
+.lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    margin: 0;
+    cursor: zoom-out;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+    background: #fff;
+}
+
+/* ---- Title block ---- */
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-attribution {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    color: var(--ink-faint);
+    margin: 0 0 24px 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+.report-attribution a {
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+}
+.report-attribution a:hover {
+    color: var(--link);
+    border-bottom-color: var(--link);
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.methodology-header {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 0 0 36px 0;
+    line-height: 1.55;
+}
+
+/* ---- Section labels (small uppercase tags above h2) ---- */
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 36px 0 4px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+/* ---- Headings ---- */
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+h3 {
+    font-family: var(--font-sans);
+    font-size: var(--h3-size);
+    font-weight: 600;
+    margin: 28px 0 10px 0;
+    color: var(--accent-2);
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+
+/* ---- Header anchor links (HTML only; hidden in print) ---- */
+.header-anchor {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.2em;
+    color: var(--anchor);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.85em;
+    vertical-align: baseline;
+    cursor: pointer;
+    user-select: none;
+}
+h2:hover .header-anchor,
+h3:hover .header-anchor,
+.header-anchor:focus {
+    opacity: 1;
+}
+.header-anchor:hover {
+    color: var(--anchor-hover);
+}
+.header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+}
+.header-anchor.copied::after {
+    content: " copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+}
+@media print {
+    .header-anchor {
+        display: none;
+    }
+}
+
+/* ---- Body text ---- */
+p {
+    margin: 0 0 14px 0;
+    orphans: 3;
+    widows: 3;
+}
+p.intro-table {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+strong { font-weight: 700; color: var(--ink); }
+em { font-style: italic; }
+
+/* ---- Links ---- */
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* ---- Lists ---- */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+li {
+    margin: 0 0 6px 0;
+    line-height: 1.55;
+}
+
+/* ---- Tables ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-before: avoid;
+    break-before: avoid;
+}
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 9.5pt;
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--accent);
+}
+tbody tr:hover { background: var(--bg); }
+
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+tbody tr:last-child td {
+    border-bottom: 2px solid var(--accent);
+}
+
+/* ---- Blockquotes (source notes, verbatim quotes) ---- */
+blockquote {
+    margin: 14px 0 18px 0;
+    padding: 14px 20px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+blockquote p { margin: 0 0 8px 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ol, blockquote ul {
+    margin: 8px 0;
+}
+
+/* ---- HR ---- */
+hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+}
+
+/* ---- Inline code ---- */
+code {
+    font-family: var(--font-mono);
+    font-size: 9.5pt;
+    background: var(--bg-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: var(--accent-2);
+    overflow-wrap: break-word;
+}
+
+/* ---- Other Formats footer ---- */
+.formats-section {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+}
+.format-cards {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.format-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.format-cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media screen and (max-width: 700px) {
+    .format-cards.cols-3,
+    .format-cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+.format-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    padding: 14px;
+    text-align: left;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+.format-card-icon { font-size: 18pt; margin-bottom: 4px; }
+.format-card-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+.format-card-desc { font-size: 9pt; color: var(--ink-mute); line-height: 1.4; }
+.format-card a { display: block; }
+
+/* ---- Footer ----
+   Two parts: .footer-id is the site-wide identity/disclaimer line, identical
+   on every page; .footer-note is the optional per-page line (sources, method,
+   "not a lawyer"). See siteFooterHtml() in _build/links.mjs. */
+/* @footer-css:start — generated from _build/footer.css; do not edit here, run: npm run sync:footer-css */
+.page-footer {
+  /* max-width + horizontal padding are px (not rem/ch) so a page's root
+     font-size can't rescale the wrap — the line breaks are identical everywhere. */
+  max-width: 512px;
+  margin: 3rem auto;
+  padding: 1.75rem 20px 0;
+  border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  text-align: center;
+  color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+}
+.page-footer p { margin: 0 auto 0.5rem; max-width: none; }
+.page-footer .footer-note { margin-top: 0.6rem; font-style: italic; }
+.page-footer strong { color: var(--ink-soft, inherit); font-weight: 600; }
+.page-footer a { color: var(--ink-soft, inherit); border-bottom: 1px solid var(--rule, currentColor); }
+.page-footer a:hover { color: var(--accent, var(--link, var(--burgundy, currentColor))); border-bottom-color: var(--accent, var(--link, var(--burgundy, currentColor))); }
+/* @footer-css:end */
+
+/* ---- Confirmation glyphs ---- */
+h3 .conf-mark {
+    color: var(--confirm);
+    font-size: 11pt;
+    margin-right: 4px;
+}
+</style>
+</head>
+<body>
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/reports/">Reports</a><span class="sep">›</span><a href="/reports/conn/">Connecticut</a><span class="sep">›</span><span class="current">The Whole Ledger</span>
+  </nav>
+</div>
+<div class="container">
+<h1 class="report-title">The Whole Ledger</h1>
+<p class="report-subtitle">Connecticut vs. the nation, 2010–2025 · 26 indicators of how the state changed under unified government · every figure traced to a primary source</p>
+<p class="report-attribution">A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Not an official town document</p>
+<hr class="report-header-rule">
+<p class="methodology-header">This report compares Connecticut with the United States on 26 indicators at
+three points in time — roughly 2010, 2019, and the latest available year — to
+ask a question that comes up constantly in local political argument: how has
+Connecticut actually fared during its long stretch of unified state government?
+Every figure is drawn from a primary or primary-derived public source (the
+Census Bureau, BEA, BLS, EIA, the FBI, NCHS/CDC, NCES, and the others listed
+under Documentation), and each was individually verified against that source
+before publication; where an underlying series changed methodology mid-period,
+the report says so and explains the choice made. Comparisons are expressed as
+same-year gaps or ratios between Connecticut and its comparator, which cancels
+inflation, national shocks, and survey redesigns that hit both sides equally.
+The report presents favorable and unfavorable results with the same prominence.</p>
+<p class="section-label">Introduction</p>
+<h2 id="overview">Overview<a class="header-anchor" href="#overview" aria-label="Link to this section">¶</a></h2>
+<p>Since 2011, Connecticut&#8217;s governorship and both chambers of the General Assembly
+have been held by one party. Whether that arrangement &#8220;has worked&#8221; is a fixture
+of town Facebook threads, letters to the editor, and campaign mailers, and both
+sides tend to argue it with a handful of cherry-picked numbers. This report
+tries to do it properly: a broad set of indicators, each measured the same way
+at the start of the period, just before the pandemic, and now, each against the
+same yardstick — the rest of the country.</p>
+<p>The honest answer that emerges is genuinely mixed, and the mix has a shape.
+Connecticut&#8217;s clearest gains are fiscal: a rainy day fund rebuilt from zero to
+its statutory cap, pension funding rising after decades of neglect, and a credit
+rating recovering from a 2017 trough through eight consecutive upgrades.
+Connecticut&#8217;s clearest strengths are inherited quality-of-life leads — income,
+education, health coverage, safety, longevity — though on several of these the
+rest of the country has been closing the gap. And Connecticut&#8217;s clearest
+failures are costs and growth: taxes, electricity, housing production,
+population, and a drug-overdose crisis that flipped the state from better than
+the nation to worse.</p>
+<p>Readers looking for a verdict that fits on a bumper sticker will not find one
+here. Readers who want to argue about Connecticut from a full and verified set
+of facts — in either direction — should find everything they need.</p>
+<p class="section-label">Method</p>
+<h2 id="how-to-read-the-numbers">How to Read the Numbers<a class="header-anchor" href="#how-to-read-the-numbers" aria-label="Link to this section">¶</a></h2>
+<p>Three methodological choices shape everything below, and two well-known
+statistical traps are worth naming before the tables.</p>
+<p><strong>Gaps and ratios, not raw values.</strong> Each indicator is expressed as the
+difference or ratio between Connecticut and its comparator in the same year. A
+dollar figure from 2010 and one from 2024 are not comparable, but the <em>gap</em>
+between Connecticut and the nation in each year is. This framing also cancels
+events that hit everyone — recessions, COVID, survey redesigns — and isolates
+the question the report actually asks: did Connecticut gain or lose ground
+<em>relative to the country</em>?</p>
+<p><strong>Three time points.</strong> Roughly 2010 (the last budget year before unified
+government), 2019 (the last pre-pandemic year), and the latest available year,
+which varies by series. Where a series starts or ends elsewhere, the tables say
+so.</p>
+<p><strong>Named comparators.</strong> Most rows compare against the United States as a whole.
+The fiscal rows cannot: the federal government is not a comparable entity — it
+issues its own currency, keeps no rainy day fund, and carries debt and pension
+obligations on entirely different terms — so the only sensible yardstick for a
+state&#8217;s balance sheet is other states. Those rows compare against the median
+state or the aggregate of all state plans, as labeled.</p>
+<blockquote>
+<p><strong>Notes:</strong> Two traps this report deliberately avoids, because readers will
+encounter both in the wild. First, <em>voter-turnout denominators</em>: the
+often-quoted claim that Connecticut turnout runs 76–80% is a percentage of
+registered voters; national comparisons use the voting-eligible population, a
+much larger base. The state legislature&#8217;s own research office illustrated the
+problem in a 2022 issue brief showing that Connecticut&#8217;s 2020 &#8220;turnout&#8221; ranges
+from 63.6% to 80.6% depending on which numerator and denominator you pick.
+This report uses the voting-eligible basis throughout. Second, <em>housing
+permits versus housing units</em>: state permit counts tally documents, and one
+permit for an apartment building can cover hundreds of homes. The Census
+Bureau&#8217;s Building Permits Survey counts units, which is the supply-relevant
+measure, and this report uses units throughout. The distinction matters: on a
+permit-document basis Connecticut looks even further behind the nation than it
+actually is.</p>
+</blockquote>
+<p class="section-label before-part">Economy</p>
+<h2 id="part-1-economy">Part 1 — Economy<a class="header-anchor" href="#part-1-economy" aria-label="Link to this section">¶</a></h2>
+<p class="intro-table">Connecticut entered the 2010s rich and left them rich, but the margin over the
+rest of the country narrowed on almost every economic measure. This is the &#8220;US
+caught up&#8221; pattern that recurs throughout the report: Connecticut&#8217;s levels
+remain enviable while its trajectory lags.</p>
+<table>
+<thead>
+<tr>
+<th>Indicator</th>
+<th>2010</th>
+<th>2019</th>
+<th>Latest</th>
+<th>Direction</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Median household income, CT ÷ US (ACS)</td>
+<td>1.28×</td>
+<td>1.20×</td>
+<td>1.18× (2024)</td>
+<td>US closing</td>
+</tr>
+<tr>
+<td>Real GDP per capita, CT ÷ US (BEA)</td>
+<td>1.37×</td>
+<td>1.22×</td>
+<td>1.13× (2024)</td>
+<td>US closing</td>
+</tr>
+<tr>
+<td>Unemployment rate, US − CT (pp)</td>
+<td>+0.5</td>
+<td>0.0</td>
+<td>+0.4 (2024)</td>
+<td>Tracked</td>
+</tr>
+<tr>
+<td>Poverty rate, US − CT (pp, ACS)</td>
+<td>+5.2</td>
+<td>+2.3</td>
+<td>+1.9 (2024)</td>
+<td>US closing</td>
+</tr>
+<tr>
+<td>Population growth since 2010, CT − US (cumulative pp)</td>
+<td>0</td>
+<td>−6.5</td>
+<td>−7.2 (2024)</td>
+<td>CT far behind</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> GDP per capita is computed on a single BEA vintage (real GDP in
+chained 2017 dollars from table SAGDP1, divided by Census vintage population
+estimates) for all three years, so the ratios are directly comparable:
+Connecticut went from $74.5K against the nation&#8217;s $54.3K in 2010 to $77.9K
+against $68.7K in 2024. Put plainly, Connecticut&#8217;s real output per person grew
+4.5% over fourteen years while the nation&#8217;s grew 26.5%. Population tells the
+same story: Connecticut shrank 0.4% from 2010 to 2019 while the country grew
+6.1% (Census vintage estimates), and the gap has kept widening; such growth as
+Connecticut has seen rests on international migration. Unemployment is the one
+economic series where Connecticut simply tracks the nation — though the
+state&#8217;s recovery of the jobs lost in 2008 famously took sixteen years.</p>
+</blockquote>
+<p class="section-label before-part">Costs and housing</p>
+<h2 id="part-2-costs-and-housing">Part 2 — Costs and Housing<a class="header-anchor" href="#part-2-costs-and-housing" aria-label="Link to this section">¶</a></h2>
+<p class="intro-table">This is the section of the ledger where the critics&#8217; case is strongest, and the
+numbers back much of it. Connecticut is an expensive state that builds very
+little housing, and neither fact improved over the period.</p>
+<table>
+<thead>
+<tr>
+<th>Indicator</th>
+<th>2010</th>
+<th>2019</th>
+<th>Latest</th>
+<th>Direction</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>State and local tax burden, US avg − CT (pp, Tax Foundation)</td>
+<td>−2.5</td>
+<td>−1.9</td>
+<td>−4.2 (2022)</td>
+<td>CT heavier</td>
+</tr>
+<tr>
+<td>Residential electricity price, US ÷ CT (EIA)</td>
+<td>0.60×</td>
+<td>0.57×</td>
+<td>0.54× (2023)</td>
+<td>CT pricier</td>
+</tr>
+<tr>
+<td>Median home value, CT ÷ US (ACS)</td>
+<td>1.62×</td>
+<td>1.27×</td>
+<td>1.10× (2024)</td>
+<td>Converging</td>
+</tr>
+<tr>
+<td>Housing units permitted per capita, CT ÷ US (Census BPS)</td>
+<td>0.54×</td>
+<td>0.44×</td>
+<td>0.41× (2024)</td>
+<td>CT builds far less</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> The tax-burden series is a V, not a slide: 12.3% vs 9.9% (2010),
+12.8% vs 10.9% (2019), 15.4% vs 11.2% (2022). The post-2020 jump partly
+reflects capital-gains income in a strong market year and a Tax Foundation
+methodology revision, but the state has also ranked 47th on that group&#8217;s
+tax-competitiveness index for ten straight years. Electricity: 19.25¢ vs
+11.54¢ per kWh in 2010 and 29.88¢ vs 16.00¢ in 2023 (EIA); the ratio wobbles
+between 0.53 and 0.60, meaning Connecticut households pay 65–85% above the
+national price throughout. Housing: on the Census units basis (see How to
+Read), Connecticut authorized 3,765 units against the nation&#8217;s 598,033 in 2010
+and 6,499 against 1,471,367 in 2024 — per capita, roughly two-fifths of the
+national rate, and falling. The home-value row cuts both ways: Connecticut
+houses went from 62% above the national median to 10% above, which is good
+news for buyers, bad news for owners&#8217; equity, and largely a consequence of the
+permits row.</p>
+</blockquote>
+<p class="section-label before-part">Quality of life</p>
+<h2 id="part-3-quality-of-life">Part 3 — Quality of Life<a class="header-anchor" href="#part-3-quality-of-life" aria-label="Link to this section">¶</a></h2>
+<p class="intro-table">Connecticut&#8217;s quality-of-life indicators are its brand, and mostly the brand
+holds up: safer, healthier, better-educated, longer-lived than the nation. But
+this section also contains the report&#8217;s single worst finding, and its most
+instructive one.</p>
+<table>
+<thead>
+<tr>
+<th>Indicator</th>
+<th>2010</th>
+<th>2019</th>
+<th>Latest</th>
+<th>Direction</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Uninsured rate, US − CT (pp)</td>
+<td>+7.2</td>
+<td>+3.3</td>
+<td>+2.3 (2024)</td>
+<td>US closing</td>
+</tr>
+<tr>
+<td>Infant mortality, US − CT (per 1,000 births)</td>
+<td>+0.8</td>
+<td>+1.2</td>
+<td>+1.1 (2023)</td>
+<td>CT ahead</td>
+</tr>
+<tr>
+<td>Drug overdose deaths, US − CT (age-adjusted per 100K)</td>
+<td>+2.5</td>
+<td>−13.1</td>
+<td>−4.2 (2023)</td>
+<td>CT flipped to worse</td>
+</tr>
+<tr>
+<td>Child poverty, US − CT (pp, ACS)</td>
+<td>+8.8</td>
+<td>+2.9</td>
+<td>+2.6 (2024)</td>
+<td>US closing; CT drifted up</td>
+</tr>
+<tr>
+<td>Teen birth rate, US ÷ CT (per 1,000 ages 15–19)</td>
+<td>1.81×</td>
+<td>2.14×</td>
+<td>2.03× (2023)</td>
+<td>CT half the US rate</td>
+</tr>
+<tr>
+<td>Violent crime, US − CT (per 100K)</td>
+<td>+98 (2012)</td>
+<td>+184</td>
+<td>+229 (2021)</td>
+<td>CT pulling ahead</td>
+</tr>
+<tr>
+<td>NAEP grade 8 reading, CT − US (scale points)</td>
+<td>+11 (2011)</td>
+<td>+8</td>
+<td>+6 (2024)</td>
+<td>Lead eroding</td>
+</tr>
+<tr>
+<td>Bachelor&#8217;s degree or higher, CT − US (pp, adults 25+)</td>
+<td>+7.3</td>
+<td>+6.7</td>
+<td>+5.7 (2024)</td>
+<td>Slight narrowing</td>
+</tr>
+<tr>
+<td>Life expectancy, CT − US (years)</td>
+<td>+2.1</td>
+<td>+1.7</td>
+<td>+1.9 (2022)</td>
+<td>CT ~2 years ahead</td>
+</tr>
+</tbody></table>
+<p>The overdose row deserves its own paragraphs, because it is the one indicator
+where Connecticut moved from clearly better than the nation to clearly worse. In
+2010 Connecticut&#8217;s drug-death rate was 10.4 per 100,000 against the nation&#8217;s
+12.9. By 2019 — the national peak of the fentanyl wave&#8217;s eastern phase —
+Connecticut stood at 34.7 against the nation&#8217;s 21.6, the sixth-highest state
+rate in the country. Fentanyl reached New England&#8217;s heroin supply years before
+it reached the interior, and roughly 85% of Connecticut&#8217;s overdose deaths now
+involve it. The gap has since converged substantially (33.3 vs 29.1 in 2023,
+about 13% above the nation in 2024), but a deterioration of this size, whatever
+its causes, belongs on any honest ledger of the period.</p>
+<p>Child poverty carries the second genuine warning: it is the only poverty measure
+in this report where Connecticut&#8217;s own number moved the wrong direction, from
+12.8% in 2010 to 13.4% in 2024, even as the national rate fell from 21.6% to
+16.0%.</p>
+<p>The rest of the section is quietly strong. Connecticut&#8217;s violent-crime rate fell
+40% over the decade while the nation&#8217;s was flat — the FBI reported the state&#8217;s
+12.5% single-year drop in 2019 as the second-largest in the country. The teen
+birth rate runs at half the national rate throughout (and both collapsed: the US
+rate fell 61% since 2010, Connecticut&#8217;s 66%). Connecticut tied Massachusetts and
+New Jersey for the highest grade-8 reading score in the nation in 2011, and
+though the lead has eroded — a national post-pandemic story Connecticut has not
+escaped — the state remains in the top tier.</p>
+<blockquote>
+<p><strong>Notes:</strong> Two cautions on the health rows. Infant mortality in a small state
+is computed on roughly 150–200 deaths a year, so single-year values are noisy
+and multi-year averages are the defensible public citation. More importantly,
+Connecticut&#8217;s good statewide average conceals one of the nation&#8217;s widest
+racial disparities: in the 2008–10 pooled data, the state&#8217;s Black
+infant-mortality rate (11.76) was 2.9 times its white rate (4.00), among the
+five largest such ratios in the country. Any use of the statewide figure in
+public argument should carry that fact with it. On crime, the 2019 value is
+computed from the FBI&#8217;s verified 2018 figure and its reported 12.5% decline;
+the FBI&#8217;s national tabulation also puts Connecticut&#8217;s 2012 rate at 283.5 where
+the state&#8217;s own report says 289 — a few points of source difference that does
+not change any direction. The 2020–22 transition to the FBI&#8217;s new reporting
+system (NIBRS) clouds those specific years.</p>
+</blockquote>
+<p class="section-label before-part">Fiscal health</p>
+<h2 id="part-4-fiscal-health">Part 4 — Fiscal Health<a class="header-anchor" href="#part-4-fiscal-health" aria-label="Link to this section">¶</a></h2>
+<p class="intro-table">The state&#8217;s balance sheet is where the period&#8217;s defenders have their strongest
+ground, and the turning point is visible in the data: roughly 2017–2019, when
+the bipartisan &#8220;fiscal guardrails&#8221; — the volatility cap, spending cap, and
+bonding limits — took effect.</p>
+<table>
+<thead>
+<tr>
+<th>Indicator</th>
+<th>2010</th>
+<th>2019</th>
+<th>Latest</th>
+<th>Direction</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Rainy day fund, CT − median state (pp of general fund)</td>
+<td>−2.0</td>
+<td>+5.1</td>
+<td>+3.5 (2025)</td>
+<td>CT at its cap</td>
+</tr>
+<tr>
+<td>Pension funded ratio, SERS − national aggregate (pp)</td>
+<td>−27 (2011)</td>
+<td>−33 (2018)</td>
+<td>−23 (2025)</td>
+<td>Gaining, still far behind</td>
+</tr>
+<tr>
+<td>Credit rating (Moody&#8217;s)</td>
+<td>Aa2</td>
+<td>A1 (2017 trough)</td>
+<td>Aa2 (2025)</td>
+<td>Recovered</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> The rainy day fund went from literally drained ($0) to its
+statutory cap of 18% of the general fund, while the median state moved from
+2.0% to roughly 14.5% (NASBO) — Connecticut now holds more reserve, relative
+to its budget, than the typical state, a sentence that would have been
+unprintable in 2010. The pension row needs its context: the state employees&#8217;
+fund was 48% funded in 2011 against a 75% national aggregate, sank to 38%
+partly because the state cut its assumed return from 8% to 6.9% (honest
+accounting that makes the hole look bigger), and has climbed to 59.6% in
+fiscal 2025 on the strength of more than $10 billion in supplemental payments
+since 2020. It remains far behind the 82.5% aggregate — decades of
+underfunding are not repaired in five years — but the direction reversed.
+Moody&#8217;s cut Connecticut to A1 by 2017 and has since issued eight upgrades,
+returning the state to Aa2 in September 2025, its first upgrades since 2001;
+most states rate Aa1 or higher, so Connecticut closed most, not all, of the
+gap.</p>
+</blockquote>
+<p class="section-label before-part">People</p>
+<h2 id="part-5-people-and-representation">Part 5 — People and Representation<a class="header-anchor" href="#part-5-people-and-representation" aria-label="Link to this section">¶</a></h2>
+<p class="intro-table">The demographic and civic rows are less argued-about than taxes or overdoses,
+but they round out the picture of what kind of state Connecticut became over the
+period.</p>
+<table>
+<thead>
+<tr>
+<th>Indicator</th>
+<th>2010</th>
+<th>2019</th>
+<th>Latest</th>
+<th>Direction</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Census Diversity Index, CT − US (pp)</td>
+<td>−8.9</td>
+<td>−5.4 (2020)</td>
+<td>~−4.4 (2022)</td>
+<td>CT diversifying faster</td>
+</tr>
+<tr>
+<td>Women in the legislature, CT − US state average (pp)</td>
+<td>+5.4 (2011)</td>
+<td>+4.6</td>
+<td>+4.6 (2025)</td>
+<td>CT a few points ahead</td>
+</tr>
+<tr>
+<td>Presidential turnout, CT − US (pp of eligible voters)</td>
+<td>+2.8 (2012)</td>
+<td>+4.9 (2020)</td>
+<td>+3.0 (2024)</td>
+<td>CT votes more</td>
+</tr>
+<tr>
+<td>Women-owned businesses, CT vs US (share of all businesses)</td>
+<td>—</td>
+<td>—</td>
+<td>41.8% vs 44.1% (2021)</td>
+<td>CT lags</td>
+</tr>
+<tr>
+<td>Minority-owned businesses, CT vs US (share of all businesses)</td>
+<td>—</td>
+<td>—</td>
+<td>15.7% vs 22.1% (2021)</td>
+<td>CT lags</td>
+</tr>
+</tbody></table>
+<p>The business-ownership rows are the section&#8217;s honest surprise, and they survive
+the obvious demographic objection. Yes, Connecticut has proportionally fewer
+minority residents than the nation — but the SBA&#8217;s profiles publish workforce
+shares alongside ownership shares, and the adjusted comparison still cuts
+against the state. Women make up 48.2% of Connecticut&#8217;s workers and own 41.8% of
+its businesses (a ratio of 0.87) versus 47.1% and 44.1% nationally (0.94);
+minorities are 26.9% of the state&#8217;s workers owning 15.7% of its businesses
+(0.58) versus 31.0% and 22.1% nationally (0.71). Relative to its own workforce,
+Connecticut&#8217;s ownership gap is wider than the country&#8217;s on both dimensions.</p>
+<blockquote>
+<p><strong>Notes:</strong> The business rows are level-only — no 2010 trend — because the
+Census changed survey universes mid-period (the Survey of Business Owners,
+through 2012, counted all firms; the Annual Business Survey, from 2018, counts
+employer firms), so no consistent time series exists. The figures shown are
+the SBA Office of Advocacy&#8217;s 2024 profiles (reference year 2021, all
+businesses, equal-plus-majority ownership), identical methodology for state
+and nation. The Diversity Index measures the chance that two randomly selected
+residents differ by race or ethnicity; the 2010 and 2020 points are official
+decennial publications, while the ~2022 point applies the same formula to ACS
+2020–24 data (Census publishes the index itself only decennially). Turnout
+uses total ballots counted over the voting-eligible population from the US
+Elections Project on both sides of every comparison; see How to Read for why
+the commonly quoted 76–80% figures are a different statistic.</p>
+</blockquote>
+<p class="section-label">At a glance</p>
+<h2 id="summary-table">Summary Table<a class="header-anchor" href="#summary-table" aria-label="Link to this section">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th class="num">#</th>
+<th>Indicator</th>
+<th>Trajectory 2010 → latest</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody><tr>
+<td class="num">1</td>
+<td>Median household income</td>
+<td>1.28× → 1.18× the US</td>
+<td>US catching up</td>
+</tr>
+<tr>
+<td class="num">2</td>
+<td>Real GDP per capita</td>
+<td>1.37× → 1.13× the US</td>
+<td>US catching up</td>
+</tr>
+<tr>
+<td class="num">3</td>
+<td>Unemployment</td>
+<td>Within ±0.5 pp of US throughout</td>
+<td>Tracked</td>
+</tr>
+<tr>
+<td class="num">4</td>
+<td>Poverty</td>
+<td>CT advantage +5.2 → +1.9 pp</td>
+<td>US catching up</td>
+</tr>
+<tr>
+<td class="num">5</td>
+<td>Population growth</td>
+<td>7.2 pp behind US cumulatively</td>
+<td>Underperformed</td>
+</tr>
+<tr>
+<td class="num">6</td>
+<td>Tax burden</td>
+<td>2.5 → 4.2 pp above US average</td>
+<td>Underperformed</td>
+</tr>
+<tr>
+<td class="num">7</td>
+<td>Electricity price</td>
+<td>65–85% above US throughout</td>
+<td>Underperformed</td>
+</tr>
+<tr>
+<td class="num">8</td>
+<td>Median home value</td>
+<td>1.62× → 1.10× the US</td>
+<td>Ambiguous</td>
+</tr>
+<tr>
+<td class="num">9</td>
+<td>Housing units permitted</td>
+<td>0.54× → 0.41× the US per-capita rate</td>
+<td>Underperformed</td>
+</tr>
+<tr>
+<td class="num">10</td>
+<td>Uninsured rate</td>
+<td>CT advantage +7.2 → +2.3 pp</td>
+<td>US catching up</td>
+</tr>
+<tr>
+<td class="num">11</td>
+<td>Infant mortality</td>
+<td>CT ~1 point better throughout</td>
+<td>CT ahead</td>
+</tr>
+<tr>
+<td class="num">12</td>
+<td>Drug overdoses</td>
+<td>+2.5 better → 4.2 worse than US</td>
+<td>Flipped to worse</td>
+</tr>
+<tr>
+<td class="num">13</td>
+<td>Child poverty</td>
+<td>CT advantage +8.8 → +2.6 pp; CT&#8217;s own rate rose</td>
+<td>US catching up</td>
+</tr>
+<tr>
+<td class="num">14</td>
+<td>Teen births</td>
+<td>US rate ~2× CT&#8217;s throughout</td>
+<td>CT ahead</td>
+</tr>
+<tr>
+<td class="num">15</td>
+<td>Violent crime</td>
+<td>CT advantage +98 → +229 per 100K</td>
+<td>CT pulled ahead</td>
+</tr>
+<tr>
+<td class="num">16</td>
+<td>NAEP grade 8 reading</td>
+<td>+11 → +6 points; tied #1 in 2011</td>
+<td>Lead eroding</td>
+</tr>
+<tr>
+<td class="num">17</td>
+<td>Bachelor&#8217;s or higher</td>
+<td>+7.3 → +5.7 pp</td>
+<td>Slight narrowing</td>
+</tr>
+<tr>
+<td class="num">18</td>
+<td>Life expectancy</td>
+<td>~2 years ahead throughout</td>
+<td>CT ahead</td>
+</tr>
+<tr>
+<td class="num">19</td>
+<td>Rainy day fund</td>
+<td>Drained → at 18% cap, above median state</td>
+<td>Outperformed</td>
+</tr>
+<tr>
+<td class="num">20</td>
+<td>Pension funding</td>
+<td>27 behind → 23 behind aggregate, rising</td>
+<td>Gaining</td>
+</tr>
+<tr>
+<td class="num">21</td>
+<td>Credit rating</td>
+<td>Aa2 → A1 → Aa2 after 8 upgrades</td>
+<td>Recovered</td>
+</tr>
+<tr>
+<td class="num">22</td>
+<td>Diversity Index</td>
+<td>Gap to US narrowed 8.9 → ~4.4 pp</td>
+<td>CT diversifying faster</td>
+</tr>
+<tr>
+<td class="num">23</td>
+<td>Women in legislature</td>
+<td>4–5 pp above state average throughout</td>
+<td>CT ahead</td>
+</tr>
+<tr>
+<td class="num">24</td>
+<td>Presidential turnout</td>
+<td>2–5 pp above US in every cycle</td>
+<td>CT ahead</td>
+</tr>
+<tr>
+<td class="num">25</td>
+<td>Women-owned businesses</td>
+<td>41.8% vs 44.1% (workforce-adjusted 0.87 vs 0.94)</td>
+<td>CT lags</td>
+</tr>
+<tr>
+<td class="num">26</td>
+<td>Minority-owned businesses</td>
+<td>15.7% vs 22.1% (workforce-adjusted 0.58 vs 0.71)</td>
+<td>CT lags</td>
+</tr>
+</tbody></table>
+<p class="section-label">Takeaways</p>
+<h2 id="key-observations">Key Observations<a class="header-anchor" href="#key-observations" aria-label="Link to this section">¶</a></h2>
+<p><strong>The fiscal turnaround is real, recent, and the period&#8217;s clearest
+achievement.</strong> A rainy day fund at its statutory cap, pension funding rising
+after $10 billion in supplemental payments, and eight credit upgrades since 2021
+are not talking points; they are line items in audited documents. Whether one
+credits the guardrails, the majority that passed and kept them, or the
+bipartisan votes behind them is a political argument the data cannot settle —
+but the balance-sheet repair itself is not in dispute.</p>
+<p><strong>Connecticut&#8217;s advantages are mostly inherited, and the country is eroding
+them.</strong> On income, output, poverty, health coverage, child poverty, and
+education, the pattern repeats: Connecticut still leads, and the lead is smaller
+than it was in 2010. A state that congratulates itself on its levels while
+ignoring its trajectories is reading half the ledger.</p>
+<p><strong>Costs and housing are the legitimate grievance.</strong> The tax burden, the
+second-highest electricity prices in the continental US, and a housing
+production rate at two-fifths of the nation&#8217;s are the three numbers behind most
+kitchen-table complaints about Connecticut, and none of the three improved over
+the period. The housing row is the structural one: nearly every cost problem in
+the state routes through building too little.</p>
+<p><strong>The overdose flip is the period&#8217;s worst single fact.</strong> From better than the
+nation in 2010 to sixth-worst state in 2019. Geography and the timing of the
+fentanyl supply explain much of it, and the gap is now converging, but an honest
+accounting of the era includes it without flinching.</p>
+<p><strong>The quiet strengths deserve more attention than they get.</strong> A 40% drop in
+violent crime while the nation was flat. A teen birth rate at half the national
+level. Turnout above the national rate in every federal cycle. A top-tier
+reading score. These rarely appear in either side&#8217;s talking points, perhaps
+because they fit neither side&#8217;s story cleanly.</p>
+<p><strong>Averages conceal disparities.</strong> The infant-mortality and business-ownership
+rows both show it: a state can lead the nation on the average while trailing it
+on equity. Connecticut&#8217;s Black–white infant-mortality ratio was among the five
+widest in the country, and its minority business-ownership gap is wider than the
+nation&#8217;s even after adjusting for demographics.</p>
+<p><strong>No single number settles the argument — and anyone offering one is selling
+something.</strong> Twenty-six indicators produce roughly eight clear wins, eight clear
+losses, and ten draws or mixed results. The period&#8217;s record supports criticism
+and defense alike, provided both are made from the whole ledger.</p>
+<p class="section-label">Caveats</p>
+<h2 id="what-this-report-does-not-show">What This Report Does Not Show<a class="header-anchor" href="#what-this-report-does-not-show" aria-label="Link to this section">¶</a></h2>
+<p><strong>Causation.</strong> This report measures what changed while one party held unified
+state government; it cannot isolate what changed <em>because</em> of it. Fentanyl&#8217;s
+geography, national interest rates, federal policy, and fifty other forces moved
+these numbers too. The counterfactual Connecticut — same decade, different
+government — does not exist to be measured.</p>
+<p><strong>Within-state variation.</strong> Every row is a statewide figure. Connecticut
+contains some of the richest and poorest municipalities in America, and several
+rows (infant mortality, crime, child poverty) vary across the state far more
+than Connecticut varies from the nation.</p>
+<p><strong>Policy detail.</strong> The report deliberately stops at outcomes. It does not trace
+which statutes, budgets, or administrative choices drove which rows; that is a
+different and much longer report.</p>
+<p><strong>One derived data point.</strong> The Diversity Index&#8217;s ~2022 value applies the Census
+formula to survey data because the Bureau publishes the index only at decennial
+censuses; it cannot be primary-verified before 2030. The crime table&#8217;s 2019
+Connecticut value is computed from the FBI&#8217;s verified 2018 figure and its
+reported one-year decline rather than read directly from the state table. Every
+other figure in this report was checked against the primary source named in
+Documentation.</p>
+<p class="section-label">Documentation</p>
+<h2 id="sources">Sources<a class="header-anchor" href="#sources" aria-label="Link to this section">¶</a></h2>
+<h3 id="federal-statistical-agencies">Federal statistical agencies<a class="header-anchor" href="#federal-statistical-agencies" aria-label="Link to this section">¶</a></h3>
+<ul>
+<li>U.S. Census Bureau: American Community Survey (income, poverty, child poverty,
+home values, educational attainment, uninsured rates); Building Permits Survey
+year-end state workbooks, 2010, 2019, and 2024 (housing units authorized);
+Small Area Income and Poverty Estimates (2010 child poverty); vintage
+population estimates, 2010–2019 and 2020–2024; 2010 and 2020 decennial
+Diversity Index publications.</li>
+<li>Bureau of Economic Analysis: SAGDP1 state real GDP (chained 2017 dollars), all
+states and the US, single vintage.</li>
+<li>Bureau of Labor Statistics: state and national unemployment rates.</li>
+<li>Energy Information Administration: average retail electricity price by state,
+annual workbook 1990–2020 (2010 values) and annual Table 4 (2023); 2024 state
+averages.</li>
+<li>Federal Bureau of Investigation, Uniform Crime Reporting program: Crime in the
+United States 2012 and 2019 (national violent-crime rates; the 2019 state
+summary reporting Connecticut&#8217;s 12.5% decline).</li>
+<li>National Center for Health Statistics / CDC: National Vital Statistics Reports
+62-8 (2010 infant mortality, including state Table C) and 70-14 (2019 infant
+mortality, state Table 5); Births: Final Data for 2010 and Data Brief 89 (teen
+birth rates by state); Health E-Stat, Drug Poisoning Mortality by State, 2019;
+CT DPH&#8217;s citation of CDC 2023 drug-mortality rates; U.S. State Life Tables
+2019 and 2022 (life expectancy), including the CDC open-data state dataset.</li>
+<li>National Center for Education Statistics: Nation&#8217;s Report Card state
+snapshots, grade 8 reading, 2011 (Digest of Education Statistics), 2019, and<ol start="2024">
+<li></li>
+</ol>
+</li>
+</ul>
+<h3 id="state-and-nonprofit-sources">State and nonprofit sources<a class="header-anchor" href="#state-and-nonprofit-sources" aria-label="Link to this section">¶</a></h3>
+<ul>
+<li>Connecticut Office of Fiscal Analysis and state comptroller/treasurer
+reporting: SERS funded ratios, 2011–2025; rainy-day-fund balances.</li>
+<li>Connecticut Department of Public Health: drug-overdose statistics page (2023
+rates); vital statistics.</li>
+<li>Connecticut Office of Policy and Management: Crime in Connecticut reports
+(state violent-crime rates 2012 and 2021).</li>
+<li>Connecticut General Assembly, Office of Legislative Research: Issue Brief
+2022-R-0154, &#8220;Understanding Voter Turnout&#8221; (the 2020
+voting-eligible-population calculation and the denominator illustration).</li>
+<li>US Elections Project (University of Florida Election Lab):
+voting-eligible-population turnout rates, 2012–2024.</li>
+<li>Center for American Women and Politics, Rutgers University: women in state
+legislatures, 2010–2025.</li>
+<li>National Association of State Budget Officers: rainy-day-fund balances, median
+state.</li>
+<li>Pew Charitable Trusts and Equable Institute: aggregate state pension funded
+ratios.</li>
+<li>Tax Foundation: state–local tax burden series (2010, 2019, 2022) and State Tax
+Competitiveness Index.</li>
+<li>SBA Office of Advocacy: 2024 Small Business Profiles, Connecticut and United
+States (business ownership and workforce shares, reference year 2021).</li>
+<li>Moody&#8217;s rating actions as reported in state announcements and financial press
+(Connecticut&#8217;s 2017 downgrade to A1; upgrades culminating in Aa2, September
+2025).</li>
+<li>Urban Institute and CTData Collaborative: population-growth and housing-permit
+context.</li>
+</ul>
+
+<p class="section-label">Download</p>
+<h2 id="other-formats">Other Formats<a class="header-anchor" href="#other-formats" aria-label="Link to this section">¶</a></h2>
+<p>This report is available in four formats, all located alongside this page:</p>
+
+<div class="format-cards cols-4">
+  <div class="format-card">
+    <div class="format-card-icon">🌐</div>
+    <div class="format-card-title"><a href="./">HTML</a></div>
+    <div class="format-card-desc">Interactive version with formatted tables; best for on-screen reading and sharing.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📄</div>
+    <div class="format-card-title"><a href="ct-vs-us.md">Markdown</a></div>
+    <div class="format-card-desc">Plain-text version; readable in any editor, ideal for copying into other documents.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📑</div>
+    <div class="format-card-title"><a href="ct-vs-us.pdf">PDF</a></div>
+    <div class="format-card-desc">Print-ready version with all tables and source citations.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📊</div>
+    <div class="format-card-title"><a href="indicators/">Single-page Chart</a></div>
+    <div class="format-card-desc">All 26 indicators as trajectory charts on one printable page — the visual companion to this report.</div>
+  </div>
+</div>
+
+</div>
+<footer class="page-footer">
+<p class="footer-id"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</p>
+<p class="footer-note">Compiled September 2, 2026 · Data from the Census Bureau, BEA, BLS, EIA, FBI, NCHS/CDC, NCES, and the other primary sources listed in Documentation. Not an official town document.</p>
+</footer>
+<script>
+document.addEventListener('click', function(e) {
+    const anchor = e.target.closest('.header-anchor');
+    if (!anchor) return;
+    const heading = anchor.parentElement;
+    const id = heading.id;
+    if (!id) return;
+    const url = window.location.origin + window.location.pathname + '#' + id;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function() {
+            anchor.classList.add('copied');
+            setTimeout(function() { anchor.classList.remove('copied'); }, 1400);
+        }).catch(function() {});
+    }
+});
+</script>
+<script>
+(function() {
+    var imgs = document.querySelectorAll('.container img');
+    if (!imgs.length) return;
+    var overlay = null;
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    function close() {
+        if (!overlay) return;
+        var o = overlay;
+        overlay = null;
+        o.classList.remove('open');
+        document.removeEventListener('keydown', onKey);
+        setTimeout(function() { if (o.parentNode) o.parentNode.removeChild(o); }, 200);
+    }
+    function open(src, alt) {
+        overlay = document.createElement('div');
+        overlay.className = 'lightbox-overlay';
+        var big = document.createElement('img');
+        big.src = src;
+        big.alt = alt || '';
+        overlay.appendChild(big);
+        overlay.addEventListener('click', close);
+        document.body.appendChild(overlay);
+        overlay.offsetWidth; // force reflow so the fade-in transition runs
+        overlay.classList.add('open');
+        document.addEventListener('keydown', onKey);
+    }
+    imgs.forEach(function(img) {
+        img.addEventListener('click', function() { open(img.currentSrc || img.src, img.alt); });
+    });
+})();
+</script>
+</body>
+</html>
