@@ -494,7 +494,8 @@ code {
   text-align: center;
   color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
 }
-.page-note a { color: inherit; }
+/* a[href] rather than a bare `a`: see the note on the bar's link rule below. */
+.page-note a[href] { color: inherit; }
 
 .site-footer {
   background: var(--banner-bg, linear-gradient(180deg, #0f2a4a, #143862));
@@ -521,12 +522,18 @@ code {
   text-align: center;
 }
 .site-footer strong { color: var(--crumb-current, #ffffff); font-weight: 600; }
-.site-footer a {
+/* Two classes deep on purpose. A host stylesheet's own link rule reaches (0,1,2)
+   easily -- style.css carries `body.bluegold a`, which the video transcript
+   pages opt into -- and that outranks a flat `.site-footer a` (0,1,1) whatever
+   the source order, repainting the footer's email link in the page's link
+   colour instead of the banner gold. Routing through the inner wrapper puts
+   these at (0,2,1), above any `body.<class> a`. */
+.site-footer .site-footer-inner a {
   color: var(--crumb-link, #e8a800);
   border-bottom: 1px solid transparent;
   text-decoration: none;
 }
-.site-footer a:hover {
+.site-footer .site-footer-inner a:hover {
   color: var(--crumb-link-hover, #ffffff);
   border-bottom-color: currentColor;
 }
@@ -560,7 +567,7 @@ code {
   .site-footer-inner { max-width: 512px; padding: 0; }
   .page-note { margin-bottom: 0.6rem; }
   .site-footer strong { color: var(--ink-soft, inherit); }
-  .site-footer a { color: inherit; }
+  .site-footer .site-footer-inner a { color: inherit; }
 }
 /* @footer-css:end */
 
