@@ -30,7 +30,7 @@ import { resolve, join } from "node:path";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
-const { escapeHtml, siteFooterHtml, banner: pageBanner } = require("./chrome.js");
+const { escapeHtml, pageNoteHtml, siteFooterBarHtml, banner: pageBanner } = require("./chrome.js");
 
 // ---------------------------------------------------------------------------
 // CSS scoping
@@ -197,7 +197,7 @@ const SUBPAGE_LAYOUT_CSS = `
     margin-right: auto;
 }
 @media print {
-    .page-banner, .page-footer { display: none; }
+    .page-banner, .site-footer { display: none; }
     body { background: #fff; }
     .subpage { max-width: none; box-shadow: none; }
 }
@@ -254,7 +254,8 @@ ${pageBanner(extendedCrumbs)}
 <div class="subpage">
 ${body}
 </div>
-${siteFooterHtml(item.footerNote ?? meta.footerNote ?? meta.footer)}
+${pageNoteHtml(item.footerNote ?? meta.footerNote ?? meta.footer)}
+${siteFooterBarHtml()}
 </body>
 </html>`;
 

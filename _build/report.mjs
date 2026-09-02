@@ -49,7 +49,7 @@ import matter from "gray-matter";
 import { buildContractsBundle } from "./contracts.mjs";
 import { buildScatterPlot } from "./scatter.mjs";
 import {
-  escapeHtml, siteFooterHtml, crumbs as buildCrumbs, banner as pageBanner, SEP,
+  escapeHtml, pageNoteHtml, siteFooterBarHtml, crumbs as buildCrumbs, banner as pageBanner, SEP,
 } from "./chrome.js";
 import { buildResearchPages } from "./research.mjs";
 import { buildSubpages } from "./subpage.mjs";
@@ -62,7 +62,8 @@ const BASE_CSS = readFileSync(join(HERE, "base.css"), "utf8");
 const PRINT_CSS = readFileSync(join(HERE, "print.css"), "utf8");
 const DRAFT_CSS = readFileSync(join(HERE, "draft.css"), "utf8");
 
-// Site footer (siteFooterHtml), breadcrumbs, banner and escapeHtml come from the
+// Site footer (the page note + the identity bar), breadcrumbs, banner and
+// escapeHtml come from the
 // shared chrome module (_build/chrome.js), sourced from footer.json.
 
 // Private-report chrome: an unmistakable "not public" banner. Layered onto the
@@ -81,6 +82,16 @@ const PRIVATE_CSS = `
   border-radius: 4px; margin-right: .35em;
 }
 .private-note { font-weight: 600; opacity: .92; }
+/* The footer bar is a bookend to the banner, so on a private page it is red at
+   both ends rather than red on top and site-navy underneath. */
+.site-footer {
+  background: #7a1420;
+  border-top: 3px solid #4a0c14;
+  color: #f6e9e6;
+}
+.site-footer strong { color: #fff; }
+.site-footer a { color: #f6e9e6; }
+.site-footer a:hover { color: #fff; }
 `;
 
 // ---------------------------------------------------------------------------
@@ -557,7 +568,8 @@ async function buildHtml(mdText, meta, { forPdf, extraCss, plugin, themeCss, bre
 ${titleBlock}
 ${rest}
 </div>
-${siteFooterHtml(meta.footerNote ?? meta.footer)}
+${pageNoteHtml(meta.footerNote ?? meta.footer)}
+${siteFooterBarHtml()}
 </body>
 </html>`;
   }
@@ -584,7 +596,8 @@ ${pageBanner(breadcrumb, isPrivate ? { extraClass: "private-banner" } : undefine
 ${titleBlock}
 ${rest}
 </div>
-${siteFooterHtml(meta.footerNote ?? meta.footer)}
+${pageNoteHtml(meta.footerNote ?? meta.footer)}
+${siteFooterBarHtml()}
 <script>${CLIPBOARD_SCRIPT}</script>
 <script>${LIGHTBOX_SCRIPT}</script>
 </body>

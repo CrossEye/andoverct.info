@@ -76,4 +76,33 @@ function siteFooterHtml(note) {
     + "\n</footer>";
 }
 
-module.exports = { escapeHtml, SEP, crumbs, banner, siteFooterHtml, footer: FOOTER };
+/*
+ * The same footer, split in two (2026-09-02). The canonical identity line moves
+ * into a full-width bar that carries the banner's own background — a bookend to
+ * the header — and the per-page note stays behind in the page flow, immediately
+ * above it. A surface whose footer is already a direct child of <body> can emit
+ * these two in sequence exactly where siteFooterHtml() used to go. A surface
+ * whose footer sits inside a width-constrained <main> must put the note inside
+ * that <main> and the bar AFTER it, or the bar cannot run full-bleed.
+ *
+ * siteFooterHtml() above is the pre-split form, still called by the surfaces not
+ * yet migrated (indexes, links, the-facts, town-charter, transcripts, series,
+ * weir-votes). It goes away once they all use the pair. Until then the two
+ * shapes coexist on purpose: each surface skins its own footer, so they have to
+ * migrate one at a time.
+ */
+function pageNoteHtml(note) {
+  return note ? `<p class="page-note">${note}</p>` : "";
+}
+
+function siteFooterBarHtml() {
+  return '<footer class="site-footer">\n'
+    + `<div class="site-footer-inner">${FOOTER.id}</div>\n`
+    + "</footer>";
+}
+
+module.exports = {
+  escapeHtml, SEP, crumbs, banner,
+  siteFooterHtml, pageNoteHtml, siteFooterBarHtml,
+  footer: FOOTER,
+};
