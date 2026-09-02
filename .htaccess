@@ -30,8 +30,13 @@ RewriteEngine On
 # host-scoped rules to the scheme-less fallbacks and gets redirected to http://
 # -- the same downgrade the rules below exist to prevent. QSA keeps the query
 # string; the fbclid rules then run on the apex.
+#
+# The target MUST use %{REQUEST_URI}, not a captured path. On the www hostname
+# this .htaccess is applied with a per-directory prefix that leaves "www/" on
+# the front of the match, so `$1` expands to "www/reports/..." and every www URL
+# 301s to /www/... and 404s. That shipped live 2026-08-26 to 2026-09-02.
 RewriteCond %{HTTP_HOST} ^www\.andoverct\.info$ [NC]
-RewriteRule ^(.*)$ https://andoverct.info/$1 [R=301,L,QSA]
+RewriteRule ^ https://andoverct.info%{REQUEST_URI} [R=301,L,QSA]
 
 # ---------------------------------------------------------------------------
 # Redirect scheme correction (see the note at the end of this file).
@@ -75,15 +80,18 @@ RewriteRule ^(.*/)?idx/?$ /idx.php?dir=$1 [L,QSA]
 # Why the redirects above name their scheme explicitly
 # ---------------------------------------------------------------------------
 # TLS is terminated by the SSL front end, which proxies to Apache over plain
-# HTTP and passes no protocol signal at all. Probed 2026-08-26 with a temporary
-# mod_rewrite rule reflecting the request environment:
+# HTTP. Probed 2026-08-26 with a temporary mod_rewrite rule reflecting the
+# request environment; re-probed 2026-09-02 after the host acted on the ticket:
 #
-#   X-Forwarded-Proto: (absent)   X-Forwarded-Ssl: (absent)
-#   Front-End-Https:   (absent)   HTTPS: off   SERVER_PORT: 80
+#   2026-08-26   X-Forwarded-Proto: (absent)   HTTPS: off   SERVER_PORT: 80
+#   2026-09-02   X-Forwarded-Proto: https      HTTPS: off   SERVER_PORT: 80
 #
-# So the usual `SetEnvIf X-Forwarded-Proto https HTTPS=on` fix cannot work —
-# there is no header to key on. Until the front end is configured to send one,
-# any self-referential redirect must state https:// itself.
+# The header now arrives, but HTTPS is still off and REQUEST_SCHEME is still
+# unset, so Apache on its own STILL builds http:// redirects and the explicit
+# https:// targets above remain load-bearing. What the header unlocks is the
+# option of `SetEnvIf X-Forwarded-Proto https HTTPS=on`, which would let Apache
+# get this right by itself and retire the per-rule workaround (and its repeats
+# in the-facts/, private/ and town-charter/). That refactor has not been done.
 #
 # The symptom this fixes: https://andoverct.info/reports (no trailing slash)
 # used to 301 to http://andoverct.info/reports/, which the front end then 301'd
