@@ -144,7 +144,7 @@ the top tier not only of Connecticut as a whole but of the 45 small-town
 elementary-only districts that share Andover's structural profile.
 
 On the cost side, a [companion analysis on this
-site](http://andoverct.info/reports/aes/peer-spending/) compares
+site](/reports/aes/peer-spending/) compares
 Andover's per-pupil spending against those same 44 peer districts using
 the Connecticut State Department of Education's published data. Andover
 spends $19,009 per pupil, the lowest of all 45 districts in the peer
@@ -196,5 +196,5 @@ doing this much with this little deserves to be funded going forward.
   Expenditures by Function
   (District)](https://public-edsight.ct.gov/overview/per-pupil-expenditures-by-function---district),
   2024-25, as consolidated in [Scott Sauyet, "Andover's Per-Pupil
-  Spending in Context"](http://andoverct.info/reports/aes/peer-spending/),
+  Spending in Context"](/reports/aes/peer-spending/),
   May 2026. Source for the 45-district peer-set spending comparison.

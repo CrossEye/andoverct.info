@@ -134,7 +134,7 @@ there was no new decision to make and nothing to vote on again. The chair was
 carrying out a directive the board had given in the open. The absence of a
 fresh vote was not secrecy. It was a position already on the record.
 
-It is worth recalling what kind of request that was. As a [companion piece on this site](http://andoverct.info/the-facts/editions/who-decides-schools-2026/)
+It is worth recalling what kind of request that was. As a [companion piece on this site](/the-facts/editions/who-decides-schools-2026/)
 lays out, Connecticut statute and the town charter both give the Board of
 Finance control over the total dollars appropriated to the school, but on the
 school budget itself the charter says it "may only comment and make
@@ -159,7 +159,7 @@ it to a vote.
 
 The question the mailer steps around is not whether the number came down. It is
 who decides where it comes down from. On that, the law is not ambiguous. As
-[shown elsewhere on this site](http://andoverct.info/the-facts/editions/who-decides-schools-2026/),
+[shown elsewhere on this site](/the-facts/editions/who-decides-schools-2026/),
 the Board of Finance controls the total dollars appropriated to the school. It
 does not control the line items. Which positions and programs to fund within
 that total is the Board of Education's call.
@@ -220,8 +220,8 @@ Sources and further reading
   official per-pupil cost measure, published annually for every district. The
   growth chart compares Andover against all 45 Connecticut elementary-only
   districts, 2019-20 through 2024-25, on the state's published basis. Detailed
-  analysis in the [Andover budget report](http://andoverct.info/reports/budget/2026/)
-  and the [per-pupil spending report](http://andoverct.info/reports/aes/peer-spending/).
+  analysis in the [Andover budget report](/reports/budget/2026/)
+  and the [per-pupil spending report](/reports/aes/peer-spending/).
   The full per-town figures behind the chart, all 45 districts across the six
   years, are available as a downloadable spreadsheet:
   [XLSX](peer-per-pupil-ncep.xlsx) and [CSV](peer-per-pupil-ncep.csv).
@@ -237,7 +237,7 @@ Sources and further reading
   [Section 802E](https://charter2024.andoverct.info/#Section802E) (the Board of
   Finance "may only comment and make recommendations" on the local Board of
   Education budget). Discussed in full in
-  [Who Decides How the Schools Are Run](http://andoverct.info/the-facts/editions/who-decides-schools-2026/).
+  [Who Decides How the Schools Are Run](/the-facts/editions/who-decides-schools-2026/).
 
 - **U.S. Bureau of Labor Statistics, Consumer Price Index**, and **Social
   Security Administration, COLA history.** The cost-of-living comparison over

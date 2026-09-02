@@ -64,7 +64,7 @@ report transcribes and recreates the diagrams Superintendent Dr. Valerie Bruneau
 presented in her May 7, 2026 video response, then offers analytical observations
 that connect the diagrams to the financial analysis published in the [companion
 preschool funding
-report](http://andoverct.info/reports/aes/preschool-funding/andover_ct_preschool_report.md).
+report](/reports/aes/preschool-funding/andover_ct_preschool_report.md).
 The diagram counts and the dollar figures throughout this report are drawn
 directly from the video; the analytical commentary and the connections to the
 broader financial picture are this author's own.*
@@ -92,7 +92,7 @@ This report does three things:
    typography and explicit legends, so they can be referenced and circulated.
 2. Extracts the underlying enrollment counts — figures that the [companion
    financial
-   report](http://andoverct.info/reports/aes/preschool-funding/andover_ct_preschool_report.md)
+   report](/reports/aes/preschool-funding/andover_ct_preschool_report.md)
    identified as not-yet-publicly-available — and presents them in tabular form
    for the first time.
 3. Connects the structural argument (why four classrooms is necessary) to the
@@ -278,7 +278,7 @@ Per-room breakdown:
 
 This diagram concretely illustrates a financial point made structurally in [Part
 5 of the financial
-report](http://andoverct.info/reports/aes/preschool-funding/andover_ct_preschool_report.md):
+report](/reports/aes/preschool-funding/andover_ct_preschool_report.md):
 out-of-town enrollment is incremental revenue that helps fund the program. The
 eight out-of-town students currently enrolled contribute approximately $48,000
 in tuition revenue. If the seven remaining open seats in those rooms were also
@@ -361,7 +361,7 @@ violate the federal Least Restrictive Environment requirement — and likely bot
 
 A separate question is what the program costs the town. That question was the
 subject of the [May 2, 2026 financial
-report](http://andoverct.info/reports/aes/preschool-funding/andover_ct_preschool_report.md)
+report](/reports/aes/preschool-funding/andover_ct_preschool_report.md)
 and is summarized in this report's [Summary table](#summary-table). The short
 version: the program is approximately revenue-neutral on the school's own
 operating ledger and runs a small net town subsidy of approximately $92,000 per
@@ -471,7 +471,7 @@ Summary table
 | How many students are in the program right now, broken down by category? | 57 Andover residents (9 high-needs, 48 general-ed) plus 8 out-of-town tuition payers (2 of whom are children of AES staff). 7 open seats remaining. Total enrollment 65 of 68 seats. | Video diagram [7:22](https://www.youtube.com/watch?v=S39PhmDqDqg&t=442s) |
 | How much tuition revenue does the program currently collect from out-of-town families? | Approximately $48,000 per year (8 students × $6,000). | Diagram + published $6,000 tuition rate |
 | How much additional tuition could be collected if remaining open seats were filled? | Approximately $42,000 per year (7 open seats × $6,000), bringing total out-of-town tuition to roughly $90,000. | Diagram + published $6,000 tuition rate |
-| What is the relationship between this $42,000 of potential additional revenue and the program's net town cost? | The program's fully-loaded net town subsidy is estimated at approximately $92,000 per year (range $84,000–103,000); the additional $42,000 in potential out-of-town tuition would close roughly half that gap. | Combined with [Part 3 of financial report](http://andoverct.info/reports/aes/preschool-funding/andover_ct_preschool_report.md) |
+| What is the relationship between this $42,000 of potential additional revenue and the program's net town cost? | The program's fully-loaded net town subsidy is estimated at approximately $92,000 per year (range $84,000–103,000); the additional $42,000 in potential out-of-town tuition would close roughly half that gap. | Combined with [Part 3 of financial report](/reports/aes/preschool-funding/andover_ct_preschool_report.md) |
 | How many Andover residents are projected to enroll for 2026–27? | 46 confirmed as of early May 2026, with an estimated 9–11 additional unaccounted births from three years ago that may or may not enroll. Likely 2026–27 Andover enrollment: 50–57. | Video diagram [9:31](https://www.youtube.com/watch?v=S39PhmDqDqg&t=571s) |
 | What is the minimum bus-eligibility age in Andover? | 4 years old. (Dr. Bruneau's previous statement of "5" was a misstatement, corrected in this video.) | Video [0:26](https://www.youtube.com/watch?v=S39PhmDqDqg&t=26s) |
 | Are lunches paid from town general funds? | No. Children bring their own lunches; reduced-price meals are federally reimbursed; the program's incidental food supplies (snacks, napkins, utensils) come from the preschool's supply line within program revenue. | Video [10:41](https://www.youtube.com/watch?v=S39PhmDqDqg&t=641s) |
@@ -623,7 +623,7 @@ Sources
 
 - **Andover Elementary School Preschool — Financial Analysis** (Sauyet, May 2,
   2026):
-  [andoverct.info/reports/aes/preschool-funding/andover_ct_preschool_report.md](http://andoverct.info/reports/aes/preschool-funding/andover_ct_preschool_report.md).
+  [andoverct.info/reports/aes/preschool-funding/andover_ct_preschool_report.md](/reports/aes/preschool-funding/andover_ct_preschool_report.md).
   See particularly Part 3 (net financial impact), Part 4 (special-education
   counterbalancing effect), and Part 5 (out-of-town enrollment policy and
   financial flow).

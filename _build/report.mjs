@@ -530,9 +530,20 @@ async function buildHtml(mdText, meta, { forPdf, extraCss, plugin, themeCss, bre
   // pointing at the build machine; resolve them against the report's public
   // URL. Leaves fragments and absolute schemes alone; img src stays relative
   // so WeasyPrint keeps loading local images from the report folder.
-  if (forPdf && meta.publicUrl) {
-    rest = rest.replace(/href="(?!https?:|mailto:|#|data:)([^"]+)"/g,
+  //
+  // This has to cover the methodology header as well as the body. splitReport
+  // lifts that leading italic paragraph out of `rest` and into the title block,
+  // so a link inside it is the one href the body pass never sees — it would
+  // stay relative in the PDF, which both breaks the link for anyone reading the
+  // PDF away from the site and stops print.css's `a[href^="http"]::after` from
+  // printing the URL after it, so the reference silently loses its target.
+  const absolutize = (html) =>
+    html.replace(/href="(?!https?:|mailto:|#|data:)([^"]+)"/g,
       (m, rel) => `href="${new URL(rel, meta.publicUrl).href}"`);
+  let headerForDoc = headerHtml;
+  if (forPdf && meta.publicUrl) {
+    rest = absolutize(rest);
+    headerForDoc = absolutize(headerHtml);
   }
 
   const printCss = (forPdf && meta.pdf)
@@ -553,7 +564,7 @@ async function buildHtml(mdText, meta, { forPdf, extraCss, plugin, themeCss, bre
     (meta.subtitle ? `<p class="report-subtitle">${meta.subtitle}</p>\n` : "") +
     (meta.attribution ? `<p class="report-attribution">${meta.attribution}</p>\n` : "") +
     `<hr class="report-header-rule">\n` +
-    `<p class="methodology-header">${headerHtml}</p>`;
+    `<p class="methodology-header">${headerForDoc}</p>`;
 
   if (forPdf) {
     return `<!DOCTYPE html>

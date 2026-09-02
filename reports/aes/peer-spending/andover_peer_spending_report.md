@@ -519,7 +519,7 @@ through district-wide employee benefits accounts that are not
 preschool-specific.
 
 This is the subject of a detailed companion analysis,
-[andoverct.info/reports/aes/preschool-funding/](http://andoverct.info/reports/aes/preschool-funding/).
+[andoverct.info/reports/aes/preschool-funding/](/reports/aes/preschool-funding/).
 The AES superintendent has reviewed that analysis and noted that the original
 estimates were, if anything, conservative — the program's actual financial
 position relative to the town is at least as favorable as the report shows, and
@@ -722,7 +722,7 @@ accidents.** The district operates a single elementary school, employs a
 part-time (0.60 FTE) superintendent shared with another district, and has
 consistently produced budgets that grow more slowly than peers (Andover's 5-year
 NCEP growth of 9.8% versus the peer-set average of 18.3% — see [the companion
-report on budget trends](http://andoverct.info/reports/budget/2026/)). Whether
+report on budget trends](/reports/budget/2026/)). Whether
 one reads this pattern as fiscal discipline or as under-investment depends on
 values, not on the data. What the data does show is that the pattern is
 consistent across years, not a single-year anomaly.
@@ -823,14 +823,14 @@ Sources
 
 - **Andover Elementary School Preschool — Financial Analysis** (Sauyet, May
   2026):
-  [andoverct.info/reports/aes/preschool-funding/](http://andoverct.info/reports/aes/preschool-funding/).
+  [andoverct.info/reports/aes/preschool-funding/](/reports/aes/preschool-funding/).
   Provides the basis for the Part 4 analysis of how preschool affects this
   comparison.
 - **AES Preschool Structure: Why Four Classrooms?** (Sauyet, May 2026):
   companion to the preschool funding analysis, transcribing Dr. Bruneau's May 7,
   2026 video diagrams.
 - **Andover's Budget in Context** (Sauyet, April 2026):
-  [andoverct.info/reports/budget/2026/](http://andoverct.info/reports/budget/2026/).
+  [andoverct.info/reports/budget/2026/](/reports/budget/2026/).
   Town budget trend analysis FY 2020–21 through FY 2026–27.
 
 **Methodology references:**

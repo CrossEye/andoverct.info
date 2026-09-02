@@ -240,7 +240,7 @@ convention, not a staff rule. The conclusion of this section — that an aggrega
 program-level benefits figure cannot be responsibly published in a small program
 — is unchanged. See the section "Further Research on the Privacy Constraints
 (June 6, 2026)" above, and the separate report [*When Small Numbers Become
-Names*](http://andoverct.info/reports/aes/data-privacy/).
+Names*](/reports/aes/data-privacy/).
 
 The original report's Part 6 included a recommendation that the BOE publish an
 estimated allocation of benefits to the preschool program, with the
@@ -481,7 +481,7 @@ Further Research on the Privacy Constraints (June 6, 2026)
 
 After this report was published, the author developed the privacy question
 raised in § 4 of the Update above into a separate, fuller analysis, [*When Small
-Numbers Become Names*](http://andoverct.info/reports/aes/data-privacy/) (also
+Numbers Become Names*](/reports/aes/data-privacy/) (also
 linked in Sources). That analysis confirms § 4's conclusion — that an aggregate
 program-level benefits figure for a group as small as the preschool's eight
 staff cannot be responsibly published — but it refines the legal basis on the
@@ -550,7 +550,7 @@ Connecticut's personnel-privacy law rather than in HIPAA, and "HIPAA" is the
 everyday shorthand for what is, more precisely, a Connecticut FOIA matter on the
 staff side and a FERPA-and-IDEA matter on the student side. The full analysis,
 with citations, is in [*When Small Numbers Become
-Names*](http://andoverct.info/reports/aes/data-privacy/).
+Names*](/reports/aes/data-privacy/).
 
 ---
 
@@ -1949,7 +1949,7 @@ documentation:**
   2026), the fuller privacy analysis that refines § 4; on the staff side it
   identifies Connecticut's FOIA personnel-privacy exemption, rather than HIPAA,
   as the operative protection:
-  [andoverct.info/reports/aes/data-privacy](http://andoverct.info/reports/aes/data-privacy/)
+  [andoverct.info/reports/aes/data-privacy](/reports/aes/data-privacy/)
 - **HIPAA definitions — 45 CFR §160.103**, defining "covered entity" and
   excluding from "protected health information" the employment records a covered
   entity holds in its role as employer:

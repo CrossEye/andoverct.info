@@ -12,7 +12,7 @@ hero_image:
 cta:
   heading: "The record is public"
   body: |
-    Every House vote, 2023&ndash;2026, searchable &nbsp;&middot;&nbsp; [andoverct.info/reports/55th/weir-votes](http://andoverct.info/reports/55th/weir-votes/)
+    Every House vote, 2023&ndash;2026, searchable &nbsp;&middot;&nbsp; [andoverct.info/reports/55th/weir-votes](/reports/55th/weir-votes/)
 colophon: |
   Posted at andoverct.info/the-facts. This page is part of an ongoing series; new editions appear at the same URL as the local conversation evolves. Earlier editions remain accessible at their permanent URLs (use the menu to navigate).
 ---
@@ -171,7 +171,7 @@ None of the above depends on anyone's opinion of any particular vote. But
 neither does the other standard way of reading a legislative record.
 W-NOMINATE, the spatial method political scientists use to place legislators
 on a left-right scale from their votes alone, was applied to this same
-roll-call record in [a separate analysis on this site](http://andoverct.info/reports/55th/weir-position/).
+roll-call record in [a separate analysis on this site](/reports/55th/weir-position/).
 
 <div class="data-section" markdown="1">
 
@@ -249,10 +249,10 @@ Sources and further reading
 - **The complete roll-call record.** Every Connecticut House floor vote of
   the 2025&ndash;2026 term, member by member, drawn from the General
   Assembly's official roll-call PDFs. Searchable at
-  [andoverct.info/reports/55th/weir-votes](http://andoverct.info/reports/55th/weir-votes/).
+  [andoverct.info/reports/55th/weir-votes](/reports/55th/weir-votes/).
   The full member-by-vote matrix used for every count on this page is
   downloadable as a spreadsheet:
-  [ct-house-2025-2026-votematrix.csv](http://andoverct.info/reports/55th/weir-votes/ct-house-2025-2026-votematrix.csv).
+  [ct-house-2025-2026-votematrix.csv](/reports/55th/weir-votes/ct-house-2025-2026-votematrix.csv).
   Each vote traces to its official record at
   [cga.ct.gov](https://www.cga.ct.gov/).
 
@@ -260,7 +260,7 @@ Sources and further reading
   members on a common ideological scale, and every district on a common
   partisan-lean scale: the 11th-most-conservative ranking, the comparison to
   Leader Candelora, and the 55th's nine-point Democratic lean.
-  [View the report](http://andoverct.info/reports/55th/weir-position/).
+  [View the report](/reports/55th/weir-position/).
 
 - **Rep. Weir's post.** The July 2026 social-media post making the 100
   percent and 77 percent claims, reproduced above as this page's image.

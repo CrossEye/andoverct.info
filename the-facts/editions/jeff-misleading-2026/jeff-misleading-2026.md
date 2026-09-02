@@ -293,12 +293,12 @@ Sources and further reading
   at $4,362,487, ECS at $2,084,974. Official copy at
   [andoverconnecticut.org](https://www.andoverconnecticut.org/sites/g/files/vyhlif5346/f/uploads/board_budget_proposal_5.6.26_pdf_lj.pdf)
   (primary). Backup copy at
-  [andoverct.info](http://andoverct.info/the-facts/board_budget_proposal_5.6.26_pdf_lj.pdf).
+  [andoverct.info](/the-facts/board_budget_proposal_5.6.26_pdf_lj.pdf).
 
 - **Andover budget analysis (civic report).** Detailed analysis of multi-year
   AES, RHAM, and town-side budgets, the NCEP peer comparison, and the 2.9% /
   23.1% / 28.8% inflation comparison.
-  [View the report](http://andoverct.info/reports/budget/2026/).
+  [View the report](/reports/budget/2026/).
 
 - **Connecticut SDE Net Current Expenditures Per Pupil (NCEP).** The state's
   official per-pupil cost measure, published annually for every district.
@@ -316,7 +316,7 @@ Sources and further reading
 - **Andover preschool funding (civic report).** Detail on how preschool is
   funded entirely through tuition and grants, and is accounted for
   separately from the AES general fund.
-  [View the report](http://andoverct.info/reports/aes/preschool-funding/).
+  [View the report](/reports/aes/preschool-funding/).
 
 - **ECS treatment in bifurcated budgets.** The Connecticut General
   Assembly's Program Review and Investigations Committee study of the
