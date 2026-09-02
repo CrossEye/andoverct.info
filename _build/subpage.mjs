@@ -1,10 +1,12 @@
 /*
  * Authored-HTML subpage builder. Triggered by a `subpages:` directive in the
  * main report's front matter. Each entry names a standalone HTML document
- * (kept under the report's _src/, out of the deploy tree) whose <style>, body
- * and <script> are lifted out and re-hosted on the site chrome: the report's
- * breadcrumb rail with one extra level, the theme + base stylesheet, and the
- * shared site footer.
+ * (kept under the report's _src/) whose <style>, body and <script> are lifted
+ * out and re-hosted on the site chrome: the report's breadcrumb rail with one
+ * extra level, the theme + base stylesheet, and the shared site footer.
+ *
+ * The source IS published, but served as text/plain via a .htaccess this
+ * builder drops beside it — see ensureSourceHtaccess below.
  *
  * The point is a format the markdown pipeline can't express — a large
  * hand-built chart, a scripted table, a rendered diagram — that should still
@@ -26,7 +28,7 @@
  */
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
-import { resolve, join } from "node:path";
+import { resolve, join, dirname } from "node:path";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
@@ -207,6 +209,35 @@ const SUBPAGE_LAYOUT_CSS = `
 // Build
 // ---------------------------------------------------------------------------
 
+/*
+ * Publish the authored source as VIEWABLE TEXT, not as a second page.
+ *
+ * The source is a complete standalone HTML document. Left as text/html the
+ * server renders it as an unstyled duplicate of the page it builds into — which
+ * is why it was originally excluded from the deploy set entirely. But then it
+ * was unreachable without a checkout, and the whole point of keeping a readable
+ * source is being able to fetch or hand it on from anywhere.
+ *
+ * So it ships, with a sibling .htaccess remapping .html to text/plain, the same
+ * way /reports/.htaccess already serves the .md report sources. Written here
+ * rather than left to whoever adds the next subpage, because forgetting it
+ * silently republishes the duplicate page. Idempotent: never overwrites an
+ * existing .htaccess, so a hand-tuned one survives.
+ */
+function ensureSourceHtaccess(srcPath) {
+  const path = join(dirname(srcPath), ".htaccess");
+  if (existsSync(path)) return;
+  writeFileSync(path, `# Authored source, published for reference only. Served as plain text so the
+# browser shows the source instead of rendering a second, unstyled copy of the
+# page it builds into. Mirrors the .md handling in /reports/.htaccess.
+#
+# No RewriteEngine here on purpose: this directory inherits the document root's
+# ruleset, including the https redirect fix and the /<dir>/idx listing route.
+AddType "text/plain; charset=utf-8" .html
+`, "utf8");
+  console.log(`  wrote ${path} (serves the source as text/plain)`);
+}
+
 export async function buildSubpages(folder, meta, themeCss, baseCss, breadcrumb) {
   const items = meta.subpages;
   if (!Array.isArray(items) || !items.length) return;
@@ -222,6 +253,7 @@ export async function buildSubpages(folder, meta, themeCss, baseCss, breadcrumb)
       continue;
     }
 
+    ensureSourceHtaccess(src);
     const { styles, body } = splitDocument(readFileSync(src, "utf8"));
     const scoped = scopeCss(styles, ".subpage");
 
