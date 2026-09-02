@@ -750,7 +750,7 @@ function convertVttToHtml(meeting, vttText) {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <link rel="stylesheet" href="/style.css">
   <link rel="alternate" type="application/json" href="${escapeHtml(meeting.id)}.json" title="Transcript as JSON">
   <style>
     /* Transcript-specific components. Theme, palette, and page chrome
@@ -1042,7 +1042,7 @@ function generateIndex(meetings, transcriptFiles) {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://andoverct.info/style.css">
+  <link rel="stylesheet" href="/style.css">
   <style>
     /* The index is a wide data table, so widen the shared content measure for
        this page. Theme, palette, and chrome come from style.css (body.dark). */

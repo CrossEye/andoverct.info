@@ -376,6 +376,11 @@ code {
    "not a lawyer"). See siteFooterHtml() in _build/links.mjs. */
 /* @footer-css:start — generated from _build/footer.css; do not edit here, run: npm run sync:footer-css */
 .page-note {
+  /* Declared here, not inherited: this block is dropped into arbitrary
+     stylesheets and not all of them carry a global border-box reset (404.html
+     does not), and without it the 512px cap applies to the content box and the
+     wrap widens by the padding. */
+  box-sizing: border-box;
   /* max-width + horizontal padding are px (not rem/ch) so a page's root
      font-size can't rescale the wrap — the line breaks are identical everywhere. */
   max-width: 512px;
@@ -400,9 +405,19 @@ code {
   line-height: 1.55;
 }
 .site-footer-inner {
+  /* Declared here, not inherited: this block is dropped into arbitrary
+     stylesheets and not all of them carry a global border-box reset (404.html
+     does not), and without it the 512px cap applies to the content box and the
+     wrap widens by the padding. */
+  box-sizing: border-box;
   max-width: 512px;
   margin: 0 auto;
-  padding: 1.15rem var(--gutter, 20px);
+  /* Horizontal padding is a LITERAL, like the wrap width above: with
+     box-sizing:border-box the text column is 512px minus this padding, so a
+     per-surface var here (--gutter is 30px on reports, 24px via style.css,
+     20px elsewhere) silently re-wraps the footer differently on every
+     surface. That is the drift this whole file exists to prevent. */
+  padding: 1.15rem 20px;
   text-align: center;
 }
 .site-footer strong { color: var(--crumb-current, #ffffff); font-weight: 600; }
