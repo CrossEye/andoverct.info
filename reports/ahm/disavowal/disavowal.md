@@ -120,12 +120,12 @@ now.
 
 Each letter is published here in full, exactly as sent:
 
-| Letter                     | Sent               | Text                                                      |
-| -------------------------- | ------------------ | --------------------------------------------------------- |
-| Scott Sauyet to Fazio      | September 10, 2026 | [read](./correspondence/2026-09-10-sauyet-fazio/)         |
-| Scott Sauyet to Jennings   | September 10, 2026 | [read](./correspondence/2026-09-10-sauyet-jennings/)      |
-| Scott Sauyet to Guidone    | September 10, 2026 | [read](./correspondence/2026-09-10-sauyet-guidone/)       |
-| Scott Sauyet to Weir       | September 10, 2026 | [read](./correspondence/2026-09-10-sauyet-weir/)          |
+| Letter                        | Sent               | Text                                                 |
+| ----------------------------- | ------------------ | ---------------------------------------------------- |
+| Scott Sauyet to Ryan Fazio    | September 10, 2026 | [read](./correspondence/2026-09-10-sauyet-fazio/)    |
+| Scott Sauyet to Jenn Jennings | September 10, 2026 | [read](./correspondence/2026-09-10-sauyet-jennings/) |
+| Scott Sauyet to Jason Guidone | September 10, 2026 | [read](./correspondence/2026-09-10-sauyet-guidone/)  |
+| Scott Sauyet to Steve Weir    | September 10, 2026 | [read](./correspondence/2026-09-10-sauyet-weir/)     |
 
 
 
