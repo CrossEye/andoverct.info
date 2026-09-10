@@ -168,6 +168,24 @@ for (const area of areas) {
 }
 
 // ---------------------------------------------------------------------------
+// Never-publish guard
+// ---------------------------------------------------------------------------
+// Belt and braces over the areas' own exclude globs. Some material must not
+// reach the server at all — raw email headers under a correspondence _raw/,
+// which carry originating IPs and spam scores. An area exclude alone is one
+// careless manifest edit away from shipping them, so matching paths are a hard
+// build failure here rather than a silent upload.
+const neverRes = (manifest.neverPublish || []).map(globToRe);
+if (neverRes.length) {
+  const leaked = files.filter((f) => matchAny(neverRes, f.key));
+  if (leaked.length) {
+    fail(`${leaked.length} file(s) matched manifest.neverPublish but reached the upload set:\n`
+      + leaked.map((f) => `      ${f.key}`).join("\n")
+      + "\n\n    Check the area's exclude globs. These files must never leave the repo.");
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Diff against the committed baseline
 // ---------------------------------------------------------------------------
 const state = existsSync(STATE_PATH)

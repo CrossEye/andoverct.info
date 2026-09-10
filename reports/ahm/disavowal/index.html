@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>A Question for Four Candidates — Eastern Connecticut, 2026</title>
+<style>/* Default civic-report theme.
+ *
+ * A theme is just this set of CSS custom properties. To experiment, copy this
+ * file to _build/themes/<name>.css, change what you like, and point at it from
+ * _build/report.config.json ({"theme":"<name>"}) for all reports, or from a
+ * single report's front matter (theme: <name>). A non-default theme is layered
+ * ON TOP of this one, so it only needs to list the variables it changes.
+ *
+ * Scope: colors, fonts, and small size/width/gap tweaks — not layout changes.
+ */
+:root {
+  /* ---- Palette ---- */
+  --bg:             #fafaf7;   /* page background */
+  --bg-page:        #ffffff;   /* the white content card */
+  --bg-soft:        #f5f3ed;   /* callouts, table headers, inline code */
+  --ink:            #1a1a1a;   /* body text, main headings */
+  --ink-soft:       #333333;   /* blockquote / methodology text */
+  --ink-mute:       #5a5a5a;   /* subtitle, card descriptions */
+  --ink-faint:      #888888;   /* attribution, footer, captions */
+  --rule:           #e0ddd5;   /* hairline borders */
+  --accent:         #b8a878;   /* gold accent rules */
+  --accent-2:       #2c3e50;   /* slate: h3, table-header & code text */
+  --banner-bg:      #2c3e50;   /* top banner background */
+  --banner-ink:     #ecf0f1;   /* top banner text */
+  --crumb-link:       #b9c4cf; /* breadcrumb links in the banner */
+  --crumb-link-hover: #ffffff;
+  --crumb-current:    #ffffff; /* deepest crumb (current page), not a link */
+  --link:           #1a5490;
+  --link-hover:     #0d3a6b;
+  --link-underline: #c5d3e2;
+  --anchor:         #b8b3a4;   /* the ¶ header anchor */
+  --anchor-hover:   #6c7480;
+  --confirm:        #5a8a5a;   /* green ✓ confirmation mark */
+  --confirm-strong: #2e7d32;
+
+  /* ---- Fonts ---- */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:  "SF Mono", Monaco, Menlo, Consolas, monospace;
+
+  /* ---- Sizes (small tweaks only; no layout restructuring) ---- */
+  --base-size:  11pt;    /* body text */
+  --measure:    780px;   /* content column width */
+  --gutter:     30px;    /* horizontal padding / banner & footer gaps */
+  --title-size: 28pt;
+  --h2-size:    18pt;
+  --h3-size:    13pt;
+}
+
+/* bluegold — mirrors the light-mode look of the 55th campaign site
+ * (C:\Users\scott\Dev\Andover\55th, e.g. localhost:8080/reports): cool
+ * blue-gray paper, a dark navy banner with a gold underline, navy serif
+ * headings over a sans body, gold accent rules, and blue links.
+ *
+ * Note the deliberate font swap: base.css uses --font-serif for body text and
+ * --font-sans for headings/labels, so to match the campaign look (sans body,
+ * serif display) we put the SANS stack in --font-serif and the SERIF stack in
+ * --font-sans.
+ *
+ * Layered on default.css. Uses --banner-border (in base.css) for the gold rule
+ * under the banner. */
+:root {
+  /* Palette */
+  --bg:             #f4f6f9;
+  --bg-page:        #ffffff;
+  --bg-soft:        #eef4fb;   /* blue-050 tint for callouts / table headers */
+  --rule:           #e3e8ef;   /* hairlines */
+  --ink:            #19222e;
+  --ink-soft:       #2b3744;
+  --ink-mute:       #5b6775;
+  --ink-faint:      #8a94a1;
+  --accent:         #e8a800;   /* signature gold rules */
+  --accent-2:       #0f2a4a;   /* blue-900: headings, table-header & code text */
+  --banner-bg:      linear-gradient(180deg, #0f2a4a, #143862);
+  --banner-border:  3px solid #e8a800;
+  --banner-ink:     #dde8f5;   /* blue-100 */
+  --crumb-link:       #e8a800; /* gold breadcrumb links */
+  --crumb-link-hover: #ffffff; /* hover to white + underline */
+  --crumb-current:    #ffffff; /* current page, not a link */
+  --link:           #245c95;   /* blue-600 */
+  --link-hover:     #1c4e80;   /* blue-700 */
+  --link-underline: #cfe0f2;
+  --confirm:        #2f8f5b;
+  --confirm-strong: #1f7d49;
+
+  /* Type: sans body + serif display headings (see note above) */
+  --font-serif: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans:  Georgia, "Times New Roman", serif;
+
+  --measure: 860px;
+}
+
+/* Structural base styles for civic reports — theme-independent.
+ * Colors, fonts, and sizes come from the active theme (CSS custom properties
+ * in _build/themes/<name>.css), which is loaded BEFORE this file. */
+
+/* ---- Reset & base ---- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Layout ---- */
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner a { color: inherit; text-decoration: none; }
+.page-banner a:hover { text-decoration: underline; }
+
+/* ---- Breadcrumb (in the banner) ---- */
+.page-banner .crumbs a {
+    color: var(--crumb-link, var(--banner-ink));
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover, #fff);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current {
+    color: var(--crumb-current, #fff);
+}
+
+.container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* ---- Images / figures ---- */
+/* Scale charts and figures to the column (and the printed page box) rather
+   than overflowing at their intrinsic pixel/point size. */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+}
+
+/* ---- Lightbox (screen only; overlay is built at runtime by the viewer
+   script, so it never appears in the PDF). Click a chart to enlarge it. ---- */
+.container img { cursor: zoom-in; }
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vmin;
+    background: rgba(0, 0, 0, 0.85);
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+.lightbox-overlay.open { opacity: 1; }
+.lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    margin: 0;
+    cursor: zoom-out;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+    background: #fff;
+}
+
+/* ---- Title block ---- */
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-attribution {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    color: var(--ink-faint);
+    margin: 0 0 24px 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+.report-attribution a {
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+}
+.report-attribution a:hover {
+    color: var(--link);
+    border-bottom-color: var(--link);
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.methodology-header {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 0 0 36px 0;
+    line-height: 1.55;
+}
+
+/* ---- Section labels (small uppercase tags above h2) ---- */
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 36px 0 4px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+/* ---- Headings ---- */
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+h3 {
+    font-family: var(--font-sans);
+    font-size: var(--h3-size);
+    font-weight: 600;
+    margin: 28px 0 10px 0;
+    color: var(--accent-2);
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+
+/* ---- Header anchor links (HTML only; hidden in print) ---- */
+.header-anchor {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.2em;
+    color: var(--anchor);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.85em;
+    vertical-align: baseline;
+    cursor: pointer;
+    user-select: none;
+}
+h2:hover .header-anchor,
+h3:hover .header-anchor,
+.header-anchor:focus {
+    opacity: 1;
+}
+.header-anchor:hover {
+    color: var(--anchor-hover);
+}
+.header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+}
+.header-anchor.copied::after {
+    content: " copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+}
+@media print {
+    .header-anchor {
+        display: none;
+    }
+}
+
+/* ---- Body text ---- */
+p {
+    margin: 0 0 14px 0;
+    orphans: 3;
+    widows: 3;
+}
+p.intro-table {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+strong { font-weight: 700; color: var(--ink); }
+em { font-style: italic; }
+
+/* ---- Links ---- */
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* ---- Lists ---- */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+li {
+    margin: 0 0 6px 0;
+    line-height: 1.55;
+}
+
+/* ---- Tables ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-before: avoid;
+    break-before: avoid;
+}
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 9.5pt;
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--accent);
+}
+tbody tr:hover { background: var(--bg); }
+
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+tbody tr:last-child td {
+    border-bottom: 2px solid var(--accent);
+}
+
+/* ---- Blockquotes (source notes, verbatim quotes) ---- */
+blockquote {
+    margin: 14px 0 18px 0;
+    padding: 14px 20px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+blockquote p { margin: 0 0 8px 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ol, blockquote ul {
+    margin: 8px 0;
+}
+
+/* ---- HR ---- */
+hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+}
+
+/* ---- Inline code ---- */
+code {
+    font-family: var(--font-mono);
+    font-size: 9.5pt;
+    background: var(--bg-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: var(--accent-2);
+    overflow-wrap: break-word;
+}
+
+/* ---- Other Formats footer ---- */
+.formats-section {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+}
+.format-cards {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.format-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.format-cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media screen and (max-width: 700px) {
+    .format-cards.cols-3,
+    .format-cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+.format-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    padding: 14px;
+    text-align: left;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+.format-card-icon { font-size: 18pt; margin-bottom: 4px; }
+.format-card-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+.format-card-desc { font-size: 9pt; color: var(--ink-mute); line-height: 1.4; }
+.format-card a { display: block; }
+
+/* ---- Footer ----
+   Two parts: .footer-id is the site-wide identity/disclaimer line, identical
+   on every page; .footer-note is the optional per-page line (sources, method,
+   "not a lawyer"). See siteFooterHtml() in _build/links.mjs. */
+/* @footer-css:start — generated from _build/footer.css; do not edit here, run: npm run sync:footer-css */
+.page-note {
+  /* Declared here, not inherited: this block is dropped into arbitrary
+     stylesheets and not all of them carry a global border-box reset (404.html
+     does not), and without it the 512px cap applies to the content box and the
+     wrap widens by the padding. */
+  box-sizing: border-box;
+  /* max-width + horizontal padding are px (not rem/ch) so a page's root
+     font-size can't rescale the wrap — the line breaks are identical everywhere. */
+  max-width: 512px;
+  margin: 3rem auto 2.5rem;
+  padding: 1.75rem 20px 0;
+  border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  font-style: italic;
+  text-align: center;
+  color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+}
+/* a[href] rather than a bare `a`: see the note on the bar's link rule below. */
+.page-note a[href] { color: inherit; }
+
+.site-footer {
+  background: var(--banner-bg, linear-gradient(180deg, #0f2a4a, #143862));
+  border-top: var(--banner-border, 3px solid #e8a800);
+  color: var(--banner-ink, #dde8f5);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.site-footer-inner {
+  /* Declared here, not inherited: this block is dropped into arbitrary
+     stylesheets and not all of them carry a global border-box reset (404.html
+     does not), and without it the 512px cap applies to the content box and the
+     wrap widens by the padding. */
+  box-sizing: border-box;
+  max-width: 512px;
+  margin: 0 auto;
+  /* Horizontal padding is a LITERAL, like the wrap width above: with
+     box-sizing:border-box the text column is 512px minus this padding, so a
+     per-surface var here (--gutter is 30px on reports, 24px via style.css,
+     20px elsewhere) silently re-wraps the footer differently on every
+     surface. That is the drift this whole file exists to prevent. */
+  padding: 1.15rem 20px;
+  text-align: center;
+}
+.site-footer strong { color: var(--crumb-current, #ffffff); font-weight: 600; }
+/* Two classes deep on purpose. A host stylesheet's own link rule reaches (0,1,2)
+   easily -- style.css carries `body.bluegold a`, which the video transcript
+   pages opt into -- and that outranks a flat `.site-footer a` (0,1,1) whatever
+   the source order, repainting the footer's email link in the page's link
+   colour instead of the banner gold. Routing through the inner wrapper puts
+   these at (0,2,1), above any `body.<class> a`. */
+.site-footer .site-footer-inner a {
+  color: var(--crumb-link, #e8a800);
+  border-bottom: 1px solid transparent;
+  text-decoration: none;
+}
+.site-footer .site-footer-inner a:hover {
+  color: var(--crumb-link-hover, #ffffff);
+  border-bottom-color: currentColor;
+}
+
+/* Sticking: body becomes a column flex container and the bar takes
+   margin-top:auto, which absorbs only space that is genuinely free. So the bar
+   sits at the viewport bottom on a page shorter than the viewport, and simply
+   follows the content on a longer one — it never reserves scrolling space.
+   Screen only; print keeps plain block flow. */
+@media screen {
+  body {
+    min-height: 100vh;
+    min-height: 100svh;   /* excludes mobile browser chrome where supported */
+    display: flex;
+    flex-direction: column;
+  }
+  .site-footer { margin-top: auto; }
+}
+
+@media print {
+  /* On paper the split is undone: no full-bleed colour, and the note and the
+     identity close back up into the single quiet block the PDFs had before. */
+  .site-footer {
+    background: none;
+    border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+    color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+  }
+  /* The note immediately above already drew that rule — a second one here
+     would stack two hairlines a few points apart. */
+  .page-note + .site-footer { border-top: none; }
+  .site-footer-inner { max-width: 512px; padding: 0; }
+  .page-note { margin-bottom: 0.6rem; }
+  .site-footer strong { color: var(--ink-soft, inherit); }
+  .site-footer .site-footer-inner a { color: inherit; }
+}
+/* @footer-css:end */
+
+/* ---- Confirmation glyphs ---- */
+h3 .conf-mark {
+    color: var(--confirm);
+    font-size: 11pt;
+    margin-right: 4px;
+}
+
+/* Draft watermark — loaded by the engine when a report's front matter
+ * contains `draft: true`. Adds a large diagonal "DRAFT" stamp behind the
+ * content (screen + print), plus a small persistent badge at the top right
+ * of every page. Selectors are gated on `body[data-draft="true"]` so this
+ * file is also safe to load unconditionally if a future engine variant
+ * decides to inline it.
+ *
+ * Customisation: a theme can override --draft-color, --draft-bg, and
+ * --draft-text by setting them in the theme's :root block.
+ */
+
+:root {
+  --draft-color: rgba(176, 30, 30, 0.10);
+  --draft-bg:    #b01e1e;
+  --draft-text:  #ffffff;
+}
+
+/* Diagonal stamp behind on-screen content. */
+body[data-draft="true"]::before {
+  content: "DRAFT";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  font-family: var(--font-sans);
+  font-weight: 900;
+  font-size: 22vw;
+  letter-spacing: 0.05em;
+  color: var(--draft-color);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* Lift the navigation chrome (banner + footer) above the watermark — but NOT
+ * the main content container. Letting .container stay unpositioned puts the
+ * watermark above plain prose (so it reads as a watermark over the text) while
+ * still being covered by panels, blockquotes, and table headers that carry
+ * their own stacking context via backgrounds or shadows. Don't add .container
+ * to this rule — it produces the "watermark sits behind everything" bug. */
+body[data-draft="true"] .page-banner,
+body[data-draft="true"] .page-note,
+body[data-draft="true"] .site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Small persistent badge at the top-right corner so the draft flag is
+ * impossible to miss even on dense pages. */
+body[data-draft="true"]::after {
+  content: "DRAFT";
+  position: fixed;
+  top: 8px;
+  right: 12px;
+  background: var(--draft-bg);
+  color: var(--draft-text);
+  padding: 4px 10px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  border-radius: 3px;
+  z-index: 9999;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+  pointer-events: none;
+}
+
+/* Print / PDF rules. WeasyPrint repeats fixed elements on every page, and
+ * honours @page backgrounds, so we get the diagonal band and the corner
+ * badge on every PDF page. */
+@media print {
+  @page {
+    background-image: linear-gradient(
+      -30deg,
+      transparent 38%,
+      var(--draft-color) 38%,
+      var(--draft-color) 62%,
+      transparent 62%
+    );
+  }
+
+  body[data-draft="true"]::before {
+    /* The @page gradient above gives the diagonal band on paper;
+       suppress the duplicate centred stamp so the page isn't muddy. */
+    display: none;
+  }
+
+  body[data-draft="true"]::after {
+    position: fixed;
+    top: 6mm;
+    right: 8mm;
+    font-size: 10pt;
+    padding: 2px 7px;
+  }
+}
+</style>
+</head>
+<body data-draft="true">
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/reports/">Reports</a><span class="sep">›</span><a href="/reports/ahm/">Andover, Hebron &amp; Marlborough</a><span class="sep">›</span><span class="current">A Question for Four Candidates</span>
+  </nav>
+</div>
+<div class="container">
+<h1 class="report-title">A Question for Four Candidates</h1>
+<p class="report-subtitle">Connecticut 2026 · Governor, Senate 4, Senate 19, House 55 · One question asked of four Republican candidates, and a public record of the answers</p>
+<p class="report-attribution">A personal project by Scott Sauyet · <a href="mailto:scott.sauyet@gmail.com">scott.sauyet@gmail.com</a> · I co-chair the Andover Democratic Town Committee; this page is my own work and not an official document of any committee, town, or campaign</p>
+<hr class="report-header-rule">
+<p class="methodology-header">On September 10, 2026 I sent the same question, in the same words, to four
+Republican candidates on Connecticut ballots this November. This page records
+who was asked, at what address, on what date, and what each has said in
+response. Any answer I receive will be published here in full and unedited,
+whether I like it or not, with the date it arrived. Contact addresses come from
+each committee&#8217;s registration with the State Elections Enforcement Commission or
+from the campaign&#8217;s own published contact page, and both are cited below. Where
+this page says no answer has been received, that is a statement about my inbox
+on the date shown, and nothing more. I am a Democrat and I co-chair the Andover
+Democratic Town Committee. I am asking anyway, and readers can weigh that as
+they see fit.</p>
+<p class="section-label">Introduction</p>
+<h2 id="overview">Overview<a class="header-anchor" href="#overview" aria-label="Link to this section">¶</a></h2>
+<p>I have one question for the Republicans asking for my vote this year, and I
+would rather put it to them directly than guess at the answer. The question is
+whether they will publicly disavow Donald Trump: a statement in their own name
+that he does not represent them and does not have their support.</p>
+<p>That is not a question about a policy, a bill, or a vote in Hartford. It is a
+question about the head of the party whose banner every one of these candidates
+runs under, and every one of them has had a decade to decide what they think of
+him.</p>
+<p>Four candidates were asked, on the same day, in the same words. Three of them
+appear on my own ballot in Andover. The fourth lives in a town that shares a
+House district with mine. All four are participants in Connecticut&#8217;s Citizens&#8217;
+Election Program with grants awarded, meaning each asked the public to finance
+his or her campaign, and the public agreed.</p>
+<p>This page is the record. It will be updated as answers come in, through Election
+Day on November 3, 2026. There is no deadline. An answer at any point gets
+added.</p>
+<p class="section-label">The ask</p>
+<h2 id="the-question-as-sent">The question, as sent<a class="header-anchor" href="#the-question-as-sent" aria-label="Link to this section">¶</a></h2>
+<p>The body of all four emails was the same but for the salutation, the sentence
+identifying the district, and one paragraph noted below. The question itself
+read:</p>
+<blockquote>
+<p>Will you publicly disavow Donald Trump? By that I mean a statement in your own
+name that he does not represent you and does not have your support. Not a
+comment on a single policy, and not a statement about the party in general.</p>
+</blockquote>
+<p>Each letter disclosed that I co-chair the Andover Democratic Town Committee,
+offered to publish the reply in full and unedited, offered to link an answer
+given anywhere else instead, and invited correction if the candidate had already
+answered publicly and I had missed it.</p>
+<p>One paragraph appeared only in the letter to Sen. Fazio, noting that he has
+discussed his own past votes for Mr. Trump and has said he would welcome Mr.
+Trump&#8217;s endorsement, and that the question here is whether he will disavow him
+now.</p>
+<p class="intro-table">Each letter is published here in full, exactly as sent:</p>
+<table>
+<thead>
+<tr>
+<th>Letter</th>
+<th>Sent</th>
+<th>Text</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Scott Sauyet to Fazio</td>
+<td>September 10, 2026</td>
+<td><a href="./correspondence/2026-09-10-sauyet-fazio/">read</a></td>
+</tr>
+<tr>
+<td>Scott Sauyet to Jennings</td>
+<td>September 10, 2026</td>
+<td><a href="./correspondence/2026-09-10-sauyet-jennings/">read</a></td>
+</tr>
+<tr>
+<td>Scott Sauyet to Guidone</td>
+<td>September 10, 2026</td>
+<td><a href="./correspondence/2026-09-10-sauyet-guidone/">read</a></td>
+</tr>
+<tr>
+<td>Scott Sauyet to Weir</td>
+<td>September 10, 2026</td>
+<td><a href="./correspondence/2026-09-10-sauyet-weir/">read</a></td>
+</tr>
+</tbody></table>
+<p class="section-label before-part">Who was asked</p>
+<h2 id="part-1-who-was-asked-and-where">Part 1 — Who was asked, and where<a class="header-anchor" href="#part-1-who-was-asked-and-where" aria-label="Link to this section">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Candidate</th>
+<th>Office sought</th>
+<th>Address used</th>
+<th>Source of address</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ryan Fazio</td>
+<td>Governor</td>
+<td><a href="mailto:info@ryanfazio.com">info@ryanfazio.com</a></td>
+<td>Campaign contact page</td>
+</tr>
+<tr>
+<td>Jenn Jennings</td>
+<td>State Senate, 4th</td>
+<td><a href="mailto:jennjennings4senate@gmail.com">jennjennings4senate@gmail.com</a></td>
+<td>Campaign contact page</td>
+</tr>
+<tr>
+<td>Jason Guidone</td>
+<td>State Senate, 19th</td>
+<td><a href="mailto:jason.guidone@proton.me">jason.guidone@proton.me</a></td>
+<td>SEEC committee registration (Form 1A)</td>
+</tr>
+<tr>
+<td>Steve Weir</td>
+<td>State Rep., 55th</td>
+<td><a href="mailto:steve@steveweirforct.com">steve@steveweirforct.com</a></td>
+<td>SEEC committee registration (Form 1A)</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> The letter to Rep. Weir was copied to his legislative address,
+<a href="mailto:Steve.Weir@housegop.ct.gov">Steve.Weir@housegop.ct.gov</a>, because I am one of his constituents and that is
+the address his office staffs. The letter to Sen. Fazio was copied to
+<a href="mailto:press@ryanfazio.com">press@ryanfazio.com</a>, the second address listed on his contact page. All four
+committees are Citizens&#8217; Election Program participants with grants awarded,
+per the Secretary of the State&#8217;s 2026 candidate registration list.</p>
+</blockquote>
+<p class="section-label before-part">The record</p>
+<h2 id="part-2-the-ledger">Part 2 — The ledger<a class="header-anchor" href="#part-2-the-ledger" aria-label="Link to this section">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Candidate</th>
+<th>Asked</th>
+<th>Answered</th>
+<th>Status as of September 17, 2026</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ryan Fazio</td>
+<td><a href="./correspondence/2026-09-10-sauyet-fazio/">Sep 10, 2026</a></td>
+<td>—</td>
+<td>No response yet</td>
+</tr>
+<tr>
+<td>Jenn Jennings</td>
+<td><a href="./correspondence/2026-09-10-sauyet-jennings/">Sep 10, 2026</a></td>
+<td>—</td>
+<td>No response yet</td>
+</tr>
+<tr>
+<td>Jason Guidone</td>
+<td><a href="./correspondence/2026-09-10-sauyet-guidone/">Sep 10, 2026</a></td>
+<td>—</td>
+<td>No response yet</td>
+</tr>
+<tr>
+<td>Steve Weir</td>
+<td><a href="./correspondence/2026-09-10-sauyet-weir/">Sep 10, 2026</a></td>
+<td>—</td>
+<td>No response yet</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> This table is the whole point of the page, and it is deliberately
+boring. A dash means no reply had reached me as of the date in the column
+heading. It does not mean the candidate has never spoken about Mr. Trump, and
+it does not mean a reply was not sent. Anyone who believes a row is wrong
+should write to me and I will correct it within 24 hours.</p>
+</blockquote>
+<h2 id="correspondence">Correspondence<a class="header-anchor" href="#correspondence" aria-label="Link to this section">¶</a></h2>
+<p class="intro-table">Everything sent or received since the four opening letters, newest first. Each
+entry links to the message as formatted for reading, with the original source
+alongside it: raw headers for email, and a link, screenshot, and archive copy
+for anything published elsewhere.</p>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Item</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>—</td>
+<td>Nothing yet beyond the four letters above.</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> Replies will be published in full and unedited, whatever they say,
+with the date received. Anything a candidate says publicly elsewhere in
+answer to this question will be added here too, with a link to the original
+and an archived copy in case it moves.</p>
+</blockquote>
+<p class="section-label before-part">Standard</p>
+<h2 id="part-3-what-counts-as-an-answer">Part 3 — What counts as an answer<a class="header-anchor" href="#part-3-what-counts-as-an-answer" aria-label="Link to this section">¶</a></h2>
+<p>Every reply will be classified, and the classification stated plainly beside it,
+on this scale:</p>
+<h3 id="disavowal">Disavowal<a class="header-anchor" href="#disavowal" aria-label="Link to this section">¶</a></h3>
+<p>An unambiguous statement in the candidate&#8217;s own name that Mr. Trump does not
+represent them and does not have their support.</p>
+<h3 id="criticism">Criticism<a class="header-anchor" href="#criticism" aria-label="Link to this section">¶</a></h3>
+<p>Objection to a specific act, decision, or policy, without withdrawal of support.
+This is a real answer and will be published as one. It is not a disavowal, and
+will not be described as one.</p>
+<h3 id="deflection">Deflection<a class="header-anchor" href="#deflection" aria-label="Link to this section">¶</a></h3>
+<p>The question was answered with something else: a pivot to state issues, a
+statement that the candidate does not agree with everything the President does,
+or a reply about the party rather than the man.</p>
+<h3 id="support">Support<a class="header-anchor" href="#support" aria-label="Link to this section">¶</a></h3>
+<p>A statement that the candidate does support Mr. Trump. This is also a real
+answer, and an honest one. It will be published in the same words and given the
+same prominence as any other.</p>
+<h3 id="no-response">No response<a class="header-anchor" href="#no-response" aria-label="Link to this section">¶</a></h3>
+<p>Nothing received. Reported as of a date, never as a permanent condition.</p>
+<p class="section-label before-part">Background</p>
+<h2 id="part-4-what-the-public-record-already-shows">Part 4 — What the public record already shows<a class="header-anchor" href="#part-4-what-the-public-record-already-shows" aria-label="Link to this section">¶</a></h2>
+<p>Before sending the question I looked at what these candidates have already said
+in the venue where they speak most deliberately: their paid advertising.</p>
+<p>Every Meta political ad attributable to each candidate&#8217;s own page was collected
+and read on three channels, namely the ad text the platform publishes, the words
+printed on the image or video, and the words spoken aloud in it.</p>
+<h3 id="meta-advertising-all-four-candidates">Meta advertising, all four candidates <span class="conf-mark">✓</span> <em>Collected September 9, 2026</em><a class="header-anchor" href="#meta-advertising-all-four-candidates" aria-label="Link to this section">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Candidate</th>
+<th class="num">Ads</th>
+<th>Mentions of Trump or MAGA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ryan Fazio</td>
+<td class="num">135</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Steve Weir</td>
+<td class="num">18</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Jason Guidone</td>
+<td class="num">31</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Jenn Jennings</td>
+<td class="num">0</td>
+<td>n/a</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Notes:</strong> Seven of the eighteen Weir ads were readable; the rest are ads Meta
+has removed, and the removal notice supports no conclusion about what they
+contained. Behind the zeros: 1,882 distinct video frames read by optical
+character recognition, about 50,000 characters of on-screen text recovered,
+and 57 minutes of audio transcribed. Ms. Jennings has never run a political ad
+on Meta, so advertising contributes nothing to her row in either direction.
+This is a paid-media finding only. Organic posts on the candidates&#8217; pages were
+not collected, so this table cannot show, and does not claim, that a candidate
+has never mentioned Mr. Trump.</p>
+</blockquote>
+<p>The count is the weak version of the finding. The stronger version is what the
+advertising does discuss. Sen. Fazio&#8217;s ads return repeatedly to immigration and
+federal enforcement, at length and in his own voice, and reach for the phrase
+&#8220;federal authorities&#8221; rather than the name of the President who directs them.
+The single instance of the word &#8220;administration&#8221; in nearly an hour of recorded
+audio refers to Gov. Lamont&#8217;s.</p>
+<p>Mr. Guidone came through a contested Republican primary between February and
+August of this year, ran thirty-one ads, and criticized his opponent by
+reference to his record and his tenure without either man&#8217;s advertising touching
+the President.</p>
+<p>None of that is an accusation. It is the reason the question is worth asking
+rather than assuming.</p>
+<p class="section-label before-part">Precedent</p>
+<h2 id="part-5-whether-the-ask-is-a-fair-one">Part 5 — Whether the ask is a fair one<a class="header-anchor" href="#part-5-whether-the-ask-is-a-fair-one" aria-label="Link to this section">¶</a></h2>
+<p>A reasonable objection is that no Republican could answer this question and
+survive a primary, so asking it is a trap rather than an inquiry. The record
+suggests otherwise.</p>
+<p>Themis Klarides led the Republican caucus in the Connecticut House from 2015 to
+2021. During her 2022 campaign for the United States Senate she said she had
+not voted for Mr. Trump in 2020, casting a protest write-in for her predecessor
+as caucus leader instead. She said it in her own name, in public, while seeking
+her party&#8217;s endorsement, and she won that endorsement on the first ballot with
+about 57 percent of the delegates. She has never reversed it.</p>
+<p>In December of that year, two former Republican leaders of the state Senate, Len
+Fasano and John McKinney, published an opinion piece in the Hartford Courant
+arguing that the party &#8220;needs to reject&#8221; Mr. Trump as a candidate.</p>
+<p>Two things should be said plainly about those examples. All three were former
+officeholders rather than sitting ones when they spoke, and all three statements
+date to 2022. No sitting Connecticut Republican legislator has made a comparable
+statement in 2025 or 2026. The ask is answerable, and it has been answered
+before, but not recently and not by anyone currently in office.</p>
+<p class="section-label">At a glance</p>
+<h2 id="summary">Summary<a class="header-anchor" href="#summary" aria-label="Link to this section">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>What was asked?</td>
+<td>Whether the candidate will publicly disavow Donald Trump, in his or her own name.</td>
+</tr>
+<tr>
+<td>Who was asked?</td>
+<td>Fazio, Jennings, Guidone, and Weir, on September 10, 2026.</td>
+</tr>
+<tr>
+<td>Was everyone asked the same thing?</td>
+<td>Yes, in the same words, on the same day.</td>
+</tr>
+<tr>
+<td>How many have answered?</td>
+<td>None as of September 17, 2026.</td>
+</tr>
+<tr>
+<td>Will answers be published?</td>
+<td>Yes, in full, unedited, whatever they say.</td>
+</tr>
+<tr>
+<td>Is silence proof a candidate supports Mr. Trump?</td>
+<td>No. It is proof of nothing beyond itself.</td>
+</tr>
+<tr>
+<td>Has any Connecticut Republican ever answered this way?</td>
+<td>Yes, but not recently, and not while holding office.</td>
+</tr>
+</tbody></table>
+<p class="section-label">Takeaways</p>
+<h2 id="key-observations">Key Observations<a class="header-anchor" href="#key-observations" aria-label="Link to this section">¶</a></h2>
+<p><strong>The question is about the man, not the party.</strong> Every candidate here runs
+under Mr. Trump&#8217;s banner because he leads their party. That is a fact about the
+ballot, not an accusation about the candidate. What each of them thinks of him
+is something only that candidate can supply.</p>
+<p><strong>Being asked and being accused are different things.</strong> Nothing on this page
+asserts that any of these four candidates supports Mr. Trump, admires him, or
+has ever said a word about him. The page records a question and whatever comes
+back.</p>
+<p><strong>Silence is not evidence.</strong> A blank row means the mail has not arrived. Voters
+can decide for themselves what to make of an unanswered question, and different
+voters will reasonably decide differently.</p>
+<p><strong>The public is paying for these campaigns.</strong> All four candidates take part in
+the Citizens&#8217; Election Program and have been awarded grants. That confers no
+legal obligation to answer anyone&#8217;s questions, and this page claims none. It
+does mean the campaigns are publicly financed, and a voter who notices that is
+not being unreasonable.</p>
+<p><strong>An answer ends the matter, whatever it says.</strong> A candidate who replies &#8220;I
+support him,&#8221; in those words, has answered honestly and will be recorded as
+having done so, in the same type as everyone else.</p>
+<p><strong>Corrections are welcome and will be made quickly.</strong> If a candidate has already
+answered this question somewhere I have not looked, the correction belongs on
+this page more than the omission does.</p>
+<p class="section-label">Limits</p>
+<h2 id="what-this-report-does-not-show">What this report does not show<a class="header-anchor" href="#what-this-report-does-not-show" aria-label="Link to this section">¶</a></h2>
+<p>It does not show that any candidate has never discussed Mr. Trump. Only paid
+advertising was collected. Organic posts on the candidates&#8217; own Facebook pages,
+their remarks at forums and debates, their interviews, and their answers to
+other people&#8217;s questions were not systematically searched, and any of those
+could contain a statement this page has missed.</p>
+<p>It does not show that the question was received, read, or seen by the candidate.
+Email to a campaign address is not certified mail.</p>
+<p>It does not show that a non-answer is a considered choice. Campaigns are busy,
+inboxes overflow, and a message can be lost without anyone deciding anything.</p>
+<p>It does not show anything about candidates who were not asked. Four Republicans
+were written to because they appear on my ballot or in my House district. Others
+on Connecticut ballots this year were not, and their absence from this page
+means only that.</p>
+<p>It is not a neutral document. I wrote it, I am a Democrat, and I would like
+these candidates to answer. What is offered here is not the absence of a point
+of view but a record specific enough that a reader who disagrees with me can
+check every part of it.</p>
+<p class="section-label">Documentation</p>
+<h2 id="sources">Sources<a class="header-anchor" href="#sources" aria-label="Link to this section">¶</a></h2>
+<p><strong>Candidate websites</strong></p>
+<ul>
+<li>Steve Weir for CT, <a href="https://steveweirforct.com/">steveweirforct.com</a></li>
+<li>Jenn Jennings 4 Senate,
+<a href="https://jennjennings4senate.com/">jennjennings4senate.com</a></li>
+<li>Ryan Fazio for Governor, <a href="https://ryanfazio.com/">ryanfazio.com</a></li>
+<li>Jason Guidone for Senate,
+<a href="https://www.guidoneforsenate.com/meet-jason">guidoneforsenate.com</a></li>
+</ul>
+<p><strong>Candidate contact information</strong></p>
+<ul>
+<li>Connecticut State Elections Enforcement Commission, committee registration
+filings (SEEC Form 1A), searchable at
+<a href="https://seec.ct.gov/Portal/eCRIS/eCrisSearch">seec.ct.gov</a></li>
+<li>Jenn Jennings 4 Senate, campaign contact page,
+<a href="https://jennjennings4senate.com/contact/">jennjennings4senate.com</a></li>
+<li>Ryan Fazio for Governor, campaign contact page,
+<a href="https://ryanfazio.com/contact/">ryanfazio.com</a></li>
+<li>Connecticut General Assembly member directory, for Rep. Weir&#8217;s legislative
+address, <a href="https://www.cga.ct.gov/">cga.ct.gov</a></li>
+</ul>
+<p><strong>Candidate status and program participation</strong></p>
+<ul>
+<li>Connecticut Secretary of the State, Candidate Registration List for Election
+Year 2026</li>
+<li>CT News Junkie, coverage of the Republican state convention, May 16, 2026,
+<a href="https://ctnewsjunkie.com/2026/05/16/ct-republicans-back-fazio-for-governor/">ctnewsjunkie.com</a></li>
+</ul>
+<p><strong>Advertising record</strong></p>
+<ul>
+<li>Meta Ad Library, collected September 9, 2026. Method and coverage boundaries
+documented separately; ad-level records retained.</li>
+</ul>
+<p><strong>Prior Connecticut examples</strong></p>
+<ul>
+<li>CT Mirror, May 7, 2022, on Themis Klarides and the Republican Senate
+endorsement,
+<a href="https://ctmirror.org/2022/05/07/ct-gop-endorses-a-social-moderate-themis-klarides-for-us-senate/">ctmirror.org</a></li>
+<li>CT News Junkie, December 7, 2022, on the Fasano and McKinney opinion piece,
+<a href="https://ctnewsjunkie.com/2022/12/07/op-ed-mckinney-fasano-tell-spoiled-child-trump-to-get-lost/">ctnewsjunkie.com</a></li>
+</ul>
+<p><strong>Correspondence</strong></p>
+<ul>
+<li>Every letter, reply, and public answer relating to this question, with
+original sources: <a href="./correspondence/">correspondence</a></li>
+</ul>
+
+<p class="section-label">Download</p>
+<h2 id="other-formats">Other Formats<a class="header-anchor" href="#other-formats" aria-label="Link to this section">¶</a></h2>
+<p>This report is available in three formats, all located alongside this page:</p>
+
+<div class="format-cards cols-3">
+  <div class="format-card">
+    <div class="format-card-icon">🌐</div>
+    <div class="format-card-title"><a href="./">HTML</a></div>
+    <div class="format-card-desc">Interactive version with formatted tables; best for on-screen reading.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📄</div>
+    <div class="format-card-title"><a href="disavowal.md">Markdown</a></div>
+    <div class="format-card-desc">Plain-text version; readable in any editor, ideal for copying elsewhere.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📑</div>
+    <div class="format-card-title"><a href="disavowal.pdf">PDF</a></div>
+    <div class="format-card-desc">Print-ready version with all tables, footnotes, and source citations.</div>
+  </div>
+</div>
+
+</div>
+<p class="page-note">Personal work of <a href="mailto:scott.sauyet@gmail.com">Scott Sauyet</a> · Compiled September 17, 2026, and updated as answers arrive<br>Contact addresses from candidate committee filings with the Connecticut State Elections Enforcement Commission and from the campaigns&rsquo; own websites. Not an official town document.</p>
+<footer class="site-footer">
+<div class="site-footer-inner"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</div>
+</footer>
+<script>
+document.addEventListener('click', function(e) {
+    const anchor = e.target.closest('.header-anchor');
+    if (!anchor) return;
+    const heading = anchor.parentElement;
+    const id = heading.id;
+    if (!id) return;
+    const url = window.location.origin + window.location.pathname + '#' + id;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function() {
+            anchor.classList.add('copied');
+            setTimeout(function() { anchor.classList.remove('copied'); }, 1400);
+        }).catch(function() {});
+    }
+});
+</script>
+<script>
+(function() {
+    var imgs = document.querySelectorAll('.container img');
+    if (!imgs.length) return;
+    var overlay = null;
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    function close() {
+        if (!overlay) return;
+        var o = overlay;
+        overlay = null;
+        o.classList.remove('open');
+        document.removeEventListener('keydown', onKey);
+        setTimeout(function() { if (o.parentNode) o.parentNode.removeChild(o); }, 200);
+    }
+    function open(src, alt) {
+        overlay = document.createElement('div');
+        overlay.className = 'lightbox-overlay';
+        var big = document.createElement('img');
+        big.src = src;
+        big.alt = alt || '';
+        overlay.appendChild(big);
+        overlay.addEventListener('click', close);
+        document.body.appendChild(overlay);
+        overlay.offsetWidth; // force reflow so the fade-in transition runs
+        overlay.classList.add('open');
+        document.addEventListener('keydown', onKey);
+    }
+    imgs.forEach(function(img) {
+        img.addEventListener('click', function() { open(img.currentSrc || img.src, img.alt); });
+    });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Correspondence — A Question for Four Candidates</title>
+<style>/* Structural base styles for civic reports — theme-independent.
+ * Colors, fonts, and sizes come from the active theme (CSS custom properties
+ * in _build/themes/<name>.css), which is loaded BEFORE this file. */
+
+/* ---- Reset & base ---- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Layout ---- */
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner a { color: inherit; text-decoration: none; }
+.page-banner a:hover { text-decoration: underline; }
+
+/* ---- Breadcrumb (in the banner) ---- */
+.page-banner .crumbs a {
+    color: var(--crumb-link, var(--banner-ink));
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover, #fff);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current {
+    color: var(--crumb-current, #fff);
+}
+
+.container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* ---- Images / figures ---- */
+/* Scale charts and figures to the column (and the printed page box) rather
+   than overflowing at their intrinsic pixel/point size. */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+}
+
+/* ---- Lightbox (screen only; overlay is built at runtime by the viewer
+   script, so it never appears in the PDF). Click a chart to enlarge it. ---- */
+.container img { cursor: zoom-in; }
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vmin;
+    background: rgba(0, 0, 0, 0.85);
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+.lightbox-overlay.open { opacity: 1; }
+.lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    margin: 0;
+    cursor: zoom-out;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+    background: #fff;
+}
+
+/* ---- Title block ---- */
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-attribution {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    color: var(--ink-faint);
+    margin: 0 0 24px 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+.report-attribution a {
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+}
+.report-attribution a:hover {
+    color: var(--link);
+    border-bottom-color: var(--link);
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.methodology-header {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 0 0 36px 0;
+    line-height: 1.55;
+}
+
+/* ---- Section labels (small uppercase tags above h2) ---- */
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 36px 0 4px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+/* ---- Headings ---- */
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+h3 {
+    font-family: var(--font-sans);
+    font-size: var(--h3-size);
+    font-weight: 600;
+    margin: 28px 0 10px 0;
+    color: var(--accent-2);
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+
+/* ---- Header anchor links (HTML only; hidden in print) ---- */
+.header-anchor {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.2em;
+    color: var(--anchor);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.85em;
+    vertical-align: baseline;
+    cursor: pointer;
+    user-select: none;
+}
+h2:hover .header-anchor,
+h3:hover .header-anchor,
+.header-anchor:focus {
+    opacity: 1;
+}
+.header-anchor:hover {
+    color: var(--anchor-hover);
+}
+.header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+}
+.header-anchor.copied::after {
+    content: " copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+}
+@media print {
+    .header-anchor {
+        display: none;
+    }
+}
+
+/* ---- Body text ---- */
+p {
+    margin: 0 0 14px 0;
+    orphans: 3;
+    widows: 3;
+}
+p.intro-table {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+strong { font-weight: 700; color: var(--ink); }
+em { font-style: italic; }
+
+/* ---- Links ---- */
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* ---- Lists ---- */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+li {
+    margin: 0 0 6px 0;
+    line-height: 1.55;
+}
+
+/* ---- Tables ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-before: avoid;
+    break-before: avoid;
+}
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 9.5pt;
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--accent);
+}
+tbody tr:hover { background: var(--bg); }
+
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+tbody tr:last-child td {
+    border-bottom: 2px solid var(--accent);
+}
+
+/* ---- Blockquotes (source notes, verbatim quotes) ---- */
+blockquote {
+    margin: 14px 0 18px 0;
+    padding: 14px 20px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+blockquote p { margin: 0 0 8px 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ol, blockquote ul {
+    margin: 8px 0;
+}
+
+/* ---- HR ---- */
+hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+}
+
+/* ---- Inline code ---- */
+code {
+    font-family: var(--font-mono);
+    font-size: 9.5pt;
+    background: var(--bg-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: var(--accent-2);
+    overflow-wrap: break-word;
+}
+
+/* ---- Other Formats footer ---- */
+.formats-section {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+}
+.format-cards {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.format-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.format-cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media screen and (max-width: 700px) {
+    .format-cards.cols-3,
+    .format-cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+.format-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    padding: 14px;
+    text-align: left;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+.format-card-icon { font-size: 18pt; margin-bottom: 4px; }
+.format-card-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+.format-card-desc { font-size: 9pt; color: var(--ink-mute); line-height: 1.4; }
+.format-card a { display: block; }
+
+/* ---- Footer ----
+   Two parts: .footer-id is the site-wide identity/disclaimer line, identical
+   on every page; .footer-note is the optional per-page line (sources, method,
+   "not a lawyer"). See siteFooterHtml() in _build/links.mjs. */
+/* @footer-css:start — generated from _build/footer.css; do not edit here, run: npm run sync:footer-css */
+.page-note {
+  /* Declared here, not inherited: this block is dropped into arbitrary
+     stylesheets and not all of them carry a global border-box reset (404.html
+     does not), and without it the 512px cap applies to the content box and the
+     wrap widens by the padding. */
+  box-sizing: border-box;
+  /* max-width + horizontal padding are px (not rem/ch) so a page's root
+     font-size can't rescale the wrap — the line breaks are identical everywhere. */
+  max-width: 512px;
+  margin: 3rem auto 2.5rem;
+  padding: 1.75rem 20px 0;
+  border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  font-style: italic;
+  text-align: center;
+  color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+}
+/* a[href] rather than a bare `a`: see the note on the bar's link rule below. */
+.page-note a[href] { color: inherit; }
+
+.site-footer {
+  background: var(--banner-bg, linear-gradient(180deg, #0f2a4a, #143862));
+  border-top: var(--banner-border, 3px solid #e8a800);
+  color: var(--banner-ink, #dde8f5);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.site-footer-inner {
+  /* Declared here, not inherited: this block is dropped into arbitrary
+     stylesheets and not all of them carry a global border-box reset (404.html
+     does not), and without it the 512px cap applies to the content box and the
+     wrap widens by the padding. */
+  box-sizing: border-box;
+  max-width: 512px;
+  margin: 0 auto;
+  /* Horizontal padding is a LITERAL, like the wrap width above: with
+     box-sizing:border-box the text column is 512px minus this padding, so a
+     per-surface var here (--gutter is 30px on reports, 24px via style.css,
+     20px elsewhere) silently re-wraps the footer differently on every
+     surface. That is the drift this whole file exists to prevent. */
+  padding: 1.15rem 20px;
+  text-align: center;
+}
+.site-footer strong { color: var(--crumb-current, #ffffff); font-weight: 600; }
+/* Two classes deep on purpose. A host stylesheet's own link rule reaches (0,1,2)
+   easily -- style.css carries `body.bluegold a`, which the video transcript
+   pages opt into -- and that outranks a flat `.site-footer a` (0,1,1) whatever
+   the source order, repainting the footer's email link in the page's link
+   colour instead of the banner gold. Routing through the inner wrapper puts
+   these at (0,2,1), above any `body.<class> a`. */
+.site-footer .site-footer-inner a {
+  color: var(--crumb-link, #e8a800);
+  border-bottom: 1px solid transparent;
+  text-decoration: none;
+}
+.site-footer .site-footer-inner a:hover {
+  color: var(--crumb-link-hover, #ffffff);
+  border-bottom-color: currentColor;
+}
+
+/* Sticking: body becomes a column flex container and the bar takes
+   margin-top:auto, which absorbs only space that is genuinely free. So the bar
+   sits at the viewport bottom on a page shorter than the viewport, and simply
+   follows the content on a longer one — it never reserves scrolling space.
+   Screen only; print keeps plain block flow. */
+@media screen {
+  body {
+    min-height: 100vh;
+    min-height: 100svh;   /* excludes mobile browser chrome where supported */
+    display: flex;
+    flex-direction: column;
+  }
+  .site-footer { margin-top: auto; }
+}
+
+@media print {
+  /* On paper the split is undone: no full-bleed colour, and the note and the
+     identity close back up into the single quiet block the PDFs had before. */
+  .site-footer {
+    background: none;
+    border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+    color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+  }
+  /* The note immediately above already drew that rule — a second one here
+     would stack two hairlines a few points apart. */
+  .page-note + .site-footer { border-top: none; }
+  .site-footer-inner { max-width: 512px; padding: 0; }
+  .page-note { margin-bottom: 0.6rem; }
+  .site-footer strong { color: var(--ink-soft, inherit); }
+  .site-footer .site-footer-inner a { color: inherit; }
+}
+/* @footer-css:end */
+
+/* ---- Confirmation glyphs ---- */
+h3 .conf-mark {
+    color: var(--confirm);
+    font-size: 11pt;
+    margin-right: 4px;
+}
+
+/* Default civic-report theme.
+ *
+ * A theme is just this set of CSS custom properties. To experiment, copy this
+ * file to _build/themes/<name>.css, change what you like, and point at it from
+ * _build/report.config.json ({"theme":"<name>"}) for all reports, or from a
+ * single report's front matter (theme: <name>). A non-default theme is layered
+ * ON TOP of this one, so it only needs to list the variables it changes.
+ *
+ * Scope: colors, fonts, and small size/width/gap tweaks — not layout changes.
+ */
+:root {
+  /* ---- Palette ---- */
+  --bg:             #fafaf7;   /* page background */
+  --bg-page:        #ffffff;   /* the white content card */
+  --bg-soft:        #f5f3ed;   /* callouts, table headers, inline code */
+  --ink:            #1a1a1a;   /* body text, main headings */
+  --ink-soft:       #333333;   /* blockquote / methodology text */
+  --ink-mute:       #5a5a5a;   /* subtitle, card descriptions */
+  --ink-faint:      #888888;   /* attribution, footer, captions */
+  --rule:           #e0ddd5;   /* hairline borders */
+  --accent:         #b8a878;   /* gold accent rules */
+  --accent-2:       #2c3e50;   /* slate: h3, table-header & code text */
+  --banner-bg:      #2c3e50;   /* top banner background */
+  --banner-ink:     #ecf0f1;   /* top banner text */
+  --crumb-link:       #b9c4cf; /* breadcrumb links in the banner */
+  --crumb-link-hover: #ffffff;
+  --crumb-current:    #ffffff; /* deepest crumb (current page), not a link */
+  --link:           #1a5490;
+  --link-hover:     #0d3a6b;
+  --link-underline: #c5d3e2;
+  --anchor:         #b8b3a4;   /* the ¶ header anchor */
+  --anchor-hover:   #6c7480;
+  --confirm:        #5a8a5a;   /* green ✓ confirmation mark */
+  --confirm-strong: #2e7d32;
+
+  /* ---- Fonts ---- */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:  "SF Mono", Monaco, Menlo, Consolas, monospace;
+
+  /* ---- Sizes (small tweaks only; no layout restructuring) ---- */
+  --base-size:  11pt;    /* body text */
+  --measure:    780px;   /* content column width */
+  --gutter:     30px;    /* horizontal padding / banner & footer gaps */
+  --title-size: 28pt;
+  --h2-size:    18pt;
+  --h3-size:    13pt;
+}
+
+
+.container { max-width: 820px; margin: 0 auto; padding: 28px 24px 8px; line-height: 1.55; }
+.container h1 { margin-top: 0; font-size: 1.6rem; }
+.entry-meta { color: #5a5348; font-size: .92rem; margin: -6px 0 22px; }
+.entry-meta .kind { text-transform: uppercase; letter-spacing: .08em; font-size: .78rem; }
+.letter {
+  white-space: pre-wrap; font-family: Georgia, "Times New Roman", serif;
+  font-size: 1rem; line-height: 1.6; background: #fffdf7;
+  border: 1px solid #e3dcc9; border-left: 3px solid #b8942f;
+  padding: 20px 24px; margin: 0 0 26px; overflow-wrap: break-word;
+}
+details.source { border-top: 1px solid #ddd6c4; padding-top: 14px; margin-bottom: 26px; }
+details.source > summary {
+  cursor: pointer; font-weight: 600; color: #4a4436; padding: 4px 0;
+}
+details.source pre {
+  white-space: pre-wrap; font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: .82rem; line-height: 1.5; background: #f6f3ea;
+  border: 1px solid #e3dcc9; padding: 14px 16px; overflow-x: auto;
+}
+.withheld { font-size: .86rem; color: #5a5348; margin: 10px 0 0; }
+.gaps {
+  background: #fdf6e3; border: 1px solid #e3d7ab; border-left: 3px solid #b8942f;
+  padding: 12px 16px; margin: 0 0 24px; font-size: .92rem;
+}
+.gaps strong { display: block; margin-bottom: 4px; }
+.gaps ul { margin: 0; padding-left: 20px; }
+.entry-list { border-collapse: collapse; width: 100%; margin: 18px 0 28px; font-size: .95rem; }
+.entry-list th, .entry-list td { padding: 8px 12px; border-bottom: 1px solid #e3dcc9; text-align: left; vertical-align: top; }
+.entry-list th { background: #f5f2e8; font-weight: 600; }
+.entry-list td.date { white-space: nowrap; }
+.pinned { color: #5a5348; font-size: .92rem; }
+</style>
+</head>
+<body>
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/reports/">Reports</a><span class="sep">›</span><a href="/reports/ahm/">Andover, Hebron &amp; Marlborough</a><span class="sep">›</span><a href="/reports/ahm/disavowal/">A Question for Four Candidates</a><span class="sep">›</span><span class="current">Correspondence</span>
+  </nav>
+</div>
+<main class="container">
+<h1>Correspondence</h1>
+<p>Every letter, reply, and public answer relating to the question put to four candidates on September 10, 2026, newest first. Each entry carries the message as formatted for reading, with its source alongside. Replies are published in full and unedited.</p>
+<h2>Since the opening letters</h2>
+<p class="pinned">As of September 10, 2026, nothing has arrived beyond the four opening letters below.</p>
+<h2>The opening letters</h2>
+<p class="pinned">Sent the same day, in the same words, but for the salutation and the sentence identifying the district.</p>
+<table class="entry-list">
+<thead><tr><th>Date</th><th>Item</th><th>Classification</th></tr></thead>
+<tbody>
+<tr>
+  <td class="date">September 10, 2026</td>
+  <td><a href="2026-09-10-sauyet-fazio/">Scott Sauyet to Ryan Fazio</a><br><span class="pinned">The question, as sent.</span></td>
+  <td>—</td>
+</tr>
+<tr>
+  <td class="date">September 10, 2026</td>
+  <td><a href="2026-09-10-sauyet-jennings/">Scott Sauyet to Jenn Jennings</a><br><span class="pinned">The question, as sent.</span></td>
+  <td>—</td>
+</tr>
+<tr>
+  <td class="date">September 10, 2026</td>
+  <td><a href="2026-09-10-sauyet-guidone/">Scott Sauyet to Jason Guidone</a><br><span class="pinned">The question, as sent.</span></td>
+  <td>—</td>
+</tr>
+<tr>
+  <td class="date">September 10, 2026</td>
+  <td><a href="2026-09-10-sauyet-weir/">Scott Sauyet to Steve Weir</a><br><span class="pinned">The question, as sent.</span></td>
+  <td>—</td>
+</tr>
+</tbody>
+</table>
+<p><a href="../">&larr; Back to the report</a></p>
+
+</main>
+<footer class="site-footer">
+<div class="site-footer-inner"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</div>
+</footer>
+</body>
+</html>
