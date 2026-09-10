@@ -11,10 +11,10 @@ pageTitle: 'A Question for Four Candidates — Eastern Connecticut, 2026'
 title: A Question for Four Candidates
 subtitle: "Connecticut 2026 · Governor, Senate 4, Senate 19, House 55 · One question asked of four Republican candidates, and a public record of the answers"
 attribution: 'A personal project by Scott Sauyet · <a href="mailto:scott.sauyet@gmail.com">scott.sauyet@gmail.com</a> · I co-chair the Andover Democratic Town Committee; this page is my own work and not an official document of any committee, town, or campaign'
-footer: 'Personal work of <a href="mailto:scott.sauyet@gmail.com">Scott Sauyet</a> · Compiled September 17, 2026, and updated as answers arrive<br>Contact addresses from candidate committee filings with the Connecticut State Elections Enforcement Commission and from the campaigns&rsquo; own websites. Not an official town document.'
+footer: 'Personal work of <a href="mailto:scott.sauyet@gmail.com">Scott Sauyet</a> · Compiled September 10, 2026, and updated as answers arrive<br>Contact addresses from candidate committee filings with the Connecticut State Elections Enforcement Commission and from the campaigns&rsquo; own websites. Not an official town document.'
 pdf:
   author: Personal work of Scott Sauyet · scott.sauyet@gmail.com
-  footer: andoverct.info/reports/ahm/disavowal/
+  footer: 'andoverct.info/reports/ahm/disavowal/ · as of {asof}'
 sectionLabels:
   - - overview
     - Introduction
@@ -120,12 +120,7 @@ now.
 
 Each letter is published here in full, exactly as sent:
 
-| Letter                        | Sent               | Text                                                 |
-| ----------------------------- | ------------------ | ---------------------------------------------------- |
-| Scott Sauyet to Ryan Fazio    | September 10, 2026 | [read](./correspondence/2026-09-10-sauyet-fazio/)    |
-| Scott Sauyet to Jenn Jennings | September 10, 2026 | [read](./correspondence/2026-09-10-sauyet-jennings/) |
-| Scott Sauyet to Jason Guidone | September 10, 2026 | [read](./correspondence/2026-09-10-sauyet-guidone/)  |
-| Scott Sauyet to Steve Weir    | September 10, 2026 | [read](./correspondence/2026-09-10-sauyet-weir/)     |
+<% correspondence letters %>
 
 
 
@@ -151,12 +146,7 @@ Part 1 — Who was asked, and where
 Part 2 — The ledger
 -------------------
 
-| Candidate     | Asked        | Answered | Status as of September 17, 2026 |
-| ------------- | ------------ | -------- | ------------------------------- |
-| Ryan Fazio    | [Sep 10, 2026](./correspondence/2026-09-10-sauyet-fazio/)    | —        | No response yet |
-| Jenn Jennings | [Sep 10, 2026](./correspondence/2026-09-10-sauyet-jennings/) | —        | No response yet |
-| Jason Guidone | [Sep 10, 2026](./correspondence/2026-09-10-sauyet-guidone/)  | —        | No response yet |
-| Steve Weir    | [Sep 10, 2026](./correspondence/2026-09-10-sauyet-weir/)     | —        | No response yet |
+<% correspondence ledger %>
 
 > **Notes:** This table is the whole point of the page, and it is deliberately
 > boring. A dash means no reply had reached me as of the date in the column
@@ -174,9 +164,7 @@ entry links to the message as formatted for reading, with the original source
 alongside it: raw headers for email, and a link, screenshot, and archive copy
 for anything published elsewhere.
 
-| Date | Item | Source |
-| ---- | ---- | ------ |
-| —    | Nothing yet beyond the four letters above. | — |
+<% correspondence log %>
 
 > **Notes:** Replies will be published in full and unedited, whatever they say,
 > with the date received. Anything a candidate says publicly elsewhere in
@@ -306,7 +294,7 @@ Summary
 | What was asked?                                        | Whether the candidate will publicly disavow Donald Trump, in his or her own name. |
 | Who was asked?                                         | Fazio, Jennings, Guidone, and Weir, on September 10, 2026.                        |
 | Was everyone asked the same thing?                     | Yes, in the same words, on the same day.                                          |
-| How many have answered?                                | None as of September 17, 2026.                                                    |
+| How many have answered?                                | <% correspondence answered %>.                                                    |
 | Will answers be published?                             | Yes, in full, unedited, whatever they say.                                        |
 | Is silence proof a candidate supports Mr. Trump?       | No. It is proof of nothing beyond itself.                                         |
 | Has any Connecticut Republican ever answered this way? | Yes, but not recently, and not while holding office.                              |

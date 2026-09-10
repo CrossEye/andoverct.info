@@ -218,6 +218,39 @@ export function reduceHeaders(raw) {
   return { text: kept.join("\n"), withheld: [...withheld].sort() };
 }
 
+/*
+ * Rejoin the hard wraps a mail client puts in at ~72 columns, so a paragraph
+ * reflows to the reader's width instead of re-wrapping raggedly on a phone.
+ * Blank lines, indented lines and short lines that look like a header block or
+ * a signature keep their breaks.
+ *
+ * This is typesetting, not editing: `letter.txt` is published alongside and
+ * stays byte-exact as sent, so the unmodified text is always one click away.
+ */
+export function reflow(text) {
+  const out = [];
+  let para = [];
+  const flush = () => { if (para.length) { out.push(para.join(" ")); para = []; } };
+
+  for (const line of text.split("\n")) {
+    const t = line.trim();
+    const isHeader = /^(To|Cc|Bcc|From|Subject|Date|Message-ID):/i.test(t);
+    // A line well short of the wrap column ended a paragraph on purpose.
+    const isShort = t.length > 0 && t.length < 45;
+    if (!t || isHeader || /^\s/.test(line)) {
+      flush();
+      out.push(line);
+    } else if (isShort) {
+      para.push(t);
+      flush();
+    } else {
+      para.push(t);
+    }
+  }
+  flush();
+  return out.join("\n");
+}
+
 // ---------------------------------------------------------------------------
 // Sorting
 // ---------------------------------------------------------------------------
@@ -402,7 +435,7 @@ function entryPage(entry, dir, ctx) {
     `<h1>${escapeHtml(entry.title)}</h1>`,
     `<p class="entry-meta">${meta}</p>`,
     gapsHtml(entry.gaps),
-    `<pre class="letter">${escapeHtml(bodyText.trim())}</pre>`,
+    `<pre class="letter">${escapeHtml(reflow(bodyText.trim()))}</pre>`,
     sourceHtml(entry, dir),
     `<p><a href="${ctx.correspondenceUrl}">&larr; All correspondence</a></p>`,
   ].filter(Boolean).join("\n");

@@ -32,6 +32,11 @@
  *   plugin: report.plugin.mjs  -> exports transform(html, ctx) run after numeric
  *                                 alignment and before confirmation marks
  *   theme: <name>         -> use _build/themes/<name>.css for this report
+ *   correspondence: <dir> -> living-ledger reports: rebuilds the evidence tree
+ *                            under <dir> and exposes it to the
+ *                            <% correspondence ... %> directives, so the
+ *                            report's tables cannot drift from the entries;
+ *                            see _build/correspondence.mjs and .meta/plans/008
  *   subpages: [...]       -> re-hosts an authored standalone HTML document
  *                            (a big chart, a scripted table) as its own page
  *                            on the report chrome, one breadcrumb level down;
@@ -53,6 +58,7 @@ import {
 } from "./chrome.js";
 import { buildResearchPages } from "./research.mjs";
 import { buildSubpages } from "./subpage.mjs";
+import { buildCorrespondence } from "./correspondence.mjs";
 
 marked.use(markedSmartypants());
 marked.use({ gfm: true });
@@ -506,7 +512,7 @@ const LIGHTBOX_SCRIPT = `
 // Assemble the document
 // ---------------------------------------------------------------------------
 
-async function buildHtml(mdText, meta, { forPdf, extraCss, plugin, themeCss, breadcrumb, isPrivate }) {
+async function buildHtml(mdText, meta, { forPdf, extraCss, plugin, themeCss, breadcrumb, isPrivate, asOf }) {
   const body = markdownToBody(mdText);
   const { headerHtml, rest: rest0 } = splitReport(body);
 
@@ -546,10 +552,12 @@ async function buildHtml(mdText, meta, { forPdf, extraCss, plugin, themeCss, bre
     headerForDoc = absolutize(headerHtml);
   }
 
+  // A downloaded PDF of a living ledger goes stale invisibly, so pdf.footer may
+  // carry an {asof} token that stamps the build date onto every sheet.
   const printCss = (forPdf && meta.pdf)
     ? PRINT_CSS.replaceAll("__PDF_PAGE_AUTHOR__", meta.pdf.author).replaceAll(
         "__PDF_PAGE_FOOTER__",
-        meta.pdf.footer
+        meta.pdf.footer.replaceAll("{asof}", asOf || "")
       )
     : "";
   const draftCss = meta.draft ? "\n" + DRAFT_CSS : "";
@@ -676,13 +684,15 @@ function isPrivateReportMd(mdPath) {
   }
 }
 
-// Data directives (<% decomp|locmap|datatable ... %>): reports that carry a
-// dataset.json get their markdown preprocessed by the vendored directives
-// module (CommonJS, hence createRequire). Data files live in the report's own
-// folder; reports without dataset.json build unchanged.
-function preprocessDirectives(mdBody, folder) {
+// Data directives (<% decomp|locmap|datatable|correspondence ... %>): markdown
+// is preprocessed by the vendored directives module (CommonJS, hence
+// createRequire) when the report supplies a source for them — a dataset.json in
+// its own folder, or a `correspondence:` tree named in front matter. Reports
+// with neither build unchanged.
+function preprocessDirectives(mdBody, folder, meta, correspondence) {
   const datasetPath = join(folder, "dataset.json");
-  if (!existsSync(datasetPath)) return mdBody;
+  const hasDataset = existsSync(datasetPath);
+  if (!hasDataset && !correspondence) return mdBody;
   const require = createRequire(import.meta.url);
   const { preprocess } = require("./directives");
   const optional = (name) => {
@@ -690,9 +700,10 @@ function preprocessDirectives(mdBody, folder) {
     return existsSync(p) ? JSON.parse(readFileSync(p, "utf8")) : undefined;
   };
   const ctx = {
-    data: JSON.parse(readFileSync(datasetPath, "utf8")),
+    data: hasDataset ? JSON.parse(readFileSync(datasetPath, "utf8")) : undefined,
     geo: optional("towns_xy.json"),
     cpi: optional("cpi_fy.json"),
+    correspondence,
   };
   return preprocess(mdBody, ctx);
 }
@@ -702,7 +713,6 @@ async function buildReport(mdPath) {
   const raw = readFileSync(mdPath, "utf8");
   const { data: meta, content: rawBody } = matter(raw);
   validateMeta(meta, mdPath);
-  const mdBody = preprocessDirectives(rawBody, folder);
 
   const htmlName = meta.htmlFile || "index.html";
   const pdfName = meta.pdfFile || basename(mdPath).replace(/\.md$/, "") + ".pdf";
@@ -716,6 +726,21 @@ async function buildReport(mdPath) {
 
   // Breadcrumb (from reports.json sections + front-matter section)
   const breadcrumb = breadcrumbHtml(meta, loadSections());
+
+  // Living-ledger reports (front-matter `correspondence:`) rebuild their evidence
+  // tree first, so the summary the directives read below is never a stale copy.
+  // Building it here rather than as a separate npm step is what removes the
+  // ordering hazard: the report cannot be rendered from yesterday's ledger.
+  let correspondence = null;
+  if (meta.correspondence) {
+    correspondence = buildCorrespondence(folder, meta, {
+      baseCss: BASE_CSS, themeCss, note: meta.correspondenceNote || "",
+    });
+  }
+
+  const asOf = correspondence?.generated || null;
+
+  const mdBody = preprocessDirectives(rawBody, folder, meta, correspondence);
 
   // Optional per-report CSS + plugin
   let extraCss = "";
@@ -743,7 +768,7 @@ async function buildReport(mdPath) {
   }
 
   // Screen HTML
-  const screenHtml = await buildHtml(mdBody, meta, { forPdf: false, extraCss, plugin, themeCss, breadcrumb });
+  const screenHtml = await buildHtml(mdBody, meta, { forPdf: false, extraCss, plugin, themeCss, breadcrumb, asOf });
   writeFileSync(htmlPath, screenHtml, "utf8");
   console.log(`wrote ${htmlPath} (${screenHtml.length.toLocaleString()} chars, theme: ${themeName})`);
 
@@ -753,7 +778,7 @@ async function buildReport(mdPath) {
   }
 
   // Print HTML -> PDF via WeasyPrint (temp file in the folder so local images resolve)
-  const printHtml = await buildHtml(mdBody, meta, { forPdf: true, extraCss, plugin, themeCss, breadcrumb });
+  const printHtml = await buildHtml(mdBody, meta, { forPdf: true, extraCss, plugin, themeCss, breadcrumb, asOf });
   const tmpHtml = join(folder, ".report-print.tmp.html");
   writeFileSync(tmpHtml, printHtml, "utf8");
   try {
