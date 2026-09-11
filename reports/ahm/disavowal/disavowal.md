@@ -1,15 +1,15 @@
 ---
 section: ahm
 # Unlisted until the September 17 publish date: kept out of search, and no
-# reports.json entry. The four candidates have the URL from their letters, so
+# reports.json entry. The five candidates have the URL from their letters, so
 # an early visitor sees the finished page rather than a DRAFT stamp.
 # Drop noindex and add the reports.json entry to go live.
 noindex: true
 correspondence: correspondence
 publicUrl: 'http://andoverct.info/reports/ahm/disavowal/'
-pageTitle: 'A Question for Four Candidates — Eastern Connecticut, 2026'
-title: A Question for Four Candidates
-subtitle: "Connecticut 2026 · Governor, Senate 4, Senate 19, House 55 · One question asked of four Republican candidates, and a public record of the answers"
+pageTitle: 'A Question for Five Candidates — Eastern Connecticut, 2026'
+title: A Question for Five Candidates
+subtitle: "Connecticut 2026 · Governor, Congress 2, Senate 4, Senate 19, House 55 · One question asked of five Republican candidates, and a public record of the answers"
 attribution: 'A personal project by Scott Sauyet · <a href="mailto:scott.sauyet@gmail.com">scott.sauyet@gmail.com</a> · I co-chair the Andover Democratic Town Committee; this page is my own work and not an official document of any committee, town, or campaign'
 footer: 'Personal work of <a href="mailto:scott.sauyet@gmail.com">Scott Sauyet</a> · Compiled September 10, 2026, and updated as answers arrive<br>Contact addresses from candidate committee filings with the Connecticut State Elections Enforcement Commission and from the campaigns&rsquo; own websites. Not an official town document.'
 pdf:
@@ -55,16 +55,17 @@ formats:
     desc: 'Print-ready version with all tables, footnotes, and source citations.'
 ---
 
-A Question for Four Candidates
+A Question for Five Candidates
 ==============================
 
 *On September 10, 2026 I sent the same question, in the same words, to four
-Republican candidates on Connecticut ballots this November. This page records
+Republican candidates on Connecticut ballots this November, and on
+[[AUSTIN-SENT]] to a fifth. This page records
 who was asked, at what address, on what date, and what each has said in
 response. Any answer I receive will be published here in full and unedited,
 whether I like it or not, with the date it arrived. Contact addresses come from
 each committee's registration with the State Elections Enforcement Commission or
-from the campaign's own published contact page, and both are cited below. Where
+from the campaign's own published website, and each is cited below. Where
 this page says no answer has been received, that is a statement about my inbox
 on the date shown, and nothing more. I am a Democrat and I co-chair the Andover
 Democratic Town Committee. I am asking anyway, and readers can weigh that as
@@ -85,11 +86,14 @@ question about the head of the party whose banner every one of these candidates
 runs under, and every one of them has had a decade to decide what they think of
 him.
 
-Four candidates were asked, on the same day, in the same words. Three of them
-appear on my own ballot in Andover. The fourth lives in a town that shares a
-House district with mine. All four are participants in Connecticut's Citizens'
-Election Program with grants awarded, meaning each asked the public to finance
-his or her campaign, and the public agreed.
+Five candidates were asked, in the same words: four on September 10, and George
+Austin, the Republican nominee for Congress in the 2nd District, on
+[[AUSTIN-SENT]]. Four of the five appear on my own ballot in Andover. The fifth
+lives in a town that shares a House district with mine. The four running for
+state office are participants in Connecticut's Citizens' Election Program with
+grants awarded, meaning each asked the public to finance his or her campaign,
+and the public agreed. Mr. Austin, running for federal office, is outside that
+program.
 
 This page is the record. It will be updated as answers come in, through Election
 Day on November 3, 2026. There is no deadline. An answer at any point gets
@@ -100,8 +104,8 @@ added.
 The question, as sent
 ---------------------
 
-The body of all four emails was the same but for the salutation, the sentence
-identifying the district, and one paragraph noted below. The question itself
+The body of all five emails was the same but for the salutation, the sentence
+identifying the district, and the paragraphs noted below. The question itself
 read:
 
 > Will you publicly disavow Donald Trump? By that I mean a statement in your own
@@ -118,6 +122,8 @@ discussed his own past votes for Mr. Trump and has said he would welcome Mr.
 Trump's endorsement, and that the question here is whether he will disavow him
 now.
 
+[[AUSTIN-PARAGRAPH: describe any paragraph unique to the Austin letter, as sent.]]
+
 Each letter is published here in full, exactly as sent:
 
 <% correspondence letters %>
@@ -127,19 +133,23 @@ Each letter is published here in full, exactly as sent:
 Part 1 — Who was asked, and where
 ---------------------------------
 
-| Candidate     | Office sought      | Address used                  | Source of address                     |
-| ------------- | ------------------ | ----------------------------- | ------------------------------------- |
-| Ryan Fazio    | Governor           | info@ryanfazio.com            | Campaign contact page                 |
-| Jenn Jennings | State Senate, 4th  | jennjennings4senate@gmail.com | Campaign contact page                 |
-| Jason Guidone | State Senate, 19th | jason.guidone@proton.me       | SEEC committee registration (Form 1A) |
-| Steve Weir    | State Rep., 55th   | steve@steveweirforct.com      | SEEC committee registration (Form 1A) |
+| Candidate     | Office sought      | Address used                     | Source of address                     |
+| ------------- | ------------------ | -------------------------------- | ------------------------------------- |
+| Ryan Fazio    | Governor           | info@ryanfazio.com               | Campaign contact page                 |
+| George Austin | U.S. House, 2nd    | george@votegeorgeforcongress.com | Campaign website                      |
+| Jenn Jennings | State Senate, 4th  | jennjennings4senate@gmail.com    | Campaign contact page                 |
+| Jason Guidone | State Senate, 19th | jason.guidone@proton.me          | SEEC committee registration (Form 1A) |
+| Steve Weir    | State Rep., 55th   | steve@steveweirforct.com         | SEEC committee registration (Form 1A) |
 
 > **Notes:** The letter to Rep. Weir was copied to his legislative address,
 > Steve.Weir@housegop.ct.gov, because I am one of his constituents and that is
 > the address his office staffs. The letter to Sen. Fazio was copied to
-> press@ryanfazio.com, the second address listed on his contact page. All four
-> committees are Citizens' Election Program participants with grants awarded,
-> per the Secretary of the State's 2026 candidate registration list.
+> press@ryanfazio.com, the second address listed on his contact page. The four
+> state committees are Citizens' Election Program participants with grants
+> awarded, per the Secretary of the State's 2026 candidate registration list.
+> Mr. Austin's committee, George for Congress, files with the Federal Election
+> Commission, and his address is the one published on his campaign website.
+> [[AUSTIN-CC: note any copy address used for the Austin letter, or delete.]]
 
 
 
@@ -217,27 +227,32 @@ Part 4 — What the public record already shows
 ---------------------------------------------
 
 Before sending the question I looked at what these candidates have already said
-in the venue where they speak most deliberately: their paid advertising.
+in the venue where they speak most deliberately: their paid advertising. For Mr.
+Austin, whose record includes long-form interviews that are publicly posted, I
+listened to those as well.
 
 Every Meta political ad attributable to each candidate's own page was collected
 and read on three channels, namely the ad text the platform publishes, the words
 printed on the image or video, and the words spoken aloud in it.
 
 
-### Meta advertising, all four candidates ✓ *Collected September 9, 2026* ###
+### Meta advertising, all five candidates ✓ *Collected September 9 and 11, 2026* ###
 
 | Candidate     | Ads | Mentions of Trump or MAGA |
 | ------------- | --- | ------------------------- |
 | Ryan Fazio    | 135 | 0                         |
+| George Austin | 57  | 0                         |
 | Steve Weir    | 18  | 0                         |
 | Jason Guidone | 31  | 0                         |
 | Jenn Jennings | 0   | n/a                       |
 
-> **Notes:** Seven of the eighteen Weir ads were readable; the rest are ads Meta
-> has removed, and the removal notice supports no conclusion about what they
-> contained. Behind the zeros: 1,882 distinct video frames read by optical
-> character recognition, about 50,000 characters of on-screen text recovered,
-> and 57 minutes of audio transcribed. Ms. Jennings has never run a political ad
+> **Notes:** Seven of the eighteen Weir ads were readable, and 130 of Sen.
+> Fazio's 135; the rest are ads Meta has removed, and the removal notice supports
+> no conclusion about what they contained. Sen. Fazio's five removed ads date
+> from his 2020 to 2022 Senate campaigns. Behind the zeros: [[FRAMES]] distinct
+> video frames read by optical character recognition, [[OCRCHARS]] characters of
+> on-screen text recovered, and [[AUDIOMIN]] minutes of advertising audio
+> transcribed. Ms. Jennings has never run a political ad
 > on Meta, so advertising contributes nothing to her row in either direction.
 > This is a paid-media finding only. Organic posts on the candidates' pages were
 > not collected, so this table cannot show, and does not claim, that a candidate
@@ -259,6 +274,41 @@ None of that is an accusation. It is the reason the question is worth asking
 rather than assuming.
 
 
+### Mr. Austin, in his own words ###
+
+Mr. Austin is the one candidate here whose own words about Mr. Trump turned up,
+and they point in more than one direction. All of it predates my letter to him.
+
+- **Praise, in writing.** In a campaign press release on April 22, 2026, he wrote
+  that "President Trump and Secretary Kennedy, through the MAHA movement, are
+  finally talking about the real sources of our health-care crisis," and "I stand
+  with Secretary Kennedy and the MAHA movement."
+- **Agreement, in an interview.** On a podcast recorded October 28, 2025, his host
+  said she had been praying for Mr. Trump to win and would have left the country
+  otherwise. Mr. Austin replied: "We might not have had a country after that,
+  honestly." He went straight on to say he did not remember elections being
+  treated, before recent years, as though the country's survival depended on
+  them: "It was never like that, and now it is."
+- **Criticism, in an interview.** On a second podcast, on July 7, 2026, he gave
+  "the big beautiful bill" as his example of inflationary spending: "The point is
+  we're borrowing from the future. We're borrowing from my kids and maybe even
+  their kids." That is an objection to a law Mr. Trump signed, made from the
+  right, in the same breath as praise for the spending cuts proposed by the
+  Department of Government Efficiency.
+
+None of his fifty-seven Meta ads mentions Mr. Trump. The praise is in a press
+release and in interviews, not in anything he has paid to run.
+
+> **Notes:** The press release is quoted from his campaign website and from an
+> archived copy made by the Internet Archive on August 10, 2026. Each interview
+> link below starts a few seconds before the remark, so that what he was
+> responding to can be heard. In the October recording the host speaks at length
+> about Mr. Trump, and several of her remarks could be mistaken for his in a
+> transcript; only words identified as Mr. Austin's are quoted here. These are
+> statements made before he was asked, and none of them is classified on the
+> scale above, which applies to answers to the question itself.
+
+
 
 Part 5 — Whether the ask is a fair one
 --------------------------------------
@@ -278,6 +328,10 @@ In December of that year, two former Republican leaders of the state Senate, Len
 Fasano and John McKinney, published an opinion piece in the Hartford Courant
 arguing that the party "needs to reject" Mr. Trump as a candidate.
 
+The question is also a more direct one for Mr. Austin than for the others. A
+state legislator has no vote on anything a President does. A member of Congress
+votes on the President's program every week the House is in session.
+
 Two things should be said plainly about those examples. All three were former
 officeholders rather than sitting ones when they spoke, and all three statements
 date to 2022. No sitting Connecticut Republican legislator has made a comparable
@@ -292,8 +346,8 @@ Summary
 | Question                                               | Answer                                                                            |
 | ------------------------------------------------------ | --------------------------------------------------------------------------------- |
 | What was asked?                                        | Whether the candidate will publicly disavow Donald Trump, in his or her own name. |
-| Who was asked?                                         | Fazio, Jennings, Guidone, and Weir, on September 10, 2026.                        |
-| Was everyone asked the same thing?                     | Yes, in the same words, on the same day.                                          |
+| Who was asked?                                         | Fazio, Jennings, Guidone, and Weir on September 10, 2026; Austin on [[AUSTIN-SENT]]. |
+| Was everyone asked the same thing?                     | Yes, in the same words.                                                           |
 | How many have answered?                                | <% correspondence answered %>.                                                    |
 | Will answers be published?                             | Yes, in full, unedited, whatever they say.                                        |
 | Is silence proof a candidate supports Mr. Trump?       | No. It is proof of nothing beyond itself.                                         |
@@ -310,16 +364,16 @@ ballot, not an accusation about the candidate. What each of them thinks of him
 is something only that candidate can supply.
 
 **Being asked and being accused are different things.** Nothing on this page
-asserts that any of these four candidates supports Mr. Trump, admires him, or
-has ever said a word about him. The page records a question and whatever comes
-back.
+asserts that any candidate supports Mr. Trump beyond what that candidate has
+said in his or her own words, quoted in context with a link to the original.
+The page records a question and whatever comes back.
 
 **Silence is not evidence.** A blank row means the mail has not arrived. Voters
 can decide for themselves what to make of an unanswered question, and different
 voters will reasonably decide differently.
 
-**The public is paying for these campaigns.** All four candidates take part in
-the Citizens' Election Program and have been awarded grants. That confers no
+**The public is paying for these campaigns.** The four candidates for state
+office take part in the Citizens' Election Program and have been awarded grants. That confers no
 legal obligation to answer anyone's questions, and this page claims none. It
 does mean the campaigns are publicly financed, and a voter who notices that is
 not being unreasonable.
@@ -337,11 +391,13 @@ this page more than the omission does.
 What this report does not show
 ------------------------------
 
-It does not show that any candidate has never discussed Mr. Trump. Only paid
-advertising was collected. Organic posts on the candidates' own Facebook pages,
-their remarks at forums and debates, their interviews, and their answers to
-other people's questions were not systematically searched, and any of those
-could contain a statement this page has missed.
+It does not show that any candidate has never discussed Mr. Trump. Paid
+advertising was collected for all five, and for Mr. Austin two long-form
+interviews posted online were transcribed as well. Organic posts on the
+candidates' own Facebook pages, their remarks at forums and debates, most of
+their interviews, and their answers to other people's questions were not
+systematically searched, and any of those could contain a statement this page
+has missed.
 
 It does not show that the question was received, read, or seen by the candidate.
 Email to a campaign address is not certified mail.
@@ -349,7 +405,7 @@ Email to a campaign address is not certified mail.
 It does not show that a non-answer is a considered choice. Campaigns are busy,
 inboxes overflow, and a message can be lost without anyone deciding anything.
 
-It does not show anything about candidates who were not asked. Four Republicans
+It does not show anything about candidates who were not asked. Five Republicans
 were written to because they appear on my ballot or in my House district. Others
 on Connecticut ballots this year were not, and their absence from this page
 means only that.
@@ -372,6 +428,7 @@ Sources
 - Ryan Fazio for Governor, [ryanfazio.com](https://ryanfazio.com/)
 - Jason Guidone for Senate,
   [guidoneforsenate.com](https://www.guidoneforsenate.com/meet-jason)
+- George for Congress, [votegeorgeforcongress.com](https://votegeorgeforcongress.com/)
 
 
 **Candidate contact information**
@@ -385,6 +442,10 @@ Sources
   [ryanfazio.com](https://ryanfazio.com/contact/)
 - Connecticut General Assembly member directory, for Rep. Weir's legislative
   address, [cga.ct.gov](https://www.cga.ct.gov/)
+- George for Congress, campaign website footer,
+  [votegeorgeforcongress.com](https://votegeorgeforcongress.com/)
+- Federal Election Commission, candidate H6CT02196 and committee C00914481,
+  [fec.gov](https://www.fec.gov/data/candidate/H6CT02196/)
 
 **Candidate status and program participation**
 
@@ -395,8 +456,20 @@ Sources
 
 **Advertising record**
 
-- Meta Ad Library, collected September 9, 2026. Method and coverage boundaries
-  documented separately; ad-level records retained.
+- Meta Ad Library, collected September 9, 2026, and September 11 for Mr. Austin.
+  Method and coverage boundaries documented separately; ad-level records
+  retained.
+
+**Mr. Austin's statements**
+
+- George for Congress, press release, April 22, 2026,
+  [votegeorgeforcongress.com](https://votegeorgeforcongress.com/george-austin-while-courtney-plays-for-clips-in-d-c-eastern-connecticut-needs-real-health-care-fixes/);
+  archived copy,
+  [web.archive.org](https://web.archive.org/web/20260810192843/https://votegeorgeforcongress.com/george-austin-while-courtney-plays-for-clips-in-d-c-eastern-connecticut-needs-real-health-care-fixes/)
+- Polish Agnes, interview with George Austin, recorded October 28, 2025,
+  [youtube.com](https://www.youtube.com/watch?v=vd9pM5_QgTg&t=3215)
+- Lock N Load Podcast, interview with George Austin, July 7, 2026,
+  [youtube.com](https://www.youtube.com/watch?v=cxsW4TIIggU&t=463)
 
 **Prior Connecticut examples**
 
