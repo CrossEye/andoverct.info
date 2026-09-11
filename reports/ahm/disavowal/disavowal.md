@@ -169,7 +169,7 @@ Part 2 — The ledger
 Correspondence
 --------------
 
-Everything sent or received since the four opening letters, newest first. Each
+Everything sent or received since the opening letters, newest first. Each
 entry links to the message as formatted for reading, with the original source
 alongside it: raw headers for email, and a link, screenshot, and archive copy
 for anything published elsewhere.
