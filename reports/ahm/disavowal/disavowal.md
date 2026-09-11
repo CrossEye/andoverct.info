@@ -60,7 +60,7 @@ A Question for Five Candidates
 
 *On September 10, 2026 I sent the same question, in the same words, to four
 Republican candidates on Connecticut ballots this November, and on
-[[AUSTIN-SENT]] to a fifth. This page records
+September 11 to a fifth. This page records
 who was asked, at what address, on what date, and what each has said in
 response. Any answer I receive will be published here in full and unedited,
 whether I like it or not, with the date it arrived. Contact addresses come from
@@ -88,7 +88,7 @@ him.
 
 Five candidates were asked, in the same words: four on September 10, and George
 Austin, the Republican nominee for Congress in the 2nd District, on
-[[AUSTIN-SENT]]. Four of the five appear on my own ballot in Andover. The fifth
+September 11. Four of the five appear on my own ballot in Andover. The fifth
 lives in a town that shares a House district with mine. The four running for
 state office are participants in Connecticut's Citizens' Election Program with
 grants awarded, meaning each asked the public to finance his or her campaign,
@@ -122,7 +122,11 @@ discussed his own past votes for Mr. Trump and has said he would welcome Mr.
 Trump's endorsement, and that the question here is whether he will disavow him
 now.
 
-[[AUSTIN-PARAGRAPH: describe any paragraph unique to the Austin letter, as sent.]]
+Two paragraphs appeared only in the letter to Mr. Austin. The first noted that he
+has written in praise of Mr. Trump and Secretary Kennedy, and has criticized the
+"big beautiful bill," and said that the question here is whether he will disavow
+Mr. Trump now. The second told him that this page quotes his earlier statements,
+and invited him to correct anything quoted wrongly or out of context.
 
 Each letter is published here in full, exactly as sent:
 
@@ -149,7 +153,8 @@ Part 1 — Who was asked, and where
 > awarded, per the Secretary of the State's 2026 candidate registration list.
 > Mr. Austin's committee, George for Congress, files with the Federal Election
 > Commission, and his address is the one published on his campaign website.
-> [[AUSTIN-CC: note any copy address used for the Austin letter, or delete.]]
+> The letter to Mr. Austin was copied to contact@votegeorgeforcongress.com, the
+> media contact listed on his campaign's press releases.
 
 
 
@@ -346,7 +351,7 @@ Summary
 | Question                                               | Answer                                                                            |
 | ------------------------------------------------------ | --------------------------------------------------------------------------------- |
 | What was asked?                                        | Whether the candidate will publicly disavow Donald Trump, in his or her own name. |
-| Who was asked?                                         | Fazio, Jennings, Guidone, and Weir on September 10, 2026; Austin on [[AUSTIN-SENT]]. |
+| Who was asked?                                         | Fazio, Jennings, Guidone, and Weir on September 10, 2026; Austin on September 11, 2026. |
 | Was everyone asked the same thing?                     | Yes, in the same words.                                                           |
 | How many have answered?                                | <% correspondence answered %>.                                                    |
 | Will answers be published?                             | Yes, in full, unedited, whatever they say.                                        |

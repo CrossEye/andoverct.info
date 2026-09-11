@@ -70,11 +70,18 @@ const STATUSES = ["Disavowal", "Criticism", "Deflection", "Support"];
 // spam scores characterize a sender, which nothing in this tree may do.
 const PUBLIC_HEADERS = ["From", "To", "Cc", "Date", "Subject", "Message-ID", "DKIM-Signature"];
 
+// Small counts read better as words in running prose.
+function numberWord(n) {
+  return ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"][n] ?? String(n);
+}
+
+
 // Same-day ties break by the report's ledger order so builds are stable.
-const LEDGER = ["fazio", "jennings", "guidone", "weir"];
+const LEDGER = ["fazio", "austin", "jennings", "guidone", "weir"];
 
 const CANDIDATE_NAMES = {
   fazio: "Ryan Fazio",
+  austin: "George Austin",
   jennings: "Jenn Jennings",
   guidone: "Jason Guidone",
   weir: "Steve Weir",
@@ -288,7 +295,7 @@ export function longDate(iso) {
 // ---------------------------------------------------------------------------
 
 /*
- * Published text cites entry directories by path — the four opening letters are
+ * Published text cites entry directories by path — the opening letters are
  * linked twice each from the report. A path that has gone out must keep
  * resolving, so every path ever built is recorded and its disappearance is a
  * build error rather than a 404 a reader finds first.
@@ -453,6 +460,12 @@ function indexPage(entries, ctx) {
   const opening = entries.filter((e) => e.opening).sort(ledgerOrder);
   const rest = entries.filter((e) => !e.opening).sort(byNewest);
 
+  // Counted from the entries, not written in: the page began with four letters
+  // on one day and gained a fifth the next, and hard-coded prose went stale.
+  const openingDates = [...new Set(opening.map((e) => e.date))].sort();
+  const count = numberWord(opening.length);
+  const sameDay = openingDates.length === 1;
+
   const row = (e) => `<tr>
   <td class="date">${escapeHtml(longDate(e.date))}</td>
   <td><a href="${e.id}/">${escapeHtml(e.title)}</a>${e.summary ? `<br><span class="pinned">${escapeHtml(e.summary)}</span>` : ""}</td>
@@ -468,17 +481,18 @@ ${rows.map(row).join("\n")}
 
   const body = [
     `<h1>Correspondence</h1>`,
-    `<p>Every letter, reply, and public answer relating to the question put to four `
-      + `candidates on September 10, 2026, newest first. Each entry carries the message `
+    `<p>Every letter, reply, and public answer relating to the question put to ${count} `
+      + `candidates ${sameDay ? "on" : "beginning"} ${escapeHtml(longDate(openingDates[0]))}, newest first. Each entry carries the message `
       + `as formatted for reading, with its source alongside. Replies are published in `
       + `full and unedited.</p>`,
     rest.length
       ? `<h2>Since the opening letters</h2>\n${table(rest)}`
       : `<h2>Since the opening letters</h2>\n<p class="pinned">As of ${escapeHtml(longDate(ctx.asOf))}, `
-        + `nothing has arrived beyond the four opening letters below.</p>`,
+        + `nothing has arrived beyond the ${count} opening letters below.</p>`,
     `<h2>The opening letters</h2>`,
-    `<p class="pinned">Sent the same day, in the same words, but for the salutation and the `
-      + `sentence identifying the district.</p>`,
+    `<p class="pinned">Sent ${sameDay ? "the same day, " : ""}in the same words, but for the `
+      + `salutation, the sentence identifying the district, and the paragraphs noted in the `
+      + `report.</p>`,
     table(opening),
     `<p><a href="../">&larr; Back to the report</a></p>`,
   ].join("\n");

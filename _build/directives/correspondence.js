@@ -43,7 +43,7 @@ function correspondence(ctx, view, args = {}) {
   const href = (e) => `${base}/${e.path}`;
 
   switch (view) {
-    // The four opening letters, pinned. Deliberately NOT part of the reverse-
+    // The opening letters, pinned. Deliberately NOT part of the reverse-
     // chronological log: they are the oldest items and would eventually truncate
     // off the page, which is backwards for what a first-time reader most needs.
     case 'letters': {
@@ -78,7 +78,10 @@ function correspondence(ctx, view, args = {}) {
         // about a moment, so the empty state carries the date it was true.
         return table(['Date', 'Item', 'Classification'], [[
           '—',
-          `As of ${longDate(c.generated)}, nothing has arrived beyond the four letters above.`,
+          `As of ${longDate(c.generated)}, nothing has arrived beyond the ${
+            ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'][
+              c.entries.filter((e) => e.opening).length] ?? c.entries.filter((e) => e.opening).length
+          } letters above.`,
           '—',
         ]]);
       }
