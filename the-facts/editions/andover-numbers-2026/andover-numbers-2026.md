@@ -25,7 +25,10 @@ something permanent. Neither is right, and the data is detailed enough to say so
 precisely.
 
 Everything below comes from the Connecticut State Department of Education's public
-EdSight system, released in late August.
+EdSight system, released in late August. Every figure is also published here as a
+spreadsheet &mdash; [the full workbook](andover-edsight-data.xlsx) carries each
+number cited on this page, the sheet it can be checked against, and the
+district-by-district data underneath it.
 
 
 What the number is
@@ -231,6 +234,14 @@ factual groundwork above stands on its own.]
 Sources
 -------
 
+- **The underlying data.** [Download the workbook](andover-edsight-data.xlsx)
+  (Excel, twelve sheets). It opens on a documented cover page explaining each
+  EdSight dataset used, what the measures mean and how they are defined, who is
+  included, and the cautions that go with them. A "key figures" sheet lists every
+  number cited on this page against the sheet it can be verified on. The rest is
+  the data itself: every town district in 2024-25 and 2025-26, the year-over-year
+  change, ten years of the performance index, nine of academic growth, spending by
+  function, and the peer group.
 - **Connecticut State Department of Education, EdSight.** All figures are from the
   public EdSight system: the **Performance Index** report (school, district and
   state indices by subject and student group), **Next Generation Accountability**
