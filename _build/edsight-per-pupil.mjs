@@ -39,16 +39,22 @@
  *   data/edsight/per-pupil-expenditures/per-pupil-expenditures.xlsx  — total-PPE trend,
  *       a districts × functions grid for the latest year, and the full long table
  *
+ * Not every entry is a town: the 199 "districts" include 24 charter districts, the
+ * six RESCs, CTECS and GUES. `entityType` labels each row so cross-town work can
+ * filter to local + regional (167 of them) — names alone will not tell you, since
+ * "Regional School District 06" is a town district and "Highville Charter School
+ * District" is not. RESCs also dominate the top of any PPE ranking.
+ *
  * Tidy row shape (one row per district × year × function):
- *   year, district, districtCode, function, expenditures, pupils, pupilBasis,
- *   pupilBasisLabel, ppe, missing
+ *   year, district, districtCode, entityType, function, expenditures, pupils,
+ *   pupilBasis, pupilBasisLabel, ppe, missing
  */
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import ExcelJS from "exceljs";
 import {
   Jar, get, spUrl, fetchYears, parseCsv, toCsv, headerIndex, cleanCode, parseNumber,
-  writeRecordsJson, NO_RESULTS, STATE, SP, PROGRAM_BASE,
+  writeRecordsJson, NO_RESULTS, STATE, SP, PROGRAM_BASE, entityType,
 } from "./edsight-client.mjs";
 
 const ROOT = join(import.meta.dirname, "..");
@@ -108,10 +114,12 @@ function tidy(csvText, year) {
     const basis = parseNumber(r[idx.basis]);
     const ppe = parseNumber(r[idx.ppe]);
 
+    const districtCode = cleanCode(r[idx.code]);
     out.push({
       year,
       district,
-      districtCode: cleanCode(r[idx.code]),
+      districtCode,
+      entityType: entityType(districtCode, district),
       function: fn,
       expenditures: expenditures.value,
       pupils: pupils.value,
@@ -130,7 +138,7 @@ function tidy(csvText, year) {
 // ---------------------------------------------------------------- outputs
 
 const FIELDS = [
-  "year", "district", "districtCode", "function", "expenditures",
+  "year", "district", "districtCode", "entityType", "function", "expenditures",
   "pupils", "pupilBasis", "pupilBasisLabel", "ppe", "missing",
 ];
 
@@ -149,12 +157,15 @@ async function writeXlsx(records, years, functions, file) {
   trend.columns = [
     { header: "District", key: "district", width: 44 },
     { header: "Code", key: "code", width: 10 },
+    // So a reader can filter the RESCs and charters out of a town comparison.
+    { header: "Type", key: "type", width: 16 },
     ...years.map((y) => ({ header: y, key: y, width: 11, style: { numFmt: money } })),
   ];
   const totals = new Map();
   for (const r of records) {
     if (r.function !== TOTAL) continue;
-    if (!totals.has(r.district)) totals.set(r.district, { district: r.district, code: r.districtCode });
+    if (!totals.has(r.district))
+      totals.set(r.district, { district: r.district, code: r.districtCode, type: r.entityType });
     totals.get(r.district)[r.year] = r.ppe;
   }
   for (const row of [...totals.values()].sort(byDistrictFirstState)) trend.addRow(row);
@@ -166,12 +177,14 @@ async function writeXlsx(records, years, functions, file) {
   grid.columns = [
     { header: "District", key: "district", width: 44 },
     { header: "Code", key: "code", width: 10 },
+    { header: "Type", key: "type", width: 16 },
     ...functions.map((f) => ({ header: f, key: f, width: 15, style: { numFmt: money } })),
   ];
   const byDistrict = new Map();
   for (const r of records) {
     if (r.year !== latest) continue;
-    if (!byDistrict.has(r.district)) byDistrict.set(r.district, { district: r.district, code: r.districtCode });
+    if (!byDistrict.has(r.district))
+      byDistrict.set(r.district, { district: r.district, code: r.districtCode, type: r.entityType });
     byDistrict.get(r.district)[r.function] = r.ppe;
   }
   for (const row of [...byDistrict.values()].sort(byDistrictFirstState)) grid.addRow(row);
@@ -188,7 +201,7 @@ async function writeXlsx(records, years, functions, file) {
 
   for (const sheet of wb.worksheets) {
     sheet.getRow(1).font = { bold: true };
-    sheet.views = [{ state: "frozen", xSplit: sheet.name === "All rows" ? 0 : 2, ySplit: 1 }];
+    sheet.views = [{ state: "frozen", xSplit: sheet.name === "All rows" ? 0 : 3, ySplit: 1 }];
   }
   // Statewide row bold on the two pivot sheets.
   for (const name of ["Total PPE", `By function ${latest}`]) {

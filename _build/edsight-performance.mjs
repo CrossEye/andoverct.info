@@ -34,28 +34,34 @@
  *     correct rather than lossy: Litchfield and Regional 06 appear through
  *     2022-23 and stop, Regional 20 picks up after they consolidate. Fetching
  *     per year therefore captures districts that no longer exist.
- *   - Four entries in the dropdown (DMHAS and three closed academies) never
- *     return rows in any year.
+ *     Fetching every year this way reaches all 205 districts the dropdown offers,
+ *     including ones that report in only a single year (DMHAS appears in 2016-17
+ *     alone). Any one year covers only ~199 of them.
  *   - The district-level export carries the 2-level meal category only; the
  *     3-level breakdown is not in it.
  *   - `*` means suppressed for privacy (small n), `N/A` means the subject is not
  *     assessed at that grade. Both become null, with `suppressed` recording why.
  *
  * Outputs, all from the same fetch so they cannot drift:
- *   data/edsight/performance-index/raw/performance-index-<year>.csv  — upstream bytes, untouched
+ *   data/edsight/performance-index/raw/performance-index-<year>-{districts,state}.csv — upstream bytes, untouched
  *   data/edsight/performance-index/performance-index.csv             — tidy long format
  *   data/edsight/performance-index/performance-index.json            — same rows + provenance
  *   data/edsight/performance-index/performance-index.xlsx            — one sheet per subject
  *
+ * Not every entry is a town: the 205 "districts" also include charter districts,
+ * the six RESCs, state-agency schools and the three endowed academies. `entityType`
+ * labels each row so cross-town work can filter to local + regional (167 of them).
+ *
  * Tidy row shape (one row per district × year × student group × subject):
- *   year, district, districtCode, category, studentGroup, subject, count, index, suppressed
+ *   year, district, districtCode, entityType, category, studentGroup, subject,
+ *   count, index, suppressed
  */
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import ExcelJS from "exceljs";
 import {
   Jar, get, spUrl, fetchYears, parseCsv, toCsv, headerIndex, cleanCode, parseNumber,
-  writeRecordsJson, NO_RESULTS, STATE, SP, PROGRAM_BASE,
+  writeRecordsJson, NO_RESULTS, STATE, SP, PROGRAM_BASE, entityType,
 } from "./edsight-client.mjs";
 
 const ROOT = join(import.meta.dirname, "..");
@@ -127,13 +133,15 @@ function tidy(csvText, year) {
   for (const r of rows.slice(hi + 1)) {
     const district = r[idx.district]?.trim();
     if (!district) continue;
+    const districtCode = idx.code >= 0 ? cleanCode(r[idx.code]) : "";
     for (const s of subjectCols) {
       const index = num(r[s.index]);
       const count = s.count >= 0 ? num(r[s.count]) : { value: null, suppressed: null };
       out.push({
         year,
         district,
-        districtCode: idx.code >= 0 ? cleanCode(r[idx.code]) : "",
+        districtCode,
+        entityType: entityType(districtCode, district),
         category: r[idx.category]?.trim() ?? "",
         studentGroup: r[idx.group]?.trim() ?? "",
         subject: s.subject,
@@ -148,7 +156,7 @@ function tidy(csvText, year) {
 
 // ---------------------------------------------------------------- outputs
 
-const FIELDS = ["year", "district", "districtCode", "category", "studentGroup", "subject", "count", "index", "suppressed"];
+const FIELDS = ["year", "district", "districtCode", "entityType", "category", "studentGroup", "subject", "count", "index", "suppressed"];
 
 async function writeXlsx(records, years, file) {
   const wb = new ExcelJS.Workbook();

@@ -158,6 +158,40 @@ export const cleanCode = (v) => {
 };
 
 /*
+ * What kind of entity a row is about, from the last four digits of its district
+ * code. EdSight's "districts" are not all towns: the lists mix in charter
+ * districts, the six RESCs, state-agency schools and the endowed academies.
+ *
+ * This matters because names do not tell you — "Regional School District 06" is
+ * a public town district while "Highville Charter School District" is not, and
+ * both end in "School District". Cross-town comparisons almost always want
+ * `local` + `regional` only.
+ *
+ * Counts observed across both datasets: 149 local, 18 regional, 25 charter,
+ * 6 resc, 2 state-agency, 1 state-technical (CTECS), 1 other-services (GUES),
+ * 3 endowed-academy (Norwich Free Academy, The Gilbert School, Woodstock Academy).
+ */
+const ENTITY_TYPES = {
+  "0011": "local",           // town school district
+  "0012": "regional",        // regional school district (RSD nn)
+  "0013": "charter",         // state charter district
+  "0014": "resc",            // regional educational service center
+  "0015": "state-agency",    // DMHAS, Unified School District #2 (DCF)
+  "0016": "state-technical", // CT Technical Education and Career System
+  "0018": "other-services",  // Goodwin University Educational Services
+  "0022": "endowed-academy", // incorporated academies serving as town high schools
+};
+
+/** True for the town-governed public districts — the usual comparison set. */
+export const isTownDistrict = (type) => type === "local" || type === "regional";
+
+export function entityType(districtCode, districtName) {
+  if (districtName === STATE) return "state";
+  const code = String(districtCode ?? "");
+  return ENTITY_TYPES[code.slice(-4)] ?? "other";
+}
+
+/*
  * Upstream's two flavours of missing. `*` is a privacy suppression (small n);
  * `N/A` means the measure does not apply. Anything else non-numeric is handed
  * back verbatim so it shows up rather than being silently nulled.
