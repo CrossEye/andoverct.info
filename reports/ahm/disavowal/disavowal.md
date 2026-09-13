@@ -95,6 +95,12 @@ grants awarded, meaning each asked the public to finance his or her campaign,
 and the public agreed. Mr. Austin, running for federal office, is outside that
 program.
 
+The first answer arrived on September 13. Jenn Jennings, the Republican
+candidate in the 4th Senate District, replied that she will not disavow Mr.
+Trump, "past, present or future," and said the question is the wrong one to ask
+a candidate for the state Senate. Her letter is published below in full, and her
+objection is taken up in Part 5.
+
 This page is the record. It will be updated as answers come in, through Election
 Day on November 3, 2026. There is no deadline. An answer at any point gets
 added.
@@ -215,6 +221,13 @@ statement that the candidate does not agree with everything the President does,
 or a reply about the party rather than the man.
 
 
+### Refusal ###
+
+An explicit statement that the candidate will not disavow Mr. Trump, without a
+statement of support for him. This is a direct answer to the question as asked,
+and it will be published and described as one.
+
+
 ### Support ###
 
 A statement that the candidate does support Mr. Trump. This is also a real
@@ -225,6 +238,15 @@ same prominence as any other.
 ### No response ###
 
 Nothing received. Reported as of a date, never as a permanent condition.
+
+> **A change to this scale, September 13, 2026.** The first four categories
+> were published on September 10, before any reply had arrived. "Refusal" was
+> added on September 13 when the first one did. The original list did not
+> anticipate a candidate answering the question plainly in the negative, and
+> the nearest label, Deflection, would have described a direct answer as an
+> evasion. Changing a published standard after seeing a reply deserves to be
+> noticed, so it is recorded here rather than made quietly. Nothing else on the
+> scale changed, and no earlier classification was revised.
 
 
 
@@ -343,6 +365,31 @@ date to 2022. No sitting Connecticut Republican legislator has made a comparable
 statement in 2025 or 2026. The ask is answerable, and it has been answered
 before, but not recently and not by anyone currently in office.
 
+### The objection, from a candidate ###
+
+Ms. Jennings made the fairest version of this objection herself, and it deserves
+an answer rather than a footnote. She wrote that of all the questions that could
+be put to a candidate for the state Senate, this is a strange one to choose; that
+Americans were not asked to denounce the President under the previous
+administration and should not be asked to now; and that defining people by which
+figures they will denounce "leaves very little room for independent thought,
+disagreement, conversation or common ground." She asked instead for a question
+about Connecticut and about what a state senator actually has the authority to
+do.
+
+Three of those points are well taken. This is one question and not a program;
+nobody should be judged only by it; and a state senator votes on Hartford's
+business, not Washington's. Readers should weigh her answer alongside everything
+else she says, not instead of it.
+
+Where I would differ is on the premise that the question is out of bounds for a
+state office. It is not asked because a state senator can restrain a President.
+It is asked because a candidate's judgment about the leader of her own party is
+a fact about her judgment, and voters are entitled to it in the same way they are
+entitled to her position on taxes. She answered it directly, which is more than
+the question was guaranteed to get, and the answer is now on the record where a
+voter can find it. That is the whole purpose of the page.
+
 
 
 Summary
@@ -382,6 +429,11 @@ office take part in the Citizens' Election Program and have been awarded grants.
 legal obligation to answer anyone's questions, and this page claims none. It
 does mean the campaigns are publicly financed, and a voter who notices that is
 not being unreasonable.
+
+**A refusal is an answer.** Ms. Jennings said no, plainly and in her own name,
+and that is recorded as a direct answer rather than an evasion. She also
+declined to be defined by the question, and readers should take that seriously
+too. She is entitled to be judged on the whole of what she says.
 
 **An answer ends the matter, whatever it says.** A candidate who replies "I
 support him," in those words, has answered honestly and will be recorded as

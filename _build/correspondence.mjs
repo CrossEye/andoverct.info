@@ -17,7 +17,9 @@
  *   correspondence/
  *     _src/<id>.yml            authored descriptors      PUBLISHED
  *     _raw/<id>.headers.txt    full raw email headers    NEVER PUBLISHED
+ *     _raw/<id>.eml            the message as received   NEVER PUBLISHED
  *     <id>/letter.txt          the message body          PUBLISHED
+ *     <id>/<enclosure>         an image sent with it     PUBLISHED
  *     <id>/index.html          generated
  *     index.html               generated
  *     correspondence.json      generated
@@ -63,7 +65,13 @@ const KINDS = new Set(["email-sent", "email-received", "public", "press"]);
 // Part 3 of the report defines exactly these as answers. "No response" is NOT
 // an entry status — it is a ledger state computed from the absence of one — so
 // it is deliberately missing here.
-const STATUSES = ["Disavowal", "Criticism", "Deflection", "Support"];
+//
+// "Refusal" was added on 2026-09-13 with the first reply. The original four did
+// not anticipate a candidate answering the question plainly in the negative, and
+// the nearest label, Deflection, would have misdescribed a direct answer. The
+// scale was published before any reply arrived, so a change to it is itself
+// disclosed in Part 3 rather than made quietly here.
+const STATUSES = ["Disavowal", "Criticism", "Deflection", "Refusal", "Support"];
 
 // The six headers doing evidentiary work (HANDOFF-correspondence.md). Everything
 // else in a raw header block is dropped: Received carries originating IPs, and
@@ -192,6 +200,29 @@ function validate(entry, dir) {
   for (const key of ["screenshot", "pdf"]) {
     if (src[key] && !existsSync(join(dir, entry.id, src[key]))) {
       err(f, `source.${key} not found: ${entry.id}/${src[key]}`);
+    }
+  }
+
+  // An enclosure is part of the message, not evidence about it — a signature
+  // banner, a flyer, a photograph the sender chose to include. It is published
+  // because "in full and unedited" covers what a correspondent sends, not only
+  // the words; source.screenshot is a different thing and stays a link.
+  const enc = entry.enclosure;
+  if (enc != null) {
+    if (typeof enc !== "object" || Array.isArray(enc)) {
+      err(f, "enclosure must be a mapping with file, alt, and optionally original and caption");
+    } else {
+      for (const k of ["file", "alt"]) {
+        if (!enc[k] || typeof enc[k] !== "string") err(f, `enclosure.${k} is required`);
+      }
+      // alt text is not optional here. The image carries words a reader using a
+      // screen reader would otherwise lose entirely, and those words are the
+      // candidate's own.
+      for (const k of ["file", "original"]) {
+        if (enc[k] && !existsSync(join(dir, entry.id, enc[k]))) {
+          err(f, `enclosure.${k} not found: ${entry.id}/${enc[k]}`);
+        }
+      }
     }
   }
 }
@@ -343,6 +374,14 @@ details.source pre {
   border: 1px solid #e3dcc9; padding: 14px 16px; overflow-x: auto;
 }
 .withheld { font-size: .86rem; color: #5a5348; margin: 10px 0 0; }
+figure.enclosure { margin: 0 0 26px; }
+figure.enclosure img {
+  display: block; max-width: 100%; height: auto;
+  border: 1px solid #e3dcc9;
+}
+figure.enclosure figcaption {
+  font-size: .86rem; color: #5a5348; margin-top: 8px;
+}
 .gaps {
   background: #fdf6e3; border: 1px solid #e3d7ab; border-left: 3px solid #b8942f;
   padding: 12px 16px; margin: 0 0 24px; font-size: .92rem;
@@ -419,6 +458,20 @@ function sourceHtml(entry, dir) {
   return `<details class="source">\n<summary>Source</summary>\n${parts.join("\n")}\n</details>`;
 }
 
+function enclosureHtml(entry) {
+  const enc = entry.enclosure;
+  if (!enc) return "";
+  const img = `<img src="${escapeHtml(enc.file)}" alt="${escapeHtml(enc.alt)}">`;
+  const framed = enc.original
+    ? `<a href="${escapeHtml(enc.original)}">${img}</a>`
+    : img;
+  const caption = enc.caption ? `<figcaption>${escapeHtml(enc.caption)}</figcaption>` : "";
+  return `<figure class="enclosure">
+${framed}
+${caption}
+</figure>`;
+}
+
 function entryPage(entry, dir, ctx) {
   const bodyText = readFileSync(join(dir, entry.id, entry.body), "utf8");
   const crumbsHtml = buildCrumbs([
@@ -443,6 +496,7 @@ function entryPage(entry, dir, ctx) {
     `<p class="entry-meta">${meta}</p>`,
     gapsHtml(entry.gaps),
     `<pre class="letter">${escapeHtml(reflow(bodyText.trim()))}</pre>`,
+    enclosureHtml(entry),
     sourceHtml(entry, dir),
     `<p><a href="${ctx.correspondenceUrl}">&larr; All correspondence</a></p>`,
   ].filter(Boolean).join("\n");
@@ -606,6 +660,7 @@ export function buildCorrespondence(folder, meta, opts = {}) {
       id: e.id, date: e.date, time: e.time || null, kind: e.kind,
       title: e.title, summary: e.summary || null, candidate: e.candidate || null,
       status: e.status || null, opening: e.opening === true, path: `${e.id}/`,
+      enclosure: e.enclosure ? `${e.id}/${e.enclosure.file}` : null,
     })),
     ledger: buildLedger(entries, asOf),
   };

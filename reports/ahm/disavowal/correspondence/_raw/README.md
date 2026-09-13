@@ -21,6 +21,12 @@ What the allowlist drops, and why:
 - `X-Spam-*` and similar — a spam score characterizes a sender, and nothing here
   characterizes a candidate.
 
+Where a received message is archived whole, its `.eml` sits here beside the
+headers, under the same exclusion. Verifying a DKIM signature needs the body
+byte-exact, and the published entry is reflowed for reading, so the headers
+alone cannot settle a dispute about a reply. A sent message needs no `.eml`:
+this site is the sender and `letter.txt` is the primary record.
+
 These files exist so that a disputed message can be authenticated. That is a
 rare, deliberate, offline act; it does not need to be reachable over the web.
 Keeping them in the (private) repo rather than on the box means git timestamps
