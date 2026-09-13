@@ -2,3 +2,9 @@
 # process returned, and they are the provenance behind the reshaped outputs. SAS
 # sends CRLF; leave it alone so the committed bytes still match upstream.
 /data/edsight/*/raw/*.csv -text
+
+# Archived email, kept so a disputed reply can be authenticated. Verifying a
+# DKIM signature needs the message byte-exact, and RFC 5322 line endings are
+# CRLF, so normalisation would silently destroy the only thing these files are
+# for. Git stored one 39,159 bytes short before this rule existed.
+**/correspondence/_raw/*.eml -text
