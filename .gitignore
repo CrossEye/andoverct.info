@@ -47,10 +47,13 @@ Thumbs.db
 # town-asset staging baseline (describes unpublished content; never commit)
 .town-asset-stage-state.json
 
-# EdSight combined outputs (~44 MB) are reshaped from the raw per-year CSVs that
-# ARE committed under data/edsight/performance-index/raw/. Those raws are the
-# provenance; regenerate everything else in a second or two with
-#   npm run fetch:edsight -- --offline
-/data/edsight/performance-index/performance-index.csv
-/data/edsight/performance-index/performance-index.json
-/data/edsight/performance-index/performance-index.xlsx
+# EdSight combined outputs are reshaped from the raw per-year CSVs, which ARE
+# committed under data/edsight/*/raw/ as the provenance. The reshaped files are
+# bulky (the performance-index trio alone is ~44 MB) and rebuild in a second or
+# two from those raws:
+#   npm run fetch:edsight -- --offline        (performance index)
+#   npm run fetch:edsight-ppe -- --offline    (per-pupil expenditures)
+/data/edsight/*/*.csv
+/data/edsight/*/*.json
+/data/edsight/*/*.xlsx
+!/data/edsight/*/raw/

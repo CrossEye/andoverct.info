@@ -53,144 +53,42 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import ExcelJS from "exceljs";
+import {
+  Jar, get, spUrl, fetchYears, parseCsv, toCsv, headerIndex, cleanCode, parseNumber,
+  writeRecordsJson, NO_RESULTS, STATE, SP, PROGRAM_BASE,
+} from "./edsight-client.mjs";
 
 const ROOT = join(import.meta.dirname, "..");
 const OUT_DIR = join(ROOT, "data/edsight/performance-index");
 const RAW_DIR = join(OUT_DIR, "raw");
 
-const HOST = "https://edsight.ct.gov";
-const SP = `${HOST}/SASStoredProcess/do`;
-const PROGRAM_BASE = "/CTDOE/EdSight/Release/Reporting/Public/Reports/StoredProcesses";
-const EXPORT_PROGRAM = `${PROGRAM_BASE}/PerformanceIndexExport`;
-const REPORT_PROGRAM = `${PROGRAM_BASE}/PerformanceIndexReport_SiteCore`;
+const EXPORT_PROGRAM = "PerformanceIndexExport";
+const REPORT_PROGRAM = "PerformanceIndexReport_SiteCore";
 
 const SUBJECTS = ["ELA", "Math", "Science"];
-const STATE = "State of Connecticut";
 // The all-students headline row: "District" in a district export, "State" in the
 // statewide one.
 const HEADLINE_GROUPS = new Set(["District", "State"]);
 
-// ---------------------------------------------------------------- http
-
-// The stored process bounces through SASLogon/CAS to mint a guest session, so
-// the only thing we need to carry across redirects is cookies. Keyed by name;
-// every hop is the same host.
-class Jar {
-  #c = new Map();
-  absorb(res) {
-    for (const line of res.headers.getSetCookie?.() ?? []) {
-      const [pair] = line.split(";");
-      const eq = pair.indexOf("=");
-      if (eq > 0) this.#c.set(pair.slice(0, eq).trim(), pair.slice(eq + 1).trim());
-    }
-  }
-  get header() {
-    return [...this.#c].map(([k, v]) => `${k}=${v}`).join("; ");
-  }
-}
-
-async function get(url, jar, { maxHops = 12 } = {}) {
-  let current = url;
-  for (let hop = 0; hop < maxHops; hop++) {
-    const res = await fetch(current, {
-      redirect: "manual",
-      headers: {
-        // A plain UA is enough; the endpoint does not gate on it, but being
-        // identifiable is the polite thing to do against a public service.
-        "user-agent": "andoverct.info data fetch (+https://andoverct.info)",
-        // Required, not optional. SAS derives its session locale from this
-        // header, and with no Accept-Language at all (Node's fetch sends none,
-        // unlike curl or a browser) every request dies with "Stored Process
-        // Error … The locale cannot be created."
-        "accept-language": "en-US,en;q=0.9",
-        ...(jar.header ? { cookie: jar.header } : {}),
-      },
-    });
-    jar.absorb(res);
-    if (res.status >= 300 && res.status < 400) {
-      const loc = res.headers.get("location");
-      if (!loc) throw new Error(`${res.status} with no Location at ${current}`);
-      current = new URL(loc, current).href;
-      continue;
-    }
-    if (!res.ok) throw new Error(`HTTP ${res.status} at ${current}`);
-    return res;
-  }
-  throw new Error(`too many redirects starting at ${url}`);
-}
-
 // `scope` is either "All Districts" (every district with data that year) or
 // "State of Connecticut" (the statewide benchmark, which "All Districts" omits).
-function exportUrl(year, scope) {
-  const q = new URLSearchParams({
-    _program: EXPORT_PROGRAM,
+const exportUrl = (year, scope) =>
+  spUrl(EXPORT_PROGRAM, {
     _year: year,
     _district: scope,
     _school: " ",
     _subgroup: " ", // must be a bare space — see header comment
     _subject: "All Subjects",
   });
-  return `${SP}?${q}`;
-}
 
-// The year dropdown lives in the report page's own HTML, so we read the list
-// from upstream rather than hardcoding it — a new school year appears on its own.
-async function fetchYears(jar) {
-  const q = new URLSearchParams({
-    _program: REPORT_PROGRAM,
-    _year: "Trend",
-    _district: "State of Connecticut",
-    _school: "",
-    _subgroup: "  ",
-    _subject: "All Subjects",
-    _select: "Submit",
-  });
-  const html = await (await get(`${SP}?${q}`, jar)).text();
-  const sel = html.match(/<select name="_year"[\s\S]*?<\/select>/i);
-  if (!sel) throw new Error("could not find the _year dropdown in the report page");
-  const years = [...sel[0].matchAll(/<option[^>]*>([^<\n]*)/g)]
-    .map((m) => m[1].trim())
-    .filter((y) => /^\d{4}-\d{2}$/.test(y)); // drop "Trend"
-  if (!years.length) throw new Error("_year dropdown contained no school years");
-  return years;
-}
-
-// ---------------------------------------------------------------- csv
-
-// RFC 4180 enough for this feed: quoted fields, doubled quotes, CRLF.
-function parseCsv(text) {
-  const rows = [];
-  let row = [];
-  let field = "";
-  let quoted = false;
-  for (let i = 0; i < text.length; i++) {
-    const ch = text[i];
-    if (quoted) {
-      if (ch === '"') {
-        if (text[i + 1] === '"') { field += '"'; i++; } else quoted = false;
-      } else field += ch;
-      continue;
-    }
-    if (ch === '"') quoted = true;
-    else if (ch === ",") { row.push(field); field = ""; }
-    else if (ch === "\n") { row.push(field); rows.push(row); row = []; field = ""; }
-    else if (ch !== "\r") field += ch;
-  }
-  if (field || row.length) { row.push(field); rows.push(row); }
-  return rows;
-}
-
-const csvCell = (v) =>
-  v == null ? "" : /[",\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : String(v);
-const toCsv = (rows) => rows.map((r) => r.map(csvCell).join(",")).join("\r\n") + "\r\n";
-
-// District codes arrive Excel-armoured as ="0010011" so leading zeros survive.
-const cleanCode = (v) => {
-  const m = String(v).match(/^="?"?(\d+)"?"?$/);
-  return m ? m[1] : String(v).replace(/[="]/g, "").trim();
+const REPORT_PARAMS = {
+  _year: "Trend",
+  _district: STATE,
+  _school: "",
+  _subgroup: "  ",
+  _subject: "All Subjects",
+  _select: "Submit",
 };
-
-const NO_RESULTS = /did not contain any results/i;
 
 /*
  * Reshape one year's export into tidy long rows.
@@ -202,11 +100,7 @@ const NO_RESULTS = /did not contain any results/i;
 function tidy(csvText, year) {
   if (NO_RESULTS.test(csvText)) return [];
   const rows = parseCsv(csvText);
-  const hi = rows.findIndex((r) => r[0]?.trim() === "District Name");
-  if (hi < 0) throw new Error(`${year}: no "District Name" header row in export`);
-
-  const header = rows[hi].map((h) => h.trim());
-  const col = (name) => header.findIndex((h) => h.toLowerCase() === name.toLowerCase());
+  const { headerRow: hi, col } = headerIndex(rows, "District Name");
   const idx = {
     district: col("District Name"),
     code: col("District Code"), // absent from the statewide export
@@ -222,12 +116,11 @@ function tidy(csvText, year) {
     index: col(`${s}PerformanceIndex`),
   })).filter((s) => s.index >= 0);
 
+  // This feed has no blank index cells (verified across all years), so a blank
+  // and a `*` mean the same thing here: withheld.
   const num = (raw) => {
-    const v = String(raw ?? "").trim();
-    if (v === "" || v === "*") return { value: null, suppressed: "suppressed" };
-    if (/^n\/?a$/i.test(v)) return { value: null, suppressed: "not-applicable" };
-    const n = Number(v.replace(/,/g, ""));
-    return Number.isFinite(n) ? { value: n, suppressed: null } : { value: null, suppressed: v };
+    const { value, missing } = parseNumber(raw);
+    return { value, suppressed: missing === "blank" ? "suppressed" : missing };
   };
 
   const out = [];
@@ -341,7 +234,7 @@ if (offline) {
   console.log(`offline: re-deriving from ${years.length} cached year(s)`);
 } else {
   const jar = new Jar();
-  years = yearArg ? [yearArg] : (await fetchYears(jar)).sort();
+  years = yearArg ? [yearArg] : await fetchYears(REPORT_PROGRAM, REPORT_PARAMS, jar);
   console.log(`years: ${years.join(", ")}`);
   for (const year of years) {
     const notes = [];
@@ -382,13 +275,12 @@ writeFileSync(
   toCsv([FIELDS, ...records.map((r) => FIELDS.map((f) => r[f]))])
 );
 
-// Metadata pretty-printed, then one record per line: a third the size of a
-// fully indented dump, and a readable diff when a year is refreshed.
-const meta = JSON.stringify(
+writeRecordsJson(
+  join(OUT_DIR, "performance-index.json"),
     {
       source: "CT EdSight, Performance Index",
       page: "https://public-edsight.ct.gov/performance/performance-index?language=en_US",
-      endpoint: `${SP}?_program=${EXPORT_PROGRAM}`,
+      endpoint: `${SP}?_program=${PROGRAM_BASE}/${EXPORT_PROGRAM}`,
       // On an offline rebuild the meaningful date is when the cached raws were
       // captured, not when the reshape ran.
       fetchedAt: offline ? newestRawAt() : fetchedAt,
@@ -405,15 +297,7 @@ const meta = JSON.stringify(
         `"${STATE}" is the statewide benchmark, fetched separately; its headline student group is "State" rather than "District" and it carries no districtCode.`,
       ],
     },
-    null,
-    2
-);
-
-writeFileSync(
-  join(OUT_DIR, "performance-index.json"),
-  `${meta.slice(0, -2)},\n  "records": [\n` +
-    records.map((r) => `    ${JSON.stringify(r)}`).join(",\n") +
-    "\n  ]\n}\n"
+  records
 );
 
 await writeXlsx(records, allYears, join(OUT_DIR, "performance-index.xlsx"));
