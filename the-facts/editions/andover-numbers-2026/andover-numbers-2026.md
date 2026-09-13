@@ -6,9 +6,11 @@ date: 2026-09-18
 description: "Andover posted the largest one-year gain in the state performance index of any Connecticut town district in 2025-26, rising 5.5 points while the state moved 0.5. What the number measures, what survives adjustment for student need, and what is still to come in November."
 page_title: "The Largest One-Year Gain in the State — the facts about Andover's 2025-26 results"
 cta:
-  heading: "The full data, district by district"
+  heading: "More to come in November"
   body: |
-    Every Connecticut town district, every measure &nbsp;&middot;&nbsp; [PLACEHOLDER: link to the fuller interactive report once it is published]
+    Connecticut publishes the academic growth data &mdash; the measure that best isolates
+    what a school itself contributes &mdash; around November for the preceding year.
+    A fuller district-by-district report will follow here when it lands.
 colophon: |
   Compiled by Scott Sauyet, Andover, from Connecticut State Department of Education public data. Posted at andoverct.info/the-facts. This page is part of an ongoing series; new editions appear at the same URL as the local conversation evolves. Earlier editions remain accessible at their permanent URLs (use the menu to navigate).
 ---
@@ -252,10 +254,13 @@ Sources
   a student with a disability. The Connecticut figure shown on the charts is the
   statewide student share, which sits well to the right of most towns because
   high-need students are concentrated in the cities.
-- **Peer group.** The 45-town comparison group used in earlier editions: small
-  districts with no high school of their own. Norwich, which appears in the
-  original spending comparison, is excluded here as an urban district several
-  times the size of any other member.
+- **Peer group.** The same 45-district set used in this site's earlier report on
+  peer spending: districts that run only elementary grades and send older students
+  elsewhere for high school. Norwich meets that structural test but was excluded
+  from the analysis there, for the reasons set out in that report &mdash; it is a
+  city district several times the size of any other member. It is excluded here on
+  the same basis. Norwich appears in that report's published comparison data, so
+  readers who want to include it can.
 - **Spending.** Reported by districts to the state and not fully audited; the
   state notes that audits may change the figures. Excludes debt, capital beyond
   equipment, adult education, community services, non-local food service and state

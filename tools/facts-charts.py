@@ -21,6 +21,31 @@ PNG rendering needs Chrome; pass --no-png to skip it.
 import csv, json, os, subprocess, sys, math
 from collections import defaultdict
 
+try:
+    from PIL import ImageFont
+except ImportError:
+    ImageFont = None
+
+_FONTS = {}
+
+
+def text_width(s, size, bold=False):
+    """Advance width of a string in Georgia at `size` px.
+
+    Measured from the actual font file so legend items can be spaced by a
+    constant gap between the end of one label and the next marker. Falls back
+    to a per-character estimate where the font or Pillow is unavailable.
+    """
+    path = r'C:\Windows\Fonts\georgia' + ('b' if bold else '') + '.ttf'
+    key = (path, round(size))
+    if key not in _FONTS:
+        try:
+            _FONTS[key] = ImageFont.truetype(path, int(round(size))) if ImageFont else None
+        except Exception:
+            _FONTS[key] = None
+    f = _FONTS[key]
+    return f.getlength(s) if f else len(s) * size * 0.52
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, 'data', 'edsight')
 
@@ -122,7 +147,8 @@ class Svg:
         self.w, self.parts = w, []
         self.title, self.subtitle, self.source = title, subtitle, source
         self.key_items = []
-        self.head_h = 104 if subtitle else 78
+        self.key_y = 96 if subtitle else 70      # baseline of the key row
+        self.head_h = self.key_y + 26            # plot area starts here
         self.plot_h = plot_h
         self.h = self.head_h + plot_h + 46
 
@@ -157,8 +183,9 @@ class Svg:
         if self.subtitle:
             head.append(f'<text x="34" y="72" font-family="{SERIF}" font-size="15.5" font-style="italic" '
                         f'fill="{C_SOFT}">{esc(self.subtitle)}</text>')
-        # key row
-        kx, ky = 34, self.head_h - 8
+        # key row: one constant gap between the end of a label and the next marker
+        GAP, LEAD = 28, 16
+        kx, ky = 34, self.key_y
         for shape, colour, label in self.key_items:
             if shape == 'bar':
                 head.append(f'<rect x="{kx}" y="{ky - 9}" width="3.5" height="12" fill="{colour}"/>')
@@ -169,8 +196,8 @@ class Svg:
                 head.append(f'<rect x="{kx}" y="{ky - 5}" width="16" height="2" fill="{colour}"/>')
             else:
                 head.append(f'<circle cx="{kx + 4}" cy="{ky - 4}" r="5" fill="{colour}"/>')
-            head.append(f'<text x="{kx + 15}" y="{ky}" font-family="{SERIF}" font-size="13.5" fill="{C_SOFT}">{esc(label)}</text>')
-            kx += 15 + len(label) * 6.9 + 20
+            head.append(f'<text x="{kx + LEAD}" y="{ky}" font-family="{SERIF}" font-size="13.5" fill="{C_SOFT}">{esc(label)}</text>')
+            kx += LEAD + text_width(label, 13.5) + GAP
         out += head + self.parts
         if self.source:
             out.append(f'<text x="34" y="{self.h - 14}" font-family="{SERIF}" font-size="12" font-style="italic" '
@@ -290,7 +317,8 @@ def scatter_chart(rows, state_pt, xk, yk, title, subtitle, xlab, ylab, xfmt, yfm
         a = my - b * mx
         r = sxy / math.sqrt(sxx * syy)
         s.line(X(xd[0]), Y(a + b * xd[0]), X(xd[1]), Y(a + b * xd[1]), C_SOFT, 2, 0.6, cap='round')
-        lbl = f'r = {"+" if r >= 0 else "\u2212"}{abs(r):.3f}   r\u00b2 = {r * r:.2f}   n = {n}'
+        # SVG collapses runs of whitespace, so separate the parts explicitly
+        lbl = f'r = {"+" if r >= 0 else "\u2212"}{abs(r):.3f}  \u00b7  r\u00b2 = {r * r:.2f}  \u00b7  n = {n}'
         cx = R - len(lbl) * 3.4
         fy = Y(a + b * ((cx - L) / (R - L) * (xd[1] - xd[0]) + xd[0]))
         if fy > T + 30:
