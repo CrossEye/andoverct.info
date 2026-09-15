@@ -109,8 +109,12 @@ def load():
     years = defaultdict(list)
     state = {}
     for (d, y), subs in lvl.items():
+        # `level` is OUR combination of the three subjects, weighted by students
+        # tested — EdSight publishes only the per-subject indices, kept here as
+        # `ela` and `math` so the headline charts plot figures a reader can find.
         rec = dict(name=d.replace(' School District', '').replace('Regional School District ', 'RSD '),
                    level=weighted(subs), growth=growth.get((d, y)), ppe=ppe.get((d, y)),
+                   ela=subs.get('ELA', (None, None))[0], math=subs.get('Math', (None, None))[0],
                    hn=(100 * hn[(d, y)] / allc[(d, y)]) if (hn.get((d, y)) and allc.get((d, y))) else None,
                    n=allc.get((d, y)), peer=d in peers, me=(d == ME))
         if d == STATE:
@@ -340,13 +344,13 @@ def scatter_chart(rows, state_pt, xk, yk, title, subtitle, xlab, ylab, xfmt, yfm
     return s.render(), xd, yd
 
 
-def change_chart(rows_prev, rows_cur, title, subtitle, source):
+def change_chart(rows_prev, rows_cur, title, subtitle, source, field='level', ylab='Change in performance index'):
     prev = {r['name']: r for r in rows_prev}
     deltas = []
     for r in rows_cur:
         p = prev.get(r['name'])
-        if p and p['level'] is not None and r['level'] is not None:
-            deltas.append((r['name'], r['level'] - p['level'], r['peer'], r['me']))
+        if p and p[field] is not None and r[field] is not None:
+            deltas.append((r['name'], r[field] - p[field], r['peer'], r['me']))
     deltas.sort(key=lambda t: -t[1])
     s = Svg(title, subtitle, plot_h=400, source=source)
     L, R = 72, s.w - 34
@@ -378,9 +382,9 @@ def change_chart(rows_prev, rows_cur, title, subtitle, source):
             lx = min(max(x + bw / 2, L + len(lbl) * 4.2), R - len(lbl) * 4.2)
             s.text(lx, Y(d) - 14, lbl, 15, C_ME, 'middle', 'bold')
             s.line(x + bw / 2, Y(d) - 10, x + bw / 2, Y(d) - 2, C_ME, 2)
-    s.text((L + R) / 2, B + 40, 'Each bar is one of Connecticut\u2019s 164 town districts, ranked by change', 14, C_SOFT, 'middle')
+    s.text((L + R) / 2, B + 40, f'Each bar is one of Connecticut\u2019s {len(deltas)} town districts, ranked by change', 14, C_SOFT, 'middle')
     s.add(f'<text x="24" y="{(T + B) / 2:.1f}" font-family="{SERIF}" font-size="14" fill="{C_SOFT}" '
-          f'text-anchor="middle" transform="rotate(-90 24 {(T + B) / 2:.1f})">Change in performance index</text>')
+          f'text-anchor="middle" transform="rotate(-90 24 {(T + B) / 2:.1f})">{esc(ylab)}</text>')
     s.key([('', C_ME, 'Andover'), ('', C_PEER, '45-town peer group'), ('', C_OTHER, 'Other town district')])
     return s.render()
 
@@ -401,21 +405,37 @@ def main():
     SRC_G_PPE = 'Sources: CT EdSight, Next Generation Accountability and Per Pupil Expenditures. Chart: andoverct.info'
 
     files = {}
-    # headline pair — one shared x-scale so the two years are comparable
-    lv = [r['level'] for r in cur + prev if r['level'] is not None]
-    pad = (max(lv) - min(lv)) * 0.05
-    shared = (min(lv) - pad, max(lv) + pad)
-    for yr, rows, tag in ((PREV, prev, 'index-2024-25'), (CUR, cur, 'index-2025-26')):
-        svg, _ = strip_chart(rows, state[yr]['level'], 'level',
-                             f'Performance index, {yr}',
-                             'Every Connecticut town district. Same scale in both years.',
-                             'Performance index (0\u2013100)', lambda v: f'{v:.0f}', SRC_PI, xd=shared,
-                             reffmt=lambda v: f'{v:.1f}')
-        files[tag] = svg
+    SRC_PI_SUBJ = 'Source: CT EdSight, Performance Index (published by subject). Chart: andoverct.info'
+    COMBINED_NOTE = ('English, math and science combined, weighted by students tested '
+                     '\u2014 our calculation, not an EdSight figure.')
 
+    def year_pair(field, name, tag, subtitle, source, xlab):
+        vals = [r[field] for r in cur + prev if r[field] is not None]
+        pad = (max(vals) - min(vals)) * 0.05
+        shared = (min(vals) - pad, max(vals) + pad)   # one scale for both years
+        for yr, rows in ((PREV, prev), (CUR, cur)):
+            svg, _ = strip_chart(rows, state[yr][field], field, f'{name}, {yr}', subtitle, xlab,
+                                 lambda v: f'{v:.0f}', source, xd=shared, reffmt=lambda v: f'{v:.1f}')
+            files[f'{tag}-{yr}'] = svg
+
+    # Headline: the two subjects EdSight actually publishes, so every plotted
+    # value is one a reader can look up. Each pair shares one scale across years.
+    SUBJ_NOTE = 'Performance index as published by the state. Every town district. Same scale in both years.'
+    year_pair('ela', 'English language arts', 'ela', SUBJ_NOTE, SRC_PI_SUBJ, 'ELA performance index (0\u2013100)')
+    year_pair('math', 'Mathematics', 'math', SUBJ_NOTE, SRC_PI_SUBJ, 'Math performance index (0\u2013100)')
+    for field, name, short_name in (('ela', 'English language arts', 'ELA'), ('math', 'mathematics', 'math')):
+        files[f'change-{field}-{CUR}'] = change_chart(
+            prev, cur, f'Change in {name}, {PREV} to {CUR}',
+            'Andover posted the largest one-year gain of any town district in the state.', SRC_PI_SUBJ,
+            field=field, ylab=f'Change in {short_name} index')
+
+    # Secondary: our combined figure, labelled as ours wherever it appears.
+    year_pair('level', 'Combined performance index', 'index', COMBINED_NOTE, SRC_PI,
+              'Combined performance index (0\u2013100)')
     files['change-2025-26'] = change_chart(
-        prev, cur, 'Change in performance index, 2024-25 to 2025-26',
-        'Andover posted the largest single-year gain of any town district in the state.', SRC_PI)
+        prev, cur, f'Change in combined performance index, {PREV} to {CUR}',
+        'Weighted by students tested. Weighted equally instead, Andover ranks sixth, because science fell.',
+        SRC_PI, ylab='Change in combined index')
 
     # high-needs pair — shared scales on both axes
     hns = [r['hn'] for r in cur + prev if r['hn'] is not None] + [state[CUR]['hn'], state[PREV]['hn']]
@@ -424,9 +444,9 @@ def main():
     yd_hn = (min(lvs) - 3, max(lvs) + 4)
     for yr, rows, tag in ((PREV, prev, 'highneeds-2024-25'), (CUR, cur, 'highneeds-2025-26')):
         svg, _, _ = scatter_chart(rows, state[yr], 'hn', 'level',
-                                  f'Performance and student need, {yr}',
+                                  f'Combined performance and student need, {yr}',
                                   'Student need explains most of the difference between districts. Same scale in both years.',
-                                  'High-needs share of students', 'Performance index',
+                                  'High-needs share of students', 'Combined performance index',
                                   lambda v: f'{v:.0f}%', lambda v: f'{v:.0f}', SRC_PI_HN, xd=xd_hn, yd=yd_hn)
         files[tag] = svg
 
@@ -436,9 +456,9 @@ def main():
                          'Average % of growth target achieved', lambda v: f'{v:.0f}', SRC_NGA,
                          reffmt=lambda v: f'{v:.1f}')
     files['growth-2024-25'] = svg
-    svg, _, _ = scatter_chart(prev, state[PREV], 'ppe', 'level', f'Performance and spending, {PREV}',
+    svg, _, _ = scatter_chart(prev, state[PREV], 'ppe', 'level', f'Combined performance and spending, {PREV}',
                               'Per-pupil spending explains very little of the difference between districts.',
-                              'Total per-pupil spending', 'Performance index',
+                              'Total per-pupil spending', 'Combined performance index',
                               lambda v: f'${v:,.0f}', lambda v: f'{v:.0f}', SRC_BOTH)
     files['level-spending-2024-25'] = svg
     svg, _, _ = scatter_chart(prev, state[PREV], 'ppe', 'growth', f'Growth and spending, {PREV}',
@@ -447,7 +467,7 @@ def main():
                               lambda v: f'${v:,.0f}', lambda v: f'{v:.0f}', SRC_G_PPE)
     files['growth-spending-2024-25'] = svg
     svg, _, _ = scatter_chart(prev, state[PREV], 'hn', 'growth', f'Growth and student need, {PREV}',
-                              'Growth tracks student need far less closely than the index does.',
+                              'Growth tracks student need far less closely than the combined index does.',
                               'High-needs share of students', 'Average % of growth target achieved',
                               lambda v: f'{v:.0f}%', lambda v: f'{v:.0f}', SRC_G_HN)
     files['growth-highneeds-2024-25'] = svg

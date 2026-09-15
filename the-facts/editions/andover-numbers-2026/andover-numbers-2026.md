@@ -1,9 +1,9 @@
 ---
 id: andover-numbers-2026
 title: The Largest **One-Year *Gain*** in the State
-subtitle: "Andover Elementary School's 2025-26 test results are the strongest single-year improvement of any town district in Connecticut. The gain is real, it survives the adjustments that usually explain these things away, and it is one year in a school of about a hundred tested students. Here is the whole picture, including the parts that complicate it."
+subtitle: "Andover Elementary School's 2025-26 results in English and in math each rose by more than any other town district's in Connecticut. The gains are real, they survive the adjustment that usually explains these things away, and they are one year in a school of about a hundred tested students. Here is the whole picture, including the parts that complicate it."
 date: 2026-09-18
-description: "Andover posted the largest one-year gain in the state performance index of any Connecticut town district in 2025-26, rising 5.5 points while the state moved 0.5. What the number measures, what survives adjustment for student need, and what is still to come in November."
+description: "Andover posted the largest one-year gain of any Connecticut town district in both English language arts (+6.1) and mathematics (+6.8) on the state's 2025-26 performance index. What the numbers measure, what survives adjustment for student need, and what is still to come in November."
 page_title: "The Largest One-Year Gain in the State — the facts about Andover's 2025-26 results"
 cta:
   heading: "More to come in November"
@@ -31,72 +31,96 @@ number cited on this page, the sheet it can be checked against, and the
 district-by-district data underneath it.
 
 
-What the number is
-------------------
+What the state publishes
+------------------------
 
-*Connecticut scores every district on a 0-100 performance index. Andover's rose
-from 71.5 to 76.9.*
+*Connecticut scores every district on a 0-100 performance index, separately for
+each subject. Andover's rose 6.1 points in English and 6.8 in math.*
 
 The performance index is the state's summary of how students did on the annual
 assessments &mdash; Smarter Balanced in English and math, the NGSS science test &mdash;
-placed on a common 0-100 scale so districts can be compared. Connecticut's stated
-target for every district is 75. Andover is now above it.
+placed on a common 0-100 scale so districts can be compared. The state publishes it
+**subject by subject**; it does not publish a single combined figure. Connecticut's
+stated target is 75 in each subject. A year ago Andover was below it in both
+English and math. It is now above it in both.
 
-![Performance index for every Connecticut town district, 2024-25. Andover sits at 71.5, the state at 62.8.](index-2024-25.svg)
+![English language arts performance index for every Connecticut town district, 2024-25. Andover is at 73.1, the state at 64.7.](ela-2024-25.svg)
 
-![Performance index for every Connecticut town district, 2025-26, on the same scale. Andover has moved to 76.9 while the state has barely moved, at 63.3.](index-2025-26.svg)
+![English language arts, 2025-26, on the same scale. Andover has moved to 79.2 while the state has barely moved, at 65.0.](ela-2025-26.svg)
 
-Both charts are drawn on the same scale, so the movement is directly comparable.
-The state as a whole went from 62.8 to 63.3. Andover went from 71.5 to 76.9.
+![Mathematics performance index for every Connecticut town district, 2024-25. Andover is at 68.7, the state at 61.1.](math-2024-25.svg)
+
+![Mathematics, 2025-26, on the same scale. Andover has moved to 75.5, the state to 61.7.](math-2025-26.svg)
+
+Each pair is drawn on one scale, so the movement between years is directly
+comparable. Across the state, the English index went from 64.7 to 65.0 and the math
+index from 61.1 to 61.7.
 
 <div class="data-section" markdown="1">
 
-- **+5.5** &mdash; Andover's one-year change in the performance index
-- **+0.35** &mdash; the median change across Connecticut's 164 town districts
-- **+0.5** &mdash; the statewide change
-- **1st of 164** &mdash; where Andover's gain ranks among town districts
+- **+6.1** — Andover's one-year change in English language arts, from 73.1 to 79.2
+- **+6.8** — Andover's one-year change in mathematics, from 68.7 to 75.5
+- **1st of 164** — where each of those gains ranks among town districts
+- **+0.1 and +0.4** — the median change across town districts, English and math
 
-Andover's move is the largest of any town district in the state, and it is not a
-close call: only six districts gained three points or more, and the next largest
-gain was 5.0. Fifty-seven percent of districts improved at all.
+Neither is a close call. In English, the next largest gain was 4.5 points; in math,
+5.6. Six districts gained three points or more in English and ten in math. Just over
+half of all districts improved at all: 55 percent in English, 59 percent in math.
 
 </div>
 
-![Change in the performance index between 2024-25 and 2025-26 for all 164 Connecticut town districts, ranked. Andover's +5.5 is the largest gain; the median is +0.35.](change-2025-26.svg)
+![Change in the English language arts index between 2024-25 and 2025-26 for all 164 Connecticut town districts, ranked. Andover's +6.1 is the largest gain.](change-ela-2025-26.svg)
 
-In Andover's own eleven-year record, no single year has moved this far. The
-previous best was a three-point gain between 2016-17 and 2017-18.
+![Change in the mathematics index between 2024-25 and 2025-26 for all 164 Connecticut town districts, ranked. Andover's +6.8 is the largest gain.](change-math-2025-26.svg)
 
-It is worth being exact about one thing the chart does not say. This is Andover's
-**largest one-year gain**, and its best result **since 2018-19** &mdash; but not its
-best ever. The district scored 78.8 in 2018-19, before the pandemic. What 2025-26
-represents is a return to, and nearly all the way back to, where Andover was
+Among the state's town districts, Andover moved from tied for 55th to 15th in
+English, and from tied for 67th to 23rd in math.
+
+In Andover's own record, neither subject has moved this far in a single year. The
+previous largest one-year gain was 3.8 points in English, between 2021-22 and
+2022-23, and 1.1 points in math.
+
+It is worth being exact about one thing the charts do not say. These are Andover's
+**largest one-year gains**, and its best results **since 2018-19** &mdash; but not
+its best ever. Andover scored 81.0 in English and 76.5 in math in 2018-19, before
+the pandemic. What 2025-26 represents is most of the way back to where Andover was
 before COVID.
 
 
-Where the gain came from
-------------------------
+The third subject, and the combined figure
+------------------------------------------
 
-*English and math both rose sharply. Science fell.*
-
-The index combines three subjects, weighted by how many students sat each test.
-Breaking it apart:
+*Science fell. How you combine the three subjects changes the ranking, so here it is
+every way.*
 
 <div class="data-section" markdown="1">
 
-- **+6.1** &mdash; English language arts, from 73.1 to 79.2
-- **+6.8** &mdash; mathematics, from 68.7 to 75.5
-- **&minus;3.3** &mdash; science, from 76.5 to 73.2
+- **&minus;3.3** — science, from 76.5 to 73.2, now just below the state's target of 75
 
 </div>
 
-The English and math gains are large and they are what drove the overall number.
-Science moved the other way. Science is tested only in grades 5, 8 and 11, so in
-Andover it rests on roughly two dozen students in a single grade &mdash; small
-enough that a few children moving a band or two will swing it several points. It
-is the least stable of the three figures in either direction, and it should not
-carry much weight on its own. It is included here because leaving it out would be
-the kind of selective reporting this series exists to correct.
+Science is tested only in grades 5, 8 and 11, so in Andover it rests on roughly two
+dozen students in a single grade &mdash; small enough that a few children moving a
+band or two will swing it several points. It is the least stable of the three
+figures in either direction, and it should not carry much weight on its own. It is
+included here because leaving it out would be the kind of selective reporting this
+series exists to correct.
+
+Because EdSight does not publish a single figure across subjects, any combined number
+is a choice someone has made. The one used in the rest of this page is ours: the
+three subject indices **weighted by the number of students who sat each test**. That
+keeps science, which only three grades take, from counting as a full third of the
+result. By that measure Andover rose from 71.5 to 76.9, also the largest gain in the
+state.
+
+Weight the three subjects equally instead, and the answer changes. Andover's
+combined gain becomes 3.2 points, and it ranks **sixth** among the 156 districts
+reporting all three &mdash; because the one subject that fell is given the same
+weight as the two that rose. That is a legitimate way to look at it, and it is why
+the headline claim on this page rests on the subjects themselves: first in the
+state in English, and first in the state in math.
+
+![Change in the combined performance index between 2024-25 and 2025-26, weighted by students tested, for all 164 town districts. Andover's +5.5 ranks first; weighted equally it would rank sixth.](change-2025-26.svg)
 
 
 The test that usually explains these things away
@@ -108,13 +132,13 @@ gain survives that adjustment.*
 This is the single most important thing to understand about school test data, and
 it is the reason a result like Andover's deserves scrutiny before celebration.
 
-Across Connecticut, the strongest predictor of a district's performance index is
-not its spending, its size, or its leadership. It is the share of its students who
-are classified as high needs &mdash; eligible for free or reduced-price meals, an
-English learner, or a student with a disability. That one variable explains about
-three quarters of the difference between districts.
+Across Connecticut, the strongest predictor of a district's results is not its
+spending, its size, or its leadership. It is the share of its students who are
+classified as high needs &mdash; eligible for free or reduced-price meals, an English
+learner, or a student with a disability. On the combined index, that one variable
+explains about three quarters of the difference between districts.
 
-![Performance index against high-needs share for every Connecticut town district, 2024-25. The relationship is strongly negative, with r equal to minus 0.873.](highneeds-2024-25.svg)
+![Combined performance index against high-needs share for every Connecticut town district, 2024-25. The relationship is strongly negative, with r equal to minus 0.873.](highneeds-2024-25.svg)
 
 ![The same chart for 2025-26. The relationship is essentially unchanged, with r equal to minus 0.878, and Andover has moved up relative to the line.](highneeds-2025-26.svg)
 
@@ -130,9 +154,9 @@ but only part.
 
 <div class="data-section" markdown="1">
 
-- **+5.5** &mdash; Andover's raw gain
-- **+4.1** &mdash; the gain that remains after adjusting for the change in student need
-- **+1.0 &rarr; +5.1** &mdash; Andover's position relative to what its demographics predict
+- **+5.5** — Andover's raw gain on the combined index
+- **+4.1** — the gain that remains after adjusting for the change in student need
+- **+1.0 &rarr; +5.1** — Andover's position relative to what its demographics predict
 
 Measured against the statewide pattern, Andover went from performing about as
 expected to performing five points better than expected &mdash; the district's
@@ -140,9 +164,9 @@ strongest showing on that measure since 2018-19.
 
 </div>
 
-Andover's raw rank among the state's town districts moved from 61st of 165 to
-22nd of 164. Within its own comparison group of small districts without a high
-school, from 22nd of 45 to 9th of 44.
+On the combined index, Andover's rank among the state's town districts moved from
+61st of 165 to 22nd of 164. Within its own comparison group of small districts
+without a high school, from 22nd of 45 to 9th of 44.
 
 
 What one year can and cannot tell you
@@ -152,16 +176,17 @@ What one year can and cannot tell you
 
 Andover Elementary tested 109 students in 2025-26. In a district that size, each
 child is worth roughly a full percentage point of any subgroup figure, and
-year-to-year results are genuinely volatile: among Connecticut districts testing
-fewer than 200 students, the typical year-over-year swing is two and a half times
-that of districts testing 600 or more.
+year-to-year results are genuinely volatile: on the combined index, districts testing
+fewer than 200 students swing about two and a half times as much from year to year
+as districts testing 600 or more.
 
 That volatility is exactly why Andover's result is notable rather than routine
-&mdash; a +5.5 is the largest gain even among the small districts, where large
-swings are most common. But it is also why a single year should not be read as a
-trend. The honest statement is that Andover has had an excellent year, on top of a
-long record of performing at or above what its demographics predict, and that one
-more year of data will say much more than this one does.
+&mdash; its gains are the largest in the state in both English and math, including
+against the small districts where large swings are most common. But it is also why
+a single year should not be read as a trend. The honest statement is that Andover
+has had an excellent year, on top of a long record of performing at or above what
+its demographics predict, and that one more year of data will say much more than
+this one does.
 
 
 What is still to come
@@ -177,7 +202,7 @@ Connecticut publishes a better measure: academic growth, which matches each
 individual student to their own prior-year score and asks what share of their
 personal growth target they achieved. It is far less determined by demographics
 &mdash; student need explains about a quarter of the variation in growth, against
-three quarters for the index &mdash; which makes it the fairer measure of a
+three quarters for the combined index &mdash; which makes it the fairer measure of a
 district's work.
 
 That data, part of the Next Generation Accountability release, is published around
@@ -195,35 +220,36 @@ The rest of the picture, 2024-25
 *The six charts below are the full comparison set for the most recent year in
 which every measure exists.*
 
-Two of them repeat charts from above, at that year, so the set can be read on its
-own.
+Two of them repeat measures from above, at that year, so the set can be read on its
+own. Where a chart shows performance across all three subjects, it uses the combined
+index described above.
 
-![Performance index for every Connecticut town district, 2024-25.](index-2024-25.svg)
+![Combined performance index for every Connecticut town district, 2024-25.](index-2024-25.svg)
 
 ![Academic growth for every Connecticut town district, 2024-25. Andover is at 69.5, the state at 61.4.](growth-2024-25.svg)
 
-![Performance index against total per-pupil spending, 2024-25. The relationship is weak, with r equal to plus 0.268.](level-spending-2024-25.svg)
+![Combined performance index against total per-pupil spending, 2024-25. The relationship is weak, with r equal to plus 0.268.](level-spending-2024-25.svg)
 
 ![Academic growth against total per-pupil spending, 2024-25. The relationship is weak, with r equal to plus 0.287.](growth-spending-2024-25.svg)
 
-![Performance index against high-needs share, 2024-25.](highneeds-2024-25.svg)
+![Combined performance index against high-needs share, 2024-25.](highneeds-2024-25.svg)
 
-![Academic growth against high-needs share, 2024-25. The relationship is much weaker than for the performance index.](growth-highneeds-2024-25.svg)
+![Academic growth against high-needs share, 2024-25. The relationship is much weaker than for the combined index.](growth-highneeds-2024-25.svg)
 
 Two things stand out in that set, and both are worth stating plainly because they
 cut against arguments made in every direction locally.
 
 The first is that per-pupil spending barely relates to results at all. Across the
 state's town districts, spending explains something like seven percent of the
-difference in the performance index and eight percent in growth &mdash; and once
+difference in the combined index and eight percent in growth &mdash; and once
 student need and grade span are accounted for, no statistically detectable amount.
 That is not evidence that money does not matter. It is evidence that what varies
 between Connecticut towns is mostly district size and geography, not educational
 effort, and that test scores cannot settle a budget argument in either direction.
 
-The second is that growth tracks student need far less closely than the index
-does. That is the case for paying attention to the November release rather than
-this one.
+The second is that growth tracks student need far less closely than the combined
+index does. That is the case for paying attention to the November release rather
+than this one.
 
 
 [PLACEHOLDER: a section responding to specific claims, quotes or framings from the
@@ -235,13 +261,13 @@ Sources
 -------
 
 - **The underlying data.** [Download the workbook](andover-edsight-data.xlsx)
-  (Excel, twelve sheets). It opens on a documented cover page explaining each
-  EdSight dataset used, what the measures mean and how they are defined, who is
-  included, and the cautions that go with them. A "key figures" sheet lists every
-  number cited on this page against the sheet it can be verified on. The rest is
-  the data itself: every town district in 2024-25 and 2025-26, the year-over-year
-  change, ten years of the performance index, nine of academic growth, spending by
-  function, and the peer group.
+  (Excel). It opens on a documented cover page explaining each EdSight dataset used,
+  what the measures mean and how they are defined, who is included, and the cautions
+  that go with them. A "key figures" sheet lists every number cited on this page
+  against the sheet it can be verified on. The rest is the data itself: every town
+  district in 2024-25 and 2025-26 by subject, the year-over-year change by subject,
+  ten years of the performance index, nine of academic growth, spending by function,
+  and the peer group.
 - **Connecticut State Department of Education, EdSight.** All figures are from the
   public EdSight system: the **Performance Index** report (school, district and
   state indices by subject and student group), **Next Generation Accountability**
@@ -254,9 +280,14 @@ Sources
   throughout: they serve different populations under different rules, and the
   service centers in particular sit at the top of every per-pupil spending
   ranking.
-- **Performance index.** Combined across English, mathematics and science weighted
-  by the number of students who sat each subject, so science &mdash; tested only in
-  grades 5, 8 and 11 &mdash; is not given a third of the weight.
+- **Performance index.** EdSight publishes the index separately for English
+  language arts, mathematics and science; the English and math figures on this page
+  are exactly as published. The **combined index** is this page's own calculation:
+  the three subject indices weighted by the number of students who sat each, so
+  science &mdash; tested only in grades 5, 8 and 11 &mdash; is not given a third of
+  the weight. Weighted equally instead, Andover's 2025-26 combined gain is 3.2
+  points and ranks sixth of 156, rather than 5.5 points and first; both versions are
+  in the workbook.
 - **Academic growth.** The average share of each student's individual growth target
   achieved, English and mathematics, grades 4 through 8, matched to that student's
   own prior-year score. Not the share of students meeting their target, which

@@ -98,6 +98,8 @@ def load():
         rows[(d, y)] = dict(
             district=d, name=short(d), year=y,
             level=weighted(s),
+            eq=(sum(s[k][0] for k in ('ELA', 'Math', 'Science')) / 3
+                if all(s.get(k, (None,))[0] is not None for k in ('ELA', 'Math', 'Science')) else None),
             ela=s.get('ELA', (None, None))[0], math=s.get('Math', (None, None))[0],
             sci=s.get('Science', (None, None))[0],
             nELA=s.get('ELA', (None, None))[1], nSci=s.get('Science', (None, None))[1],
@@ -180,11 +182,16 @@ def main():
     def get(d, y):
         return rows.get((d, y), {})
 
-    def rank_of(d, y, key, reverse=True):
+    def competition_rank(value, values):
+        # Ties share the better rank (1 + how many are strictly higher). Published
+        # indices carry one decimal, so ties are common, and a rank taken from list
+        # position would depend on how the rows happened to be ordered.
+        return 1 + sum(v > value + 1e-9 for v in values)
+
+    def rank_of(d, y, key):
         g = [r for r in rows.values() if r['year'] == y and not r['state'] and r.get(key) is not None]
-        g.sort(key=lambda r: -r[key] if reverse else r[key])
-        names = [r['district'] for r in g]
-        return (names.index(d) + 1, len(g)) if d in names else (None, len(g))
+        me = next((r for r in g if r['district'] == d), None)
+        return (competition_rank(me[key], [r[key] for r in g]) if me else None, len(g))
 
     # ---------------------------------------------------------------- About
     ws = wb.active
@@ -224,10 +231,16 @@ def main():
     line('')
     line('What the measures mean', '', 'h')
     line('Performance index',
-         'The state\'s 0-100 summary of how students performed on the assessments. Connecticut\'s stated target for '
-         'every district is 75. In this workbook the three subjects are combined WEIGHTED BY THE NUMBER OF STUDENTS '
-         'who sat each one, so science — tested in only three grades — is not given a third of the weight. '
-         'Per-subject figures are shown alongside so the combination can be checked.')
+         'The state\'s 0-100 summary of how students performed on the assessments. EDSIGHT PUBLISHES IT SEPARATELY '
+         'FOR EACH SUBJECT — English language arts, mathematics and science — and does not publish a single '
+         'combined figure. Connecticut\'s stated target is 75 in each subject. The ELA, math and science figures in '
+         'this workbook are exactly as published.')
+    line('Combined index (ours)',
+         'Where a sheet shows one figure across all three subjects, it is THIS WORKBOOK\'S OWN CALCULATION, not an '
+         'EdSight number: the three subject indices weighted by the number of students who sat each, so science — '
+         'tested in only three grades — is not given a third of the weight. The choice matters: from 2024-25 to '
+         '2025-26, Andover\'s combined gain ranks first weighted by students, but sixth weighted equally, because '
+         'science fell while English and math rose. Both versions are on the "Change" sheet.')
     line('Academic growth',
          'Indicator 2 of the accountability system, and a longitudinal measure: Smarter Balanced is vertically '
          'scaled, so each student in grades 4-8 is given an individual growth target from their OWN prior-year '
@@ -323,19 +336,31 @@ def main():
     # ---------------------------------------------------------------- Key figures
     a_cur, a_prev = get(ME, CUR), get(ME, PREV)
     s_cur, s_prev = get(STATE, CUR), get(STATE, PREV)
-    deltas = []
-    for d in districts:
-        x, y = get(d, PREV), get(d, CUR)
-        if x.get('level') is not None and y.get('level') is not None:
-            deltas.append((d, y['level'] - x['level']))
-    deltas.sort(key=lambda t: -t[1])
-    dmap = dict(deltas)
-    dvals = sorted((v for _, v in deltas), reverse=True)
-    # n is even, so the median is the mean of the two middle values
-    _mid = sorted(dvals)
-    med_delta = (_mid[(len(_mid) - 1) // 2] + _mid[len(_mid) // 2]) / 2
-    a_rank_cur = rank_of(ME, CUR, 'level')
-    a_rank_prev = rank_of(ME, PREV, 'level')
+
+    def median(v):
+        v = sorted(v)
+        return (v[(len(v) - 1) // 2] + v[len(v) // 2]) / 2
+
+    def change_stats(k):
+        deltas = []
+        for d in districts:
+            x, y = get(d, PREV), get(d, CUR)
+            if x.get(k) is not None and y.get(k) is not None:
+                deltas.append((d, y[k] - x[k]))
+        deltas.sort(key=lambda t: -t[1])
+        vals = [v for _, v in deltas]
+        names = [d for d, _ in deltas]
+        return dict(deltas=deltas, n=len(vals), median=median(vals),
+                    rank=competition_rank(dict(deltas)[ME], vals),
+                    change=dict(deltas)[ME], next=deltas[1][1] if names[0] == ME else deltas[0][1],
+                    three=sum(v >= 3 for v in vals), improved=100 * sum(v > 0 for v in vals) / len(vals))
+
+    stats = {k: change_stats(k) for k in ('ela', 'math', 'level', 'eq')}
+
+    def prior_best_gain(k):
+        hist = [(y, get(ME, y)[k]) for y in years if get(ME, y).get(k) is not None]
+        gains = [(hist[i][1] - hist[i - 1][1], hist[i - 1][0], hist[i][0]) for i in range(1, len(hist) - 1)]
+        return max(gains)
 
     def corr(y):
         g = [r for r in rows.values() if r['year'] == y and not r['state']
@@ -348,37 +373,75 @@ def main():
         sxy = sum((r['hn'] - mx) * (r['level'] - my) for r in g)
         return sxy / math.sqrt(sxx * syy), n
 
+    def peer_rank(y):
+        g = sorted([r for r in rows.values() if r['year'] == y and r['peer'] and r['level'] is not None],
+                   key=lambda r: -r['level'])
+        return [r['district'] for r in g].index(ME) + 1, len(g)
+
+    def swing_sd(lo, hi):
+        v = [dv for d, dv in stats['level']['deltas'] if lo <= (get(d, CUR).get('n') or 0) < hi]
+        m = sum(v) / len(v)
+        return math.sqrt(sum((x - m) ** 2 for x in v) / (len(v) - 1))
+
+    def ranks(k):
+        a, b = rank_of(ME, PREV, k), rank_of(ME, CUR, k)
+        return f'{a[0]} of {a[1]} to {b[0]} of {b[1]}'
+
     r25, n25 = corr(PREV)
     r26, n26 = corr(CUR)
     peers_cur = [d for d in districts if get(d, CUR).get('peer')]
+    S_ELA, S_M, S_C, S_E = stats['ela'], stats['math'], stats['level'], stats['eq']
+    pg_ela, pg_m = prior_best_gain('ela'), prior_best_gain('math')
+    pr_prev, pr_cur = peer_rank(PREV), peer_rank(CUR)
+    CH = 'Change 24-25 to 25-26'
+    AC = 'Andover and Connecticut'
+    DY = 'Districts 2024-25 / 2025-26'
+    a18 = get(ME, '2018-19')
     kf = [
-        ('Andover performance index, 2025-26', round(a_cur['level'], 1), 'Districts 2025-26'),
-        ('Andover performance index, 2024-25', round(a_prev['level'], 1), 'Districts 2024-25'),
-        ('Andover one-year change', f"{a_cur['level'] - a_prev['level']:+.1f}", 'Change 24-25 to 25-26'),
-        ('Rank of that change among town districts', f'1 of {len(deltas)}', 'Change 24-25 to 25-26'),
-        ('Median change across town districts', f'{med_delta:+.2f}', 'Change 24-25 to 25-26'),
-        ('Districts gaining 3 points or more', sum(1 for v in dvals if v >= 3), 'Change 24-25 to 25-26'),
-        ('Next largest gain after Andover', f'{dvals[1]:+.1f}', 'Change 24-25 to 25-26'),
-        ('Share of districts improving at all', f'{100 * sum(1 for v in dvals if v > 0) / len(dvals):.0f}%', 'Change 24-25 to 25-26'),
-        ('Connecticut performance index, 2025-26', round(s_cur['level'], 1), 'Andover and Connecticut'),
-        ('Connecticut performance index, 2024-25', round(s_prev['level'], 1), 'Andover and Connecticut'),
-        ('Andover ELA, 2024-25 to 2025-26', f"{a_prev['ela']:.1f} to {a_cur['ela']:.1f}", 'Andover and Connecticut'),
-        ('Andover math, 2024-25 to 2025-26', f"{a_prev['math']:.1f} to {a_cur['math']:.1f}", 'Andover and Connecticut'),
-        ('Andover science, 2024-25 to 2025-26', f"{a_prev['sci']:.1f} to {a_cur['sci']:.1f}", 'Andover and Connecticut'),
-        ('Andover high-needs share, 2024-25 to 2025-26', f"{a_prev['hn']:.1f}% to {a_cur['hn']:.1f}%", 'Andover and Connecticut'),
-        ('Andover need-adjusted residual, 2024-25', f"{a_prev['residual']:+.1f}", 'Andover and Connecticut'),
-        ('Andover need-adjusted residual, 2025-26', f"{a_cur['residual']:+.1f}", 'Andover and Connecticut'),
-        ('Gain surviving the need adjustment', f"{a_cur['residual'] - a_prev['residual']:+.1f}", 'Andover and Connecticut'),
-        ('Andover rank, all town districts, 2024-25', f'{a_rank_prev[0]} of {a_rank_prev[1]}', 'Districts 2024-25'),
-        ('Andover rank, all town districts, 2025-26', f'{a_rank_cur[0]} of {a_rank_cur[1]}', 'Districts 2025-26'),
-        ('Index vs high-needs correlation, 2024-25', f'r = {r25:+.3f} (r² {r25 * r25:.2f}, n = {n25})', 'Districts 2024-25'),
-        ('Index vs high-needs correlation, 2025-26', f'r = {r26:+.3f} (r² {r26 * r26:.2f}, n = {n26})', 'Districts 2025-26'),
+        ('PUBLISHED BY EDSIGHT, BY SUBJECT', '', ''),
+        ('Andover ELA index, 2024-25 to 2025-26', f"{a_prev['ela']:.1f} to {a_cur['ela']:.1f}", CH),
+        ('Andover ELA one-year change', f"{S_ELA['change']:+.1f}", CH),
+        ('Rank of that change among town districts', f"{S_ELA['rank']} of {S_ELA['n']}", CH),
+        ('Next largest ELA gain', f"{S_ELA['next']:+.1f}", CH),
+        ('Median ELA change across town districts', f"{S_ELA['median']:+.2f}", CH),
+        ('Districts gaining 3+ points in ELA', S_ELA['three'], CH),
+        ('Share of districts improving in ELA', f"{S_ELA['improved']:.0f}%", CH),
+        ('Andover math index, 2024-25 to 2025-26', f"{a_prev['math']:.1f} to {a_cur['math']:.1f}", CH),
+        ('Andover math one-year change', f"{S_M['change']:+.1f}", CH),
+        ('Rank of that change among town districts', f"{S_M['rank']} of {S_M['n']}", CH),
+        ('Next largest math gain', f"{S_M['next']:+.1f}", CH),
+        ('Median math change across town districts', f"{S_M['median']:+.2f}", CH),
+        ('Districts gaining 3+ points in math', S_M['three'], CH),
+        ('Share of districts improving in math', f"{S_M['improved']:.0f}%", CH),
+        ('Andover science index, 2024-25 to 2025-26', f"{a_prev['sci']:.1f} to {a_cur['sci']:.1f}", CH),
+        ('Connecticut ELA index, 2024-25 to 2025-26', f"{s_prev['ela']:.1f} to {s_cur['ela']:.1f}", AC),
+        ('Connecticut math index, 2024-25 to 2025-26', f"{s_prev['math']:.1f} to {s_cur['math']:.1f}", AC),
+        ('State target, each subject', 75, AC),
+        ('Andover ELA rank among town districts', ranks('ela'), DY),
+        ('Andover math rank among town districts', ranks('math'), DY),
+        ('Andover largest prior one-year ELA gain', f"{pg_ela[0]:+.1f} ({pg_ela[1]} to {pg_ela[2]})", 'ELA by year'),
+        ('Andover largest prior one-year math gain', f"{pg_m[0]:+.1f} ({pg_m[1]} to {pg_m[2]})", 'Math by year'),
+        ('Andover ELA and math, 2018-19', f"{a18['ela']:.1f} and {a18['math']:.1f}", AC),
+        ('COMBINED ACROSS SUBJECTS: OUR CALCULATION, NOT AN EDSIGHT FIGURE', '', ''),
+        ('Andover combined index (weighted by students tested)', f"{a_prev['level']:.1f} to {a_cur['level']:.1f}", CH),
+        ('Andover combined change, and its rank', f"{S_C['change']:+.1f}, {S_C['rank']} of {S_C['n']}", CH),
+        ('Same, subjects weighted equally, and its rank', f"{S_E['change']:+.1f}, {S_E['rank']} of {S_E['n']}", CH),
+        ('Connecticut combined index', f"{s_prev['level']:.1f} to {s_cur['level']:.1f}", AC),
+        ('Andover high-needs share', f"{a_prev['hn']:.1f}% to {a_cur['hn']:.1f}%", AC),
+        ('Andover need-adjusted residual', f"{a_prev['residual']:+.1f} to {a_cur['residual']:+.1f}", AC),
+        ('Gain surviving the need adjustment', f"{a_cur['residual'] - a_prev['residual']:+.1f}", AC),
+        ('Andover combined rank among town districts', ranks('level'), DY),
+        ('Andover combined rank within the peer group', f"{pr_prev[0]} of {pr_prev[1]} to {pr_cur[0]} of {pr_cur[1]}", 'Peer group'),
+        ('Combined index vs high-needs share, 2024-25', f'r = {r25:+.3f} (r² {r25 * r25:.2f}, n = {n25})', 'Districts 2024-25'),
+        ('Combined index vs high-needs share, 2025-26', f'r = {r26:+.3f} (r² {r26 * r26:.2f}, n = {n26})', 'Districts 2025-26'),
+        ('Year-to-year swing in the combined index (s.d.)',
+         f"{swing_sd(0, 200):.2f} under 200 tested vs {swing_sd(600, 10 ** 9):.2f} at 600+", CH),
+        ('OTHER MEASURES', '', ''),
         ('Andover academic growth, 2024-25', round(a_prev['growth'], 1), 'Districts 2024-25'),
-        ('Connecticut academic growth, 2024-25', round(s_prev['growth'], 1), 'Andover and Connecticut'),
+        ('Connecticut academic growth, 2024-25', round(s_prev['growth'], 1), AC),
         ('Andover per-pupil spending, 2024-25', round(a_prev['ppe']), 'Spending by function 2024-25'),
         ('Connecticut per-pupil spending, 2024-25', round(s_prev['ppe']), 'Spending by function 2024-25'),
         ('Andover students tested, 2025-26', int(a_cur['n']), 'Districts 2025-26'),
-        ('Andover best prior year (2018-19)', round(get(ME, '2018-19')['level'], 1), 'Andover and Connecticut'),
         ('Peer group size, 2025-26', len(peers_cur), 'Peer group'),
     ]
     ws = wb.create_sheet('Key figures')
@@ -394,17 +457,19 @@ def main():
     ws.sheet_view.showGridLines = False
 
     # ---------------------------------------------------------------- Andover and Connecticut
-    hdr = ['Year', 'Andover index', 'Andover ELA', 'Andover math', 'Andover science',
+    hdr = ['Year', 'Andover combined index (ours)', 'Andover ELA', 'Andover math', 'Andover science',
            'Andover growth', 'Andover high needs %', 'Andover tested', 'Andover per-pupil $',
-           'Predicted from need', 'Residual', 'CT index', 'CT growth', 'CT high needs %', 'CT per-pupil $']
+           'Predicted from need', 'Residual', 'CT combined index (ours)', 'CT growth', 'CT high needs %',
+           'CT per-pupil $', 'CT ELA', 'CT math', 'CT science']
     body = []
     for y in years:
         a, s = get(ME, y), get(STATE, y)
         body.append([y, a.get('level'), a.get('ela'), a.get('math'), a.get('sci'), a.get('growth'),
                      a.get('hn'), a.get('n'), a.get('ppe'), a.get('predicted'), a.get('residual'),
-                     s.get('level'), s.get('growth'), s.get('hn'), s.get('ppe')])
-    ws = table(wb, 'Andover and Connecticut', hdr, body, [10] + [13] * 14,
-               fmts={i: N1 for i in list(range(2, 8)) + [10, 11, 12, 13, 14]}, autofilter=False)
+                     s.get('level'), s.get('growth'), s.get('hn'), s.get('ppe'),
+                     s.get('ela'), s.get('math'), s.get('sci')])
+    ws = table(wb, 'Andover and Connecticut', hdr, body, [10] + [13] * 17,
+               fmts={i: N1 for i in list(range(2, 8)) + [10, 11, 12, 13, 14, 16, 17, 18]}, autofilter=False)
     for i in range(2, len(body) + 2):
         ws.cell(row=i, column=9).number_format = MONEY
         ws.cell(row=i, column=15).number_format = MONEY
@@ -413,49 +478,62 @@ def main():
 
     # ---------------------------------------------------------------- per-year district sheets
     for y, label in ((CUR, 'Districts 2025-26'), (PREV, 'Districts 2024-25')):
-        hdr = ['District', 'Type', 'Grade span', 'Peer group', 'Performance index', 'ELA', 'Math', 'Science',
-               'Academic growth', 'High needs %', 'High-needs students', 'Students tested',
-               'Per-pupil spending', 'Predicted from need', 'Residual', 'Rank (index)']
+        hdr = ['District', 'Type', 'Grade span', 'Peer group', 'ELA', 'Math', 'Science',
+               'Combined index (ours)', 'Academic growth', 'High needs %', 'High-needs students',
+               'Students tested', 'Per-pupil spending', 'Predicted from need', 'Residual',
+               'Rank (ELA)', 'Rank (math)', 'Rank (combined)']
         g = [r for r in rows.values() if r['year'] == y and not r['state']]
         g.sort(key=lambda r: -(r['level'] if r['level'] is not None else -1e9))
         body = []
-        for i, r in enumerate(g, start=1):
+        for r in g:
+            d = r['district']
             body.append(dict(tag='me' if r['me'] else None, cells=[
                 r['name'], 'Regional' if r['name'].startswith('RSD') else 'Local', r['span'],
-                'yes' if r['peer'] else '', r['level'], r['ela'], r['math'], r['sci'], r['growth'],
-                r['hn'], r['hnCount'], r['n'], r['ppe'], r.get('predicted'), r.get('residual'), i]))
+                'yes' if r['peer'] else '', r['ela'], r['math'], r['sci'], r['level'], r['growth'],
+                r['hn'], r['hnCount'], r['n'], r['ppe'], r.get('predicted'), r.get('residual'),
+                rank_of(d, y, 'ela')[0], rank_of(d, y, 'math')[0], rank_of(d, y, 'level')[0]]))
         st = get(STATE, y)
         body.insert(0, dict(tag='state', cells=[
-            'State of Connecticut', 'Statewide', '', '', st.get('level'), st.get('ela'), st.get('math'),
-            st.get('sci'), st.get('growth'), st.get('hn'), st.get('hnCount'), st.get('n'), st.get('ppe'), '', '', '']))
-        ws = table(wb, label, hdr, body, [30, 10, 11, 11, 15, 9, 9, 9, 14, 12, 15, 12, 15, 15, 11, 11],
+            'State of Connecticut', 'Statewide', '', '', st.get('ela'), st.get('math'), st.get('sci'),
+            st.get('level'), st.get('growth'), st.get('hn'), st.get('hnCount'), st.get('n'), st.get('ppe'),
+            '', '', '', '', '']))
+        ws = table(wb, label, hdr, body, [30, 10, 11, 11, 9, 9, 9, 15, 14, 12, 15, 12, 15, 15, 11, 10, 11, 14],
                    fmts={i: N1 for i in (5, 6, 7, 8, 9, 14, 15)})
         for i in range(2, len(body) + 2):
             ws.cell(row=i, column=10).number_format = PC
             ws.cell(row=i, column=13).number_format = MONEY
 
     # ---------------------------------------------------------------- change
-    hdr = ['Rank', 'District', 'Peer group', '2024-25 index', '2025-26 index', 'Change',
-           '2024-25 high needs %', '2025-26 high needs %', 'Change in high needs',
-           '2024-25 residual', '2025-26 residual', 'Change in residual']
+    # Sorted by the published ELA change; every rank column is its own ranking,
+    # so the sheet can be re-sorted on any of them.
+    hdr = ['District', 'Peer group',
+           'ELA 2024-25', 'ELA 2025-26', 'ELA change', 'ELA rank',
+           'Math 2024-25', 'Math 2025-26', 'Math change', 'Math rank',
+           'Science change',
+           'Combined change, weighted by students (ours)', 'Rank',
+           'Combined change, subjects weighted equally', 'Rank ',
+           'Change in high needs (pts)', 'Change in need-adjusted residual']
+    rk = {k: {d: competition_rank(v, [x for _, x in stats[k]['deltas']]) for d, v in stats[k]['deltas']}
+          for k in stats}
     body = []
-    for i, (d, delta) in enumerate(deltas, start=1):
+    for d, _ in stats['ela']['deltas']:
         x, y2 = get(d, PREV), get(d, CUR)
-        hnd = (y2['hn'] - x['hn']) if (x.get('hn') is not None and y2.get('hn') is not None) else None
-        rd = ((y2.get('residual') - x.get('residual'))
-              if (x.get('residual') is not None and y2.get('residual') is not None) else None)
+
+        def ch(k):
+            return (y2[k] - x[k]) if (x.get(k) is not None and y2.get(k) is not None) else None
         body.append(dict(tag='me' if d == ME else None, cells=[
-            i, short(d), 'yes' if y2.get('peer') else '', x['level'], y2['level'], delta,
-            x.get('hn'), y2.get('hn'), hnd, x.get('residual'), y2.get('residual'), rd]))
-    ws = table(wb, 'Change 24-25 to 25-26', hdr, body,
-               [7, 30, 11, 14, 14, 10, 17, 17, 16, 14, 14, 15],
-               fmts={i: N1 for i in (4, 5, 6, 9, 10, 11, 12)})
-    for i in range(2, len(body) + 2):
-        ws.cell(row=i, column=7).number_format = PC
-        ws.cell(row=i, column=8).number_format = PC
+            short(d), 'yes' if y2.get('peer') else '',
+            x.get('ela'), y2.get('ela'), ch('ela'), rk['ela'].get(d),
+            x.get('math'), y2.get('math'), ch('math'), rk['math'].get(d),
+            ch('sci'), ch('level'), rk['level'].get(d), ch('eq'), rk['eq'].get(d),
+            ch('hn'), ch('residual')]))
+    table(wb, 'Change 24-25 to 25-26', hdr, body,
+          [30, 11, 11, 11, 10, 9, 12, 12, 11, 10, 13, 20, 7, 20, 7, 16, 18],
+          fmts={i: N1 for i in (3, 4, 5, 7, 8, 9, 11, 12, 14, 16, 17)})
 
     # ---------------------------------------------------------------- trends
-    for key, label, fmt in (('level', 'Index by year', N1), ('growth', 'Growth by year', N1),
+    for key, label, fmt in (('ela', 'ELA by year', N1), ('math', 'Math by year', N1),
+                            ('level', 'Combined index by year', N1), ('growth', 'Growth by year', N1),
                             ('hn', 'High needs by year', PC), ('residual', 'Residual by year', N1)):
         ys = [y for y in years if any(rows.get((d, y), {}).get(key) is not None for d in districts)]
         hdr = ['District', 'Peer group'] + ys
@@ -487,20 +565,23 @@ def main():
           fmts={i: MONEY for i in range(3, 3 + len(order))})
 
     # ---------------------------------------------------------------- peer group
-    hdr = ['District', 'Grade span', '2025-26 index', '2024-25 index', 'Change',
-           '2024-25 growth', 'High needs %', 'Students tested', 'Per-pupil spending']
+    hdr = ['District', 'Grade span', 'ELA 2025-26', 'ELA change', 'Math 2025-26', 'Math change',
+           'Combined index 2025-26 (ours)', 'Combined change (ours)',
+           '2024-25 growth', 'High needs %', 'Students tested', 'Per-pupil spending 2024-25']
     body = []
+
+    def chg(c, p, k):
+        return (c[k] - p[k]) if (c.get(k) is not None and p.get(k) is not None) else None
     for d in sorted(peers_cur, key=lambda d: -(get(d, CUR).get('level') or -1e9)):
         c, p = get(d, CUR), get(d, PREV)
         body.append(dict(tag='me' if d == ME else None, cells=[
-            short(d), c.get('span'), c.get('level'), p.get('level'),
-            (c['level'] - p['level']) if (c.get('level') is not None and p.get('level') is not None) else None,
-            p.get('growth'), c.get('hn'), c.get('n'), p.get('ppe')]))
-    ws = table(wb, 'Peer group', hdr, body, [30, 12, 14, 14, 10, 14, 13, 14, 16],
-               fmts={i: N1 for i in (3, 4, 5, 6)})
+            short(d), c.get('span'), c.get('ela'), chg(c, p, 'ela'), c.get('math'), chg(c, p, 'math'),
+            c.get('level'), chg(c, p, 'level'), p.get('growth'), c.get('hn'), c.get('n'), p.get('ppe')]))
+    ws = table(wb, 'Peer group', hdr, body, [30, 12, 12, 12, 13, 12, 16, 15, 14, 13, 14, 16],
+               fmts={i: N1 for i in (3, 4, 5, 6, 7, 8, 9)})
     for i in range(2, len(body) + 2):
-        ws.cell(row=i, column=7).number_format = PC
-        ws.cell(row=i, column=9).number_format = MONEY
+        ws.cell(row=i, column=10).number_format = PC
+        ws.cell(row=i, column=12).number_format = MONEY
 
     out = os.path.join(out_dir, 'andover-edsight-data.xlsx')
     wb.save(out)
