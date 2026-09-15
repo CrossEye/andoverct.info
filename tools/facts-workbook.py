@@ -387,6 +387,10 @@ def main():
         ws.append([k, v, sheet])
     style_header(ws, 3)
     widths(ws, [52, 26, 30])
+    # The value column mixes numbers and text; Excel would right-align the
+    # numbers and left-align the text, so pin it left to read as one column.
+    for (cell,) in ws.iter_rows(min_row=2, min_col=2, max_col=2):
+        cell.alignment = Alignment(horizontal='left')
     ws.sheet_view.showGridLines = False
 
     # ---------------------------------------------------------------- Andover and Connecticut
