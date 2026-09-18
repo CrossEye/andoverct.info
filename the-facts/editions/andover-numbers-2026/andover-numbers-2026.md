@@ -8,15 +8,29 @@ page_title: "The Largest One-Year Gain in the State — the facts about Andover'
 cta:
   heading: "More to come in November"
   body: |
-    Connecticut publishes the academic growth data &mdash; the measure that best isolates
-    what a school itself contributes &mdash; around November for the preceding year.
-    A fuller district-by-district report will follow here when it lands.
+    Connecticut's Next Generation Accountability release, which sets this year's growth
+    alongside attendance, fitness and the rest of its twelve indicators, is published
+    around November. A fuller district-by-district report will follow here when it lands.
 colophon: |
   Compiled by Scott Sauyet, Andover, from Connecticut State Department of Education public data. Posted at andoverct.info/the-facts. This page is part of an ongoing series; new editions appear at the same URL as the local conversation evolves. Earlier editions remain accessible at their permanent URLs (use the menu to navigate).
 ---
 
-[PLACEHOLDER: opening paragraph keyed to the newspaper article — its headline,
-its framing, and what it did or did not include. Written once the article runs.]
+The Rivereast News Bulletin reported the results on September 18, under the headline
+"Andover Elementary Celebrates Increase in Test Scores." The article followed Principal
+Taylor Parker's presentation to the Board of Education on September 9, and she did not
+undersell it:
+
+> I'm so excited. Thank you for letting me share in celebrations, because we
+> definitely have a lot to celebrate.
+>
+> *— Taylor Parker, AES principal, Board of Education meeting, Sept. 9, 2026*
+
+Every figure in that article checks out. We compared each one against the state's own
+published data &mdash; the proficiency rates, the growth figures, the statewide
+averages and the index scores &mdash; and they match. What follows is not a
+correction. It is the context a single school's announcement is not in a position to
+supply: where those numbers put Andover among Connecticut's 164 town districts, which
+of them carry the most weight, and which should be held lightly.
 
 The underlying numbers are public, and they are worth setting out in full, because
 a result this good invites two opposite mistakes. One is to wave it away as noise
@@ -26,9 +40,10 @@ precisely.
 
 Everything below comes from the Connecticut State Department of Education's public
 EdSight system, released in late August. Every figure is also published here as a
-spreadsheet &mdash; [the full workbook](andover-edsight-data.xlsx) carries each
-number cited on this page, the sheet it can be checked against, and the
-district-by-district data underneath it.
+spreadsheet &mdash; [the full workbook](andover-edsight-data.xlsx) carries the
+district-by-district data behind this page, and names the sheet each figure can be
+checked against. (The 2025-26 growth figures below were published after it was last
+built, and will be added on its next refresh.)
 
 
 What the state publishes
@@ -189,10 +204,11 @@ its demographics predict, and that one more year of data will say much more than
 this one does.
 
 
-What is still to come
----------------------
+The fairer measure, and what is still to come
+---------------------------------------------
 
-*The measure that best isolates what a school contributes is not published yet.*
+*Growth is the measure that best isolates what a school contributes. On it, Andover's
+year is more remarkable than the headline suggests.*
 
 The performance index measures where students are. It does not measure how far
 they moved, and because it tracks so closely with student need, it is a limited
@@ -205,13 +221,30 @@ personal growth target they achieved. It is far less determined by demographics
 three quarters for the combined index &mdash; which makes it the fairer measure of a
 district's work.
 
-That data, part of the Next Generation Accountability release, is published around
-November for the preceding school year. **The 2025-26 growth figures are not
-available yet.** When they arrive, this page will be followed by a fuller
-accounting.
+Connecticut reports growth two ways. The **growth rate** is the share of students who
+met their target &mdash; the figures Parker gave the board. The **average percentage of
+target achieved** counts partial progress too, and it is the version the state uses in
+its accountability system. On that second measure:
 
-On the most recent growth data that does exist, for 2024-25, Andover scored 69.5
-against a state figure of 61.4.
+<div class="data-section" markdown="1">
+
+- **85.0** — Andover, 2025-26, averaged across English and math
+- **60.1** — Connecticut, 2025-26
+- **69.5 and 61.4** — the same two figures a year earlier
+
+Andover went from eight points above the state to twenty-five, while the state itself
+edged down.
+
+</div>
+
+This is arguably the more impressive half of Andover's year, and it is the half least
+explained by who its students are.
+
+One caution on timing. These growth figures are published now, with the assessment
+results. What arrives around November is the **Next Generation Accountability**
+release, which packages growth as one indicator among twelve and adds the rest:
+chronic absenteeism, physical fitness, and, for districts that have them, graduation
+and college-and-career measures. That is the release this page will return to.
 
 
 The rest of the picture, 2024-25
@@ -252,9 +285,57 @@ index does. That is the case for paying attention to the November release rather
 than this one.
 
 
-[PLACEHOLDER: a section responding to specific claims, quotes or framings from the
-newspaper article and any public reaction to it. Left open deliberately; the
-factual groundwork above stands on its own.]
+What the school said, and what the numbers add
+----------------------------------------------
+
+*The article's figures are accurate. Three of its themes are worth extending.*
+
+**On growth.** Parker drew the distinction that matters most in this data, and drew
+it correctly:
+
+> Every student gets a target, whether you score a one or a four. So even students
+> performing above grade level have a target score.
+>
+> *— Taylor Parker, Board of Education meeting, Sept. 9, 2026*
+
+That is exactly why growth is the fairer measure. Achievement scores largely track
+which students a district serves; growth asks how far each student moved from their
+own starting point, and is far less determined by demographics. The figures she gave
+the board &mdash; 68.7 percent of students meeting their ELA target, 67.5 percent in
+math, against 44.4 and 41.1 a year earlier &mdash; are the state's published growth
+rates, and they are correct.
+
+**On the achievement gap.** The article reports that the gap between high-needs
+students and their classmates narrowed in both subjects, from 20.7 points to 14.5.
+
+> We want all students growing.
+>
+> *— Taylor Parker, Board of Education meeting, Sept. 9, 2026*
+
+This is the one figure on which we can offer no independent check. Andover's
+high-needs subgroup is small enough that the state suppresses its results publicly
+to protect student confidentiality, so the underlying numbers are not in EdSight.
+The claim comes from the district's own data, and should be read as such &mdash; not
+because there is reason to doubt it, but because it cannot be verified the way
+everything else here can.
+
+**On not over-reading one year.** The article closes on a note of caution that this
+page would make anyway, and it is to the school's credit that it came from the
+school:
+
+> It is not a one-shot deal. We can't just say we had one good year.
+>
+> *— Taylor Parker, Board of Education meeting, Sept. 9, 2026*
+
+About 110 students sit these tests. That is small enough that a strong cohort moves
+the whole district figure, in either direction. The case for taking this year
+seriously is not the size of the jump on its own; it is that the jump survives
+adjustment for student need, that it holds in both subjects independently, and that
+it sits on a decade in which Andover has almost always performed at or above what
+its demographics predict.
+
+[PLACEHOLDER: responses to any public reaction to the article — left open
+deliberately. The factual groundwork above stands on its own.]
 
 
 Sources
@@ -264,7 +345,8 @@ Sources
   (Excel). It opens on a documented cover page explaining each EdSight dataset used,
   what the measures mean and how they are defined, who is included, and the cautions
   that go with them. A "key figures" sheet lists every number cited on this page
-  against the sheet it can be verified on. The rest is the data itself: every town
+  against the sheet it can be verified on, except the 2025-26 growth figures, which the
+  state published after the workbook was last built. The rest is the data itself: every town
   district in 2024-25 and 2025-26 by subject, the year-over-year change by subject,
   ten years of the performance index, nine of academic growth, spending by function,
   and the peer group.
