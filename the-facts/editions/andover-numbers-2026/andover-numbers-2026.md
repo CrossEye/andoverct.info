@@ -334,9 +334,6 @@ adjustment for student need, that it holds in both subjects independently, and t
 it sits on a decade in which Andover has almost always performed at or above what
 its demographics predict.
 
-[PLACEHOLDER: responses to any public reaction to the article — left open
-deliberately. The factual groundwork above stands on its own.]
-
 
 Sources
 -------
