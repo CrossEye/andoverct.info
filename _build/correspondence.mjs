@@ -305,6 +305,18 @@ function byNewest(a, b) {
   return (ai < 0 ? 99 : ai) - (bi < 0 ? 99 : bi);
 }
 
+// The correspondence index reads oldest first: it is the archive of an
+// exchange, and an exchange is followed forwards. correspondence.json stays
+// newest-first, because the report's log is a feed of what is new.
+function byOldest(x, y) {
+  if (x.date !== y.date) return x.date < y.date ? -1 : 1;
+  const xt = x.time || "", yt = y.time || "";
+  if (xt !== yt) return xt < yt ? -1 : 1;
+  // Not simply -byNewest: that would invert the tie-break too, and the four
+  // letters sent in the same minute would list backwards through the ledger.
+  return ledgerOrder(x, y);
+}
+
 function ledgerOrder(a, b) {
   return LEDGER.indexOf(a.candidate) - LEDGER.indexOf(b.candidate);
 }
@@ -319,6 +331,26 @@ const MONTHS = ["January", "February", "March", "April", "May", "June",
 export function longDate(iso) {
   const [y, m, d] = iso.split("-").map(Number);
   return `${MONTHS[m - 1]} ${d}, ${y}`;
+}
+
+/*
+ * "00:26" -> "12:26 am". The stored time is the sender's local clock, as the
+ * Date header gave it, and is shown without a zone: the exact offset is in the
+ * raw headers, and what a reader wants from this column is the order of events
+ * and whether a reply came back in an hour or a week.
+ */
+export function clockTime(hhmm) {
+  if (!hhmm) return "";
+  const [h, m] = hhmm.split(":").map(Number);
+  const suffix = h < 12 ? "am" : "pm";
+  const hour = h % 12 === 0 ? 12 : h % 12;
+  return `${hour}:${String(m).padStart(2, "0")} ${suffix}`;
+}
+
+// Date and time as one stamp. time is optional, so this degrades to the date.
+export function stamp(e) {
+  const t = clockTime(e.time);
+  return t ? `${longDate(e.date)}, ${t}` : longDate(e.date);
 }
 
 // ---------------------------------------------------------------------------
@@ -487,7 +519,7 @@ function entryPage(entry, dir, ctx) {
 
   const meta = [
     `<span class="kind">${escapeHtml(kindLabel)}</span>`,
-    escapeHtml(longDate(entry.date)),
+    escapeHtml(stamp(entry)),
     entry.status ? `Classified as <strong>${escapeHtml(entry.status)}</strong>` : "",
   ].filter(Boolean).join(" &middot; ");
 
@@ -511,8 +543,10 @@ function entryPage(entry, dir, ctx) {
 function indexPage(entries, ctx) {
   const crumbsHtml = buildCrumbs([...ctx.trail, { label: "Correspondence" }]);
 
-  const opening = entries.filter((e) => e.opening).sort(ledgerOrder);
-  const rest = entries.filter((e) => !e.opening).sort(byNewest);
+  // One list, oldest first, with the opening letters at the top of it where
+  // they fall chronologically rather than pinned in a section of their own.
+  const all = [...entries].sort(byOldest);
+  const opening = entries.filter((e) => e.opening);
 
   // Counted from the entries, not written in: the page began with four letters
   // on one day and gained a fifth the next, and hard-coded prose went stale.
@@ -521,7 +555,7 @@ function indexPage(entries, ctx) {
   const sameDay = openingDates.length === 1;
 
   const row = (e) => `<tr>
-  <td class="date">${escapeHtml(longDate(e.date))}</td>
+  <td class="date">${escapeHtml(stamp(e))}</td>
   <td><a href="${e.id}/">${escapeHtml(e.title)}</a>${e.summary ? `<br><span class="pinned">${escapeHtml(e.summary)}</span>` : ""}</td>
   <td>${escapeHtml(e.status || "—")}</td>
 </tr>`;
@@ -536,18 +570,17 @@ ${rows.map(row).join("\n")}
   const body = [
     `<h1>Correspondence</h1>`,
     `<p>Every letter, reply, and public answer relating to the question put to ${count} `
-      + `candidates ${sameDay ? "on" : "beginning"} ${escapeHtml(longDate(openingDates[0]))}, newest first. Each entry carries the message `
-      + `as formatted for reading, with its source alongside. Replies are published in `
-      + `full and unedited.</p>`,
-    rest.length
-      ? `<h2>Since the opening letters</h2>\n${table(rest)}`
-      : `<h2>Since the opening letters</h2>\n<p class="pinned">As of ${escapeHtml(longDate(ctx.asOf))}, `
-        + `nothing has arrived beyond the ${count} opening letters below.</p>`,
-    `<h2>The opening letters</h2>`,
-    `<p class="pinned">Sent ${sameDay ? "the same day, " : ""}in the same words, but for the `
-      + `salutation, the sentence identifying the district, and the paragraphs noted in the `
-      + `report.</p>`,
-    table(opening),
+      + `candidates ${sameDay ? "on" : "beginning"} ${escapeHtml(longDate(openingDates[0]))}, `
+      + `in the order it happened. Each entry carries the message as formatted for reading, `
+      + `with its source alongside. Replies are published in full and unedited.</p>`,
+    `<p class="pinned">The opening letters, at the top, went out ${sameDay ? "the same day, " : ""}`
+      + `in the same words, but for the salutation, the sentence identifying the district, and `
+      + `the paragraphs noted in the report. Times are the sender's local clock.</p>`,
+    table(all),
+    // The list is only ever a claim about a day. Without this line an archive
+    // that has gone quiet reads as one that is finished.
+    `<p class="pinned">Complete as of ${escapeHtml(longDate(ctx.asOf))}. Anything that arrives `
+      + `later is added here.</p>`,
     `<p><a href="../">&larr; Back to the report</a></p>`,
   ].join("\n");
 

@@ -1,10 +1,5 @@
 ---
 section: ahm
-# Unlisted until the September 17 publish date: kept out of search, and no
-# reports.json entry. The five candidates have the URL from their letters, so
-# an early visitor sees the finished page rather than a DRAFT stamp.
-# Drop noindex and add the reports.json entry to go live.
-noindex: true
 correspondence: correspondence
 publicUrl: 'http://andoverct.info/reports/ahm/disavowal/'
 pageTitle: 'A Question for Five Candidates — Eastern Connecticut, 2026'
