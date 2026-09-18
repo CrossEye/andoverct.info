@@ -674,6 +674,17 @@ export function buildCorrespondence(folder, meta, opts = {}) {
 // ---------------------------------------------------------------------------
 // CLI
 // ---------------------------------------------------------------------------
+// Site-wide build defaults, shared with report.mjs.
+function loadConfig() {
+  const p = join(HERE, "report.config.json");
+  if (!existsSync(p)) return {};
+  try {
+    return JSON.parse(readFileSync(p, "utf8"));
+  } catch {
+    return {};
+  }
+}
+
 
 if (process.argv[1] && basename(process.argv[1]) === "correspondence.mjs") {
   const matter = (await import("gray-matter")).default;
@@ -687,7 +698,11 @@ if (process.argv[1] && basename(process.argv[1]) === "correspondence.mjs") {
     const mdPath = resolve(ROOT, t);
     const { data: meta } = matter(readFileSync(mdPath, "utf8"));
     const folder = resolve(mdPath, "..");
-    const themeName = meta.theme || "default";
+    // Theme resolution must match report.mjs (front matter > report.config.json
+    // > "default"). rebuild:all runs rebuild:reports and then this script over
+    // the same folder, so a narrower default here silently reverts the theme
+    // report.mjs just applied.
+    const themeName = meta.theme || loadConfig().theme || "default";
     const themePath = join(HERE, "themes", `${themeName}.css`);
     const defaultTheme = readFileSync(join(HERE, "themes", "default.css"), "utf8");
     const themeCss = themeName === "default" || !existsSync(themePath)
