@@ -76,7 +76,7 @@ There has been no reply.
 
 I want to be careful here, because the page itself is careful. Silence is not proof of anything. It is a statement about my inbox on a given date and nothing more. He may answer tomorrow. If he does, it goes up in full, unedited, exactly like everyone else's.
 
-But a candidate one district over answered in three days, in a single sentence, and I published it the same week. It is not a hard question to answer. It is only a hard question to avoid.
+But another Republican on my own ballot answered in three days, in a single sentence, and I published it the same week. It is not a hard question to answer. It is only a hard question to avoid.
 
 andoverct.info/reports/ahm/disavowal/
 ```
