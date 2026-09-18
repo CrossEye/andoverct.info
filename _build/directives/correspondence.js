@@ -1,7 +1,7 @@
 'use strict';
 // <% correspondence letters %>            the pinned opening letters, ledger order
 // <% correspondence ledger %>             Part 2, Answered + Status computed
-// <% correspondence log [limit=12] %>     everything since, newest first
+// <% correspondence log [limit=25] %>     the whole exchange, oldest first
 // <% correspondence asof %>               the build date, inline in prose
 //
 // Reads the summary that _build/correspondence.mjs writes beside the entries, so
@@ -17,6 +17,41 @@ const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
 function longDate(iso) {
   const [y, m, d] = iso.split('-').map(Number);
   return `${MONTHS[m - 1]} ${d}, ${y}`;
+}
+
+// "00:26" -> "12:26 am". The sender's local clock, as the Date header gave it,
+// shown without a zone: the offset is in the raw headers, and what this column
+// is for is the order of events and how long a reply took.
+function clockTime(hhmm) {
+  if (!hhmm) return '';
+  const [h, m] = hhmm.split(':').map(Number);
+  const suffix = h < 12 ? 'am' : 'pm';
+  const hour = h % 12 === 0 ? 12 : h % 12;
+  return `${hour}:${String(m).padStart(2, '0')} ${suffix}`;
+}
+
+function stamp(e) {
+  const t = clockTime(e.time);
+  return t ? `${longDate(e.date)}, ${t}` : longDate(e.date);
+}
+
+// correspondence.json is newest-first. The log reads the other way: it is the
+// record of an exchange, and an exchange is followed forwards.
+//
+// Not [...entries].reverse(): that inverts the tie-break too, and the five
+// opening letters, sent within one minute of each other, then list backwards
+// through the ledger. Ties break by ledger order in both directions.
+function oldestFirst(entries, ledger) {
+  const rank = (e) => {
+    const i = ledger.findIndex((l) => l.candidate === e.candidate);
+    return i < 0 ? ledger.length : i;
+  };
+  return [...entries].sort((x, y) => {
+    if (x.date !== y.date) return x.date < y.date ? -1 : 1;
+    const xt = x.time || '', yt = y.time || '';
+    if (xt !== yt) return xt < yt ? -1 : 1;
+    return rank(x) - rank(y);
+  });
 }
 
 // Markdown pipe tables: an unescaped | would end the cell.
@@ -70,32 +105,30 @@ function correspondence(ctx, view, args = {}) {
     // Everything since the opening letters, newest first. correspondence.json is
     // already sorted, so this only filters and truncates.
     case 'log': {
-      const limit = Number(args.limit || 12);
-      const items = c.entries.filter((e) => !e.opening);
+      const limit = Number(args.limit || 25);
+      // Everything, opening letters included: this is the whole exchange in one
+      // place, not a feed of what has happened since some other table.
+      const items = oldestFirst(c.entries, c.ledger);
 
-      if (!items.length) {
-        // A bare dash would age into a claim about the world rather than a claim
-        // about a moment, so the empty state carries the date it was true.
-        return table(['Date', 'Item', 'Classification'], [[
-          '—',
-          `As of ${longDate(c.generated)}, nothing has arrived beyond the ${
-            ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'][
-              c.entries.filter((e) => e.opening).length] ?? c.entries.filter((e) => e.opening).length
-          } letters above.`,
-          '—',
-        ]]);
-      }
-
-      const shown = items.slice(0, limit);
+      // Truncation keeps the MOST RECENT items, so a long record loses its
+      // oldest rows to the full list rather than its newest.
+      const shown = items.length > limit ? items.slice(items.length - limit) : items;
       const rows = shown.map((e) => [
-        longDate(e.date),
+        stamp(e),
         `[${e.title}](${href(e)})${e.summary ? ` — ${e.summary}` : ''}`,
         e.status || '—',
       ]);
       let md = table(['Date', 'Item', 'Classification'], rows);
       if (items.length > shown.length) {
-        md += `\n\n[See all ${items.length} items](${base}/)`;
+        md += `
+
+[See all ${items.length} items](${base}/)`;
       }
+      // The record is only ever a claim about a day. Without this an archive
+      // that has gone quiet reads as one that is finished.
+      md += `
+
+Complete as of ${longDate(c.generated)}. Anything that arrives later is added here.`;
       return md;
     }
 

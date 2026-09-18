@@ -129,9 +129,8 @@ has written in praise of Mr. Trump and Secretary Kennedy, and has criticized the
 Mr. Trump now. The second told him that this page quotes his earlier statements,
 and invited him to correct anything quoted wrongly or out of context.
 
-Each letter is published here in full, exactly as sent:
-
-<% correspondence letters %>
+Each letter is published in full, exactly as sent, in the Correspondence
+section below, where it sits in order with everything that followed it.
 
 
 
@@ -175,10 +174,11 @@ Part 2 — The ledger
 Correspondence
 --------------
 
-Everything sent or received since the opening letters, newest first. Each
-entry links to the message as formatted for reading, with the original source
-alongside it: raw headers for email, and a link, screenshot, and archive copy
-for anything published elsewhere.
+Everything sent or received, in the order it happened, starting with the five
+opening letters. Times are the sender's local clock. Each entry links to the
+message as formatted for reading, with the original source alongside it: raw
+headers for email, and a link, screenshot, and archive copy for anything
+published elsewhere.
 
 <% correspondence log %>
 
