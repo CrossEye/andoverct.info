@@ -538,118 +538,153 @@ function buildSvg(card){
 </script>
 
 <script>
-(async function(){
-  const FONT_CSS = document.getElementById('fbcc-fonts').textContent;
-  const R   = JSON.parse(document.getElementById('fbcc-render').textContent);
-  const SRC = JSON.parse(document.getElementById('fbcc-source').textContent);
-  const DECK = {}; (SRC.deck||[]).forEach(c=>{ if(c && c.name!=null) DECK[c.name]=c; });
+;(async () => {
+  const FONT_CSS = document.getElementById('fbcc-fonts').textContent
+  const R = JSON.parse(document.getElementById('fbcc-render').textContent)
+  const SRC = JSON.parse(document.getElementById('fbcc-source').textContent)
+  const DECK = Object.fromEntries((SRC.deck || [])
+    .filter((c) => c && c.name != null)
+    .map((c) => [c.name, c]))
 
   // apply the embedded fonts to the page (for on-screen inline SVG), and force-load
   // the faces so cardlib's text measurement matches what is drawn.
-  const st=document.createElement('style'); st.textContent=FONT_CSS; document.head.appendChild(st);
-  try{
+  const st = document.createElement('style')
+  st.textContent = FONT_CSS
+  document.head.appendChild(st)
+  try {
     await Promise.all([
       document.fonts.load('400 40px Gelasio'), document.fonts.load('700 40px Gelasio'),
       document.fonts.load('italic 400 40px Gelasio'), document.fonts.load('italic 700 40px Gelasio'),
-      document.fonts.load('400 40px Arimo'), document.fonts.load('700 40px Arimo')
-    ]);
-    await document.fonts.ready;
-  }catch(e){}
+      document.fonts.load('400 40px Arimo'), document.fonts.load('700 40px Arimo'),
+    ])
+    await document.fonts.ready
+  } catch (e) {}
 
-  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-  const TEXTS = R.posts.map(p=>p.text);
+  const esc = (s) => String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  const TEXTS = R.posts.map((p) => p.text)
 
   // posts
-  const wrap=document.getElementById('posts');
-  R.posts.forEach((p,i)=>{
-    let cardsHtml='';
-    if(p.cards && p.cards.length){
-      p.cards.forEach(name=>{
-        const card=DECK[name];
-        cardsHtml += card
-          ? '<div class="card" data-name="'+esc(name)+'">'+buildSvg(card)+'</div>'
-          : '<span class="missing">missing card: '+esc(name)+'</span>';
-      });
-    } else {
-      cardsHtml='<div class="noimg">Text only, no card for this post.</div>';
-    }
-    const disp=p.text.split(/\n\n/).map(par=>'<p>'+esc(par).replace(/\n/g,'<br>')+'</p>').join('');
-    const sec=document.createElement('section'); sec.className='post';
-    sec.innerHTML=
-      '<div class="meta"><span class="num">'+(i+1)+'</span>'+
-      '<span class="day">'+esc(p.day)+'</span><span class="name">'+esc(p.name)+'</span></div>'+
-      (p.note?'<p class="note">'+esc(p.note)+'</p>':'')+
-      '<div class="cards">'+cardsHtml+'</div>'+
-      '<div class="textwrap"><button class="copy" data-i="'+i+'">Copy text</button>'+
-      '<div class="text">'+disp+'</div></div>';
-    wrap.appendChild(sec);
-  });
+  const cardHtml = (name) => {
+    const card = DECK[name]
+    return card
+      ? '<div class="card" data-name="' + esc(name) + '">' + buildSvg(card) + '</div>'
+      : '<span class="missing">missing card: ' + esc(name) + '</span>'
+  }
+  const wrap = document.getElementById('posts')
+  R.posts.forEach((p, i) => {
+    const cardsHtml = p.cards && p.cards.length
+      ? p.cards.map(cardHtml).join('')
+      : '<div class="noimg">Text only, no card for this post.</div>'
+    const disp = p.text.split(/\n\n/)
+      .map((par) => '<p>' + esc(par).replace(/\n/g, '<br>') + '</p>').join('')
+    const sec = document.createElement('section')
+    sec.className = 'post'
+    sec.innerHTML =
+      '<div class="meta"><span class="num">' + (i + 1) + '</span>'
+      + '<span class="day">' + esc(p.day) + '</span><span class="name">' + esc(p.name) + '</span></div>'
+      + (p.note ? '<p class="note">' + esc(p.note) + '</p>' : '')
+      + '<div class="cards">' + cardsHtml + '</div>'
+      + '<div class="textwrap"><button class="copy" data-i="' + i + '">Copy text</button>'
+      + '<div class="text">' + disp + '</div></div>'
+    wrap.appendChild(sec)
+  })
 
   // footers
-  const foot=document.getElementById('footers');
-  (R.footers||[]).forEach(f=>{ foot.insertAdjacentHTML('beforeend',
-    '<h2>'+esc(f.title)+'</h2><p>'+esc(f.body)+'</p>'); });
+  const foot = document.getElementById('footers')
+  ;(R.footers || []).forEach((f) => foot.insertAdjacentHTML('beforeend',
+    '<h2>' + esc(f.title) + '</h2><p>' + esc(f.body) + '</p>'))
 
   // copy text
-  document.querySelectorAll('.copy').forEach(b=>{
-    b.addEventListener('click',async()=>{
-      const t=TEXTS[+b.dataset.i];
-      try{await navigator.clipboard.writeText(t);}
-      catch(e){const ta=document.createElement('textarea');ta.value=t;
-        document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();}
-      const o=b.textContent;b.textContent='Copied \u2713';b.classList.add('done');
-      setTimeout(()=>{b.textContent=o;b.classList.remove('done');},1500);
-    });
-  });
+  document.querySelectorAll('.copy').forEach((b) => {
+    b.addEventListener('click', async () => {
+      const t = TEXTS[+b.dataset.i]
+      try { await navigator.clipboard.writeText(t) }
+      catch (e) {
+        const ta = document.createElement('textarea')
+        ta.value = t
+        document.body.appendChild(ta)
+        ta.select()
+        document.execCommand('copy')
+        ta.remove()
+      }
+      const o = b.textContent
+      b.textContent = 'Copied \u2713'
+      b.classList.add('done')
+      setTimeout(() => { b.textContent = o; b.classList.remove('done') }, 1500)
+    })
+  })
 
   // rasterize a card SVG to a PNG blob, with fonts inlined so canvas can draw them
-  function inlineFonts(svg){
-    return svg.replace(/(<svg\b[^>]*>)/, '$1<defs><style>'+FONT_CSS+'</style></defs>');
-  }
-  function svgToPng(svg){
-    return new Promise((res,rej)=>{
-      const img=new Image();
-      const blob=new Blob([inlineFonts(svg)],{type:'image/svg+xml;charset=utf-8'});
-      const url=URL.createObjectURL(blob);
-      img.onload=()=>{const cv=document.createElement('canvas');cv.width=1080;cv.height=1080;
-        cv.getContext('2d').drawImage(img,0,0,1080,1080);URL.revokeObjectURL(url);
-        cv.toBlob(b=>b?res(b):rej(new Error('toBlob failed')),'image/png');};
-      img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error('SVG render failed'));};
-      img.src=url;
-    });
-  }
+  const inlineFonts = (svg) =>
+    svg.replace(/(<svg\b[^>]*>)/, '$1<defs><style>' + FONT_CSS + '</style></defs>')
+
+  const svgToPng = (svg) => new Promise((res, rej) => {
+    const img = new Image()
+    const blob = new Blob([inlineFonts(svg)], { type: 'image/svg+xml;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    img.onload = () => {
+      const cv = document.createElement('canvas')
+      cv.width = 1080; cv.height = 1080
+      cv.getContext('2d').drawImage(img, 0, 0, 1080, 1080)
+      URL.revokeObjectURL(url)
+      cv.toBlob((b) => b ? res(b) : rej(new Error('toBlob failed')), 'image/png')
+    }
+    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('SVG render failed')) }
+    img.src = url
+  })
 
   // lightbox
-  const lb=document.getElementById('lb'),stage=document.getElementById('lbStage'),
-    lbSave=document.getElementById('lbSave'),lbMsg=document.getElementById('lbMsg');
-  let curSvg='',curName='card';
-  function openLB(svg,name){curSvg=svg;curName=name||'card';stage.innerHTML=svg;
-    lbMsg.textContent='';lb.hidden=false;document.body.style.overflow='hidden';
-    lbSave.removeAttribute('href');lbSave.dataset.ready='';}
-  function closeLB(){lb.hidden=true;stage.innerHTML='';document.body.style.overflow='';}
-  document.querySelectorAll('.card').forEach(d=>d.addEventListener('click',()=>{
-    const svg=d.querySelector('svg'); if(svg) openLB(svg.outerHTML,d.dataset.name);}));
-  document.getElementById('lbClose').addEventListener('click',closeLB);
-  lb.addEventListener('click',e=>{if(e.target===lb)closeLB();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden)closeLB();});
-  lbSave.addEventListener('click',async(e)=>{
-    if(lbSave.dataset.ready==='1')return;   // second tap follows the real download link
-    e.preventDefault(); lbMsg.textContent='Preparing\u2026';
-    try{const b=await svgToPng(curSvg);lbSave.href=URL.createObjectURL(b);
-      lbSave.download=curName+'.png';lbSave.dataset.ready='1';
-      lbMsg.textContent='Ready. Tap Save again to download.';
-    }catch(err){lbMsg.textContent='Could not render: '+(err.message||err);}
-  });
-  document.getElementById('lbCopy').addEventListener('click',async()=>{
-    lbMsg.textContent='Copying\u2026';
-    try{
-      const blob=await svgToPng(curSvg);
-      await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
-      lbMsg.textContent='Image copied \u2713  (paste it into the post)';
-    }catch(e){
-      lbMsg.textContent='Image copy needs https or a file opened off disk. Save instead. ('+(e.name||e)+')';
+  const lb = document.getElementById('lb'), stage = document.getElementById('lbStage'),
+    lbSave = document.getElementById('lbSave'), lbMsg = document.getElementById('lbMsg')
+  let curSvg = '', curName = 'card'
+
+  const openLB = (svg, name) => {
+    curSvg = svg
+    curName = name || 'card'
+    stage.innerHTML = svg
+    lbMsg.textContent = ''
+    lb.hidden = false
+    document.body.style.overflow = 'hidden'
+    lbSave.removeAttribute('href')
+    lbSave.dataset.ready = ''
+  }
+  const closeLB = () => {
+    lb.hidden = true
+    stage.innerHTML = ''
+    document.body.style.overflow = ''
+  }
+
+  document.querySelectorAll('.card').forEach((d) => d.addEventListener('click', () => {
+    const svg = d.querySelector('svg')
+    if (svg) openLB(svg.outerHTML, d.dataset.name)
+  }))
+  document.getElementById('lbClose').addEventListener('click', closeLB)
+  lb.addEventListener('click', (e) => { if (e.target === lb) closeLB() })
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !lb.hidden) closeLB() })
+
+  lbSave.addEventListener('click', async (e) => {
+    if (lbSave.dataset.ready === '1') return   // second tap follows the real download link
+    e.preventDefault()
+    lbMsg.textContent = 'Preparing\u2026'
+    try {
+      const b = await svgToPng(curSvg)
+      lbSave.href = URL.createObjectURL(b)
+      lbSave.download = curName + '.png'
+      lbSave.dataset.ready = '1'
+      lbMsg.textContent = 'Ready. Tap Save again to download.'
+    } catch (err) { lbMsg.textContent = 'Could not render: ' + (err.message || err) }
+  })
+  document.getElementById('lbCopy').addEventListener('click', async () => {
+    lbMsg.textContent = 'Copying\u2026'
+    try {
+      const blob = await svgToPng(curSvg)
+      await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })])
+      lbMsg.textContent = 'Image copied \u2713  (paste it into the post)'
+    } catch (e) {
+      lbMsg.textContent = 'Image copy needs https or a file opened off disk. Save instead. (' + (e.name || e) + ')'
     }
-  });
-})();
+  })
+})()
 </script>
 </body></html>
