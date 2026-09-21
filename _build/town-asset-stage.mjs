@@ -60,12 +60,12 @@ if (!existsSync(SRC)) fail(`src not found: ${SRC}`)
 // ---------------------------------------------------------------------------
 const walk = (absDir, relPrefix = "") => {
   const out = []
-  for (const ent of readdirSync(absDir, { withFileTypes: true })) {
-    if (ent.name.startsWith(".")) continue
+  ;(readdirSync(absDir, { withFileTypes: true })).forEach((ent) => {
+    if (ent.name.startsWith(".")) return
     const rel = relPrefix ? `${relPrefix}/${ent.name}` : ent.name
     if (ent.isDirectory()) out.push(...walk(join(absDir, ent.name), rel))
     else if (ent.isFile()) out.push(rel)
-  }
+  })
   return out
 }
 const sha256 = (p) => createHash("sha256").update(readFileSync(p)).digest("hex")
@@ -73,14 +73,14 @@ const sha256 = (p) => createHash("sha256").update(readFileSync(p)).digest("hex")
 const files = [];      // { rel, abs, remote, size, hash }
 const skipped = [];    // top-level entries outside the contract (warned, not uploaded)
 
-for (const rel of walk(SRC)) {
+walk(SRC).forEach((rel) => {
   const p = rel.replace(/\\/g, "/")
   if (p.includes("..") || p.includes("\0")) fail(`refusing suspicious path in staging tree: ${p}`)
 
   let remote
   if (p.startsWith("steps/")) remote = posix.join(REMOTE_STEPS, p.slice("steps/".length))
   else if (p.startsWith("preview/")) remote = posix.join(REMOTE_PREVIEW, p.slice("preview/".length))
-  else { skipped.push(p); continue }
+  else { skipped.push(p); return }
 
   // The console owns its state; a tree that would touch it is a hard refusal.
   const base = posix.basename(remote)
@@ -90,7 +90,7 @@ for (const rel of walk(SRC)) {
 
   const abs = join(SRC, rel)
   files.push({ rel: p, abs, remote, size: statSync(abs).size, hash: sha256(abs) })
-}
+})
 
 if (!files.length) fail(`nothing stageable under ${SRC} (expected steps/ and/or preview/).`)
 
@@ -104,11 +104,11 @@ const baseline = state.files || {}
 
 const upload = []
 let unchanged = 0
-for (const f of files) {
+files.forEach((f) => {
   const prev = baseline[f.remote]
-  if (prev === f.hash) { unchanged++; continue }
+  if (prev === f.hash) { unchanged++; return }
   upload.push({ ...f, tag: prev === undefined ? "NEW" : "MOD" })
-}
+})
 
 // ---------------------------------------------------------------------------
 // Report the plan
@@ -146,11 +146,11 @@ if (!GO) {
 const loadDotenv = () => {
   const p = join(ROOT, ".env")
   if (!existsSync(p)) return
-  for (const line of readFileSync(p, "utf8").split(/\r?\n/)) {
+  ;(readFileSync(p, "utf8").split(/\r?\n/)).forEach((line) => {
     const m = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*?)\s*$/)
-    if (!m) continue
+    if (!m) return
     if (!(m[1] in process.env)) process.env[m[1]] = m[2].replace(/^(["'])(.*)\1$/, "$2")
-  }
+  })
 }
 loadDotenv()
 const password = process.env[manifest.remote.passwordEnv]
@@ -176,11 +176,11 @@ try {
   })
 
   const groups = new Map()
-  for (const f of upload) {
+  upload.forEach((f) => {
     const dir = posix.dirname(f.remote)
     if (!groups.has(dir)) groups.set(dir, [])
     groups.get(dir).push(f)
-  }
+  })
   let done = 0
   for (const [dir, groupFiles] of groups) {
     await client.ensureDir(dir)

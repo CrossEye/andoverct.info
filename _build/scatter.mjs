@@ -41,15 +41,15 @@ const dedupePoints = (comp, enrol) => {
   const hsSupp = enrolDistricts._hs_supplements || {}
 
   const groups = new Map()
-  for (const [key, d] of Object.entries(comp.districts || {})) {
-    if (!isCurrent(d.comp_year_used)) continue
-    if (!d.fte_equivalent_total_cash) continue
-    if (key === "Andover_FY27_proposed") continue
+  ;(Object.entries(comp.districts || {})).forEach(([key, d]) => {
+    if (!isCurrent(d.comp_year_used)) return
+    if (!d.fte_equivalent_total_cash) return
+    if (key === "Andover_FY27_proposed") return
     // Reference-only contracts are excluded from the ranking tables because
     // their FTE-equivalent figure is unreliable (e.g. Chaplin/Region 11, whose
     // FTE denominator is entangled with Skarzynski's separate Hampton contract).
     // Keep them off the scatter too, so a misleading pay point isn't plotted.
-    if (d.ranked === false) continue
+    if (d.ranked === false) return
     const term = d.contract_term || {}
     const gk = [d.supe_name || "", term.start || "", term.end || ""].join("|")
     let g = groups.get(gk)
@@ -65,7 +65,7 @@ const dedupePoints = (comp, enrol) => {
       groups.set(gk, g)
     }
     g.districts.push(key)
-  }
+  })
 
   const points = []
   for (const g of groups.values()) {
@@ -128,10 +128,10 @@ const pearsonFit = (pts) => {
   const mx = pts.reduce((a, p) => a + p.students, 0) / n
   const my = pts.reduce((a, p) => a + p.pay, 0) / n
   let sxy = 0, sxx = 0, syy = 0
-  for (const p of pts) {
+  pts.forEach((p) => {
     const dx = p.students - mx, dy = p.pay - my
     sxy += dx * dy; sxx += dx * dx; syy += dy * dy
-  }
+  })
   if (sxx === 0 || syy === 0) return null
   const slope = sxy / sxx
   const intercept = my - slope * mx

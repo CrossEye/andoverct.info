@@ -60,16 +60,16 @@ export const buildResearchPages = async (folder, meta, themeCss, baseCss, breadc
   const items = meta.research
   if (!Array.isArray(items) || !items.length) return
 
-  for (const item of items) {
+  items.forEach((item) => {
     const subdir = item.subdir
     if (!subdir || !item.title) {
       console.log(`research: skipping entry missing subdir/title: ${JSON.stringify(item)}`)
-      continue
+      return
     }
     const src = resolve(folder, subdir, "report.md")
     if (!existsSync(src)) {
       console.log(`research: source not found: ${src}`)
-      continue
+      return
     }
 
     const raw = readFileSync(src, "utf8")
@@ -108,5 +108,5 @@ ${bodyHtml}
     const outPath = join(folder, subdir, "index.html")
     writeFileSync(outPath, html, "utf8")
     console.log(`wrote ${subdir}/index.html (${html.length.toLocaleString()} chars)`)
-  }
+  })
 }

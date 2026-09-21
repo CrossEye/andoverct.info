@@ -262,10 +262,10 @@ const alignNumericColumns = (htmlBody) => {
     if (!tbodyM) return tableHtml
 
     const bodyRows = []
-    for (const tr of tbodyM[1].matchAll(/<tr>([\s\S]*?)<\/tr>/g)) {
+    ;(tbodyM[1].matchAll(/<tr>([\s\S]*?)<\/tr>/g)).forEach((tr) => {
       const cells = [...tr[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)].map((c) => c[1])
       bodyRows.push(cells)
-    }
+    })
     if (!bodyRows.length) return tableHtml
 
     const ncols = Math.max(...bodyRows.map((r) => r.length))

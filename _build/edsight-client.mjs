@@ -40,11 +40,11 @@ export const STATE = "State of Connecticut"
 export class Jar {
   #c = new Map()
   absorb(res) {
-    for (const line of res.headers.getSetCookie?.() ?? []) {
+    (res.headers.getSetCookie?.() ?? []).forEach((line) => {
       const [pair] = line.split(";")
       const eq = pair.indexOf("=")
       if (eq > 0) this.#c.set(pair.slice(0, eq).trim(), pair.slice(eq + 1).trim())
-    }
+    })
   }
   get header() {
     return [...this.#c].map(([k, v]) => `${k}=${v}`).join("; ")

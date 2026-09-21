@@ -348,7 +348,7 @@ const renderEcsChart = (md) => {
   )
 
   const scenarios = []
-  for (const m of inner.matchAll(re)) {
+  inner.matchAll(re).forEach((m) => {
     scenarios.push({
       heading: m[1].trim(),
       subtitle: m[2].trim(),
@@ -357,7 +357,7 @@ const renderEcsChart = (md) => {
       totalAmount: m[5].trim(),
       totalSuffix: (m[6] || '').trim(),
     })
-  }
+  })
 
   if (scenarios.length === 0) {
     process.stderr.write('warn: ecs-chart found no scenarios\n')

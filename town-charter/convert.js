@@ -66,7 +66,7 @@ const generateToc = (markdown) => {
 
   let html = '<details class="toc" aria-label="Table of Contents">\n'
   html += '  <summary>Contents</summary>\n  <ul>\n'
-  for (const entry of entries) {
+  entries.forEach((entry) => {
     const id = entry.text
       .toLowerCase()
       .replace(/[^\w\s-]/g, '')
@@ -74,7 +74,7 @@ const generateToc = (markdown) => {
     const indent = entry.level === 3 ? '      ' : '    '
     const cls = entry.level === 3 ? ' class="toc-sub"' : ''
     html += `${indent}<li${cls}><a href="#${id}">${entry.text}</a></li>\n`
-  }
+  })
   html += '  </ul>\n</details>\n'
   return html
 }
@@ -184,9 +184,9 @@ const slugify = (text) => {
 
 // Build a map from source filename to dest path for link rewriting
 const srcToDestMap = {}
-for (const page of pages) {
+pages.forEach((page) => {
   srcToDestMap[page.src] = page.dest
-}
+})
 
 /*
  * These two stay `function` on purpose, against the arrow-by-default rule:
@@ -226,12 +226,12 @@ console.log('Source directory:', sourceDir)
 console.log('Output directory:', rootDir)
 
 // Build HTML pages
-for (const page of pages) {
+pages.forEach((page) => {
   const destPath = path.join(rootDir, page.dest)
   ensureDir(path.dirname(destPath))
   const html = buildPage(page)
   fs.writeFileSync(destPath, html, 'utf-8')
   console.log(`  wrote ${page.dest}`)
-}
+})
 
 console.log('\nDone.')

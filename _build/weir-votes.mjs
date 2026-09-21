@@ -38,10 +38,10 @@ const generated = provenance?.generated?.slice(0, 10) || new Date().toISOString(
 // Sessions in dataset order (records are sorted by year, date, roll call):
 // each year's regular session first, then its special session(s).
 const sessions = new Map()
-for (const r of records) {
+records.forEach((r) => {
   if (!sessions.has(r.sessionId)) sessions.set(r.sessionId, { id: r.sessionId, label: r.sessionLabel, kind: r.sessionKind, rows: [] })
   sessions.get(r.sessionId).rows.push(r)
-}
+})
 
 const classifyAlignment = (weir, splits) => {
   if (!weir || !splits?.R) return ""
@@ -52,14 +52,14 @@ const classifyAlignment = (weir, splits) => {
 
 const summarize = (rows) => {
   const s = { yea: 0, nay: 0, absent: 0, withParty: 0, againstParty: 0 }
-  for (const r of rows) {
+  rows.forEach((r) => {
     if (r.weirVote === "Y") s.yea++
     else if (r.weirVote === "N") s.nay++
     else if (r.weirVote === "X" || r.weirVote === "A") s.absent++
     const a = classifyAlignment(r.weirVote, r.splits)
     if (a === "with-r") s.withParty++
     else if (a === "against-r") s.againstParty++
-  }
+  })
   return s
 }
 
@@ -172,7 +172,7 @@ writeFileSync(join(DIR, "index.html"), html)
 // --------------- Markdown ---------------
 
 const md = ["# Steve Weir (R-55) — CT House floor votes", "", `Generated ${generated}. ${records.length} votes total.`, ""]
-for (const s of sessions.values()) {
+sessions.values().forEach((s) => {
   const sum = summarize(s.rows)
   md.push(`## ${s.label}`, "")
   md.push(`${s.rows.length} votes. Weir Y/N/abs: ${sum.yea}/${sum.nay}/${sum.absent}. With-party / against-party: ${sum.withParty}/${sum.againstParty}.`, "")
@@ -182,7 +182,7 @@ for (const s of sessions.values()) {
     md.push(`| ${r.rollCall} | ${r.date || ""} | [${r.billHumanForm}](${r.billTrackingUrl}) | ${(r.billTitle || "").replace(/\|/g, "\\|").slice(0, 80)} | ${r.weirVote || "—"} | ${t.yea ?? "?"}–${t.nay ?? "?"} | ${d.Y ?? "?"}–${d.N ?? "?"} | ${R.Y ?? "?"}–${R.N ?? "?"} |`)
   }
   md.push("")
-}
+})
 writeFileSync(join(DIR, "weir-votes.md"), md.join("\n"))
 
 // --------------- CSV ---------------
@@ -196,10 +196,10 @@ const csv = [
   ["session_id", "session_label", "year", "date", "roll_call", "bill_number", "bill_title", "weir_vote", "total_voting", "yea", "nay", "absent",
     "d_yea", "d_nay", "r_yea", "r_nay", "o_yea", "o_nay", "tracking_url", "rollcall_pdf_url"].join(","),
 ]
-for (const r of records) {
+records.forEach((r) => {
   csv.push([r.sessionId, r.sessionLabel, r.year, r.date, r.rollCall, r.billHumanForm, r.billTitle, r.weirVote, r.totals?.voting, r.totals?.yea, r.totals?.nay, r.totals?.absent,
     r.splits?.D?.Y, r.splits?.D?.N, r.splits?.R?.Y, r.splits?.R?.N, r.splits?.O?.Y, r.splits?.O?.N, r.billTrackingUrl, r.rollCallPdfUrl].map(csvCell).join(","))
-}
+})
 writeFileSync(join(DIR, "all-votes.csv"), csv.join("\n"))
 
 console.log(`weir-votes: ${records.length} records → index.html, weir-votes.md, all-votes.csv (generated ${generated}; ${perSession.join(", ")})`)

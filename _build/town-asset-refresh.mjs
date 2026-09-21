@@ -42,11 +42,11 @@ const last = steps[steps.length - 1]
 const srcLinks = join(STEPS_SRC, String(last), "links")
 const dstLinks = join(ROOT, "links", "_src")
 let synced = 0
-for (const f of readdirSync(srcLinks)) {
-  if (!f.endsWith(".yaml")) continue
+readdirSync(srcLinks).forEach((f) => {
+  if (!f.endsWith(".yaml")) return
   const from = join(srcLinks, f), to = join(dstLinks, f)
   if (!existsSync(to) || readFileSync(to, "utf8") !== readFileSync(from, "utf8")) { copyFileSync(from, to); synced++ }
-}
+})
 console.log(`  synced ${synced} register entr${synced === 1 ? "y" : "ies"} into links/_src`)
 
 // 2 + 3
@@ -61,11 +61,11 @@ const dstSeries = join(ROOT, "series")
 let n = 0
 const copyTree = (a, b) => {
   mkdirSync(b, { recursive: true })
-  for (const e of readdirSync(a, { withFileTypes: true })) {
+  ;(readdirSync(a, { withFileTypes: true })).forEach((e) => {
     const f = join(a, e.name), t = join(b, e.name)
     if (e.isDirectory()) copyTree(f, t)
     else { copyFileSync(f, t); n++ }
-  }
+  })
 }
 copyTree(srcSeries, dstSeries)
 console.log(`  refreshed ${n} series file(s) into series/.`)

@@ -46,11 +46,11 @@ const fail = (msg) => { console.error(`\n  reconcile:town-asset: ${msg}\n`); pro
 const loadDotenv = () => {
   const p = join(ROOT, ".env")
   if (!existsSync(p)) return
-  for (const line of readFileSync(p, "utf8").split(/\r?\n/)) {
+  ;(readFileSync(p, "utf8").split(/\r?\n/)).forEach((line) => {
     const m = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*?)\s*$/)
-    if (!m) continue
+    if (!m) return
     if (!(m[1] in process.env)) process.env[m[1]] = m[2].replace(/^(["'])(.*)\1$/, "$2")
-  }
+  })
 }
 
 // ---------------------------------------------------------------------------
@@ -106,15 +106,15 @@ const srcYaml = join(stepDir, "www", "links", "_src")
 const destYaml = join(ROOT, "links", "_src")
 let copied = 0, same = 0
 if (existsSync(srcYaml)) {
-  for (const name of readdirSync(srcYaml)) {
-    if (!name.endsWith(".yaml")) continue
+  readdirSync(srcYaml).forEach((name) => {
+    if (!name.endsWith(".yaml")) return
     const from = join(srcYaml, name)
     const to = join(destYaml, name)
-    if (existsSync(to) && readFileSync(to, "utf8") === readFileSync(from, "utf8")) { same++; continue }
+    if (existsSync(to) && readFileSync(to, "utf8") === readFileSync(from, "utf8")) { same++; return }
     copyFileSync(from, to)
     copied++
     console.log(`  + links/_src/${name}`)
-  }
+  })
 }
 console.log(`  register entries: ${copied} copied, ${same} already current.`)
 
@@ -154,11 +154,11 @@ const destSeries = join(ROOT, "series")
 let integrated = 0
 const copyTree = (from, to) => {
   mkdirSync(to, { recursive: true })
-  for (const ent of readdirSync(from, { withFileTypes: true })) {
+  ;(readdirSync(from, { withFileTypes: true })).forEach((ent) => {
     const f = join(from, ent.name), t = join(to, ent.name)
     if (ent.isDirectory()) copyTree(f, t)
     else if (ent.isFile()) { copyFileSync(f, t); integrated++ }
-  }
+  })
 }
 copyTree(srcSeries, destSeries)
 console.log(`  integrated ${integrated} file(s) into series/.`)

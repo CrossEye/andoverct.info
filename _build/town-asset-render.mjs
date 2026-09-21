@@ -129,16 +129,16 @@ const loadPosts = () => {
   const posts = new Map(); // number -> { title, image, text }
   let current = null
   let fence = null
-  for (const line of text.split(/\r?\n/)) {
+  ;(text.split(/\r?\n/)).forEach((line) => {
     const h = line.match(/^###\s+(.+?)\s+###\s*$/)
     if (h) {
       const n = h[1].match(/^Post\s+(\d+)\b/i)
       current = { number: n ? parseInt(n[1], 10) : null, title: h[1], image: null, lines: null }
-      continue
+      return
     }
-    if (!current) continue
+    if (!current) return
     const im = line.match(/^Image:\s*`?([^`\s]+?)`?\.?\s*$/i)
-    if (im && fence === null) { current.image = /^none$/i.test(im[1]) ? null : im[1]; continue }
+    if (im && fence === null) { current.image = /^none$/i.test(im[1]) ? null : im[1]; return }
     if (line.trim() === "```") {
       if (fence === null) { fence = [] }
       else {
@@ -149,10 +149,10 @@ const loadPosts = () => {
         }
         fence = null
       }
-      continue
+      return
     }
     if (fence !== null) fence.push(line)
-  }
+  })
   return posts
 }
 
@@ -318,7 +318,7 @@ const finalSd = join(STEPS_SRC, String(TOTAL))
 
 // Full renderings of every piece and the assembled article, byte-styled like
 // the live pages, so phone review shows exactly what will publish.
-for (const piece of finalMeta.pieces) {
+finalMeta.pieces.forEach((piece) => {
   const md = readFileSync(join(finalSd, "pieces", piece.slug + ".md"), "utf8")
   let html = mdToHtml(md).replace(/<\/h1>/, `</h1>\n<p class="piece-dek">${escapeHtml(piece.dek)}</p>`)
   const dir = join(pv, "pieces", piece.slug)
@@ -332,7 +332,7 @@ for (const piece of finalMeta.pieces) {
     body: `<article class="piece-body">${html}</article>`,
     footerNote: SERIES_FOOTER_NOTE,
   }, seriesCss), "utf8")
-}
+})
 mkdirSync(join(pv, "article"), { recursive: true })
 writeFileSync(join(pv, "article", "index.html"), pageShell({
   pageTitle: SERIES_TITLE, og: "",

@@ -97,14 +97,14 @@ const tidy = (csvText, year) => {
     basis: col("Pupil Basis"),
     ppe: col("PPE"),
   }
-  for (const [k, v] of Object.entries(idx)) {
+  Object.entries(idx).forEach(([k, v]) => {
     if (v < 0) throw new Error(`${year}: export is missing the ${k} column`)
-  }
+  })
 
   const out = []
-  for (const r of rows.slice(hi + 1)) {
+  ;(rows.slice(hi + 1)).forEach((r) => {
     const district = r[idx.district]?.trim()
-    if (!district) continue
+    if (!district) return
     const fn = r[idx.function]?.trim() ?? ""
     if (fn && !functionOrder.includes(fn)) functionOrder.push(fn)
 
@@ -131,7 +131,7 @@ const tidy = (csvText, year) => {
       // and keeps the table narrow.
       missing: ppe.missing,
     })
-  }
+  })
   return out
 }
 
@@ -162,12 +162,12 @@ const writeXlsx = async (records, years, functions, file) => {
     ...years.map((y) => ({ header: y, key: y, width: 11, style: { numFmt: money } })),
   ]
   const totals = new Map()
-  for (const r of records) {
-    if (r.function !== TOTAL) continue
+  records.forEach((r) => {
+    if (r.function !== TOTAL) return
     if (!totals.has(r.district))
       totals.set(r.district, { district: r.district, code: r.districtCode, type: r.entityType })
     totals.get(r.district)[r.year] = r.ppe
-  }
+  })
   for (const row of [...totals.values()].sort(byDistrictFirstState)) trend.addRow(row)
 
   // 2. The latest year broken out by function — districts down, functions across.
@@ -181,12 +181,12 @@ const writeXlsx = async (records, years, functions, file) => {
     ...functions.map((f) => ({ header: f, key: f, width: 15, style: { numFmt: money } })),
   ]
   const byDistrict = new Map()
-  for (const r of records) {
-    if (r.year !== latest) continue
+  records.forEach((r) => {
+    if (r.year !== latest) return
     if (!byDistrict.has(r.district))
       byDistrict.set(r.district, { district: r.district, code: r.districtCode, type: r.entityType })
     byDistrict.get(r.district)[r.function] = r.ppe
-  }
+  })
   for (const row of [...byDistrict.values()].sort(byDistrictFirstState)) grid.addRow(row)
 
   // 3. Everything, for real work.
@@ -199,15 +199,15 @@ const writeXlsx = async (records, years, functions, file) => {
   }))
   for (const r of records) all.addRow(r)
 
-  for (const sheet of wb.worksheets) {
+  wb.worksheets.forEach((sheet) => {
     sheet.getRow(1).font = { bold: true }
     sheet.views = [{ state: "frozen", xSplit: sheet.name === "All rows" ? 0 : 3, ySplit: 1 }]
-  }
+  })
   // Statewide row bold on the two pivot sheets.
-  for (const name of ["Total PPE", `By function ${latest}`]) {
+  ;(["Total PPE", `By function ${latest}`]).forEach((name) => {
     const sheet = wb.getWorksheet(name)
     if (sheet.getRow(2).getCell(1).value === STATE) sheet.getRow(2).font = { bold: true }
-  }
+  })
 
   await wb.xlsx.writeFile(file)
 }
@@ -265,12 +265,12 @@ if (offline) {
 const allYears = cachedYears()
 
 const records = []
-for (const year of allYears) {
+allYears.forEach((year) => {
   for (const scope of SCOPES) {
     const file = rawFor(year, scope.key)
     if (existsSync(file)) records.push(...tidy(readFileSync(file, "utf8"), year))
   }
-}
+})
 
 // Upstream order for functions; Total forced last in case a year lists it early.
 functionOrder = [...functionOrder.filter((f) => f !== TOTAL), TOTAL]

@@ -48,7 +48,7 @@ const growRing = (sel) => {
 const core = townsOf("core")
 let ring = core
 const expect = ["block1", "block2", "block3"]
-for (const gid of expect) {
+expect.forEach((gid) => {
   ring = growRing(ring)
   const want = townsOf(gid)
   const extra = [...ring].filter((t) => !want.has(t))
@@ -60,7 +60,7 @@ for (const gid of expect) {
     process.exit(1)
   }
   console.log(`adjacency ✓ ring reproduces ${gid} (${want.size} towns)`)
-}
+})
 
 // ---------------------------------------------------------------------------
 // Emit geo.json (coarse + state + adjacency; the full-res layer stays home).
@@ -97,12 +97,12 @@ parts.push("      cache[key] = module.exports")
 parts.push("    }")
 parts.push("    return cache[key]")
 parts.push("  }")
-for (const name of MODULES) {
+MODULES.forEach((name) => {
   const src = readFileSync(join(HERE, "directives", `${name}.js`), "utf8")
   parts.push(`  define(${JSON.stringify(name)}, (module, require) => {`)
   parts.push(src)
   parts.push("  })")
-}
+})
 parts.push("  return {")
 parts.push("    ...require('resolve'),")
 parts.push("    decomp: require('decomp'),")

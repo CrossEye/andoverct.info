@@ -344,11 +344,11 @@ ${siteFooterBarHtml()}
 }
 
 let n = 0
-for (const node of TREE.nodes) {
+TREE.nodes.forEach((node) => {
   const dest = join(ROOT, node.out)
   mkdirSync(dirname(dest), { recursive: true })
   writeFileSync(dest, renderNode(node), "utf8")
   console.log(`  wrote ${node.out}`)
   n++
-}
+})
 console.log(`\nindexes: wrote ${n} page(s).`)

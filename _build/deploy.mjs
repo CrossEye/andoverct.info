@@ -86,15 +86,15 @@ const PRUNE_DIRS = new Set(["node_modules", ".git", "Charter", ".meta"])
 
 const walk = (absDir, recursive, relPrefix = "") => {
   const out = []
-  for (const ent of readdirSync(absDir, { withFileTypes: true })) {
+  ;(readdirSync(absDir, { withFileTypes: true })).forEach((ent) => {
     const rel = relPrefix ? `${relPrefix}/${ent.name}` : ent.name
     if (ent.isDirectory()) {
-      if (!recursive || PRUNE_DIRS.has(ent.name)) continue
+      if (!recursive || PRUNE_DIRS.has(ent.name)) return
       out.push(...walk(join(absDir, ent.name), recursive, rel))
     } else if (ent.isFile()) {
       out.push(rel)
     }
-  }
+  })
   return out
 }
 
@@ -108,13 +108,13 @@ const sha256 = (absPath) => {
 const loadDotenv = () => {
   const p = join(ROOT, ".env")
   if (!existsSync(p)) return
-  for (const line of readFileSync(p, "utf8").split(/\r?\n/)) {
+  ;(readFileSync(p, "utf8").split(/\r?\n/)).forEach((line) => {
     const m = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*?)\s*$/)
-    if (!m) continue
+    if (!m) return
     const k = m[1]
     const v = m[2].replace(/^(["'])(.*)\1$/, "$2")
     if (!(k in process.env)) process.env[k] = v
-  }
+  })
 }
 
 const fail = (msg) => { console.error(`\n  deploy: ${msg}\n`); process.exit(1) }
@@ -196,13 +196,13 @@ const baseline = state.files || {}
 const localKeys = new Set(files.map((f) => f.key))
 const upload = []; // files needing transfer (new or changed)
 
-for (const f of files) {
+files.forEach((f) => {
   const prev = baseline[f.key]
   const bucket = perArea.get(f.areaId)
   if (prev === undefined) { bucket.new++; bucket.bytes += f.size; bucket.items.push(["NEW", f]); upload.push(f) }
   else if (prev !== f.hash) { bucket.changed++; bucket.bytes += f.size; bucket.items.push(["MOD", f]); upload.push(f) }
   else { bucket.same++ }
-}
+})
 
 // Removed = baseline keys gone locally — only meaningful on a full run.
 const removed = ONLY ? [] : Object.keys(baseline).filter((k) => !localKeys.has(k))
@@ -219,14 +219,14 @@ console.log(`\n  andoverct.info deploy — ${mode}`)
 console.log(`  target: ftp://${manifest.remote.user}@${manifest.remote.host}${REMOTE_ROOT}  (plain FTP)`)
 console.log(`  areas:  ${areas.map((a) => a.id).join(", ")}${ONLY ? "  [filtered]" : ""}\n`)
 
-for (const area of areas) {
+areas.forEach((area) => {
   const b = perArea.get(area.id)
   const tag = b.new + b.changed === 0 ? "up to date" : `${b.new} new, ${b.changed} changed, ${fmtBytes(b.bytes)}`
   console.log(`  • ${area.id.padEnd(13)} ${tag}  (${b.same} unchanged)`)
   const show = VERBOSE ? b.items : b.items.slice(0, 12)
   for (const [k, f] of show) console.log(`      ${k}  ${f.key}  (${fmtBytes(f.size)})`)
   if (!VERBOSE && b.items.length > 12) console.log(`      … and ${b.items.length - 12} more (use --verbose)`)
-}
+})
 
 if (removed.length) {
   console.log(`\n  ${removed.length} file(s) in baseline no longer present locally${DELETE ? " (will be DELETED)" : " (use --delete to remove remotely)"}:`)
@@ -320,11 +320,11 @@ try {
 
   // Group uploads by remote directory so each dir is ensured once.
   const groups = new Map()
-  for (const f of upload) {
+  upload.forEach((f) => {
     const remoteDir = posix.dirname(posix.join(REMOTE_ROOT, f.key))
     if (!groups.has(remoteDir)) groups.set(remoteDir, [])
     groups.get(remoteDir).push(f)
-  }
+  })
   let done = 0
   for (const [dir, groupFiles] of groups) {
     await client.ensureDir(dir); // creates as needed; leaves cwd in `dir`
@@ -355,13 +355,13 @@ try {
     // page doesn't leave a bare dir behind that the server lists. removeEmptyDir
     // only removes truly-empty dirs, so dirs with other content are left alone.
     const dirs = new Set()
-    for (const k of removed) {
+    removed.forEach((k) => {
       let d = posix.dirname(posix.join(REMOTE_ROOT, k))
       while (d.length > REMOTE_ROOT.length && d.startsWith(REMOTE_ROOT)) {
         dirs.add(d)
         d = posix.dirname(d)
       }
-    }
+    })
     for (const d of [...dirs].sort((a, b) => b.split("/").length - a.split("/").length)) {
       try { await client.removeEmptyDir(d); console.log(`  ✕ (dir) ${d}`) }
       catch { /* not empty or already gone — leave it */ }

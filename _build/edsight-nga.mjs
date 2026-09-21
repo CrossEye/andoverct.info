@@ -184,7 +184,7 @@ const writeXlsx = async (records, years, file) => {
       ]),
     ]
     const by = new Map()
-    for (const r of rows) {
+    rows.forEach((r) => {
       const k = keyName === "School" ? `${r.school} — ${r.district}` : r.district
       if (!by.has(k)) {
         by.set(k, {
@@ -195,7 +195,7 @@ const writeXlsx = async (records, years, file) => {
       }
       by.get(k)[`i${r.year}`] = r.outcomeRatePct
       by.get(k)[`a${r.year}`] = r.academicPct
-    }
+    })
     const ordered = [...by.values()].sort(
       (a, b) => (a.k === STATE ? -1 : 0) - (b.k === STATE ? -1 : 0) || a.k.localeCompare(b.k)
     )
@@ -257,9 +257,9 @@ if (offline) {
 
 const allYears = cachedYears()
 const records = []
-for (const year of allYears) {
+allYears.forEach((year) => {
   if (existsSync(rawFor(year))) records.push(...tidy(readFileSync(rawFor(year), "utf8"), year))
-}
+})
 
 const LEVEL_RANK = { state: 0, district: 1, school: 2 }
 records.sort(

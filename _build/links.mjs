@@ -165,9 +165,9 @@ const validateDoc = (raw, stem, rel) => {
     kind === "leaf"
       ? ["id", "title", "description", "url", "image", "date", "archived"]
       : ["id", "title", "description", "image", "groups", "links"]
-  for (const k of Object.keys(raw)) {
+  Object.keys(raw).forEach((k) => {
     if (!allowed.includes(k)) err(`unknown key "${k}"`)
-  }
+  })
 
   const nonEmptyString = (v) => typeof v === "string" && v.trim() !== ""
   if (!nonEmptyString(raw.title)) err(`"title" must be a non-empty string`)
@@ -199,9 +199,9 @@ const validateDoc = (raw, stem, rel) => {
       err(`${where} must be a non-empty array of ids`)
       return
     }
-    for (const x of arr) {
+    arr.forEach((x) => {
       if (!ID_RE.test(String(x))) err(`${where} contains invalid id "${x}"`)
-    }
+    })
   }
 
   if (raw.groups !== undefined) {
@@ -215,10 +215,10 @@ const validateDoc = (raw, stem, rel) => {
         err(`${where} must be a mapping`)
         return
       }
-      for (const k of Object.keys(g)) {
+      Object.keys(g).forEach((k) => {
         if (!["title", "description", "links"].includes(k))
           err(`${where}: unknown key "${k}"`)
-      }
+      })
       if (!nonEmptyString(g.title)) err(`${where}: "title" must be a non-empty string`)
       if (g.description !== undefined && !nonEmptyString(g.description))
         err(`${where}: "description" must be a non-empty string`)
@@ -271,27 +271,27 @@ export const loadDocsFrom = (dir) => {
   const files = readdirSync(dir)
     .filter((f) => f.endsWith(".yaml"))
     .sort()
-  for (const file of files) {
+  files.forEach((file) => {
     const rel = `${label}/${file}`
     const stem = file.slice(0, -".yaml".length)
     if (!ID_RE.test(stem)) {
       errors.push(`${rel}: filename id "${stem}" must be letters/digits/_/- only`)
-      continue
+      return
     }
     let raw
     try {
       raw = parseYaml(readFileSync(join(dir, file), "utf8"))
     } catch (e) {
       errors.push(`${rel}: YAML parse error: ${e.message}`)
-      continue
+      return
     }
     const errs = validateDoc(raw, stem, rel)
     if (errs.length) {
       errors.push(...errs)
-      continue
+      return
     }
     docs.set(stem, normalizeDoc(raw, stem))
-  }
+  })
   for (const [id, doc] of docs) {
     if (doc.kind !== "list") continue
     for (const g of doc.groups) {
@@ -443,7 +443,7 @@ export const renderListPage = (doc, docs, ctx) => {
     `<h1 class="report-title">${escapeHtml(doc.title)}</h1>\n` +
     `<p class="report-subtitle">${escapeHtml(doc.description)}</p>\n` +
     `<hr class="report-header-rule">\n`
-  for (const g of doc.groups) {
+  doc.groups.forEach((g) => {
     if (g.title) body += `<h2>${escapeHtml(g.title)}</h2>\n`
     if (g.description) body += `<p class="link-group-desc">${escapeHtml(g.description)}</p>\n`
     for (const ref of g.links) {
@@ -455,7 +455,7 @@ export const renderListPage = (doc, docs, ctx) => {
           ? leafCardHtml(target, withFragment)
           : listRefCardHtml(target, withFragment)) + "\n"
     }
-  }
+  })
   return pageShell(
     {
       pageTitle: `${doc.title} — andoverct.info`,
@@ -528,7 +528,7 @@ const main = () => {
     process.exit(1)
   }
 
-  for (const [id, doc] of docs) {
+  docs.forEach((doc, id) => {
     const html =
       doc.kind === "leaf"
         ? renderLeafPage(doc, ctx)
@@ -536,7 +536,7 @@ const main = () => {
     mkdirSync(join(OUT_DIR, id), { recursive: true })
     writeFileSync(join(OUT_DIR, id, "index.html"), html, "utf8")
     console.log(`wrote links/${id}/index.html (${html.length} chars)`)
-  }
+  })
 
   const idx = renderIndexPage(docs, ctx)
   writeFileSync(join(OUT_DIR, "index.html"), idx, "utf8")
@@ -544,10 +544,10 @@ const main = () => {
 
   // Prune output dirs whose source is gone, so the local tree stays canonical.
   // Only dirs that contain exactly our own output are touched.
-  for (const entry of readdirSync(OUT_DIR, { withFileTypes: true })) {
-    if (!entry.isDirectory()) continue
+  ;(readdirSync(OUT_DIR, { withFileTypes: true })).forEach((entry) => {
+    if (!entry.isDirectory()) return
     const name = entry.name
-    if (name === "_src" || docs.has(name) || !ID_RE.test(name)) continue
+    if (name === "_src" || docs.has(name) || !ID_RE.test(name)) return
     const contents = readdirSync(join(OUT_DIR, name))
     if (contents.length === 1 && contents[0] === "index.html") {
       rmSync(join(OUT_DIR, name), { recursive: true })
@@ -557,7 +557,7 @@ const main = () => {
         `WARNING links/${name}/ has no source but holds unexpected files; not pruned`
       )
     }
-  }
+  })
 }
 
 // Run the CLI only when executed directly (node _build/links.mjs), never on

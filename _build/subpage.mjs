@@ -242,15 +242,15 @@ export const buildSubpages = async (folder, meta, themeCss, baseCss, breadcrumb)
   const items = meta.subpages
   if (!Array.isArray(items) || !items.length) return
 
-  for (const item of items) {
+  items.forEach((item) => {
     if (!item.src || !item.subdir || !item.title) {
       console.log(`subpages: skipping entry missing src/subdir/title: ${JSON.stringify(item)}`)
-      continue
+      return
     }
     const src = resolve(folder, item.src)
     if (!existsSync(src)) {
       console.log(`subpages: source not found: ${src}`)
-      continue
+      return
     }
 
     ensureSourceHtaccess(src)
@@ -296,5 +296,5 @@ ${siteFooterBarHtml()}
     const outPath = join(outDir, "index.html")
     writeFileSync(outPath, html, "utf8")
     console.log(`wrote ${item.subdir}/index.html (${html.length.toLocaleString()} chars)`)
-  }
+  })
 }

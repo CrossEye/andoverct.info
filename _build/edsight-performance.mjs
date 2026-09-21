@@ -113,9 +113,9 @@ const tidy = (csvText, year) => {
     category: col("Category"),
     group: col("Student Group"),
   }
-  for (const [k, v] of Object.entries(idx)) {
+  Object.entries(idx).forEach(([k, v]) => {
     if (v < 0 && k !== "code") throw new Error(`${year}: export is missing the ${k} column`)
-  }
+  })
   const subjectCols = SUBJECTS.map((s) => ({
     subject: s,
     count: col(`${s}Count`),
@@ -260,12 +260,12 @@ if (offline) {
 const allYears = cachedYears()
 
 const records = []
-for (const year of allYears) {
+allYears.forEach((year) => {
   for (const scope of SCOPES) {
     const file = rawFor(year, scope.key)
     if (existsSync(file)) records.push(...tidy(readFileSync(file, "utf8"), year))
   }
-}
+})
 records.sort(
   (a, b) =>
     (a.district === STATE ? -1 : 0) - (b.district === STATE ? -1 : 0) ||

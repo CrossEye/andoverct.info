@@ -42,13 +42,13 @@ const MARKER_RE = /\/\* @footer-css:start[\s\S]*?@footer-css:end \*\//
 
 let changed = 0
 let drift = 0
-for (const rel of TARGETS) {
+TARGETS.forEach((rel) => {
   const path = join(ROOT, rel)
   const src = readFileSync(path, "utf8")
   if (!MARKER_RE.test(src)) {
     console.error(`  MISSING markers: ${rel} — add /* @footer-css:start */ .. /* @footer-css:end */`)
     process.exitCode = 1
-    continue
+    return
   }
   const next = src.replace(MARKER_RE, block)
   if (next === src) {
@@ -61,7 +61,7 @@ for (const rel of TARGETS) {
     console.log(`  synced    ${rel}`)
     changed++
   }
-}
+})
 
 if (CHECK && drift) {
   console.error(`\nfooter CSS drift in ${drift} file(s) — run: npm run sync:footer-css`)

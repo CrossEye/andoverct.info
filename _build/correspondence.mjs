@@ -109,8 +109,8 @@ const err = (file, msg) => errors.push(`${file}: ${msg}`)
 const loadEntries = (srcDir) => {
   if (!existsSync(srcDir)) return []
   const entries = []
-  for (const name of readdirSync(srcDir).sort()) {
-    if (!/\.ya?ml$/.test(name)) continue
+  readdirSync(srcDir).sort().forEach((name) => {
+    if (!/\.ya?ml$/.test(name)) return
     const file = `_src/${name}`
     const stem = name.replace(/\.ya?ml$/, "")
     let doc
@@ -118,11 +118,11 @@ const loadEntries = (srcDir) => {
       doc = parseYaml(readFileSync(join(srcDir, name), "utf8"))
     } catch (e) {
       err(file, `YAML parse failed — ${e.message}`)
-      continue
+      return
     }
     if (!doc || typeof doc !== "object") {
       err(file, "empty or not a mapping")
-      continue
+      return
     }
     if (doc.id && doc.id !== stem) {
       err(file, `id "${doc.id}" does not match filename stem "${stem}"`)
@@ -131,7 +131,7 @@ const loadEntries = (srcDir) => {
       err(file, `filename must be <YYYY-MM-DD>-<from>-<to>[-N], lowercase; got "${stem}"`)
     }
     entries.push({ ...doc, id: stem, _file: file })
-  }
+  })
   return entries
 }
 
@@ -149,9 +149,9 @@ const validate = (entry, dir) => {
   if (!KINDS.has(entry.kind)) {
     err(f, `kind must be one of ${[...KINDS].join(", ")}; got ${JSON.stringify(entry.kind)}`)
   }
-  for (const k of ["from", "to", "title"]) {
+  ;(["from", "to", "title"]).forEach((k) => {
     if (!entry[k] || typeof entry[k] !== "string") err(f, `${k} is required`)
-  }
+  })
   if (entry.candidate != null && !CANDIDATE_NAMES[entry.candidate]) {
     err(f, `candidate must be one of ${Object.keys(CANDIDATE_NAMES).join(", ")}; got ${JSON.stringify(entry.candidate)}`)
   }
@@ -190,18 +190,18 @@ const validate = (entry, dir) => {
   // screenshot must be declared rather than simply absent.
   if (entry.kind === "public" || entry.kind === "press") {
     if (!src.url && !src.pdf) err(f, `kind "${entry.kind}" requires source.url (or source.pdf for a paper)`)
-    for (const want of ["archive", "screenshot"]) {
+    ;(["archive", "screenshot"]).forEach((want) => {
       if (!src[want] && !gaps.length) {
         err(f, `no source.${want} and no gaps: entry explaining why`)
       }
-    }
+    })
   }
 
-  for (const key of ["screenshot", "pdf"]) {
+  ;(["screenshot", "pdf"]).forEach((key) => {
     if (src[key] && !existsSync(join(dir, entry.id, src[key]))) {
       err(f, `source.${key} not found: ${entry.id}/${src[key]}`)
     }
-  }
+  })
 
   // An enclosure is part of the message, not evidence about it — a signature
   // banner, a flyer, a photograph the sender chose to include. It is published
@@ -212,17 +212,17 @@ const validate = (entry, dir) => {
     if (typeof enc !== "object" || Array.isArray(enc)) {
       err(f, "enclosure must be a mapping with file, alt, and optionally original and caption")
     } else {
-      for (const k of ["file", "alt"]) {
+      (["file", "alt"]).forEach((k) => {
         if (!enc[k] || typeof enc[k] !== "string") err(f, `enclosure.${k} is required`)
-      }
+      })
       // alt text is not optional here. The image carries words a reader using a
       // screen reader would otherwise lose entirely, and those words are the
       // candidate's own.
-      for (const k of ["file", "original"]) {
+      ;(["file", "original"]).forEach((k) => {
         if (enc[k] && !existsSync(join(dir, entry.id, enc[k]))) {
           err(f, `enclosure.${k} not found: ${entry.id}/${enc[k]}`)
         }
-      }
+      })
     }
   }
 }
@@ -241,18 +241,18 @@ export const reduceHeaders = (raw) => {
   const withheld = new Set()
   let keeping = false
 
-  for (const line of raw.split(/\r?\n/)) {
+  ;(raw.split(/\r?\n/)).forEach((line) => {
     if (/^[ \t]/.test(line)) {
       if (keeping) kept.push(line); // folded continuation of a kept header
-      continue
+      return
     }
     const m = /^([A-Za-z0-9-]+):/.exec(line)
-    if (!m) { keeping = false; continue }
+    if (!m) { keeping = false; return }
     const name = m[1]
     keeping = PUBLIC_HEADERS.some((h) => h.toLowerCase() === name.toLowerCase())
     if (keeping) kept.push(line)
     else withheld.add(name)
-  }
+  })
   return { text: kept.join("\n"), withheld: [...withheld].sort() }
 }
 
@@ -270,7 +270,7 @@ export const reflow = (text) => {
   let para = []
   const flush = () => { if (para.length) { out.push(para.join(" ")); para = []; } }
 
-  for (const line of text.split("\n")) {
+  ;(text.split("\n")).forEach((line) => {
     const t = line.trim()
     const isHeader = /^(To|Cc|Bcc|From|Subject|Date|Message-ID):/i.test(t)
     // A line well short of the wrap column ended a paragraph on purpose.
@@ -284,7 +284,7 @@ export const reflow = (text) => {
     } else {
       para.push(t)
     }
-  }
+  })
   flush()
   return out.join("\n")
 }
@@ -369,13 +369,13 @@ const checkPublishedPaths = (dir, ids) => {
   const known = new Set(prev.paths || [])
   const now = new Set(ids)
 
-  for (const p of known) {
+  known.forEach((p) => {
     if (!now.has(p)) {
       errors.push(`published-paths.json: "${p}" has been published and is cited by path, `
         + "but no _src entry produces it any more. Restore the entry or, if it truly "
         + "never shipped, remove it from published-paths.json by hand.")
     }
-  }
+  })
   const merged = [...new Set([...known, ...now])].sort()
   writeFileSync(file, JSON.stringify({ paths: merged }, null, 2) + "\n", "utf8")
   return merged
@@ -680,11 +680,11 @@ export const buildCorrespondence = (folder, meta, opts = {}) => {
     throw new Error("correspondence build failed validation")
   }
 
-  for (const entry of entries) {
+  entries.forEach((entry) => {
     const out = join(dir, entry.id, "index.html")
     mkdirSync(join(dir, entry.id), { recursive: true })
     writeFileSync(out, entryPage(entry, dir, ctx), "utf8")
-  }
+  })
   writeFileSync(join(dir, "index.html"), indexPage(entries, ctx), "utf8")
 
   const summary = {
@@ -727,7 +727,7 @@ if (process.argv[1] && basename(process.argv[1]) === "correspondence.mjs") {
     process.exit(1)
   }
   const baseCss = readFileSync(join(HERE, "base.css"), "utf8")
-  for (const t of targets) {
+  targets.forEach((t) => {
     const mdPath = resolve(ROOT, t)
     const { data: meta } = matter(readFileSync(mdPath, "utf8"))
     const folder = resolve(mdPath, "..")
@@ -742,5 +742,5 @@ if (process.argv[1] && basename(process.argv[1]) === "correspondence.mjs") {
       ? defaultTheme
       : defaultTheme + "\n" + readFileSync(themePath, "utf8")
     buildCorrespondence(folder, meta, { baseCss, themeCss })
-  }
+  })
 }

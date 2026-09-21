@@ -88,11 +88,11 @@ const collectGroups = (data, pdfsBase) => {
   // Pass 1: districts whose source_pdf is on disk — these establish a group.
   // For a joint contract, the first member-town whose copy is found becomes
   // the canonical PDF; that's the file we copy into contracts/{slug}/.
-  for (const [key, d] of Object.entries(data.districts || {})) {
+  ;(Object.entries(data.districts || {})).forEach(([key, d]) => {
     const src = d.source_pdf
-    if (!src || typeof src !== "string" || !src.toLowerCase().endsWith(".pdf")) continue
+    if (!src || typeof src !== "string" || !src.toLowerCase().endsWith(".pdf")) return
     const srcAbs = resolve(pdfsBase, src)
-    if (!existsSync(srcAbs)) continue
+    if (!existsSync(srcAbs)) return
 
     const groupKey = groupKeyFor(d)
     let g = groups.get(groupKey)
@@ -112,32 +112,32 @@ const collectGroups = (data, pdfsBase) => {
       groups.set(groupKey, g)
     }
     g.entries.push({ key, district: d })
-  }
+  })
 
   // Pass 2: districts whose source_pdf is missing on disk but match an
   // existing group via (supe + term) — attach them to that group so a joint
   // contract picks up all member districts even if the PDF lives in only one
   // town's folder.
-  for (const [key, d] of Object.entries(data.districts || {})) {
+  ;(Object.entries(data.districts || {})).forEach(([key, d]) => {
     const src = d.source_pdf
-    if (!src || typeof src !== "string" || !src.toLowerCase().endsWith(".pdf")) continue
+    if (!src || typeof src !== "string" || !src.toLowerCase().endsWith(".pdf")) return
     const srcAbs = resolve(pdfsBase, src)
-    if (existsSync(srcAbs)) continue
+    if (existsSync(srcAbs)) return
 
     const g = groups.get(groupKeyFor(d))
     if (g && !g.entries.some((e) => e.key === key)) {
       g.entries.push({ key, district: d })
     }
-  }
+  })
 
   const groupList = [...groups.values()]
-  for (const g of groupList) {
+  groupList.forEach((g) => {
     g.slug = determineSlug(g)
     g.status = classifyVintage(g.vintage)
     g.displayName = g.entries.length > 1
       ? g.entries.map((e) => e.key).join(" / ")
       : g.entries[0].key
-  }
+  })
 
   groupList.sort((a, b) => {
     // primary first, then future, then stale; then by FTE-equivalent desc.
@@ -154,13 +154,13 @@ const collectGroups = (data, pdfsBase) => {
 // ----------------------------------------------------------------------------
 
 const copyPdfs = (groups, contractsDir) => {
-  for (const g of groups) {
+  groups.forEach((g) => {
     const destDir = join(contractsDir, g.slug)
     mkdirSync(destDir, { recursive: true })
     const destPdf = join(destDir, g.sourceFilename)
     copyFileSync(g.sourceAbs, destPdf)
     g.relPdf = `${g.slug}/${g.sourceFilename}`
-  }
+  })
 }
 
 // ----------------------------------------------------------------------------
@@ -281,10 +281,10 @@ const buildZip = async (zipPath, groups, contractsDir, manifestRows) => {
     archive.pipe(out)
 
     // Add each PDF under the same slug-folder layout used on the site.
-    for (const g of groups) {
+    groups.forEach((g) => {
       const onDisk = join(contractsDir, g.slug, g.sourceFilename)
       archive.file(onDisk, { name: `contracts/${g.slug}/${g.sourceFilename}` })
-    }
+    })
     // Add a manifest CSV so a reader who unzips can navigate without the HTML.
     const csv = ["pdf,supe,districts,scope,term,vintage,fte_equiv,status"]
       .concat(manifestRows.map((r) => r.map(csvCell).join(",")))
@@ -332,9 +332,9 @@ const buildXlsx = async (xlsxPath, data, groups, meta, subdir) => {
   // Map every district key to its group (so Sheet 1 rows can find the joint
   // contract's slug + canonical filename).
   const byDistrict = new Map()
-  for (const g of groups) {
+  groups.forEach((g) => {
     for (const e of g.entries) byDistrict.set(e.key, g)
-  }
+  })
 
   // Sheet 1 — every district entry, one row per district.
   const s1 = wb.addWorksheet("By district")
@@ -363,8 +363,8 @@ const buildXlsx = async (xlsxPath, data, groups, meta, subdir) => {
   s1.getRow(1).font = { bold: true }
   s1.getRow(1).fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FFF5F2E8" } }
 
-  for (const [key, d] of Object.entries(data.districts || {})) {
-    if (!d.supe_full_cash_comp) continue
+  ;(Object.entries(data.districts || {})).forEach(([key, d]) => {
+    if (!d.supe_full_cash_comp) return
     const comp = d.supe_full_cash_comp || {}
     const term = d.contract_term || {}
     const g = byDistrict.get(key)
@@ -392,7 +392,7 @@ const buildXlsx = async (xlsxPath, data, groups, meta, subdir) => {
       joint: d.joint_contract ? "yes" : "no",
       contract: linkCell(linkText, linkHref),
     })
-  }
+  })
   s1.views = [{ state: "frozen", ySplit: 1 }]
   s1.autoFilter = { from: { row: 1, column: 1 }, to: { row: 1, column: s1.columnCount } }
 
@@ -422,7 +422,7 @@ const buildXlsx = async (xlsxPath, data, groups, meta, subdir) => {
   s2.getRow(1).font = { bold: true }
   s2.getRow(1).fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FFF5F2E8" } }
 
-  for (const g of groups) {
+  groups.forEach((g) => {
     // Read the contract-level cash components from the first member district
     // (joint contracts share these — supe_full_cash_comp is the same).
     const d = g.entries[0]?.district || {}
@@ -446,7 +446,7 @@ const buildXlsx = async (xlsxPath, data, groups, meta, subdir) => {
       fteEquiv: g.fteEquiv ?? null,
       contract: linkCell(`${g.slug}/${g.sourceFilename}`, urlFor(g.slug, g.sourceFilename)),
     })
-  }
+  })
   s2.views = [{ state: "frozen", ySplit: 1 }]
   s2.autoFilter = { from: { row: 1, column: 1 }, to: { row: 1, column: s2.columnCount } }
 
