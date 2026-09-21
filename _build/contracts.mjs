@@ -297,7 +297,7 @@ const buildZip = async (zipPath, groups, contractsDir, manifestRows) => {
 
 const csvCell = (v) => {
   const s = String(v ?? "")
-  return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s
 }
 
 // ----------------------------------------------------------------------------
@@ -307,37 +307,37 @@ const csvCell = (v) => {
 // Resolve the absolute URL that each contract PDF will live at on the site.
 // Built from `meta.publicUrl` (front matter) + the contracts subdir + slug/filename,
 // so re-deploying the report anywhere is one front-matter line change away.
-function makeContractUrlBuilder(meta, subdir) {
-  const base = String(meta.publicUrl || "").replace(/\/+$/, "");
+const makeContractUrlBuilder = (meta, subdir) => {
+  const base = String(meta.publicUrl || "").replace(/\/+$/, "")
   return (slug, filename) => {
     if (!base) return ""; // no publicUrl set; degrade gracefully
-    return `${base}/${subdir}/${encodeURIComponent(slug)}/${encodeURIComponent(filename)}`;
-  };
+    return `${base}/${subdir}/${encodeURIComponent(slug)}/${encodeURIComponent(filename)}`
+  }
 }
 
 // Build a sheet-cell hyperlink whose display text is short-and-readable while
 // the actual link target is the full URL.
-function linkCell(displayText, hyperlink) {
-  if (!hyperlink) return displayText || "";
-  return { text: displayText, hyperlink };
+const linkCell = (displayText, hyperlink) => {
+  if (!hyperlink) return displayText || ""
+  return { text: displayText, hyperlink }
 }
 
-async function buildXlsx(xlsxPath, data, groups, meta, subdir) {
-  const wb = new ExcelJS.Workbook();
-  wb.creator = "andoverct.info report build";
-  wb.created = new Date();
+const buildXlsx = async (xlsxPath, data, groups, meta, subdir) => {
+  const wb = new ExcelJS.Workbook()
+  wb.creator = "andoverct.info report build"
+  wb.created = new Date()
 
-  const urlFor = makeContractUrlBuilder(meta, subdir);
+  const urlFor = makeContractUrlBuilder(meta, subdir)
 
   // Map every district key to its group (so Sheet 1 rows can find the joint
   // contract's slug + canonical filename).
-  const byDistrict = new Map();
+  const byDistrict = new Map()
   for (const g of groups) {
-    for (const e of g.entries) byDistrict.set(e.key, g);
+    for (const e of g.entries) byDistrict.set(e.key, g)
   }
 
   // Sheet 1 — every district entry, one row per district.
-  const s1 = wb.addWorksheet("By district");
+  const s1 = wb.addWorksheet("By district")
   s1.columns = [
     { header: "District", key: "district", width: 28 },
     { header: "Supe", key: "supe", width: 32 },
@@ -359,17 +359,17 @@ async function buildXlsx(xlsxPath, data, groups, meta, subdir) {
     { header: "Vintage status", key: "vintageStatus", width: 14 },
     { header: "Joint contract", key: "joint", width: 14 },
     { header: "Contract", key: "contract", width: 48 },
-  ];
-  s1.getRow(1).font = { bold: true };
-  s1.getRow(1).fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FFF5F2E8" } };
+  ]
+  s1.getRow(1).font = { bold: true }
+  s1.getRow(1).fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FFF5F2E8" } }
 
   for (const [key, d] of Object.entries(data.districts || {})) {
-    if (!d.supe_full_cash_comp) continue;
-    const comp = d.supe_full_cash_comp || {};
-    const term = d.contract_term || {};
-    const g = byDistrict.get(key);
-    const linkText = g ? `${g.slug}/${g.sourceFilename}` : "";
-    const linkHref = g ? urlFor(g.slug, g.sourceFilename) : "";
+    if (!d.supe_full_cash_comp) continue
+    const comp = d.supe_full_cash_comp || {}
+    const term = d.contract_term || {}
+    const g = byDistrict.get(key)
+    const linkText = g ? `${g.slug}/${g.sourceFilename}` : ""
+    const linkHref = g ? urlFor(g.slug, g.sourceFilename) : ""
     s1.addRow({
       district: key,
       supe: d.supe_name || "",
@@ -391,15 +391,15 @@ async function buildXlsx(xlsxPath, data, groups, meta, subdir) {
       vintageStatus: classifyVintage(d.comp_year_used),
       joint: d.joint_contract ? "yes" : "no",
       contract: linkCell(linkText, linkHref),
-    });
+    })
   }
-  s1.views = [{ state: "frozen", ySplit: 1 }];
-  s1.autoFilter = { from: { row: 1, column: 1 }, to: { row: 1, column: s1.columnCount } };
+  s1.views = [{ state: "frozen", ySplit: 1 }]
+  s1.autoFilter = { from: { row: 1, column: 1 }, to: { row: 1, column: s1.columnCount } }
 
   // Sheet 2 — one row per unique contract (joint contracts dedup'd), with the
   // same component-level cash breakdown as Sheet 1 so a reader can compare
   // contracts head-to-head without duplicating member-town rows.
-  const s2 = wb.addWorksheet("By contract");
+  const s2 = wb.addWorksheet("By contract")
   s2.columns = [
     { header: "Slug", key: "slug", width: 22 },
     { header: "Supe", key: "supe", width: 32 },
@@ -418,15 +418,15 @@ async function buildXlsx(xlsxPath, data, groups, meta, subdir) {
     { header: "Total cash", key: "totalCash", width: 14, style: { numFmt: "$#,##0" } },
     { header: "FTE-equiv total cash", key: "fteEquiv", width: 16, style: { numFmt: "$#,##0" } },
     { header: "Contract", key: "contract", width: 48 },
-  ];
-  s2.getRow(1).font = { bold: true };
-  s2.getRow(1).fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FFF5F2E8" } };
+  ]
+  s2.getRow(1).font = { bold: true }
+  s2.getRow(1).fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FFF5F2E8" } }
 
   for (const g of groups) {
     // Read the contract-level cash components from the first member district
     // (joint contracts share these — supe_full_cash_comp is the same).
-    const d = g.entries[0]?.district || {};
-    const comp = d.supe_full_cash_comp || {};
+    const d = g.entries[0]?.district || {}
+    const comp = d.supe_full_cash_comp || {}
     s2.addRow({
       slug: g.slug,
       supe: g.supe || "",
@@ -445,46 +445,46 @@ async function buildXlsx(xlsxPath, data, groups, meta, subdir) {
       totalCash: comp._total_known_cash ?? null,
       fteEquiv: g.fteEquiv ?? null,
       contract: linkCell(`${g.slug}/${g.sourceFilename}`, urlFor(g.slug, g.sourceFilename)),
-    });
+    })
   }
-  s2.views = [{ state: "frozen", ySplit: 1 }];
-  s2.autoFilter = { from: { row: 1, column: 1 }, to: { row: 1, column: s2.columnCount } };
+  s2.views = [{ state: "frozen", ySplit: 1 }]
+  s2.autoFilter = { from: { row: 1, column: 1 }, to: { row: 1, column: s2.columnCount } }
 
-  await wb.xlsx.writeFile(xlsxPath);
+  await wb.xlsx.writeFile(xlsxPath)
 }
 
 // ----------------------------------------------------------------------------
 // Public entry point
 // ----------------------------------------------------------------------------
 
-export async function buildContractsBundle(folder, meta, themeCss, baseCss, breadcrumb) {
-  const cfg = meta.contracts;
-  if (!cfg) return;
-  if (!cfg.source) throw new Error("contracts.source is required");
-  if (!cfg.pdfsBase) throw new Error("contracts.pdfsBase is required");
+export const buildContractsBundle = async (folder, meta, themeCss, baseCss, breadcrumb) => {
+  const cfg = meta.contracts
+  if (!cfg) return
+  if (!cfg.source) throw new Error("contracts.source is required")
+  if (!cfg.pdfsBase) throw new Error("contracts.pdfsBase is required")
 
-  const sourcePath = resolve(folder, cfg.source);
-  const pdfsBase = resolve(folder, cfg.pdfsBase);
+  const sourcePath = resolve(folder, cfg.source)
+  const pdfsBase = resolve(folder, cfg.pdfsBase)
 
   if (!existsSync(sourcePath)) {
-    throw new Error(`contracts.source not found: ${sourcePath}`);
+    throw new Error(`contracts.source not found: ${sourcePath}`)
   }
 
-  const data = JSON.parse(readFileSync(sourcePath, "utf8"));
-  const groups = collectGroups(data, pdfsBase);
+  const data = JSON.parse(readFileSync(sourcePath, "utf8"))
+  const groups = collectGroups(data, pdfsBase)
   if (!groups.length) {
-    console.log("contracts: no PDFs found under pdfsBase; skipping");
-    return;
+    console.log("contracts: no PDFs found under pdfsBase; skipping")
+    return
   }
 
-  const subdir = cfg.subdir || "contracts";
-  const contractsDir = join(folder, subdir);
-  mkdirSync(contractsDir, { recursive: true });
+  const subdir = cfg.subdir || "contracts"
+  const contractsDir = join(folder, subdir)
+  mkdirSync(contractsDir, { recursive: true })
 
-  copyPdfs(groups, contractsDir);
+  copyPdfs(groups, contractsDir)
 
-  const indexHtml = buildIndexHtml(groups, meta, themeCss, baseCss, breadcrumb);
-  writeFileSync(join(contractsDir, "index.html"), indexHtml);
+  const indexHtml = buildIndexHtml(groups, meta, themeCss, baseCss, breadcrumb)
+  writeFileSync(join(contractsDir, "index.html"), indexHtml)
 
   const manifestRows = groups.map((g) => [
     `${g.slug}/${g.sourceFilename}`,
@@ -495,13 +495,13 @@ export async function buildContractsBundle(folder, meta, themeCss, baseCss, brea
     g.vintage || "",
     g.fteEquiv ?? "",
     g.status,
-  ]);
+  ])
 
-  const zipName = cfg.zip || "contracts.zip";
-  await buildZip(join(folder, zipName), groups, contractsDir, manifestRows);
+  const zipName = cfg.zip || "contracts.zip"
+  await buildZip(join(folder, zipName), groups, contractsDir, manifestRows)
 
-  const xlsxName = cfg.xlsx || "contracts.xlsx";
-  await buildXlsx(join(folder, xlsxName), data, groups, meta, subdir);
+  const xlsxName = cfg.xlsx || "contracts.xlsx"
+  await buildXlsx(join(folder, xlsxName), data, groups, meta, subdir)
 
-  console.log(`wrote ${subdir}/ (${groups.length} contracts) + ${zipName} + ${xlsxName}`);
+  console.log(`wrote ${subdir}/ (${groups.length} contracts) + ${zipName} + ${xlsxName}`)
 }

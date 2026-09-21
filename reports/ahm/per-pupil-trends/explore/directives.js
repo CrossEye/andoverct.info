@@ -70,7 +70,7 @@ const exclusionReason = (e) => e.reason
     ? `no local district; member of ${e.regions.join(', ')}`
     : 'no local district')
 
-function resolveGroup(data, groupId) {
+const resolveGroup = (data, groupId) => {
   const g = data.groups[groupId]
   if (!g) throw new Error(`Unknown group '${groupId}'`)
 
@@ -107,7 +107,7 @@ function resolveGroup(data, groupId) {
 //                  (a year missing any member is dropped whole), the students
 //                  and spending totals — and thus their percent-change lines —
 //                  are identical either way; only `pp` differs.
-function seriesFor(data, resolved, fy0, fy1, weighting) {
+const seriesFor = (data, resolved, fy0, fy1, weighting) => {
   weighting = weighting || 'enrollment'
   if (weighting !== 'enrollment' && weighting !== 'equal')
     throw new Error(`weighting '${weighting}' not implemented (supported: 'enrollment', 'equal')`)
@@ -166,7 +166,7 @@ const spread = (values, minGap) => values.reduce((acc, v) => {
   return [...acc, prev !== undefined && v - prev < minGap ? prev + minGap : v]
 }, [])
 
-function decomp(ctx, groupId, args = {}) {
+const decomp = (ctx, groupId, args = {}) => {
   const { data, cpi } = ctx
   const g = resolveGroup(data, groupId)
   let [fy0, fy1] = (args.window || '2013:2023').split(':').map(Number)
@@ -278,7 +278,7 @@ const { resolveGroup } = require('./resolve')
 
 const FW = 960, FH = 500
 
-function classify(data, g) {
+const classify = (data, g) => {
   const named = g.included.concat(g.excluded.map((e) => e.name))
   const viaRegion = new Set(named.flatMap((name) => {
     const u = data.units[name]
@@ -293,7 +293,7 @@ function classify(data, g) {
 // the group itself last), e.g. core -> block1 -> block2 for block2. Only
 // multi-member groups count, and the candidates must nest cleanly; otherwise
 // there is no ring structure and the map uses a single fill.
-function ringChain(data, groupId) {
+const ringChain = (data, groupId) => {
   const cur = data.groups[groupId]
   if (!cur || !cur.members) return null
   const curSet = new Set(cur.members)
@@ -308,7 +308,7 @@ function ringChain(data, groupId) {
   return nestsCleanly ? [...cands, curSet] : null
 }
 
-function locmap(ctx, groupId) {
+const locmap = (ctx, groupId) => {
   const { data, geo } = ctx
   const g = resolveGroup(data, groupId)
   if (g.included.some((n) => data.units[n].type === 'state'))
@@ -362,7 +362,7 @@ function locmap(ctx, groupId) {
   return out.join('')
 }
 
-function stateMap(ctx, g) {
+const stateMap = (ctx, g) => {
   const { geo } = ctx
   const FW2 = 960, FH2 = 500
   const sw = geo.viewW, sh = geo.viewH

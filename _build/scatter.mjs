@@ -118,7 +118,7 @@ const niceMax = (v, step) => {
   return Math.ceil(v / step) * step
 }
 
-function fmt$(n) {
+const fmt$ = (n) => {
   return "$" + Math.round(n).toLocaleString("en-US")
 }
 

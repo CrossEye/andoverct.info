@@ -188,6 +188,12 @@ for (const page of pages) {
   srcToDestMap[page.src] = page.dest
 }
 
+/*
+ * These two stay `function` on purpose, against the arrow-by-default rule:
+ * marked invokes a renderer method with `this` bound to the renderer, and
+ * `link` needs `this.parser` to render its own child tokens. An arrow would
+ * capture the enclosing `this` and break it.
+ */
 const makeRenderer = (currentDest) => {
   const renderer = new marked.Renderer()
 

@@ -24,7 +24,7 @@ const spread = (values, minGap) => values.reduce((acc, v) => {
   return [...acc, prev !== undefined && v - prev < minGap ? prev + minGap : v]
 }, [])
 
-function decomp(ctx, groupId, args = {}) {
+const decomp = (ctx, groupId, args = {}) => {
   const { data, cpi } = ctx
   const g = resolveGroup(data, groupId)
   let [fy0, fy1] = (args.window || '2013:2023').split(':').map(Number)

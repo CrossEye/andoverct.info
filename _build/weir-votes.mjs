@@ -190,16 +190,16 @@ writeFileSync(join(DIR, "weir-votes.md"), md.join("\n"))
 const csvCell = (v) => {
   if (v == null) return ""
   const s = String(v)
-  return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-};
+  return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s
+}
 const csv = [
   ["session_id", "session_label", "year", "date", "roll_call", "bill_number", "bill_title", "weir_vote", "total_voting", "yea", "nay", "absent",
     "d_yea", "d_nay", "r_yea", "r_nay", "o_yea", "o_nay", "tracking_url", "rollcall_pdf_url"].join(","),
-];
+]
 for (const r of records) {
   csv.push([r.sessionId, r.sessionLabel, r.year, r.date, r.rollCall, r.billHumanForm, r.billTitle, r.weirVote, r.totals?.voting, r.totals?.yea, r.totals?.nay, r.totals?.absent,
-    r.splits?.D?.Y, r.splits?.D?.N, r.splits?.R?.Y, r.splits?.R?.N, r.splits?.O?.Y, r.splits?.O?.N, r.billTrackingUrl, r.rollCallPdfUrl].map(csvCell).join(","));
+    r.splits?.D?.Y, r.splits?.D?.N, r.splits?.R?.Y, r.splits?.R?.N, r.splits?.O?.Y, r.splits?.O?.N, r.billTrackingUrl, r.rollCallPdfUrl].map(csvCell).join(","))
 }
-writeFileSync(join(DIR, "all-votes.csv"), csv.join("\n"));
+writeFileSync(join(DIR, "all-votes.csv"), csv.join("\n"))
 
-console.log(`weir-votes: ${records.length} records → index.html, weir-votes.md, all-votes.csv (generated ${generated}; ${perSession.join(", ")})`);
+console.log(`weir-votes: ${records.length} records → index.html, weir-votes.md, all-votes.csv (generated ${generated}; ${perSession.join(", ")})`)

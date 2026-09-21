@@ -18,7 +18,7 @@ const exclusionReason = (e) => e.reason
     ? `no local district; member of ${e.regions.join(', ')}`
     : 'no local district')
 
-function resolveGroup(data, groupId) {
+const resolveGroup = (data, groupId) => {
   const g = data.groups[groupId]
   if (!g) throw new Error(`Unknown group '${groupId}'`)
 
@@ -55,7 +55,7 @@ function resolveGroup(data, groupId) {
 //                  (a year missing any member is dropped whole), the students
 //                  and spending totals — and thus their percent-change lines —
 //                  are identical either way; only `pp` differs.
-function seriesFor(data, resolved, fy0, fy1, weighting) {
+const seriesFor = (data, resolved, fy0, fy1, weighting) => {
   weighting = weighting || 'enrollment'
   if (weighting !== 'enrollment' && weighting !== 'equal')
     throw new Error(`weighting '${weighting}' not implemented (supported: 'enrollment', 'equal')`)
