@@ -266,10 +266,10 @@ const allYears = cachedYears()
 
 const records = []
 allYears.forEach((year) => {
-  for (const scope of SCOPES) {
+  SCOPES.forEach((scope) => {
     const file = rawFor(year, scope.key)
     if (existsSync(file)) records.push(...tidy(readFileSync(file, "utf8"), year))
-  }
+  })
 })
 
 // Upstream order for functions; Total forced last in case a year lists it early.

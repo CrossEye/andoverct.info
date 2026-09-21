@@ -177,10 +177,10 @@ sessions.values().forEach((s) => {
   md.push(`## ${s.label}`, "")
   md.push(`${s.rows.length} votes. Weir Y/N/abs: ${sum.yea}/${sum.nay}/${sum.absent}. With-party / against-party: ${sum.withParty}/${sum.againstParty}.`, "")
   md.push("| RC# | Date | Bill | Title | Weir | Yea–Nay | D Y–N | R Y–N |", "|---|---|---|---|---|---|---|---|")
-  for (const r of s.rows) {
+  s.rows.forEach((r) => {
     const t = r.totals || {}, d = r.splits?.D || {}, R = r.splits?.R || {}
     md.push(`| ${r.rollCall} | ${r.date || ""} | [${r.billHumanForm}](${r.billTrackingUrl}) | ${(r.billTitle || "").replace(/\|/g, "\\|").slice(0, 80)} | ${r.weirVote || "—"} | ${t.yea ?? "?"}–${t.nay ?? "?"} | ${d.Y ?? "?"}–${d.N ?? "?"} | ${R.Y ?? "?"}–${R.N ?? "?"} |`)
-  }
+  })
   md.push("")
 })
 writeFileSync(join(DIR, "weir-votes.md"), md.join("\n"))

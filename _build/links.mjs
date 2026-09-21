@@ -446,7 +446,7 @@ export const renderListPage = (doc, docs, ctx) => {
   doc.groups.forEach((g) => {
     if (g.title) body += `<h2>${escapeHtml(g.title)}</h2>\n`
     if (g.description) body += `<p class="link-group-desc">${escapeHtml(g.description)}</p>\n`
-    for (const ref of g.links) {
+    g.links.forEach((ref) => {
       const target = docs.get(ref)
       const withFragment = !seen.has(ref)
       seen.add(ref)
@@ -454,7 +454,7 @@ export const renderListPage = (doc, docs, ctx) => {
         (target.kind === "leaf"
           ? leafCardHtml(target, withFragment)
           : listRefCardHtml(target, withFragment)) + "\n"
-    }
+    })
   })
   return pageShell(
     {

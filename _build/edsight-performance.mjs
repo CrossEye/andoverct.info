@@ -261,10 +261,10 @@ const allYears = cachedYears()
 
 const records = []
 allYears.forEach((year) => {
-  for (const scope of SCOPES) {
+  SCOPES.forEach((scope) => {
     const file = rawFor(year, scope.key)
     if (existsSync(file)) records.push(...tidy(readFileSync(file, "utf8"), year))
-  }
+  })
 })
 records.sort(
   (a, b) =>
