@@ -955,20 +955,20 @@ school budget.</li>
 </footer>
 
 <script>
-// Click a heading's ¶ anchor to copy its permalink to the clipboard.
-document.addEventListener('click', function (e) {
-  var anchor = e.target.closest('.header-anchor');
-  if (!anchor) return;
-  var id = anchor.parentElement.id;
-  if (!id) return;
-  var url = window.location.origin + window.location.pathname + '#' + id;
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(url).then(function () {
-      anchor.classList.add('copied');
-      setTimeout(function () { anchor.classList.remove('copied'); }, 1400);
-    }).catch(function () {});
-  }
-});
+;(() => {
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('.header-anchor')
+    const id = anchor && anchor.parentElement.id
+    if (!id || !navigator.clipboard?.writeText) return
+    const url = window.location.origin + window.location.pathname + '#' + id
+    navigator.clipboard.writeText(url)
+      .then(() => {
+        anchor.classList.add('copied')
+        setTimeout(() => anchor.classList.remove('copied'), 1400)
+      })
+      .catch(() => {})
+  })
+})()
 </script>
 <script src="/the-facts/editions.js"></script>
 </body>

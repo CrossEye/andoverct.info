@@ -16,7 +16,9 @@
  */
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
-import { escapeHtml, crumbs as buildCrumbs, pageNoteHtml, siteFooterBarHtml } from "./chrome.js";
+import {
+  escapeHtml, crumbs as buildCrumbs, pageNoteHtml, siteFooterBarHtml, scrollspyScript,
+} from "./chrome.js";
 
 const HERE = import.meta.dirname;
 const ROOT = join(HERE, "..");
@@ -241,20 +243,7 @@ function cardsSectionHtml(s) {
     </section>`;
 }
 
-const HOME_SCROLLSPY = `<script>
-(function () {
-  var rail = document.querySelector('.home-rail'); if (!rail) return;
-  var links = {}; [].forEach.call(rail.querySelectorAll('a'), function (l) { links[l.getAttribute('href').slice(5)] = l; });
-  var io = new IntersectionObserver(function (es) {
-    es.forEach(function (e) {
-      if (!e.isIntersecting) return;
-      for (var k in links) links[k].classList.remove('on');
-      var l = links[e.target.id.slice(4)]; if (l) l.classList.add('on');
-    });
-  }, { rootMargin: '-45% 0px -50% 0px' });
-  [].forEach.call(document.querySelectorAll('section.group'), function (s) { io.observe(s); });
-})();
-</script>`;
+const HOME_SCROLLSPY = `<script>${scrollspyScript()}</script>`;
 
 // The rail count is what a reader perceives as top-level entries in a section:
 // individual reports/editions for those, but the number of series/document groups

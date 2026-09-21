@@ -31,7 +31,9 @@ const EDITIONS_DIR = path.resolve(__dirname, '..', 'editions');
 // edition's own note (the "ongoing series / permanent URLs" colophon). Mirrors
 // the shared chrome helpers so the identity never drifts.
 // Shared page chrome (footer, breadcrumbs, escapeHtml) from _build/chrome.js.
-const { escapeHtml, pageNoteHtml, siteFooterBarHtml, crumbs: buildCrumbs } = require('../../_build/chrome.js');
+const {
+  escapeHtml, pageNoteHtml, siteFooterBarHtml, crumbs: buildCrumbs, permalinkScript,
+} = require('../../_build/chrome.js');
 
 function main() {
   const args = process.argv.slice(2);
@@ -117,7 +119,8 @@ function renderToHtml({ frontmatter, body }) {
     .replace('{{CTA}}', ctaHtml)
     .replace('{{REFERENCES}}', references)
     .replace('{{PAGE_NOTE}}', pageNoteHtml(footerNote))
-    .replace('{{SITE_FOOTER}}', siteFooterBarHtml());
+    .replace('{{SITE_FOOTER}}', siteFooterBarHtml())
+    .replace('{{PERMALINK_SCRIPT}}', permalinkScript());
 }
 
 function buildPageTitle(titlePlain, fm) {

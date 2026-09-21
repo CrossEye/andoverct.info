@@ -709,7 +709,7 @@ media contact listed on his campaign&#8217;s press releases.</p>
 <th>Candidate</th>
 <th>Asked</th>
 <th>Answered</th>
-<th>Status as of September 18, 2026</th>
+<th>Status as of September 20, 2026</th>
 </tr>
 </thead>
 <tbody><tr>
@@ -800,7 +800,7 @@ published elsewhere.</p>
 <td>—</td>
 </tr>
 </tbody></table>
-<p>Complete as of September 18, 2026. Anything that arrives later is added here.</p>
+<p>Complete as of September 20, 2026. Anything that arrives later is added here.</p>
 <blockquote>
 <p><strong>Notes:</strong> Replies will be published in full and unedited, whatever they say,
 with the date received. Anything a candidate says publicly elsewhere in
@@ -1010,7 +1010,7 @@ voter can find it. That is the whole purpose of the page.</p>
 </tr>
 <tr>
 <td>How many have answered?</td>
-<td>1 of 5 as of September 18, 2026.</td>
+<td>1 of 5 as of September 20, 2026.</td>
 </tr>
 <tr>
 <td>Will answers be published?</td>
@@ -1168,52 +1168,56 @@ original sources: <a href="./correspondence/">correspondence</a></li>
 <div class="site-footer-inner"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</div>
 </footer>
 <script>
-document.addEventListener('click', function(e) {
-    const anchor = e.target.closest('.header-anchor');
-    if (!anchor) return;
-    const heading = anchor.parentElement;
-    const id = heading.id;
-    if (!id) return;
-    const url = window.location.origin + window.location.pathname + '#' + id;
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url).then(function() {
-            anchor.classList.add('copied');
-            setTimeout(function() { anchor.classList.remove('copied'); }, 1400);
-        }).catch(function() {});
-    }
-});
+;(() => {
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('.header-anchor')
+    const id = anchor && anchor.parentElement.id
+    if (!id || !navigator.clipboard?.writeText) return
+    const url = window.location.origin + window.location.pathname + '#' + id
+    navigator.clipboard.writeText(url)
+      .then(() => {
+        anchor.classList.add('copied')
+        setTimeout(() => anchor.classList.remove('copied'), 1400)
+      })
+      .catch(() => {})
+  })
+})()
 </script>
 <script>
-(function() {
-    var imgs = document.querySelectorAll('.container img');
-    if (!imgs.length) return;
-    var overlay = null;
-    function onKey(e) { if (e.key === 'Escape') close(); }
-    function close() {
-        if (!overlay) return;
-        var o = overlay;
-        overlay = null;
-        o.classList.remove('open');
-        document.removeEventListener('keydown', onKey);
-        setTimeout(function() { if (o.parentNode) o.parentNode.removeChild(o); }, 200);
-    }
-    function open(src, alt) {
-        overlay = document.createElement('div');
-        overlay.className = 'lightbox-overlay';
-        var big = document.createElement('img');
-        big.src = src;
-        big.alt = alt || '';
-        overlay.appendChild(big);
-        overlay.addEventListener('click', close);
-        document.body.appendChild(overlay);
-        overlay.offsetWidth; // force reflow so the fade-in transition runs
-        overlay.classList.add('open');
-        document.addEventListener('keydown', onKey);
-    }
-    imgs.forEach(function(img) {
-        img.addEventListener('click', function() { open(img.currentSrc || img.src, img.alt); });
-    });
-})();
+;(() => {
+  const imgs = [...document.querySelectorAll('.container img')]
+  if (!imgs.length) return
+
+  let overlay = null
+
+  const onKey = (e) => e.key === 'Escape' && close()
+
+  const close = () => {
+    if (!overlay) return
+    const gone = overlay
+    overlay = null
+    gone.classList.remove('open')
+    document.removeEventListener('keydown', onKey)
+    setTimeout(() => gone.parentNode && gone.parentNode.removeChild(gone), 200)
+  }
+
+  const open = (src, alt) => {
+    overlay = document.createElement('div')
+    overlay.className = 'lightbox-overlay'
+    const big = document.createElement('img')
+    big.src = src
+    big.alt = alt || ''
+    overlay.appendChild(big)
+    overlay.addEventListener('click', close)
+    document.body.appendChild(overlay)
+    void overlay.offsetWidth // force reflow so the fade-in transition runs
+    overlay.classList.add('open')
+    document.addEventListener('keydown', onKey)
+  }
+
+  imgs.forEach((img) =>
+    img.addEventListener('click', () => open(img.currentSrc || img.src, img.alt)))
+})()
 </script>
 </body>
 </html>

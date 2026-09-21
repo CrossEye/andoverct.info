@@ -55,6 +55,7 @@ import { buildContractsBundle } from "./contracts.mjs";
 import { buildScatterPlot } from "./scatter.mjs";
 import {
   escapeHtml, pageNoteHtml, siteFooterBarHtml, crumbs as buildCrumbs, banner as pageBanner, SEP,
+  permalinkScript, lightboxScript,
 } from "./chrome.js";
 import { buildResearchPages } from "./research.mjs";
 import { buildSubpages } from "./subpage.mjs";
@@ -455,58 +456,6 @@ function privateBreadcrumbHtml(meta) {
   );
 }
 
-const CLIPBOARD_SCRIPT = `
-document.addEventListener('click', function(e) {
-    const anchor = e.target.closest('.header-anchor');
-    if (!anchor) return;
-    const heading = anchor.parentElement;
-    const id = heading.id;
-    if (!id) return;
-    const url = window.location.origin + window.location.pathname + '#' + id;
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url).then(function() {
-            anchor.classList.add('copied');
-            setTimeout(function() { anchor.classList.remove('copied'); }, 1400);
-        }).catch(function() {});
-    }
-});
-`;
-
-// Click any content image (chart/figure) to open it full-size in a lightbox
-// overlay; click anywhere or press Esc to close. Screen-only — the overlay is
-// built at runtime, so it never reaches the PDF.
-const LIGHTBOX_SCRIPT = `
-(function() {
-    var imgs = document.querySelectorAll('.container img');
-    if (!imgs.length) return;
-    var overlay = null;
-    function onKey(e) { if (e.key === 'Escape') close(); }
-    function close() {
-        if (!overlay) return;
-        var o = overlay;
-        overlay = null;
-        o.classList.remove('open');
-        document.removeEventListener('keydown', onKey);
-        setTimeout(function() { if (o.parentNode) o.parentNode.removeChild(o); }, 200);
-    }
-    function open(src, alt) {
-        overlay = document.createElement('div');
-        overlay.className = 'lightbox-overlay';
-        var big = document.createElement('img');
-        big.src = src;
-        big.alt = alt || '';
-        overlay.appendChild(big);
-        overlay.addEventListener('click', close);
-        document.body.appendChild(overlay);
-        overlay.offsetWidth; // force reflow so the fade-in transition runs
-        overlay.classList.add('open');
-        document.addEventListener('keydown', onKey);
-    }
-    imgs.forEach(function(img) {
-        img.addEventListener('click', function() { open(img.currentSrc || img.src, img.alt); });
-    });
-})();
-`;
 
 // ---------------------------------------------------------------------------
 // Assemble the document
@@ -617,8 +566,8 @@ ${rest}
 </div>
 ${pageNoteHtml(meta.footerNote ?? meta.footer)}
 ${siteFooterBarHtml()}
-<script>${CLIPBOARD_SCRIPT}</script>
-<script>${LIGHTBOX_SCRIPT}</script>
+<script>${permalinkScript()}</script>
+<script>${lightboxScript()}</script>
 </body>
 </html>`;
 }

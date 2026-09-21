@@ -22,14 +22,14 @@
         <p class="lede">A personally maintained gateway to research, plain-language explainers, and civic reference material — everything in one place, nothing buried.</p>
       </header>
 
-      <nav class="home-rail" aria-label="Sections"><a href="#sec-facts">The Facts<span class="rail-n">4</span></a><a href="#sec-reports">Reports<span class="rail-n">17</span></a><a href="#sec-legal">Legal Docs<span class="rail-n">2</span></a><a href="#sec-series">Series<span class="rail-n">1</span></a><a href="#sec-other">Other<span class="rail-n">3</span></a></nav>
+      <nav class="home-rail" aria-label="Sections"><a href="#sec-facts">The Facts<span class="rail-n">5</span></a><a href="#sec-reports">Reports<span class="rail-n">17</span></a><a href="#sec-legal">Legal Docs<span class="rail-n">2</span></a><a href="#sec-series">Series<span class="rail-n">1</span></a><a href="#sec-other">Other<span class="rail-n">3</span></a></nav>
 
 <section class="group" id="sec-facts" data-sec="facts">
       <p class="section-label">§ I · The Facts</p>
       <h2 class="section-title"><a href="/the-facts/">Setting the record straight <span class="arrow">→</span></a></h2>
       <p class="section-blurb">Issue-by-issue responses to specific mailers, flyers, or public claims about Andover town business — each edition weighs one piece of public communication against the underlying records.</p>
-      <div class="cardgrid"><article class="card"><p class="meta"><span class="flag">Current edition</span> <span class="dot">·</span> July 16, 2026</p><h3><a href="/the-facts/">Present, and Accounted For</a></h3><p class="desc">Rep. Steve Weir touts a 100% voting record and says he voted with the majority 77 percent of the time. The full roll-call record shows what those numbers actually measure, and where they place him among his colleagues.</p></article></div><details class="disclose"><summary>Previous editions <span class="count">3</span></summary>
-<div class="chip-row"><a class="chip" href="/the-facts/editions/unsustainable-2026/" title="June 13, 2026 — The town&#39;s own record says the opposite">Is the Budget &quot;Unsustainable&quot;?</a><a class="chip" href="/the-facts/editions/who-decides-schools-2026/" title="June 1, 2026">Who Decides How the Schools Are Run</a><a class="chip" href="/the-facts/editions/jeff-misleading-2026/" title="May 22, 2026 — On the May 26, 2026 AES budget mailer">Jeff is Misleading Us</a></div></details>
+      <div class="cardgrid"><article class="card"><p class="meta"><span class="flag">Current edition</span> <span class="dot">·</span> September 18, 2026</p><h3><a href="/the-facts/">The Largest One-Year Gain in the State</a></h3><p class="desc">Andover posted the largest one-year gain of any Connecticut town district in both English language arts (+6.1) and mathematics (+6.8) on the state&#39;s 2025-26 performance index. What the numbers measure, what survives adjustment for student need, and what the growth data adds.</p></article></div><details class="disclose"><summary>Previous editions <span class="count">4</span></summary>
+<div class="chip-row"><a class="chip" href="/the-facts/editions/weir-voted-2026/" title="July 16, 2026 — On Rep. Weir&#39;s &quot;100% Voting Record&quot; post">Present, and Accounted For</a><a class="chip" href="/the-facts/editions/unsustainable-2026/" title="June 13, 2026 — The town&#39;s own record says the opposite">Is the Budget &quot;Unsustainable&quot;?</a><a class="chip" href="/the-facts/editions/who-decides-schools-2026/" title="June 1, 2026">Who Decides How the Schools Are Run</a><a class="chip" href="/the-facts/editions/jeff-misleading-2026/" title="May 22, 2026 — On the May 26, 2026 AES budget mailer">Jeff is Misleading Us</a></div></details>
     </section>
 <section class="group" id="sec-reports" data-sec="reports">
       <p class="section-label">§ II · Reports</p>
@@ -112,18 +112,22 @@
 <div class="site-footer-inner"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</div>
 </footer>
     <script>
-(function () {
-  var rail = document.querySelector('.home-rail'); if (!rail) return;
-  var links = {}; [].forEach.call(rail.querySelectorAll('a'), function (l) { links[l.getAttribute('href').slice(5)] = l; });
-  var io = new IntersectionObserver(function (es) {
-    es.forEach(function (e) {
-      if (!e.isIntersecting) return;
-      for (var k in links) links[k].classList.remove('on');
-      var l = links[e.target.id.slice(4)]; if (l) l.classList.add('on');
-    });
-  }, { rootMargin: '-45% 0px -50% 0px' });
-  [].forEach.call(document.querySelectorAll('section.group'), function (s) { io.observe(s); });
-})();
+;(() => {
+  const rail = document.querySelector('.home-rail')
+  if (!rail) return
+
+  const links = Object.fromEntries(
+    [...rail.querySelectorAll('a')].map((a) => [a.getAttribute('href').slice(5), a]))
+
+  const io = new IntersectionObserver((entries) => {
+    entries.filter((entry) => entry.isIntersecting).forEach((entry) => {
+      Object.values(links).forEach((a) => a.classList.remove('on'))
+      links[entry.target.id.slice(4)]?.classList.add('on')
+    })
+  }, { rootMargin: '-45% 0px -50% 0px' })
+
+  document.querySelectorAll('section.group').forEach((s) => io.observe(s))
+})()
 </script>
   </body>
 </html>

@@ -91,8 +91,121 @@ function siteFooterBarHtml() {
     + "</footer>";
 }
 
+/*
+ * ---------------------------------------------------------------------------
+ * Client-side chrome scripts (plan 009 stage 1)
+ * ---------------------------------------------------------------------------
+ *
+ * Each returns a script BODY, without the <script> tags, so the caller decides
+ * how to place it. They live here for the same reason the markup helpers do:
+ * the permalink script was previously maintained twice, in two dialects, once
+ * in report.mjs and once inline in the-facts' template.
+ *
+ * These follow the house conventions (CLAUDE.md): no semicolons, const, arrow
+ * functions, array methods over loops. Each is wrapped in an IIFE so its
+ * bindings cannot collide with another script block on the same page — top-level
+ * const/let in a classic script share one script scope, and a redeclaration
+ * there is a SyntaxError that kills the whole block.
+ *
+ * The leading `;` before each IIFE is deliberate: a statement opening with `(`
+ * continues the previous line under ASI. It does not bite today, since each of
+ * these is emitted into its own <script>, but it costs one character to make
+ * these safe to concatenate or relocate later.
+ */
+
+// Click a heading's ¶ anchor to copy its permalink. Note that the clipboard API
+// needs a secure context, so this is inert on the plain-http local dev host.
+function permalinkScript() {
+  return `
+;(() => {
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('.header-anchor')
+    const id = anchor && anchor.parentElement.id
+    if (!id || !navigator.clipboard?.writeText) return
+    const url = window.location.origin + window.location.pathname + '#' + id
+    navigator.clipboard.writeText(url)
+      .then(() => {
+        anchor.classList.add('copied')
+        setTimeout(() => anchor.classList.remove('copied'), 1400)
+      })
+      .catch(() => {})
+  })
+})()
+`;
+}
+
+/*
+ * Click any content image (chart/figure) to open it full-size in an overlay;
+ * click anywhere or press Esc to close. Screen-only — the overlay is built at
+ * runtime, and the PDF path (WeasyPrint) does not execute JavaScript at all.
+ */
+function lightboxScript() {
+  return `
+;(() => {
+  const imgs = [...document.querySelectorAll('.container img')]
+  if (!imgs.length) return
+
+  let overlay = null
+
+  const onKey = (e) => e.key === 'Escape' && close()
+
+  const close = () => {
+    if (!overlay) return
+    const gone = overlay
+    overlay = null
+    gone.classList.remove('open')
+    document.removeEventListener('keydown', onKey)
+    setTimeout(() => gone.parentNode && gone.parentNode.removeChild(gone), 200)
+  }
+
+  const open = (src, alt) => {
+    overlay = document.createElement('div')
+    overlay.className = 'lightbox-overlay'
+    const big = document.createElement('img')
+    big.src = src
+    big.alt = alt || ''
+    overlay.appendChild(big)
+    overlay.addEventListener('click', close)
+    document.body.appendChild(overlay)
+    void overlay.offsetWidth // force reflow so the fade-in transition runs
+    overlay.classList.add('open')
+    document.addEventListener('keydown', onKey)
+  }
+
+  imgs.forEach((img) =>
+    img.addEventListener('click', () => open(img.currentSrc || img.src, img.alt)))
+})()
+`;
+}
+
+/*
+ * Highlight the rail link for whichever section is in view. Rail hrefs are
+ * "#sec-<id>" and the sections carry id "sec-<id>", hence the slice(5)/slice(4).
+ */
+function scrollspyScript() {
+  return `
+;(() => {
+  const rail = document.querySelector('.home-rail')
+  if (!rail) return
+
+  const links = Object.fromEntries(
+    [...rail.querySelectorAll('a')].map((a) => [a.getAttribute('href').slice(5), a]))
+
+  const io = new IntersectionObserver((entries) => {
+    entries.filter((entry) => entry.isIntersecting).forEach((entry) => {
+      Object.values(links).forEach((a) => a.classList.remove('on'))
+      links[entry.target.id.slice(4)]?.classList.add('on')
+    })
+  }, { rootMargin: '-45% 0px -50% 0px' })
+
+  document.querySelectorAll('section.group').forEach((s) => io.observe(s))
+})()
+`;
+}
+
 module.exports = {
   escapeHtml, SEP, crumbs, banner,
   pageNoteHtml, siteFooterBarHtml,
+  permalinkScript, lightboxScript, scrollspyScript,
   footer: FOOTER,
 };
