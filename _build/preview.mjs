@@ -15,35 +15,35 @@
  * restart (npm run preview:stop && npm run preview).
  */
 
-import { spawn, execSync } from "node:child_process";
+import { spawn, execSync } from "node:child_process"
 
-const HTTPD = "C:/Users/scott/Dev/servers/Apache24/bin/httpd.exe";
-const URL = "http://andoverct.local/";
+const HTTPD = "C:/Users/scott/Dev/servers/Apache24/bin/httpd.exe"
+const URL = "http://andoverct.local/"
 
-const arg = process.argv[2] || "--start";
+const arg = process.argv[2] || "--start"
 
-function running() {
-  const out = execSync('tasklist /FI "IMAGENAME eq httpd.exe" /FO CSV /NH', { encoding: "utf8" });
-  return out.includes("httpd.exe");
+const running = () => {
+  const out = execSync('tasklist /FI "IMAGENAME eq httpd.exe" /FO CSV /NH', { encoding: "utf8" })
+  return out.includes("httpd.exe")
 }
 
 if (arg === "--status") {
-  console.log(running() ? `running — ${URL}` : "not running");
+  console.log(running() ? `running — ${URL}` : "not running")
 } else if (arg === "--stop") {
   if (!running()) {
-    console.log("not running");
+    console.log("not running")
   } else {
-    execSync("taskkill /IM httpd.exe /F", { stdio: "ignore" });
-    console.log("stopped");
+    execSync("taskkill /IM httpd.exe /F", { stdio: "ignore" })
+    console.log("stopped")
   }
 } else {
   if (running()) {
-    console.log(`already running — ${URL}`);
+    console.log(`already running — ${URL}`)
   } else {
-    spawn(HTTPD, [], { detached: true, stdio: "ignore", windowsHide: true }).unref();
-    console.log(`started — ${URL}`);
+    spawn(HTTPD, [], { detached: true, stdio: "ignore", windowsHide: true }).unref()
+    console.log(`started — ${URL}`)
   }
   if (arg === "--open") {
-    spawn("cmd", ["/c", "start", "", URL], { detached: true, stdio: "ignore" }).unref();
+    spawn("cmd", ["/c", "start", "", URL], { detached: true, stdio: "ignore" }).unref()
   }
 }

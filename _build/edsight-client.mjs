@@ -18,17 +18,17 @@
  * guest — the first request 302s through SASLogon/CAS and needs only cookie
  * persistence across the hops.
  */
-import { writeFileSync } from "node:fs";
+import { writeFileSync } from "node:fs"
 
-export const HOST = "https://edsight.ct.gov";
-export const SP = `${HOST}/SASStoredProcess/do`;
-export const PROGRAM_BASE = "/CTDOE/EdSight/Release/Reporting/Public/Reports/StoredProcesses";
+export const HOST = "https://edsight.ct.gov"
+export const SP = `${HOST}/SASStoredProcess/do`
+export const PROGRAM_BASE = "/CTDOE/EdSight/Release/Reporting/Public/Reports/StoredProcesses"
 
 /** Upstream's marker for a parameter combination that yields nothing. */
-export const NO_RESULTS = /did not contain any results/i;
+export const NO_RESULTS = /did not contain any results/i
 
 /** The statewide row's district label, which `All Districts` never includes. */
-export const STATE = "State of Connecticut";
+export const STATE = "State of Connecticut"
 
 // ---------------------------------------------------------------- http
 
@@ -38,21 +38,21 @@ export const STATE = "State of Connecticut";
  * every hop is the same host.
  */
 export class Jar {
-  #c = new Map();
+  #c = new Map()
   absorb(res) {
     for (const line of res.headers.getSetCookie?.() ?? []) {
-      const [pair] = line.split(";");
-      const eq = pair.indexOf("=");
-      if (eq > 0) this.#c.set(pair.slice(0, eq).trim(), pair.slice(eq + 1).trim());
+      const [pair] = line.split(";")
+      const eq = pair.indexOf("=")
+      if (eq > 0) this.#c.set(pair.slice(0, eq).trim(), pair.slice(eq + 1).trim())
     }
   }
   get header() {
-    return [...this.#c].map(([k, v]) => `${k}=${v}`).join("; ");
+    return [...this.#c].map(([k, v]) => `${k}=${v}`).join("; ")
   }
 }
 
-export async function get(url, jar, { maxHops = 12 } = {}) {
-  let current = url;
+export const get = async (url, jar, { maxHops = 12 } = {}) => {
+  let current = url
   for (let hop = 0; hop < maxHops; hop++) {
     const res = await fetch(current, {
       redirect: "manual",
@@ -67,95 +67,95 @@ export async function get(url, jar, { maxHops = 12 } = {}) {
         "accept-language": "en-US,en;q=0.9",
         ...(jar.header ? { cookie: jar.header } : {}),
       },
-    });
-    jar.absorb(res);
+    })
+    jar.absorb(res)
     if (res.status >= 300 && res.status < 400) {
-      const loc = res.headers.get("location");
-      if (!loc) throw new Error(`${res.status} with no Location at ${current}`);
-      current = new URL(loc, current).href;
-      continue;
+      const loc = res.headers.get("location")
+      if (!loc) throw new Error(`${res.status} with no Location at ${current}`)
+      current = new URL(loc, current).href
+      continue
     }
-    if (!res.ok) throw new Error(`HTTP ${res.status} at ${current}`);
-    return res;
+    if (!res.ok) throw new Error(`HTTP ${res.status} at ${current}`)
+    return res
   }
-  throw new Error(`too many redirects starting at ${url}`);
+  throw new Error(`too many redirects starting at ${url}`)
 }
 
 /** Build a stored-process URL. `program` is a name under PROGRAM_BASE. */
-export function spUrl(program, params) {
-  const q = new URLSearchParams({ _program: `${PROGRAM_BASE}/${program}`, ...params });
-  return `${SP}?${q}`;
+export const spUrl = (program, params) => {
+  const q = new URLSearchParams({ _program: `${PROGRAM_BASE}/${program}`, ...params })
+  return `${SP}?${q}`
 }
 
-export const fetchText = async (url, jar) => (await get(url, jar)).text();
+export const fetchText = async (url, jar) => (await get(url, jar)).text()
 
 /*
  * Read one <select>'s options out of a report page's HTML. The report pages
  * embed their own filter form, so the available years and districts come from
  * upstream rather than being hardcoded — a new school year shows up on its own.
  */
-export function selectOptions(html, name) {
-  const block = html.match(new RegExp(`<select name="${name}"[\\s\\S]*?</select>`, "i"));
-  if (!block) return null;
-  return [...block[0].matchAll(/<option[^>]*>([^<\n]*)/g)].map((m) => m[1].trim()).filter(Boolean);
+export const selectOptions = (html, name) => {
+  const block = html.match(new RegExp(`<select name="${name}"[\\s\\S]*?</select>`, "i"))
+  if (!block) return null
+  return [...block[0].matchAll(/<option[^>]*>([^<\n]*)/g)].map((m) => m[1].trim()).filter(Boolean)
 }
 
 /** The school years offered by a report, newest-last, with "Trend" dropped. */
-export async function fetchYears(reportProgram, params, jar) {
-  const html = await fetchText(spUrl(reportProgram, params), jar);
-  const years = (selectOptions(html, "_year") ?? []).filter((y) => /^\d{4}-\d{2}$/.test(y));
-  if (!years.length) throw new Error(`${reportProgram}: no school years in the _year dropdown`);
-  return years.sort();
+export const fetchYears = async (reportProgram, params, jar) => {
+  const html = await fetchText(spUrl(reportProgram, params), jar)
+  const years = (selectOptions(html, "_year") ?? []).filter((y) => /^\d{4}-\d{2}$/.test(y))
+  if (!years.length) throw new Error(`${reportProgram}: no school years in the _year dropdown`)
+  return years.sort()
 }
 
 // ---------------------------------------------------------------- csv
 
 /** RFC 4180 enough for these feeds: quoted fields, doubled quotes, CRLF. */
-export function parseCsv(text) {
-  const rows = [];
-  let row = [];
-  let field = "";
-  let quoted = false;
+export const parseCsv = (text) => {
+  const rows = []
+  let row = []
+  let field = ""
+  let quoted = false
   for (let i = 0; i < text.length; i++) {
-    const ch = text[i];
+    const ch = text[i]
     if (quoted) {
       if (ch === '"') {
-        if (text[i + 1] === '"') { field += '"'; i++; } else quoted = false;
-      } else field += ch;
-      continue;
+        if (text[i + 1] === '"') { field += '"'; i++; } else quoted = false
+      } else field += ch
+      continue
     }
-    if (ch === '"') quoted = true;
-    else if (ch === ",") { row.push(field); field = ""; }
-    else if (ch === "\n") { row.push(field); rows.push(row); row = []; field = ""; }
-    else if (ch !== "\r") field += ch;
+    if (ch === '"') quoted = true
+    else if (ch === ",") { row.push(field); field = "" }
+    else if (ch === "\n") { row.push(field); rows.push(row); row = []; field = "" }
+    else if (ch !== "\r") field += ch
   }
-  if (field || row.length) { row.push(field); rows.push(row); }
-  return rows;
+  if (field || row.length) { row.push(field); rows.push(row) }
+  return rows
 }
 
 const csvCell = (v) =>
-  v == null ? "" : /[",\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : String(v);
+  v == null ? "" : /[",\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : String(v)
 
-export const toCsv = (rows) => rows.map((r) => r.map(csvCell).join(",")).join("\r\n") + "\r\n";
+export const toCsv = (rows) => rows.map((r) => r.map(csvCell).join(",")).join("\r\n") + "\r\n"
 
 /*
  * Locate a report's header row and give back a lookup from column name to index.
  * Columns are found by name rather than position because the statewide export
  * does not always carry the same columns as the district one.
  */
-export function headerIndex(rows, firstColumn) {
-  const i = rows.findIndex((r) => r[0]?.trim() === firstColumn);
-  if (i < 0) throw new Error(`no "${firstColumn}" header row in export`);
-  const header = rows[i].map((h) => h.trim());
-  const col = (name) => header.findIndex((h) => h.toLowerCase() === name.toLowerCase());
-  return { headerRow: i, header, col };
+export const headerIndex = (rows, firstColumn) => {
+  const i = rows.findIndex((r) => r[0]?.trim() === firstColumn)
+  if (i < 0) throw new Error(`no "${firstColumn}" header row in export`)
+  const header = rows[i].map((h) => h.trim())
+  const col = (name) => header.findIndex((h) => h.toLowerCase() === name.toLowerCase())
+  return { headerRow: i, header, col }
 }
 
 /** District codes arrive Excel-armoured as ="0010011" so leading zeros survive. */
 export const cleanCode = (v) => {
-  const m = String(v).match(/^="?"?(\d+)"?"?$/);
-  return m ? m[1] : String(v).replace(/[="]/g, "").trim();
-};
+  const m = String(v).match(/^="?"?(\d+)"?"?$/)
+  return m ? m[1] : String(v).replace(/[="]/g, "").trim()
+}
 
 /*
  * What kind of entity a row is about, from the last four digits of its district
@@ -180,15 +180,15 @@ const ENTITY_TYPES = {
   "0016": "state-technical", // CT Technical Education and Career System
   "0018": "other-services",  // Goodwin University Educational Services
   "0022": "endowed-academy", // incorporated academies serving as town high schools
-};
+}
 
 /** True for the town-governed public districts — the usual comparison set. */
-export const isTownDistrict = (type) => type === "local" || type === "regional";
+export const isTownDistrict = (type) => type === "local" || type === "regional"
 
-export function entityType(districtCode, districtName) {
-  if (districtName === STATE) return "state";
-  const code = String(districtCode ?? "");
-  return ENTITY_TYPES[code.slice(-4)] ?? "other";
+export const entityType = (districtCode, districtName) => {
+  if (districtName === STATE) return "state"
+  const code = String(districtCode ?? "")
+  return ENTITY_TYPES[code.slice(-4)] ?? "other"
 }
 
 /*
@@ -196,13 +196,13 @@ export function entityType(districtCode, districtName) {
  * `N/A` means the measure does not apply. Anything else non-numeric is handed
  * back verbatim so it shows up rather than being silently nulled.
  */
-export function parseNumber(raw) {
-  const v = String(raw ?? "").trim();
-  if (v === "") return { value: null, missing: "blank" };
-  if (v === "*") return { value: null, missing: "suppressed" };
-  if (/^n\/?a$/i.test(v)) return { value: null, missing: "not-applicable" };
+export const parseNumber = (raw) => {
+  const v = String(raw ?? "").trim()
+  if (v === "") return { value: null, missing: "blank" }
+  if (v === "*") return { value: null, missing: "suppressed" }
+  if (/^n\/?a$/i.test(v)) return { value: null, missing: "not-applicable" }
   const n = Number(v.replace(/[$,%\s]/g, "")); // currency and thousands separators
-  return Number.isFinite(n) ? { value: n, missing: null } : { value: null, missing: v };
+  return Number.isFinite(n) ? { value: n, missing: null } : { value: null, missing: v }
 }
 
 // ---------------------------------------------------------------- output
@@ -211,12 +211,12 @@ export function parseNumber(raw) {
  * Metadata pretty-printed, then one record per line: a third the size of a fully
  * indented dump, and a readable diff when a single year is refreshed.
  */
-export function writeRecordsJson(file, meta, records) {
-  const head = JSON.stringify(meta, null, 2);
+export const writeRecordsJson = (file, meta, records) => {
+  const head = JSON.stringify(meta, null, 2)
   writeFileSync(
     file,
     `${head.slice(0, -2)},\n  "records": [\n` +
       records.map((r) => `    ${JSON.stringify(r)}`).join(",\n") +
       "\n  ]\n}\n"
-  );
+  )
 }

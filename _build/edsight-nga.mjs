@@ -54,71 +54,71 @@
  * the derived academic-only trio (academicPoints, academicPossible, academicPct),
  * then all 105 upstream Ind* columns under their own names.
  */
-import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from "node:fs";
-import { join } from "node:path";
-import ExcelJS from "exceljs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from "node:fs"
+import { join } from "node:path"
+import ExcelJS from "exceljs"
 import {
   Jar, get, spUrl, fetchYears, parseCsv, toCsv, headerIndex, cleanCode, parseNumber,
   writeRecordsJson, NO_RESULTS, STATE, SP, PROGRAM_BASE, entityType,
-} from "./edsight-client.mjs";
+} from "./edsight-client.mjs"
 
-const ROOT = join(import.meta.dirname, "..");
-const OUT_DIR = join(ROOT, "data/edsight/accountability");
-const RAW_DIR = join(OUT_DIR, "raw");
+const ROOT = join(import.meta.dirname, "..")
+const OUT_DIR = join(ROOT, "data/edsight/accountability")
+const RAW_DIR = join(OUT_DIR, "raw")
 
-const EXPORT_PROGRAM = "NGAExport_All";
-const REPORT_PROGRAM = "NGAReport_SiteCore";
-const REPORT_PARAMS = { _year: "2024-25", _district: STATE, _school: "", _select: "Submit" };
+const EXPORT_PROGRAM = "NGAExport_All"
+const REPORT_PROGRAM = "NGAReport_SiteCore"
+const REPORT_PARAMS = { _year: "2024-25", _district: STATE, _school: "", _select: "Submit" }
 
-const LEVELS = { StateTot: "state", DistrictTot: "district", SchoolTot: "school" };
+const LEVELS = { StateTot: "state", DistrictTot: "district", SchoolTot: "school" }
 
 // Indicators 1 (performance index) and 2 (academic growth / progress toward English
 // proficiency) are the academic ones. 4 is chronic absenteeism, 5-10 are college and
 // career readiness / graduation / postsecondary, 11 is physical fitness, 12 arts
 // access. Indicator 3 is test participation and scores no points.
-const ACADEMIC_INDICATORS = new Set([1, 2]);
+const ACADEMIC_INDICATORS = new Set([1, 2])
 
 // Only Indicator 1's rates are already on 0-100 (they are Performance Indices);
 // every other rate is a 0-1 fraction upstream. OutcomeRatePct is a percent already.
 const isFractionRate = (col) =>
-  /Rate$/i.test(col) && !/^Ind1(ELA|Math|Sci)_/.test(col) && col !== "OutcomeRatePct";
+  /Rate$/i.test(col) && !/^Ind1(ELA|Math|Sci)_/.test(col) && col !== "OutcomeRatePct"
 
 const indicatorOf = (col) => {
-  const m = col.match(/^Ind(\d+)/);
-  return m ? Number(m[1]) : null;
-};
+  const m = col.match(/^Ind(\d+)/)
+  return m ? Number(m[1]) : null
+}
 
 // ---------------------------------------------------------------- reshape
 
 const IDENTITY = [
   "year", "level", "district", "districtCode", "entityType",
   "school", "schoolCode", "orgType", "lowGrade", "highGrade", "titleI",
-];
+]
 const INDEX_COLS = [
   "totalPoints", "possiblePoints", "outcomeRatePct", "finalCategory", "achievementGapFlag",
-];
-const DERIVED = ["academicPoints", "academicPossible", "academicPct"];
+]
+const DERIVED = ["academicPoints", "academicPossible", "academicPct"]
 
 let indColumns = null; // upstream Ind* names, in upstream order, fixed on first parse
 
-function tidy(csvText, year) {
-  if (NO_RESULTS.test(csvText)) return [];
-  const rows = parseCsv(csvText);
-  const { headerRow: hi, header } = headerIndex(rows, "FallOfYear");
-  const at = (name) => header.indexOf(name);
+const tidy = (csvText, year) => {
+  if (NO_RESULTS.test(csvText)) return []
+  const rows = parseCsv(csvText)
+  const { headerRow: hi, header } = headerIndex(rows, "FallOfYear")
+  const at = (name) => header.indexOf(name)
 
-  const indCols = header.filter((h) => indicatorOf(h) !== null);
-  if (!indColumns) indColumns = indCols;
+  const indCols = header.filter((h) => indicatorOf(h) !== null)
+  if (!indColumns) indColumns = indCols
 
-  const out = [];
+  const out = []
   for (const r of rows.slice(hi + 1)) {
-    if (!r || r.length < 13) continue;
-    const level = LEVELS[r[at("Category")]?.trim()];
-    if (!level) continue;
+    if (!r || r.length < 13) continue
+    const level = LEVELS[r[at("Category")]?.trim()]
+    if (!level) continue
 
-    const district = r[at("RptngDistrictName")]?.trim() ?? "";
-    const districtCode = cleanCode(r[at("ReportingDistrictCode")]);
-    const school = r[at("SchoolName")]?.trim() ?? "";
+    const district = r[at("RptngDistrictName")]?.trim() ?? ""
+    const districtCode = cleanCode(r[at("ReportingDistrictCode")])
+    const school = r[at("SchoolName")]?.trim() ?? ""
 
     const rec = {
       year,
@@ -139,41 +139,41 @@ function tidy(csvText, year) {
       outcomeRatePct: parseNumber(r[at("OutcomeRatePct")]).value,
       finalCategory: parseNumber(r[at("FinalCategory")]).value,
       achievementGapFlag: r[at("AchievementGapFlag")]?.trim().replace(/^\.$/, "") ?? "",
-    };
+    }
     for (const k of ["lowGrade", "highGrade", "titleI", "orgType"]) {
-      if (rec[k] === "." || rec[k] === "District") rec[k] = "";
+      if (rec[k] === "." || rec[k] === "District") rec[k] = ""
     }
 
-    let aPts = 0;
-    let aPoss = 0;
+    let aPts = 0
+    let aPoss = 0
     for (const col of indCols) {
-      const { value } = parseNumber(r[at(col)]);
-      rec[col] = value == null ? null : isFractionRate(col) ? value * 100 : value;
-      if (value == null) continue;
-      if (!ACADEMIC_INDICATORS.has(indicatorOf(col))) continue;
-      if (/PossiblePoints$/i.test(col)) aPoss += value;
-      else if (/Points$/i.test(col)) aPts += value;
+      const { value } = parseNumber(r[at(col)])
+      rec[col] = value == null ? null : isFractionRate(col) ? value * 100 : value
+      if (value == null) continue
+      if (!ACADEMIC_INDICATORS.has(indicatorOf(col))) continue
+      if (/PossiblePoints$/i.test(col)) aPoss += value
+      else if (/Points$/i.test(col)) aPts += value
     }
-    rec.academicPoints = aPoss ? Number(aPts.toFixed(6)) : null;
-    rec.academicPossible = aPoss || null;
-    rec.academicPct = aPoss ? Number(((100 * aPts) / aPoss).toFixed(6)) : null;
+    rec.academicPoints = aPoss ? Number(aPts.toFixed(6)) : null
+    rec.academicPossible = aPoss || null
+    rec.academicPct = aPoss ? Number(((100 * aPts) / aPoss).toFixed(6)) : null
 
-    out.push(rec);
+    out.push(rec)
   }
-  return out;
+  return out
 }
 
 // ---------------------------------------------------------------- outputs
 
-async function writeXlsx(records, years, file) {
-  const wb = new ExcelJS.Workbook();
-  wb.creator = "andoverct.info";
-  wb.created = new Date();
-  const pct = "0.0";
+const writeXlsx = async (records, years, file) => {
+  const wb = new ExcelJS.Workbook()
+  wb.creator = "andoverct.info"
+  wb.created = new Date()
+  const pct = "0.0"
 
   // Districts: the index and the academic-only index, years across.
   const mk = (name, rows, keyName) => {
-    const sheet = wb.addWorksheet(name);
+    const sheet = wb.addWorksheet(name)
     sheet.columns = [
       { header: keyName, key: "k", width: 46 },
       { header: "Type", key: "type", width: 15 },
@@ -182,102 +182,102 @@ async function writeXlsx(records, years, file) {
         { header: `${y} index %`, key: `i${y}`, width: 12, style: { numFmt: pct } },
         { header: `${y} academic %`, key: `a${y}`, width: 13, style: { numFmt: pct } },
       ]),
-    ];
-    const by = new Map();
+    ]
+    const by = new Map()
     for (const r of rows) {
-      const k = keyName === "School" ? `${r.school} — ${r.district}` : r.district;
+      const k = keyName === "School" ? `${r.school} — ${r.district}` : r.district
       if (!by.has(k)) {
         by.set(k, {
           k,
           type: r.entityType,
           grades: r.lowGrade && r.highGrade ? `${r.lowGrade}-${r.highGrade}` : "",
-        });
+        })
       }
-      by.get(k)[`i${r.year}`] = r.outcomeRatePct;
-      by.get(k)[`a${r.year}`] = r.academicPct;
+      by.get(k)[`i${r.year}`] = r.outcomeRatePct
+      by.get(k)[`a${r.year}`] = r.academicPct
     }
     const ordered = [...by.values()].sort(
       (a, b) => (a.k === STATE ? -1 : 0) - (b.k === STATE ? -1 : 0) || a.k.localeCompare(b.k)
-    );
-    for (const row of ordered) sheet.addRow(row);
-    sheet.getRow(1).font = { bold: true };
-    sheet.views = [{ state: "frozen", xSplit: 3, ySplit: 1 }];
-  };
+    )
+    for (const row of ordered) sheet.addRow(row)
+    sheet.getRow(1).font = { bold: true }
+    sheet.views = [{ state: "frozen", xSplit: 3, ySplit: 1 }]
+  }
 
-  mk("Districts", records.filter((r) => r.level !== "school"), "District");
-  mk("Schools", records.filter((r) => r.level === "school"), "School");
+  mk("Districts", records.filter((r) => r.level !== "school"), "District")
+  mk("Schools", records.filter((r) => r.level === "school"), "School")
 
   // Everything Andover, every indicator — the detail sheet for a local reader.
-  const sheet = wb.addWorksheet("Andover detail");
-  const cols = [...IDENTITY, ...INDEX_COLS, ...DERIVED, ...(indColumns ?? [])];
-  sheet.columns = cols.map((c) => ({ header: c, key: c, width: Math.min(30, Math.max(11, c.length + 2)) }));
-  for (const r of records.filter((r) => r.district.startsWith("Andover"))) sheet.addRow(r);
-  sheet.getRow(1).font = { bold: true };
-  sheet.views = [{ state: "frozen", ySplit: 1 }];
+  const sheet = wb.addWorksheet("Andover detail")
+  const cols = [...IDENTITY, ...INDEX_COLS, ...DERIVED, ...(indColumns ?? [])]
+  sheet.columns = cols.map((c) => ({ header: c, key: c, width: Math.min(30, Math.max(11, c.length + 2)) }))
+  for (const r of records.filter((r) => r.district.startsWith("Andover"))) sheet.addRow(r)
+  sheet.getRow(1).font = { bold: true }
+  sheet.views = [{ state: "frozen", ySplit: 1 }]
 
-  await wb.xlsx.writeFile(file);
+  await wb.xlsx.writeFile(file)
 }
 
 // ---------------------------------------------------------------- main
 
-const argv = process.argv.slice(2);
-const offline = argv.includes("--offline");
-const yearArg = argv.includes("--year") ? argv[argv.indexOf("--year") + 1] : null;
+const argv = process.argv.slice(2)
+const offline = argv.includes("--offline")
+const yearArg = argv.includes("--year") ? argv[argv.indexOf("--year") + 1] : null
 
-mkdirSync(RAW_DIR, { recursive: true });
-const rawFor = (year) => join(RAW_DIR, `accountability-${year}.csv`);
+mkdirSync(RAW_DIR, { recursive: true })
+const rawFor = (year) => join(RAW_DIR, `accountability-${year}.csv`)
 const cachedYears = () =>
   readdirSync(RAW_DIR)
     .map((f) => f.match(/^accountability-(\d{4}-\d{2})\.csv$/)?.[1])
     .filter(Boolean)
-    .sort();
+    .sort()
 
-const fetchedAt = new Date().toISOString();
+const fetchedAt = new Date().toISOString()
 const newestRawAt = () => {
   const times = readdirSync(RAW_DIR)
     .filter((f) => f.endsWith(".csv"))
-    .map((f) => statSync(join(RAW_DIR, f)).mtimeMs);
-  return times.length ? new Date(Math.max(...times)).toISOString() : fetchedAt;
-};
+    .map((f) => statSync(join(RAW_DIR, f)).mtimeMs)
+  return times.length ? new Date(Math.max(...times)).toISOString() : fetchedAt
+}
 
 if (offline) {
-  const years = cachedYears();
-  if (!years.length) throw new Error(`--offline but no cached CSVs in ${RAW_DIR}`);
-  console.log(`offline: re-deriving from ${years.length} cached year(s)`);
+  const years = cachedYears()
+  if (!years.length) throw new Error(`--offline but no cached CSVs in ${RAW_DIR}`)
+  console.log(`offline: re-deriving from ${years.length} cached year(s)`)
 } else {
-  const jar = new Jar();
-  const years = yearArg ? [yearArg] : await fetchYears(REPORT_PROGRAM, REPORT_PARAMS, jar);
-  console.log(`years: ${years.join(", ")}`);
+  const jar = new Jar()
+  const years = yearArg ? [yearArg] : await fetchYears(REPORT_PROGRAM, REPORT_PARAMS, jar)
+  console.log(`years: ${years.join(", ")}`)
   for (const year of years) {
-    const text = await (await get(spUrl(EXPORT_PROGRAM, { _year: year }), jar)).text();
-    writeFileSync(rawFor(year), text);
-    console.log(`  ${year} … ${NO_RESULTS.test(text) ? "no results" : `${(text.length / 1024).toFixed(0)} KB`}`);
+    const text = await (await get(spUrl(EXPORT_PROGRAM, { _year: year }), jar)).text()
+    writeFileSync(rawFor(year), text)
+    console.log(`  ${year} … ${NO_RESULTS.test(text) ? "no results" : `${(text.length / 1024).toFixed(0)} KB`}`)
   }
 }
 
-const allYears = cachedYears();
-const records = [];
+const allYears = cachedYears()
+const records = []
 for (const year of allYears) {
-  if (existsSync(rawFor(year))) records.push(...tidy(readFileSync(rawFor(year), "utf8"), year));
+  if (existsSync(rawFor(year))) records.push(...tidy(readFileSync(rawFor(year), "utf8"), year))
 }
 
-const LEVEL_RANK = { state: 0, district: 1, school: 2 };
+const LEVEL_RANK = { state: 0, district: 1, school: 2 }
 records.sort(
   (a, b) =>
     LEVEL_RANK[a.level] - LEVEL_RANK[b.level] ||
     a.district.localeCompare(b.district) ||
     a.school.localeCompare(b.school) ||
     a.year.localeCompare(b.year)
-);
+)
 
-const FIELDS = [...IDENTITY, ...INDEX_COLS, ...DERIVED, ...(indColumns ?? [])];
-const districts = new Set(records.filter((r) => r.level === "district").map((r) => r.district));
-const schools = new Set(records.filter((r) => r.level === "school").map((r) => r.schoolCode));
+const FIELDS = [...IDENTITY, ...INDEX_COLS, ...DERIVED, ...(indColumns ?? [])]
+const districts = new Set(records.filter((r) => r.level === "district").map((r) => r.district))
+const schools = new Set(records.filter((r) => r.level === "school").map((r) => r.schoolCode))
 
 writeFileSync(
   join(OUT_DIR, "accountability.csv"),
   toCsv([FIELDS, ...records.map((r) => FIELDS.map((f) => r[f]))])
-);
+)
 
 writeRecordsJson(
   join(OUT_DIR, "accountability.json"),
@@ -302,11 +302,11 @@ writeRecordsJson(
     ],
   },
   records
-);
+)
 
-await writeXlsx(records, allYears, join(OUT_DIR, "accountability.xlsx"));
+await writeXlsx(records, allYears, join(OUT_DIR, "accountability.xlsx"))
 
 console.log(
   `\n${records.length.toLocaleString()} rows · ${districts.size} districts · ${schools.size} schools · ${allYears.length} years` +
     `\nwrote ${OUT_DIR.replace(ROOT, ".")}/accountability.{csv,json,xlsx}`
-);
+)

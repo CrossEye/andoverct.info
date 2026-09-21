@@ -49,22 +49,22 @@
  *   year, district, districtCode, entityType, function, expenditures, pupils,
  *   pupilBasis, pupilBasisLabel, ppe, missing
  */
-import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from "node:fs";
-import { join } from "node:path";
-import ExcelJS from "exceljs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from "node:fs"
+import { join } from "node:path"
+import ExcelJS from "exceljs"
 import {
   Jar, get, spUrl, fetchYears, parseCsv, toCsv, headerIndex, cleanCode, parseNumber,
   writeRecordsJson, NO_RESULTS, STATE, SP, PROGRAM_BASE, entityType,
-} from "./edsight-client.mjs";
+} from "./edsight-client.mjs"
 
-const ROOT = join(import.meta.dirname, "..");
-const OUT_DIR = join(ROOT, "data/edsight/per-pupil-expenditures");
-const RAW_DIR = join(OUT_DIR, "raw");
+const ROOT = join(import.meta.dirname, "..")
+const OUT_DIR = join(ROOT, "data/edsight/per-pupil-expenditures")
+const RAW_DIR = join(OUT_DIR, "raw")
 
-const EXPORT_PROGRAM = "EFSDistrictLevelbyFunctionExport";
-const REPORT_PROGRAM = "EFSDistrictLevelbyFunctionReport_SiteCore";
+const EXPORT_PROGRAM = "EFSDistrictLevelbyFunctionExport"
+const REPORT_PROGRAM = "EFSDistrictLevelbyFunctionReport_SiteCore"
 
-const TOTAL = "Total";
+const TOTAL = "Total"
 
 // Straight from upstream's own note line, so a reader never has to guess which
 // population a per-pupil figure is divided by.
@@ -72,22 +72,22 @@ const PUPIL_BASIS = {
   1: "Enrollment plus outplaced pupils",
   2: "Enrollment in district schools",
   3: "Total pupils transported",
-};
+}
 
 // Upstream's function order, which is meaningful (instruction first, Total last)
 // and worth preserving rather than sorting alphabetically. Filled in from the
 // first export parsed, so a new function category does not need a code change.
-let functionOrder = [];
+let functionOrder = []
 
-const exportUrl = (year, district) => spUrl(EXPORT_PROGRAM, { _year: year, _district: district });
-const REPORT_PARAMS = { _year: "2024-25", _district: STATE, _select: "Submit" };
+const exportUrl = (year, district) => spUrl(EXPORT_PROGRAM, { _year: year, _district: district })
+const REPORT_PARAMS = { _year: "2024-25", _district: STATE, _select: "Submit" }
 
 // ---------------------------------------------------------------- reshape
 
-function tidy(csvText, year) {
-  if (NO_RESULTS.test(csvText)) return [];
-  const rows = parseCsv(csvText);
-  const { headerRow: hi, col } = headerIndex(rows, "District");
+const tidy = (csvText, year) => {
+  if (NO_RESULTS.test(csvText)) return []
+  const rows = parseCsv(csvText)
+  const { headerRow: hi, col } = headerIndex(rows, "District")
   const idx = {
     district: col("District"),
     code: col("District Code"),
@@ -96,25 +96,25 @@ function tidy(csvText, year) {
     pupils: col("Pupils"),
     basis: col("Pupil Basis"),
     ppe: col("PPE"),
-  };
+  }
   for (const [k, v] of Object.entries(idx)) {
-    if (v < 0) throw new Error(`${year}: export is missing the ${k} column`);
+    if (v < 0) throw new Error(`${year}: export is missing the ${k} column`)
   }
 
-  const out = [];
+  const out = []
   for (const r of rows.slice(hi + 1)) {
-    const district = r[idx.district]?.trim();
-    if (!district) continue;
-    const fn = r[idx.function]?.trim() ?? "";
-    if (fn && !functionOrder.includes(fn)) functionOrder.push(fn);
+    const district = r[idx.district]?.trim()
+    if (!district) continue
+    const fn = r[idx.function]?.trim() ?? ""
+    if (fn && !functionOrder.includes(fn)) functionOrder.push(fn)
 
     // Currency arrives as "$9,234,243"; parseNumber strips $ and separators.
-    const expenditures = parseNumber(r[idx.expenditures]);
-    const pupils = parseNumber(r[idx.pupils]);
-    const basis = parseNumber(r[idx.basis]);
-    const ppe = parseNumber(r[idx.ppe]);
+    const expenditures = parseNumber(r[idx.expenditures])
+    const pupils = parseNumber(r[idx.pupils])
+    const basis = parseNumber(r[idx.basis])
+    const ppe = parseNumber(r[idx.ppe])
 
-    const districtCode = cleanCode(r[idx.code]);
+    const districtCode = cleanCode(r[idx.code])
     out.push({
       year,
       district,
@@ -130,9 +130,9 @@ function tidy(csvText, year) {
       // district did not report at all), so recording it once per row is honest
       // and keeps the table narrow.
       missing: ppe.missing,
-    });
+    })
   }
-  return out;
+  return out
 }
 
 // ---------------------------------------------------------------- outputs
@@ -140,158 +140,158 @@ function tidy(csvText, year) {
 const FIELDS = [
   "year", "district", "districtCode", "entityType", "function", "expenditures",
   "pupils", "pupilBasis", "pupilBasisLabel", "ppe", "missing",
-];
+]
 
 const byDistrictFirstState = (a, b) =>
   (a.district === STATE ? -1 : 0) - (b.district === STATE ? -1 : 0) ||
-  a.district.localeCompare(b.district);
+  a.district.localeCompare(b.district)
 
-async function writeXlsx(records, years, functions, file) {
-  const wb = new ExcelJS.Workbook();
-  wb.creator = "andoverct.info";
-  wb.created = new Date();
-  const money = '"$"#,##0';
+const writeXlsx = async (records, years, functions, file) => {
+  const wb = new ExcelJS.Workbook()
+  wb.creator = "andoverct.info"
+  wb.created = new Date()
+  const money = '"$"#,##0'
 
   // 1. Total PPE over time — the headline trend, statewide row pinned on top.
-  const trend = wb.addWorksheet("Total PPE");
+  const trend = wb.addWorksheet("Total PPE")
   trend.columns = [
     { header: "District", key: "district", width: 44 },
     { header: "Code", key: "code", width: 10 },
     // So a reader can filter the RESCs and charters out of a town comparison.
     { header: "Type", key: "type", width: 16 },
     ...years.map((y) => ({ header: y, key: y, width: 11, style: { numFmt: money } })),
-  ];
-  const totals = new Map();
+  ]
+  const totals = new Map()
   for (const r of records) {
-    if (r.function !== TOTAL) continue;
+    if (r.function !== TOTAL) continue
     if (!totals.has(r.district))
-      totals.set(r.district, { district: r.district, code: r.districtCode, type: r.entityType });
-    totals.get(r.district)[r.year] = r.ppe;
+      totals.set(r.district, { district: r.district, code: r.districtCode, type: r.entityType })
+    totals.get(r.district)[r.year] = r.ppe
   }
-  for (const row of [...totals.values()].sort(byDistrictFirstState)) trend.addRow(row);
+  for (const row of [...totals.values()].sort(byDistrictFirstState)) trend.addRow(row)
 
   // 2. The latest year broken out by function — districts down, functions across.
   //    This is the cross-district comparison shape, for every district at once.
-  const latest = years[years.length - 1];
-  const grid = wb.addWorksheet(`By function ${latest}`);
+  const latest = years[years.length - 1]
+  const grid = wb.addWorksheet(`By function ${latest}`)
   grid.columns = [
     { header: "District", key: "district", width: 44 },
     { header: "Code", key: "code", width: 10 },
     { header: "Type", key: "type", width: 16 },
     ...functions.map((f) => ({ header: f, key: f, width: 15, style: { numFmt: money } })),
-  ];
-  const byDistrict = new Map();
+  ]
+  const byDistrict = new Map()
   for (const r of records) {
-    if (r.year !== latest) continue;
+    if (r.year !== latest) continue
     if (!byDistrict.has(r.district))
-      byDistrict.set(r.district, { district: r.district, code: r.districtCode, type: r.entityType });
-    byDistrict.get(r.district)[r.function] = r.ppe;
+      byDistrict.set(r.district, { district: r.district, code: r.districtCode, type: r.entityType })
+    byDistrict.get(r.district)[r.function] = r.ppe
   }
-  for (const row of [...byDistrict.values()].sort(byDistrictFirstState)) grid.addRow(row);
+  for (const row of [...byDistrict.values()].sort(byDistrictFirstState)) grid.addRow(row)
 
   // 3. Everything, for real work.
-  const all = wb.addWorksheet("All rows");
+  const all = wb.addWorksheet("All rows")
   all.columns = FIELDS.map((f) => ({
     header: f,
     key: f,
     width: f === "district" ? 44 : f === "function" ? 46 : f === "pupilBasisLabel" ? 30 : 14,
     ...(f === "expenditures" || f === "ppe" ? { style: { numFmt: money } } : {}),
-  }));
-  for (const r of records) all.addRow(r);
+  }))
+  for (const r of records) all.addRow(r)
 
   for (const sheet of wb.worksheets) {
-    sheet.getRow(1).font = { bold: true };
-    sheet.views = [{ state: "frozen", xSplit: sheet.name === "All rows" ? 0 : 3, ySplit: 1 }];
+    sheet.getRow(1).font = { bold: true }
+    sheet.views = [{ state: "frozen", xSplit: sheet.name === "All rows" ? 0 : 3, ySplit: 1 }]
   }
   // Statewide row bold on the two pivot sheets.
   for (const name of ["Total PPE", `By function ${latest}`]) {
-    const sheet = wb.getWorksheet(name);
-    if (sheet.getRow(2).getCell(1).value === STATE) sheet.getRow(2).font = { bold: true };
+    const sheet = wb.getWorksheet(name)
+    if (sheet.getRow(2).getCell(1).value === STATE) sheet.getRow(2).font = { bold: true }
   }
 
-  await wb.xlsx.writeFile(file);
+  await wb.xlsx.writeFile(file)
 }
 
 // ---------------------------------------------------------------- main
 
-const argv = process.argv.slice(2);
-const offline = argv.includes("--offline");
-const yearArg = argv.includes("--year") ? argv[argv.indexOf("--year") + 1] : null;
+const argv = process.argv.slice(2)
+const offline = argv.includes("--offline")
+const yearArg = argv.includes("--year") ? argv[argv.indexOf("--year") + 1] : null
 
-mkdirSync(RAW_DIR, { recursive: true });
+mkdirSync(RAW_DIR, { recursive: true })
 
 const SCOPES = [
   { key: "districts", district: "All Districts" },
   { key: "state", district: STATE },
-];
-const rawFor = (year, scope) => join(RAW_DIR, `per-pupil-${year}-${scope}.csv`);
+]
+const rawFor = (year, scope) => join(RAW_DIR, `per-pupil-${year}-${scope}.csv`)
 
 const cachedYears = () =>
   [...new Set(
     readdirSync(RAW_DIR)
       .map((f) => f.match(/^per-pupil-(\d{4}-\d{2})-\w+\.csv$/)?.[1])
       .filter(Boolean)
-  )].sort();
+  )].sort()
 
-const fetchedAt = new Date().toISOString();
+const fetchedAt = new Date().toISOString()
 const newestRawAt = () => {
   const times = readdirSync(RAW_DIR)
     .filter((f) => f.endsWith(".csv"))
-    .map((f) => statSync(join(RAW_DIR, f)).mtimeMs);
-  return times.length ? new Date(Math.max(...times)).toISOString() : fetchedAt;
-};
+    .map((f) => statSync(join(RAW_DIR, f)).mtimeMs)
+  return times.length ? new Date(Math.max(...times)).toISOString() : fetchedAt
+}
 
 if (offline) {
-  const years = cachedYears();
-  if (!years.length) throw new Error(`--offline but no cached CSVs in ${RAW_DIR}`);
-  console.log(`offline: re-deriving from ${years.length} cached year(s)`);
+  const years = cachedYears()
+  if (!years.length) throw new Error(`--offline but no cached CSVs in ${RAW_DIR}`)
+  console.log(`offline: re-deriving from ${years.length} cached year(s)`)
 } else {
-  const jar = new Jar();
-  const years = yearArg ? [yearArg] : await fetchYears(REPORT_PROGRAM, REPORT_PARAMS, jar);
-  console.log(`years: ${years.join(", ")}`);
+  const jar = new Jar()
+  const years = yearArg ? [yearArg] : await fetchYears(REPORT_PROGRAM, REPORT_PARAMS, jar)
+  console.log(`years: ${years.join(", ")}`)
   for (const year of years) {
-    const notes = [];
+    const notes = []
     for (const scope of SCOPES) {
-      const text = await (await get(exportUrl(year, scope.district), jar)).text();
-      writeFileSync(rawFor(year, scope.key), text);
-      notes.push(`${scope.key} ${NO_RESULTS.test(text) ? "none" : `${(text.length / 1024).toFixed(0)}KB`}`);
+      const text = await (await get(exportUrl(year, scope.district), jar)).text()
+      writeFileSync(rawFor(year, scope.key), text)
+      notes.push(`${scope.key} ${NO_RESULTS.test(text) ? "none" : `${(text.length / 1024).toFixed(0)}KB`}`)
     }
-    console.log(`  ${year} … ${notes.join(", ")}`);
+    console.log(`  ${year} … ${notes.join(", ")}`)
   }
 }
 
 // Always rebuild from every cached year, so a targeted --year refresh does not
 // truncate the dataset.
-const allYears = cachedYears();
+const allYears = cachedYears()
 
-const records = [];
+const records = []
 for (const year of allYears) {
   for (const scope of SCOPES) {
-    const file = rawFor(year, scope.key);
-    if (existsSync(file)) records.push(...tidy(readFileSync(file, "utf8"), year));
+    const file = rawFor(year, scope.key)
+    if (existsSync(file)) records.push(...tidy(readFileSync(file, "utf8"), year))
   }
 }
 
 // Upstream order for functions; Total forced last in case a year lists it early.
-functionOrder = [...functionOrder.filter((f) => f !== TOTAL), TOTAL];
+functionOrder = [...functionOrder.filter((f) => f !== TOTAL), TOTAL]
 const fnRank = (f) => {
-  const i = functionOrder.indexOf(f);
-  return i < 0 ? functionOrder.length : i;
-};
+  const i = functionOrder.indexOf(f)
+  return i < 0 ? functionOrder.length : i
+}
 
 records.sort(
   (a, b) =>
     byDistrictFirstState(a, b) ||
     a.year.localeCompare(b.year) ||
     fnRank(a.function) - fnRank(b.function)
-);
+)
 
-const districts = [...new Set(records.map((r) => r.district))].filter((d) => d !== STATE).sort();
+const districts = [...new Set(records.map((r) => r.district))].filter((d) => d !== STATE).sort()
 
 writeFileSync(
   join(OUT_DIR, "per-pupil-expenditures.csv"),
   toCsv([FIELDS, ...records.map((r) => FIELDS.map((f) => r[f]))])
-);
+)
 
 writeRecordsJson(
   join(OUT_DIR, "per-pupil-expenditures.json"),
@@ -316,12 +316,12 @@ writeRecordsJson(
     ],
   },
   records
-);
+)
 
-await writeXlsx(records, allYears, functionOrder, join(OUT_DIR, "per-pupil-expenditures.xlsx"));
+await writeXlsx(records, allYears, functionOrder, join(OUT_DIR, "per-pupil-expenditures.xlsx"))
 
 console.log(
   `\n${records.length.toLocaleString()} rows · ${districts.length} districts · ` +
     `${allYears.length} years · ${functionOrder.length} functions` +
     `\nwrote ${OUT_DIR.replace(ROOT, ".")}/per-pupil-expenditures.{csv,json,xlsx}`
-);
+)

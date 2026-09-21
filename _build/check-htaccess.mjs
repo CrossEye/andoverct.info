@@ -23,24 +23,24 @@
 //
 // Usage:  npm run check:htaccess        (exit 1 on failure)
 //
-import { readFileSync } from "node:fs";
-import { readdir } from "node:fs/promises";
-import { join, relative, sep } from "node:path";
-import { fileURLToPath } from "node:url";
+import { readFileSync } from "node:fs"
+import { readdir } from "node:fs/promises"
+import { join, relative, sep } from "node:path"
+import { fileURLToPath } from "node:url"
 
-const ROOT = join(fileURLToPath(new URL(".", import.meta.url)), "..");
-const SKIP = new Set(["node_modules", ".git", ".meta"]);
-const LIVE_HOST = "andoverct.info";
+const ROOT = join(fileURLToPath(new URL(".", import.meta.url)), "..")
+const SKIP = new Set(["node_modules", ".git", ".meta"])
+const LIVE_HOST = "andoverct.info"
 
-async function findHtaccess(dir, out = []) {
+const findHtaccess = async (dir, out = []) => {
   for (const entry of await readdir(dir, { withFileTypes: true })) {
     if (entry.isDirectory()) {
-      if (!SKIP.has(entry.name)) await findHtaccess(join(dir, entry.name), out);
+      if (!SKIP.has(entry.name)) await findHtaccess(join(dir, entry.name), out)
     } else if (entry.name === ".htaccess") {
-      out.push(join(dir, entry.name));
+      out.push(join(dir, entry.name))
     }
   }
-  return out;
+  return out
 }
 
 // Strip comments so a rule quoted in a comment block never counts as present.
@@ -48,19 +48,19 @@ const live = (text) =>
   text
     .split(/\r?\n/)
     .filter((l) => !/^\s*#/.test(l))
-    .join("\n");
+    .join("\n")
 
 // The redirect's signature, independent of how the target path is spelled:
 // a -d test (this request names a directory) reached by a RewriteRule whose
 // target is an absolute https URL on the live host. The root writes the target
 // as /$1/, the children as %{REQUEST_URI}/; both are fine.
-function hasDirectoryRedirect(text) {
-  const lines = live(text).split("\n");
-  let sawDirTest = false;
+const hasDirectoryRedirect = (text) => {
+  const lines = live(text).split("\n")
+  let sawDirTest = false
   for (const line of lines) {
     if (/^\s*RewriteCond\s+%\{REQUEST_FILENAME\}\s+-d\b/i.test(line)) {
-      sawDirTest = true;
-      continue;
+      sawDirTest = true
+      continue
     }
     if (/^\s*RewriteRule\b/i.test(line)) {
       if (
@@ -68,12 +68,12 @@ function hasDirectoryRedirect(text) {
         new RegExp(`https://${LIVE_HOST.replace(/\./g, "\\.")}`, "i").test(line) &&
         /\[[^\]]*R=301[^\]]*\]/i.test(line)
       ) {
-        return true;
+        return true
       }
       sawDirTest = false; // conditions bind only to the rule that follows them
     }
   }
-  return false;
+  return false
 }
 
 // Advisory: a redirect whose target has no scheme is built relative to what
@@ -85,79 +85,79 @@ function hasDirectoryRedirect(text) {
 //   # htaccess-check: allow-relative
 // in the comment block above it. Runs on raw lines, not the comment-stripped
 // text, so the pragma is visible.
-const ALLOW_RELATIVE = /^\s*#\s*htaccess-check:\s*allow-relative\b/i;
+const ALLOW_RELATIVE = /^\s*#\s*htaccess-check:\s*allow-relative\b/i
 
 // A whole file can opt out with `# htaccess-check: exempt — why`. Used by the
 // deliberately-unfixed /temp diagnostic, which has to reproduce the bug for the
 // host's support team. Exemptions are reported, not silently skipped, so an
 // abandoned one stays visible.
-const EXEMPT = /^\s*#\s*htaccess-check:\s*exempt\b[\s—:-]*(.*)$/im;
+const EXEMPT = /^\s*#\s*htaccess-check:\s*exempt\b[\s—:-]*(.*)$/im
 
-function relativeRedirects(text) {
-  const found = [];
-  let hostScoped = false;
-  let allowed = false;
+const relativeRedirects = (text) => {
+  const found = []
+  let hostScoped = false
+  let allowed = false
   text.split(/\r?\n/).forEach((line, i) => {
     if (ALLOW_RELATIVE.test(line)) {
-      allowed = true;
-      return;
+      allowed = true
+      return
     }
     if (/^\s*#/.test(line) || !line.trim()) return; // comments/blanks keep the pragma alive
     if (/^\s*RewriteCond\s+%\{HTTP_HOST\}/i.test(line)) {
-      hostScoped = true;
-      return;
+      hostScoped = true
+      return
     }
     if (/^\s*RewriteCond\b/i.test(line)) return; // other conds don't clear the scoping
     if (/^\s*RewriteRule\b/i.test(line)) {
-      const isRedirect = /\[[^\]]*R=30\d[^\]]*\]/i.test(line);
-      const absolute = /https?:\/\//i.test(line);
+      const isRedirect = /\[[^\]]*R=30\d[^\]]*\]/i.test(line)
+      const absolute = /https?:\/\//i.test(line)
       if (isRedirect && !absolute && !hostScoped && !allowed) {
-        found.push({ line: i + 1, text: line.trim() });
+        found.push({ line: i + 1, text: line.trim() })
       }
-      hostScoped = false;
-      allowed = false;
-      return;
+      hostScoped = false
+      allowed = false
+      return
     }
     allowed = false; // any other directive ends the pragma's reach
-  });
-  return found;
+  })
+  return found
 }
 
-const files = (await findHtaccess(ROOT)).sort();
-let failures = 0;
-let warnings = 0;
-let exemptions = 0;
+const files = (await findHtaccess(ROOT)).sort()
+let failures = 0
+let warnings = 0
+let exemptions = 0
 
-console.log(`\n  Checking ${files.length} .htaccess file(s) for the https redirect rule\n`);
+console.log(`\n  Checking ${files.length} .htaccess file(s) for the https redirect rule\n`)
 
 for (const file of files) {
-  const rel = relative(ROOT, file).split(sep).join("/");
-  const text = readFileSync(file, "utf-8");
-  const rewrites = /^\s*RewriteEngine\s+On\b/im.test(live(text));
+  const rel = relative(ROOT, file).split(sep).join("/")
+  const text = readFileSync(file, "utf-8")
+  const rewrites = /^\s*RewriteEngine\s+On\b/im.test(live(text))
 
   if (!rewrites) {
-    console.log(`  ·  ${rel}  — no RewriteEngine, inherits the root ruleset`);
-    continue;
+    console.log(`  ·  ${rel}  — no RewriteEngine, inherits the root ruleset`)
+    continue
   }
 
-  const exempt = text.match(EXEMPT);
+  const exempt = text.match(EXEMPT)
   if (exempt) {
-    exemptions++;
-    console.log(`  ~  ${rel}  — EXEMPT: ${exempt[1].trim() || "no reason given"}`);
-    continue;
+    exemptions++
+    console.log(`  ~  ${rel}  — EXEMPT: ${exempt[1].trim() || "no reason given"}`)
+    continue
   }
 
   if (hasDirectoryRedirect(text)) {
-    console.log(`  ok ${rel}`);
+    console.log(`  ok ${rel}`)
   } else {
-    failures++;
-    console.log(`  ✗  ${rel}  — declares RewriteEngine On but has no https directory redirect`);
+    failures++
+    console.log(`  ✗  ${rel}  — declares RewriteEngine On but has no https directory redirect`)
   }
 
   for (const r of relativeRedirects(text)) {
-    warnings++;
-    console.log(`     ! line ${r.line}: redirect with no scheme, not scoped to a host`);
-    console.log(`       ${r.text}`);
+    warnings++
+    console.log(`     ! line ${r.line}: redirect with no scheme, not scoped to a host`)
+    console.log(`       ${r.text}`)
   }
 }
 
@@ -174,22 +174,22 @@ if (failures) {
 
   Use %{REQUEST_URI} rather than a captured path: in a per-directory context
   the match is relative to that directory, and empty for the directory itself.
-`);
+`)
 } else {
-  console.log(`\n  All rewrite-enabled .htaccess files carry the rule.\n`);
+  console.log(`\n  All rewrite-enabled .htaccess files carry the rule.\n`)
 }
 
 if (exemptions) {
   console.log(`  ${exemptions} file(s) exempt by declaration. An exemption is a standing promise that
   the directory is meant to behave differently; if the reason no longer holds,
   delete the pragma (or the directory) rather than leaving it.
-`);
+`)
 }
 
 if (warnings) {
   console.log(`  ${warnings} advisory warning(s): a scheme-less redirect resolves to http here.
   That is correct only for rules deliberately scoped to the dev host; if the
-  rule can fire on ${LIVE_HOST}, give it an absolute https:// target.\n`);
+  rule can fire on ${LIVE_HOST}, give it an absolute https:// target.\n`)
 }
 
-process.exit(failures ? 1 : 0);
+process.exit(failures ? 1 : 0)

@@ -23,35 +23,35 @@
 import {
   readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync,
   copyFileSync, rmSync,
-} from "node:fs";
-import { join, resolve } from "node:path";
-import { spawnSync } from "node:child_process";
-import { crumbs as buildCrumbs } from "./chrome.js";
-import { marked } from "marked";
-import { markedSmartypants } from "marked-smartypants";
+} from "node:fs"
+import { join, resolve } from "node:path"
+import { spawnSync } from "node:child_process"
+import { crumbs as buildCrumbs } from "./chrome.js"
+import { marked } from "marked"
+import { markedSmartypants } from "marked-smartypants"
 import {
   loadConfig, loadTheme, loadDocsFrom, pageShell, ogHead, escapeHtml,
   renderLeafPage, renderListPage, renderIndexPage, BASE_CSS, LINKS_CSS,
-} from "./links.mjs";
+} from "./links.mjs"
 
-const HERE = import.meta.dirname;
-const ROOT = resolve(HERE, "..");
+const HERE = import.meta.dirname
+const ROOT = resolve(HERE, "..")
 
-const args = process.argv.slice(2);
-const valOf = (n) => { const i = args.indexOf(n); return i >= 0 ? args[i + 1] : undefined; };
-const SRC = resolve(ROOT, valOf("--src") || "../docs-sweep/v4");
-const OUT = resolve(ROOT, valOf("--out") || join(SRC, "out-site"));
+const args = process.argv.slice(2)
+const valOf = (n) => { const i = args.indexOf(n); return i >= 0 ? args[i + 1] : undefined }
+const SRC = resolve(ROOT, valOf("--src") || "../docs-sweep/v4")
+const OUT = resolve(ROOT, valOf("--out") || join(SRC, "out-site"))
 
-const STEPS_SRC = join(SRC, "out", "town-asset");
-const FB_DIR = join(SRC, "fb");
-const SITE_SRC = join(ROOT, "links", "_src");
+const STEPS_SRC = join(SRC, "out", "town-asset")
+const FB_DIR = join(SRC, "fb")
+const SITE_SRC = join(ROOT, "links", "_src")
 
-function fail(msg) { console.error(`\n  render:town-asset: ${msg}\n`); process.exit(1); }
-const warnings = [];
-function warn(msg) { warnings.push(msg); console.log(`  ! ${msg}`); }
+const fail = (msg) => { console.error(`\n  render:town-asset: ${msg}\n`); process.exit(1) }
+const warnings = []
+const warn = (msg) => { warnings.push(msg); console.log(`  ! ${msg}`) }
 
-marked.use(markedSmartypants());
-marked.use({ mangle: false, headerIds: false });
+marked.use(markedSmartypants())
+marked.use({ mangle: false, headerIds: false })
 
 // ---------------------------------------------------------------------------
 // Series chrome. The piece-page spec comes from the stage-0 mockup
@@ -94,134 +94,134 @@ p.seam {
     margin: 4em 2em 2em;
     font-style: italic;
 }
-`;
+`
 
-const SERIES_TITLE = "A Town Asset";
+const SERIES_TITLE = "A Town Asset"
 const SERIES_DESC =
   "An account drawn entirely from Andover's own public record: the minutes, "
-  + "the packets, and the recordings of its own meetings.";
+  + "the packets, and the recordings of its own meetings."
 // The footer's optional second line for series pages (the constant identity
 // line comes from siteFooterHtml). Links pages pass none: line 1 says it all.
 const SERIES_FOOTER_NOTE =
   "Drawn entirely from Andover&rsquo;s own minutes, packets and meeting "
-  + "recordings. Every claim carries its source.";
+  + "recordings. Every claim carries its source."
 
-const crumb = (parts, current) => buildCrumbs([...parts, { label: current }]);
+const crumb = (parts, current) => buildCrumbs([...parts, { label: current }])
 
 // Markdown -> body HTML, with the two known shapes given their site classes.
-function mdToHtml(md) {
-  let html = marked.parse(md);
-  html = html.replace(/<h2([^>]*)>Sources<\/h2>/, '<h2$1 class="sources-h">Sources</h2>');
-  html = html.replace(/<p>Every source cited above/, '<p class="collection-footer">Every source cited above');
+const mdToHtml = (md) => {
+  let html = marked.parse(md)
+  html = html.replace(/<h2([^>]*)>Sources<\/h2>/, '<h2$1 class="sources-h">Sources</h2>')
+  html = html.replace(/<p>Every source cited above/, '<p class="collection-footer">Every source cited above')
   // Citation markers need no transform: build.py emits them as raw
   // <sup class="src"> HTML (like the seams), so nothing here has to guess
   // which links are citations. TA_CSS styles .piece-body sup.
-  return html;
+  return html
 }
 
 // ---------------------------------------------------------------------------
 // FB campaign: posts by number from the fenced blocks of fb/campaign.md.
 // ---------------------------------------------------------------------------
-function loadPosts() {
-  const p = join(FB_DIR, "campaign.md");
-  if (!existsSync(p)) { warn("no fb/campaign.md — steps get no FB.txt/cards"); return new Map(); }
-  const text = readFileSync(p, "utf8");
+const loadPosts = () => {
+  const p = join(FB_DIR, "campaign.md")
+  if (!existsSync(p)) { warn("no fb/campaign.md — steps get no FB.txt/cards"); return new Map() }
+  const text = readFileSync(p, "utf8")
   const posts = new Map(); // number -> { title, image, text }
-  let current = null;
-  let fence = null;
+  let current = null
+  let fence = null
   for (const line of text.split(/\r?\n/)) {
-    const h = line.match(/^###\s+(.+?)\s+###\s*$/);
+    const h = line.match(/^###\s+(.+?)\s+###\s*$/)
     if (h) {
-      const n = h[1].match(/^Post\s+(\d+)\b/i);
-      current = { number: n ? parseInt(n[1], 10) : null, title: h[1], image: null, lines: null };
-      continue;
+      const n = h[1].match(/^Post\s+(\d+)\b/i)
+      current = { number: n ? parseInt(n[1], 10) : null, title: h[1], image: null, lines: null }
+      continue
     }
-    if (!current) continue;
-    const im = line.match(/^Image:\s*`?([^`\s]+?)`?\.?\s*$/i);
-    if (im && fence === null) { current.image = /^none$/i.test(im[1]) ? null : im[1]; continue; }
+    if (!current) continue
+    const im = line.match(/^Image:\s*`?([^`\s]+?)`?\.?\s*$/i)
+    if (im && fence === null) { current.image = /^none$/i.test(im[1]) ? null : im[1]; continue }
     if (line.trim() === "```") {
-      if (fence === null) { fence = []; }
+      if (fence === null) { fence = [] }
       else {
         if (current.number !== null) {
           posts.set(current.number, {
             title: current.title, image: current.image, text: fence.join("\n").trim() + "\n",
-          });
+          })
         }
-        fence = null;
+        fence = null
       }
-      continue;
+      continue
     }
-    if (fence !== null) fence.push(line);
+    if (fence !== null) fence.push(line)
   }
-  return posts;
+  return posts
 }
 
 // ---------------------------------------------------------------------------
 // Load inputs
 // ---------------------------------------------------------------------------
-if (!existsSync(STEPS_SRC)) fail(`no ${STEPS_SRC} — run docs-sweep's build first (python v4/build.py).`);
-const stepNums = readdirSync(STEPS_SRC).filter((n) => /^\d+$/.test(n)).map(Number).sort((a, b) => a - b);
-if (!stepNums.length) fail(`no step dirs under ${STEPS_SRC}.`);
-const TOTAL = stepNums[stepNums.length - 1];
+if (!existsSync(STEPS_SRC)) fail(`no ${STEPS_SRC} — run docs-sweep's build first (python v4/build.py).`)
+const stepNums = readdirSync(STEPS_SRC).filter((n) => /^\d+$/.test(n)).map(Number).sort((a, b) => a - b)
+if (!stepNums.length) fail(`no step dirs under ${STEPS_SRC}.`)
+const TOTAL = stepNums[stepNums.length - 1]
 
-const config = loadConfig();
-if (!config.siteOrigin) fail(`_build/report.config.json must define "siteOrigin".`);
+const config = loadConfig()
+if (!config.siteOrigin) fail(`_build/report.config.json must define "siteOrigin".`)
 // Strip CSS comments before shipping: the theme files carry dev-facing notes
 // (paths, project names) that must not ride along inside every page's <style>
 // — the rule-3 greps treat them as leaks.
-const stripCss = (css) => css.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\n{3,}/g, "\n\n");
+const stripCss = (css) => css.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\n{3,}/g, "\n\n")
 const linksCtx = {
   siteOrigin: config.siteOrigin.replace(/\/+$/, ""),
   defaultOgImage: config.defaultOgImage,
   css: stripCss(loadTheme(config.theme || "default") + "\n" + BASE_CSS + LINKS_CSS),
-};
-const seriesCss = stripCss(loadTheme(config.theme || "default") + "\n" + BASE_CSS + TA_CSS);
+}
+const seriesCss = stripCss(loadTheme(config.theme || "default") + "\n" + BASE_CSS + TA_CSS)
 const og = (title, description, path) =>
-  ogHead({ title, description, path }, linksCtx);
+  ogHead({ title, description, path }, linksCtx)
 
-const site = loadDocsFrom(SITE_SRC);
-if (site.errors.length) { site.errors.forEach((e) => console.error(`ERROR ${e}`)); fail("repo links/_src does not validate."); }
+const site = loadDocsFrom(SITE_SRC)
+if (site.errors.length) { site.errors.forEach((e) => console.error(`ERROR ${e}`)); fail("repo links/_src does not validate.") }
 
-const posts = loadPosts();
+const posts = loadPosts()
 
-rmSync(OUT, { recursive: true, force: true });
+rmSync(OUT, { recursive: true, force: true })
 
 // ---------------------------------------------------------------------------
 // Per-step rendering
 // ---------------------------------------------------------------------------
-let finalMeta = null;
+let finalMeta = null
 for (const step of stepNums) {
-  const sd = join(STEPS_SRC, String(step));
-  const metaPath = join(sd, "meta.json");
-  if (!existsSync(metaPath)) fail(`steps/${step} has no meta.json (rebuild docs-sweep with the current build.py).`);
-  const meta = JSON.parse(readFileSync(metaPath, "utf8"));
-  if (meta.final) finalMeta = meta;
-  const byQuery = new Map(meta.pieces.map((p) => [p.slug, p]));
+  const sd = join(STEPS_SRC, String(step))
+  const metaPath = join(sd, "meta.json")
+  if (!existsSync(metaPath)) fail(`steps/${step} has no meta.json (rebuild docs-sweep with the current build.py).`)
+  const meta = JSON.parse(readFileSync(metaPath, "utf8"))
+  if (meta.final) finalMeta = meta
+  const byQuery = new Map(meta.pieces.map((p) => [p.slug, p]))
 
-  const www = join(OUT, "steps", String(step), "www");
-  const taDir = join(www, "series", "town-asset");
-  mkdirSync(taDir, { recursive: true });
+  const www = join(OUT, "steps", String(step), "www")
+  const taDir = join(www, "series", "town-asset")
+  mkdirSync(taDir, { recursive: true })
 
   // --- the parent: annotated list mid-run, THE ARTICLE on the final night ---
-  const indexMd = readFileSync(join(sd, "index.md"), "utf8");
+  const indexMd = readFileSync(join(sd, "index.md"), "utf8")
   const parentBody = `<article class="piece-body ${meta.final ? "ta-article" : "ta-index"}">`
-    + mdToHtml(indexMd) + `</article>`;
+    + mdToHtml(indexMd) + `</article>`
   writeFileSync(join(taDir, "index.html"), pageShell({
     pageTitle: SERIES_TITLE,
     og: og(SERIES_TITLE, SERIES_DESC, "/series/town-asset/"),
     crumbs: crumb([{ label: "Home", href: "/" }, { label: "Series", href: "/series/" }], SERIES_TITLE),
     body: parentBody,
     footerNote: SERIES_FOOTER_NOTE,
-  }, seriesCss), "utf8");
+  }, seriesCss), "utf8")
 
   // --- the pieces published so far ---
   for (const piece of meta.pieces) {
-    const md = readFileSync(join(sd, "pieces", piece.slug + ".md"), "utf8");
-    let html = mdToHtml(md);
+    const md = readFileSync(join(sd, "pieces", piece.slug + ".md"), "utf8")
+    let html = mdToHtml(md)
     // The dek lives in meta.json, not the markdown; it renders under the title.
-    html = html.replace(/<\/h1>/, `</h1>\n<p class="piece-dek">${escapeHtml(piece.dek)}</p>`);
-    const dir = join(taDir, piece.slug);
-    mkdirSync(dir, { recursive: true });
+    html = html.replace(/<\/h1>/, `</h1>\n<p class="piece-dek">${escapeHtml(piece.dek)}</p>`)
+    const dir = join(taDir, piece.slug)
+    mkdirSync(dir, { recursive: true })
     writeFileSync(join(dir, "index.html"), pageShell({
       pageTitle: `${piece.title} — ${SERIES_TITLE}`,
       og: og(piece.title, piece.dek, `/series/town-asset/${piece.slug}/`),
@@ -231,7 +231,7 @@ for (const step of stepNums) {
       ], piece.title),
       body: `<article class="piece-body">${html}</article>`,
       footerNote: SERIES_FOOTER_NOTE,
-    }, seriesCss), "utf8");
+    }, seriesCss), "utf8")
   }
 
   // --- the /series/ landing: minimal, one entry, identical every step ---
@@ -242,13 +242,13 @@ for (const step of stepNums) {
     body: `<article class="piece-body ta-index"><h1>Series</h1>`
       + `<h3><a href="/series/town-asset/">${SERIES_TITLE}</a></h3>`
       + `<p>${escapeHtml(SERIES_DESC)}</p></article>`,
-  }, seriesCss), "utf8");
+  }, seriesCss), "utf8")
 
   // --- links: the step's campaign docs + the union index -------------------
-  const camp = loadDocsFrom(join(sd, "links"));
-  if (camp.errors.length) { camp.errors.forEach((e) => console.error(`ERROR ${e}`)); fail(`step ${step} campaign links do not validate.`); }
+  const camp = loadDocsFrom(join(sd, "links"))
+  if (camp.errors.length) { camp.errors.forEach((e) => console.error(`ERROR ${e}`)); fail(`step ${step} campaign links do not validate.`) }
 
-  const union = new Map(site.docs);
+  const union = new Map(site.docs)
   for (const [id, doc] of camp.docs) {
     if (union.has(id)) {
       // Once a series is finalized (reconcile --finalize), its register entries
@@ -259,70 +259,70 @@ for (const step of stepNums) {
       // fresh series still catches genuine collisions. (A register entry edited
       // at the source will differ until reconciled into links/_src — reconcile
       // it, then re-render.)
-      const repoYaml = join(ROOT, "links", "_src", id + ".yaml");
-      const campYaml = join(sd, "links", id + ".yaml");
+      const repoYaml = join(ROOT, "links", "_src", id + ".yaml")
+      const campYaml = join(sd, "links", id + ".yaml")
       const identical = existsSync(repoYaml) && existsSync(campYaml)
-        && readFileSync(repoYaml, "utf8") === readFileSync(campYaml, "utf8");
+        && readFileSync(repoYaml, "utf8") === readFileSync(campYaml, "utf8")
       if (!identical) {
         fail(`conflicting link id "${id}": links/_src/${id}.yaml (repo) differs from `
-          + `${join(sd, "links", id + ".yaml")} (campaign). Reconcile or resolve the id.`);
+          + `${join(sd, "links", id + ".yaml")} (campaign). Reconcile or resolve the id.`)
       }
       continue;  // identical; keep the repo copy
     }
-    union.set(id, doc);
+    union.set(id, doc)
   }
 
-  const linksOut = join(www, "links");
-  mkdirSync(join(linksOut, "_src"), { recursive: true });
+  const linksOut = join(www, "links")
+  mkdirSync(join(linksOut, "_src"), { recursive: true })
   for (const [id, doc] of camp.docs) {
-    copyFileSync(join(sd, "links", id + ".yaml"), join(linksOut, "_src", id + ".yaml"));
-    const html = doc.kind === "leaf" ? renderLeafPage(doc, linksCtx) : renderListPage(doc, union, linksCtx);
-    mkdirSync(join(linksOut, id), { recursive: true });
-    writeFileSync(join(linksOut, id, "index.html"), html, "utf8");
+    copyFileSync(join(sd, "links", id + ".yaml"), join(linksOut, "_src", id + ".yaml"))
+    const html = doc.kind === "leaf" ? renderLeafPage(doc, linksCtx) : renderListPage(doc, union, linksCtx)
+    mkdirSync(join(linksOut, id), { recursive: true })
+    writeFileSync(join(linksOut, id, "index.html"), html, "utf8")
   }
-  writeFileSync(join(linksOut, "index.html"), renderIndexPage(union, linksCtx), "utf8");
+  writeFileSync(join(linksOut, "index.html"), renderIndexPage(union, linksCtx), "utf8")
 
   // --- MANIFEST + the night's post text and card(s) -------------------------
-  copyFileSync(join(sd, "MANIFEST.txt"), join(OUT, "steps", String(step), "MANIFEST.txt"));
+  copyFileSync(join(sd, "MANIFEST.txt"), join(OUT, "steps", String(step), "MANIFEST.txt"))
 
-  const nights = [];
-  if (posts.has(step)) nights.push(posts.get(step));
+  const nights = []
+  if (posts.has(step)) nights.push(posts.get(step))
   if (step === TOTAL) {
-    for (const [n, p] of [...posts].sort((a, b) => a[0] - b[0])) if (n > TOTAL) nights.push(p);
+    for (const [n, p] of [...posts].sort((a, b) => a[0] - b[0])) if (n > TOTAL) nights.push(p)
   }
   if (nights.length) {
     writeFileSync(join(OUT, "steps", String(step), "FB.txt"),
-      nights.map((p) => p.text).join("\n----\n"), "utf8");
-    let cardN = 0;
+      nights.map((p) => p.text).join("\n----\n"), "utf8")
+    let cardN = 0
     for (const p of nights) {
-      if (!p.image) { warn(`step ${step}: post "${p.title}" has no card (Image: none)`); continue; }
-      const src = join(FB_DIR, "cards", p.image.replace(/\.png$/i, "") + ".png");
-      if (!existsSync(src)) { warn(`step ${step}: card ${p.image} not found under fb/cards/ (run export_cards.py)`); continue; }
-      cardN++;
-      copyFileSync(src, join(OUT, "steps", String(step), cardN === 1 ? "FB-card.png" : `FB-card-${cardN}.png`));
+      if (!p.image) { warn(`step ${step}: post "${p.title}" has no card (Image: none)`); continue }
+      const src = join(FB_DIR, "cards", p.image.replace(/\.png$/i, "") + ".png")
+      if (!existsSync(src)) { warn(`step ${step}: card ${p.image} not found under fb/cards/ (run export_cards.py)`); continue }
+      cardN++
+      copyFileSync(src, join(OUT, "steps", String(step), cardN === 1 ? "FB-card.png" : `FB-card-${cardN}.png`))
     }
   } else {
-    warn(`step ${step}: no FB post numbered ${step} in fb/campaign.md — no FB.txt staged`);
+    warn(`step ${step}: no FB post numbered ${step} in fb/campaign.md — no FB.txt staged`)
   }
 
-  console.log(`  step ${String(step).padStart(2)}  ${meta.tonight.slug.padEnd(20)} pieces=${String(meta.pieces.length).padStart(2)}  links=${camp.docs.size}${meta.final ? "   <- THE ARTICLE" : ""}`);
+  console.log(`  step ${String(step).padStart(2)}  ${meta.tonight.slug.padEnd(20)} pieces=${String(meta.pieces.length).padStart(2)}  links=${camp.docs.size}${meta.final ? "   <- THE ARTICLE" : ""}`)
 }
 
 // ---------------------------------------------------------------------------
 // preview/ — the gated review area (uploaded to /private/town-asset/)
 // ---------------------------------------------------------------------------
-if (!finalMeta) fail("no step is marked final in its meta.json — cannot build the preview dashboard.");
-const pv = join(OUT, "preview");
-mkdirSync(pv, { recursive: true });
-const finalSd = join(STEPS_SRC, String(TOTAL));
+if (!finalMeta) fail("no step is marked final in its meta.json — cannot build the preview dashboard.")
+const pv = join(OUT, "preview")
+mkdirSync(pv, { recursive: true })
+const finalSd = join(STEPS_SRC, String(TOTAL))
 
 // Full renderings of every piece and the assembled article, byte-styled like
 // the live pages, so phone review shows exactly what will publish.
 for (const piece of finalMeta.pieces) {
-  const md = readFileSync(join(finalSd, "pieces", piece.slug + ".md"), "utf8");
-  let html = mdToHtml(md).replace(/<\/h1>/, `</h1>\n<p class="piece-dek">${escapeHtml(piece.dek)}</p>`);
-  const dir = join(pv, "pieces", piece.slug);
-  mkdirSync(dir, { recursive: true });
+  const md = readFileSync(join(finalSd, "pieces", piece.slug + ".md"), "utf8")
+  let html = mdToHtml(md).replace(/<\/h1>/, `</h1>\n<p class="piece-dek">${escapeHtml(piece.dek)}</p>`)
+  const dir = join(pv, "pieces", piece.slug)
+  mkdirSync(dir, { recursive: true })
   writeFileSync(join(dir, "index.html"), pageShell({
     pageTitle: `${piece.title} — ${SERIES_TITLE}`, og: "",
     crumbs: crumb([
@@ -331,36 +331,36 @@ for (const piece of finalMeta.pieces) {
     ], piece.title),
     body: `<article class="piece-body">${html}</article>`,
     footerNote: SERIES_FOOTER_NOTE,
-  }, seriesCss), "utf8");
+  }, seriesCss), "utf8")
 }
-mkdirSync(join(pv, "article"), { recursive: true });
+mkdirSync(join(pv, "article"), { recursive: true })
 writeFileSync(join(pv, "article", "index.html"), pageShell({
   pageTitle: SERIES_TITLE, og: "",
   crumbs: crumb([{ label: "Home", href: "/" }, { label: "Series", href: "/series/" }], SERIES_TITLE),
   body: `<article class="piece-body ta-article">${mdToHtml(readFileSync(join(finalSd, "index.md"), "utf8"))}</article>`,
   footerNote: SERIES_FOOTER_NOTE,
-}, seriesCss), "utf8");
+}, seriesCss), "utf8")
 
 // The FB console: build it from the campaign sources and copy it in.
 if (existsSync(join(FB_DIR, "campaign.md"))) {
-  const py = process.platform === "win32" ? "python" : "python3";
+  const py = process.platform === "win32" ? "python" : "python3"
   const res = spawnSync(py, ["build_console.py", "campaign.md"],
-    { cwd: FB_DIR, encoding: "utf8", env: { ...process.env, PYTHONUTF8: "1" } });
+    { cwd: FB_DIR, encoding: "utf8", env: { ...process.env, PYTHONUTF8: "1" } })
   if (res.status !== 0) {
-    warn(`build_console.py failed (${(res.stderr || "").trim().slice(-300)}) — preview has no console`);
+    warn(`build_console.py failed (${(res.stderr || "").trim().slice(-300)}) — preview has no console`)
   } else {
-    mkdirSync(join(pv, "console"), { recursive: true });
-    copyFileSync(join(FB_DIR, "index.html"), join(pv, "console", "index.html"));
+    mkdirSync(join(pv, "console"), { recursive: true })
+    copyFileSync(join(FB_DIR, "index.html"), join(pv, "console", "index.html"))
   }
 }
 
 // The dashboard: plain private chrome, clearly not public-styled.
 const statusRows = finalMeta.pieces.map((p, i) => {
-  const ok = p.status === "sourced";
+  const ok = p.status === "sourced"
   return `<tr><td>${i + 1}</td>`
     + `<td><a href="pieces/${escapeHtml(p.slug)}/">${escapeHtml(p.title)}</a></td>`
-    + `<td class="${ok ? "ok" : "warn"}">${escapeHtml(p.status || "?")}</td></tr>`;
-}).join("\n");
+    + `<td class="${ok ? "ok" : "warn"}">${escapeHtml(p.status || "?")}</td></tr>`
+}).join("\n")
 writeFileSync(join(pv, "index.html"), `<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -384,7 +384,7 @@ ${statusRows}
 </table>
 <p>Live promotion happens at <a href="/private/admin/promote">/private/admin/promote</a>.
 Each night's post text and card sit in that step's folder and appear on the promote result page.</p>
-</div></body></html>\n`, "utf8");
+</div></body></html>\n`, "utf8")
 
-console.log(`\n  wrote ${OUT}  (steps 1..${TOTAL} + preview)`);
-if (warnings.length) console.log(`  ${warnings.length} warning(s) above.`);
+console.log(`\n  wrote ${OUT}  (steps 1..${TOTAL} + preview)`)
+if (warnings.length) console.log(`  ${warnings.length} warning(s) above.`)
