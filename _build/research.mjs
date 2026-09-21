@@ -15,30 +15,30 @@
 // the rendered page while /report.md remains available for anyone who wants
 // the underlying source.
 
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
-import { resolve, join } from "node:path";
-import { marked } from "marked";
-import { markedSmartypants } from "marked-smartypants";
+import { readFileSync, writeFileSync, existsSync } from "node:fs"
+import { resolve, join } from "node:path"
+import { marked } from "marked"
+import { markedSmartypants } from "marked-smartypants"
 
-marked.use(markedSmartypants());
+marked.use(markedSmartypants())
 
-function escapeHtml(s) {
+const escapeHtml = (s) => {
   return String(s ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+    .replace(/"/g, "&quot;")
 }
 
 // Promote the parent report's `<span class="current">…title…</span>` breadcrumb
 // terminus to a link back to ../../, then append a new terminal current node
 // carrying this page's title.
-function extendBreadcrumb(breadcrumb, reportHref, finalLabel) {
-  if (!breadcrumb) return "";
+const extendBreadcrumb = (breadcrumb, reportHref, finalLabel) => {
+  if (!breadcrumb) return ""
   return breadcrumb.replace(
     /<span class="current">([^<]+)<\/span>/,
     `<a href="${reportHref}">$1</a><span class="sep">›</span><span class="current">${escapeHtml(finalLabel)}</span>`
-  );
+  )
 }
 
 const LOCAL_CSS = `
@@ -54,35 +54,35 @@ const LOCAL_CSS = `
 .container a { word-break: break-word; }
 .container ul, .container ol { padding-left: 24px; }
 .container li { margin: 4px 0; }
-`;
+`
 
-export async function buildResearchPages(folder, meta, themeCss, baseCss, breadcrumb) {
-  const items = meta.research;
-  if (!Array.isArray(items) || !items.length) return;
+export const buildResearchPages = async (folder, meta, themeCss, baseCss, breadcrumb) => {
+  const items = meta.research
+  if (!Array.isArray(items) || !items.length) return
 
   for (const item of items) {
-    const subdir = item.subdir;
+    const subdir = item.subdir
     if (!subdir || !item.title) {
-      console.log(`research: skipping entry missing subdir/title: ${JSON.stringify(item)}`);
-      continue;
+      console.log(`research: skipping entry missing subdir/title: ${JSON.stringify(item)}`)
+      continue
     }
-    const src = resolve(folder, subdir, "report.md");
+    const src = resolve(folder, subdir, "report.md")
     if (!existsSync(src)) {
-      console.log(`research: source not found: ${src}`);
-      continue;
+      console.log(`research: source not found: ${src}`)
+      continue
     }
 
-    const raw = readFileSync(src, "utf8");
-    const bodyHtml = marked.parse(raw);
+    const raw = readFileSync(src, "utf8")
+    const bodyHtml = marked.parse(raw)
 
     // Depth of the page relative to the parent report determines the href
     // that promotes the parent title to a link. subdir "research/chaplin-rd11"
     // is two levels deep, so the parent lives at "../../".
-    const depth = subdir.split("/").filter(Boolean).length;
-    const parentHref = "../".repeat(depth);
-    const extendedCrumbs = extendBreadcrumb(breadcrumb, parentHref, item.title);
+    const depth = subdir.split("/").filter(Boolean).length
+    const parentHref = "../".repeat(depth)
+    const extendedCrumbs = extendBreadcrumb(breadcrumb, parentHref, item.title)
 
-    const pageTitle = `${item.title} — ${meta.title || ""}`;
+    const pageTitle = `${item.title} — ${meta.title || ""}`
     const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -103,10 +103,10 @@ ${LOCAL_CSS}</style>
 ${bodyHtml}
 </main>
 </body>
-</html>`;
+</html>`
 
-    const outPath = join(folder, subdir, "index.html");
-    writeFileSync(outPath, html, "utf8");
-    console.log(`wrote ${subdir}/index.html (${html.length.toLocaleString()} chars)`);
+    const outPath = join(folder, subdir, "index.html")
+    writeFileSync(outPath, html, "utf8")
+    console.log(`wrote ${subdir}/index.html (${html.length.toLocaleString()} chars)`)
   }
 }

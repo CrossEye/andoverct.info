@@ -19,73 +19,73 @@
  * totals{voting,necessary,yea,nay,absent}, splits{D,R,O}{Y,N,X,A,OTHER},
  * vacantSeats, memberVotes{NAME: code}.
  */
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
-import { join } from "node:path";
-import { escapeHtml, pageNoteHtml, siteFooterBarHtml } from "./links.mjs";
+import { readFileSync, writeFileSync, existsSync } from "node:fs"
+import { join } from "node:path"
+import { escapeHtml, pageNoteHtml, siteFooterBarHtml } from "./links.mjs"
 
-const ROOT = join(import.meta.dirname, "..");
-const DIR = join(ROOT, "reports/55th/weir-votes");
-const TEMPLATE = join(ROOT, "_build/templates/weir-votes.html");
+const ROOT = join(import.meta.dirname, "..")
+const DIR = join(ROOT, "reports/55th/weir-votes")
+const TEMPLATE = join(ROOT, "_build/templates/weir-votes.html")
 
-const records = JSON.parse(readFileSync(join(DIR, "all-votes.json"), "utf8"));
+const records = JSON.parse(readFileSync(join(DIR, "all-votes.json"), "utf8"))
 const provenance = existsSync(join(DIR, "provenance.json"))
   ? JSON.parse(readFileSync(join(DIR, "provenance.json"), "utf8"))
-  : null;
-const generated = provenance?.generated?.slice(0, 10) || new Date().toISOString().slice(0, 10);
+  : null
+const generated = provenance?.generated?.slice(0, 10) || new Date().toISOString().slice(0, 10)
 
 // --------------- Grouping ---------------
 
 // Sessions in dataset order (records are sorted by year, date, roll call):
 // each year's regular session first, then its special session(s).
-const sessions = new Map();
+const sessions = new Map()
 for (const r of records) {
-  if (!sessions.has(r.sessionId)) sessions.set(r.sessionId, { id: r.sessionId, label: r.sessionLabel, kind: r.sessionKind, rows: [] });
-  sessions.get(r.sessionId).rows.push(r);
+  if (!sessions.has(r.sessionId)) sessions.set(r.sessionId, { id: r.sessionId, label: r.sessionLabel, kind: r.sessionKind, rows: [] })
+  sessions.get(r.sessionId).rows.push(r)
 }
 
-function classifyAlignment(weir, splits) {
-  if (!weir || !splits?.R) return "";
-  if (weir === "X" || weir === "A") return "absent";
-  const rMajority = splits.R.Y >= splits.R.N ? "Y" : "N";
-  return weir === rMajority ? "with-r" : "against-r";
+const classifyAlignment = (weir, splits) => {
+  if (!weir || !splits?.R) return ""
+  if (weir === "X" || weir === "A") return "absent"
+  const rMajority = splits.R.Y >= splits.R.N ? "Y" : "N"
+  return weir === rMajority ? "with-r" : "against-r"
 }
 
-function summarize(rows) {
-  const s = { yea: 0, nay: 0, absent: 0, withParty: 0, againstParty: 0 };
+const summarize = (rows) => {
+  const s = { yea: 0, nay: 0, absent: 0, withParty: 0, againstParty: 0 }
   for (const r of rows) {
-    if (r.weirVote === "Y") s.yea++;
-    else if (r.weirVote === "N") s.nay++;
-    else if (r.weirVote === "X" || r.weirVote === "A") s.absent++;
-    const a = classifyAlignment(r.weirVote, r.splits);
-    if (a === "with-r") s.withParty++;
-    else if (a === "against-r") s.againstParty++;
+    if (r.weirVote === "Y") s.yea++
+    else if (r.weirVote === "N") s.nay++
+    else if (r.weirVote === "X" || r.weirVote === "A") s.absent++
+    const a = classifyAlignment(r.weirVote, r.splits)
+    if (a === "with-r") s.withParty++
+    else if (a === "against-r") s.againstParty++
   }
-  return s;
+  return s
 }
 
-const fmtN = (n) => n.toLocaleString("en-US");
+const fmtN = (n) => n.toLocaleString("en-US")
 
 // --------------- HTML ---------------
 
-function voteCellHtml(v) {
-  if (!v) return '<span class="v v-na">—</span>';
-  const cls = { Y: "v-y", N: "v-n", X: "v-x", A: "v-a" }[v] || "v-other";
-  const label = { Y: "Yea", N: "Nay", X: "Absent", A: "Abstain" }[v] || v;
-  return `<span class="v ${cls}" title="${label}">${v}</span>`;
+const voteCellHtml = (v) => {
+  if (!v) return '<span class="v v-na">—</span>'
+  const cls = { Y: "v-y", N: "v-n", X: "v-x", A: "v-a" }[v] || "v-other"
+  const label = { Y: "Yea", N: "Nay", X: "Absent", A: "Abstain" }[v] || v
+  return `<span class="v ${cls}" title="${label}">${v}</span>`
 }
 
-function partyTotalText(splits) {
-  const fmt = (b) => (b ? `${b.Y}–${b.N}${b.X || b.A || b.OTHER ? ` (abs ${b.X + b.A + b.OTHER})` : ""}` : "—");
-  return `D ${fmt(splits.D)}<br>R ${fmt(splits.R)}<br>O ${fmt(splits.O)}`;
+const partyTotalText = (splits) => {
+  const fmt = (b) => (b ? `${b.Y}–${b.N}${b.X || b.A || b.OTHER ? ` (abs ${b.X + b.A + b.OTHER})` : ""}` : "—")
+  return `D ${fmt(splits.D)}<br>R ${fmt(splits.R)}<br>O ${fmt(splits.O)}`
 }
 
-function totalsText(t) {
-  return `${t.yea ?? "?"}–${t.nay ?? "?"}${t.absent != null ? `<br><span class="dim">(${t.absent} not voting)</span>` : ""}`;
+const totalsText = (t) => {
+  return `${t.yea ?? "?"}–${t.nay ?? "?"}${t.absent != null ? `<br><span class="dim">(${t.absent} not voting)</span>` : ""}`
 }
 
-function rowHtml(r) {
-  const align = classifyAlignment(r.weirVote, r.splits);
-  const text = r.billTextLinks?.[0] ? ` &middot; <a href="${escapeHtml(r.billTextLinks[0].url)}">text</a>` : "";
+const rowHtml = (r) => {
+  const align = classifyAlignment(r.weirVote, r.splits)
+  const text = r.billTextLinks?.[0] ? ` &middot; <a href="${escapeHtml(r.billTextLinks[0].url)}">text</a>` : ""
   return `
           <tr class="rc rc-${align}">
             <td class="num">${r.rollCall}</td>
@@ -101,13 +101,13 @@ function rowHtml(r) {
             <td class="weir">${voteCellHtml(r.weirVote)}</td>
             <td class="totals">${totalsText(r.totals)}</td>
             <td class="splits">${partyTotalText(r.splits)}</td>
-          </tr>`;
+          </tr>`
 }
 
-function sessionHtml(s) {
-  const sum = summarize(s.rows);
-  const dates = s.rows.map((r) => r.date).filter(Boolean).sort();
-  const span = s.kind === "regular" ? "" : ` <span class="dates">(${dates[0]}${dates[dates.length - 1] !== dates[0] ? ` – ${dates[dates.length - 1]}` : ""})</span>`;
+const sessionHtml = (s) => {
+  const sum = summarize(s.rows)
+  const dates = s.rows.map((r) => r.date).filter(Boolean).sort()
+  const span = s.kind === "regular" ? "" : ` <span class="dates">(${dates[0]}${dates[dates.length - 1] !== dates[0] ? ` – ${dates[dates.length - 1]}` : ""})</span>`
   return `
       <section class="session" id="${escapeHtml(s.id)}">
         <h2>${escapeHtml(s.label)}${span}</h2>
@@ -130,15 +130,15 @@ function sessionHtml(s) {
         </tbody>
         </table>
       </section>
-`;
+`
 }
 
 const jump = `<nav class="jump">
   Jump to: ${[...sessions.values()].map((s) => `<a href="#${escapeHtml(s.id)}">${escapeHtml(s.label)}</a>`).join("")}
 </nav>
-`;
+`
 
-const perSession = [...sessions.values()].map((s) => `${s.rows.length} ${s.label.replace(/^\d{4} /, "")} ${s.rows[0].year}`);
+const perSession = [...sessions.values()].map((s) => `${s.rows.length} ${s.label.replace(/^\d{4} /, "")} ${s.rows[0].year}`)
 const provenanceHtml = `
 <section class="provenance" id="provenance">
   <h2>Provenance and checks</h2>
@@ -158,38 +158,38 @@ const provenanceHtml = `
     <a href="weir-votes.md">weir-votes.md</a>.
   </p>
 </section>
-`;
+`
 
-const body = jump + [...sessions.values()].map(sessionHtml).join("\n") + provenanceHtml;
-const footerNote = `Generated ${generated} from the Connecticut General Assembly's roll-call PDFs · ${fmtN(records.length)} votes across ${sessions.size} sessions · Vote codes: Y = Yea, N = Nay, X = Absent / not voting, A = Abstain`;
+const body = jump + [...sessions.values()].map(sessionHtml).join("\n") + provenanceHtml
+const footerNote = `Generated ${generated} from the Connecticut General Assembly's roll-call PDFs · ${fmtN(records.length)} votes across ${sessions.size} sessions · Vote codes: Y = Yea, N = Nay, X = Absent / not voting, A = Abstain`
 
-const template = readFileSync(TEMPLATE, "utf8");
-if (!template.includes("{{BODY}}") || !template.includes("{{FOOTER}}")) throw new Error("template lacks {{BODY}}/{{FOOTER}}");
+const template = readFileSync(TEMPLATE, "utf8")
+if (!template.includes("{{BODY}}") || !template.includes("{{FOOTER}}")) throw new Error("template lacks {{BODY}}/{{FOOTER}}")
 const html = template.replace("{{BODY}}", body).replace("{{FOOTER}}", `${pageNoteHtml(footerNote)}
-${siteFooterBarHtml()}`);
-writeFileSync(join(DIR, "index.html"), html);
+${siteFooterBarHtml()}`)
+writeFileSync(join(DIR, "index.html"), html)
 
 // --------------- Markdown ---------------
 
-const md = ["# Steve Weir (R-55) — CT House floor votes", "", `Generated ${generated}. ${records.length} votes total.`, ""];
+const md = ["# Steve Weir (R-55) — CT House floor votes", "", `Generated ${generated}. ${records.length} votes total.`, ""]
 for (const s of sessions.values()) {
-  const sum = summarize(s.rows);
-  md.push(`## ${s.label}`, "");
-  md.push(`${s.rows.length} votes. Weir Y/N/abs: ${sum.yea}/${sum.nay}/${sum.absent}. With-party / against-party: ${sum.withParty}/${sum.againstParty}.`, "");
-  md.push("| RC# | Date | Bill | Title | Weir | Yea–Nay | D Y–N | R Y–N |", "|---|---|---|---|---|---|---|---|");
+  const sum = summarize(s.rows)
+  md.push(`## ${s.label}`, "")
+  md.push(`${s.rows.length} votes. Weir Y/N/abs: ${sum.yea}/${sum.nay}/${sum.absent}. With-party / against-party: ${sum.withParty}/${sum.againstParty}.`, "")
+  md.push("| RC# | Date | Bill | Title | Weir | Yea–Nay | D Y–N | R Y–N |", "|---|---|---|---|---|---|---|---|")
   for (const r of s.rows) {
-    const t = r.totals || {}, d = r.splits?.D || {}, R = r.splits?.R || {};
-    md.push(`| ${r.rollCall} | ${r.date || ""} | [${r.billHumanForm}](${r.billTrackingUrl}) | ${(r.billTitle || "").replace(/\|/g, "\\|").slice(0, 80)} | ${r.weirVote || "—"} | ${t.yea ?? "?"}–${t.nay ?? "?"} | ${d.Y ?? "?"}–${d.N ?? "?"} | ${R.Y ?? "?"}–${R.N ?? "?"} |`);
+    const t = r.totals || {}, d = r.splits?.D || {}, R = r.splits?.R || {}
+    md.push(`| ${r.rollCall} | ${r.date || ""} | [${r.billHumanForm}](${r.billTrackingUrl}) | ${(r.billTitle || "").replace(/\|/g, "\\|").slice(0, 80)} | ${r.weirVote || "—"} | ${t.yea ?? "?"}–${t.nay ?? "?"} | ${d.Y ?? "?"}–${d.N ?? "?"} | ${R.Y ?? "?"}–${R.N ?? "?"} |`)
   }
-  md.push("");
+  md.push("")
 }
-writeFileSync(join(DIR, "weir-votes.md"), md.join("\n"));
+writeFileSync(join(DIR, "weir-votes.md"), md.join("\n"))
 
 // --------------- CSV ---------------
 
 const csvCell = (v) => {
-  if (v == null) return "";
-  const s = String(v);
+  if (v == null) return ""
+  const s = String(v)
   return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 };
 const csv = [

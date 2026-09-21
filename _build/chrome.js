@@ -11,24 +11,24 @@
  * stable class names (page-banner / page-banner-inner / crumbs / page-note /
  * site-footer / site-footer-inner) that every stylesheet keeps skinning its own way.
  */
-"use strict";
+"use strict"
 
-const { readFileSync } = require("node:fs");
-const { join } = require("node:path");
+const { readFileSync } = require("node:fs")
+const { join } = require("node:path")
 
-const FOOTER = JSON.parse(readFileSync(join(__dirname, "footer.json"), "utf8"));
+const FOOTER = JSON.parse(readFileSync(join(__dirname, "footer.json"), "utf8"))
 
-function escapeHtml(s) {
+const escapeHtml = (s) => {
   return String(s)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
+    .replace(/'/g, "&#39;")
 }
 
 // The one crumb separator, previously copied verbatim into all six generators.
-const SEP = '<span class="sep">›</span>';
+const SEP = '<span class="sep">›</span>'
 
 /*
  * Breadcrumb innards. `trail` is an ordered array of { label, href? }: items
@@ -37,12 +37,12 @@ const SEP = '<span class="sep">›</span>';
  * with banner() for the standard dark rail, or in a surface-specific <nav> (the
  * charter home page keeps its crumbs inside the dark article, for instance).
  */
-function crumbs(trail) {
+const crumbs = (trail) => {
   return trail
     .map((c) => (c.href
       ? `<a href="${c.href}">${escapeHtml(c.label)}</a>`
       : `<span class="current">${escapeHtml(c.label)}</span>`))
-    .join(SEP);
+    .join(SEP)
 }
 
 /*
@@ -52,15 +52,15 @@ function crumbs(trail) {
  *    embedding the banner deeper in its document can keep its own indentation
  *    (and thus byte-identical output).
  */
-function banner(crumbsHtml, opts) {
-  opts = opts || {};
-  const extra = opts.extraClass ? " " + opts.extraClass : "";
-  const p = opts.indent || "";
+const banner = (crumbsHtml, opts) => {
+  opts = opts || {}
+  const extra = opts.extraClass ? " " + opts.extraClass : ""
+  const p = opts.indent || ""
   return `${p}<div class="page-banner${extra}">\n`
     + `${p}  <nav class="page-banner-inner crumbs">\n`
     + `${p}    ${crumbsHtml}\n`
     + `${p}  </nav>\n`
-    + `${p}</div>`;
+    + `${p}</div>`
 }
 
 /*
@@ -81,14 +81,14 @@ function banner(crumbsHtml, opts) {
  * the note goes INSIDE the wrapper and the bar AFTER it — inside, the bar
  * inherits the wrapper's max-width and stops being full-width.
  */
-function pageNoteHtml(note) {
-  return note ? `<p class="page-note">${note}</p>` : "";
+const pageNoteHtml = (note) => {
+  return note ? `<p class="page-note">${note}</p>` : ""
 }
 
-function siteFooterBarHtml() {
+const siteFooterBarHtml = () => {
   return '<footer class="site-footer">\n'
     + `<div class="site-footer-inner">${FOOTER.id}</div>\n`
-    + "</footer>";
+    + "</footer>"
 }
 
 /*
@@ -115,7 +115,7 @@ function siteFooterBarHtml() {
 
 // Click a heading's ¶ anchor to copy its permalink. Note that the clipboard API
 // needs a secure context, so this is inert on the plain-http local dev host.
-function permalinkScript() {
+const permalinkScript = () => {
   return `
 ;(() => {
   document.addEventListener('click', (e) => {
@@ -131,7 +131,7 @@ function permalinkScript() {
       .catch(() => {})
   })
 })()
-`;
+`
 }
 
 /*
@@ -139,7 +139,7 @@ function permalinkScript() {
  * click anywhere or press Esc to close. Screen-only — the overlay is built at
  * runtime, and the PDF path (WeasyPrint) does not execute JavaScript at all.
  */
-function lightboxScript() {
+const lightboxScript = () => {
   return `
 ;(() => {
   const imgs = [...document.querySelectorAll('.container img')]
@@ -175,14 +175,14 @@ function lightboxScript() {
   imgs.forEach((img) =>
     img.addEventListener('click', () => open(img.currentSrc || img.src, img.alt)))
 })()
-`;
+`
 }
 
 /*
  * Highlight the rail link for whichever section is in view. Rail hrefs are
  * "#sec-<id>" and the sections carry id "sec-<id>", hence the slice(5)/slice(4).
  */
-function scrollspyScript() {
+const scrollspyScript = () => {
   return `
 ;(() => {
   const rail = document.querySelector('.home-rail')
@@ -200,7 +200,7 @@ function scrollspyScript() {
 
   document.querySelectorAll('section.group').forEach((s) => io.observe(s))
 })()
-`;
+`
 }
 
 module.exports = {
@@ -208,4 +208,4 @@ module.exports = {
   pageNoteHtml, siteFooterBarHtml,
   permalinkScript, lightboxScript, scrollspyScript,
   footer: FOOTER,
-};
+}

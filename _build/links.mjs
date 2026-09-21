@@ -38,25 +38,25 @@ import {
   mkdirSync,
   readdirSync,
   rmSync,
-} from "node:fs";
-import { join, resolve, relative, sep } from "node:path";
-import { pathToFileURL } from "node:url";
-import { load as parseYaml } from "js-yaml";
+} from "node:fs"
+import { join, resolve, relative, sep } from "node:path"
+import { pathToFileURL } from "node:url"
+import { load as parseYaml } from "js-yaml"
 import {
   escapeHtml, pageNoteHtml, siteFooterBarHtml, crumbs as buildCrumbs, banner as pageBanner,
   footer as FOOTER,
-} from "./chrome.js";
+} from "./chrome.js"
 
-const HERE = import.meta.dirname;
-const ROOT = resolve(HERE, "..");
-const SRC_DIR = join(ROOT, "links", "_src");
-const OUT_DIR = join(ROOT, "links");
+const HERE = import.meta.dirname
+const ROOT = resolve(HERE, "..")
+const SRC_DIR = join(ROOT, "links", "_src")
+const OUT_DIR = join(ROOT, "links")
 
-const ID_RE = /^[A-Za-z0-9_-]+$/;
+const ID_RE = /^[A-Za-z0-9_-]+$/
 const URL_RE = /^(https?:\/\/|\/)/; // external or root-relative internal
-const EXT_RE = /^https?:\/\//;
+const EXT_RE = /^https?:\/\//
 
-export const BASE_CSS = readFileSync(join(HERE, "base.css"), "utf8");
+export const BASE_CSS = readFileSync(join(HERE, "base.css"), "utf8")
 
 // Registry-specific chrome, layered onto the shared theme + base.css.
 export const LINKS_CSS = `
@@ -104,7 +104,7 @@ export const LINKS_CSS = `
     font-size: 9pt;
     color: var(--ink-faint);
 }
-`;
+`
 
 // ---------------------------------------------------------------------------
 // Helpers shared with report.mjs (copied — report.mjs exports nothing)
@@ -113,25 +113,25 @@ export const LINKS_CSS = `
 // escapeHtml and the footer helpers now live in the shared chrome module;
 // re-export them so existing importers (town-asset-render.mjs, weir-votes.mjs)
 // keep working.
-export { escapeHtml, pageNoteHtml, siteFooterBarHtml };
+export { escapeHtml, pageNoteHtml, siteFooterBarHtml }
 
-export function loadConfig() {
-  const p = join(HERE, "report.config.json");
-  if (!existsSync(p)) return {};
+export const loadConfig = () => {
+  const p = join(HERE, "report.config.json")
+  if (!existsSync(p)) return {}
   try {
-    return JSON.parse(readFileSync(p, "utf8"));
+    return JSON.parse(readFileSync(p, "utf8"))
   } catch {
-    return {};
+    return {}
   }
 }
 
-export function loadTheme(name) {
-  const dir = join(HERE, "themes");
-  const base = readFileSync(join(dir, "default.css"), "utf8");
-  if (!name || name === "default") return base;
-  const p = join(dir, `${name}.css`);
-  if (!existsSync(p)) throw new Error(`theme "${name}" not found: ${p}`);
-  return base + "\n" + readFileSync(p, "utf8");
+export const loadTheme = (name) => {
+  const dir = join(HERE, "themes")
+  const base = readFileSync(join(dir, "default.css"), "utf8")
+  if (!name || name === "default") return base
+  const p = join(dir, `${name}.css`)
+  if (!existsSync(p)) throw new Error(`theme "${name}" not found: ${p}`)
+  return base + "\n" + readFileSync(p, "utf8")
 }
 
 // ---------------------------------------------------------------------------
@@ -140,113 +140,113 @@ export function loadTheme(name) {
 
 // Structural validation of one parsed YAML doc. Returns error strings; an
 // empty array means the doc is safe to normalize.
-function validateDoc(raw, stem, rel) {
-  const errs = [];
-  const err = (m) => errs.push(`${rel}: ${m}`);
+const validateDoc = (raw, stem, rel) => {
+  const errs = []
+  const err = (m) => errs.push(`${rel}: ${m}`)
 
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
-    err("document must be a YAML mapping");
-    return errs;
+    err("document must be a YAML mapping")
+    return errs
   }
-  if (raw.id === undefined) err(`missing "id"`);
-  else if (String(raw.id) !== stem) err(`id "${raw.id}" does not match filename`);
+  if (raw.id === undefined) err(`missing "id"`)
+  else if (String(raw.id) !== stem) err(`id "${raw.id}" does not match filename`)
 
-  const shapeKeys = ["url", "groups", "links"].filter((k) => raw[k] !== undefined);
+  const shapeKeys = ["url", "groups", "links"].filter((k) => raw[k] !== undefined)
   if (shapeKeys.length !== 1) {
     err(
       `must be a leaf ("url") or a list ("groups" or "links"); found: ` +
         (shapeKeys.join(", ") || "none")
-    );
-    return errs;
+    )
+    return errs
   }
-  const kind = shapeKeys[0] === "url" ? "leaf" : "list";
+  const kind = shapeKeys[0] === "url" ? "leaf" : "list"
 
   const allowed =
     kind === "leaf"
       ? ["id", "title", "description", "url", "image", "date", "archived"]
-      : ["id", "title", "description", "image", "groups", "links"];
+      : ["id", "title", "description", "image", "groups", "links"]
   for (const k of Object.keys(raw)) {
-    if (!allowed.includes(k)) err(`unknown key "${k}"`);
+    if (!allowed.includes(k)) err(`unknown key "${k}"`)
   }
 
-  const nonEmptyString = (v) => typeof v === "string" && v.trim() !== "";
-  if (!nonEmptyString(raw.title)) err(`"title" must be a non-empty string`);
-  if (!nonEmptyString(raw.description)) err(`"description" must be a non-empty string`);
+  const nonEmptyString = (v) => typeof v === "string" && v.trim() !== ""
+  if (!nonEmptyString(raw.title)) err(`"title" must be a non-empty string`)
+  if (!nonEmptyString(raw.description)) err(`"description" must be a non-empty string`)
   if (raw.image !== undefined && !(typeof raw.image === "string" && URL_RE.test(raw.image)))
-    err(`"image" must start with "/" or "http(s)://"`);
+    err(`"image" must start with "/" or "http(s)://"`)
 
   if (kind === "leaf") {
     if (!(typeof raw.url === "string" && URL_RE.test(raw.url)))
-      err(`"url" must start with "/" (internal) or "http(s)://" (external)`);
+      err(`"url" must start with "/" (internal) or "http(s)://" (external)`)
     if (
       raw.archived !== undefined &&
       !(typeof raw.archived === "string" && EXT_RE.test(raw.archived))
     )
-      err(`"archived" must be an http(s) URL`);
+      err(`"archived" must be an http(s) URL`)
     if (raw.date !== undefined) {
       // js-yaml parses a bare YYYY-MM-DD into a JS Date; accept either form.
       const ok =
         raw.date instanceof Date
           ? !isNaN(raw.date)
-          : typeof raw.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(raw.date);
-      if (!ok) err(`"date" must be YYYY-MM-DD`);
+          : typeof raw.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(raw.date)
+      if (!ok) err(`"date" must be YYYY-MM-DD`)
     }
-    return errs;
+    return errs
   }
 
   const checkLinks = (arr, where) => {
     if (!Array.isArray(arr) || arr.length === 0) {
-      err(`${where} must be a non-empty array of ids`);
-      return;
+      err(`${where} must be a non-empty array of ids`)
+      return
     }
     for (const x of arr) {
-      if (!ID_RE.test(String(x))) err(`${where} contains invalid id "${x}"`);
+      if (!ID_RE.test(String(x))) err(`${where} contains invalid id "${x}"`)
     }
-  };
+  }
 
   if (raw.groups !== undefined) {
     if (!Array.isArray(raw.groups) || raw.groups.length === 0) {
-      err(`"groups" must be a non-empty array`);
-      return errs;
+      err(`"groups" must be a non-empty array`)
+      return errs
     }
     raw.groups.forEach((g, i) => {
-      const where = `groups[${i}]`;
+      const where = `groups[${i}]`
       if (!g || typeof g !== "object" || Array.isArray(g)) {
-        err(`${where} must be a mapping`);
-        return;
+        err(`${where} must be a mapping`)
+        return
       }
       for (const k of Object.keys(g)) {
         if (!["title", "description", "links"].includes(k))
-          err(`${where}: unknown key "${k}"`);
+          err(`${where}: unknown key "${k}"`)
       }
-      if (!nonEmptyString(g.title)) err(`${where}: "title" must be a non-empty string`);
+      if (!nonEmptyString(g.title)) err(`${where}: "title" must be a non-empty string`)
       if (g.description !== undefined && !nonEmptyString(g.description))
-        err(`${where}: "description" must be a non-empty string`);
-      checkLinks(g.links, `${where}.links`);
-    });
+        err(`${where}: "description" must be a non-empty string`)
+      checkLinks(g.links, `${where}.links`)
+    })
   } else {
-    checkLinks(raw.links, `"links"`);
+    checkLinks(raw.links, `"links"`)
   }
-  return errs;
+  return errs
 }
 
 // A validated doc, reshaped for rendering: ids stringified, dates formatted,
 // and an ungrouped links array folded into a single untitled group.
-function normalizeDoc(raw, stem) {
-  const kind = raw.url !== undefined ? "leaf" : "list";
+const normalizeDoc = (raw, stem) => {
+  const kind = raw.url !== undefined ? "leaf" : "list"
   const doc = {
     id: stem,
     kind,
     title: raw.title.trim(),
     description: raw.description.trim(),
-  };
-  if (raw.image) doc.image = raw.image;
+  }
+  if (raw.image) doc.image = raw.image
   if (kind === "leaf") {
-    doc.url = raw.url;
-    if (raw.archived) doc.archived = raw.archived;
+    doc.url = raw.url
+    if (raw.archived) doc.archived = raw.archived
     if (raw.date !== undefined)
       doc.date =
-        raw.date instanceof Date ? raw.date.toISOString().slice(0, 10) : raw.date;
+        raw.date instanceof Date ? raw.date.toISOString().slice(0, 10) : raw.date
   } else {
     doc.groups = raw.groups
       ? raw.groups.map((g) => ({
@@ -254,90 +254,90 @@ function normalizeDoc(raw, stem) {
           description: g.description ? g.description.trim() : undefined,
           links: g.links.map(String),
         }))
-      : [{ links: raw.links.map(String) }];
+      : [{ links: raw.links.map(String) }]
   }
-  return doc;
+  return doc
 }
 
 // Reads every <dir>/*.yaml into a Map<id, doc>, collecting all problems
 // (bad filename, parse failure, schema violation, dangling reference) so the
 // caller can report the whole batch at once. Error messages name files by
 // their path relative to the repo root (e.g. "links/_src/foo.yaml").
-export function loadDocsFrom(dir) {
-  if (!existsSync(dir)) throw new Error(`source directory not found: ${dir}`);
-  const label = relative(ROOT, dir).split(sep).join("/") || ".";
-  const errors = [];
-  const docs = new Map();
+export const loadDocsFrom = (dir) => {
+  if (!existsSync(dir)) throw new Error(`source directory not found: ${dir}`)
+  const label = relative(ROOT, dir).split(sep).join("/") || "."
+  const errors = []
+  const docs = new Map()
   const files = readdirSync(dir)
     .filter((f) => f.endsWith(".yaml"))
-    .sort();
+    .sort()
   for (const file of files) {
-    const rel = `${label}/${file}`;
-    const stem = file.slice(0, -".yaml".length);
+    const rel = `${label}/${file}`
+    const stem = file.slice(0, -".yaml".length)
     if (!ID_RE.test(stem)) {
-      errors.push(`${rel}: filename id "${stem}" must be letters/digits/_/- only`);
-      continue;
+      errors.push(`${rel}: filename id "${stem}" must be letters/digits/_/- only`)
+      continue
     }
-    let raw;
+    let raw
     try {
-      raw = parseYaml(readFileSync(join(dir, file), "utf8"));
+      raw = parseYaml(readFileSync(join(dir, file), "utf8"))
     } catch (e) {
-      errors.push(`${rel}: YAML parse error: ${e.message}`);
-      continue;
+      errors.push(`${rel}: YAML parse error: ${e.message}`)
+      continue
     }
-    const errs = validateDoc(raw, stem, rel);
+    const errs = validateDoc(raw, stem, rel)
     if (errs.length) {
-      errors.push(...errs);
-      continue;
+      errors.push(...errs)
+      continue
     }
-    docs.set(stem, normalizeDoc(raw, stem));
+    docs.set(stem, normalizeDoc(raw, stem))
   }
   for (const [id, doc] of docs) {
-    if (doc.kind !== "list") continue;
+    if (doc.kind !== "list") continue
     for (const g of doc.groups) {
       for (const ref of g.links) {
         if (!docs.has(ref))
-          errors.push(`${label}/${id}.yaml: reference to unknown id "${ref}"`);
+          errors.push(`${label}/${id}.yaml: reference to unknown id "${ref}"`)
       }
     }
   }
-  return { docs, errors };
+  return { docs, errors }
 }
 
 // ---------------------------------------------------------------------------
 // Rendering
 // ---------------------------------------------------------------------------
 
-export function absUrl(u, siteOrigin) {
-  return u.startsWith("/") ? siteOrigin + u : u;
+export const absUrl = (u, siteOrigin) => {
+  return u.startsWith("/") ? siteOrigin + u : u
 }
 
-export function ogHead({ title, description, path, image }, { siteOrigin, defaultOgImage }) {
-  const url = siteOrigin + path;
+export const ogHead = ({ title, description, path, image }, { siteOrigin, defaultOgImage }) => {
+  const url = siteOrigin + path
   const lines = [
     `<meta property="og:type" content="website">`,
     `<meta property="og:title" content="${escapeHtml(title)}">`,
     `<meta property="og:description" content="${escapeHtml(description)}">`,
     `<meta property="og:url" content="${escapeHtml(url)}">`,
-  ];
-  const img = image || defaultOgImage;
+  ]
+  const img = image || defaultOgImage
   if (img)
     lines.push(
       `<meta property="og:image" content="${escapeHtml(absUrl(img, siteOrigin))}">`
-    );
-  lines.push(`<link rel="canonical" href="${escapeHtml(url)}">`);
-  return lines.join("\n");
+    )
+  lines.push(`<link rel="canonical" href="${escapeHtml(url)}">`)
+  return lines.join("\n")
 }
 
 // Home › Links › <title>; pass currentTitle=null on the index page itself.
-export function crumbsHtml(currentTitle) {
-  const trail = [{ label: "Home", href: "/" }];
-  let current = "Links";
+export const crumbsHtml = (currentTitle) => {
+  const trail = [{ label: "Home", href: "/" }]
+  let current = "Links"
   if (currentTitle !== null) {
-    trail.push({ label: "Links", href: "/links/" });
-    current = currentTitle;
+    trail.push({ label: "Links", href: "/links/" })
+    current = currentTitle
   }
-  return buildCrumbs([...trail, { label: current }]);
+  return buildCrumbs([...trail, { label: current }])
 }
 
 /* The site footer, in two parts — now two separate elements.
@@ -357,9 +357,9 @@ export function crumbsHtml(currentTitle) {
  */
 // The canonical identity string and the footer/crumb/banner helpers now live in
 // the shared chrome module (_build/chrome.js), sourced from footer.json.
-export const SITE_FOOTER_ID = FOOTER.id;
+export const SITE_FOOTER_ID = FOOTER.id
 
-export function pageShell({ pageTitle, og, crumbs, body, footerNote }, css) {
+export const pageShell = ({ pageTitle, og, crumbs, body, footerNote }, css) => {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -379,45 +379,45 @@ ${body}
 ${pageNoteHtml(footerNote)}
 ${siteFooterBarHtml()}
 </body>
-</html>`;
+</html>`
 }
 
-function metaLineHtml(doc) {
-  const bits = [];
-  if (doc.date) bits.push(escapeHtml(doc.date));
+const metaLineHtml = (doc) => {
+  const bits = []
+  if (doc.date) bits.push(escapeHtml(doc.date))
   if (doc.archived)
-    bits.push(`<a href="${escapeHtml(doc.archived)}">archived copy</a>`);
+    bits.push(`<a href="${escapeHtml(doc.archived)}">archived copy</a>`)
   return bits.length
     ? `\n  <p class="link-card-meta">${bits.join(" · ")}</p>`
-    : "";
+    : ""
 }
 
 // The card for a leaf doc, both on its own page and inlined in lists. Only
 // the first occurrence per page carries the fragment id (withFragment).
-export function leafCardHtml(doc, withFragment) {
-  const idAttr = withFragment ? ` id="link-${doc.id}"` : "";
+export const leafCardHtml = (doc, withFragment) => {
+  const idAttr = withFragment ? ` id="link-${doc.id}"` : ""
   const mark = EXT_RE.test(doc.url)
     ? `<span class="ext-mark" title="external link">&#8599;</span>`
-    : "";
+    : ""
   return `<div class="link-card"${idAttr}>
   <div class="link-card-title"><a href="${escapeHtml(doc.url)}">${escapeHtml(doc.title)}</a>${mark}</div>
   <p class="link-card-desc">${escapeHtml(doc.description)}</p>${metaLineHtml(doc)}
-</div>`;
+</div>`
 }
 
 // The card for a list doc referenced from another page: links to the list's
 // own page instead of inlining its contents (the no-nesting rule).
-export function listRefCardHtml(doc, withFragment) {
-  const idAttr = withFragment ? ` id="link-${doc.id}"` : "";
+export const listRefCardHtml = (doc, withFragment) => {
+  const idAttr = withFragment ? ` id="link-${doc.id}"` : ""
   return `<div class="link-card"${idAttr}>
   <div class="link-card-title"><a href="/links/${doc.id}/">${escapeHtml(doc.title)}</a></div>
   <p class="link-card-desc">${escapeHtml(doc.description)}</p>
-</div>`;
+</div>`
 }
 
-export function renderLeafPage(doc, ctx) {
+export const renderLeafPage = (doc, ctx) => {
   const body =
-    `<p class="section-label">Source</p>\n` + leafCardHtml(doc, true);
+    `<p class="section-label">Source</p>\n` + leafCardHtml(doc, true)
   return pageShell(
     {
       pageTitle: `${doc.title} — andoverct.info`,
@@ -434,26 +434,26 @@ export function renderLeafPage(doc, ctx) {
       body,
     },
     ctx.css
-  );
+  )
 }
 
-export function renderListPage(doc, docs, ctx) {
-  const seen = new Set();
+export const renderListPage = (doc, docs, ctx) => {
+  const seen = new Set()
   let body =
     `<h1 class="report-title">${escapeHtml(doc.title)}</h1>\n` +
     `<p class="report-subtitle">${escapeHtml(doc.description)}</p>\n` +
-    `<hr class="report-header-rule">\n`;
+    `<hr class="report-header-rule">\n`
   for (const g of doc.groups) {
-    if (g.title) body += `<h2>${escapeHtml(g.title)}</h2>\n`;
-    if (g.description) body += `<p class="link-group-desc">${escapeHtml(g.description)}</p>\n`;
+    if (g.title) body += `<h2>${escapeHtml(g.title)}</h2>\n`
+    if (g.description) body += `<p class="link-group-desc">${escapeHtml(g.description)}</p>\n`
     for (const ref of g.links) {
-      const target = docs.get(ref);
-      const withFragment = !seen.has(ref);
-      seen.add(ref);
+      const target = docs.get(ref)
+      const withFragment = !seen.has(ref)
+      seen.add(ref)
       body +=
         (target.kind === "leaf"
           ? leafCardHtml(target, withFragment)
-          : listRefCardHtml(target, withFragment)) + "\n";
+          : listRefCardHtml(target, withFragment)) + "\n"
     }
   }
   return pageShell(
@@ -472,25 +472,25 @@ export function renderListPage(doc, docs, ctx) {
       body,
     },
     ctx.css
-  );
+  )
 }
 
-export function renderIndexPage(docs, ctx) {
+export const renderIndexPage = (docs, ctx) => {
   const byId = (a, b) =>
     /^\d+$/.test(a.id) && /^\d+$/.test(b.id)
       ? Number(a.id) - Number(b.id)
-      : a.id.localeCompare(b.id);
-  const all = [...docs.values()];
-  const lists = all.filter((d) => d.kind === "list").sort(byId);
-  const leaves = all.filter((d) => d.kind === "leaf");
-  const plural = (n, w) => `${n} ${w}${n === 1 ? "" : "s"}`;
-  const description = "Sources referenced in andoverct.info posts and campaigns.";
+      : a.id.localeCompare(b.id)
+  const all = [...docs.values()]
+  const lists = all.filter((d) => d.kind === "list").sort(byId)
+  const leaves = all.filter((d) => d.kind === "leaf")
+  const plural = (n, w) => `${n} ${w}${n === 1 ? "" : "s"}`
+  const description = "Sources referenced in andoverct.info posts and campaigns."
   const body =
     `<h1 class="report-title">Link registry</h1>\n` +
     `<p class="report-subtitle">${escapeHtml(description)}</p>\n` +
     `<hr class="report-header-rule">\n` +
     lists.map((d) => listRefCardHtml(d, false)).join("\n") +
-    `\n<p class="links-count">${plural(lists.length, "collection")} · ${plural(leaves.length, "source")}</p>`;
+    `\n<p class="links-count">${plural(lists.length, "collection")} · ${plural(leaves.length, "source")}</p>`
   return pageShell(
     {
       pageTitle: "Link registry — andoverct.info",
@@ -499,7 +499,7 @@ export function renderIndexPage(docs, ctx) {
       body,
     },
     ctx.css
-  );
+  )
 }
 
 // ---------------------------------------------------------------------------
@@ -508,54 +508,54 @@ export function renderIndexPage(docs, ctx) {
 // rendering into staging trees must never prune)
 // ---------------------------------------------------------------------------
 
-function main() {
-  const config = loadConfig();
+const main = () => {
+  const config = loadConfig()
   if (!config.siteOrigin)
     throw new Error(
       `_build/report.config.json must define "siteOrigin" (e.g. "https://andoverct.info")`
-    );
+    )
   const css =
-    loadTheme(config.theme || "default") + "\n" + BASE_CSS + LINKS_CSS;
+    loadTheme(config.theme || "default") + "\n" + BASE_CSS + LINKS_CSS
   const ctx = {
     siteOrigin: config.siteOrigin.replace(/\/+$/, ""),
     defaultOgImage: config.defaultOgImage,
     css,
-  };
+  }
 
-  const { docs, errors } = loadDocsFrom(SRC_DIR);
+  const { docs, errors } = loadDocsFrom(SRC_DIR)
   if (errors.length) {
-    for (const e of errors) console.error(`ERROR ${e}`);
-    process.exit(1);
+    for (const e of errors) console.error(`ERROR ${e}`)
+    process.exit(1)
   }
 
   for (const [id, doc] of docs) {
     const html =
       doc.kind === "leaf"
         ? renderLeafPage(doc, ctx)
-        : renderListPage(doc, docs, ctx);
-    mkdirSync(join(OUT_DIR, id), { recursive: true });
-    writeFileSync(join(OUT_DIR, id, "index.html"), html, "utf8");
-    console.log(`wrote links/${id}/index.html (${html.length} chars)`);
+        : renderListPage(doc, docs, ctx)
+    mkdirSync(join(OUT_DIR, id), { recursive: true })
+    writeFileSync(join(OUT_DIR, id, "index.html"), html, "utf8")
+    console.log(`wrote links/${id}/index.html (${html.length} chars)`)
   }
 
-  const idx = renderIndexPage(docs, ctx);
-  writeFileSync(join(OUT_DIR, "index.html"), idx, "utf8");
-  console.log(`wrote links/index.html (${idx.length} chars)`);
+  const idx = renderIndexPage(docs, ctx)
+  writeFileSync(join(OUT_DIR, "index.html"), idx, "utf8")
+  console.log(`wrote links/index.html (${idx.length} chars)`)
 
   // Prune output dirs whose source is gone, so the local tree stays canonical.
   // Only dirs that contain exactly our own output are touched.
   for (const entry of readdirSync(OUT_DIR, { withFileTypes: true })) {
-    if (!entry.isDirectory()) continue;
-    const name = entry.name;
-    if (name === "_src" || docs.has(name) || !ID_RE.test(name)) continue;
-    const contents = readdirSync(join(OUT_DIR, name));
+    if (!entry.isDirectory()) continue
+    const name = entry.name
+    if (name === "_src" || docs.has(name) || !ID_RE.test(name)) continue
+    const contents = readdirSync(join(OUT_DIR, name))
     if (contents.length === 1 && contents[0] === "index.html") {
-      rmSync(join(OUT_DIR, name), { recursive: true });
-      console.log(`pruned links/${name}/`);
+      rmSync(join(OUT_DIR, name), { recursive: true })
+      console.log(`pruned links/${name}/`)
     } else {
       console.warn(
         `WARNING links/${name}/ has no source but holds unexpected files; not pruned`
-      );
+      )
     }
   }
 }
@@ -563,13 +563,13 @@ function main() {
 // Run the CLI only when executed directly (node _build/links.mjs), never on
 // import.
 const isMain =
-  process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href;
+  process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href
 
 if (isMain) {
   try {
-    main();
+    main()
   } catch (err) {
-    console.error(err.message);
-    process.exit(1);
+    console.error(err.message)
+    process.exit(1)
   }
 }

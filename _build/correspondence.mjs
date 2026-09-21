@@ -42,25 +42,25 @@
 
 import {
   readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, rmSync,
-} from "node:fs";
-import { join, resolve, basename } from "node:path";
-import { createRequire } from "node:module";
-import { load as parseYaml } from "js-yaml";
+} from "node:fs"
+import { join, resolve, basename } from "node:path"
+import { createRequire } from "node:module"
+import { load as parseYaml } from "js-yaml"
 
-const require = createRequire(import.meta.url);
+const require = createRequire(import.meta.url)
 const {
   escapeHtml, crumbs: buildCrumbs, banner: pageBanner,
   pageNoteHtml, siteFooterBarHtml, SEP,
-} = require("./chrome.js");
+} = require("./chrome.js")
 
-const HERE = import.meta.dirname;
-const ROOT = resolve(HERE, "..");
+const HERE = import.meta.dirname
+const ROOT = resolve(HERE, "..")
 
-const ID_RE = /^[0-9]{4}-[0-9]{2}-[0-9]{2}-[a-z0-9]+-[a-z0-9]+(?:-[0-9]+)?$/;
-const DATE_RE = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
-const TIME_RE = /^[0-9]{2}:[0-9]{2}$/;
+const ID_RE = /^[0-9]{4}-[0-9]{2}-[0-9]{2}-[a-z0-9]+-[a-z0-9]+(?:-[0-9]+)?$/
+const DATE_RE = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/
+const TIME_RE = /^[0-9]{2}:[0-9]{2}$/
 
-const KINDS = new Set(["email-sent", "email-received", "public", "press"]);
+const KINDS = new Set(["email-sent", "email-received", "public", "press"])
 
 // Part 3 of the report defines exactly these as answers. "No response" is NOT
 // an entry status — it is a ledger state computed from the absence of one — so
@@ -71,21 +71,21 @@ const KINDS = new Set(["email-sent", "email-received", "public", "press"]);
 // the nearest label, Deflection, would have misdescribed a direct answer. The
 // scale was published before any reply arrived, so a change to it is itself
 // disclosed in Part 3 rather than made quietly here.
-const STATUSES = ["Disavowal", "Criticism", "Deflection", "Refusal", "Support"];
+const STATUSES = ["Disavowal", "Criticism", "Deflection", "Refusal", "Support"]
 
 // The six headers doing evidentiary work (HANDOFF-correspondence.md). Everything
 // else in a raw header block is dropped: Received carries originating IPs, and
 // spam scores characterize a sender, which nothing in this tree may do.
-const PUBLIC_HEADERS = ["From", "To", "Cc", "Date", "Subject", "Message-ID", "DKIM-Signature"];
+const PUBLIC_HEADERS = ["From", "To", "Cc", "Date", "Subject", "Message-ID", "DKIM-Signature"]
 
 // Small counts read better as words in running prose.
-function numberWord(n) {
-  return ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"][n] ?? String(n);
+const numberWord = (n) => {
+  return ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"][n] ?? String(n)
 }
 
 
 // Same-day ties break by the report's ledger order so builds are stable.
-const LEDGER = ["fazio", "austin", "jennings", "guidone", "weir"];
+const LEDGER = ["fazio", "austin", "jennings", "guidone", "weir"]
 
 const CANDIDATE_NAMES = {
   fazio: "Ryan Fazio",
@@ -93,85 +93,85 @@ const CANDIDATE_NAMES = {
   jennings: "Jenn Jennings",
   guidone: "Jason Guidone",
   weir: "Steve Weir",
-};
+}
 
 // ---------------------------------------------------------------------------
 // Error collection — every failure is reported before exiting, links.mjs style
 // ---------------------------------------------------------------------------
 
-const errors = [];
-const err = (file, msg) => errors.push(`${file}: ${msg}`);
+const errors = []
+const err = (file, msg) => errors.push(`${file}: ${msg}`)
 
 // ---------------------------------------------------------------------------
 // Loading + validation
 // ---------------------------------------------------------------------------
 
-function loadEntries(srcDir) {
-  if (!existsSync(srcDir)) return [];
-  const entries = [];
+const loadEntries = (srcDir) => {
+  if (!existsSync(srcDir)) return []
+  const entries = []
   for (const name of readdirSync(srcDir).sort()) {
-    if (!/\.ya?ml$/.test(name)) continue;
-    const file = `_src/${name}`;
-    const stem = name.replace(/\.ya?ml$/, "");
-    let doc;
+    if (!/\.ya?ml$/.test(name)) continue
+    const file = `_src/${name}`
+    const stem = name.replace(/\.ya?ml$/, "")
+    let doc
     try {
-      doc = parseYaml(readFileSync(join(srcDir, name), "utf8"));
+      doc = parseYaml(readFileSync(join(srcDir, name), "utf8"))
     } catch (e) {
-      err(file, `YAML parse failed — ${e.message}`);
-      continue;
+      err(file, `YAML parse failed — ${e.message}`)
+      continue
     }
     if (!doc || typeof doc !== "object") {
-      err(file, "empty or not a mapping");
-      continue;
+      err(file, "empty or not a mapping")
+      continue
     }
     if (doc.id && doc.id !== stem) {
-      err(file, `id "${doc.id}" does not match filename stem "${stem}"`);
+      err(file, `id "${doc.id}" does not match filename stem "${stem}"`)
     }
     if (!ID_RE.test(stem)) {
-      err(file, `filename must be <YYYY-MM-DD>-<from>-<to>[-N], lowercase; got "${stem}"`);
+      err(file, `filename must be <YYYY-MM-DD>-<from>-<to>[-N], lowercase; got "${stem}"`)
     }
-    entries.push({ ...doc, id: stem, _file: file });
+    entries.push({ ...doc, id: stem, _file: file })
   }
-  return entries;
+  return entries
 }
 
-function validate(entry, dir) {
-  const f = entry._file;
+const validate = (entry, dir) => {
+  const f = entry._file
 
   if (!DATE_RE.test(entry.date || "")) {
-    err(f, `date must be YYYY-MM-DD; got ${JSON.stringify(entry.date)}`);
+    err(f, `date must be YYYY-MM-DD; got ${JSON.stringify(entry.date)}`)
   } else if (Number.isNaN(Date.parse(entry.date))) {
-    err(f, `date "${entry.date}" is not a real date`);
+    err(f, `date "${entry.date}" is not a real date`)
   }
   if (entry.time != null && !TIME_RE.test(entry.time)) {
-    err(f, `time must be HH:MM (quoted); got ${JSON.stringify(entry.time)}`);
+    err(f, `time must be HH:MM (quoted); got ${JSON.stringify(entry.time)}`)
   }
   if (!KINDS.has(entry.kind)) {
-    err(f, `kind must be one of ${[...KINDS].join(", ")}; got ${JSON.stringify(entry.kind)}`);
+    err(f, `kind must be one of ${[...KINDS].join(", ")}; got ${JSON.stringify(entry.kind)}`)
   }
   for (const k of ["from", "to", "title"]) {
-    if (!entry[k] || typeof entry[k] !== "string") err(f, `${k} is required`);
+    if (!entry[k] || typeof entry[k] !== "string") err(f, `${k} is required`)
   }
   if (entry.candidate != null && !CANDIDATE_NAMES[entry.candidate]) {
-    err(f, `candidate must be one of ${Object.keys(CANDIDATE_NAMES).join(", ")}; got ${JSON.stringify(entry.candidate)}`);
+    err(f, `candidate must be one of ${Object.keys(CANDIDATE_NAMES).join(", ")}; got ${JSON.stringify(entry.candidate)}`)
   }
   if (entry.status != null && !STATUSES.includes(entry.status)) {
     err(f, `status must be exactly one of ${STATUSES.join(" / ")} — the words Part 3 defines. `
-      + `"No response" is a ledger state, not an entry status. Got ${JSON.stringify(entry.status)}`);
+      + `"No response" is a ledger state, not an entry status. Got ${JSON.stringify(entry.status)}`)
   }
   if (entry.status && !entry.candidate) {
-    err(f, "status is set but candidate is not — a classified answer must attach to a ledger row");
+    err(f, "status is set but candidate is not — a classified answer must attach to a ledger row")
   }
 
   // Body: the reading view.
   if (!entry.body) {
-    err(f, "body is required (the message file inside the entry directory)");
+    err(f, "body is required (the message file inside the entry directory)")
   } else if (!existsSync(join(dir, entry.id, entry.body))) {
-    err(f, `body file not found: ${entry.id}/${entry.body}`);
+    err(f, `body file not found: ${entry.id}/${entry.body}`)
   }
 
-  const src = entry.source || {};
-  const gaps = Array.isArray(entry.gaps) ? entry.gaps : [];
+  const src = entry.source || {}
+  const gaps = Array.isArray(entry.gaps) ? entry.gaps : []
 
   // Received mail must have headers or a stated reason: the evidentiary question
   // about a reply is whether it really came from the candidate, and that is what
@@ -179,27 +179,27 @@ function validate(entry, dir) {
   // text is the primary record, and headers add little a reader can act on. So
   // they are welcome on a sent entry but not demanded.
   if (entry.kind === "email-received") {
-    const rawPath = join(dir, "_raw", `${entry.id}.headers.txt`);
+    const rawPath = join(dir, "_raw", `${entry.id}.headers.txt`)
     if (!existsSync(rawPath) && !gaps.length) {
       err(f, `no _raw/${entry.id}.headers.txt and no gaps: entry explaining why. `
-        + "A missing source must be visible to the reader, not a hole they cannot see.");
+        + "A missing source must be visible to the reader, not a hole they cannot see.")
     }
   }
 
   // Anything published online: the URL is mandatory, and a missing archive or
   // screenshot must be declared rather than simply absent.
   if (entry.kind === "public" || entry.kind === "press") {
-    if (!src.url && !src.pdf) err(f, `kind "${entry.kind}" requires source.url (or source.pdf for a paper)`);
+    if (!src.url && !src.pdf) err(f, `kind "${entry.kind}" requires source.url (or source.pdf for a paper)`)
     for (const want of ["archive", "screenshot"]) {
       if (!src[want] && !gaps.length) {
-        err(f, `no source.${want} and no gaps: entry explaining why`);
+        err(f, `no source.${want} and no gaps: entry explaining why`)
       }
     }
   }
 
   for (const key of ["screenshot", "pdf"]) {
     if (src[key] && !existsSync(join(dir, entry.id, src[key]))) {
-      err(f, `source.${key} not found: ${entry.id}/${src[key]}`);
+      err(f, `source.${key} not found: ${entry.id}/${src[key]}`)
     }
   }
 
@@ -207,20 +207,20 @@ function validate(entry, dir) {
   // banner, a flyer, a photograph the sender chose to include. It is published
   // because "in full and unedited" covers what a correspondent sends, not only
   // the words; source.screenshot is a different thing and stays a link.
-  const enc = entry.enclosure;
+  const enc = entry.enclosure
   if (enc != null) {
     if (typeof enc !== "object" || Array.isArray(enc)) {
-      err(f, "enclosure must be a mapping with file, alt, and optionally original and caption");
+      err(f, "enclosure must be a mapping with file, alt, and optionally original and caption")
     } else {
       for (const k of ["file", "alt"]) {
-        if (!enc[k] || typeof enc[k] !== "string") err(f, `enclosure.${k} is required`);
+        if (!enc[k] || typeof enc[k] !== "string") err(f, `enclosure.${k} is required`)
       }
       // alt text is not optional here. The image carries words a reader using a
       // screen reader would otherwise lose entirely, and those words are the
       // candidate's own.
       for (const k of ["file", "original"]) {
         if (enc[k] && !existsSync(join(dir, entry.id, enc[k]))) {
-          err(f, `enclosure.${k} not found: ${entry.id}/${enc[k]}`);
+          err(f, `enclosure.${k} not found: ${entry.id}/${enc[k]}`)
         }
       }
     }
@@ -236,24 +236,24 @@ function validate(entry, dir) {
  * folded continuation lines (DKIM-Signature is always folded). Returns the
  * reduced block plus the names withheld, so the page can say what it dropped.
  */
-export function reduceHeaders(raw) {
-  const kept = [];
-  const withheld = new Set();
-  let keeping = false;
+export const reduceHeaders = (raw) => {
+  const kept = []
+  const withheld = new Set()
+  let keeping = false
 
   for (const line of raw.split(/\r?\n/)) {
     if (/^[ \t]/.test(line)) {
       if (keeping) kept.push(line); // folded continuation of a kept header
-      continue;
+      continue
     }
-    const m = /^([A-Za-z0-9-]+):/.exec(line);
-    if (!m) { keeping = false; continue; }
-    const name = m[1];
-    keeping = PUBLIC_HEADERS.some((h) => h.toLowerCase() === name.toLowerCase());
-    if (keeping) kept.push(line);
-    else withheld.add(name);
+    const m = /^([A-Za-z0-9-]+):/.exec(line)
+    if (!m) { keeping = false; continue }
+    const name = m[1]
+    keeping = PUBLIC_HEADERS.some((h) => h.toLowerCase() === name.toLowerCase())
+    if (keeping) kept.push(line)
+    else withheld.add(name)
   }
-  return { text: kept.join("\n"), withheld: [...withheld].sort() };
+  return { text: kept.join("\n"), withheld: [...withheld].sort() }
 }
 
 /*
@@ -265,28 +265,28 @@ export function reduceHeaders(raw) {
  * This is typesetting, not editing: `letter.txt` is published alongside and
  * stays byte-exact as sent, so the unmodified text is always one click away.
  */
-export function reflow(text) {
-  const out = [];
-  let para = [];
-  const flush = () => { if (para.length) { out.push(para.join(" ")); para = []; } };
+export const reflow = (text) => {
+  const out = []
+  let para = []
+  const flush = () => { if (para.length) { out.push(para.join(" ")); para = []; } }
 
   for (const line of text.split("\n")) {
-    const t = line.trim();
-    const isHeader = /^(To|Cc|Bcc|From|Subject|Date|Message-ID):/i.test(t);
+    const t = line.trim()
+    const isHeader = /^(To|Cc|Bcc|From|Subject|Date|Message-ID):/i.test(t)
     // A line well short of the wrap column ended a paragraph on purpose.
-    const isShort = t.length > 0 && t.length < 45;
+    const isShort = t.length > 0 && t.length < 45
     if (!t || isHeader || /^\s/.test(line)) {
-      flush();
-      out.push(line);
+      flush()
+      out.push(line)
     } else if (isShort) {
-      para.push(t);
-      flush();
+      para.push(t)
+      flush()
     } else {
-      para.push(t);
+      para.push(t)
     }
   }
-  flush();
-  return out.join("\n");
+  flush()
+  return out.join("\n")
 }
 
 // ---------------------------------------------------------------------------
@@ -297,28 +297,28 @@ export function reflow(text) {
  * Reverse chronological, newest first. Sorts on the entry's own date field
  * rather than the directory name so a corrected date reorders correctly.
  */
-function byNewest(a, b) {
-  if (a.date !== b.date) return a.date < b.date ? 1 : -1;
-  const at = a.time || "", bt = b.time || "";
-  if (at !== bt) return at < bt ? 1 : -1;
-  const ai = LEDGER.indexOf(a.candidate), bi = LEDGER.indexOf(b.candidate);
-  return (ai < 0 ? 99 : ai) - (bi < 0 ? 99 : bi);
+const byNewest = (a, b) => {
+  if (a.date !== b.date) return a.date < b.date ? 1 : -1
+  const at = a.time || "", bt = b.time || ""
+  if (at !== bt) return at < bt ? 1 : -1
+  const ai = LEDGER.indexOf(a.candidate), bi = LEDGER.indexOf(b.candidate)
+  return (ai < 0 ? 99 : ai) - (bi < 0 ? 99 : bi)
 }
 
 // The correspondence index reads oldest first: it is the archive of an
 // exchange, and an exchange is followed forwards. correspondence.json stays
 // newest-first, because the report's log is a feed of what is new.
-function byOldest(x, y) {
-  if (x.date !== y.date) return x.date < y.date ? -1 : 1;
-  const xt = x.time || "", yt = y.time || "";
-  if (xt !== yt) return xt < yt ? -1 : 1;
+const byOldest = (x, y) => {
+  if (x.date !== y.date) return x.date < y.date ? -1 : 1
+  const xt = x.time || "", yt = y.time || ""
+  if (xt !== yt) return xt < yt ? -1 : 1
   // Not simply -byNewest: that would invert the tie-break too, and the four
   // letters sent in the same minute would list backwards through the ledger.
-  return ledgerOrder(x, y);
+  return ledgerOrder(x, y)
 }
 
-function ledgerOrder(a, b) {
-  return LEDGER.indexOf(a.candidate) - LEDGER.indexOf(b.candidate);
+const ledgerOrder = (a, b) => {
+  return LEDGER.indexOf(a.candidate) - LEDGER.indexOf(b.candidate)
 }
 
 // ---------------------------------------------------------------------------
@@ -326,11 +326,11 @@ function ledgerOrder(a, b) {
 // ---------------------------------------------------------------------------
 
 const MONTHS = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"];
+  "July", "August", "September", "October", "November", "December"]
 
-export function longDate(iso) {
-  const [y, m, d] = iso.split("-").map(Number);
-  return `${MONTHS[m - 1]} ${d}, ${y}`;
+export const longDate = (iso) => {
+  const [y, m, d] = iso.split("-").map(Number)
+  return `${MONTHS[m - 1]} ${d}, ${y}`
 }
 
 /*
@@ -339,18 +339,18 @@ export function longDate(iso) {
  * raw headers, and what a reader wants from this column is the order of events
  * and whether a reply came back in an hour or a week.
  */
-export function clockTime(hhmm) {
-  if (!hhmm) return "";
-  const [h, m] = hhmm.split(":").map(Number);
-  const suffix = h < 12 ? "am" : "pm";
-  const hour = h % 12 === 0 ? 12 : h % 12;
-  return `${hour}:${String(m).padStart(2, "0")} ${suffix}`;
+export const clockTime = (hhmm) => {
+  if (!hhmm) return ""
+  const [h, m] = hhmm.split(":").map(Number)
+  const suffix = h < 12 ? "am" : "pm"
+  const hour = h % 12 === 0 ? 12 : h % 12
+  return `${hour}:${String(m).padStart(2, "0")} ${suffix}`
 }
 
 // Date and time as one stamp. time is optional, so this degrades to the date.
-export function stamp(e) {
-  const t = clockTime(e.time);
-  return t ? `${longDate(e.date)}, ${t}` : longDate(e.date);
+export const stamp = (e) => {
+  const t = clockTime(e.time)
+  return t ? `${longDate(e.date)}, ${t}` : longDate(e.date)
 }
 
 // ---------------------------------------------------------------------------
@@ -363,22 +363,22 @@ export function stamp(e) {
  * resolving, so every path ever built is recorded and its disappearance is a
  * build error rather than a 404 a reader finds first.
  */
-function checkPublishedPaths(dir, ids) {
-  const file = join(dir, "published-paths.json");
-  const prev = existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : { paths: [] };
-  const known = new Set(prev.paths || []);
-  const now = new Set(ids);
+const checkPublishedPaths = (dir, ids) => {
+  const file = join(dir, "published-paths.json")
+  const prev = existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : { paths: [] }
+  const known = new Set(prev.paths || [])
+  const now = new Set(ids)
 
   for (const p of known) {
     if (!now.has(p)) {
       errors.push(`published-paths.json: "${p}" has been published and is cited by path, `
         + "but no _src entry produces it any more. Restore the entry or, if it truly "
-        + "never shipped, remove it from published-paths.json by hand.");
+        + "never shipped, remove it from published-paths.json by hand.")
     }
   }
-  const merged = [...new Set([...known, ...now])].sort();
-  writeFileSync(file, JSON.stringify({ paths: merged }, null, 2) + "\n", "utf8");
-  return merged;
+  const merged = [...new Set([...known, ...now])].sort()
+  writeFileSync(file, JSON.stringify({ paths: merged }, null, 2) + "\n", "utf8")
+  return merged
 }
 
 // ---------------------------------------------------------------------------
@@ -425,9 +425,9 @@ figure.enclosure figcaption {
 .entry-list th { background: #f5f2e8; font-weight: 600; }
 .entry-list td.date { white-space: nowrap; }
 .pinned { color: #5a5348; font-size: .92rem; }
-`;
+`
 
-function shell({ title, crumbsHtml, body, note, baseCss, themeCss, noindex }) {
+const shell = ({ title, crumbsHtml, body, note, baseCss, themeCss, noindex }) => {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -446,82 +446,82 @@ ${pageNoteHtml(note)}
 </main>
 ${siteFooterBarHtml()}
 </body>
-</html>`;
+</html>`
 }
 
-function gapsHtml(gaps) {
-  if (!gaps || !gaps.length) return "";
+const gapsHtml = (gaps) => {
+  if (!gaps || !gaps.length) return ""
   return `<div class="gaps"><strong>What is missing from this entry</strong>\n<ul>`
     + gaps.map((g) => `<li>${escapeHtml(g)}</li>`).join("\n")
-    + `</ul></div>`;
+    + `</ul></div>`
 }
 
-function sourceHtml(entry, dir) {
-  const src = entry.source || {};
-  const parts = [];
+const sourceHtml = (entry, dir) => {
+  const src = entry.source || {}
+  const parts = []
 
   if (entry.kind.startsWith("email")) {
-    const rawPath = join(dir, "_raw", `${entry.id}.headers.txt`);
+    const rawPath = join(dir, "_raw", `${entry.id}.headers.txt`)
     if (existsSync(rawPath)) {
-      const { text, withheld } = reduceHeaders(readFileSync(rawPath, "utf8"));
-      parts.push(`<pre>${escapeHtml(text)}</pre>`);
+      const { text, withheld } = reduceHeaders(readFileSync(rawPath, "utf8"))
+      parts.push(`<pre>${escapeHtml(text)}</pre>`)
       const note = withheld.length
         ? `The headers doing evidentiary work are shown. ${withheld.length} other header `
           + `${withheld.length === 1 ? "field was" : "fields were"} withheld — routing records, `
           + "which carry originating IP addresses, and spam-filter scores, which characterize a "
           + "sender. The full block is retained and will be produced if the authenticity of this "
           + "message is disputed."
-        : "";
-      if (note) parts.push(`<p class="withheld">${note}</p>`);
+        : ""
+      if (note) parts.push(`<p class="withheld">${note}</p>`)
       parts.push(`<p class="withheld"><em>A DKIM signature is strong evidence that a message `
         + `arrived as sent, not proof: verifying one needs the body byte-exact and the sending `
-        + `domain's key still published, and campaign keys rotate.</em></p>`);
+        + `domain's key still published, and campaign keys rotate.</em></p>`)
     }
   }
 
-  const links = [];
-  if (src.url) links.push(`<a href="${escapeHtml(src.url)}">Original</a>`);
-  if (src.archive) links.push(`<a href="${escapeHtml(src.archive)}">Archived copy</a>`);
-  if (src.screenshot) links.push(`<a href="${escapeHtml(src.screenshot)}">Screenshot</a>`);
-  if (src.pdf) links.push(`<a href="${escapeHtml(src.pdf)}">PDF</a>`);
-  if (links.length) parts.push(`<p>${links.join(" · ")}</p>`);
+  const links = []
+  if (src.url) links.push(`<a href="${escapeHtml(src.url)}">Original</a>`)
+  if (src.archive) links.push(`<a href="${escapeHtml(src.archive)}">Archived copy</a>`)
+  if (src.screenshot) links.push(`<a href="${escapeHtml(src.screenshot)}">Screenshot</a>`)
+  if (src.pdf) links.push(`<a href="${escapeHtml(src.pdf)}">PDF</a>`)
+  if (links.length) parts.push(`<p>${links.join(" · ")}</p>`)
 
-  if (!parts.length) return "";
-  return `<details class="source">\n<summary>Source</summary>\n${parts.join("\n")}\n</details>`;
+  if (!parts.length) return ""
+  return `<details class="source">\n<summary>Source</summary>\n${parts.join("\n")}\n</details>`
 }
 
-function enclosureHtml(entry) {
-  const enc = entry.enclosure;
-  if (!enc) return "";
-  const img = `<img src="${escapeHtml(enc.file)}" alt="${escapeHtml(enc.alt)}">`;
+const enclosureHtml = (entry) => {
+  const enc = entry.enclosure
+  if (!enc) return ""
+  const img = `<img src="${escapeHtml(enc.file)}" alt="${escapeHtml(enc.alt)}">`
   const framed = enc.original
     ? `<a href="${escapeHtml(enc.original)}">${img}</a>`
-    : img;
-  const caption = enc.caption ? `<figcaption>${escapeHtml(enc.caption)}</figcaption>` : "";
+    : img
+  const caption = enc.caption ? `<figcaption>${escapeHtml(enc.caption)}</figcaption>` : ""
   return `<figure class="enclosure">
 ${framed}
 ${caption}
-</figure>`;
+</figure>`
 }
 
-function entryPage(entry, dir, ctx) {
-  const bodyText = readFileSync(join(dir, entry.id, entry.body), "utf8");
+const entryPage = (entry, dir, ctx) => {
+  const bodyText = readFileSync(join(dir, entry.id, entry.body), "utf8")
   const crumbsHtml = buildCrumbs([
     ...ctx.trail,
     { label: "Correspondence", href: ctx.correspondenceUrl },
     { label: entry.title },
-  ]);
+  ])
 
   const kindLabel = {
     "email-sent": "Email sent", "email-received": "Email received",
     public: "Published statement", press: "Newspaper",
-  }[entry.kind];
+  }[entry.kind]
 
   const meta = [
     `<span class="kind">${escapeHtml(kindLabel)}</span>`,
     escapeHtml(stamp(entry)),
     entry.status ? `Classified as <strong>${escapeHtml(entry.status)}</strong>` : "",
-  ].filter(Boolean).join(" &middot; ");
+  ].filter(Boolean).join(" &middot; ")
 
   const body = [
     `<h1>${escapeHtml(entry.title)}</h1>`,
@@ -531,41 +531,41 @@ function entryPage(entry, dir, ctx) {
     enclosureHtml(entry),
     sourceHtml(entry, dir),
     `<p><a href="${ctx.correspondenceUrl}">&larr; All correspondence</a></p>`,
-  ].filter(Boolean).join("\n");
+  ].filter(Boolean).join("\n")
 
   return shell({
     title: `${entry.title} — ${ctx.reportTitle}`,
     crumbsHtml, body, note: ctx.note,
     baseCss: ctx.baseCss, themeCss: ctx.themeCss, noindex: ctx.noindex,
-  });
+  })
 }
 
-function indexPage(entries, ctx) {
-  const crumbsHtml = buildCrumbs([...ctx.trail, { label: "Correspondence" }]);
+const indexPage = (entries, ctx) => {
+  const crumbsHtml = buildCrumbs([...ctx.trail, { label: "Correspondence" }])
 
   // One list, oldest first, with the opening letters at the top of it where
   // they fall chronologically rather than pinned in a section of their own.
-  const all = [...entries].sort(byOldest);
-  const opening = entries.filter((e) => e.opening);
+  const all = [...entries].sort(byOldest)
+  const opening = entries.filter((e) => e.opening)
 
   // Counted from the entries, not written in: the page began with four letters
   // on one day and gained a fifth the next, and hard-coded prose went stale.
-  const openingDates = [...new Set(opening.map((e) => e.date))].sort();
-  const count = numberWord(opening.length);
-  const sameDay = openingDates.length === 1;
+  const openingDates = [...new Set(opening.map((e) => e.date))].sort()
+  const count = numberWord(opening.length)
+  const sameDay = openingDates.length === 1
 
   const row = (e) => `<tr>
   <td class="date">${escapeHtml(stamp(e))}</td>
   <td><a href="${e.id}/">${escapeHtml(e.title)}</a>${e.summary ? `<br><span class="pinned">${escapeHtml(e.summary)}</span>` : ""}</td>
   <td>${escapeHtml(e.status || "—")}</td>
-</tr>`;
+</tr>`
 
   const table = (rows) => `<table class="entry-list">
 <thead><tr><th>Date</th><th>Item</th><th>Classification</th></tr></thead>
 <tbody>
 ${rows.map(row).join("\n")}
 </tbody>
-</table>`;
+</table>`
 
   const body = [
     `<h1>Correspondence</h1>`,
@@ -582,13 +582,13 @@ ${rows.map(row).join("\n")}
     `<p class="pinned">Complete as of ${escapeHtml(longDate(ctx.asOf))}. Anything that arrives `
       + `later is added here.</p>`,
     `<p><a href="../">&larr; Back to the report</a></p>`,
-  ].join("\n");
+  ].join("\n")
 
   return shell({
     title: `Correspondence — ${ctx.reportTitle}`,
     crumbsHtml, body, note: ctx.note,
     baseCss: ctx.baseCss, themeCss: ctx.themeCss, noindex: ctx.noindex,
-  });
+  })
 }
 
 // ---------------------------------------------------------------------------
@@ -599,11 +599,11 @@ ${rows.map(row).join("\n")}
  * Per candidate the newest entry carrying a status wins; none means "No
  * response", reported as of a date and never as a permanent condition.
  */
-function buildLedger(entries, asOf) {
+const buildLedger = (entries, asOf) => {
   return LEDGER.map((id) => {
-    const mine = entries.filter((e) => e.candidate === id).sort(byNewest);
-    const asked = mine.filter((e) => e.opening)[0] || null;
-    const answer = mine.find((e) => e.status) || null;
+    const mine = entries.filter((e) => e.candidate === id).sort(byNewest)
+    const asked = mine.filter((e) => e.opening)[0] || null
+    const answer = mine.find((e) => e.status) || null
     return {
       candidate: id,
       name: CANDIDATE_NAMES[id],
@@ -611,8 +611,8 @@ function buildLedger(entries, asOf) {
       answered: answer ? { date: answer.date, path: `${answer.id}/` } : null,
       status: answer ? answer.status : "No response",
       asOf,
-    };
-  });
+    }
+  })
 }
 
 // ---------------------------------------------------------------------------
@@ -621,43 +621,43 @@ function buildLedger(entries, asOf) {
 
 // The report's section crumb, read from the same reports.json the report reads,
 // so the two trails cannot drift.
-function sectionCrumb(meta) {
-  if (!meta.section) return null;
-  const path = join(ROOT, "reports", "reports.json");
-  if (!existsSync(path)) return null;
-  const sec = JSON.parse(readFileSync(path, "utf8")).sections?.[meta.section];
-  return sec ? { label: sec.label, href: sec.url } : null;
+const sectionCrumb = (meta) => {
+  if (!meta.section) return null
+  const path = join(ROOT, "reports", "reports.json")
+  if (!existsSync(path)) return null
+  const sec = JSON.parse(readFileSync(path, "utf8")).sections?.[meta.section]
+  return sec ? { label: sec.label, href: sec.url } : null
 }
 
-export function buildCorrespondence(folder, meta, opts = {}) {
-  const dirName = typeof meta.correspondence === "string" ? meta.correspondence : "correspondence";
-  const dir = resolve(folder, dirName);
-  if (!existsSync(dir)) throw new Error(`correspondence dir not found: ${dir}`);
+export const buildCorrespondence = (folder, meta, opts = {}) => {
+  const dirName = typeof meta.correspondence === "string" ? meta.correspondence : "correspondence"
+  const dir = resolve(folder, dirName)
+  if (!existsSync(dir)) throw new Error(`correspondence dir not found: ${dir}`)
 
-  errors.length = 0;
+  errors.length = 0
 
-  const entries = loadEntries(join(dir, "_src"));
-  if (!entries.length) errors.push(`${dirName}/_src: no entry descriptors found`);
-  for (const e of entries) validate(e, dir);
+  const entries = loadEntries(join(dir, "_src"))
+  if (!entries.length) errors.push(`${dirName}/_src: no entry descriptors found`)
+  for (const e of entries) validate(e, dir)
 
   if (errors.length) {
-    console.error(`\n  correspondence: ${errors.length} problem${errors.length === 1 ? "" : "s"}\n`);
-    for (const e of errors) console.error(`    - ${e}`);
-    console.error("");
-    throw new Error("correspondence build failed validation");
+    console.error(`\n  correspondence: ${errors.length} problem${errors.length === 1 ? "" : "s"}\n`)
+    for (const e of errors) console.error(`    - ${e}`)
+    console.error("")
+    throw new Error("correspondence build failed validation")
   }
 
   // Local date, not UTC: a build run on a US evening must not stamp tomorrow's
   // date on a page whose whole claim is "this is what had arrived on this day".
   const asOf = opts.asOf || (() => {
-    const d = new Date();
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-  })();
+    const d = new Date()
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`
+  })()
 
   // Root-relative hrefs, matching the report's own trail (report.mjs
   // breadcrumbHtml). Relative ones would need a different prefix at each depth,
   // and the index and entry pages sit one level apart.
-  const reportUrl = new URL(meta.publicUrl).pathname.replace(/\/?$/, "/");
+  const reportUrl = new URL(meta.publicUrl).pathname.replace(/\/?$/, "/")
   const ctx = {
     trail: opts.trail || [
       { label: "Home", href: "/" },
@@ -672,20 +672,20 @@ export function buildCorrespondence(folder, meta, opts = {}) {
     note: opts.note || "",
     noindex: meta.noindex === true,
     asOf,
-  };
+  }
 
-  checkPublishedPaths(dir, entries.map((e) => e.id));
+  checkPublishedPaths(dir, entries.map((e) => e.id))
   if (errors.length) {
-    for (const e of errors) console.error(`    - ${e}`);
-    throw new Error("correspondence build failed validation");
+    for (const e of errors) console.error(`    - ${e}`)
+    throw new Error("correspondence build failed validation")
   }
 
   for (const entry of entries) {
-    const out = join(dir, entry.id, "index.html");
-    mkdirSync(join(dir, entry.id), { recursive: true });
-    writeFileSync(out, entryPage(entry, dir, ctx), "utf8");
+    const out = join(dir, entry.id, "index.html")
+    mkdirSync(join(dir, entry.id), { recursive: true })
+    writeFileSync(out, entryPage(entry, dir, ctx), "utf8")
   }
-  writeFileSync(join(dir, "index.html"), indexPage(entries, ctx), "utf8");
+  writeFileSync(join(dir, "index.html"), indexPage(entries, ctx), "utf8")
 
   const summary = {
     generated: asOf,
@@ -696,51 +696,51 @@ export function buildCorrespondence(folder, meta, opts = {}) {
       enclosure: e.enclosure ? `${e.id}/${e.enclosure.file}` : null,
     })),
     ledger: buildLedger(entries, asOf),
-  };
-  writeFileSync(join(dir, "correspondence.json"), JSON.stringify(summary, null, 2) + "\n", "utf8");
+  }
+  writeFileSync(join(dir, "correspondence.json"), JSON.stringify(summary, null, 2) + "\n", "utf8")
 
   console.log(`  correspondence: ${entries.length} entr${entries.length === 1 ? "y" : "ies"} `
-    + `-> ${dirName}/ (index + correspondence.json, as of ${asOf})`);
-  return summary;
+    + `-> ${dirName}/ (index + correspondence.json, as of ${asOf})`)
+  return summary
 }
 
 // ---------------------------------------------------------------------------
 // CLI
 // ---------------------------------------------------------------------------
 // Site-wide build defaults, shared with report.mjs.
-function loadConfig() {
-  const p = join(HERE, "report.config.json");
-  if (!existsSync(p)) return {};
+const loadConfig = () => {
+  const p = join(HERE, "report.config.json")
+  if (!existsSync(p)) return {}
   try {
-    return JSON.parse(readFileSync(p, "utf8"));
+    return JSON.parse(readFileSync(p, "utf8"))
   } catch {
-    return {};
+    return {}
   }
 }
 
 
 if (process.argv[1] && basename(process.argv[1]) === "correspondence.mjs") {
-  const matter = (await import("gray-matter")).default;
-  const targets = process.argv.slice(2).filter((a) => !a.startsWith("-"));
+  const matter = (await import("gray-matter")).default
+  const targets = process.argv.slice(2).filter((a) => !a.startsWith("-"))
   if (!targets.length) {
-    console.error("usage: node _build/correspondence.mjs <report.md> [...]");
-    process.exit(1);
+    console.error("usage: node _build/correspondence.mjs <report.md> [...]")
+    process.exit(1)
   }
-  const baseCss = readFileSync(join(HERE, "base.css"), "utf8");
+  const baseCss = readFileSync(join(HERE, "base.css"), "utf8")
   for (const t of targets) {
-    const mdPath = resolve(ROOT, t);
-    const { data: meta } = matter(readFileSync(mdPath, "utf8"));
-    const folder = resolve(mdPath, "..");
+    const mdPath = resolve(ROOT, t)
+    const { data: meta } = matter(readFileSync(mdPath, "utf8"))
+    const folder = resolve(mdPath, "..")
     // Theme resolution must match report.mjs (front matter > report.config.json
     // > "default"). rebuild:all runs rebuild:reports and then this script over
     // the same folder, so a narrower default here silently reverts the theme
     // report.mjs just applied.
-    const themeName = meta.theme || loadConfig().theme || "default";
-    const themePath = join(HERE, "themes", `${themeName}.css`);
-    const defaultTheme = readFileSync(join(HERE, "themes", "default.css"), "utf8");
+    const themeName = meta.theme || loadConfig().theme || "default"
+    const themePath = join(HERE, "themes", `${themeName}.css`)
+    const defaultTheme = readFileSync(join(HERE, "themes", "default.css"), "utf8")
     const themeCss = themeName === "default" || !existsSync(themePath)
       ? defaultTheme
-      : defaultTheme + "\n" + readFileSync(themePath, "utf8");
-    buildCorrespondence(folder, meta, { baseCss, themeCss });
+      : defaultTheme + "\n" + readFileSync(themePath, "utf8")
+    buildCorrespondence(folder, meta, { baseCss, themeCss })
   }
 }

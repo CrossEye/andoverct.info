@@ -15,87 +15,87 @@
 import {
   readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync,
   createWriteStream,
-} from "node:fs";
-import { dirname, join, basename, resolve, relative } from "node:path";
-import { ZipArchive } from "archiver";
-import ExcelJS from "exceljs";
+} from "node:fs"
+import { dirname, join, basename, resolve, relative } from "node:path"
+import { ZipArchive } from "archiver"
+import ExcelJS from "exceljs"
 
 // ----------------------------------------------------------------------------
 // Small helpers
 // ----------------------------------------------------------------------------
 
-function slugify(text) {
+const slugify = (text) => {
   return String(text || "")
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+    .replace(/^-+|-+$/g, "")
 }
 
-function escapeHtml(s) {
+const escapeHtml = (s) => {
   return String(s ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+    .replace(/"/g, "&quot;")
 }
 
-function formatMoney(n) {
-  if (n === null || n === undefined || n === "") return "";
-  const num = typeof n === "number" ? n : Number(n);
-  if (Number.isNaN(num)) return "";
-  return "$" + num.toLocaleString("en-US", { maximumFractionDigits: 0 });
+const formatMoney = (n) => {
+  if (n === null || n === undefined || n === "") return ""
+  const num = typeof n === "number" ? n : Number(n)
+  if (Number.isNaN(num)) return ""
+  return "$" + num.toLocaleString("en-US", { maximumFractionDigits: 0 })
 }
 
-function fmtTerm(term) {
-  if (!term || !term.start || !term.end) return "";
-  return `${term.start.slice(0, 4)}–${term.end.slice(0, 4)}`;
+const fmtTerm = (term) => {
+  if (!term || !term.start || !term.end) return ""
+  return `${term.start.slice(0, 4)}–${term.end.slice(0, 4)}`
 }
 
 // Vintage classification per the report's fallback rule:
 //   2025-26 → primary, 2024-25 → primary (fallback), 2026-27 → future, else → stale
-function classifyVintage(yearStr) {
-  if (!yearStr) return "stale";
-  const m = yearStr.match(/(\d{4})/);
-  if (!m) return "stale";
-  const start = Number(m[1]);
-  if (start === 2025 || start === 2024) return "primary";
-  if (start >= 2026) return "future";
-  return "stale";
+const classifyVintage = (yearStr) => {
+  if (!yearStr) return "stale"
+  const m = yearStr.match(/(\d{4})/)
+  if (!m) return "stale"
+  const start = Number(m[1])
+  if (start === 2025 || start === 2024) return "primary"
+  if (start >= 2026) return "future"
+  return "stale"
 }
 
 // Slug for a contract group. Joint contracts covering multiple peer districts
 // get a region-style slug from `scope`; everything else uses the (first)
 // district key.
-function determineSlug(group) {
+const determineSlug = (group) => {
   if (group.entries.length > 1) {
-    const m = (group.scope || "").match(/\((Region\s+\d+|ER\d+|Amity\s+Region\s+\d+)\)/i);
-    if (m) return slugify(m[1]);
+    const m = (group.scope || "").match(/\((Region\s+\d+|ER\d+|Amity\s+Region\s+\d+)\)/i)
+    if (m) return slugify(m[1])
   }
-  return slugify(group.entries[0].key);
+  return slugify(group.entries[0].key)
 }
 
 // ----------------------------------------------------------------------------
 // 1) Group: walk compensation.json, dedupe by (supe + start + end).
 // ----------------------------------------------------------------------------
 
-function collectGroups(data, pdfsBase) {
-  const groups = new Map();
+const collectGroups = (data, pdfsBase) => {
+  const groups = new Map()
   const groupKeyFor = (d) => {
-    const term = d.contract_term || {};
-    return [d.supe_name || "", term.start || "", term.end || ""].join("|");
-  };
+    const term = d.contract_term || {}
+    return [d.supe_name || "", term.start || "", term.end || ""].join("|")
+  }
 
   // Pass 1: districts whose source_pdf is on disk — these establish a group.
   // For a joint contract, the first member-town whose copy is found becomes
   // the canonical PDF; that's the file we copy into contracts/{slug}/.
   for (const [key, d] of Object.entries(data.districts || {})) {
-    const src = d.source_pdf;
-    if (!src || typeof src !== "string" || !src.toLowerCase().endsWith(".pdf")) continue;
-    const srcAbs = resolve(pdfsBase, src);
-    if (!existsSync(srcAbs)) continue;
+    const src = d.source_pdf
+    if (!src || typeof src !== "string" || !src.toLowerCase().endsWith(".pdf")) continue
+    const srcAbs = resolve(pdfsBase, src)
+    if (!existsSync(srcAbs)) continue
 
-    const groupKey = groupKeyFor(d);
-    let g = groups.get(groupKey);
+    const groupKey = groupKeyFor(d)
+    let g = groups.get(groupKey)
     if (!g) {
       g = {
         supe: d.supe_name,
@@ -108,10 +108,10 @@ function collectGroups(data, pdfsBase) {
         sourceFilename: basename(srcAbs),
         entries: [],
         notes: d.notes,
-      };
-      groups.set(groupKey, g);
+      }
+      groups.set(groupKey, g)
     }
-    g.entries.push({ key, district: d });
+    g.entries.push({ key, district: d })
   }
 
   // Pass 2: districts whose source_pdf is missing on disk but match an
@@ -119,47 +119,47 @@ function collectGroups(data, pdfsBase) {
   // contract picks up all member districts even if the PDF lives in only one
   // town's folder.
   for (const [key, d] of Object.entries(data.districts || {})) {
-    const src = d.source_pdf;
-    if (!src || typeof src !== "string" || !src.toLowerCase().endsWith(".pdf")) continue;
-    const srcAbs = resolve(pdfsBase, src);
-    if (existsSync(srcAbs)) continue;
+    const src = d.source_pdf
+    if (!src || typeof src !== "string" || !src.toLowerCase().endsWith(".pdf")) continue
+    const srcAbs = resolve(pdfsBase, src)
+    if (existsSync(srcAbs)) continue
 
-    const g = groups.get(groupKeyFor(d));
+    const g = groups.get(groupKeyFor(d))
     if (g && !g.entries.some((e) => e.key === key)) {
-      g.entries.push({ key, district: d });
+      g.entries.push({ key, district: d })
     }
   }
 
-  const groupList = [...groups.values()];
+  const groupList = [...groups.values()]
   for (const g of groupList) {
-    g.slug = determineSlug(g);
-    g.status = classifyVintage(g.vintage);
+    g.slug = determineSlug(g)
+    g.status = classifyVintage(g.vintage)
     g.displayName = g.entries.length > 1
       ? g.entries.map((e) => e.key).join(" / ")
-      : g.entries[0].key;
+      : g.entries[0].key
   }
 
   groupList.sort((a, b) => {
     // primary first, then future, then stale; then by FTE-equivalent desc.
-    const rank = { primary: 0, future: 1, stale: 2 };
-    if (rank[a.status] !== rank[b.status]) return rank[a.status] - rank[b.status];
-    return (b.fteEquiv || 0) - (a.fteEquiv || 0);
-  });
+    const rank = { primary: 0, future: 1, stale: 2 }
+    if (rank[a.status] !== rank[b.status]) return rank[a.status] - rank[b.status]
+    return (b.fteEquiv || 0) - (a.fteEquiv || 0)
+  })
 
-  return groupList;
+  return groupList
 }
 
 // ----------------------------------------------------------------------------
 // 2) Copy PDFs into contracts/{slug}/{filename}
 // ----------------------------------------------------------------------------
 
-function copyPdfs(groups, contractsDir) {
+const copyPdfs = (groups, contractsDir) => {
   for (const g of groups) {
-    const destDir = join(contractsDir, g.slug);
-    mkdirSync(destDir, { recursive: true });
-    const destPdf = join(destDir, g.sourceFilename);
-    copyFileSync(g.sourceAbs, destPdf);
-    g.relPdf = `${g.slug}/${g.sourceFilename}`;
+    const destDir = join(contractsDir, g.slug)
+    mkdirSync(destDir, { recursive: true })
+    const destPdf = join(destDir, g.sourceFilename)
+    copyFileSync(g.sourceAbs, destPdf)
+    g.relPdf = `${g.slug}/${g.sourceFilename}`
   }
 }
 
@@ -171,27 +171,27 @@ const STATUS_LABEL = {
   primary: "Primary",
   future: "Future",
   stale: "Stale ⚠",
-};
+}
 
 // Convert the parent report's breadcrumb (whose final segment is the report
 // title, marked `<span class="current">`) into one suitable for this subpage:
 // turn the title into a link back to ../ and append "Contracts" as the new
 // terminal `current` node. Keeps using base.css's `.page-banner .crumbs`
 // styling unchanged.
-function extendBreadcrumb(breadcrumb, reportHref, finalLabel) {
-  if (!breadcrumb) return "";
+const extendBreadcrumb = (breadcrumb, reportHref, finalLabel) => {
+  if (!breadcrumb) return ""
   return breadcrumb.replace(
     /<span class="current">([^<]+)<\/span>/,
     `<a href="${reportHref}">$1</a><span class="sep">›</span><span class="current">${escapeHtml(finalLabel)}</span>`
-  );
+  )
 }
 
-function buildIndexHtml(groups, meta, themeCss, baseCss, breadcrumb) {
-  const title = `${meta.title || "Contracts"} — Contracts on file`;
-  const extendedCrumbs = extendBreadcrumb(breadcrumb, "../", "Contracts");
+const buildIndexHtml = (groups, meta, themeCss, baseCss, breadcrumb) => {
+  const title = `${meta.title || "Contracts"} — Contracts on file`
+  const extendedCrumbs = extendBreadcrumb(breadcrumb, "../", "Contracts")
 
   const rows = groups.map((g) => {
-    const districts = g.entries.map((e) => escapeHtml(e.key)).join(", ");
+    const districts = g.entries.map((e) => escapeHtml(e.key)).join(", ")
     return `
         <tr class="status-${g.status}">
           <td><a href="${escapeHtml(g.relPdf)}" target="_blank" rel="noopener">${escapeHtml(g.sourceFilename)}</a></td>
@@ -202,11 +202,11 @@ function buildIndexHtml(groups, meta, themeCss, baseCss, breadcrumb) {
           <td class="num">${escapeHtml(g.vintage || "")}</td>
           <td class="num">${formatMoney(g.fteEquiv)}</td>
           <td class="status-cell">${STATUS_LABEL[g.status] || g.status}</td>
-        </tr>`;
-  }).join("");
+        </tr>`
+  }).join("")
 
-  const counts = { primary: 0, future: 0, stale: 0 };
-  for (const g of groups) counts[g.status]++;
+  const counts = { primary: 0, future: 0, stale: 0 }
+  for (const g of groups) counts[g.status]++
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -250,7 +250,7 @@ function buildIndexHtml(groups, meta, themeCss, baseCss, breadcrumb) {
   </section>
 </main>
 </body>
-</html>`;
+</html>`
 }
 
 const LOCAL_CSS = `
@@ -266,37 +266,37 @@ table.contracts-table td.num { text-align: right; white-space: nowrap; font-vari
 table.contracts-table .status-stale  { background: #faf4ee; color: #6b4a1a; }
 table.contracts-table .status-future { background: #f5f3fc; color: #3a2a6b; }
 table.contracts-table .status-cell { white-space: nowrap; font-weight: 500; }
-`;
+`
 
 // ----------------------------------------------------------------------------
 // 4) Build contracts.zip
 // ----------------------------------------------------------------------------
 
-async function buildZip(zipPath, groups, contractsDir, manifestRows) {
+const buildZip = async (zipPath, groups, contractsDir, manifestRows) => {
   return new Promise((resolveP, rejectP) => {
-    const out = createWriteStream(zipPath);
-    const archive = new ZipArchive({ zlib: { level: 6 } });
-    out.on("close", resolveP);
-    archive.on("error", rejectP);
-    archive.pipe(out);
+    const out = createWriteStream(zipPath)
+    const archive = new ZipArchive({ zlib: { level: 6 } })
+    out.on("close", resolveP)
+    archive.on("error", rejectP)
+    archive.pipe(out)
 
     // Add each PDF under the same slug-folder layout used on the site.
     for (const g of groups) {
-      const onDisk = join(contractsDir, g.slug, g.sourceFilename);
-      archive.file(onDisk, { name: `contracts/${g.slug}/${g.sourceFilename}` });
+      const onDisk = join(contractsDir, g.slug, g.sourceFilename)
+      archive.file(onDisk, { name: `contracts/${g.slug}/${g.sourceFilename}` })
     }
     // Add a manifest CSV so a reader who unzips can navigate without the HTML.
     const csv = ["pdf,supe,districts,scope,term,vintage,fte_equiv,status"]
       .concat(manifestRows.map((r) => r.map(csvCell).join(",")))
-      .join("\n") + "\n";
-    archive.append(csv, { name: "contracts/manifest.csv" });
+      .join("\n") + "\n"
+    archive.append(csv, { name: "contracts/manifest.csv" })
 
-    archive.finalize();
-  });
+    archive.finalize()
+  })
 }
 
-function csvCell(v) {
-  const s = String(v ?? "");
+const csvCell = (v) => {
+  const s = String(v ?? "")
   return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
 

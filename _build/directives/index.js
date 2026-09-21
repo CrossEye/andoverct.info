@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 // Directive preprocessor for civic-report markdown.
 //
 //   const { preprocess } = require('./scripts/directives');
@@ -19,34 +19,34 @@ const handlers = {
   locmap: require('./locmap'),
   datatable: require('./datatable'),
   correspondence: require('./correspondence'),
-};
+}
 
-const DIRECTIVE = /^[ \t]*<%\s*([\w-]+)\s+([\w-]+)((?:\s+[\w-]+=[^\s%]+)*)\s*%>[ \t]*$/gm;
+const DIRECTIVE = /^[ \t]*<%\s*([\w-]+)\s+([\w-]+)((?:\s+[\w-]+=[^\s%]+)*)\s*%>[ \t]*$/gm
 
-function parseArgs(s) {
-  const args = {};
-  for (const m of (s || '').matchAll(/([\w-]+)=([^\s%]+)/g)) args[m[1]] = m[2];
-  return args;
+const parseArgs = (s) => {
+  const args = {}
+  for (const m of (s || '').matchAll(/([\w-]+)=([^\s%]+)/g)) args[m[1]] = m[2]
+  return args
 }
 
 // The same syntax mid-line, for a directive that supplies a phrase rather than a
 // block — a date inside a sentence, a count inside a table cell. Applied after
 // the block pass, so a directive standing on its own line is already gone and
 // only genuinely inline ones remain.
-const INLINE = /<%\s*([\w-]+)\s+([\w-]+)((?:\s+[\w-]+=[^\s%]+)*)\s*%>/g;
+const INLINE = /<%\s*([\w-]+)\s+([\w-]+)((?:\s+[\w-]+=[^\s%]+)*)\s*%>/g
 
-function preprocess(markdown, ctx, opts = {}) {
+const preprocess = (markdown, ctx, opts = {}) => {
   const run = (whole, name, groupId, rest) => {
-    const h = handlers[name];
+    const h = handlers[name]
     if (!h) {
-      if (opts.lenient) return whole;
-      throw new Error(`Unknown directive '${name}'`);
+      if (opts.lenient) return whole
+      throw new Error(`Unknown directive '${name}'`)
     }
-    return h(ctx, groupId, parseArgs(rest));
-  };
-  return markdown.replace(DIRECTIVE, run).replace(INLINE, run);
+    return h(ctx, groupId, parseArgs(rest))
+  }
+  return markdown.replace(DIRECTIVE, run).replace(INLINE, run)
 }
 
-function register(name, fn) { handlers[name] = fn; }
+const register = (name, fn) => { handlers[name] = fn }
 
-module.exports = { preprocess, register, handlers };
+module.exports = { preprocess, register, handlers }
