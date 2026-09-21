@@ -191,18 +191,18 @@ button.danger{background:#b0402c;color:#fff}
 <svg id="meas" class="meas" xmlns="http://www.w3.org/2000/svg"><text id="measT"></text></svg>
 
 <script>
-"use strict";
-const SVGNS="http://www.w3.org/2000/svg";
-const W=1080, PADL=80, PADR=1000, CW=PADR-PADL, CX=(PADL+PADR)/2, SRC_Y=1002;
+"use strict"
+const SVGNS="http://www.w3.org/2000/svg"
+const W=1080, PADL=80, PADR=1000, CW=PADR-PADL, CX=(PADL+PADR)/2, SRC_Y=1002
 
 /* Palette roles describe WHAT a color does, so any theme can fill them.
    ground=card background, accent=border/kicker/rules, heading=headlines,
    text=body copy, label=neutral labels, faint=source line,
    feature=highlight + CTA panel ground, featureDark=emphasis line, alert=sparing negative. */
-const ROLES=["ground","accent","heading","text","label","faint","feature","featureDark","alert"];
+const ROLES=["ground","accent","heading","text","label","faint","feature","featureDark","alert"]
 const ROLE_LABEL={ground:"ground (card bg)",accent:"accent (border, kicker)",heading:"heading",
   text:"body text",label:"labels / context",faint:"source line",feature:"feature (highlight, CTA)",
-  featureDark:"feature dark (emphasis)",alert:"alert (sparing)"};
+  featureDark:"feature dark (emphasis)",alert:"alert (sparing)"}
 /* Curated themes. "Andover Civic" is the original; the rest borrow hues + names from
    the letters themes.yml, retuned for a light card ground with legible dark text. */
 const THEMES={
@@ -213,140 +213,140 @@ const THEMES={
  "Sunday Papers":      {ground:"#f6eef4",accent:"#5a7d8c",heading:"#3a2f36",text:"#444444",label:"#675c63",faint:"#7c7178",feature:"#a83c68",featureDark:"#7a2c4c",alert:"#b0402c"},
  "Whiter Shade of Pale":{ground:"#faf0e6",accent:"#9a6a28",heading:"#4a3b2a",text:"#5a4a3a",label:"#6c5c45",faint:"#857961",feature:"#9a5d24",featureDark:"#724616",alert:"#b0402c"},
  /* dark themes: dark ground, light type; feature stays bright so the inverted CTA panel
-    (dark ground-colored text on the feature panel) keeps its contrast. */
+    ;(dark ground-colored text on the feature panel) keeps its contrast. */
  "Back in Black":      {ground:"#1b1b1b",accent:"#cda434",heading:"#f5f2ea",text:"#dcd8ce",label:"#a49c8d",faint:"#8a8273",feature:"#36c07d",featureDark:"#5fd79a",alert:"#e2574c"},
  "Green River":        {ground:"#1d4d38",accent:"#cf9b3a",heading:"#eef4f0",text:"#cdd8d2",label:"#9fb0a6",faint:"#82938a",feature:"#39b39a",featureDark:"#5fd0b8",alert:"#e2574c"}
-};
-const DEFAULT_PAL={...THEMES["Andover Civic"]};
+}
+const DEFAULT_PAL={...THEMES["Andover Civic"]}
 /* old palette/color names -> new role names, for migrating saved decks */
 const OLD2NEW={cream:"ground",gold:"accent",dark:"heading",body:"text",gray:"label",
-  muted:"faint",green:"feature",greendk:"featureDark",red:"alert"};
+  muted:"faint",green:"feature",greendk:"featureDark",red:"alert"}
 
-const FAM={serif:"Georgia,'Times New Roman',serif",sans:"Arial,Helvetica,sans-serif"};
+const FAM={serif:"Georgia,'Times New Roman',serif",sans:"Arial,Helvetica,sans-serif"}
 const STYLE={serif_b:["serif","b"],serif_r:["serif","r"],serif_i:["serif","i"],
-  serif_bi:["serif","bi"],sans_b:["sans","b"],sans_r:["sans","r"]};
+  serif_bi:["serif","bi"],sans_b:["sans","b"],sans_r:["sans","r"]}
 
-let PAL={...DEFAULT_PAL};
-let deck=null, cur=0;
+let PAL={...DEFAULT_PAL}
+let deck=null, cur=0
 
 /* ---------- low-level SVG helpers (ported from cardlib.py) ---------- */
-function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;")
+const esc = (s) => {return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;")
   .replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
-function col(name){return PAL[name]||name;}
+const col = (name) => {return PAL[name]||name;}
 
-const measT=document.getElementById("measT");
-function textw(s,fam,wt,size,ls){
-  measT.setAttribute("font-family",FAM[fam]);
-  measT.setAttribute("font-weight",(wt==="b"||wt==="bi")?"bold":"normal");
-  measT.setAttribute("font-style",(wt==="i"||wt==="bi")?"italic":"normal");
-  measT.setAttribute("font-size",size);
-  if(ls) measT.setAttribute("letter-spacing",ls); else measT.removeAttribute("letter-spacing");
-  measT.textContent=s;
+const measT=document.getElementById("measT")
+const textw = (s,fam,wt,size,ls) => {
+  measT.setAttribute("font-family",FAM[fam])
+  measT.setAttribute("font-weight",(wt==="b"||wt==="bi")?"bold":"normal")
+  measT.setAttribute("font-style",(wt==="i"||wt==="bi")?"italic":"normal")
+  measT.setAttribute("font-size",size)
+  if(ls) measT.setAttribute("letter-spacing",ls); else measT.removeAttribute("letter-spacing")
+  measT.textContent=s
   try{return measT.getComputedTextLength();}catch(e){return s.length*size*0.5;}
 }
-function wrap(s,fam,wt,size,maxw,ls){
-  const out=[];let line="";
+const wrap = (s,fam,wt,size,maxw,ls) => {
+  const out=[];let line=""
   for(const word of String(s).split(/\s+/).filter(Boolean)){
-    const t=(line+" "+word).trim();
-    if(textw(t,fam,wt,size,ls||0)<=maxw) line=t;
+    const t=(line+" "+word).trim()
+    if(textw(t,fam,wt,size,ls||0)<=maxw) line=t
     else{if(line)out.push(line);line=word;}
   }
-  if(line)out.push(line);
-  return out;
+  if(line)out.push(line)
+  return out
 }
-function tline(x,y,s,sty,size,fill,anchor,ls,spans){
-  anchor=anchor||"start";ls=ls||0;
-  const [fam,wt]=STYLE[sty];
-  const extra=ls?` letter-spacing="${ls}"`:"";
-  const inner=(spans!=null)?spans:esc(s);
-  return `<text x="${x}" y="${y}" font-family="${FAM[fam]}" font-weight="${(wt==="b"||wt==="bi")?"bold":"normal"}" font-style="${(wt==="i"||wt==="bi")?"italic":"normal"}" font-size="${size}" fill="${fill}" text-anchor="${anchor}"${extra}>${inner}</text>`;
+const tline = (x,y,s,sty,size,fill,anchor,ls,spans) => {
+  anchor=anchor||"start";ls=ls||0
+  const [fam,wt]=STYLE[sty]
+  const extra=ls?` letter-spacing="${ls}"`:""
+  const inner=(spans!=null)?spans:esc(s)
+  return `<text x="${x}" y="${y}" font-family="${FAM[fam]}" font-weight="${(wt==="b"||wt==="bi")?"bold":"normal"}" font-style="${(wt==="i"||wt==="bi")?"italic":"normal"}" font-size="${size}" fill="${fill}" text-anchor="${anchor}"${extra}>${inner}</text>`
 }
-function block(x,y,s,sty,size,fill,maxw,leading,anchor,ls){
-  anchor=anchor||"start";ls=ls||0;
-  const [fam,wt]=STYLE[sty];
-  const out=[];let cy=y;
-  for(const ln of wrap(s,fam,wt,size,maxw,ls)){out.push(tline(x,cy,ln,sty,size,fill,anchor,ls));cy+=leading;}
-  return [out.join("\n"),cy-leading];
+const block = (x,y,s,sty,size,fill,maxw,leading,anchor,ls) => {
+  anchor=anchor||"start";ls=ls||0
+  const [fam,wt]=STYLE[sty]
+  const out=[];let cy=y
+  wrap(s,fam,wt,size,maxw,ls).forEach(ln=>{out.push(tline(x,cy,ln,sty,size,fill,anchor,ls));cy+=leading})
+  return [out.join("\n"),cy-leading]
 }
-function frame(bg,border){
-  bg=bg||PAL.ground;border=border||PAL.accent;
+const frame = (bg,border) => {
+  bg=bg||PAL.ground;border=border||PAL.accent
   return `<svg xmlns="${SVGNS}" width="${W}" height="${W}" viewBox="0 0 ${W} ${W}">\n`+
     `<rect width="${W}" height="${W}" fill="${bg}"/>\n`+
-    `<rect x="26" y="26" width="${W-52}" height="${W-52}" rx="18" fill="none" stroke="${border}" stroke-width="3"/>\n`;
+    `<rect x="26" y="26" width="${W-52}" height="${W-52}" rx="18" fill="none" stroke="${border}" stroke-width="3"/>\n`
 }
-function kicker(text,y,color,rule,cx,key){
-  if(!text)return"";
-  const t=twk(key||"kicker");
-  y=y==null?126:y;color=t.color?col(t.color):(color||PAL.accent);rule=rule!==false;cx=cx==null?CX:cx;
-  const sty=(t.font&&STYLE[t.font])?t.font:"sans_b",[fam,wt]=STYLE[sty];
-  let size=t.size||27,ls=4;
-  if(!t.size)while(textw(text,fam,wt,size,ls)>CW&&size>20)size--;
-  const anchor=t.align||"middle",x=alignX(cx,CW,"middle",anchor);
-  const tw=textw(text,fam,wt,size,ls);
-  let s=tline(x,y,text,sty,size,color,anchor,ls);
+const kicker = (text,y,color,rule,cx,key) => {
+  if(!text)return""
+  const t=twk(key||"kicker")
+  y=y==null?126:y;color=t.color?col(t.color):(color||PAL.accent);rule=rule!==false;cx=cx==null?CX:cx
+  const sty=(t.font&&STYLE[t.font])?t.font:"sans_b",[fam,wt]=STYLE[sty]
+  let size=t.size||27,ls=4
+  if(!t.size)while(textw(text,fam,wt,size,ls)>CW&&size>20)size--
+  const anchor=t.align||"middle",x=alignX(cx,CW,"middle",anchor)
+  const tw=textw(text,fam,wt,size,ls)
+  let s=tline(x,y,text,sty,size,color,anchor,ls)
   if(rule){const rw=Math.max(40,Math.round(tw*0.9));   /* underline tracks kicker width */
-    const rx=anchor==="start"?x:anchor==="end"?x-rw:x-rw/2;
+    const rx=anchor==="start"?x:anchor==="end"?x-rw:x-rw/2
     s+=`\n<rect x="${rx}" y="${y+18}" width="${rw}" height="3" fill="${color}"/>`;}
-  return nudge(s,t.dy);
+  return nudge(s,t.dy)
 }
-function source(text){
-  if(!text)return"";
-  const t=twk("source");
-  const sty=(t.font&&STYLE[t.font])?t.font:"sans_r";
-  const anchor=t.align||"middle",x=alignX(CX,CW,"middle",anchor);
-  return nudge(tline(x,SRC_Y,text,sty,t.size||22,t.color?col(t.color):PAL.faint,anchor),t.dy);
+const source = (text) => {
+  if(!text)return""
+  const t=twk("source")
+  const sty=(t.font&&STYLE[t.font])?t.font:"sans_r"
+  const anchor=t.align||"middle",x=alignX(CX,CW,"middle",anchor)
+  return nudge(tline(x,SRC_Y,text,sty,t.size||22,t.color?col(t.color):PAL.faint,anchor),t.dy)
 }
-function stat(cx,num,numcol,lablines){
-  const out=[tline(cx,560-66,num,"serif_b",66,numcol,"middle")];
-  let yy=560;
-  for(const ln of (lablines||[])){out.push(tline(cx,yy,ln,"sans_r",25,PAL.label,"middle"));yy+=30;}
-  return out.join("\n");
+const stat = (cx,num,numcol,lablines) => {
+  const out=[tline(cx,560-66,num,"serif_b",66,numcol,"middle")]
+  let yy=560
+  ;(lablines||[]).forEach(ln=>{out.push(tline(cx,yy,ln,"sans_r",25,PAL.label,"middle"));yy+=30})
+  return out.join("\n")
 }
 /* *word* -> green italic span inside a headline line */
-function headlineSpans(text){
-  let out="",last=0,m;const re=/\*([^*]+)\*/g;
-  while((m=re.exec(text))){out+=esc(text.slice(last,m.index));
+const headlineSpans = (text) => {
+  let out="",last=0,m;const re=/\*([^*]+)\*/g
+  while((m=re.exec(text))){out+=esc(text.slice(last,m.index))
     out+=`<tspan font-style="italic" fill="${PAL.feature}">${esc(m[1])}</tspan>`;last=re.lastIndex;}
-  out+=esc(text.slice(last));return out;
+  out+=esc(text.slice(last));return out
 }
 
 /* ---------- per-field tweaks ----------
    Optional per-card overrides, stored in the card JSON as
      tweaks:{ fieldKey:{ dy, size, lh, color, font, align } }
-   size/lh/color/font/align feed the normal layout, so wrapping and flow follow;
+   size/lh/color/font/align feed the normal layout, so wrapping and flow follow
    dy is a pure visual nudge applied after layout — it moves only that field and
    does not shift downstream fields or the card's vertical centering. */
-let CURT={};
-function twk(key){return (CURT&&CURT[key])||{};}
-function nudge(mk,dy){return dy?`<g transform="translate(0,${dy})">${mk}</g>`:mk;}
-function alignX(x,colw,from,to){
-  const left=from==="middle"?x-colw/2:from==="end"?x-colw:x;
-  return to==="middle"?left+colw/2:to==="end"?left+colw:left;
+let CURT={}
+const twk = (key) => {return (CURT&&CURT[key])||{};}
+const nudge = (mk,dy) => {return dy?`<g transform="translate(0,${dy})">${mk}</g>`:mk;}
+const alignX = (x,colw,from,to) => {
+  const left=from==="middle"?x-colw/2:from==="end"?x-colw:x
+  return to==="middle"?left+colw/2:to==="end"?left+colw:left
 }
 /* merged (style,size,leading) for a field — for renderers that must measure
    before placing (bottom-anchored or centered-in-gap blocks) */
-function twkText(key,sty,size,leading){
-  const t=twk(key);
+const twkText = (key,sty,size,leading) => {
+  const t=twk(key)
   if(t.size){leading=Math.round(leading*t.size/size);size=t.size;}
-  if(t.lh)leading=t.lh;
-  if(t.font&&STYLE[t.font])sty=t.font;
-  return[sty,size,leading];
+  if(t.lh)leading=t.lh
+  if(t.font&&STYLE[t.font])sty=t.font
+  return[sty,size,leading]
 }
-function fblock(key,x,y,s,sty,size,fill,maxw,leading,anchor,ls){
-  const t=twk(key);anchor=anchor||"start";
-  [sty,size,leading]=twkText(key,sty,size,leading);
-  if(t.color)fill=col(t.color);
+const fblock = (key,x,y,s,sty,size,fill,maxw,leading,anchor,ls) => {
+  const t=twk(key);anchor=anchor||"start"
+  ;[sty,size,leading]=twkText(key,sty,size,leading)
+  if(t.color)fill=col(t.color)
   if(t.align&&t.align!==anchor){x=alignX(x,maxw,anchor,t.align);anchor=t.align;}
-  const[mk,endy]=block(x,y,s,sty,size,fill,maxw,leading,anchor,ls);
-  return[nudge(mk,t.dy),endy];
+  const[mk,endy]=block(x,y,s,sty,size,fill,maxw,leading,anchor,ls)
+  return[nudge(mk,t.dy),endy]
 }
-function ftline(key,x,y,s,sty,size,fill,anchor,ls,spans,colw){
-  const t=twk(key);anchor=anchor||"start";colw=colw==null?CW:colw;
-  if(t.size)size=t.size;
-  if(t.color)fill=col(t.color);
-  if(t.font&&STYLE[t.font])sty=t.font;
+const ftline = (key,x,y,s,sty,size,fill,anchor,ls,spans,colw) => {
+  const t=twk(key);anchor=anchor||"start";colw=colw==null?CW:colw
+  if(t.size)size=t.size
+  if(t.color)fill=col(t.color)
+  if(t.font&&STYLE[t.font])sty=t.font
   if(t.align&&t.align!==anchor){x=alignX(x,colw,anchor,t.align);anchor=t.align;}
-  return nudge(tline(x,y,s,sty,size,fill,anchor,ls,spans),t.dy);
+  return nudge(tline(x,y,s,sty,size,fill,anchor,ls,spans),t.dy)
 }
 
 /* ---------- vertical centering ----------
@@ -357,200 +357,200 @@ function ftline(key,x,y,s,sty,size,fill,anchor,ls,spans,colw){
    visual top (first line's cap-top) and bottom (last line's baseline); vcenter
    shifts the whole block by a single translate. */
 const CBOT=952;                                        // region bottom (source sits below)
-function cregion(hasKicker){return hasKicker?181:132;} // region top (kicker sits above)
-function vcenter(inner,top,bot,hasKicker){
-  const rt=cregion(hasKicker);
-  const dy=Math.round((rt+CBOT)/2-(top+bot)/2);
-  return `<g transform="translate(0,${dy})">\n${inner}\n</g>`;
+const cregion = (hasKicker) => {return hasKicker?181:132;} // region top (kicker sits above)
+const vcenter = (inner,top,bot,hasKicker) => {
+  const rt=cregion(hasKicker)
+  const dy=Math.round((rt+CBOT)/2-(top+bot)/2)
+  return `<g transform="translate(0,${dy})">\n${inner}\n</g>`
 }
 /* ---------- per-type card builders ---------- */
-function c_statTrio(c){
-  const K=!!c.kicker; let m="";
-  const hl=String(c.headline||"").split("\n");let y=268;
-  const hstep=Math.round(76*((twk("headline").size||60)/60));
-  for(const line of hl){m+="\n"+ftline("headline",PADL,y,"","serif_b",60,PAL.heading,"start",0,headlineSpans(line));y+=hstep;}
-  const cs=[PADL+CW/6,PADL+CW/2,PADR-CW/6];
-  (c.stats||[]).slice(0,3).forEach((st,i)=>{m+="\n"+stat(cs[i],st.num,col(st.color||"label"),st.label||[]);});
-  let bot=596;
+const c_statTrio = (c) => {
+  const K=!!c.kicker; let m=""
+  const hl=String(c.headline||"").split("\n");let y=268
+  const hstep=Math.round(76*((twk("headline").size||60)/60))
+  hl.forEach(line=>{m+="\n"+ftline("headline",PADL,y,"","serif_b",60,PAL.heading,"start",0,headlineSpans(line));y+=hstep})
+  const cs=[PADL+CW/6,PADL+CW/2,PADR-CW/6]
+  ;(c.stats||[]).slice(0,3).forEach((st,i)=>{m+="\n"+stat(cs[i],st.num,col(st.color||"label"),st.label||[]);})
+  let bot=596
   if(c.body){const[tk,endy]=fblock("body",PADL,700,c.body,"serif_r",35,PAL.text,CW,47);m+="\n"+tk;bot=endy+8;}
-  return kicker(c.kicker)+"\n"+vcenter(m,225,bot,K)+"\n"+source(c.source);
+  return kicker(c.kicker)+"\n"+vcenter(m,225,bot,K)+"\n"+source(c.source)
 }
-function c_numberStack(c){
-  const K=!!c.kicker; let m="";
-  if(c.headline)m+="\n"+ftline("headline",PADL,250,c.headline,"serif_b",56,PAL.heading);
-  let ry=400;
-  (c.rows||[]).forEach(r=>{
-    m+="\n"+tline(PADL,ry,r.num,"serif_b",86,col(r.color||"heading"));
-    const lx=PADL+Math.max(250,textw(r.num||"","serif","b",86,0)+28);
-    const[tk]=block(lx,ry-8,r.label,"serif_r",33,PAL.text,PADR-lx,38);m+="\n"+tk;ry+=150;});
-  let bot=ry-150+14;
+const c_numberStack = (c) => {
+  const K=!!c.kicker; let m=""
+  if(c.headline)m+="\n"+ftline("headline",PADL,250,c.headline,"serif_b",56,PAL.heading)
+  let ry=400
+  ;(c.rows||[]).forEach(r=>{
+    m+="\n"+tline(PADL,ry,r.num,"serif_b",86,col(r.color||"heading"))
+    const lx=PADL+Math.max(250,textw(r.num||"","serif","b",86,0)+28)
+    const[tk]=block(lx,ry-8,r.label,"serif_r",33,PAL.text,PADR-lx,38);m+="\n"+tk;ry+=150;})
+  let bot=ry-150+14
   if(c.emphasis){const[tk,endy]=fblock("emphasis",PADL,ry+30,c.emphasis,"serif_bi",36,PAL.featureDark,CW,46);m+="\n"+tk;bot=endy+8;}
-  return kicker(c.kicker)+"\n"+vcenter(m,c.headline?210:340,bot,K)+"\n"+source(c.source);
+  return kicker(c.kicker)+"\n"+vcenter(m,c.headline?210:340,bot,K)+"\n"+source(c.source)
 }
-function c_hero(c){
-  const K=!!c.kicker; let m="";
-  if(c.headline)m+="\n"+ftline("headline",PADL,250,c.headline,"serif_b",52,PAL.heading);
-  if(c.hero&&c.hero.num)m+="\n"+ftline("hero.num",CX,430,c.hero.num,"serif_b",124,PAL.feature,"middle");
+const c_hero = (c) => {
+  const K=!!c.kicker; let m=""
+  if(c.headline)m+="\n"+ftline("headline",PADL,250,c.headline,"serif_b",52,PAL.heading)
+  if(c.hero&&c.hero.num)m+="\n"+ftline("hero.num",CX,430,c.hero.num,"serif_b",124,PAL.feature,"middle")
   if(c.hero&&c.hero.subtitle){const[tk]=fblock("hero.subtitle",CX,478,c.hero.subtitle,"sans_r",26,PAL.label,CW-120,32,"middle");m+="\n"+tk;}
-  let sb=520;
-  if(c.left&&c.left.num){m+="\n"+tline(CX-220,640,c.left.num,"serif_b",56,PAL.heading,"middle");
-    (c.left.label||[]).forEach((ln,i)=>{m+="\n"+tline(CX-220,686+i*28,ln,"sans_r",24,PAL.label,"middle");sb=Math.max(sb,686+i*28);});}
-  if(c.right&&c.right.num){m+="\n"+tline(CX+220,640,c.right.num,"serif_b",56,PAL.heading,"middle");
-    (c.right.label||[]).forEach((ln,i)=>{m+="\n"+tline(CX+220,686+i*28,ln,"sans_r",24,PAL.label,"middle");sb=Math.max(sb,686+i*28);});}
-  let bot=sb+8;
+  let sb=520
+  if(c.left&&c.left.num){m+="\n"+tline(CX-220,640,c.left.num,"serif_b",56,PAL.heading,"middle")
+    ;(c.left.label||[]).forEach((ln,i)=>{m+="\n"+tline(CX-220,686+i*28,ln,"sans_r",24,PAL.label,"middle");sb=Math.max(sb,686+i*28);});}
+  if(c.right&&c.right.num){m+="\n"+tline(CX+220,640,c.right.num,"serif_b",56,PAL.heading,"middle")
+    ;(c.right.label||[]).forEach((ln,i)=>{m+="\n"+tline(CX+220,686+i*28,ln,"sans_r",24,PAL.label,"middle");sb=Math.max(sb,686+i*28);});}
+  let bot=sb+8
   if(c.body){const[tk,endy]=fblock("body",PADL,820,c.body,"serif_r",35,PAL.text,CW,47);m+="\n"+tk;bot=endy+8;}
-  return kicker(c.kicker)+"\n"+vcenter(m,c.headline?213:341,bot,K)+"\n"+source(c.source);
+  return kicker(c.kicker)+"\n"+vcenter(m,c.headline?213:341,bot,K)+"\n"+source(c.source)
 }
-function c_text(c){
-  const K=!!c.kicker; let m="",y=270;
-  (c.headline||[]).forEach(l=>{m+="\n"+tline(PADL,y,"","serif_b",62,col(l.color||"heading"),"start",0,headlineSpans(l.text||""));y+=74;});
-  let by=y+30,bot=y-74+14;
-  (c.body||[]).forEach(p=>{const[tk,endy]=fblock("body",PADL,by,p,"serif_r",37,PAL.text,CW,50);m+="\n"+tk;by=endy+74;bot=endy+8;});
+const c_text = (c) => {
+  const K=!!c.kicker; let m="",y=270
+  ;(c.headline||[]).forEach(l=>{m+="\n"+tline(PADL,y,"","serif_b",62,col(l.color||"heading"),"start",0,headlineSpans(l.text||""));y+=74;})
+  let by=y+30,bot=y-74+14
+  ;(c.body||[]).forEach(p=>{const[tk,endy]=fblock("body",PADL,by,p,"serif_r",37,PAL.text,CW,50);m+="\n"+tk;by=endy+74;bot=endy+8;})
   if(c.emphasis){const[tk,endy]=fblock("emphasis",PADL,by+10,c.emphasis,"serif_bi",40,PAL.featureDark,CW,52);m+="\n"+tk;bot=endy+8;}
-  return kicker(c.kicker)+"\n"+vcenter(m,225,bot,K)+"\n"+source(c.source);
+  return kicker(c.kicker)+"\n"+vcenter(m,225,bot,K)+"\n"+source(c.source)
 }
-function c_photo(c){
-  const K=!!c.kicker; let m="";
-  const px=74,py=250,pw=430,ph=558;
+const c_photo = (c) => {
+  const K=!!c.kicker; let m=""
+  const px=74,py=250,pw=430,ph=558
   if(c.image){
-    m+=`\n<clipPath id="pc"><rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="10"/></clipPath>`;
-    m+=`\n<image x="${px}" y="${py}" width="${pw}" height="${ph}" preserveAspectRatio="xMidYMid slice" clip-path="url(#pc)" href="${c.image}"/>`;
+    m+=`\n<clipPath id="pc"><rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="10"/></clipPath>`
+    m+=`\n<image x="${px}" y="${py}" width="${pw}" height="${ph}" preserveAspectRatio="xMidYMid slice" clip-path="url(#pc)" href="${c.image}"/>`
   }else{
-    m+=`\n<rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="10" fill="#ece6d8"/>`;
-    m+="\n"+tline(px+pw/2,py+ph/2,"[ photo here ]","sans_r",24,PAL.faint,"middle");
+    m+=`\n<rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="10" fill="#ece6d8"/>`
+    m+="\n"+tline(px+pw/2,py+ph/2,"[ photo here ]","sans_r",24,PAL.faint,"middle")
   }
-  m+=`\n<rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="10" fill="none" stroke="#d8d1c2" stroke-width="2"/>`;
+  m+=`\n<rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="10" fill="none" stroke="#d8d1c2" stroke-width="2"/>`
   /* right column flows: question top-aligned, emphasis bottom-anchored, caption
      centered in the gap between them (clamped so it never crowds either). */
-  const tx=px+pw+44,tw=PADR-tx;
-  let qbot=py+10;
+  const tx=px+pw+44,tw=PADR-tx
+  let qbot=py+10
   if(c.question){const[q,qe]=fblock("question",tx,py+58,c.question,"serif_b",44,PAL.heading,tw,56);m+="\n"+q;qbot=qe;}
-  let etop=py+ph-10;
+  let etop=py+ph-10
   if(c.emphasis){
-    const[es,esz,el]=twkText("emphasis","serif_bi",30,40);
-    const eln=wrap(c.emphasis,STYLE[es][0],STYLE[es][1],esz,tw,0).length;
-    etop=py+ph-40-(eln-1)*el;
-    const[hb]=fblock("emphasis",tx,etop,c.emphasis,"serif_bi",30,PAL.featureDark,tw,40);m+="\n"+hb;
+    const[es,esz,el]=twkText("emphasis","serif_bi",30,40)
+    const eln=wrap(c.emphasis,STYLE[es][0],STYLE[es][1],esz,tw,0).length
+    etop=py+ph-40-(eln-1)*el
+    const[hb]=fblock("emphasis",tx,etop,c.emphasis,"serif_bi",30,PAL.featureDark,tw,40);m+="\n"+hb
   }
   if(c.caption){
-    const[cs,csz,cl]=twkText("caption","serif_i",29,40);
-    const ch=(wrap(c.caption,STYLE[cs][0],STYLE[cs][1],csz,tw,0).length-1)*cl;
-    const minY=qbot+64, maxY=etop-ch-56;
-    let cy=Math.round((qbot+etop)/2-ch/2);
-    cy=Math.min(Math.max(cy,minY),Math.max(maxY,minY));
-    const[cap]=fblock("caption",tx,cy,c.caption,"serif_i",29,PAL.label,tw,40);m+="\n"+cap;
+    const[cs,csz,cl]=twkText("caption","serif_i",29,40)
+    const ch=(wrap(c.caption,STYLE[cs][0],STYLE[cs][1],csz,tw,0).length-1)*cl
+    const minY=qbot+64, maxY=etop-ch-56
+    let cy=Math.round((qbot+etop)/2-ch/2)
+    cy=Math.min(Math.max(cy,minY),Math.max(maxY,minY))
+    const[cap]=fblock("caption",tx,cy,c.caption,"serif_i",29,PAL.label,tw,40);m+="\n"+cap
   }
-  return kicker(c.kicker)+"\n"+vcenter(m,py,py+ph,K)+"\n"+source(c.source);
+  return kicker(c.kicker)+"\n"+vcenter(m,py,py+ph,K)+"\n"+source(c.source)
 }
-function c_cta(c){
+const c_cta = (c) => {
   /* inverted panel: feature ground (set in buildSvg), light ground-colored text throughout */
-  let s=ftline("kicker",CX,200,c.kicker||"","sans_b",28,PAL.ground,"middle",4);
-  s+=`\n<rect x="${CX-40}" y="248" width="80" height="3" fill="${PAL.ground}"/>`;
-  s+="\n"+ftline("big",CX,470,c.big||"VOTE YES","serif_b",170,PAL.ground,"middle");
-  if(c.subtitle)s+="\n"+ftline("subtitle",CX,600,c.subtitle,"serif_i",42,PAL.ground,"middle");
-  let ly=740;(c.lines||[]).forEach(ln=>{s+="\n"+tline(CX,ly,ln,"sans_r",34,PAL.ground,"middle");ly+=52;});
-  if(c.tail)s+="\n"+ftline("tail",CX,920,c.tail,"serif_r",32,PAL.ground,"middle");
-  return s;
+  let s=ftline("kicker",CX,200,c.kicker||"","sans_b",28,PAL.ground,"middle",4)
+  s+=`\n<rect x="${CX-40}" y="248" width="80" height="3" fill="${PAL.ground}"/>`
+  s+="\n"+ftline("big",CX,470,c.big||"VOTE YES","serif_b",170,PAL.ground,"middle")
+  if(c.subtitle)s+="\n"+ftline("subtitle",CX,600,c.subtitle,"serif_i",42,PAL.ground,"middle")
+  let ly=740;(c.lines||[]).forEach(ln=>{s+="\n"+tline(CX,ly,ln,"sans_r",34,PAL.ground,"middle");ly+=52;})
+  if(c.tail)s+="\n"+ftline("tail",CX,920,c.tail,"serif_r",32,PAL.ground,"middle")
+  return s
 }
 /* --- new styles: break the shared silhouette (band/quote/list/bars/table/air) --- */
-function c_quote(c){
+const c_quote = (c) => {
   /* pull-quote: oversized quote glyph (fixed corner accent) + centered italic
      serif quote + attribution. */
-  const K=!!c.tag; let m="";
-  const[q,endy]=fblock("quote",150,430,c.quote||"","serif_i",58,PAL.heading,CW-140,74);
-  m+=q; let bot=endy+14;
+  const K=!!c.tag; let m=""
+  const[q,endy]=fblock("quote",150,430,c.quote||"","serif_i",58,PAL.heading,CW-140,74)
+  m+=q; let bot=endy+14
   if(c.attribution){m+="\n"+ftline("attribution",PADR,endy+96,c.attribution,"serif_r",34,PAL.label,"end");bot=endy+96+8;}
-  const deco=tline(96,360,"\u201c","serif_b",340,PAL.accent,"start");
+  const deco=tline(96,360,"\u201c","serif_b",340,PAL.accent,"start")
   const rt=273,dy=Math.round((rt+CBOT)/2-(388+bot)/2);   // region tuned so mark->quote gap == attr->source gap
   return deco+"\n"+(c.tag?kicker(c.tag,150,null,true,null,"tag"):"")+
-    `\n<g transform="translate(0,${dy})">\n${m}\n</g>\n`+source(c.source);
+    `\n<g transform="translate(0,${dy})">\n${m}\n</g>\n`+source(c.source)
 }
-function c_checklist(c){
+const c_checklist = (c) => {
   /* headline + a scannable marked list. One mark char for the whole list,
      colored by role (green check, gold bullet, red x). A different rhythm. */
-  const K=!!c.kicker; let m="",y;
-  if(c.headline){y=264;const hstep=Math.round(72*((twk("headline").size||58)/58));
+  const K=!!c.kicker; let m="",y
+  if(c.headline){y=264;const hstep=Math.round(72*((twk("headline").size||58)/58))
     for(const line of String(c.headline).split("\n")){
     m+="\n"+ftline("headline",PADL,y,"","serif_b",58,PAL.heading,"start",0,headlineSpans(line));y+=hstep;}}
-  else y=240;
-  const mark=c.mark||"\u2713",mcol=col(c.markColor||"feature");
-  let iy=y+60,bot=iy;
-  (c.items||[]).forEach(it=>{
-    m+="\n"+tline(PADL,iy,mark,"sans_b",46,mcol,"start");
-    const[tk,endy]=block(PADL+78,iy,it,"serif_r",37,PAL.text,CW-78,48);
-    m+="\n"+tk;iy=Math.max(iy+70,endy+40);bot=iy-40+8;});
+  else y=240
+  const mark=c.mark||"\u2713",mcol=col(c.markColor||"feature")
+  let iy=y+60,bot=iy
+  ;(c.items||[]).forEach(it=>{
+    m+="\n"+tline(PADL,iy,mark,"sans_b",46,mcol,"start")
+    const[tk,endy]=block(PADL+78,iy,it,"serif_r",37,PAL.text,CW-78,48)
+    m+="\n"+tk;iy=Math.max(iy+70,endy+40);bot=iy-40+8;})
   if(c.emphasis){const[tk,endy]=fblock("emphasis",PADL,iy+22,c.emphasis,"serif_bi",38,PAL.featureDark,CW,50);m+="\n"+tk;bot=endy+8;}
-  return kicker(c.kicker)+"\n"+vcenter(m,c.headline?222:200,bot,K)+"\n"+source(c.source);
+  return kicker(c.kicker)+"\n"+vcenter(m,c.headline?222:200,bot,K)+"\n"+source(c.source)
 }
-function _num(v){const m=String(v==null?"":v).match(/-?[\d,.]+/);return m?parseFloat(m[0].replace(/,/g,"")):0;}
-function c_compareBar(c){
+const _num = (v) => {const m=String(v==null?"":v).match(/-?[\d,.]+/);return m?parseFloat(m[0].replace(/,/g,"")):0;}
+const c_compareBar = (c) => {
   /* headline + horizontal proportional bars. Light data-viz: fill length is
      proportional to the value; favorable bar in feature, others in label. */
-  const K=!!c.kicker; let m="";
-  if(c.headline)m+="\n"+ftline("headline",PADL,252,"","serif_b",54,PAL.heading,"start",0,headlineSpans(c.headline));
-  const bars=c.bars||[],vals=bars.map(b=>_num(b.value));
-  let mx=c.max?_num(c.max):(vals.length?Math.max(...vals):1);if(!mx)mx=1;
-  const track=relLum(PAL.ground)<0.4?"#ffffff22":"#00000016";
-  const bt=360,barh=46,rowh=Math.min(150,(860-bt)/Math.max(1,bars.length));
+  const K=!!c.kicker; let m=""
+  if(c.headline)m+="\n"+ftline("headline",PADL,252,"","serif_b",54,PAL.heading,"start",0,headlineSpans(c.headline))
+  const bars=c.bars||[],vals=bars.map(b=>_num(b.value))
+  let mx=c.max?_num(c.max):(vals.length?Math.max(...vals):1);if(!mx)mx=1
+  const track=relLum(PAL.ground)<0.4?"#ffffff22":"#00000016"
+  const bt=360,barh=46,rowh=Math.min(150,(860-bt)/Math.max(1,bars.length))
   bars.forEach((b,i)=>{
-    const y=bt+i*rowh;
-    m+="\n"+tline(PADL,y,b.label||"","sans_b",30,PAL.heading);
-    const by=y+22;
-    m+=`\n<rect x="${PADL}" y="${by}" width="${CW}" height="${barh}" rx="8" fill="${track}"/>`;
-    const frac=Math.max(0,Math.min(1,_num(b.value)/mx)),fw=Math.max(6,Math.round(CW*frac));
-    m+=`\n<rect x="${PADL}" y="${by}" width="${fw}" height="${barh}" rx="8" fill="${col(b.color||"label")}"/>`;
-    const disp=b.display||b.value||"",vw=textw(disp,"serif","b",30,0);
-    if(fw>vw+36)m+="\n"+tline(PADL+fw-16,by+barh-12,disp,"serif_b",30,PAL.ground,"end");
-    else m+="\n"+tline(PADL+fw+16,by+barh-12,disp,"serif_b",30,PAL.heading,"start");});
-  let bot=bt+(bars.length-1)*rowh+68;
+    const y=bt+i*rowh
+    m+="\n"+tline(PADL,y,b.label||"","sans_b",30,PAL.heading)
+    const by=y+22
+    m+=`\n<rect x="${PADL}" y="${by}" width="${CW}" height="${barh}" rx="8" fill="${track}"/>`
+    const frac=Math.max(0,Math.min(1,_num(b.value)/mx)),fw=Math.max(6,Math.round(CW*frac))
+    m+=`\n<rect x="${PADL}" y="${by}" width="${fw}" height="${barh}" rx="8" fill="${col(b.color||"label")}"/>`
+    const disp=b.display||b.value||"",vw=textw(disp,"serif","b",30,0)
+    if(fw>vw+36)m+="\n"+tline(PADL+fw-16,by+barh-12,disp,"serif_b",30,PAL.ground,"end")
+    else m+="\n"+tline(PADL+fw+16,by+barh-12,disp,"serif_b",30,PAL.heading,"start");})
+  let bot=bt+(bars.length-1)*rowh+68
   if(c.caption){const[tk,endy]=fblock("caption",PADL,bt+bars.length*rowh+30,c.caption,"serif_i",32,PAL.featureDark,CW,44);m+="\n"+tk;bot=endy+8;}
-  return kicker(c.kicker)+"\n"+vcenter(m,c.headline?213:338,bot,K)+"\n"+source(c.source);
+  return kicker(c.kicker)+"\n"+vcenter(m,c.headline?213:338,bot,K)+"\n"+source(c.source)
 }
-function c_banner(c){
+const c_banner = (c) => {
   /* solid color band across the top with a reversed headline, content on the
      ground below. A strong divider / one-claim look, distinct from the CTA. */
-  const band=col(c.bandColor||"feature"),bh=430;
-  let out=`<rect x="26" y="26" width="${W-52}" height="${bh-26}" rx="18" fill="${band}"/>`;
-  out+=`\n<rect x="26" y="${bh-40}" width="${W-52}" height="40" fill="${band}"/>`;
-  if(c.kicker){out+="\n"+ftline("kicker",CX,150,c.kicker,"sans_b",27,PAL.ground,"middle",4);
-    const ka=twk("kicker").align||"middle",kx=alignX(CX,CW,"middle",ka);
-    const krx=ka==="start"?kx:ka==="end"?kx-80:kx-40;
+  const band=col(c.bandColor||"feature"),bh=430
+  let out=`<rect x="26" y="26" width="${W-52}" height="${bh-26}" rx="18" fill="${band}"/>`
+  out+=`\n<rect x="26" y="${bh-40}" width="${W-52}" height="40" fill="${band}"/>`
+  if(c.kicker){out+="\n"+ftline("kicker",CX,150,c.kicker,"sans_b",27,PAL.ground,"middle",4)
+    const ka=twk("kicker").align||"middle",kx=alignX(CX,CW,"middle",ka)
+    const krx=ka==="start"?kx:ka==="end"?kx-80:kx-40
     out+=`\n<rect x="${krx}" y="168" width="80" height="3" fill="${PAL.ground}"/>`;}
-  let y=250;
-  const hstep=Math.round(80*((twk("headline").size||66)/66));
-  for(const line of String(c.headline||"").split("\n")){out+="\n"+ftline("headline",CX,y,line,"serif_b",66,PAL.ground,"middle");y+=hstep;}
-  let m="",by=520,bot=520;
+  let y=250
+  const hstep=Math.round(80*((twk("headline").size||66)/66))
+  String(c.headline||"").split("\n").forEach(line=>{out+="\n"+ftline("headline",CX,y,line,"serif_b",66,PAL.ground,"middle");y+=hstep})
+  let m="",by=520,bot=520
   if(c.body){const[tk,endy]=fblock("body",CX,by,c.body,"serif_r",37,PAL.text,CW,50,"middle");m+=tk;by=endy;bot=endy+6;}
   if(c.emphasis){const[tk,endy]=fblock("emphasis",CX,by+84,c.emphasis,"serif_bi",40,PAL.featureDark,CW,52,"middle");m+="\n"+tk;bot=endy+8;}
-  const rt=bh+40,dy=Math.round((rt+CBOT)/2-(493+bot)/2);
-  out+=`\n<g transform="translate(0,${dy})">${m}</g>`;
-  out+="\n"+source(c.source);return out;
+  const rt=bh+40,dy=Math.round((rt+CBOT)/2-(493+bot)/2)
+  out+=`\n<g transform="translate(0,${dy})">${m}</g>`
+  out+="\n"+source(c.source);return out
 }
-function c_ledger(c){
+const c_ledger = (c) => {
   /* right-aligned numeric table (civic-report house style): item ... amount
      rows, a rule, an emphasized total. Reads like a document, not a poster. */
-  const K=!!c.kicker; let m="";
-  if(c.headline)m+="\n"+ftline("headline",PADL,258,c.headline,"serif_b",52,PAL.heading);
-  let y=400;
-  (c.rows||[]).forEach(r=>{
-    m+="\n"+tline(PADL,y,r.label||"","serif_r",38,PAL.text);
-    m+="\n"+tline(PADR,y,r.amount||"","serif_r",38,PAL.text,"end");y+=66;});
-  let bot=y-66+12;
+  const K=!!c.kicker; let m=""
+  if(c.headline)m+="\n"+ftline("headline",PADL,258,c.headline,"serif_b",52,PAL.heading)
+  let y=400
+  ;(c.rows||[]).forEach(r=>{
+    m+="\n"+tline(PADL,y,r.label||"","serif_r",38,PAL.text)
+    m+="\n"+tline(PADR,y,r.amount||"","serif_r",38,PAL.text,"end");y+=66;})
+  let bot=y-66+12
   if(c.total&&(c.total.label||c.total.amount)){
-    m+=`\n<rect x="${PADL}" y="${y-6}" width="${CW}" height="3" fill="${PAL.accent}"/>`;y+=46;
-    m+="\n"+tline(PADL,y,c.total.label||"","serif_b",42,PAL.heading);
+    m+=`\n<rect x="${PADL}" y="${y-6}" width="${CW}" height="3" fill="${PAL.accent}"/>`;y+=46
+    m+="\n"+tline(PADL,y,c.total.label||"","serif_b",42,PAL.heading)
     m+="\n"+tline(PADR,y,c.total.amount||"","serif_b",42,PAL.feature,"end");bot=y+12;y+=20;}
   if(c.note){const[tk,endy]=fblock("note",PADL,y+60,c.note,"serif_i",32,PAL.label,CW,44);m+="\n"+tk;bot=endy+6;}
-  return kicker(c.kicker)+"\n"+vcenter(m,c.headline?221:378,bot,K)+"\n"+source(c.source);
+  return kicker(c.kicker)+"\n"+vcenter(m,c.headline?221:378,bot,K)+"\n"+source(c.source)
 }
-function c_bigQuestion(c){
+const c_bigQuestion = (c) => {
   /* near-empty palate cleanser: one big centered question, lots of air.
      Maximum contrast against the dense cards; good for a hanging-question beat. */
-  const K=!!c.kicker; let m="";
-  const[q,endy]=fblock("question",CX,470,c.question||"","serif_b",76,PAL.heading,CW,92,"middle");
-  m+=q; let bot=endy+16;
+  const K=!!c.kicker; let m=""
+  const[q,endy]=fblock("question",CX,470,c.question||"","serif_b",76,PAL.heading,CW,92,"middle")
+  m+=q; let bot=endy+16
   if(c.subtitle){const[tk,endy2]=fblock("subtitle",CX,endy+90,c.subtitle,"serif_i",40,PAL.featureDark,CW-80,52,"middle");m+="\n"+tk;bot=endy2+8;}
-  return kicker(c.kicker)+"\n"+vcenter(m,415,bot,K)+"\n"+source(c.source);
+  return kicker(c.kicker)+"\n"+vcenter(m,415,bot,K)+"\n"+source(c.source)
 }
 /* ---------- card-type registry: ONE entry per type (label, fields, defaults, render) ----------
    Single source of truth for a card type. The type dropdowns, the form schema, blankCard()
@@ -694,268 +694,268 @@ const CARD_TYPES={
    defaults:{kicker:"ONE QUESTION",
      question:"A single question with room to breathe?",
      subtitle:"A short line under it.",source:"Source:"}},
-};
+}
 /* derived: keep SCHEMA name for the form renderer */
-const SCHEMA=Object.fromEntries(Object.entries(CARD_TYPES).map(([k,v])=>[k,v.fields]));
+const SCHEMA=Object.fromEntries(Object.entries(CARD_TYPES).map(([k,v])=>[k,v.fields]))
 /* effective palette for a card: explicit per-card palette > named per-card theme
    > deck-level default > built-in default. buildSvg sets it as the active PAL, so
    every card renders in its own palette (preview, single export, and export-all). */
-function palOf(card){
-  if(card&&card.palette&&typeof card.palette==="object")return {...DEFAULT_PAL,...card.palette};
-  if(card&&card.theme&&allThemes()[card.theme])return {...allThemes()[card.theme]};
-  return {...DEFAULT_PAL,...((deck&&deck.palette)||{})};
+const palOf = (card) => {
+  if(card&&card.palette&&typeof card.palette==="object")return {...DEFAULT_PAL,...card.palette}
+  if(card&&card.theme&&allThemes()[card.theme])return {...allThemes()[card.theme]}
+  return {...DEFAULT_PAL,...((deck&&deck.palette)||{})}
 }
-function buildSvg(card){
-  PAL=palOf(card);
-  CURT=(card&&card.tweaks)||{};
-  const def=CARD_TYPES[card.type];
-  if(!def)return frame()+"\n</svg>\n";
-  return frame(PAL[def.frameBg||"ground"],PAL[def.frameBorder||"accent"])+def.render(card)+"\n</svg>\n";
+const buildSvg = (card) => {
+  PAL=palOf(card)
+  CURT=(card&&card.tweaks)||{}
+  const def=CARD_TYPES[card.type]
+  if(!def)return frame()+"\n</svg>\n"
+  return frame(PAL[def.frameBg||"ground"],PAL[def.frameBorder||"accent"])+def.render(card)+"\n</svg>\n"
 }
-function populateTypeSelects(){
-  const opts=Object.entries(CARD_TYPES).map(([k,v])=>`<option value="${k}">${esc(v.label)}</option>`).join("");
-  document.getElementById("newtype").innerHTML=opts;
-  document.getElementById("cardtype").innerHTML=opts;
+const populateTypeSelects = () => {
+  const opts=Object.entries(CARD_TYPES).map(([k,v])=>`<option value="${k}">${esc(v.label)}</option>`).join("")
+  document.getElementById("newtype").innerHTML=opts
+  document.getElementById("cardtype").innerHTML=opts
 }
 
-function getPath(o,p){return p.split(".").reduce((x,k)=>x&&x[k],o);}
-function setPath(o,p,v){const ks=p.split(".");let x=o;
+const getPath = (o,p) => {return p.split(".").reduce((x,k)=>x&&x[k],o);}
+const setPath = (o,p,v) => {const ks=p.split(".");let x=o
   for(let i=0;i<ks.length-1;i++){if(!x[ks[i]]||typeof x[ks[i]]!=="object")x[ks[i]]={};x=x[ks[i]];}
   x[ks[ks.length-1]]=v;}
 
-function encode(kind,v){
+const encode = (kind,v) => {
   switch(kind){
-    case"stats":return (v||[]).map(s=>`${s.num||""} | ${s.color||"label"} | ${(s.label||[]).join("; ")}`).join("\n");
-    case"rows":return (v||[]).map(r=>`${r.num||""} | ${r.color||"heading"} | ${r.label||""}`).join("\n");
-    case"hlines":return (v||[]).map(l=>`${l.text||""} | ${l.color||"heading"}`).join("\n");
-    case"paras":return (v||[]).join("\n\n");
-    case"lines":return (v||[]).join("\n");
-    case"csvlabel":return (v||[]).join("; ");
-    case"bars":return (v||[]).map(b=>`${b.label||""} | ${b.value||""} | ${b.color||"label"} | ${b.display||""}`).join("\n");
-    case"ledgerrows":return (v||[]).map(r=>`${r.label||""} | ${r.amount||""}`).join("\n");
-    default:return v==null?"":v;
+    case"stats":return (v||[]).map(s=>`${s.num||""} | ${s.color||"label"} | ${(s.label||[]).join("; ")}`).join("\n")
+    case"rows":return (v||[]).map(r=>`${r.num||""} | ${r.color||"heading"} | ${r.label||""}`).join("\n")
+    case"hlines":return (v||[]).map(l=>`${l.text||""} | ${l.color||"heading"}`).join("\n")
+    case"paras":return (v||[]).join("\n\n")
+    case"lines":return (v||[]).join("\n")
+    case"csvlabel":return (v||[]).join("; ")
+    case"bars":return (v||[]).map(b=>`${b.label||""} | ${b.value||""} | ${b.color||"label"} | ${b.display||""}`).join("\n")
+    case"ledgerrows":return (v||[]).map(r=>`${r.label||""} | ${r.amount||""}`).join("\n")
+    default:return v==null?"":v
   }
 }
-function decode(kind,str){
-  const lines=String(str).split("\n");
+const decode = (kind,str) => {
+  const lines=String(str).split("\n")
   switch(kind){
-    case"stats":return lines.filter(l=>l.trim()).map(l=>{const[n,c,lab]=l.split("|");
-      return{num:(n||"").trim(),color:(c||"label").trim(),label:(lab||"").split(";").map(x=>x.trim()).filter(Boolean)};});
-    case"rows":return lines.filter(l=>l.trim()).map(l=>{const[n,c,lab]=l.split("|");
-      return{num:(n||"").trim(),color:(c||"heading").trim(),label:(lab||"").trim()};});
-    case"hlines":return lines.filter(l=>l.trim()).map(l=>{const[t,c]=l.split("|");
-      return{text:(t||"").trim(),color:(c||"heading").trim()};});
-    case"paras":return String(str).split(/\n\s*\n/).map(x=>x.trim()).filter(Boolean);
-    case"lines":return lines.map(x=>x.trim()).filter(Boolean);
-    case"csvlabel":return String(str).split(";").map(x=>x.trim()).filter(Boolean);
-    case"bars":return lines.filter(l=>l.trim()).map(l=>{const[lab,val,c,disp]=l.split("|");
-      return{label:(lab||"").trim(),value:(val||"").trim(),color:(c||"label").trim(),display:(disp||"").trim()};});
-    case"ledgerrows":return lines.filter(l=>l.trim()).map(l=>{const[lab,amt]=l.split("|");
-      return{label:(lab||"").trim(),amount:(amt||"").trim()};});
-    default:return str;
+    case"stats":return lines.filter(l=>l.trim()).map(l=>{const[n,c,lab]=l.split("|")
+      return{num:(n||"").trim(),color:(c||"label").trim(),label:(lab||"").split(";").map(x=>x.trim()).filter(Boolean)};})
+    case"rows":return lines.filter(l=>l.trim()).map(l=>{const[n,c,lab]=l.split("|")
+      return{num:(n||"").trim(),color:(c||"heading").trim(),label:(lab||"").trim()};})
+    case"hlines":return lines.filter(l=>l.trim()).map(l=>{const[t,c]=l.split("|")
+      return{text:(t||"").trim(),color:(c||"heading").trim()};})
+    case"paras":return String(str).split(/\n\s*\n/).map(x=>x.trim()).filter(Boolean)
+    case"lines":return lines.map(x=>x.trim()).filter(Boolean)
+    case"csvlabel":return String(str).split(";").map(x=>x.trim()).filter(Boolean)
+    case"bars":return lines.filter(l=>l.trim()).map(l=>{const[lab,val,c,disp]=l.split("|")
+      return{label:(lab||"").trim(),value:(val||"").trim(),color:(c||"label").trim(),display:(disp||"").trim()};})
+    case"ledgerrows":return lines.filter(l=>l.trim()).map(l=>{const[lab,amt]=l.split("|")
+      return{label:(lab||"").trim(),amount:(amt||"").trim()};})
+    default:return str
   }
 }
 
 /* ---------- form rendering ---------- */
-function renderForm(){
-  closeTweaks();
-  const c=deck.cards[cur];
-  document.getElementById("cardname").value=c.name||"";
-  document.getElementById("cardtype").value=c.type;
-  const tweakable=(CARD_TYPES[c.type]&&CARD_TYPES[c.type].tweakable)||[];
-  const box=document.getElementById("fields");box.innerHTML="";
+const renderForm = () => {
+  closeTweaks()
+  const c=deck.cards[cur]
+  document.getElementById("cardname").value=c.name||""
+  document.getElementById("cardtype").value=c.type
+  const tweakable=(CARD_TYPES[c.type]&&CARD_TYPES[c.type].tweakable)||[]
+  const box=document.getElementById("fields");box.innerHTML=""
   for(const [key,label,kind] of (SCHEMA[c.type]||[])){
-    const wrap=document.createElement("label");wrap.className="f";
-    const lab=document.createElement("span");lab.className="lab";lab.textContent=label;wrap.appendChild(lab);
+    const wrap=document.createElement("label");wrap.className="f"
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=label;wrap.appendChild(lab)
     if(tweakable.includes(key)){
-      const g=document.createElement("button");g.type="button";
-      g.className="gear"+((c.tweaks&&c.tweaks[key])?" on":"");
-      g.innerHTML="&#9881;";
-      g.title="Fine-tune this field on this card (nudge, size, color, font, alignment)";
-      g.addEventListener("click",ev=>{ev.preventDefault();ev.stopPropagation();openTweaks(g,key,label);});
-      lab.appendChild(g);
+      const g=document.createElement("button");g.type="button"
+      g.className="gear"+((c.tweaks&&c.tweaks[key])?" on":"")
+      g.innerHTML="&#9881;"
+      g.title="Fine-tune this field on this card (nudge, size, color, font, alignment)"
+      g.addEventListener("click",ev=>{ev.preventDefault();ev.stopPropagation();openTweaks(g,key,label);})
+      lab.appendChild(g)
     }
     if(kind==="image"){
-      const dz=document.createElement("div");dz.className="drop";dz.tabIndex=0;
-      const file=document.createElement("input");file.type="file";file.accept="image/*";file.hidden=true;
-      const setImg=f=>{if(!f||!f.type||!f.type.startsWith("image/"))return;
-        const fr=new FileReader();fr.onload=()=>{c.image=fr.result;sync();renderForm();};fr.readAsDataURL(f);};
-      file.addEventListener("change",ev=>setImg(ev.target.files[0]));
-      if(c.image){const im=document.createElement("img");im.src=c.image;im.alt="";dz.appendChild(im);
+      const dz=document.createElement("div");dz.className="drop";dz.tabIndex=0
+      const file=document.createElement("input");file.type="file";file.accept="image/*";file.hidden=true
+      const setImg=f=>{if(!f||!f.type||!f.type.startsWith("image/"))return
+        const fr=new FileReader();fr.onload=()=>{c.image=fr.result;sync();renderForm();};fr.readAsDataURL(f);}
+      file.addEventListener("change",ev=>setImg(ev.target.files[0]))
+      if(c.image){const im=document.createElement("img");im.src=c.image;im.alt="";dz.appendChild(im)
         const cap=document.createElement("div");cap.textContent="Drop, click, or paste to replace";dz.appendChild(cap);}
       else{const cap=document.createElement("div");cap.innerHTML="Drag &amp; drop an image here<br>&mdash; or click, or paste &mdash;";dz.appendChild(cap);}
-      const btns=document.createElement("div");btns.className="dzbtns";
-      const up=document.createElement("button");up.className="ghost";up.type="button";
-      up.textContent=c.image?"Replace image":"Upload image";
-      up.addEventListener("click",ev=>{ev.stopPropagation();file.click();});btns.appendChild(up);
-      if(c.image){const clr=document.createElement("button");clr.className="ghost";clr.type="button";
-        clr.textContent="Remove";clr.style.marginLeft="6px";
+      const btns=document.createElement("div");btns.className="dzbtns"
+      const up=document.createElement("button");up.className="ghost";up.type="button"
+      up.textContent=c.image?"Replace image":"Upload image"
+      up.addEventListener("click",ev=>{ev.stopPropagation();file.click();});btns.appendChild(up)
+      if(c.image){const clr=document.createElement("button");clr.className="ghost";clr.type="button"
+        clr.textContent="Remove";clr.style.marginLeft="6px"
         clr.addEventListener("click",ev=>{ev.stopPropagation();delete c.image;sync();renderForm();});btns.appendChild(clr);}
-      dz.appendChild(btns);
-      dz.addEventListener("click",()=>file.click());
-      dz.addEventListener("dragover",ev=>{ev.preventDefault();dz.classList.add("over");});
-      dz.addEventListener("dragleave",()=>dz.classList.remove("over"));
-      dz.addEventListener("drop",ev=>{ev.preventDefault();dz.classList.remove("over");
-        setImg(ev.dataTransfer&&ev.dataTransfer.files&&ev.dataTransfer.files[0]);});
-      dz.addEventListener("paste",ev=>{const items=(ev.clipboardData||{}).items||[];
-        for(const it of items){if(it.type&&it.type.startsWith("image/")){setImg(it.getAsFile());break;}}});
-      wrap.appendChild(dz);wrap.appendChild(file);
+      dz.appendChild(btns)
+      dz.addEventListener("click",()=>file.click())
+      dz.addEventListener("dragover",ev=>{ev.preventDefault();dz.classList.add("over");})
+      dz.addEventListener("dragleave",()=>dz.classList.remove("over"))
+      dz.addEventListener("drop",ev=>{ev.preventDefault();dz.classList.remove("over")
+        setImg(ev.dataTransfer&&ev.dataTransfer.files&&ev.dataTransfer.files[0]);})
+      dz.addEventListener("paste",ev=>{const items=(ev.clipboardData||{}).items||[]
+        for(const it of items){if(it.type&&it.type.startsWith("image/")){setImg(it.getAsFile());break;}}})
+      wrap.appendChild(dz);wrap.appendChild(file)
     }else{
-      const isArea=(kind!=="text");
-      const el=document.createElement(isArea?"textarea":"input");
-      if(!isArea)el.type="text";
-      if(["stats","rows","hlines","paras","bars","ledgerrows","lines"].includes(kind))el.className="big";
-      el.value=encode(kind,getPath(c,key));
-      el.addEventListener("input",()=>{setPath(c,key,decode(kind,el.value));sync();});
-      wrap.appendChild(el);
+      const isArea=(kind!=="text")
+      const el=document.createElement(isArea?"textarea":"input")
+      if(!isArea)el.type="text"
+      if(["stats","rows","hlines","paras","bars","ledgerrows","lines"].includes(kind))el.className="big"
+      el.value=encode(kind,getPath(c,key))
+      el.addEventListener("input",()=>{setPath(c,key,decode(kind,el.value));sync();})
+      wrap.appendChild(el)
     }
-    box.appendChild(wrap);
+    box.appendChild(wrap)
   }
-  showCardPalette();
+  showCardPalette()
 }
 
 /* ---------- per-field tweak popup ---------- */
 const TW_FONTS=[["","default"],["serif_r","serif"],["serif_b","serif bold"],["serif_i","serif italic"],
-  ["serif_bi","serif bold-italic"],["sans_r","sans"],["sans_b","sans bold"]];
-const TW_ALIGNS=[["","default"],["start","left"],["middle","center"],["end","right"]];
-let twPop=null,twGear=null;
-function setTweak(key,prop,val){
-  const c=deck.cards[cur];
+  ["serif_bi","serif bold-italic"],["sans_r","sans"],["sans_b","sans bold"]]
+const TW_ALIGNS=[["","default"],["start","left"],["middle","center"],["end","right"]]
+let twPop=null,twGear=null
+const setTweak = (key,prop,val) => {
+  const c=deck.cards[cur]
   if(val===""||val==null||(typeof val==="number"&&!isFinite(val))){
-    if(c.tweaks&&c.tweaks[key]){delete c.tweaks[key][prop];
-      if(!Object.keys(c.tweaks[key]).length)delete c.tweaks[key];
+    if(c.tweaks&&c.tweaks[key]){delete c.tweaks[key][prop]
+      if(!Object.keys(c.tweaks[key]).length)delete c.tweaks[key]
       if(!Object.keys(c.tweaks).length)delete c.tweaks;}
   }else{
-    if(!c.tweaks)c.tweaks={};if(!c.tweaks[key])c.tweaks[key]={};
-    c.tweaks[key][prop]=val;
+    if(!c.tweaks)c.tweaks={};if(!c.tweaks[key])c.tweaks[key]={}
+    c.tweaks[key][prop]=val
   }
-  if(twGear)twGear.classList.toggle("on",!!(c.tweaks&&c.tweaks[key]));
-  sync();
+  if(twGear)twGear.classList.toggle("on",!!(c.tweaks&&c.tweaks[key]))
+  sync()
 }
-function closeTweaks(){if(twPop){twPop.remove();twPop=null;twGear=null;}}
-function openTweaks(gear,key,fieldLabel){
+const closeTweaks = () => {if(twPop){twPop.remove();twPop=null;twGear=null;}}
+const openTweaks = (gear,key,fieldLabel) => {
   if(twPop&&twGear===gear){closeTweaks();return;}
-  closeTweaks();twGear=gear;
-  const c=deck.cards[cur],t=(c.tweaks&&c.tweaks[key])||{};
-  const pop=document.createElement("div");pop.className="twpop";
-  const h=document.createElement("h3");
-  const ttl=document.createElement("span");ttl.className="ttl";ttl.textContent=fieldLabel;h.appendChild(ttl);
-  const x=document.createElement("button");x.type="button";x.className="ghost";x.textContent="×";
-  x.style.padding="0 6px";x.addEventListener("click",closeTweaks);h.appendChild(x);
-  pop.appendChild(h);
-  const row=(labTxt,el)=>{const d=document.createElement("div");d.className="rowt";
-    const l=document.createElement("label");l.textContent=labTxt;d.appendChild(l);d.appendChild(el);pop.appendChild(d);};
+  closeTweaks();twGear=gear
+  const c=deck.cards[cur],t=(c.tweaks&&c.tweaks[key])||{}
+  const pop=document.createElement("div");pop.className="twpop"
+  const h=document.createElement("h3")
+  const ttl=document.createElement("span");ttl.className="ttl";ttl.textContent=fieldLabel;h.appendChild(ttl)
+  const x=document.createElement("button");x.type="button";x.className="ghost";x.textContent="×"
+  x.style.padding="0 6px";x.addEventListener("click",closeTweaks);h.appendChild(x)
+  pop.appendChild(h)
+  const row=(labTxt,el)=>{const d=document.createElement("div");d.className="rowt"
+    const l=document.createElement("label");l.textContent=labTxt;d.appendChild(l);d.appendChild(el);pop.appendChild(d);}
   const num=(prop,labTxt,step,title)=>{
-    const i=document.createElement("input");i.type="number";i.step=step||1;i.placeholder="default";
-    if(t[prop]!=null)i.value=t[prop];if(title)i.title=title;
-    i.addEventListener("input",()=>setTweak(key,prop,i.value===""?null:parseFloat(i.value)));
-    row(labTxt,i);};
-  num("dy","Nudge ↕ px",2,"negative = up, positive = down; moves only this field");
-  num("size","Font size px",1);
-  num("lh","Line height px",1);
-  const ci=document.createElement("input");ci.type="text";ci.placeholder="default";
-  ci.title="role name (feature, heading, …) or #hex";ci.setAttribute("list","twroles");
-  if(t.color)ci.value=t.color;
-  ci.addEventListener("input",()=>setTweak(key,"color",ci.value.trim()||null));
-  row("Color",ci);
+    const i=document.createElement("input");i.type="number";i.step=step||1;i.placeholder="default"
+    if(t[prop]!=null)i.value=t[prop];if(title)i.title=title
+    i.addEventListener("input",()=>setTweak(key,prop,i.value===""?null:parseFloat(i.value)))
+    row(labTxt,i);}
+  num("dy","Nudge ↕ px",2,"negative = up, positive = down; moves only this field")
+  num("size","Font size px",1)
+  num("lh","Line height px",1)
+  const ci=document.createElement("input");ci.type="text";ci.placeholder="default"
+  ci.title="role name (feature, heading, …) or #hex";ci.setAttribute("list","twroles")
+  if(t.color)ci.value=t.color
+  ci.addEventListener("input",()=>setTweak(key,"color",ci.value.trim()||null))
+  row("Color",ci)
   const sel=(prop,labTxt,opts)=>{
-    const s=document.createElement("select");
-    for(const[v,txt] of opts){const o=document.createElement("option");o.value=v;o.textContent=txt;s.appendChild(o);}
-    s.value=t[prop]||"";
-    s.addEventListener("change",()=>setTweak(key,prop,s.value||null));
-    row(labTxt,s);};
-  sel("font","Font",TW_FONTS);
-  sel("align","Align",TW_ALIGNS);
-  const foot=document.createElement("div");foot.className="foot";
-  const rst=document.createElement("button");rst.type="button";rst.className="ghost";rst.textContent="Reset field";
+    const s=document.createElement("select")
+    opts.forEach(([v,txt])=>{const o=document.createElement("option");o.value=v;o.textContent=txt;s.appendChild(o)})
+    s.value=t[prop]||""
+    s.addEventListener("change",()=>setTweak(key,prop,s.value||null))
+    row(labTxt,s);}
+  sel("font","Font",TW_FONTS)
+  sel("align","Align",TW_ALIGNS)
+  const foot=document.createElement("div");foot.className="foot"
+  const rst=document.createElement("button");rst.type="button";rst.className="ghost";rst.textContent="Reset field"
   rst.addEventListener("click",()=>{
     if(c.tweaks){delete c.tweaks[key];if(!Object.keys(c.tweaks).length)delete c.tweaks;}
-    gear.classList.remove("on");sync();closeTweaks();openTweaks(gear,key,fieldLabel);});
-  foot.appendChild(rst);pop.appendChild(foot);
-  document.body.appendChild(pop);
-  const r=gear.getBoundingClientRect();
-  pop.style.left=Math.max(8,Math.min(r.right-256,innerWidth-264))+"px";
-  let top=r.bottom+6;
-  if(top+pop.offsetHeight>innerHeight-8)top=Math.max(8,r.top-pop.offsetHeight-6);
-  pop.style.top=top+"px";
-  twPop=pop;
+    gear.classList.remove("on");sync();closeTweaks();openTweaks(gear,key,fieldLabel);})
+  foot.appendChild(rst);pop.appendChild(foot)
+  document.body.appendChild(pop)
+  const r=gear.getBoundingClientRect()
+  pop.style.left=Math.max(8,Math.min(r.right-256,innerWidth-264))+"px"
+  let top=r.bottom+6
+  if(top+pop.offsetHeight>innerHeight-8)top=Math.max(8,r.top-pop.offsetHeight-6)
+  pop.style.top=top+"px"
+  twPop=pop
 }
 document.addEventListener("pointerdown",e=>{
-  if(twPop&&!twPop.contains(e.target)&&!(twGear&&twGear.contains(e.target)))closeTweaks();});
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeTweaks();});
-(function(){
-  const dl=document.createElement("datalist");dl.id="twroles";
-  ROLES.forEach(r=>{const o=document.createElement("option");o.value=r;dl.appendChild(o);});
-  document.body.appendChild(dl);
+  if(twPop&&!twPop.contains(e.target)&&!(twGear&&twGear.contains(e.target)))closeTweaks();})
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeTweaks();})
+;(function(){
+  const dl=document.createElement("datalist");dl.id="twroles"
+  ROLES.forEach(r=>{const o=document.createElement("option");o.value=r;dl.appendChild(o);})
+  document.body.appendChild(dl)
   const ep=document.querySelector(".edit");   // popup is position:fixed; don't let it drift on scroll
-  if(ep)ep.addEventListener("scroll",closeTweaks,{passive:true});
-})();
+  if(ep)ep.addEventListener("scroll",closeTweaks,{passive:true})
+})()
 
 /* ---------- deck list + palette ---------- */
-function renderList(){
-  const box=document.getElementById("cardlist");box.innerHTML="";
+const renderList = () => {
+  const box=document.getElementById("cardlist");box.innerHTML=""
   deck.cards.forEach((c,i)=>{
-    const d=document.createElement("div");d.className="ci"+(i===cur?" active":"");
-    d.innerHTML=`<span class="nm">${esc(c.name||"(unnamed)")}</span><span class="ty">${esc(c.type)}</span>`;
-    d.addEventListener("click",()=>{cur=i;renderForm();renderList();renderPreview();});
-    box.appendChild(d);
-  });
+    const d=document.createElement("div");d.className="ci"+(i===cur?" active":"")
+    d.innerHTML=`<span class="nm">${esc(c.name||"(unnamed)")}</span><span class="ty">${esc(c.type)}</span>`
+    d.addEventListener("click",()=>{cur=i;renderForm();renderList();renderPreview();})
+    box.appendChild(d)
+  })
 }
-function renderPalette(){
-  const box=document.getElementById("palette");box.innerHTML="";
+const renderPalette = () => {
+  const box=document.getElementById("palette");box.innerHTML=""
   ROLES.forEach(k=>{
-    const l=document.createElement("label");l.title=ROLE_LABEL[k]||k;
-    const inp=document.createElement("input");inp.type="color";inp.value=PAL[k]||"#000000";
+    const l=document.createElement("label");l.title=ROLE_LABEL[k]||k
+    const inp=document.createElement("input");inp.type="color";inp.value=PAL[k]||"#000000"
     inp.addEventListener("input",()=>{
-      const card=deck.cards[cur];
-      const p={...palOf(card)};p[k]=inp.value;PAL=p;
+      const card=deck.cards[cur]
+      const p={...palOf(card)};p[k]=inp.value;PAL=p
       const name=matchTheme();               // did the tweak land exactly on a named theme?
       if(name){card.theme=name;delete card.palette;}
       else{card.theme=undefined;card.palette=p;}
-      renderThemeSel();sync();
-    });
-    l.appendChild(inp);l.appendChild(document.createTextNode(k));box.appendChild(l);
-  });
+      renderThemeSel();sync()
+    })
+    l.appendChild(inp);l.appendChild(document.createTextNode(k));box.appendChild(l)
+  })
 }
 /* point the palette panel + contrast at the current card's palette */
-function showCardPalette(){PAL=palOf(deck.cards[cur]);renderThemeSel();renderPalette();renderContrast();}
+const showCardPalette = () => {PAL=palOf(deck.cards[cur]);renderThemeSel();renderPalette();renderContrast();}
 /* user-saved palettes live in their own localStorage key, merged with built-ins */
-let userThemes={};
-function loadUserThemes(){try{userThemes=JSON.parse(localStorage.getItem("cardThemes"))||{};}catch(e){userThemes={};}}
-function saveUserThemes(){try{localStorage.setItem("cardThemes",JSON.stringify(userThemes));}catch(e){}}
-function allThemes(){return {...THEMES,...userThemes};}
-function matchTheme(){
+let userThemes={}
+const loadUserThemes = () => {try{userThemes=JSON.parse(localStorage.getItem("cardThemes"))||{};}catch(e){userThemes={};}}
+const saveUserThemes = () => {try{localStorage.setItem("cardThemes",JSON.stringify(userThemes));}catch(e){}}
+const allThemes = () => {return {...THEMES,...userThemes};}
+const matchTheme = () => {
   for(const[name,p] of Object.entries(allThemes())){
-    if(ROLES.every(r=>(PAL[r]||"").toLowerCase()===(p[r]||"").toLowerCase()))return name;
+    if(ROLES.every(r=>(PAL[r]||"").toLowerCase()===(p[r]||"").toLowerCase()))return name
   }
-  return"";
+  return""
 }
-function renderThemeSel(){
-  const sel=document.getElementById("themesel");sel.innerHTML="";
-  const g1=document.createElement("optgroup");g1.label="Built-in";
-  for(const name of Object.keys(THEMES)){const o=document.createElement("option");o.value=name;o.textContent=name;g1.appendChild(o);}
-  sel.appendChild(g1);
-  const un=Object.keys(userThemes);
-  if(un.length){const g2=document.createElement("optgroup");g2.label="My palettes";
-    for(const name of un){const o=document.createElement("option");o.value=name;o.textContent=name;g2.appendChild(o);}
+const renderThemeSel = () => {
+  const sel=document.getElementById("themesel");sel.innerHTML=""
+  const g1=document.createElement("optgroup");g1.label="Built-in"
+  Object.keys(THEMES).forEach(name=>{const o=document.createElement("option");o.value=name;o.textContent=name;g1.appendChild(o)})
+  sel.appendChild(g1)
+  const un=Object.keys(userThemes)
+  if(un.length){const g2=document.createElement("optgroup");g2.label="My palettes"
+    un.forEach(name=>{const o=document.createElement("option");o.value=name;o.textContent=name;g2.appendChild(o)})
     sel.appendChild(g2);}
-  const oc=document.createElement("option");oc.value="";oc.textContent="Custom…";sel.appendChild(oc);
-  const m=matchTheme();sel.value=m;
-  const nameInp=document.getElementById("themename"),del=document.getElementById("deltheme");
-  if(document.activeElement!==nameInp)nameInp.value=m||"";
-  del.disabled=!(m&&userThemes[m]);
+  const oc=document.createElement("option");oc.value="";oc.textContent="Custom…";sel.appendChild(oc)
+  const m=matchTheme();sel.value=m
+  const nameInp=document.getElementById("themename"),del=document.getElementById("deltheme")
+  if(document.activeElement!==nameInp)nameInp.value=m||""
+  del.disabled=!(m&&userThemes[m])
 }
-function applyTheme(name){
-  const t=allThemes()[name];if(!t)return;
-  const card=deck.cards[cur];card.theme=name;delete card.palette;
-  PAL={...t};showCardPalette();sync();
+const applyTheme = (name) => {
+  const t=allThemes()[name];if(!t)return
+  const card=deck.cards[cur];card.theme=name;delete card.palette
+  PAL={...t};showCardPalette();sync()
 }
 /* ---------- WCAG contrast warnings ---------- */
-function hexRgb(h){h=(h||"").replace("#","");if(h.length===3)h=h.split("").map(c=>c+c).join("");
+const hexRgb = (h) => {h=(h||"").replace("#","");if(h.length===3)h=h.split("").map(c=>c+c).join("")
   const n=parseInt(h,16)||0;return[(n>>16)&255,(n>>8)&255,n&255];}
-function relLum(h){const[r,g,b]=hexRgb(h).map(v=>{v/=255;return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4);});
+const relLum = (h) => {const[r,g,b]=hexRgb(h).map(v=>{v/=255;return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4);})
   return 0.2126*r+0.7152*g+0.0722*b;}
-function contrastRatio(a,b){const L1=relLum(a),L2=relLum(b),hi=Math.max(L1,L2),lo=Math.min(L1,L2);
+const contrastRatio = (a,b) => {const L1=relLum(a),L2=relLum(b),hi=Math.max(L1,L2),lo=Math.min(L1,L2)
   return (hi+0.05)/(lo+0.05);}
 /* min ratios: ~3:1 for large/heavy type (headlines, big numbers, kicker),
    4.5:1 for normal-size copy (body, labels, source, emphasis, CTA address lines). */
@@ -969,170 +969,170 @@ const CONTRAST=[
   {fg:"accent",    bg:"ground", min:3,   what:"kicker / accent"},
   {fg:"alert",     bg:"ground", min:3,   what:"alert"},
   {fg:"ground",    bg:"feature",min:4.5, what:"CTA text on feature panel"},
-];
-function renderContrast(){
-  const box=document.getElementById("contrast");if(!box)return;
-  const bad=CONTRAST.map(c=>({...c,r:contrastRatio(PAL[c.fg],PAL[c.bg])})).filter(c=>c.r<c.min);
+]
+const renderContrast = () => {
+  const box=document.getElementById("contrast");if(!box)return
+  const bad=CONTRAST.map(c=>({...c,r:contrastRatio(PAL[c.fg],PAL[c.bg])})).filter(c=>c.r<c.min)
   if(!bad.length){box.innerHTML='<span class="ok">&#10003; Contrast looks good across all roles.</span>';return;}
   box.innerHTML='<span class="warnhead">&#9888; Low contrast &mdash; may be hard to read:</span><br>'+
-    bad.map(b=>`<span class="bad">${b.what}</span> <span class="ratio">${b.r.toFixed(1)}:1 (aim ${b.min}:1)</span>`).join("<br>");
+    bad.map(b=>`<span class="bad">${b.what}</span> <span class="ratio">${b.r.toFixed(1)}:1 (aim ${b.min}:1)</span>`).join("<br>")
 }
 
 /* ---------- preview + json + persistence ---------- */
-function renderPreview(){
-  const c=deck.cards[cur];
-  document.getElementById("preview").innerHTML=c?buildSvg(c):"";
+const renderPreview = () => {
+  const c=deck.cards[cur]
+  document.getElementById("preview").innerHTML=c?buildSvg(c):""
 }
 /* The textarea is left alone while focused OR holding unapplied edits (gold
    border) — resyncing it on blur used to wipe the user's edits the instant
    they clicked Apply, because mousedown blurs the textarea first. */
-let jsonDirty=false;
-function setJsonDirty(v){jsonDirty=v;
+let jsonDirty=false
+const setJsonDirty = (v) => {jsonDirty=v
   document.getElementById("json").style.borderColor=v?"var(--gold)":"";}
-function renderJson(){
-  const ta=document.getElementById("json");
-  if(document.activeElement!==ta&&!jsonDirty) ta.value=JSON.stringify(deck,null,2);
+const renderJson = () => {
+  const ta=document.getElementById("json")
+  if(document.activeElement!==ta&&!jsonDirty) ta.value=JSON.stringify(deck,null,2)
 }
-function save(){try{localStorage.setItem("cardDeck",JSON.stringify(deck));}catch(e){}}
-function sync(){renderPreview();renderJson();renderList();renderContrast();save();}
+const save = () => {try{localStorage.setItem("cardDeck",JSON.stringify(deck));}catch(e){}}
+const sync = () => {renderPreview();renderJson();renderList();renderContrast();save();}
 
 /* ---------- export ---------- */
-function flash(t,err){const m=document.getElementById("msg");m.textContent=t;
+const flash = (t,err) => {const m=document.getElementById("msg");m.textContent=t
   m.className="msg "+(err?"err":"ok");setTimeout(()=>{m.textContent="";m.className="msg";},err?7000:2500);}
-function downloadBlob(blob,name){const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+const downloadBlob = (blob,name) => {const a=document.createElement("a");a.href=URL.createObjectURL(blob)
   a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500);}
-function svgToPng(svg){
+const svgToPng = (svg) => {
   return new Promise((res,rej)=>{
-    const img=new Image();
-    const blob=new Blob([svg],{type:"image/svg+xml;charset=utf-8"});
-    const url=URL.createObjectURL(blob);
-    img.onload=()=>{const cv=document.createElement("canvas");cv.width=W;cv.height=W;
-      const ctx=cv.getContext("2d");ctx.drawImage(img,0,0,W,W);URL.revokeObjectURL(url);
-      cv.toBlob(b=>b?res(b):rej(new Error("toBlob failed")),"image/png");};
-    img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error("SVG render failed"));};
-    img.src=url;
-  });
+    const img=new Image()
+    const blob=new Blob([svg],{type:"image/svg+xml;charset=utf-8"})
+    const url=URL.createObjectURL(blob)
+    img.onload=()=>{const cv=document.createElement("canvas");cv.width=W;cv.height=W
+      const ctx=cv.getContext("2d");ctx.drawImage(img,0,0,W,W);URL.revokeObjectURL(url)
+      cv.toBlob(b=>b?res(b):rej(new Error("toBlob failed")),"image/png");}
+    img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error("SVG render failed"));}
+    img.src=url
+  })
 }
-function curName(){const c=deck.cards[cur];return (c.name||"card").replace(/[^\w.-]+/g,"_");}
+const curName = () => {const c=deck.cards[cur];return (c.name||"card").replace(/[^\w.-]+/g,"_");}
 
 document.getElementById("svgBtn").onclick=()=>{
-  const c=deck.cards[cur];downloadBlob(new Blob([buildSvg(c)],{type:"image/svg+xml"}),curName()+".svg");};
+  const c=deck.cards[cur];downloadBlob(new Blob([buildSvg(c)],{type:"image/svg+xml"}),curName()+".svg");}
 document.getElementById("pngBtn").onclick=async()=>{
   try{const b=await svgToPng(buildSvg(deck.cards[cur]));downloadBlob(b,curName()+".png");flash("PNG saved");}
-  catch(e){flash(e.message,true);}};
+  catch(e){flash(e.message,true);}}
 /* ---------- minimal ZIP writer (store-only) ----------
    PNGs are already deflate-compressed, so the zip only wraps them (method 0,
    no compression). Self-contained — no CDN dependency, works offline/file://. */
-const CRC_T=(()=>{const t=new Uint32Array(256);
+const CRC_T=(()=>{const t=new Uint32Array(256)
   for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?0xEDB88320^(c>>>1):c>>>1;t[n]=c;}
-  return t;})();
-function crc32(u8){let c=0xFFFFFFFF;
-  for(let i=0;i<u8.length;i++)c=CRC_T[(c^u8[i])&0xFF]^(c>>>8);
+  return t;})()
+const crc32 = (u8) => {let c=0xFFFFFFFF
+  for(let i=0;i<u8.length;i++)c=CRC_T[(c^u8[i])&0xFF]^(c>>>8)
   return (c^0xFFFFFFFF)>>>0;}
-function zipStore(files){   /* files: [{name, data:Uint8Array}] -> Blob */
-  const enc=new TextEncoder(),parts=[],cdir=[];let off=0;
+const zipStore = (files) => {   /* files: [{name, data:Uint8Array}] -> Blob */
+  const enc=new TextEncoder(),parts=[],cdir=[];let off=0
   const d=new Date(),
     dtime=((d.getHours()<<11)|(d.getMinutes()<<5)|(d.getSeconds()>>1))&0xFFFF,
-    ddate=(((d.getFullYear()-1980)<<9)|((d.getMonth()+1)<<5)|d.getDate())&0xFFFF;
-  const u16=v=>[v&255,(v>>>8)&255],u32=v=>[v&255,(v>>>8)&255,(v>>>16)&255,(v>>>24)&255];
+    ddate=(((d.getFullYear()-1980)<<9)|((d.getMonth()+1)<<5)|d.getDate())&0xFFFF
+  const u16=v=>[v&255,(v>>>8)&255],u32=v=>[v&255,(v>>>8)&255,(v>>>16)&255,(v>>>24)&255]
   for(const f of files){
-    const nm=enc.encode(f.name),crc=crc32(f.data),sz=f.data.length;
+    const nm=enc.encode(f.name),crc=crc32(f.data),sz=f.data.length
     const common=[...u16(20),...u16(0x0800),...u16(0),...u16(dtime),...u16(ddate),
-      ...u32(crc),...u32(sz),...u32(sz),...u16(nm.length),...u16(0)];
-    parts.push(new Uint8Array([...u32(0x04034b50),...common]),nm,f.data);
+      ...u32(crc),...u32(sz),...u32(sz),...u16(nm.length),...u16(0)]
+    parts.push(new Uint8Array([...u32(0x04034b50),...common]),nm,f.data)
     cdir.push(new Uint8Array([...u32(0x02014b50),...u16(20),...common,
-      ...u16(0),...u16(0),...u16(0),...u32(0),...u32(off)]),nm);
-    off+=30+nm.length+sz;
+      ...u16(0),...u16(0),...u16(0),...u32(0),...u32(off)]),nm)
+    off+=30+nm.length+sz
   }
-  let csize=0;cdir.forEach(p=>csize+=p.length);
+  let csize=0;cdir.forEach(p=>csize+=p.length)
   parts.push(...cdir,new Uint8Array([...u32(0x06054b50),...u16(0),...u16(0),
-    ...u16(files.length),...u16(files.length),...u32(csize),...u32(off),...u16(0)]));
-  return new Blob(parts,{type:"application/zip"});
+    ...u16(files.length),...u16(files.length),...u32(csize),...u32(off),...u16(0)]))
+  return new Blob(parts,{type:"application/zip"})
 }
 document.getElementById("allBtn").onclick=async()=>{
-  const btn=document.getElementById("allBtn"),files=[],used=new Set();
+  const btn=document.getElementById("allBtn"),files=[],used=new Set()
   try{
     for(let i=0;i<deck.cards.length;i++){
-      btn.textContent=`Zipping ${i+1}/${deck.cards.length}…`;
-      const c=deck.cards[i];
-      const base=(c.name||("card"+(i+1))).replace(/[^\w.-]+/g,"_");
-      let nm=base,n=2;while(used.has(nm))nm=base+"_"+(n++);used.add(nm);
-      const b=await svgToPng(buildSvg(c));
-      files.push({name:nm+".png",data:new Uint8Array(await b.arrayBuffer())});
+      btn.textContent=`Zipping ${i+1}/${deck.cards.length}…`
+      const c=deck.cards[i]
+      const base=(c.name||("card"+(i+1))).replace(/[^\w.-]+/g,"_")
+      let nm=base,n=2;while(used.has(nm))nm=base+"_"+(n++);used.add(nm)
+      const b=await svgToPng(buildSvg(c))
+      files.push({name:nm+".png",data:new Uint8Array(await b.arrayBuffer())})
     }
-    downloadBlob(zipStore(files),"card-deck.zip");
-    flash("Exported "+files.length+" PNGs as card-deck.zip");
+    downloadBlob(zipStore(files),"card-deck.zip")
+    flash("Exported "+files.length+" PNGs as card-deck.zip")
   }catch(e){flash("Export failed: "+(e.message||e),true);}
-  btn.textContent="Export all PNGs";renderPreview();};
+  btn.textContent="Export all PNGs";renderPreview();}
 document.getElementById("copyBtn").onclick=()=>{
-  const btn=document.getElementById("copyBtn"),note=document.getElementById("expnote");
-  const done=(ok,msg)=>{flash(ok?msg:"Copy failed — details below the buttons",!ok);
-    note.textContent=msg;note.style.color=ok?"var(--green)":"#b0402c";
-    btn.textContent=ok?"Copied ✓":"Copy failed ✗";
-    setTimeout(()=>{btn.textContent="Copy PNG";},2000);};
+  const btn=document.getElementById("copyBtn"),note=document.getElementById("expnote")
+  const done=(ok,msg)=>{flash(ok?msg:"Copy failed — details below the buttons",!ok)
+    note.textContent=msg;note.style.color=ok?"var(--green)":"#b0402c"
+    btn.textContent=ok?"Copied ✓":"Copy failed ✗"
+    setTimeout(()=>{btn.textContent="Copy PNG";},2000);}
   if(!navigator.clipboard||!navigator.clipboard.write||!window.ClipboardItem){
     done(false,window.isSecureContext
       ?"This browser doesn't expose image clipboard writes (ClipboardItem) — use Download PNG instead."
       :"Clipboard copy needs a secure context — you're on http://. Use the https:// site (or file://), or Download PNG instead.");return;}
-  const png=svgToPng(buildSvg(deck.cards[cur]));
-  const write=b=>navigator.clipboard.write([new ClipboardItem({"image/png":b})]);
+  const png=svgToPng(buildSvg(deck.cards[cur]))
+  const write=b=>navigator.clipboard.write([new ClipboardItem({"image/png":b})])
   /* write must start inside the click gesture — pass the pending PNG as a
      promise so rasterizing doesn't outlive the transient activation */
-  let first;
+  let first
   try{first=write(png);}catch(e){first=Promise.reject(e);}
   first.catch(e1=>png.then(write).catch(e2=>{   // retry with the resolved blob: some browsers reject the promise form
-      const d=e=>((e&&(e.message||e.name))||"unknown error");
-      let msg="Copy failed: "+d(e2)+(d(e1)!==d(e2)?" — first attempt: "+d(e1):"");
+      const d=e=>((e&&(e.message||e.name))||"unknown error")
+      let msg="Copy failed: "+d(e2)+(d(e1)!==d(e2)?" — first attempt: "+d(e1):"")
       if(/NotAllowed|denied|permission/i.test(d(e1)+d(e2)))
-        msg+=" · Brave blocks clipboard writes by default: click the icon left of the address bar → Site settings → Clipboard → Allow, then reload.";
+        msg+=" · Brave blocks clipboard writes by default: click the icon left of the address bar → Site settings → Clipboard → Allow, then reload."
       throw new Error(msg);}))
     .then(()=>done(true,"PNG copied — paste with Ctrl+V"))
-    .catch(e=>{console.error("Copy PNG:",e);done(false,e.message);});};
+    .catch(e=>{console.error("Copy PNG:",e);done(false,e.message);});}
 
 /* ---------- deck operations ---------- */
-function blankCard(type){
-  const def=CARD_TYPES[type];
-  const defaults=def?JSON.parse(JSON.stringify(def.defaults||{})):{};
-  return Object.assign({type,name:"card_"+(deck.cards.length+1)},defaults);
+const blankCard = (type) => {
+  const def=CARD_TYPES[type]
+  const defaults=def?JSON.parse(JSON.stringify(def.defaults||{})):{}
+  return Object.assign({type,name:"card_"+(deck.cards.length+1)},defaults)
 }
-document.getElementById("add").onclick=()=>{const t=document.getElementById("newtype").value;
-  const src=deck.cards[cur],nc=blankCard(t);
+document.getElementById("add").onclick=()=>{const t=document.getElementById("newtype").value
+  const src=deck.cards[cur],nc=blankCard(t)
   if(src){if(src.palette)nc.palette={...src.palette};else if(src.theme)nc.theme=src.theme;}
-  deck.cards.splice(cur+1,0,nc);cur++;renderForm();sync();};
-document.getElementById("dup").onclick=()=>{const c=JSON.parse(JSON.stringify(deck.cards[cur]));
-  c.name=(c.name||"card")+"_copy";deck.cards.splice(cur+1,0,c);cur++;renderForm();sync();};
+  deck.cards.splice(cur+1,0,nc);cur++;renderForm();sync();}
+document.getElementById("dup").onclick=()=>{const c=JSON.parse(JSON.stringify(deck.cards[cur]))
+  c.name=(c.name||"card")+"_copy";deck.cards.splice(cur+1,0,c);cur++;renderForm();sync();}
 document.getElementById("del").onclick=()=>{if(deck.cards.length<=1){flash("Keep at least one card",true);return;}
-  deck.cards.splice(cur,1);if(cur>=deck.cards.length)cur=deck.cards.length-1;renderForm();sync();};
-document.getElementById("up").onclick=()=>{if(cur===0)return;
-  [deck.cards[cur-1],deck.cards[cur]]=[deck.cards[cur],deck.cards[cur-1]];cur--;renderForm();sync();};
-document.getElementById("down").onclick=()=>{if(cur>=deck.cards.length-1)return;
-  [deck.cards[cur+1],deck.cards[cur]]=[deck.cards[cur],deck.cards[cur+1]];cur++;renderForm();sync();};
-document.getElementById("cardname").addEventListener("input",e=>{deck.cards[cur].name=e.target.value;renderList();save();});
+  deck.cards.splice(cur,1);if(cur>=deck.cards.length)cur=deck.cards.length-1;renderForm();sync();}
+document.getElementById("up").onclick=()=>{if(cur===0)return
+  ;[deck.cards[cur-1],deck.cards[cur]]=[deck.cards[cur],deck.cards[cur-1]];cur--;renderForm();sync();}
+document.getElementById("down").onclick=()=>{if(cur>=deck.cards.length-1)return
+  ;[deck.cards[cur+1],deck.cards[cur]]=[deck.cards[cur],deck.cards[cur+1]];cur++;renderForm();sync();}
+document.getElementById("cardname").addEventListener("input",e=>{deck.cards[cur].name=e.target.value;renderList();save();})
 document.getElementById("cardtype").addEventListener("change",e=>{
-  deck.cards[cur].type=e.target.value;renderForm();sync();});
+  deck.cards[cur].type=e.target.value;renderForm();sync();})
 
 /* ---------- JSON apply / load / save ---------- */
 document.getElementById("applyJson").onclick=()=>{
-  try{const d=migrate(JSON.parse(document.getElementById("json").value));
-    if(!d||!Array.isArray(d.cards))throw new Error("need {cards:[...]}");
-    deck=d;if(!deck.palette)deck.palette={...DEFAULT_PAL};cur=0;
+  try{const d=migrate(JSON.parse(document.getElementById("json").value))
+    if(!d||!Array.isArray(d.cards))throw new Error("need {cards:[...]}")
+    deck=d;if(!deck.palette)deck.palette={...DEFAULT_PAL};cur=0
     setJsonDirty(false);   // applied — textarea is canonical again (errors keep edits + gold border)
-    boot();flash("JSON applied");}catch(e){flash("JSON error: "+e.message,true);}};
+    boot();flash("JSON applied");}catch(e){flash("JSON error: "+e.message,true);}}
 document.getElementById("dlJson").onclick=()=>downloadBlob(
-  new Blob([JSON.stringify(deck,null,2)],{type:"application/json"}),"card-deck.json");
-document.getElementById("loadJson").onclick=()=>document.getElementById("jsonFile").click();
-document.getElementById("jsonFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;
-  const fr=new FileReader();fr.onload=()=>{document.getElementById("json").value=fr.result;
-    document.getElementById("applyJson").click();};fr.readAsText(f);
+  new Blob([JSON.stringify(deck,null,2)],{type:"application/json"}),"card-deck.json")
+document.getElementById("loadJson").onclick=()=>document.getElementById("jsonFile").click()
+document.getElementById("jsonFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return
+  const fr=new FileReader();fr.onload=()=>{document.getElementById("json").value=fr.result
+    document.getElementById("applyJson").click();};fr.readAsText(f)
   e.target.value="";   // else picking the same file again fires no change event
-});
-document.getElementById("json").addEventListener("input",()=>setJsonDirty(true));
-document.getElementById("reset").onclick=()=>{deck=sampleDeck();PAL={...DEFAULT_PAL};cur=0;boot();flash("Sample loaded");};
-document.getElementById("blank").onclick=()=>{deck={palette:{...DEFAULT_PAL},cards:[blankCard("stat-trio")]};
-  PAL={...DEFAULT_PAL};cur=0;boot();};
+})
+document.getElementById("json").addEventListener("input",()=>setJsonDirty(true))
+document.getElementById("reset").onclick=()=>{deck=sampleDeck();PAL={...DEFAULT_PAL};cur=0;boot();flash("Sample loaded");}
+document.getElementById("blank").onclick=()=>{deck={palette:{...DEFAULT_PAL},cards:[blankCard("stat-trio")]}
+  PAL={...DEFAULT_PAL};cur=0;boot();}
 
 /* ---------- the worked Andover sample deck ---------- */
-function sampleDeck(){return{palette:{...DEFAULT_PAL},cards:[
+const sampleDeck = () => {return{palette:{...DEFAULT_PAL},cards:[
  {"type":"quote","name":"01_quote","theme":"Sunday Papers","tag":"WHAT MEMBERS SAY","quote":"I moved here knowing no one. The Thursday potluck is the reason this street feels like home now.","attribution":"— Dana R., member since 2023","source":"riverside-mutual-aid.org"},
  {"type":"checklist","name":"02_checklist","theme":"Songs from the Woods","kicker":"SATURDAY · RIVERBANK CLEANUP","headline":"Bring three things.","mark":"✓","markColor":"feature","items":["Work gloves and a refillable water bottle.","Sturdy shoes you don't mind getting muddy.","A neighbor. More hands, shorter morning."],"emphasis":"We finish by noon, rain or shine.","source":"greenvalleytrails.org/cleanup"},
  {"type":"compare-bar","name":"03_turnout","theme":"Tangled Up in Blue","kicker":"MUNICIPAL TURNOUT, LAST THREE CYCLES","headline":"Off-year turnout is *climbing*.","bars":[{"label":"2019","value":"31","color":"label","display":"31%"},{"label":"2021","value":"38","color":"label","display":"38%"},{"label":"2023","value":"46","color":"feature","display":"46%"}],"max":"60","caption":"Every off-year since 2019 has beaten the last.","source":"Source: CT Secretary of the State, election returns."},
@@ -1148,72 +1148,72 @@ function sampleDeck(){return{palette:{...DEFAULT_PAL},cards:[
 ]};}
 
 /* ---------- migration: old color names -> role names ---------- */
-function migrate(d){
-  if(!d||typeof d!=="object")return d;
+const migrate = (d) => {
+  if(!d||typeof d!=="object")return d
   if(d.palette&&typeof d.palette==="object"){
-    const np={};for(const[k,v] of Object.entries(d.palette))np[OLD2NEW[k]||k]=v;d.palette=np;
+    d.palette=Object.fromEntries(Object.entries(d.palette).map(([k,v])=>[OLD2NEW[k]||k,v]))
   }
-  (d.cards||[]).forEach(c=>{
-    (c.stats||[]).forEach(s=>{if(OLD2NEW[s.color])s.color=OLD2NEW[s.color];});
-    (c.rows||[]).forEach(r=>{if(OLD2NEW[r.color])r.color=OLD2NEW[r.color];});
-    if(Array.isArray(c.headline))c.headline.forEach(h=>{if(OLD2NEW[h.color])h.color=OLD2NEW[h.color];});
-  });
-  return d;
+  ;(d.cards||[]).forEach(c=>{
+    (c.stats||[]).forEach(s=>{if(OLD2NEW[s.color])s.color=OLD2NEW[s.color];})
+    ;(c.rows||[]).forEach(r=>{if(OLD2NEW[r.color])r.color=OLD2NEW[r.color];})
+    if(Array.isArray(c.headline))c.headline.forEach(h=>{if(OLD2NEW[h.color])h.color=OLD2NEW[h.color];})
+  })
+  return d
 }
 document.getElementById("themesel").addEventListener("change",e=>{
-  if(e.target.value)applyTheme(e.target.value);else renderThemeSel();});
+  if(e.target.value)applyTheme(e.target.value);else renderThemeSel();})
 document.getElementById("savetheme").onclick=()=>{
-  const name=(document.getElementById("themename").value||"").trim();
+  const name=(document.getElementById("themename").value||"").trim()
   if(!name){flash("Name the palette first",true);return;}
   if(THEMES[name]){flash("“"+name+"” is a built-in name — choose another",true);return;}
-  userThemes[name]={...PAL};saveUserThemes();
-  const card=deck.cards[cur];card.theme=name;delete card.palette;
-  renderThemeSel();flash("Saved palette “"+name+"”");};
+  userThemes[name]={...PAL};saveUserThemes()
+  const card=deck.cards[cur];card.theme=name;delete card.palette
+  renderThemeSel();flash("Saved palette “"+name+"”");}
 document.getElementById("deltheme").onclick=()=>{
-  const name=document.getElementById("themesel").value;
+  const name=document.getElementById("themesel").value
   if(!name||!userThemes[name]){flash("Select one of your palettes to delete",true);return;}
-  delete userThemes[name];saveUserThemes();renderThemeSel();flash("Deleted “"+name+"”");};
+  delete userThemes[name];saveUserThemes();renderThemeSel();flash("Deleted “"+name+"”");}
 document.getElementById("exportThemes").onclick=()=>{
-  const n=Object.keys(userThemes).length;
+  const n=Object.keys(userThemes).length
   if(!n){flash("No saved palettes to export yet",true);return;}
-  downloadBlob(new Blob([JSON.stringify(userThemes,null,2)],{type:"application/json"}),"card-palettes.json");
-  flash("Exported "+n+" palette"+(n>1?"s":""));};
-document.getElementById("importThemes").onclick=()=>document.getElementById("themesFile").click();
+  downloadBlob(new Blob([JSON.stringify(userThemes,null,2)],{type:"application/json"}),"card-palettes.json")
+  flash("Exported "+n+" palette"+(n>1?"s":""));}
+document.getElementById("importThemes").onclick=()=>document.getElementById("themesFile").click()
 document.getElementById("themesFile").addEventListener("change",e=>{
-  const f=e.target.files[0];if(!f)return;
+  const f=e.target.files[0];if(!f)return
   const fr=new FileReader();fr.onload=()=>{
-    try{const obj=JSON.parse(fr.result);
-      if(!obj||typeof obj!=="object"||Array.isArray(obj))throw new Error("expected an object of name → palette");
-      let added=0,skipped=0;
+    try{const obj=JSON.parse(fr.result)
+      if(!obj||typeof obj!=="object"||Array.isArray(obj))throw new Error("expected an object of name → palette")
+      let added=0,skipped=0
       for(const[name,p] of Object.entries(obj)){
         if(THEMES[name]||!p||typeof p!=="object"){skipped++;continue;}
-        const np={};for(const[k,v] of Object.entries(p))np[OLD2NEW[k]||k]=v;
-        userThemes[name]=np;added++;
+        const np=Object.fromEntries(Object.entries(p).map(([k,v])=>[OLD2NEW[k]||k,v]))
+        userThemes[name]=np;added++
       }
-      saveUserThemes();renderThemeSel();
-      flash("Imported "+added+(skipped?", skipped "+skipped:""));
+      saveUserThemes();renderThemeSel()
+      flash("Imported "+added+(skipped?", skipped "+skipped:""))
     }catch(err){flash("Import error: "+err.message,true);}
-    e.target.value="";
-  };fr.readAsText(f);});
+    e.target.value=""
+  };fr.readAsText(f);})
 
 /* ---------- boot ---------- */
-function boot(){
+const boot = () => {
   if(!deck.palette)deck.palette={...DEFAULT_PAL};   // deck-level default (fallback for cards with no theme)
-  if(cur>=deck.cards.length)cur=0;
-  PAL=palOf(deck.cards[cur]);
-  populateTypeSelects();
+  if(cur>=deck.cards.length)cur=0
+  PAL=palOf(deck.cards[cur])
+  populateTypeSelects()
   renderThemeSel();renderPalette();renderForm();renderList();renderPreview();renderJson();renderContrast();save();}
-(function init(){
-  loadUserThemes();
+;(function init(){
+  loadUserThemes()
   try{const saved=localStorage.getItem("cardDeck");if(saved){deck=migrate(JSON.parse(saved));}}catch(e){}
-  if(!deck||!Array.isArray(deck.cards)||!deck.cards.length)deck=sampleDeck();
-  const params=new URLSearchParams(location.search);
-  const q=params.get("card");
+  if(!deck||!Array.isArray(deck.cards)||!deck.cards.length)deck=sampleDeck()
+  const params=new URLSearchParams(location.search)
+  const q=params.get("card")
   if(q!=null){const n=parseInt(q,10);if(n>=0&&n<deck.cards.length)cur=n;}
-  const t=params.get("theme");
+  const t=params.get("theme")
   if(t&&THEMES[t]){deck.palette={...THEMES[t]};deck.theme=t;}
-  boot();
-})();
+  boot()
+})()
 </script>
 </body>
 </html>
