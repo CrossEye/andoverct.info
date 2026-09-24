@@ -175,11 +175,11 @@ async function ensureYouTubeAudio(meeting) {
   }
   if (!good) { cleanupDl(); throw new Error("yt-dlp produced no usable audio (all formats garbled or unavailable)"); }
 
-  // Normalise to a plain .m4a: stream-copy when already AAC, else transcode.
-  const { stdout: codec } = await exec("ffprobe", ["-v", "error", "-select_streams", "a:0",
-    "-show_entries", "stream=codec_name", "-of", "csv=p=0", good]);
-  const acodec = codec.trim() === "aac" ? ["-c:a", "copy"] : ["-c:a", "aac", "-b:a", "128k"];
-  await exec("ffmpeg", ["-v", "error", "-y", "-i", good, "-vn", ...acodec, "-movflags", "+faststart", m4a]);
+  // Normalise to a mono 64 kbps .m4a. YouTube's stereo 128k AAC is ~120 MB for
+  // a two-hour meeting and Deepgram times out slow uploads (408 SLOW_UPLOAD);
+  // mono 64k halves that with no loss that matters for speech recognition.
+  await exec("ffmpeg", ["-v", "error", "-y", "-i", good, "-vn", "-ac", "1", "-c:a", "aac", "-b:a", "64k",
+    "-movflags", "+faststart", m4a]);
   cleanupDl();
   console.log(`  [audio] saved ${path.basename(m4a)}`);
   return m4a;
@@ -255,6 +255,10 @@ async function ensureAudio(meeting) {
 
 const CONTENT_TYPE = { m4a: "audio/mp4", mp4: "video/mp4", wav: "audio/wav" };
 
+// "fetch failed" on its own says nothing; the cause carries the errno.
+const describeError = (err) =>
+  err.cause ? `${err.message} (${err.cause.code || err.cause.message || err.cause})` : err.message;
+
 const dgCachePath = (id) => path.join(DG_CACHE, `${id}.json`);
 const hasFreshCache = (id) => fs.existsSync(dgCachePath(id)) && !REDO_DG;
 
@@ -280,18 +284,32 @@ async function transcribe(meeting, audioPath) {
   const bytes = fs.readFileSync(audioPath);
   console.log(`  [deepgram] uploading ${(bytes.length / 1048576).toFixed(1)} MB to ${DG_MODEL}…`);
 
-  const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), 20 * 60 * 1000); // 20 min ceiling
+  // Node's fetch reports any socket-level failure (reset, EPIPE, DNS, TLS) as a
+  // bare "fetch failed" TypeError with the real reason in err.cause. Deepgram
+  // also drops slow uploads with HTTP 408 SLOW_UPLOAD. One retry cures most of
+  // both; the durable fix is keeping the upload small (see ensureYouTubeAudio).
+  const upload = async () => {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 20 * 60 * 1000); // 20 min ceiling
+    try {
+      return await fetch(`https://api.deepgram.com/v1/listen?${params}`, {
+        method: "POST",
+        headers: { Authorization: `Token ${API_KEY}`, "Content-Type": CONTENT_TYPE[ext] || "audio/mpeg" },
+        body: bytes,
+        signal: ctrl.signal,
+      });
+    } finally {
+      clearTimeout(timer);
+    }
+  };
   let resp;
   try {
-    resp = await fetch(`https://api.deepgram.com/v1/listen?${params}`, {
-      method: "POST",
-      headers: { Authorization: `Token ${API_KEY}`, "Content-Type": CONTENT_TYPE[ext] || "audio/mpeg" },
-      body: bytes,
-      signal: ctrl.signal,
-    });
-  } finally {
-    clearTimeout(timer);
+    resp = await upload();
+    if (resp.status === 408) throw new Error(`Deepgram HTTP 408: ${(await resp.text()).slice(0, 120)}`);
+  } catch (err) {
+    if (err.name === "AbortError") throw err;
+    console.log(`  [deepgram] retrying after: ${describeError(err)}`);
+    resp = await upload();
   }
   if (!resp.ok) throw new Error(`Deepgram HTTP ${resp.status}: ${(await resp.text()).slice(0, 300)}`);
   const json = await resp.json();
@@ -384,7 +402,7 @@ async function main() {
       console.log(`  [done] ${cues} cues → output/transcripts/${m.id}.html\n`);
       done.push(m.id);
     } catch (err) {
-      console.error(`  [error] ${err.message}\n`);
+      console.error(`  [error] ${describeError(err)}\n`);
       failed.push(m.id);
     }
   }
