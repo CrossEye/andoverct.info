@@ -46,7 +46,7 @@ Run all of these from the repo root.
 | `npm run rebuild:videos:boe`   | Transcribe missing **BOE (Zoom)** meetings via Deepgram        |
 | `npm run deploy`               | **Dry run** — show exactly what would upload, transfer nothing |
 | `npm run deploy:go`            | Upload the changed files to the live server                    |
-| `npm run deploy:commit`        | `git add -A`, `deploy:go`, then commit (pass `-- "message"`)   |
+| `npm run deploy:commit`        | stage, `deploy:go`, restage, then commit (pass `-- "message"`) |
 | `npm run publish`              | `rebuild:all` then `deploy:go`                                 |
 
 Notes:
@@ -103,8 +103,9 @@ file an area publishes and compares against the committed baseline in
 - **Deploy, then commit.** Every upload rewrites `.deploy-state.json`, so
   committing first leaves the baseline dirty and forces a second commit.
   `npm run deploy:commit -- "Add new videos"` stages the working tree (staged
-  files pass the untracked-file guard), uploads, and then commits the content
-  and the updated baseline together. A failed upload stops before the commit.
+  files pass the untracked-file guard), uploads, stages again so the rewritten
+  baseline is picked up, and commits content and baseline together. A failed
+  upload stops before the commit.
 - **Useful flags** (pass after `--`, e.g. `npm run deploy -- --area video`):
   - `--area <id>` — limit to one area (`root`, `the-facts`, `reports`,
     `town-charter`, `reference`, `video`).
