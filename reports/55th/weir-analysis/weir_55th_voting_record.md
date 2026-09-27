@@ -578,9 +578,9 @@ confirmations, state-land conveyances, statutory housekeeping — where reflexiv
 opposition has no obvious policy justification.
 
 **His committee assignments do not predict his votes.** Weir is the Ranking
-Member of the Labor and Public Employees Committee. On 50 partisan labor votes,
+Member of the Labor and Public Employees Committee. On 47 partisan labor votes,
 he sided with the Democratic position 4 times. He sits on the Housing Committee.
-On 30 partisan housing votes, he sided with the Democratic position 0 times.
+On 22 partisan housing votes, he sided with the Democratic position 0 times.
 
 **He has voted against several bills that distinguish him from mainstream
 Connecticut public opinion.** The child-marriage ban (HB-6569, 2023) became law
