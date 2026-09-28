@@ -449,10 +449,23 @@ ${siteFooterBarHtml()}
 </html>`
 }
 
-const gapsHtml = (gaps) => {
+// A gap that names another entry by id is naming a page that exists, so make it
+// a link rather than an id the reader has to retype into the address bar. Only
+// ids this build actually produced are linked: a typo, or an id that has since
+// been retired, stays plain text instead of becoming a 404 a reader finds first.
+const ENTRY_ID_RE = /\b[0-9]{4}-[0-9]{2}-[0-9]{2}-[a-z0-9]+-[a-z0-9]+(?:-[0-9]+)?\b/g
+
+// Escape first, then link. An id is [0-9a-z-] only, so escaping never alters one,
+// and the prose around it is still escaped exactly as it was before.
+const linkEntryIds = (text, ctx) =>
+  escapeHtml(text).replace(ENTRY_ID_RE, (id) => (ctx.entryIds && ctx.entryIds.has(id)
+    ? `<a href="${ctx.correspondenceUrl}${id}/">${id}</a>`
+    : id))
+
+const gapsHtml = (gaps, ctx) => {
   if (!gaps || !gaps.length) return ""
   return `<div class="gaps"><strong>What is missing from this entry</strong>\n<ul>`
-    + gaps.map((g) => `<li>${escapeHtml(g)}</li>`).join("\n")
+    + gaps.map((g) => `<li>${linkEntryIds(g, ctx)}</li>`).join("\n")
     + `</ul></div>`
 }
 
@@ -526,7 +539,7 @@ const entryPage = (entry, dir, ctx) => {
   const body = [
     `<h1>${escapeHtml(entry.title)}</h1>`,
     `<p class="entry-meta">${meta}</p>`,
-    gapsHtml(entry.gaps),
+    gapsHtml(entry.gaps, ctx),
     `<pre class="letter">${escapeHtml(reflow(bodyText.trim()))}</pre>`,
     enclosureHtml(entry),
     sourceHtml(entry, dir),
@@ -666,6 +679,7 @@ export const buildCorrespondence = (folder, meta, opts = {}) => {
       { label: meta.title, href: reportUrl },
     ],
     correspondenceUrl: `${reportUrl}${dirName}/`,
+    entryIds: new Set(entries.map((e) => e.id)),
     reportTitle: meta.title || "Report",
     baseCss: opts.baseCss || "",
     themeCss: opts.themeCss || "",
