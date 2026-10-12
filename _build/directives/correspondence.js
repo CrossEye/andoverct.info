@@ -3,6 +3,9 @@
 // <% correspondence ledger %>             Part 2, Answered + Status computed
 // <% correspondence log [limit=25] %>     the whole exchange, oldest first
 // <% correspondence asof %>               the build date, inline in prose
+// <% correspondence latest %>             the date of the newest entry, inline
+// <% correspondence quiet %>              how long the record has been quiet:
+//                                         newest entry to build date, in words
 //
 // Reads the summary that _build/correspondence.mjs writes beside the entries, so
 // the report's tables and the correspondence tree cannot disagree about a date,
@@ -28,6 +31,28 @@ const clockTime = (hhmm) => {
   const suffix = h < 12 ? 'am' : 'pm'
   const hour = h % 12 === 0 ? 12 : h % 12
   return `${hour}:${String(m).padStart(2, '0')} ${suffix}`
+}
+
+// Whole days between two ISO dates, counted in UTC so a DST change cannot
+// make a 28-day gap read as 27.
+const daysBetween = (from, to) => {
+  const utc = (iso) => Date.UTC(...iso.split('-').map((n, i) => Number(n) - (i === 1 ? 1 : 0)))
+  return Math.round((utc(to) - utc(from)) / 86400000)
+}
+
+const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven',
+  'eight', 'nine', 'ten', 'eleven', 'twelve']
+const numberWord = (n) => WORDS[n] || String(n)
+const plural = (n, unit) => `${numberWord(n)} ${unit}${n === 1 ? '' : 's'}`
+
+// "four weeks", "nearly five weeks", "nine days". The prose this feeds is a
+// claim about an inbox on a date, so it rounds down, never up: a span is
+// "nearly" the next week only once it is within three days of it.
+const spanWords = (days) => {
+  if (days < 7) return plural(days, 'day')
+  const weeks = Math.floor(days / 7)
+  const rest = days % 7
+  return rest >= 4 ? `nearly ${plural(weeks + 1, 'week')}` : plural(weeks, 'week')
 }
 
 const stamp = (e) => {
@@ -136,6 +161,17 @@ Complete as of ${longDate(c.generated)}. Anything that arrives later is added he
     case 'asof':
       return longDate(c.generated)
 
+    // The newest item in the record, whoever sent it, so prose about what has
+    // (not) happened lately is anchored to the same entry the log ends on.
+    case 'latest':
+      return longDate(c.entries[0].date)
+
+    // How long since anything arrived or was sent. Hand-written ("nearly a
+    // month ago") goes stale the first time the page is rebuilt for some other
+    // reason; this moves with the build date the rest of the page asserts.
+    case 'quiet':
+      return spanWords(daysBetween(c.entries[0].date, c.generated))
+
     // The count, so the Summary row cannot contradict the ledger.
     case 'answered': {
       const n = c.ledger.filter((r) => r.status !== 'No response').length
@@ -145,7 +181,7 @@ Complete as of ${longDate(c.generated)}. Anything that arrives later is added he
 
     default:
       throw new Error(`Unknown correspondence view '${view}' — `
-        + 'expected letters, ledger, log, asof or answered')
+        + 'expected letters, ledger, log, asof, latest, quiet or answered')
   }
 }
 

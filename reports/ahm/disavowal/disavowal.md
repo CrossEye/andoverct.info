@@ -96,6 +96,12 @@ Trump, "past, present or future," and said the question is the wrong one to ask
 a candidate for the state Senate. Her letter is published below in full, and her
 objection is taken up in Part 5.
 
+Nothing has arrived since. As of <% correspondence asof %>, Ms. Jennings's
+letter is the only reply received, and no correspondence of any kind, from any
+of the five campaigns, has come in during the <% correspondence quiet %> since
+that exchange. The other four letters remain unanswered. That is a statement
+about an inbox on a date, not a verdict on anyone.
+
 This page is the record. It will be updated as answers come in, through Election
 Day on November 3, 2026. There is no deadline. An answer at any point gets
 added.
