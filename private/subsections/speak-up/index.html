@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Speak Up: a volunteer letters and social toolkit (PRIVATE) · Andover, CT</title>
+<style>/* Default civic-report theme.
+ *
+ * A theme is just this set of CSS custom properties. To experiment, copy this
+ * file to _build/themes/<name>.css, change what you like, and point at it from
+ * _build/report.config.json ({"theme":"<name>"}) for all reports, or from a
+ * single report's front matter (theme: <name>). A non-default theme is layered
+ * ON TOP of this one, so it only needs to list the variables it changes.
+ *
+ * Scope: colors, fonts, and small size/width/gap tweaks — not layout changes.
+ */
+:root {
+  /* ---- Palette ---- */
+  --bg:             #fafaf7;   /* page background */
+  --bg-page:        #ffffff;   /* the white content card */
+  --bg-soft:        #f5f3ed;   /* callouts, table headers, inline code */
+  --ink:            #1a1a1a;   /* body text, main headings */
+  --ink-soft:       #333333;   /* blockquote / methodology text */
+  --ink-mute:       #5a5a5a;   /* subtitle, card descriptions */
+  --ink-faint:      #888888;   /* attribution, footer, captions */
+  --rule:           #e0ddd5;   /* hairline borders */
+  --accent:         #b8a878;   /* gold accent rules */
+  --accent-2:       #2c3e50;   /* slate: h3, table-header & code text */
+  --banner-bg:      #2c3e50;   /* top banner background */
+  --banner-ink:     #ecf0f1;   /* top banner text */
+  --crumb-link:       #b9c4cf; /* breadcrumb links in the banner */
+  --crumb-link-hover: #ffffff;
+  --crumb-current:    #ffffff; /* deepest crumb (current page), not a link */
+  --link:           #1a5490;
+  --link-hover:     #0d3a6b;
+  --link-underline: #c5d3e2;
+  --anchor:         #b8b3a4;   /* the ¶ header anchor */
+  --anchor-hover:   #6c7480;
+  --confirm:        #5a8a5a;   /* green ✓ confirmation mark */
+  --confirm-strong: #2e7d32;
+
+  /* ---- Fonts ---- */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:  "SF Mono", Monaco, Menlo, Consolas, monospace;
+
+  /* ---- Sizes (small tweaks only; no layout restructuring) ---- */
+  --base-size:  11pt;    /* body text */
+  --measure:    780px;   /* content column width */
+  --gutter:     30px;    /* horizontal padding / banner & footer gaps */
+  --title-size: 28pt;
+  --h2-size:    18pt;
+  --h3-size:    13pt;
+}
+
+/* bluegold — mirrors the light-mode look of the 55th campaign site
+ * (C:\Users\scott\Dev\Andover\55th, e.g. localhost:8080/reports): cool
+ * blue-gray paper, a dark navy banner with a gold underline, navy serif
+ * headings over a sans body, gold accent rules, and blue links.
+ *
+ * Note the deliberate font swap: base.css uses --font-serif for body text and
+ * --font-sans for headings/labels, so to match the campaign look (sans body,
+ * serif display) we put the SANS stack in --font-serif and the SERIF stack in
+ * --font-sans.
+ *
+ * Layered on default.css. Uses --banner-border (in base.css) for the gold rule
+ * under the banner. */
+:root {
+  /* Palette */
+  --bg:             #f4f6f9;
+  --bg-page:        #ffffff;
+  --bg-soft:        #eef4fb;   /* blue-050 tint for callouts / table headers */
+  --rule:           #e3e8ef;   /* hairlines */
+  --ink:            #19222e;
+  --ink-soft:       #2b3744;
+  --ink-mute:       #5b6775;
+  --ink-faint:      #8a94a1;
+  --accent:         #e8a800;   /* signature gold rules */
+  --accent-2:       #0f2a4a;   /* blue-900: headings, table-header & code text */
+  --banner-bg:      linear-gradient(180deg, #0f2a4a, #143862);
+  --banner-border:  3px solid #e8a800;
+  --banner-ink:     #dde8f5;   /* blue-100 */
+  --crumb-link:       #e8a800; /* gold breadcrumb links */
+  --crumb-link-hover: #ffffff; /* hover to white + underline */
+  --crumb-current:    #ffffff; /* current page, not a link */
+  --link:           #245c95;   /* blue-600 */
+  --link-hover:     #1c4e80;   /* blue-700 */
+  --link-underline: #cfe0f2;
+  --confirm:        #2f8f5b;
+  --confirm-strong: #1f7d49;
+
+  /* Type: sans body + serif display headings (see note above) */
+  --font-serif: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans:  Georgia, "Times New Roman", serif;
+
+  --measure: 860px;
+}
+
+/* Structural base styles for civic reports — theme-independent.
+ * Colors, fonts, and sizes come from the active theme (CSS custom properties
+ * in _build/themes/<name>.css), which is loaded BEFORE this file. */
+
+/* ---- Reset & base ---- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Layout ---- */
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner a { color: inherit; text-decoration: none; }
+.page-banner a:hover { text-decoration: underline; }
+
+/* ---- Breadcrumb (in the banner) ---- */
+.page-banner .crumbs a {
+    color: var(--crumb-link, var(--banner-ink));
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover, #fff);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current {
+    color: var(--crumb-current, #fff);
+}
+
+.container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* ---- Images / figures ---- */
+/* Scale charts and figures to the column (and the printed page box) rather
+   than overflowing at their intrinsic pixel/point size. */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+}
+
+/* ---- Lightbox (screen only; overlay is built at runtime by the viewer
+   script, so it never appears in the PDF). Click a chart to enlarge it. ---- */
+.container img { cursor: zoom-in; }
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vmin;
+    background: rgba(0, 0, 0, 0.85);
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+.lightbox-overlay.open { opacity: 1; }
+.lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    margin: 0;
+    cursor: zoom-out;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+    background: #fff;
+}
+
+/* ---- Title block ---- */
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-attribution {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    color: var(--ink-faint);
+    margin: 0 0 24px 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+.report-attribution a {
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+}
+.report-attribution a:hover {
+    color: var(--link);
+    border-bottom-color: var(--link);
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.methodology-header {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 0 0 36px 0;
+    line-height: 1.55;
+}
+
+/* ---- Section labels (small uppercase tags above h2) ---- */
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 36px 0 4px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+/* ---- Headings ---- */
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+h3 {
+    font-family: var(--font-sans);
+    font-size: var(--h3-size);
+    font-weight: 600;
+    margin: 28px 0 10px 0;
+    color: var(--accent-2);
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+
+/* ---- Header anchor links (HTML only; hidden in print) ---- */
+.header-anchor {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.2em;
+    color: var(--anchor);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.85em;
+    vertical-align: baseline;
+    cursor: pointer;
+    user-select: none;
+}
+h2:hover .header-anchor,
+h3:hover .header-anchor,
+.header-anchor:focus {
+    opacity: 1;
+}
+.header-anchor:hover {
+    color: var(--anchor-hover);
+}
+.header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+}
+.header-anchor.copied::after {
+    content: " copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+}
+@media print {
+    .header-anchor {
+        display: none;
+    }
+}
+
+/* ---- Body text ---- */
+p {
+    margin: 0 0 14px 0;
+    orphans: 3;
+    widows: 3;
+}
+p.intro-table {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+strong { font-weight: 700; color: var(--ink); }
+em { font-style: italic; }
+
+/* ---- Links ---- */
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* ---- Lists ---- */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+li {
+    margin: 0 0 6px 0;
+    line-height: 1.55;
+}
+
+/* ---- Tables ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-before: avoid;
+    break-before: avoid;
+}
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 9.5pt;
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--accent);
+}
+tbody tr:hover { background: var(--bg); }
+
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+tbody tr:last-child td {
+    border-bottom: 2px solid var(--accent);
+}
+
+/* ---- Blockquotes (source notes, verbatim quotes) ---- */
+blockquote {
+    margin: 14px 0 18px 0;
+    padding: 14px 20px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+blockquote p { margin: 0 0 8px 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ol, blockquote ul {
+    margin: 8px 0;
+}
+
+/* ---- HR ---- */
+hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+}
+
+/* ---- Inline code ---- */
+code {
+    font-family: var(--font-mono);
+    font-size: 9.5pt;
+    background: var(--bg-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: var(--accent-2);
+    overflow-wrap: break-word;
+}
+
+/* ---- Other Formats footer ---- */
+.formats-section {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+}
+.format-cards {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.format-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.format-cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media screen and (max-width: 700px) {
+    .format-cards.cols-3,
+    .format-cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+.format-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    padding: 14px;
+    text-align: left;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+.format-card-icon { font-size: 18pt; margin-bottom: 4px; }
+.format-card-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+.format-card-desc { font-size: 9pt; color: var(--ink-mute); line-height: 1.4; }
+.format-card a { display: block; }
+
+/* ---- Footer ----
+   Two parts: .footer-id is the site-wide identity/disclaimer line, identical
+   on every page; .footer-note is the optional per-page line (sources, method,
+   "not a lawyer"). See siteFooterHtml() in _build/links.mjs. */
+/* @footer-css:start — generated from _build/footer.css; do not edit here, run: npm run sync:footer-css */
+.page-note {
+  /* Declared here, not inherited: this block is dropped into arbitrary
+     stylesheets and not all of them carry a global border-box reset (404.html
+     does not), and without it the 512px cap applies to the content box and the
+     wrap widens by the padding. */
+  box-sizing: border-box;
+  /* max-width + horizontal padding are px (not rem/ch) so a page's root
+     font-size can't rescale the wrap — the line breaks are identical everywhere. */
+  max-width: 512px;
+  margin: 3rem auto 2.5rem;
+  padding: 1.75rem 20px 0;
+  border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  font-style: italic;
+  text-align: center;
+  color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+}
+/* a[href] rather than a bare `a`: see the note on the bar's link rule below. */
+.page-note a[href] { color: inherit; }
+
+.site-footer {
+  background: var(--banner-bg, linear-gradient(180deg, #0f2a4a, #143862));
+  border-top: var(--banner-border, 3px solid #e8a800);
+  color: var(--banner-ink, #dde8f5);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.site-footer-inner {
+  /* Declared here, not inherited: this block is dropped into arbitrary
+     stylesheets and not all of them carry a global border-box reset (404.html
+     does not), and without it the 512px cap applies to the content box and the
+     wrap widens by the padding. */
+  box-sizing: border-box;
+  max-width: 512px;
+  margin: 0 auto;
+  /* Horizontal padding is a LITERAL, like the wrap width above: with
+     box-sizing:border-box the text column is 512px minus this padding, so a
+     per-surface var here (--gutter is 30px on reports, 24px via style.css,
+     20px elsewhere) silently re-wraps the footer differently on every
+     surface. That is the drift this whole file exists to prevent. */
+  padding: 1.15rem 20px;
+  text-align: center;
+}
+.site-footer strong { color: var(--crumb-current, #ffffff); font-weight: 600; }
+/* Two classes deep on purpose. A host stylesheet's own link rule reaches (0,1,2)
+   easily -- style.css carries `body.bluegold a`, which the video transcript
+   pages opt into -- and that outranks a flat `.site-footer a` (0,1,1) whatever
+   the source order, repainting the footer's email link in the page's link
+   colour instead of the banner gold. Routing through the inner wrapper puts
+   these at (0,2,1), above any `body.<class> a`. */
+.site-footer .site-footer-inner a {
+  color: var(--crumb-link, #e8a800);
+  border-bottom: 1px solid transparent;
+  text-decoration: none;
+}
+.site-footer .site-footer-inner a:hover {
+  color: var(--crumb-link-hover, #ffffff);
+  border-bottom-color: currentColor;
+}
+
+/* Sticking: body becomes a column flex container and the bar takes
+   margin-top:auto, which absorbs only space that is genuinely free. So the bar
+   sits at the viewport bottom on a page shorter than the viewport, and simply
+   follows the content on a longer one — it never reserves scrolling space.
+   Screen only; print keeps plain block flow. */
+@media screen {
+  body {
+    min-height: 100vh;
+    min-height: 100svh;   /* excludes mobile browser chrome where supported */
+    display: flex;
+    flex-direction: column;
+  }
+  .site-footer { margin-top: auto; }
+}
+
+@media print {
+  /* On paper the split is undone: no full-bleed colour, and the note and the
+     identity close back up into the single quiet block the PDFs had before. */
+  .site-footer {
+    background: none;
+    border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+    color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+  }
+  /* The note immediately above already drew that rule — a second one here
+     would stack two hairlines a few points apart. */
+  .page-note + .site-footer { border-top: none; }
+  .site-footer-inner { max-width: 512px; padding: 0; }
+  .page-note { margin-bottom: 0.6rem; }
+  .site-footer strong { color: var(--ink-soft, inherit); }
+  .site-footer .site-footer-inner a { color: inherit; }
+}
+/* @footer-css:end */
+
+/* ---- Confirmation glyphs ---- */
+h3 .conf-mark {
+    color: var(--confirm);
+    font-size: 11pt;
+    margin-right: 4px;
+}
+
+
+.page-banner.private-banner {
+  background: #7a1420;
+  color: #f6e9e6;
+  border-bottom: 3px solid #4a0c14;
+}
+.page-banner.private-banner .crumbs .sep { color: #f6e9e6; opacity: .55; }
+.page-banner.private-banner .crumbs .current { color: #fff; }
+.private-badge {
+  display: inline-block; background: #fff; color: #7a1420;
+  font-weight: 700; letter-spacing: .12em; padding: 2px 9px;
+  border-radius: 4px; margin-right: .35em;
+}
+.private-note { font-weight: 600; opacity: .92; }
+/* The footer bar is a bookend to the banner, so on a private page it is red at
+   both ends rather than red on top and site-navy underneath. */
+.site-footer {
+  background: #7a1420;
+  border-top: 3px solid #4a0c14;
+  color: #f6e9e6;
+}
+.site-footer strong { color: #fff; }
+.site-footer a { color: #f6e9e6; }
+.site-footer a:hover { color: #fff; }
+
+/* Screenshot layouts for the Speak Up write-up. Phone screenshots sit in a row
+   so a flow reads left to right; desktop screenshots take the column. */
+figure { margin: 1.6em 0; }
+figure img { margin: 0; border: 1px solid var(--rule); border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+figure figcaption {
+  font-family: var(--font-sans);
+  font-size: .85em;
+  color: var(--ink-mute);
+  margin-top: .6em;
+  line-height: 1.4;
+}
+figure.phones { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-start; }
+figure.phones img { flex: 1 1 200px; max-width: 236px; width: 100%; }
+figure.phones figcaption { flex-basis: 100%; }
+figure.pair { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-start; }
+figure.pair img { flex: 1 1 300px; max-width: calc(50% - 7px); }
+figure.pair figcaption { flex-basis: 100%; }
+figure.pair img.wide { max-width: 100%; }
+.at-a-glance td:first-child { white-space: nowrap; font-weight: 600; }
+.at-a-glance thead { display: none; }
+.at-a-glance table { border-top: 2px solid var(--accent); }
+</style>
+</head>
+<body>
+<div class="page-banner private-banner">
+  <nav class="page-banner-inner crumbs">
+    <span class="private-badge">🔒 PRIVATE</span><span class="private-note">Not for public distribution</span><span class="sep">›</span><span class="current">Speak Up: a volunteer letters and social toolkit</span>
+  </nav>
+</div>
+<div class="container">
+<h1 class="report-title">Speak Up: a volunteer letters and social toolkit</h1>
+<p class="report-subtitle">How the 55th District's volunteer site works, for volunteers and for the people running it, with screenshots</p>
+<p class="report-attribution">Written by Scott Sauyet, Andover DTC · For DTC chairs · Not for public distribution</p>
+<hr class="report-header-rule">
+<p class="methodology-header">The 55th District Democrats (Andover, Bolton, Glastonbury, Hebron and
+Marlborough) have been running a 26-week letters-to-the-editor and social media
+campaign for Ellen Paul out of a small private website called Speak Up. This
+page shows what a volunteer sees, what the coordinator does each week, and what
+it took to build, so you can judge whether a general-purpose version would be
+worth building for other campaigns after the election.</p>
+<p class="section-label">Why</p>
+<h2 id="why-i-am-showing-you-this">Why I am showing you this<a class="header-anchor" href="#why-i-am-showing-you-this" aria-label="Link to this section">¶</a></h2>
+<p>Every campaign asks volunteers to write letters to the editor and to post on
+social media, and every campaign runs into the same problems: people do not know
+what to write about this week, they do not know the paper&#8217;s rules, two people
+send nearly the same letter, the coordinator spends the week nagging, and the
+one volunteer who would actually write has no idea where to start.</p>
+<p>Speak Up is our answer for one district and one race. Each week has a topic.
+Behind the topic sit sample letters in ten different voices, short Facebook and
+Nextdoor drafts, square image cards, the talking points, and the citations. A
+volunteer signs in with a link sent to their email, is walked through one
+decision at a time, claims a letter so nobody else sends it, and is told exactly
+where to send it and by when. The coordinator sees the status of every letter,
+can add volunteers and letters from a web form, and lets a weekly email go out on
+its own.</p>
+<p>It has worked well enough for us that I want to know whether it is worth turning
+into something other town committees and campaigns could use. The last section
+has the questions I would like your reactions to. Everything before it is a tour.</p>
+<blockquote>
+<p><strong>About the screenshots.</strong> The app is private, so the screenshots below were
+taken against a local copy with made-up volunteer names (Pat Volunteer, Jane
+from Hebron, Sam Chair). The content, layout and behavior are exactly what is
+live at 55th.ahmdems.org/speak-up. The sign-in page is the live one.</p>
+</blockquote>
+<p class="section-label">At a glance</p>
+<h2 id="at-a-glance">At a glance<a class="header-anchor" href="#at-a-glance" aria-label="Link to this section">¶</a></h2>
+<div class="at-a-glance">
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Campaign</td>
+<td>26 weeks, May 6 through Election Day, in six themed &#8220;waves&#8221;</td>
+</tr>
+<tr>
+<td>Each week</td>
+<td>one topic, a target number of letters per paper, sample letters, post drafts, image cards, talking points, citations</td>
+</tr>
+<tr>
+<td>Volunteers</td>
+<td>about 95 on the roster across five towns, eight of them admins (the town point people)</td>
+</tr>
+<tr>
+<td>Sample letters</td>
+<td>119, written in ten named &#8220;personas&#8221; (the Prosecutor, the Storyteller, the Reluctant Critic, and so on)</td>
+</tr>
+<tr>
+<td>Social</td>
+<td>77 Facebook and Nextdoor post drafts and 137 square image cards, each card in five color schemes</td>
+</tr>
+<tr>
+<td>Papers</td>
+<td>the four that cover the district, each with its word limit, per-writer cap, deadline and submission address</td>
+</tr>
+<tr>
+<td>Weekly email</td>
+<td>Wednesdays at 4 pm, staged in advance, sends itself unless held</td>
+</tr>
+<tr>
+<td>Offline volunteers</td>
+<td>a large-print two-sided sheet and a folded letter-writing-party booklet, per week and per town</td>
+</tr>
+<tr>
+<td>Hosting</td>
+<td>ordinary shared hosting (the DTC&#8217;s existing web host), no database, no monthly software cost</td>
+</tr>
+</tbody></table>
+</div>
+
+
+
+<p class="section-label">Sign-in</p>
+<h2 id="signing-in">Signing in<a class="header-anchor" href="#signing-in" aria-label="Link to this section">¶</a></h2>
+<p>There are no passwords. A volunteer types their email, and if it is on the
+roster they get a one-time sign-in link that is good for a few minutes and signs
+in that device. The page says the same thing whether or not the address is on
+the list, so it never reveals who is a volunteer. Removing someone from the
+roster locks them out on their next visit. The whole site sits behind this
+gate, not just a landing page, because it carries opposition research and
+strategy notes that are not meant to be public.</p>
+<figure class="phones">
+<img src="01-signin.png" alt="The sign-in page: 55th District Letter Campaign, your email, Email me a sign-in link">
+<figcaption>The sign-in page, as seen on a phone. This is also where the weekly email&#8217;s &#8220;Open Speak Up&#8221; button lands if the volunteer&#8217;s session has expired.</figcaption>
+</figure>
+
+
+
+<p class="section-label">Guided path</p>
+<h2 id="the-guided-path-one-decision-per-screen">The guided path: one decision per screen<a class="header-anchor" href="#the-guided-path-one-decision-per-screen" aria-label="Link to this section">¶</a></h2>
+<p>Most volunteers arrive from a text or the weekly email, on a phone, meaning to
+do one thing once. So the front door is a wizard, not a dashboard. It opens on
+the current week and the week&#8217;s topic, and asks a single question at a time.
+Every step is in the page address, so the phone&#8217;s Back button works, the
+breadcrumb at the top jumps back to any earlier step, and a coordinator can text
+someone a link that lands them three steps in.</p>
+<figure class="phones">
+<img src="02-wiz-medium.png" alt="Step 1: the week's topic with a short summary and talking points, then How do you want to share it: Letter to the editor (7 letters), Facebook post (3 posts, 8 cards), Nextdoor post (3 posts), Instagram (8 cards)">
+<img src="03-wiz-letters.png" alt="Step 2: Pick a letter to start from. Seven letter cards with word counts, persona lines, Preview the draft, and Use this letter buttons. Some carry chips: For senior readers, Published, Claimed by Jane from Hebron, Submitted">
+<img src="04-wiz-paper.png" alt="Step 3: Which paper? Four papers, each with its deadline and word limit">
+<figcaption>Left to right: how to share it (each choice shows how much material is behind it, and a choice with nothing behind it is disabled); pick a letter (open drafts first, taken ones dimmed with a status chip); pick a paper (deadline and word limit shown on the button, so the choice is informed).</figcaption>
+</figure>
+
+<p>The last screen is the letter itself plus everything needed to send it: the
+paper&#8217;s email address, deadline, word limit and per-writer cap, the paper&#8217;s
+quirks (&#8220;send as a .txt or .doc attachment, not a PDF&#8221;), and the talking points
+and writing advice folded away underneath.</p>
+<figure class="phones">
+<img src="05-wiz-letter.png" alt="The full letter: title, persona, 253 words, the letter text starting To the Editor">
+<img src="06-wiz-publish.png" alt="Below the letter: Claim this letter and Copy text buttons, then How to submit to Rivereast News Bulletin with Send to, Deadline, Word limit, Per-writer cap and the paper's notes">
+<img src="09-wiz-week-picker.png" alt="The Week 23 crumb opened as a popover listing all 26 weeks grouped by wave">
+<figcaption>The letter and how to send it. &#8220;Claim this letter&#8221; takes it off the board for everyone else; &#8220;Copy text&#8221; puts it on the clipboard with a To the Editor line and a signature block to fill in. The week crumb (right) opens a picker for anyone who wants to work ahead or catch up.</figcaption>
+</figure>
+
+<p><strong>Claims.</strong> A sample letter is scarce: one writer, one paper. So letters carry a
+status that everyone sees. <em>Open</em> means take it. <em>Claimed</em> shows the writer&#8217;s
+name. <em>Submitted</em> and <em>Published</em> carry a note like &#8220;Rivereast, Oct 9&#8221;. Only the
+writer who claimed a letter, or an admin, can move it forward or release it, and
+the server refuses a claim on a letter someone else grabbed a moment earlier.
+Volunteers are asked to adapt the draft in their own voice, not send it as is,
+and the sample letters are written to make that easy.</p>
+<p class="section-label">Social</p>
+<h2 id="the-social-side">The social side<a class="header-anchor" href="#the-social-side" aria-label="Link to this section">¶</a></h2>
+<p>A letter reaches people who read the paper; a post reaches everyone else. The
+same wizard handles Facebook, Nextdoor and Instagram. A post or a card is not
+scarce, since twenty people should share the same one, so there is nothing to
+claim: the actions are &#8220;copy text&#8221; and &#8220;download image&#8221;.</p>
+<figure class="phones">
+<img src="07-wiz-facebook.png" alt="Facebook: three text post drafts with character counts and preview, then a grid of image cards, each with a Use this card button">
+<img src="08-wiz-instagram.png" alt="Instagram: the image cards only, including photo cards of the candidate">
+<figcaption>Facebook offers both text drafts and image cards; Instagram offers cards only. Each card is a 1080 by 1080 image rendered in the browser, so it downloads sharp and can be shuffled through five color schemes to keep a feed from looking like a template.</figcaption>
+</figure>
+
+<p>Each post comes with a short publishing guide for the platform (&#8220;put the source
+link in the first comment, not the post, so Facebook does not throttle it&#8221;), and
+a pool of citations to rotate through so a dozen volunteers do not all post the
+same link. Every factual claim in a card or post points at a public source: a
+roll-call record, a news story, or one of our public analyses.</p>
+<p class="section-label">Dashboard</p>
+<h2 id="browse-everything-the-dashboard">Browse everything: the dashboard<a class="header-anchor" href="#browse-everything-the-dashboard" aria-label="Link to this section">¶</a></h2>
+<p>The wizard is the front door, but a link on every screen opens the full
+dashboard for the returning volunteer, the town point person, or anyone who
+wants to survey the whole week. It is a different shape: the 26 weeks across the
+top grouped by wave, the week&#8217;s ask and open slots, two tabs for letters and
+social, and a reference rail with the papers&#8217; rules, the writing advice, and the
+evidence.</p>
+<figure class="pair">
+<img class="wide" src="10-dash-top.png" alt="Dashboard top: the wave and week stepper, the week hero with Week 23 of 26, Wave 6: The choice, the topic, the coordinator's note, open slots per paper, and links to the paper edition and party booklet">
+<figcaption>The dashboard on a desktop. The week strip shows the whole campaign at once; the hero shows the week&#8217;s topic, the coordinator&#8217;s note to writers, which papers still need a letter, and the printable editions.</figcaption>
+</figure>
+
+<figure class="pair">
+<img class="wide" src="11-dash-letters.png" alt="The Letters tab: sample letters with Claim buttons and status chips, the ten personas, and on the right the four papers' rules and the writing advice">
+<figcaption>The Letters tab. Every sample letter for the week, its status, the ten personas, and the papers&#8217; word limits, deadlines and addresses alongside. Open drafts sort to the top.</figcaption>
+</figure>
+
+<figure class="pair">
+<img class="wide" src="12-dash-social.png" alt="The Social tab: text posts with Facebook and Nextdoor versions, the image card grid, and the How to post here guidance per platform">
+<figcaption>The Social tab: post drafts in a Facebook and a Nextdoor version, the card grid, and platform-by-platform posting advice.</figcaption>
+</figure>
+
+
+
+<p class="section-label">Email</p>
+<h2 id="the-weekly-email">The weekly email<a class="header-anchor" href="#the-weekly-email" aria-label="Link to this section">¶</a></h2>
+<p>Volunteers get one email a week, Wednesday afternoon, timed so a writer has the
+weekend before the papers&#8217; Monday and Tuesday deadlines. It is deliberately
+thin: the week&#8217;s theme, the open slots with deadlines and addresses, the topic
+summary and talking points, one shareable card, and a button into the app.
+Anything that will change during the week lives behind the button, not in the
+email. There is a one-click unsubscribe, which drops the person from the email
+list but not from the site.</p>
+<figure class="pair">
+<img src="23-weekly-email.png" alt="The week 23 email: theme, a short nudge, open slots with deadlines, the topic and talking points, a shareable card, a Facebook tip, and an Open Speak Up button">
+<figcaption>A week&#8217;s email as it arrives. Everything on it is generated from the same content the app uses, so the email and the site never disagree.</figcaption>
+</figure>
+
+
+
+<p class="section-label">Print</p>
+<h2 id="the-paper-edition-for-volunteers-who-are-not-online">The paper edition, for volunteers who are not online<a class="header-anchor" href="#the-paper-edition-for-volunteers-who-are-not-online" aria-label="Link to this section">¶</a></h2>
+<p>Some of our best writers have no internet. One is 88, sharp, and had her
+internet taken away by her family after a run of scams. So every week is also
+produced as a single sheet of paper in large type: the week&#8217;s story and facts on
+the front, how to write and mail a letter and the papers&#8217; postal addresses on
+the back, with every date and address spelled out because the reader cannot
+follow a link. It is handed out a week ahead so a mailed letter still beats the
+deadline. There is a version per town, signed by that town&#8217;s coordinator with
+their phone number.</p>
+<figure class="pair">
+<img src="30-sheet-front.png" alt="The front of the week 23 large-print sheet: headline, What this is about, What happened, Facts you can use">
+<img src="31-sheet-back.png" alt="The back: How to write your letter, Two things to avoid, Where to send it with postal addresses and deadlines, the two candidates, voting dates, and the coordinator's phone">
+<figcaption>The large-print sheet, front and back, 14-point type on a single Letter page.</figcaption>
+</figure>
+
+<p>For letter-writing parties there is a folded booklet: a cover with the week&#8217;s
+story, one sample letter per page, a make-your-own page, and a back cover with
+where to send things.</p>
+<figure class="pair">
+<img src="32-booklet-cover.png" alt="The booklet cover for week 23">
+<img src="33-booklet-letter.png" alt="A booklet page with one sample letter">
+<figcaption>Two pages of the week 23 party booklet. It prints two-sided on ordinary paper and folds into order.</figcaption>
+</figure>
+
+
+
+<p class="section-label">Admin</p>
+<h2 id="running-it-week-to-week">Running it week to week<a class="header-anchor" href="#running-it-week-to-week" aria-label="Link to this section">¶</a></h2>
+<p><strong>Content.</strong> The coordinator writes the week: the topic summary and talking
+points, the sample letters (five or six a week, in different personas), the
+post drafts, the cards. That is the real work, and no tool removes it. The
+schedule itself (which week, which topic, how many letters in which paper) is a
+single plain-text list, and each sample letter is its own plain-text file with a
+few lines at the top (title, persona, topic, suggested paper). A short build
+step on the coordinator&#8217;s laptop turns those into what the site serves, and
+the site&#8217;s own guide is written so that a non-programmer can update a week.</p>
+<p><strong>Admin tools in the browser.</strong> Town point people sign in like anyone else, but
+see an &#8220;Admin tools&#8221; link. From there they can add a volunteer (who can sign in
+immediately), add a sample letter (live at once, no rebuild), and upload images
+or PDFs for the social grid (a PDF, say a mailer, is split into page images in
+the browser so each page becomes a postable image). Admins can also release or
+reopen anyone&#8217;s claim.</p>
+<figure class="pair">
+<img class="wide" src="20-admin-link.png" alt="The dashboard as an admin sees it, with an Admin tools link beside the Guided mode link">
+<img class="wide" src="21-admin-tools.png" alt="The Admin tools page: Add a sample letter form with title, persona, topics, suggested paper and letter text; Add a volunteer with name, email and phone; Upload material with file, title, topics and credit">
+<figcaption>The admin link, and the admin tools page with all three panels open.</figcaption>
+</figure>
+
+<p><strong>The email queue.</strong> The weekly email is generated on the laptop and staged
+onto the server weeks ahead; right now every remaining week is already queued.
+An outside scheduler pings the server once an hour and any email that has come
+due goes out, unless an admin has held or cancelled it. The queue page works
+from a phone: preview, edit the subject or the opening paragraph, reschedule,
+hold, cancel, or send now. The admin gets a heads-up email a day before each
+send, so a quick &#8220;hold&#8221; from a phone is enough to stop a week. This was designed
+around a two-week vacation with no laptop, and it held up.</p>
+<figure class="pair">
+<img class="wide" src="22-email-queue.png" alt="The email queue page: five weekly emails as cards, two marked Sent with counts, two Scheduled, one On hold, each with Preview, Edit text, Reschedule, Hold or Resume, Cancel and Send now buttons">
+<figcaption>The queue, with two weeks sent, two scheduled and one on hold. The recipient count and the unsubscribes are shown at the top.</figcaption>
+</figure>
+
+<p><strong>Backups.</strong> The live state (claims, web-added letters, the roster) is a handful
+of small files on the server; a one-command backup pulls them down, encrypted,
+into the project.</p>
+<p class="section-label">Tech</p>
+<h2 id="what-it-runs-on">What it runs on<a class="header-anchor" href="#what-it-runs-on" aria-label="Link to this section">¶</a></h2>
+<p>This matters for the &#8220;could others use it&#8221; question, because the answer is
+that it runs on almost nothing.</p>
+<ul>
+<li><strong>The site</strong> is static pages and browser-side JavaScript. There is no
+framework and no build server; the laptop build is a few small scripts.</li>
+<li><strong>The live parts</strong> (sign-in, claims, admin forms, uploads, the email queue)
+are about a dozen short PHP scripts, which means it runs on the cheapest
+shared hosting a town committee already has. Ours is on the DTC&#8217;s existing
+host, in a subfolder.</li>
+<li><strong>Storage</strong> is a few JSON files on the server, not a database. At our scale
+(under a hundred volunteers, a few hundred items) that is more than enough,
+and there is nothing to administer.</li>
+<li><strong>Email</strong> goes out through the host&#8217;s ordinary SMTP. The hourly &#8220;is anything
+due&#8221; ping comes from a free external cron service, because shared hosts do
+not reliably offer one.</li>
+<li><strong>Cost:</strong> nothing beyond hosting we already paid for.</li>
+</ul>
+<p>It was built by one person between the end of May and now, alongside writing
+much of the content. A second campaign would not start from zero, but see the
+sections that follow.</p>
+<p class="section-label">Limits</p>
+<h2 id="what-it-does-not-do">What it does not do<a class="header-anchor" href="#what-it-does-not-do" aria-label="Link to this section">¶</a></h2>
+<ul>
+<li><strong>It does not write the letters.</strong> Every week&#8217;s sample letters, posts and
+cards are written by hand and checked against public records. That is the
+job; the tool only distributes it. A campaign without someone willing to do
+that work each week gets nothing from this.</li>
+<li><strong>It does not know about your papers, towns or race.</strong> Those are built in
+for the 55th. A second campaign would need its own set up.</li>
+<li><strong>Editing content means editing text files</strong> on a laptop and running the
+build, except for the add-a-letter and upload forms. That is fine for one
+technically comfortable coordinator and would not be fine for most.</li>
+<li><strong>Claims are on the honor system.</strong> The site records who claimed what; it
+cannot see what people actually send.</li>
+<li><strong>It does not track whether a letter ran.</strong> The writer or an admin marks it
+published. We separately keep a clippings library of what the papers
+actually printed, but that is another tool.</li>
+</ul>
+<p class="section-label">Unused</p>
+<h2 id="what-got-built-but-not-used">What got built but not used<a class="header-anchor" href="#what-got-built-but-not-used" aria-label="Link to this section">¶</a></h2>
+<p>Some of this was built on a guess about how other people would work, and the
+guess was wrong. The admin forms are the clearest case. Eight town point people
+can add a volunteer or a sample letter from a phone, and as far as I can tell I
+am the only one who ever has. The roster grew through me, and so did the
+letters. The same goes for the content more broadly: the hope was that several
+writers would contribute drafts in their own personas, and a few did, but the
+great majority of the 119 letters and 77 posts came from one keyboard.</p>
+<p>That is not a complaint about the volunteers. It is a lesson about the tool.
+The parts that saw heavy use are the ones a volunteer meets on the way to doing
+one thing: the sign-in link, the wizard, the claim button, the weekly email, the
+paper sheet. The parts built for a distributed team of coordinators sat idle,
+because the team never distributed itself that way. A general version should
+probably start from the volunteer path, and treat shared authoring as a
+question to settle with real users rather than a feature to build on
+speculation.</p>
+<p class="section-label">Our race</p>
+<h2 id="why-it-fit-this-race">Why it fit this race<a class="header-anchor" href="#why-it-fit-this-race" aria-label="Link to this section">¶</a></h2>
+<p>Some of what made Speak Up work is particular to the 55th and to this year, and
+it is worth saying so before anyone imagines it dropping into a different race.</p>
+<p><strong>We could write most of it up front.</strong> The 55th leans Democratic by about nine
+points in state and national races, yet the House seat has been held by one
+Republican or another for nearly fifty years. The incumbent, Steve Weir, is
+among the dozen most conservative members of the House, with four years of
+roll-call votes behind him. So the campaign was built, from the first week,
+almost entirely on his voting record, and there was plenty of it. A record does
+not change from week to week, which meant the six waves and most of the sample
+letters could be planned and written in the spring. We rarely felt a need to
+react to the week&#8217;s news or to the other side&#8217;s letters. A campaign in a
+different position, running on live issues or against a candidate without a
+record, would feel the weekly deadline far more sharply, and the coordinator&#8217;s
+job would be closer to a newsroom&#8217;s than to the one described above.</p>
+<p><strong>The letters stood on research we had already done.</strong> Speak Up was linked
+throughout to our opposition research, which began as private pages on the
+55th site and moved piece by piece onto the public andoverct.info as each part
+was ready, so that a letter could cite it. Every claim had been checked against
+the primary record before it reached a sample letter, which is why letters
+built from the samples could go out in confidence that they would survive a
+fact-check. A campaign without that body of work would have to build it as it
+went, or write more cautiously.</p>
+<p><strong>One piece of research has never been public: the one on our own candidate.</strong>
+Ellen Paul has strong credentials and a good story, and the file on her was
+compiled from the public record alone, not from her own material, as a
+preemptive answer to whatever opposition research the other side might run. It
+has not been needed. But it shaped what the letters could safely say about her,
+and it is work another campaign would have to do for itself.</p>
+<p>Put together, these say that the tool worked partly because the race let it.
+Whether it would carry its weight somewhere else depends on things no tool
+controls: an opponent with a record to run against, time to write ahead, and
+research solid enough to cite.</p>
+<p class="section-label">A general tool</p>
+<h2 id="what-a-general-purpose-version-would-need">What a general-purpose version would need<a class="header-anchor" href="#what-a-general-purpose-version-would-need" aria-label="Link to this section">¶</a></h2>
+<p>If chairs think this is worth having, here is roughly what it would take to go
+from &#8220;ours&#8221; to &#8220;anyone&#8217;s&#8221;, in order of importance:</p>
+<ol>
+<li><strong>Per-campaign setup in the browser:</strong> the race, the towns, the papers and
+their rules, the volunteer roster (imported from a spreadsheet), and the
+week schedule, all editable by a coordinator without a laptop build.</li>
+<li><strong>Content editing in the browser:</strong> sample letters, post drafts and talking
+points written and edited on the site, with a review step before volunteers
+see them. The card designer would need a few templates a coordinator can
+fill in rather than hand-made cards.</li>
+<li><strong>One hosted copy for everyone,</strong> or a packaged copy each campaign installs
+on its own host. Hosted is easier for chairs and harder for whoever runs it;
+installed is the reverse.</li>
+<li><strong>A shared library.</strong> The papers and their rules are the same for every
+campaign in a region, and so is a lot of the writing advice. Those could be
+maintained once.</li>
+<li><strong>The things we never got to:</strong> text-message nudges (we already collect
+phone numbers), a simple &#8220;what ran this week&#8221; view fed by the published
+marks, and a light analytics page so a chair can see claims and sends per
+week without asking.</li>
+</ol>
+<p>I would guess that a usable general version is two months&#8217; after-hours work for
+one person, not a weekend, and that it needs two or three campaigns willing to
+use it in the spring and tell us what is wrong with it.</p>
+<p class="section-label">Questions</p>
+<h2 id="questions-for-you">Questions for you<a class="header-anchor" href="#questions-for-you" aria-label="Link to this section">¶</a></h2>
+<p>I would rather hear &#8220;we would never use this&#8221; now than build it and find out.
+In the chairs&#8217; chat, or by email to <a href="mailto:scott.sauyet@gmail.com">scott.sauyet@gmail.com</a>:</p>
+<ol>
+<li>Does your committee or campaign run a letters-to-the-editor effort today,
+and how? A group text? A spreadsheet? Nothing organized?</li>
+<li>Which of the pieces above would you actually use: the guided letter path,
+the claims, the social cards, the weekly email, the paper edition? Which
+would you skip?</li>
+<li>Who on your side would do the weekly content? Is there a person who would
+write five sample letters a week, or would you want the tool to help draft
+them?</li>
+<li>Would you rather sign in to a shared hosted copy run by someone else, or
+install your own?</li>
+<li>What papers cover you, and what do their letter rules look like? (The more
+of those we collect, the more of the setup can be shared.)</li>
+<li>Is there anything here you think is a bad idea?</li>
+</ol>
+<p>If there is interest, I am glad to give a live walk-through, and to add any
+chair to the live site as a volunteer so you can try it yourself.</p>
+
+</div>
+<p class="page-note">Private material for DTC chairs. Please don't forward or republish.</p>
+<footer class="site-footer">
+<div class="site-footer-inner"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</div>
+</footer>
+<script>
+;(() => {
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('.header-anchor')
+    const id = anchor && anchor.parentElement.id
+    if (!id || !navigator.clipboard?.writeText) return
+    const url = window.location.origin + window.location.pathname + '#' + id
+    navigator.clipboard.writeText(url)
+      .then(() => {
+        anchor.classList.add('copied')
+        setTimeout(() => anchor.classList.remove('copied'), 1400)
+      })
+      .catch(() => {})
+  })
+})()
+</script>
+<script>
+;(() => {
+  const imgs = [...document.querySelectorAll('.container img')]
+  if (!imgs.length) return
+
+  let overlay = null
+
+  const onKey = (e) => e.key === 'Escape' && close()
+
+  const close = () => {
+    if (!overlay) return
+    const gone = overlay
+    overlay = null
+    gone.classList.remove('open')
+    document.removeEventListener('keydown', onKey)
+    setTimeout(() => gone.parentNode && gone.parentNode.removeChild(gone), 200)
+  }
+
+  const open = (src, alt) => {
+    overlay = document.createElement('div')
+    overlay.className = 'lightbox-overlay'
+    const big = document.createElement('img')
+    big.src = src
+    big.alt = alt || ''
+    overlay.appendChild(big)
+    overlay.addEventListener('click', close)
+    document.body.appendChild(overlay)
+    void overlay.offsetWidth // force reflow so the fade-in transition runs
+    overlay.classList.add('open')
+    document.addEventListener('keydown', onKey)
+  }
+
+  imgs.forEach((img) =>
+    img.addEventListener('click', () => open(img.currentSrc || img.src, img.alt)))
+})()
+</script>
+</body>
+</html>
