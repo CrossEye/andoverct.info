@@ -3,7 +3,7 @@ kind: opinion
 publicUrl: 'http://andoverct.info/opinion/votes-are-the-job/'
 pageTitle: 'The Votes Are the Job · Opinion · CT 55th House District'
 title: The Votes Are the Job
-subtitle: "Opinion · Why it is fair, and necessary, for Ellen Paul's campaign to make this race about Steve Weir's record"
+subtitle: "Why it is fair, and necessary, for Ellen Paul's campaign to make this race about Steve Weir's record"
 attribution: 'An opinion piece by Scott Sauyet · <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Co-chair, Andover Democratic Town Committee · Not an official document'
 footerNote: 'Written October 2026 · Opinion, not a data report · Vote figures are from the Connecticut General Assembly''s official roll-call records; see Sources.'
 pdf:
