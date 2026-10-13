@@ -8,7 +8,7 @@ attribution: 'A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.
 banner:
   left: CT 55th House District · Scott Sauyet's Reports
   right: SB 1 (2026) · May 2 vote
-footerNote: 'Compiled May 4, 2026 · Data from the Connecticut General Assembly, the Office of the Secretary of the State, and the Lamont administration FY 2027 town-aid release.'
+footerNote: 'Compiled May 4, 2026 · Republican caucus split corrected October 12, 2026 against the verified roll-call record · Data from the Connecticut General Assembly, the Office of the Secretary of the State, and the Lamont administration FY 2027 town-aid release.'
 pdf:
   author: Personal work of Scott Sauyet · scott@sauyet.com
   footer: andoverct.info/reports/55th/weir-sb1/
@@ -98,6 +98,17 @@ votes against 127 Yeses.
 This report walks through three things: how much money each town gets, how the
 district's voters are distributed across the five towns, and how Weir's No vote
 fits within his caucus — most House Republicans on the day voted Yes.
+
+> **Correction (October 12, 2026):** The original version of this report,
+> compiled from a hand reading of the Roll Call 204 PDF, gave the Republican
+> split as 28 Yea and 21 Nay and named Rep. Tim Ackert of the 8th District among
+> the Yes votes. The re-derived roll-call record behind
+> [Steve Weir's House Floor Votes](https://andoverct.info/reports/55th/weir-votes/), which parses every
+> vote from the official PDFs and reconciles each count against the printed
+> totals, shows 27 Republican Yea votes, 21 Nay, and 1 absent, and records
+> Ackert as a No. The tallies and member lists below are corrected to the
+> verified record. The conclusion is unchanged: a majority of the House
+> Republicans voting that day supported the bill.
 
 
 
@@ -202,25 +213,28 @@ SB 1 passed the House on May 2, 2026 at 9:49 p.m., on Roll Call 204. The total:
 The 49-member House Republican caucus split roughly in half on this vote.
 Reading from the official roll call:
 
-**Republicans voting Yea (28):**
+**Republicans voting Yea (27):**
 
-Ackert, Anderson, Aniskovich, Bolinsky, Bronko, Buchsbaum, Buckbee, Callahan,
-Canino, Carney, Carpino, Hall (C.), Howard, Hoxha, Kennedy, Klarides-Ditria,
-Lanoue, McGorty, Nuccio, Polletta, Rutigliano, Scott, Stewart, Vail, Yaccarino,
-Zawistowski. *(The roll call records 28 Republican Yea votes; the two beyond those named here were not individually identified from the roll-call PDF.)*
+Anderson, Aniskovich, Bolinsky, Bronko, Buchsbaum, Buckbee, Callahan, Canino,
+Carney, Carpino, Delnicki, Hall (C.), Howard, Hoxha, Kennedy, Klarides-Ditria,
+Lanoue, McGorty, Nuccio, Pizzuto, Polletta, Rutigliano, Scott, Stewart, Vail,
+Yaccarino, Zawistowski.
 
 **Republicans voting Nay (21):**
 
-Candelora (V., Minority Leader), Case, Courpas, Dauphinais, DeCaprio, Dubitsky,
-Fishbein, Foncello, Haines, Jensen, Marra, Mastrofrancesco, O'Dea, Piscopo,
-Reddington-Hughes, Romano, Veach, **Weir**, Zullo, Zupkus, plus Pavalock-D'Amato
-(recorded absent / not voting).
+Ackert, Candelora (V., Minority Leader), Case, Courpas, Dauphinais, DeCaprio,
+Dubitsky, Fishbein, Foncello, Haines, Jensen, Marra, Mastrofrancesco, O'Dea,
+Piscopo, Reddington-Hughes, Romano, Veach, **Weir**, Zullo, Zupkus.
+
+**Absent / not voting (1):** Pavalock-D'Amato.
 
 > **Notes:** Pavalock-D'Amato is shown with an X (absent / not voting) on the
-> roll call, so she is not formally a Nay vote, but is grouped here with
-> Republicans who did not vote in support. The vote was not a party-line vote: a
-> clear majority of Republicans on the floor voted Yes. Source:
-> 2026HV-00204-R00SB00001-HV.PDF, Office of the House Clerk.
+> roll call, so she is counted in neither column. The vote was not a party-line
+> vote: a majority of Republicans on the floor voted Yes. Source:
+> 2026HV-00204-R00SB00001-HV.PDF, Office of the House Clerk; the member-by-member
+> reading is cross-checked against the verified dataset in
+> [Steve Weir's House Floor Votes](https://andoverct.info/reports/55th/weir-votes/). Corrected
+> October 12, 2026; see the note in the Overview.
 
 
 ### Rep. Weir's vote ✓ *Confirmed from Roll Call 204 PDF* ###
@@ -239,7 +253,7 @@ Summary
 | When did the House vote?                              | May 2, 2026, 9:49 p.m., Roll Call 204 |
 | What was the result?                                  | Passed 127–21, with 3 absent or not voting |
 | How did Rep. Weir vote?                               | Nay (against passage) |
-| How did the rest of the Republican caucus vote?       | Roughly split: 28 Yea, 21 Nay, 1 absent. A clear majority of Republicans voting on the day voted Yes. |
+| How did the rest of the Republican caucus vote?       | Roughly split: 27 Yea, 21 Nay, 1 absent. A majority of Republicans voting on the day voted Yes. |
 | How much new aid does SB 1 send to the 55th's towns?  | Approximately $630,000 (estimate; see Part 2 for proration methodology) |
 | Is this the same vote as the immigration bill (SB 397)? | No. SB 397 is a separate 2026 bill on which Weir also voted no. SB 1 is the budget adjustment bill discussed in this report. |
 
@@ -256,12 +270,13 @@ Marlborough). The Bolton and Glastonbury portions are prorated because both
 towns are split across two House districts.
 
 **The vote was not party-line.** This is the single most important context for
-evaluating any Republican's No vote on SB 1. A clear majority of House
-Republicans on the floor — 28 of 49 voting Republicans — voted Yes. The minority
-leader voted No, which gave political cover to Republicans who wanted to oppose
-the bill, but it did not require it. Republicans on the Yes side included
-neighbors like Ackert (8th District, which contains north Bolton) and
-Aniskovich, Buchsbaum, Buckbee, and many others.
+evaluating any Republican's No vote on SB 1. A majority of House Republicans
+on the floor — 27 of 48 voting Republicans — voted Yes. The minority leader
+voted No, which gave political cover to Republicans who wanted to oppose the
+bill, but it did not require it. Republicans on the Yes side included Anderson,
+Aniskovich, Buchsbaum, Buckbee, and many others. (An earlier version of this
+report counted Rep. Ackert of the neighboring 8th District among the Yes votes;
+the verified roll call records him as a No.)
 
 **Weir was not a leadership No.** Of the 21 Republican No votes, Candelora (the
 Minority Leader) is the most notable. Weir's No is a member-level vote, not a
