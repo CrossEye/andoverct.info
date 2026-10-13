@@ -32,6 +32,12 @@
  *   plugin: report.plugin.mjs  -> exports transform(html, ctx) run after numeric
  *                                 alignment and before confirmation marks
  *   theme: <name>         -> use _build/themes/<name>.css for this report
+ *   kind: opinion         -> an opinion piece (lives under /opinion/, not
+ *                            /reports/): OPINION eyebrow over the title, the
+ *                            standing note from footer.json after the body
+ *                            (override with opinionNote:), the `opinion`
+ *                            footer variant, and _build/opinion.css with
+ *                            data-kind="opinion" on <body>
  *   correspondence: <dir> -> living-ledger reports: rebuilds the evidence tree
  *                            under <dir> and exposes it to the
  *                            <% correspondence ... %> directives, so the
@@ -54,7 +60,7 @@ import matter from "gray-matter"
 import { buildContractsBundle } from "./contracts.mjs"
 import { buildScatterPlot } from "./scatter.mjs"
 import {
-  escapeHtml, pageNoteHtml, siteFooterBarHtml, crumbs as buildCrumbs, banner as pageBanner, SEP,
+  escapeHtml, pageNoteHtml, siteFooterBarHtml, opinionNoteHtml, crumbs as buildCrumbs, banner as pageBanner, SEP,
   permalinkScript, lightboxScript,
 } from "./chrome.js"
 import { buildResearchPages } from "./research.mjs"
@@ -68,6 +74,7 @@ const HERE = import.meta.dirname
 const BASE_CSS = readFileSync(join(HERE, "base.css"), "utf8")
 const PRINT_CSS = readFileSync(join(HERE, "print.css"), "utf8")
 const DRAFT_CSS = readFileSync(join(HERE, "draft.css"), "utf8")
+const OPINION_CSS = readFileSync(join(HERE, "opinion.css"), "utf8")
 
 // Site footer (the page note + the identity bar), breadcrumbs, banner and
 // escapeHtml come from the
@@ -434,14 +441,25 @@ const loadSections = () => {
   }
 }
 
-// Home › Reports › <Section> › <title>. The final node (the page itself) is a
-// non-link .current; the rest are links. Section node is dropped if unknown.
+// The top-level areas a built page can live under, keyed by the first path
+// segment of its publicUrl. Reports carry a Reports › <Section> trail; an
+// opinion piece sits directly under Opinion, which has no sub-sections.
+const ROOTS = {
+  reports: { label: "Reports", href: "/reports/" },
+  opinion: { label: "Opinion", href: "/opinion/" },
+}
+const rootFor = (meta) => {
+  const seg = meta.publicUrl ? new URL(meta.publicUrl).pathname.split("/")[1] : ""
+  return ROOTS[seg] || ROOTS.reports
+}
+
+// Home › Reports › <Section> › <title> (or Home › Opinion › <title>). The final
+// node (the page itself) is a non-link .current; the rest are links. Section
+// node is dropped if unknown.
 const breadcrumbHtml = (meta, sections) => {
-  const trail = [
-    { label: "Home", href: "/" },
-    { label: "Reports", href: "/reports/" },
-  ]
-  const sec = meta.section && sections[meta.section]
+  const root = rootFor(meta)
+  const trail = [{ label: "Home", href: "/" }, root]
+  const sec = root === ROOTS.reports && meta.section && sections[meta.section]
   if (sec) trail.push({ label: sec.label, href: sec.url })
   return buildCrumbs([...trail, { label: meta.title }])
 }
@@ -509,14 +527,24 @@ const buildHtml = async (mdText, meta, { forPdf, extraCss, plugin, themeCss, bre
         meta.pdf.footer.replaceAll("{asof}", asOf || "")
       )
     : ""
+  const isOpinion = meta.kind === "opinion"
   const draftCss = meta.draft ? "\n" + DRAFT_CSS : ""
   const privateCss = isPrivate ? "\n" + PRIVATE_CSS : ""
-  const bodyAttr = meta.draft ? ' data-draft="true"' : ""
+  const opinionCss = isOpinion ? "\n" + OPINION_CSS : ""
+  const bodyAttr =
+    (meta.draft ? ' data-draft="true"' : "") + (isOpinion ? ' data-kind="opinion"' : "")
   const css =
-    themeCss + "\n" + BASE_CSS + (forPdf ? printCss : "") + draftCss + privateCss +
+    themeCss + "\n" + BASE_CSS + (forPdf ? printCss : "") + draftCss + privateCss + opinionCss +
     (extraCss ? "\n" + extraCss : "")
 
+  // An opinion piece is labelled by the chrome, not by its prose: the eyebrow
+  // above the title and the standing note after the body are the same on every
+  // piece, so no author can forget to say what kind of page this is.
+  const endNote = isOpinion ? "\n" + opinionNoteHtml(meta.opinionNote) : ""
+  const footerBar = siteFooterBarHtml(isOpinion ? "opinion" : undefined)
+
   const titleBlock =
+    (isOpinion ? '<p class="opinion-eyebrow">Opinion</p>\n' : "") +
     `<h1 class="report-title">${meta.title}</h1>\n` +
     (meta.subtitle ? `<p class="report-subtitle">${meta.subtitle}</p>\n` : "") +
     (meta.attribution ? `<p class="report-attribution">${meta.attribution}</p>\n` : "") +
@@ -534,10 +562,10 @@ const buildHtml = async (mdText, meta, { forPdf, extraCss, plugin, themeCss, bre
 <body${bodyAttr}>
 <div class="container">
 ${titleBlock}
-${rest}
+${rest}${endNote}
 </div>
 ${pageNoteHtml(meta.footerNote ?? meta.footer)}
-${siteFooterBarHtml()}
+${footerBar}
 </body>
 </html>`
   }
@@ -562,10 +590,10 @@ ${siteFooterBarHtml()}
 ${pageBanner(breadcrumb, isPrivate ? { extraClass: "private-banner" } : undefined)}
 <div class="container">
 ${titleBlock}
-${rest}
+${rest}${endNote}
 </div>
 ${pageNoteHtml(meta.footerNote ?? meta.footer)}
-${siteFooterBarHtml()}
+${footerBar}
 <script>${permalinkScript()}</script>
 <script>${lightboxScript()}</script>
 </body>
@@ -776,7 +804,7 @@ const main = async () => {
   if (arg === "--all" || arg === "--private") {
     const root = process.cwd()
     const [glob, filter, where] = arg === "--all"
-      ? ["reports/**/*.md", isReportMd, "reports/"]
+      ? [["reports/**/*.md", "opinion/**/*.md"], isReportMd, "reports/ or opinion/"]
       : ["private/subsections/**/report.md", isPrivateReportMd, "private/subsections/"]
     const files = globSync(glob, { cwd: root })
       .map((f) => resolve(root, f))

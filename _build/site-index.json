@@ -1,5 +1,5 @@
 {
-  "//": "Plan 006 index tree. Each node is one generated index page. Leaf card lists reference reports/reports.json by `list` rather than duplicating report metadata. Rendered by _build/indexes.mjs onto the shared chrome. Stage 2 = the reports landing + section indices; Stage 3 adds reference/, tools/, home.",
+  "//": "Plan 006 index tree. Each node is one generated index page. Leaf card lists reference reports/reports.json by `list` rather than duplicating report metadata (the /opinion/ landing lists opinion/opinion.json the same way, and names the `opinion` footer variant from footer.json via `footerVariant`). Rendered by _build/indexes.mjs onto the shared chrome. Stage 2 = the reports landing + section indices; Stage 3 adds reference/, tools/, home.",
   "nodes": [
     {
       "out": "index.html",
@@ -84,7 +84,12 @@
           ]
         },
         {
-          "id": "other", "num": "V", "label": "Other", "href": "/reference/",
+          "id": "opinion", "num": "V", "label": "Opinion", "href": "/opinion/",
+          "title": "Argued, not reported", "source": "opinion",
+          "blurb": "Pieces that take a side. Unlike everything else on this site, these argue a position and say so up front, under the author's name and affiliations. The facts in them are still drawn from the public record and sourced at the end."
+        },
+        {
+          "id": "other", "num": "VI", "label": "Other", "href": "/reference/",
           "title": "Reference material",
           "blurb": "Longstanding reference works and archives that don't fit the report or charter-guide format but are part of the same project.",
           "items": [
@@ -122,6 +127,20 @@
       "subtitle": "Original, sourced analysis on town budgets, regional school operations, state legislation, and other matters that come up in public deliberation.",
       "lede": "Each report below is a longer, footnoted piece of work intended to inform a specific public conversation. Methodology and known data gaps are described inside each report; download links to underlying data accompany most of them.",
       "list": { "kind": "featured", "group": "section", "groupHeading": "h2", "heading": "h3" }
+    },
+    {
+      "out": "opinion/index.html",
+      "theme": "dark",
+      "pageTitle": "Opinion — andoverct.info",
+      "description": "Opinion pieces by Scott Sauyet on Andover and 55th District matters: argued positions, signed, with the facts sourced to the public record.",
+      "crumbsAbove": true,
+      "trail": [{ "label": "Home", "href": "/" }, { "label": "Opinion" }],
+      "eyebrow": "Scott Sauyet · Personal opinion",
+      "h1": "Opinion",
+      "subtitle": "Argued, not reported.",
+      "lede": "Everything else on this site tries to stay on the record and off the soapbox. The pieces here do the opposite: each takes a position and argues it, under my name and with my affiliations stated. The facts in them are held to the same standard as the reports, and each piece sources them at the end.",
+      "list": { "kind": "opinion", "heading": "h3" },
+      "footerVariant": "opinion"
     },
     {
       "out": "reports/aes/index.html",

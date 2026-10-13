@@ -1,0 +1,47 @@
+/* Opinion pieces — loaded by the engine when a report's front matter carries
+ * `kind: opinion`, which also puts data-kind="opinion" on <body>. The chrome
+ * that says "andoverct.info" (banner, crumbs, footer bar) is left alone; what
+ * changes are the cues a newspaper uses to mark its op-ed page: an OPINION
+ * eyebrow over the title, serif body text, warm paper, a narrower column, and
+ * a standing note at the end. The paper colours come from the theme's
+ * --opinion-* tokens (themes/bluegold.css overrides the pass-through defaults
+ * in themes/default.css), so this file carries no colour literals. */
+
+body[data-kind="opinion"] {
+  --bg:         var(--opinion-bg);
+  --bg-page:    var(--opinion-bg-page);
+  --bg-soft:    var(--opinion-bg-soft);
+  --rule:       var(--opinion-rule);
+  /* Serif body: base.css sets body text in --font-serif, which bluegold fills
+     with a sans stack. An essay reads as an essay in a serif. */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --measure:    760px;
+}
+
+/* The label that does the work: small, spaced capitals over the title, on a
+   short gold rule, so the page says what it is before the first sentence. */
+.opinion-eyebrow {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 9.5pt;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  margin: 0 0 12px 0;
+  padding-bottom: 5px;
+  border-bottom: 3px solid var(--accent);
+}
+
+/* Standing note after the body, the way a paper runs a line under every
+   op-ed: who wrote it, what kind of piece it is, where corrections go. */
+.opinion-note {
+  margin: 48px 0 0 0;
+  padding-top: 18px;
+  border-top: 3px solid var(--accent);
+  font-size: 10.5pt;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.opinion-note strong { font-style: normal; }

@@ -70,7 +70,9 @@ const banner = (crumbsHtml, opts) => {
  * It stays in the page flow because it belongs to the document.
  *
  * .site-footer is the canonical identity/disclaimer from footer.json, constant
- * site-wide. It renders as a full-width bar carrying the banner's background,
+ * site-wide — except that an opinion piece carries footer.json's `opinion`
+ * variant, which drops "independent civic reference" for a line that says what
+ * the page is. It renders as a full-width bar carrying the banner's background,
  * with the banner's rule mirrored onto its top edge, so every page is bookended
  * by the same chrome; each stylesheet skins it from its own palette vars.
  *
@@ -85,10 +87,16 @@ const pageNoteHtml = (note) => {
   return note ? `<p class="page-note">${note}</p>` : ""
 }
 
-const siteFooterBarHtml = () => {
+const siteFooterBarHtml = (variant) => {
   return '<footer class="site-footer">\n'
-    + `<div class="site-footer-inner">${FOOTER.id}</div>\n`
+    + `<div class="site-footer-inner">${FOOTER[variant] || FOOTER.id}</div>\n`
     + "</footer>"
+}
+
+// The standing note under every opinion piece (footer.json `opinionNote`), the
+// way a paper runs a line under each op-ed; a piece may supply its own text.
+const opinionNoteHtml = (note) => {
+  return `<div class="opinion-note">${note || FOOTER.opinionNote}</div>`
 }
 
 /*
@@ -205,7 +213,7 @@ const scrollspyScript = () => {
 
 module.exports = {
   escapeHtml, SEP, crumbs, banner,
-  pageNoteHtml, siteFooterBarHtml,
+  pageNoteHtml, siteFooterBarHtml, opinionNoteHtml,
   permalinkScript, lightboxScript, scrollspyScript,
   footer: FOOTER,
 }

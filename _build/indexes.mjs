@@ -26,6 +26,9 @@ const ROOT = join(HERE, "..")
 const TREE = JSON.parse(readFileSync(join(HERE, "site-index.json"), "utf8"))
 const REPORTS = JSON.parse(readFileSync(join(ROOT, "reports", "reports.json"), "utf8"))
 const EDITIONS = JSON.parse(readFileSync(join(ROOT, "the-facts", "editions.json"), "utf8"))
+const OPINION = JSON.parse(readFileSync(join(ROOT, "opinion", "opinion.json"), "utf8"))
+
+const opinionPieces = () => OPINION.pieces.filter((p) => !p.hidden)
 
 const FONTS = `    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -81,9 +84,20 @@ const featuredGroupHtml = (groupHeading, heading) => {
     .join("\n")
 }
 
+// The /opinion/ landing: every piece in the registry, newest first.
+const opinionListHtml = (heading) => {
+  const entries = opinionPieces()
+    .map((p) => entryHtml({ url: p.url, title: p.title, meta: p.meta || [], paras: p.summary ? [p.summary] : [] }, heading))
+    .join("\n")
+  return `<section class="group">\n${entries}\n      </section>`
+}
+
 const listHtml = (list) => {
   if (list.kind === "section") {
     return sectionListHtml(list.section, list.heading || "h3")
+  }
+  if (list.kind === "opinion") {
+    return opinionListHtml(list.heading || "h3")
   }
   // featured (optionally grouped by section)
   if (list.group === "section") {
@@ -223,10 +237,19 @@ const factsCards = () => {
   return html
 }
 
+// Opinion: one card per piece, newest first.
+const opinionCards = () => {
+  const cards = opinionPieces()
+    .map((p) => cardHtml({ meta: p.meta || [], title: p.title, href: p.url, desc: p.summary || "" }))
+    .join("\n")
+  return `<div class="cardgrid">${cards}</div>`
+}
+
 const cardsSectionHtml = (s) => {
   let body
   if (s.source === "reports") body = reportsCards()
   else if (s.source === "editions") body = factsCards()
+  else if (s.source === "opinion") body = opinionCards()
   else {
     body = s.items ? `<div class="cardgrid">${s.items.map(cardHtml).join("\n")}</div>` : ""
     if (s.groups) body += (body ? "\n" : "") + s.groups.map(cardGroupHtml).join("\n")
@@ -251,6 +274,7 @@ const HOME_SCROLLSPY = `<script>${scrollspyScript()}</script>`
 const railCount = (s) => {
   if (s.source === "reports") return REPORTS.reports.filter((r) => r.featured !== false && !r.hidden).length
   if (s.source === "editions") return Object.values(EDITIONS.editions).filter((e) => !e.hidden).length
+  if (s.source === "opinion") return opinionPieces().length
   if (s.groups) return s.groups.length
   return s.items ? s.items.length : 0
 }
@@ -337,7 +361,7 @@ ${headerParts.join("\n")}
 
       ${pageNoteHtml(node.footerNote)}
     </main>
-${siteFooterBarHtml()}
+${siteFooterBarHtml(node.footerVariant)}
   </body>
 </html>
 `

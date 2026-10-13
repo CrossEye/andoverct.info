@@ -8,16 +8,17 @@ result.
 
 ## Repository layout
 
-| Path                                                           | What it is                                                              | Built by                                                             |
-| -------------------------------------------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| `index.html`, `style.css`, `idx.php`, `favicon.*`, `.htaccess` | Top-level hub chrome                                                    | hand-authored                                                        |
-| `the-facts/`                                                   | Newspaper-style "the facts" editions                                    | `the-facts/_build/render.js` (Markdown → HTML)                       |
-| `reports/`                                                     | Long-form civic/analytical reports                                      | `_build/report.mjs` (Markdown → HTML + PDF)                          |
-| `town-charter/`                                                | Town-charter guide pages                                                | `town-charter/convert.js` (data → HTML)                              |
-| `links/`                                                       | Link registry — shareable pages for campaign sources ([docs](links/README.md)) | `_build/links.mjs` (YAML in `links/_src/` → HTML)              |
-| `reference/`                                                   | Reference landing page                                                  | hand-authored                                                        |
-| `reference/video/`                                             | Town-meeting transcripts (the former *TownMeetings* project, folded in) | `reference/video/download-transcripts.js` + `transcribe-deepgram.js` |
-| `_build/`                                                      | Shared report engine + the deploy tool                                  | —                                                                    |
+| Path                                                           | What it is                                                                                 | Built by                                                             |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------- |
+| `index.html`, `style.css`, `idx.php`, `favicon.*`, `.htaccess` | Top-level hub chrome                                                                       | hand-authored                                                        |
+| `the-facts/`                                                   | Newspaper-style "the facts" editions                                                       | `the-facts/_build/render.js` (Markdown → HTML)                       |
+| `reports/`                                                     | Long-form civic/analytical reports                                                         | `_build/report.mjs` (Markdown → HTML + PDF)                          |
+| `opinion/`                                                     | Opinion pieces — argued and signed, facts still sourced ([registry](opinion/opinion.json)) | `_build/report.mjs` with `kind: opinion` in the front matter         |
+| `town-charter/`                                                | Town-charter guide pages                                                                   | `town-charter/convert.js` (data → HTML)                              |
+| `links/`                                                       | Link registry — shareable pages for campaign sources ([docs](links/README.md))             | `_build/links.mjs` (YAML in `links/_src/` → HTML)                    |
+| `reference/`                                                   | Reference landing page                                                                     | hand-authored                                                        |
+| `reference/video/`                                             | Town-meeting transcripts (the former *TownMeetings* project, folded in)                    | `reference/video/download-transcripts.js` + `transcribe-deepgram.js` |
+| `_build/`                                                      | Shared report engine + the deploy tool                                                     | —                                                                    |
 
 **Not in this repo** (separate GitHub Pages sites on their own subdomains, linked
 from the hub): `charter22` / `charter24` / `flyer`.andoverct.info. They keep their
@@ -36,7 +37,7 @@ Run all of these from the repo root.
 | Command                        | Does                                                           |
 | ------------------------------ | -------------------------------------------------------------- |
 | `npm run setup`                | Install dependencies (root + the video pipeline)               |
-| `npm run rebuild:reports`      | Rebuild every report (HTML + PDF)                              |
+| `npm run rebuild:reports`      | Rebuild every report and opinion piece (HTML + PDF)            |
 | `npm run rebuild:the-facts`    | Rebuild every "the facts" edition                              |
 | `npm run rebuild:town-charter` | Rebuild the town-charter pages                                 |
 | `npm run rebuild:links`        | Rebuild the link-registry pages from `links/_src/*.yaml`       |
@@ -107,7 +108,7 @@ file an area publishes and compares against the committed baseline in
   baseline is picked up, and commits content and baseline together. A failed
   upload stops before the commit.
 - **Useful flags** (pass after `--`, e.g. `npm run deploy -- --area video`):
-  - `--area <id>` — limit to one area (`root`, `the-facts`, `reports`,
+  - `--area <id>` — limit to one area (`root`, `the-facts`, `reports`, `opinion`,
     `town-charter`, `reference`, `video`).
   - `--delete` — also remove files on the server that are gone locally (off by
     default; deletions are otherwise only reported).

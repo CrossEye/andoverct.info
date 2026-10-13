@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>The Votes Are the Job · Opinion · CT 55th House District</title>
+<style>/* Default civic-report theme.
+ *
+ * A theme is just this set of CSS custom properties. To experiment, copy this
+ * file to _build/themes/<name>.css, change what you like, and point at it from
+ * _build/report.config.json ({"theme":"<name>"}) for all reports, or from a
+ * single report's front matter (theme: <name>). A non-default theme is layered
+ * ON TOP of this one, so it only needs to list the variables it changes.
+ *
+ * Scope: colors, fonts, and small size/width/gap tweaks — not layout changes.
+ */
+:root {
+  /* ---- Palette ---- */
+  --bg:             #fafaf7;   /* page background */
+  --bg-page:        #ffffff;   /* the white content card */
+  --bg-soft:        #f5f3ed;   /* callouts, table headers, inline code */
+  --ink:            #1a1a1a;   /* body text, main headings */
+  --ink-soft:       #333333;   /* blockquote / methodology text */
+  --ink-mute:       #5a5a5a;   /* subtitle, card descriptions */
+  --ink-faint:      #888888;   /* attribution, footer, captions */
+  --rule:           #e0ddd5;   /* hairline borders */
+  --accent:         #b8a878;   /* gold accent rules */
+  --accent-2:       #2c3e50;   /* slate: h3, table-header & code text */
+  --banner-bg:      #2c3e50;   /* top banner background */
+  --banner-ink:     #ecf0f1;   /* top banner text */
+  --crumb-link:       #b9c4cf; /* breadcrumb links in the banner */
+  --crumb-link-hover: #ffffff;
+  --crumb-current:    #ffffff; /* deepest crumb (current page), not a link */
+  --link:           #1a5490;
+  --link-hover:     #0d3a6b;
+  --link-underline: #c5d3e2;
+  --anchor:         #b8b3a4;   /* the ¶ header anchor */
+  --anchor-hover:   #6c7480;
+  --confirm:        #5a8a5a;   /* green ✓ confirmation mark */
+  --confirm-strong: #2e7d32;
+
+  /* ---- Opinion pages (front-matter `kind: opinion`) ----
+     Paper tokens that _build/opinion.css swaps in for the ordinary --bg family.
+     The default theme passes its own paper through unchanged; a skin that wants
+     its op-ed page on different stock (bluegold: cream) overrides these. */
+  --opinion-bg:       var(--bg);
+  --opinion-bg-page:  var(--bg-page);
+  --opinion-bg-soft:  var(--bg-soft);
+  --opinion-rule:     var(--rule);
+
+  /* ---- Fonts ---- */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:  "SF Mono", Monaco, Menlo, Consolas, monospace;
+
+  /* ---- Sizes (small tweaks only; no layout restructuring) ---- */
+  --base-size:  11pt;    /* body text */
+  --measure:    780px;   /* content column width */
+  --gutter:     30px;    /* horizontal padding / banner & footer gaps */
+  --title-size: 28pt;
+  --h2-size:    18pt;
+  --h3-size:    13pt;
+}
+
+/* bluegold — mirrors the light-mode look of the 55th campaign site
+ * (C:\Users\scott\Dev\Andover\55th, e.g. localhost:8080/reports): cool
+ * blue-gray paper, a dark navy banner with a gold underline, navy serif
+ * headings over a sans body, gold accent rules, and blue links.
+ *
+ * Note the deliberate font swap: base.css uses --font-serif for body text and
+ * --font-sans for headings/labels, so to match the campaign look (sans body,
+ * serif display) we put the SANS stack in --font-serif and the SERIF stack in
+ * --font-sans.
+ *
+ * Layered on default.css. Uses --banner-border (in base.css) for the gold rule
+ * under the banner. */
+:root {
+  /* Palette */
+  --bg:             #f4f6f9;
+  --bg-page:        #ffffff;
+  --bg-soft:        #eef4fb;   /* blue-050 tint for callouts / table headers */
+  --rule:           #e3e8ef;   /* hairlines */
+  --ink:            #19222e;
+  --ink-soft:       #2b3744;
+  --ink-mute:       #5b6775;
+  --ink-faint:      #8a94a1;
+  --accent:         #e8a800;   /* signature gold rules */
+  --accent-2:       #0f2a4a;   /* blue-900: headings, table-header & code text */
+  --banner-bg:      linear-gradient(180deg, #0f2a4a, #143862);
+  --banner-border:  3px solid #e8a800;
+  --banner-ink:     #dde8f5;   /* blue-100 */
+  --crumb-link:       #e8a800; /* gold breadcrumb links */
+  --crumb-link-hover: #ffffff; /* hover to white + underline */
+  --crumb-current:    #ffffff; /* current page, not a link */
+  --link:           #245c95;   /* blue-600 */
+  --link-hover:     #1c4e80;   /* blue-700 */
+  --link-underline: #cfe0f2;
+  --confirm:        #2f8f5b;
+  --confirm-strong: #1f7d49;
+
+  /* Opinion pages: warm cream stock under the same navy-and-gold banner, so an
+     op-ed reads as this site's editorial page rather than another report. */
+  --opinion-bg:       #f6f2ea;
+  --opinion-bg-page:  #fffdf8;
+  --opinion-bg-soft:  #f3ecdf;
+  --opinion-rule:     #e6dfd2;
+
+  /* Type: sans body + serif display headings (see note above) */
+  --font-serif: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans:  Georgia, "Times New Roman", serif;
+
+  --measure: 860px;
+}
+
+/* Structural base styles for civic reports — theme-independent.
+ * Colors, fonts, and sizes come from the active theme (CSS custom properties
+ * in _build/themes/<name>.css), which is loaded BEFORE this file. */
+
+/* ---- Reset & base ---- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Layout ---- */
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner a { color: inherit; text-decoration: none; }
+.page-banner a:hover { text-decoration: underline; }
+
+/* ---- Breadcrumb (in the banner) ---- */
+.page-banner .crumbs a {
+    color: var(--crumb-link, var(--banner-ink));
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover, #fff);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current {
+    color: var(--crumb-current, #fff);
+}
+
+.container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* ---- Images / figures ---- */
+/* Scale charts and figures to the column (and the printed page box) rather
+   than overflowing at their intrinsic pixel/point size. */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+}
+
+/* ---- Lightbox (screen only; overlay is built at runtime by the viewer
+   script, so it never appears in the PDF). Click a chart to enlarge it. ---- */
+.container img { cursor: zoom-in; }
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vmin;
+    background: rgba(0, 0, 0, 0.85);
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+.lightbox-overlay.open { opacity: 1; }
+.lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    margin: 0;
+    cursor: zoom-out;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+    background: #fff;
+}
+
+/* ---- Title block ---- */
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-attribution {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    color: var(--ink-faint);
+    margin: 0 0 24px 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+.report-attribution a {
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+}
+.report-attribution a:hover {
+    color: var(--link);
+    border-bottom-color: var(--link);
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.methodology-header {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 0 0 36px 0;
+    line-height: 1.55;
+}
+
+/* ---- Section labels (small uppercase tags above h2) ---- */
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 36px 0 4px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+/* ---- Headings ---- */
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+h3 {
+    font-family: var(--font-sans);
+    font-size: var(--h3-size);
+    font-weight: 600;
+    margin: 28px 0 10px 0;
+    color: var(--accent-2);
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+
+/* ---- Header anchor links (HTML only; hidden in print) ---- */
+.header-anchor {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.2em;
+    color: var(--anchor);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.85em;
+    vertical-align: baseline;
+    cursor: pointer;
+    user-select: none;
+}
+h2:hover .header-anchor,
+h3:hover .header-anchor,
+.header-anchor:focus {
+    opacity: 1;
+}
+.header-anchor:hover {
+    color: var(--anchor-hover);
+}
+.header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+}
+.header-anchor.copied::after {
+    content: " copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+}
+@media print {
+    .header-anchor {
+        display: none;
+    }
+}
+
+/* ---- Body text ---- */
+p {
+    margin: 0 0 14px 0;
+    orphans: 3;
+    widows: 3;
+}
+p.intro-table {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+strong { font-weight: 700; color: var(--ink); }
+em { font-style: italic; }
+
+/* ---- Links ---- */
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* ---- Lists ---- */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+li {
+    margin: 0 0 6px 0;
+    line-height: 1.55;
+}
+
+/* ---- Tables ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-before: avoid;
+    break-before: avoid;
+}
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 9.5pt;
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--accent);
+}
+tbody tr:hover { background: var(--bg); }
+
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+tbody tr:last-child td {
+    border-bottom: 2px solid var(--accent);
+}
+
+/* ---- Blockquotes (source notes, verbatim quotes) ---- */
+blockquote {
+    margin: 14px 0 18px 0;
+    padding: 14px 20px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+blockquote p { margin: 0 0 8px 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ol, blockquote ul {
+    margin: 8px 0;
+}
+
+/* ---- HR ---- */
+hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+}
+
+/* ---- Inline code ---- */
+code {
+    font-family: var(--font-mono);
+    font-size: 9.5pt;
+    background: var(--bg-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: var(--accent-2);
+    overflow-wrap: break-word;
+}
+
+/* ---- Other Formats footer ---- */
+.formats-section {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+}
+.format-cards {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.format-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.format-cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media screen and (max-width: 700px) {
+    .format-cards.cols-3,
+    .format-cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+.format-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    padding: 14px;
+    text-align: left;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+.format-card-icon { font-size: 18pt; margin-bottom: 4px; }
+.format-card-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+.format-card-desc { font-size: 9pt; color: var(--ink-mute); line-height: 1.4; }
+.format-card a { display: block; }
+
+/* ---- Footer ----
+   Two parts: .footer-id is the site-wide identity/disclaimer line, identical
+   on every page; .footer-note is the optional per-page line (sources, method,
+   "not a lawyer"). See siteFooterHtml() in _build/links.mjs. */
+/* @footer-css:start — generated from _build/footer.css; do not edit here, run: npm run sync:footer-css */
+.page-note {
+  /* Declared here, not inherited: this block is dropped into arbitrary
+     stylesheets and not all of them carry a global border-box reset (404.html
+     does not), and without it the 512px cap applies to the content box and the
+     wrap widens by the padding. */
+  box-sizing: border-box;
+  /* max-width + horizontal padding are px (not rem/ch) so a page's root
+     font-size can't rescale the wrap — the line breaks are identical everywhere. */
+  max-width: 512px;
+  margin: 3rem auto 2.5rem;
+  padding: 1.75rem 20px 0;
+  border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  font-style: italic;
+  text-align: center;
+  color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+}
+/* a[href] rather than a bare `a`: see the note on the bar's link rule below. */
+.page-note a[href] { color: inherit; }
+
+.site-footer {
+  background: var(--banner-bg, linear-gradient(180deg, #0f2a4a, #143862));
+  border-top: var(--banner-border, 3px solid #e8a800);
+  color: var(--banner-ink, #dde8f5);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.site-footer-inner {
+  /* Declared here, not inherited: this block is dropped into arbitrary
+     stylesheets and not all of them carry a global border-box reset (404.html
+     does not), and without it the 512px cap applies to the content box and the
+     wrap widens by the padding. */
+  box-sizing: border-box;
+  max-width: 512px;
+  margin: 0 auto;
+  /* Horizontal padding is a LITERAL, like the wrap width above: with
+     box-sizing:border-box the text column is 512px minus this padding, so a
+     per-surface var here (--gutter is 30px on reports, 24px via style.css,
+     20px elsewhere) silently re-wraps the footer differently on every
+     surface. That is the drift this whole file exists to prevent. */
+  padding: 1.15rem 20px;
+  text-align: center;
+}
+.site-footer strong { color: var(--crumb-current, #ffffff); font-weight: 600; }
+/* Two classes deep on purpose. A host stylesheet's own link rule reaches (0,1,2)
+   easily -- style.css carries `body.bluegold a`, which the video transcript
+   pages opt into -- and that outranks a flat `.site-footer a` (0,1,1) whatever
+   the source order, repainting the footer's email link in the page's link
+   colour instead of the banner gold. Routing through the inner wrapper puts
+   these at (0,2,1), above any `body.<class> a`. */
+.site-footer .site-footer-inner a {
+  color: var(--crumb-link, #e8a800);
+  border-bottom: 1px solid transparent;
+  text-decoration: none;
+}
+.site-footer .site-footer-inner a:hover {
+  color: var(--crumb-link-hover, #ffffff);
+  border-bottom-color: currentColor;
+}
+
+/* Sticking: body becomes a column flex container and the bar takes
+   margin-top:auto, which absorbs only space that is genuinely free. So the bar
+   sits at the viewport bottom on a page shorter than the viewport, and simply
+   follows the content on a longer one — it never reserves scrolling space.
+   Screen only; print keeps plain block flow. */
+@media screen {
+  body {
+    min-height: 100vh;
+    min-height: 100svh;   /* excludes mobile browser chrome where supported */
+    display: flex;
+    flex-direction: column;
+  }
+  .site-footer { margin-top: auto; }
+}
+
+@media print {
+  /* On paper the split is undone: no full-bleed colour, and the note and the
+     identity close back up into the single quiet block the PDFs had before. */
+  .site-footer {
+    background: none;
+    border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+    color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+  }
+  /* The note immediately above already drew that rule — a second one here
+     would stack two hairlines a few points apart. */
+  .page-note + .site-footer { border-top: none; }
+  .site-footer-inner { max-width: 512px; padding: 0; }
+  .page-note { margin-bottom: 0.6rem; }
+  .site-footer strong { color: var(--ink-soft, inherit); }
+  .site-footer .site-footer-inner a { color: inherit; }
+}
+/* @footer-css:end */
+
+/* ---- Confirmation glyphs ---- */
+h3 .conf-mark {
+    color: var(--confirm);
+    font-size: 11pt;
+    margin-right: 4px;
+}
+
+/* Opinion pieces — loaded by the engine when a report's front matter carries
+ * `kind: opinion`, which also puts data-kind="opinion" on <body>. The chrome
+ * that says "andoverct.info" (banner, crumbs, footer bar) is left alone; what
+ * changes are the cues a newspaper uses to mark its op-ed page: an OPINION
+ * eyebrow over the title, serif body text, warm paper, a narrower column, and
+ * a standing note at the end. The paper colours come from the theme's
+ * --opinion-* tokens (themes/bluegold.css overrides the pass-through defaults
+ * in themes/default.css), so this file carries no colour literals. */
+
+body[data-kind="opinion"] {
+  --bg:         var(--opinion-bg);
+  --bg-page:    var(--opinion-bg-page);
+  --bg-soft:    var(--opinion-bg-soft);
+  --rule:       var(--opinion-rule);
+  /* Serif body: base.css sets body text in --font-serif, which bluegold fills
+     with a sans stack. An essay reads as an essay in a serif. */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --measure:    760px;
+}
+
+/* The label that does the work: small, spaced capitals over the title, on a
+   short gold rule, so the page says what it is before the first sentence. */
+.opinion-eyebrow {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 9.5pt;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  margin: 0 0 12px 0;
+  padding-bottom: 5px;
+  border-bottom: 3px solid var(--accent);
+}
+
+/* Standing note after the body, the way a paper runs a line under every
+   op-ed: who wrote it, what kind of piece it is, where corrections go. */
+.opinion-note {
+  margin: 48px 0 0 0;
+  padding-top: 18px;
+  border-top: 3px solid var(--accent);
+  font-size: 10.5pt;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.opinion-note strong { font-style: normal; }
+</style>
+</head>
+<body data-kind="opinion">
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/opinion/">Opinion</a><span class="sep">›</span><span class="current">The Votes Are the Job</span>
+  </nav>
+</div>
+<div class="container">
+<p class="opinion-eyebrow">Opinion</p>
+<h1 class="report-title">The Votes Are the Job</h1>
+<p class="report-subtitle">Opinion · Why it is fair, and necessary, for Ellen Paul's campaign to make this race about Steve Weir's record</p>
+<p class="report-attribution">An opinion piece by Scott Sauyet · <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Co-chair, Andover Democratic Town Committee · Not an official document</p>
+<hr class="report-header-rule">
+<p class="methodology-header">This is an opinion piece, unlike the reports elsewhere on this site. The
+opinions are mine. The facts are checkable, and every one is sourced at the
+end.</p>
+<p>This fall, a few letters in our local papers and a good many comments online
+have objected that Ellen Paul&#8217;s campaign is running negative ads against Rep.
+Steve Weir. I want to make the case that criticizing an incumbent&#8217;s record is
+not negative campaigning. It is the most important thing a challenger can do,
+and very nearly the only thing.</p>
+<p>First, where I stand. I co-chair the Andover Democratic Town Committee, and
+the Democratic committees across the 55th District are working to elect Ellen.
+Some of the mail I&#8217;m defending was paid for by those committees. I&#8217;m not
+neutral, and I won&#8217;t pretend to be. What I can promise is that every number
+below can be checked against the official roll calls.</p>
+<p>Consider what an incumbent brings to a race. His name goes on the ballot with
+the title already attached. His caucus maintains an official page for him on
+the House Republicans&#8217; website. Connecticut legislators can send district-wide
+newsletters at state expense. And two terms in office have made his name
+familiar in all five towns. None of that is improper; it comes with the job.
+But it means a challenger starts behind, introducing herself to voters who
+already know her opponent&#8217;s name.</p>
+<p>The incumbent carries one burden the challenger doesn&#8217;t: a record. Two terms,
+1,351 recorded House votes. The best evidence of what a legislator will do
+next is what he has already done. Asking voters to look at it is not an
+attack. It is what a campaign is for.</p>
+<p>And Weir&#8217;s is not an easy record to run on in this district. By the standard
+political-science measure of a whole voting record, he was the 11th most
+conservative of 153 House members in 2025-26, and the 8th of 152 in his first
+term. He votes to the right of the House Republican leader. Meanwhile the 55th
+leans Democratic, about 54.5 percent in top-of-the-ticket races since 2012. Of
+the 22 Republicans who hold Democratic-leaning seats, only two vote more
+conservatively than he does.</p>
+<p>That isn&#8217;t a label. It shows up bill by bill.</p>
+<p>On 95 roll calls, Weir voted no while most of his own caucus voted yes. Three
+examples:</p>
+<ul>
+<li><strong>The 2026 budget adjustment (SB 1)</strong> carried about $630,000 in new aid to
+Andover, Bolton, Glastonbury, Hebron, and Marlborough. Twenty-seven of the 48
+House Republicans voting supported it. He voted no.</li>
+<li><strong>Private equity in our hospitals (SB 196, 2026).</strong> Thirty House Republicans
+voted for stronger oversight. He voted no.</li>
+<li><strong>In-law apartments (HB 5288, 2026)</strong> barred towns and utilities from
+requiring a costly separate utility connection for an accessory dwelling
+unit, a pure removal of a government requirement. His caucus supported it 35
+to 13. He was one of the 13.</li>
+</ul>
+<p>Other votes put him with his caucus but against nearly everyone else in
+Connecticut:</p>
+<ul>
+<li><strong>Ending child marriage (HB 6569, 2023)</strong> made Connecticut the ninth state to
+set 18 as the minimum age to marry, with no exceptions. The state Senate
+passed it without a single no vote. Most House Republicans voted no, and so
+did eleven Democrats; none of them represent us. He voted no.</li>
+<li><strong>Medical debt (SB 395, 2024)</strong> limited the reporting of medical debt. It
+passed the House 106 to 44. He voted no.</li>
+</ul>
+<p>Weir&#8217;s supporters answer that he is a decent man who never misses a vote. Both
+things appear to be true. By all accounts he is kind, accessible, and hard
+working, and his family&#8217;s dog-rescue work is genuinely admirable. But perfect
+attendance means only that he was present for every one of those votes. A
+voting record measures how you voted, not whether you showed up. No amount of
+personal decency changes what those votes did, or didn&#8217;t do, for the five
+towns he represents. The votes are the job.</p>
+<p>I&#8217;ll concede what is fair in the complaint. Campaign mail is loud, and some of
+Ellen&#8217;s is louder than I would write it; I&#8217;d rather it stayed on Connecticut
+votes and left national politics out of it. But look at what is printed on
+the cards themselves: bill numbers. Anyone can look up how he voted on each
+one, and I hope you will. Not all of Ellen&#8217;s mail is about him, either. Much
+of it is about her own plans: property tax relief, early childhood care,
+holding Eversource accountable, and the organizations that have endorsed her.</p>
+<p>Now compare the mailer Weir sent, which arrived in my mailbox the same day as
+one of Ellen&#8217;s. It tells us he was a police officer, that he is an Eagle Scout
+and a licensed helicopter pilot, and that he and his wife have raised three
+daughters in Hebron. It calls him trustworthy and principled. Those are good
+things to know about a neighbor. It does not mention a single vote he has cast
+in two terms. That&#8217;s a choice worth noticing.</p>
+<p>An election is a job review. An incumbent&#8217;s work is public, recorded, and easy
+to check. A challenger who points to it isn&#8217;t running a smear. She&#8217;s asking us
+to do the review. I hope you will, starting with the links below.</p>
+<h2 id="sources">Sources<a class="header-anchor" href="#sources" aria-label="Link to this section">¶</a></h2>
+<p><strong>Weir&#8217;s record (andoverct.info, all built from official roll-call PDFs):</strong></p>
+<ul>
+<li><a href="https://andoverct.info/reports/55th/weir-position/">Where Weir Sits in the House</a>:
+the W-NOMINATE ranking, district lean, and full methods and data</li>
+<li><a href="https://andoverct.info/reports/55th/weir-votes/">Steve Weir&#8217;s House Floor Votes, 2023-2026</a>:
+every roll call, with a link to its official PDF</li>
+<li><a href="https://andoverct.info/reports/55th/weir-analysis/">Steve Weir&#8217;s Voting Record</a>:
+the 95 right-of-caucus votes and the party-line analysis</li>
+<li><a href="https://andoverct.info/reports/55th/weir-sb1/">SB 1 town aid, by town</a></li>
+</ul>
+<p><strong>Individual votes (House final passage):</strong></p>
+<ul>
+<li>SB 1 (2026): passed 127 to 21; Republicans 27 to 21</li>
+<li>SB 196 (2026): passed 130 to 18; Republicans 30 to 18</li>
+<li>HB 5288 (2026), now Public Act 26-7: Republicans 35 to 13</li>
+<li>HB 6569 (2023): passed 98 to 45; Democrats 83 to 11, Republicans 15 to 34;
+<a href="https://www.cga.ct.gov/2023/VOTE/H/PDF/2023HV-00050-R00HB06569-HV.PDF">roll call</a></li>
+<li>SB 395 (2024): passed 106 to 44; Democrats 98 to 0, Republicans 8 to 44</li>
+</ul>
+<p><strong>Incumbency:</strong></p>
+<ul>
+<li><a href="https://www.cthousegop.com/weir/about">Rep. Weir&#8217;s page on the House Republicans&#8217; site</a></li>
+<li><a href="https://prdext3.cga.ct.gov/gae/tfs/20090129_Commission%20on%20Enhancing%20Agency%20Outcomes/Selected%20OLR%20Reports/Legislative%20Mailings.pdf">Connecticut Office of Legislative Research, &#8220;Legislative Mailings&#8221;</a></li>
+</ul>
+
+<div class="opinion-note"><strong>About this piece.</strong> The opinion pieces on andoverct.info argue a position; the reports elsewhere on the site do not. The views are the author's own. The facts are drawn from the public record and sourced above, and corrections are welcome at <a href="mailto:scott@sauyet.com">scott@sauyet.com</a>.</div>
+</div>
+<p class="page-note">Written October 2026 · Opinion, not a data report · Vote figures are from the Connecticut General Assembly's official roll-call records; see Sources.</p>
+<footer class="site-footer">
+<div class="site-footer-inner"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · An opinion piece, argued rather than reported · Not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee · Corrections welcome</div>
+</footer>
+<script>
+;(() => {
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('.header-anchor')
+    const id = anchor && anchor.parentElement.id
+    if (!id || !navigator.clipboard?.writeText) return
+    const url = window.location.origin + window.location.pathname + '#' + id
+    navigator.clipboard.writeText(url)
+      .then(() => {
+        anchor.classList.add('copied')
+        setTimeout(() => anchor.classList.remove('copied'), 1400)
+      })
+      .catch(() => {})
+  })
+})()
+</script>
+<script>
+;(() => {
+  const imgs = [...document.querySelectorAll('.container img')]
+  if (!imgs.length) return
+
+  let overlay = null
+
+  const onKey = (e) => e.key === 'Escape' && close()
+
+  const close = () => {
+    if (!overlay) return
+    const gone = overlay
+    overlay = null
+    gone.classList.remove('open')
+    document.removeEventListener('keydown', onKey)
+    setTimeout(() => gone.parentNode && gone.parentNode.removeChild(gone), 200)
+  }
+
+  const open = (src, alt) => {
+    overlay = document.createElement('div')
+    overlay.className = 'lightbox-overlay'
+    const big = document.createElement('img')
+    big.src = src
+    big.alt = alt || ''
+    overlay.appendChild(big)
+    overlay.addEventListener('click', close)
+    document.body.appendChild(overlay)
+    void overlay.offsetWidth // force reflow so the fade-in transition runs
+    overlay.classList.add('open')
+    document.addEventListener('keydown', onKey)
+  }
+
+  imgs.forEach((img) =>
+    img.addEventListener('click', () => open(img.currentSrc || img.src, img.alt)))
+})()
+</script>
+</body>
+</html>
