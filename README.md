@@ -45,6 +45,7 @@ Run all of these from the repo root.
 | `npm run rebuild:all`          | Reports + the-facts + town-charter + links + private (the fast, local builds) |
 | `npm run rebuild:videos`       | Fetch/render new **YouTube** meeting transcripts               |
 | `npm run rebuild:videos:boe`   | Transcribe missing **BOE (Zoom)** meetings via Deepgram        |
+| `npm run votes:update`         | Enter a day's early-voting counts, then commit, deploy, push   |
 | `npm run deploy`               | **Dry run** — show exactly what would upload, transfer nothing |
 | `npm run deploy:go`            | Upload the changed files to the live server                    |
 | `npm run deploy:commit`        | stage, `deploy:go`, restage, then commit (pass `-- "message"`) |
