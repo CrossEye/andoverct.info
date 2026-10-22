@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voter Turnout Tracker</title>
+<script>
+try {
+  const theme = localStorage.getItem('early-voting:theme')
+  theme && document.documentElement.setAttribute('data-theme', theme)
+} catch (e) {}
+</script>
+<style>
+:root{
+  --bg:#f6f5f2; --card:#ffffff; --ink:#1d1d1b; --ink2:#5f5e5a; --ink3:#8a8984;
+  --line:#dedcd6; --line2:#ecebe6; --sel:#eef3fd; --focus:#2f6fdc;
+  --dem:#2f6fdc; --rep:#d6453d; --una:#7a5cc7; --oth:#2e9e6b;
+  --btn:#2f2f2c; --btn-ink:#ffffff; --warn-bg:#fff6dc; --warn-line:#e6c766;
+  --seg-ink:#ffffff;
+  --fs-xs:0.72rem; --fs-sm:0.8rem; --fs-md:0.85rem; --fs-base:0.95rem; --fs-lg:1.1rem; --fs-xl:1.6rem;
+  --sp-xs:0.25rem; --sp-sm:0.5rem; --sp-md:0.75rem; --sp-lg:1rem; --sp-xl:1.5rem;
+  --radius-sm:4px; --radius-md:6px; --radius-lg:10px;
+  --control-pad:0.4rem; --control-border:1px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#161614; --card:#1f1f1d; --ink:#ecebe6; --ink2:#a9a8a2; --ink3:#7b7a75;
+    --line:#3a3a37; --line2:#2b2b29; --sel:#232a3a; --focus:#4d82ea;
+    --dem:#4d82ea; --rep:#df5a52; --una:#9a7ee0; --oth:#3eaa78;
+    --btn:#e6e5df; --btn-ink:#1d1d1b; --warn-bg:#3a3320; --warn-line:#8a7a3a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#161614; --card:#1f1f1d; --ink:#ecebe6; --ink2:#a9a8a2; --ink3:#7b7a75;
+  --line:#3a3a37; --line2:#2b2b29; --sel:#232a3a; --focus:#4d82ea;
+  --dem:#4d82ea; --rep:#df5a52; --una:#9a7ee0; --oth:#3eaa78;
+  --btn:#e6e5df; --btn-ink:#1d1d1b; --warn-bg:#3a3320; --warn-line:#8a7a3a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);
+  font:var(--fs-base)/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+main{max-width:960px;margin:0 auto;padding:var(--sp-lg) var(--sp-lg) 3rem}
+h1{font-size:var(--fs-xl);margin:0;line-height:1.2}
+h2{font-size:var(--fs-lg);margin:0 0 var(--sp-md)}
+h3{font-size:var(--fs-base);margin:var(--sp-lg) 0 var(--sp-xs)}
+.masthead{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--sp-sm);margin:var(--sp-md) 0 var(--sp-xs)}
+.sub{color:var(--ink2);margin:0 0 var(--sp-lg)}
+section,details.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:var(--sp-lg);margin:0 0 var(--sp-lg)}
+details.panel summary{cursor:pointer;list-style:none;display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--sp-sm)}
+details.panel summary::-webkit-details-marker{display:none}
+details.panel summary::before{content:"\25B6";font-size:var(--fs-xs);color:var(--ink3)}
+details.panel[open] summary::before{content:"\25BC"}
+details.panel summary h2{margin:0}
+details.panel[open] summary{margin-bottom:var(--sp-md)}
+details.panel[open] .synopsis{display:none}
+.synopsis{color:var(--ink3);font-size:var(--fs-md)}
+label{display:block;font-size:var(--fs-sm);color:var(--ink2);margin-bottom:var(--sp-xs)}
+input[type=text],input[type=date],input[type=number]{
+  font:inherit;color:var(--ink);background:var(--card);border:var(--control-border) solid var(--line);
+  border-radius:var(--radius-md);padding:var(--control-pad) var(--sp-sm);width:100%;min-width:0}
+input[type=number]{text-align:right;font-variant-numeric:tabular-nums}
+input:focus{outline:2px solid var(--focus);outline-offset:1px;border-color:transparent}
+.grid{display:grid;gap:var(--sp-md);grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
+.grid .wide{grid-column:span 2}
+.row{display:flex;flex-wrap:wrap;gap:var(--sp-sm);align-items:center}
+.row.between{justify-content:space-between}
+.head-row{margin-bottom:var(--sp-sm)}
+.hint{color:var(--ink3);font-size:var(--fs-sm);margin:0 0 var(--sp-sm)}
+.note{color:var(--ink3);font-size:var(--fs-sm);margin:var(--sp-md) 0 0}
+.muted{color:var(--ink3);font-size:var(--fs-sm)}
+button{font:inherit;font-size:var(--fs-md);border:1px solid var(--line);background:var(--card);color:var(--ink);
+  border-radius:var(--radius-md);padding:var(--control-pad) var(--sp-md);cursor:pointer}
+button:hover{border-color:var(--ink3)}
+button.primary{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
+button.link{border:none;background:none;padding:0;color:var(--focus);text-decoration:underline}
+button.danger{color:var(--rep)}
+button.theme{font-size:var(--fs-lg);line-height:1;padding:var(--sp-xs) var(--sp-sm);flex:none}
+.tablewrap{overflow-x:auto;margin:0 calc(-1 * var(--sp-xs))}
+table{border-collapse:collapse;width:100%;min-width:560px;font-variant-numeric:tabular-nums}
+th,td{padding:var(--sp-xs) var(--sp-xs);text-align:right;border-bottom:1px solid var(--line2);white-space:nowrap}
+th{font-size:var(--fs-sm);color:var(--ink2);font-weight:600}
+th.l,td.l{text-align:left}
+th .sw{margin-right:var(--sp-xs)}
+tbody tr.sel{background:var(--sel)}
+tbody tr.today td.l{font-weight:700}
+tbody tr.extra td{border-top:2px solid var(--line)}
+tbody tr.extra + tr.extra td{border-top:none}
+td.num input{width:4.6em;padding:var(--sp-xs) var(--sp-sm)}
+td.day{color:var(--ink2);font-size:var(--fs-md)}
+td.tot{font-weight:600}
+td.cum{color:var(--ink2)}
+tfoot th{font-weight:700;color:var(--ink);font-size:var(--fs-base);border-bottom:none;padding-top:var(--sp-sm);padding-bottom:var(--sp-md)}
+tfoot th.num{padding-right:calc(var(--sp-xs) + var(--sp-sm) + var(--control-border))}
+table.small{min-width:0}
+.sw{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:-1px}
+.sw.dem{background:var(--dem)}.sw.rep{background:var(--rep)}.sw.una{background:var(--una)}.sw.oth{background:var(--oth)}
+.tiles{display:grid;gap:var(--sp-sm);grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:var(--sp-lg)}
+.tile{border:1px solid var(--line2);border-radius:var(--radius-lg);padding:var(--sp-sm) var(--sp-md)}
+.tile .v{font-size:var(--fs-xl);font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+.tile .k{font-size:var(--fs-sm);color:var(--ink2)}
+.tile .n{font-size:var(--fs-sm);color:var(--ink3)}
+.bars{margin:var(--sp-sm) 0 var(--sp-xs)}
+.barrow{display:grid;grid-template-columns:150px 1fr;gap:var(--sp-sm);align-items:center;margin:var(--sp-xs) 0}
+.barrow .lbl{font-size:var(--fs-sm);color:var(--ink2);text-align:right}
+.bar{display:flex;height:26px;gap:2px;border-radius:var(--radius-sm);overflow:hidden}
+.seg{display:flex;align-items:center;justify-content:center;color:var(--seg-ink);font-size:var(--fs-xs);font-weight:600;min-width:0;overflow:hidden;flex:var(--f) 1 0}
+.seg.dem{background:var(--dem)}.seg.rep{background:var(--rep)}.seg.una{background:var(--una)}.seg.oth{background:var(--oth)}
+.seg.none{background:var(--line2);color:var(--ink3);flex:1}
+.legend{display:flex;flex-wrap:wrap;gap:var(--sp-xs) var(--sp-lg);font-size:var(--fs-sm);color:var(--ink2);margin:var(--sp-xs) 0 var(--sp-lg)}
+.legend span{white-space:nowrap}
+.diff.pos{color:var(--oth)}.diff.neg{color:var(--rep)}
+svg.daily{width:100%;min-width:560px;height:auto;display:block;margin-top:var(--sp-md)}
+svg.daily text{fill:var(--ink2);font-size:10px}
+svg.daily text.sub{font-size:8.5px}
+svg.daily .grid line{stroke:var(--line2)}
+svg.daily .axis{stroke:var(--line)}
+svg.daily rect.dem{fill:var(--dem)}svg.daily rect.rep{fill:var(--rep)}svg.daily rect.una{fill:var(--una)}svg.daily rect.oth{fill:var(--oth)}
+svg.daily g.bar{cursor:pointer}
+svg.daily g.bar.off rect{opacity:.28}
+svg.daily g.bar.off text{opacity:.5}
+svg.daily rect.seg{stroke:var(--card);stroke-width:2}
+svg.daily rect.hit{fill:transparent;stroke:none}
+#banner{background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:var(--radius-lg);padding:var(--sp-sm) var(--sp-lg);margin:0 0 var(--sp-lg);font-size:var(--fs-md)}
+#banner[hidden],#absReport[hidden]{display:none}
+details.help{font-size:var(--fs-md);color:var(--ink2)}
+details.help summary{cursor:pointer;color:var(--ink)}
+details.help p{margin:var(--sp-xs) 0}
+.status{font-size:var(--fs-sm);color:var(--ink3);min-height:1.2em}
+@media (max-width:560px){
+  .barrow{grid-template-columns:1fr}
+  .barrow .lbl{text-align:left}
+  .grid .wide{grid-column:span 1}
+}
+</style>
+</head>
+<body>
+<main>
+  <div class="masthead">
+    <h1 id="title">Voter turnout</h1>
+    <button type="button" class="theme" id="themeBtn" aria-label="Switch color theme"></button>
+  </div>
+  <p class="sub" id="subtitle"></p>
+
+  <div id="banner" hidden=""></div>
+
+  <details class="panel" id="setup" open="">
+    <summary><h2>Setup</h2><span class="synopsis" id="synopsis"></span></summary>
+    <div class="grid">
+      <div class="wide"><label for="town">Town</label><input type="text" id="town" autocomplete="off" placeholder="Town name"></div>
+      <div><label for="start">First day of early voting</label><input type="date" id="start"></div>
+      <div><label for="ndays">Early voting days</label><input type="number" id="ndays" min="1" max="31" step="1"></div>
+      <div><label for="eday">Election Day</label><input type="date" id="eday"></div>
+    </div>
+    <h3>Registered voters by party enrollment (the electorate)</h3>
+    <div class="grid" id="regGrid"></div>
+    <h3>Absentee ballots mailed, by party enrollment <span class="muted">(optional, for return rates)</span></h3>
+    <div class="grid" id="mailedGrid"></div>
+  </details>
+
+  <section id="entry">
+    <div class="row between head-row">
+      <h2>Ballots cast</h2>
+      <div class="row">
+        <span class="muted">Select:</span>
+        <button type="button" data-sel="all">All</button>
+        <button type="button" data-sel="reported">Reported</button>
+        <button type="button" data-sel="early">Early voting only</button>
+        <button type="button" data-sel="none">None</button>
+      </div>
+    </div>
+    <p class="hint">Enter the ballots cast by the voter's party enrollment: one row per early voting day, then absentee ballots and Election Day. Leave a row blank until it is reported. Tick the rows to include in the report below.</p>
+    <div class="tablewrap">
+      <table id="daysTable">
+        <thead><tr>
+          <th class="l"><input type="checkbox" id="selAll" title="Select or clear all rows"></th>
+          <th class="l">When</th>
+          <th><span class="sw dem"></span>Dem</th>
+          <th><span class="sw rep"></span>Rep</th>
+          <th><span class="sw una"></span>Unenr</th>
+          <th><span class="sw oth"></span>Other</th>
+          <th>Total</th>
+          <th>Running total</th>
+        </tr></thead>
+        <tbody></tbody>
+        <tfoot></tfoot>
+      </table>
+    </div>
+    <div class="tablewrap"><svg class="daily" id="dailyChart" viewBox="0 0 720 200" role="img" aria-label="Ballots cast per early voting day, stacked by party"></svg></div>
+    <div class="legend" id="dailyLegend"></div>
+  </section>
+
+  <section id="report">
+    <div class="row between head-row">
+      <h2>Report <span class="muted" id="reportScope"></span></h2>
+      <button type="button" id="copySummary">Copy summary text</button>
+    </div>
+    <div class="tiles" id="tiles"></div>
+    <div class="bars" id="shareBars"></div>
+    <div class="legend" id="shareLegend"></div>
+    <div class="tablewrap">
+      <table id="partyTable">
+        <thead><tr>
+          <th class="l">Party</th>
+          <th>Registered</th>
+          <th>% of electorate</th>
+          <th>Ballots</th>
+          <th>% of ballots</th>
+          <th>Turnout</th>
+          <th>vs. electorate</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="note">Turnout is ballots in the selected rows divided by registered voters. “vs. electorate” is the party's share of ballots minus its share of registered voters, in percentage points.</p>
+    <div id="absReport" hidden="">
+      <h3>Absentee ballots</h3>
+      <div class="tablewrap">
+        <table id="absTable" class="small">
+          <thead><tr><th class="l">Party</th><th>Mailed</th><th>Returned</th><th>Return rate</th><th>% of absentees</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="note" id="absNote"></p>
+    </div>
+  </section>
+
+  <section id="actions">
+    <h2>Save and share</h2>
+    <div class="row">
+      <button type="button" class="primary" id="dlHtml">Download this page with data</button>
+      <button type="button" id="dlEmpty">Download an empty copy</button>
+      <button type="button" id="dlCsv">Download CSV</button>
+      <button type="button" id="importBtn">Import CSV…</button>
+      <input type="file" id="importFile" accept=".csv,text/csv" hidden="">
+      <button type="button" class="danger" id="resetBtn">Clear saved data</button>
+    </div>
+    <p class="status" id="status"></p>
+    <details class="help">
+      <summary>How saving and sharing work</summary>
+      <p>Everything you type is saved automatically in this browser (keyed by town name), so you can close the page and come back.</p>
+      <p><b>Download this page with data</b> produces a copy of this HTML file with the current numbers embedded. Email it to anyone; when they open it, they see your numbers and can keep updating their own copy. If their browser already has saved data for the same town, the page loads whichever copy was saved more recently and offers the other.</p>
+      <p><b>Download an empty copy</b> is for another town: it keeps the early voting dates and Election Day but no town name, counts, or voter totals. Open it, type the town name, and start entering.</p>
+      <p><b>Download CSV</b> exports the same data as a spreadsheet-friendly file. <b>Import CSV</b> replaces the current data with a CSV exported from this page.</p>
+      <p>For a final report after the election, fill in the absentee and Election Day rows and select everything.</p>
+    </details>
+  </section>
+</main>
+
+<script id="data" type="text/csv">
+kind,town,date,democratic,republican,unenrolled,other
+saved,Andover,2026-10-22T19:41:36.588Z,,,,
+registered,Andover,,639,714,1010,31
+mailed,Andover,,15,6,7,0
+day,Andover,2026-10-19,38,20,21,1
+day,Andover,2026-10-20,17,8,15,1
+day,Andover,2026-10-21,21,13,15,0
+day,Andover,2026-10-22,,,,
+day,Andover,2026-10-23,,,,
+day,Andover,2026-10-24,,,,
+day,Andover,2026-10-25,,,,
+day,Andover,2026-10-26,,,,
+day,Andover,2026-10-27,,,,
+day,Andover,2026-10-28,,,,
+day,Andover,2026-10-29,,,,
+day,Andover,2026-10-30,,,,
+day,Andover,2026-10-31,,,,
+day,Andover,2026-11-01,,,,
+absentee,Andover,,,,,
+electionday,Andover,2026-11-03,,,,
+</script>
+
+<script>
+(() => {
+  // Capture the pristine page source before anything is rendered, so that
+  // "Download this page with data" can emit a clean copy with new data embedded.
+  const SOURCE = '<!DOCTYPE html>\n' + document.documentElement.outerHTML
+
+  const PARTIES = [
+    {k: 'dem', label: 'Democratic', short: 'Dem', col: 'democratic'},
+    {k: 'rep', label: 'Republican', short: 'Rep', col: 'republican'},
+    {k: 'una', label: 'Unenrolled', short: 'Unenr', col: 'unenrolled', alias: 'unaffiliated'},
+    {k: 'oth', label: 'Other parties', short: 'Other', col: 'other'}
+  ]
+  const DEFAULT_TOWN = 'Andover'
+  const DEFAULT_START = '2026-10-19'
+  const DEFAULT_DAYS = 14
+  const HEADER = ['kind', 'town', 'date', 'democratic', 'republican', 'unenrolled', 'other']
+  const THEME_KEY = 'early-voting:theme'
+  const LAST_TOWN_KEY = 'early-voting:last-town'
+
+  const $ = (sel) => document.querySelector(sel)
+  const $$ = (sel) => [...document.querySelectorAll(sel)]
+  const html = document.documentElement
+
+  let state
+  let alt = null
+  let altSource = ''
+  let selected = {} // selected[id] === false means excluded; anything else is included
+
+  /* ---------- dates ---------- */
+  const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const parseDate = (s) => {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || '')
+    return m ? Date.UTC(+m[1], +m[2] - 1, +m[3]) : NaN
+  }
+  const validDate = (s) => !isNaN(parseDate(s))
+  const isoDate = (ms) => new Date(ms).toISOString().slice(0, 10)
+  const addDays = (s, n) => isoDate(parseDate(s) + n * 86400000)
+  const utc = (s) => new Date(parseDate(s))
+  const dow = (s) => DOW[utc(s).getUTCDay()]
+  const fmtDate = (s, withDow) => (withDow ? dow(s) + ' ' : '') + MON[utc(s).getUTCMonth()] + ' ' + utc(s).getUTCDate()
+  const pad2 = (n) => String(n).padStart(2, '0')
+  const todayIso = () => {
+    const d = new Date()
+    return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`
+  }
+  const fmtSaved = (iso) => {
+    const d = new Date(iso || NaN)
+    return !iso ? 'no timestamp'
+      : isNaN(d) ? iso
+      : d.toLocaleString(undefined, {month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', second: '2-digit'})
+  }
+
+  /* ---------- formatting ---------- */
+  const fmtN = (n) => (n == null || isNaN(n)) ? '' : Number(n).toLocaleString('en-US')
+  const pct = (f) => {
+    const v = f * 100
+    return !isFinite(f) ? '—' : (v > 0 && v < 10 ? v.toFixed(1) : Math.round(v)) + '%'
+  }
+  const ratio = (a, b) => b ? pct(a / b) : '—'
+  const signed = (v) => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1) + ' pts'
+  const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+  const swatch = (p) => `<span class="sw ${p.k}"></span>`
+  const num = (v) => {
+    const t = v == null ? '' : String(v).trim().replace(/,/g, '')
+    const n = Math.round(Number(t))
+    return t !== '' && isFinite(n) && n >= 0 ? n : null
+  }
+
+  /* ---------- CSV ---------- */
+  const parseRow = (line) => {
+    const fields = []
+    const re = /(?:"((?:[^"]|"")*)"|([^,]*))(,|$)/g
+    let m
+    while ((m = re.exec(line))) {
+      fields.push(m[1] != null ? m[1].replace(/""/g, '"') : m[2])
+      if (m[3] === '') break
+    }
+    return fields
+  }
+  const parseCSV = (text) => String(text || '').replace(/^﻿/, '')
+    .split(/\r\n|\r|\n/)
+    .filter((line) => line.trim() !== '')
+    .map(parseRow)
+  const csvField = (v) => {
+    const s = v == null ? '' : String(v)
+    return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s
+  }
+  const csvLine = (cells) => cells.map(csvField).join(',')
+  const counts = (o) => PARTIES.map((p) => o[p.k] == null ? '' : o[p.k])
+  const toCSV = (st) => [
+    HEADER.join(','),
+    csvLine(['saved', st.town, st.saved || '', '', '', '', '']),
+    csvLine(['registered', st.town, '', ...counts(st.reg)]),
+    csvLine(['mailed', st.town, '', ...counts(st.mailed)]),
+    ...st.days.map((d) => csvLine(['day', st.town, d.date, ...counts(d)])),
+    csvLine(['absentee', st.town, '', ...counts(st.absentee)]),
+    csvLine(['electionday', st.town, st.electionDay.date, ...counts(st.electionDay)])
+  ].join('\n') + '\n'
+
+  const blank = (date = '') => ({date, ...Object.fromEntries(PARTIES.map((p) => [p.k, null]))})
+  const defaultState = () => ({
+    town: DEFAULT_TOWN,
+    saved: '',
+    reg: blank(),
+    mailed: blank(),
+    days: Array.from({length: DEFAULT_DAYS}, (_, i) => blank(addDays(DEFAULT_START, i))),
+    absentee: blank(),
+    electionDay: blank(addDays(DEFAULT_START, DEFAULT_DAYS + 1))
+  })
+  const stateFromCSV = (text) => {
+    const rows = parseCSV(text)
+    const head = rows.length ? rows[0].map((h) => h.trim().toLowerCase()) : []
+    if (head[0] !== 'kind') return null
+    const idx = Object.fromEntries(head.map((h, i) => [h, i]))
+    const get = (r, k) => idx[k] == null ? '' : (r[idx[k]] || '')
+    const read = (r, o) => ({...o, ...Object.fromEntries(PARTIES.map((p) => [p.k, num(get(r, idx[p.col] != null ? p.col : p.alias))]))})
+    const st = {town: '', saved: '', reg: blank(), mailed: blank(), days: [], absentee: blank(), electionDay: null}
+    rows.slice(1).forEach((r) => {
+      const kind = get(r, 'kind').trim().toLowerCase()
+      const date = get(r, 'date').trim()
+      const town = get(r, 'town').trim()
+      if (town) st.town = town
+      if (kind === 'saved') st.saved = date
+      else if (kind === 'registered') st.reg = read(r, st.reg)
+      else if (kind === 'mailed') st.mailed = read(r, st.mailed)
+      else if (kind === 'absentee') st.absentee = read(r, st.absentee)
+      else if (kind === 'electionday') st.electionDay = read(r, blank(validDate(date) ? date : ''))
+      else if (kind === 'day' && validDate(date)) st.days.push(read(r, blank(date)))
+    })
+    if (!st.days.length) return null
+    st.days.sort((a, b) => a.date < b.date ? -1 : a.date > b.date ? 1 : 0)
+    const lastDay = st.days[st.days.length - 1].date
+    return {
+      ...st,
+      town: st.town,
+      electionDay: st.electionDay && st.electionDay.date ? st.electionDay : {...(st.electionDay || blank()), date: addDays(lastDay, 2)}
+    }
+  }
+  const hasAny = (o) => PARTIES.some((p) => o[p.k] != null)
+  const hasAll = (o) => PARTIES.every((p) => o[p.k] != null)
+  const isEmpty = (st) => !st.days.some(hasAny) && ![st.reg, st.mailed, st.absentee, st.electionDay].some(hasAny)
+  const setupComplete = (st) => !!st.town && st.days.length > 0 && validDate(st.electionDay.date) && hasAll(st.reg)
+
+  /* ---------- storage ---------- */
+  const slug = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'town'
+  const lsKey = (town) => 'early-voting:' + slug(town)
+  const lsGet = (key) => {
+    try { return localStorage.getItem(key) } catch (e) { return null }
+  }
+  const lsSet = (key, value) => {
+    try { value == null ? localStorage.removeItem(key) : localStorage.setItem(key, value) } catch (e) {}
+  }
+  const loadLS = (town) => {
+    const text = lsGet(lsKey(town))
+    return text ? stateFromCSV(text) : null
+  }
+  const saveLS = () => lsSet(lsKey(state.town), toCSV(state))
+  const removeLS = (town) => lsSet(lsKey(town), null)
+  const touch = () => {
+    state.saved = new Date().toISOString()
+    saveLS()
+    lsSet(LAST_TOWN_KEY, state.town)
+  }
+
+  /* ---------- theme ---------- */
+  const systemDark = () => window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const currentTheme = () => html.getAttribute('data-theme') || (systemDark() ? 'dark' : 'light')
+  const renderThemeBtn = () => {
+    const dark = currentTheme() === 'dark'
+    $('#themeBtn').textContent = dark ? '☀' : '☾'
+    $('#themeBtn').title = dark ? 'Switch to light mode' : 'Switch to dark mode'
+  }
+  const toggleTheme = () => {
+    const next = currentTheme() === 'dark' ? 'light' : 'dark'
+    html.setAttribute('data-theme', next)
+    lsSet(THEME_KEY, next)
+    renderThemeBtn()
+  }
+
+  /* ---------- entries: the selectable rows ---------- */
+  const entries = () => [
+    ...state.days.map((d, i) => ({
+      id: 'd' + i, kind: 'day', data: d, n: i + 1,
+      label: `<b>${i + 1}</b> &nbsp;${fmtDate(d.date, true)}`,
+      text: `Day ${i + 1} (${fmtDate(d.date, true)})`,
+      tick: String(i + 1), sub: dow(d.date)
+    })),
+    {id: 'abs', kind: 'abs', data: state.absentee, label: '<b>Absentee</b> &nbsp;ballots returned', text: 'Absentee ballots', tick: 'Abs', sub: 'mail'},
+    {id: 'ed', kind: 'ed', data: state.electionDay, label: `<b>Election Day</b> &nbsp;${fmtDate(state.electionDay.date, true)}`, text: `Election Day (${fmtDate(state.electionDay.date, true)})`, tick: 'ED', sub: dow(state.electionDay.date)}
+  ]
+  const isSel = (id) => selected[id] !== false
+  const total = (o) => PARTIES.reduce((s, p) => s + (o[p.k] || 0), 0)
+  const sumBy = (list, p) => list.reduce((s, e) => s + (e.data[p.k] || 0), 0)
+  const dataFor = (id) => id === 'abs' ? state.absentee : id === 'ed' ? state.electionDay : state.days[+id.slice(1)]
+
+  /* ---------- rendering ---------- */
+  const countGrid = (sel, prefix, src) => {
+    const g = $(sel)
+    if (!g.children.length) {
+      g.innerHTML = PARTIES.map((p) =>
+        `<div><label for="${prefix}-${p.k}">${swatch(p)} ${p.label}</label><input type="number" min="0" step="1" inputmode="numeric" id="${prefix}-${p.k}" data-${prefix}="${p.k}"></div>`
+      ).join('')
+    }
+    PARTIES.forEach((p) => {
+      const el = $(`#${prefix}-${p.k}`)
+      if (document.activeElement !== el) el.value = src[p.k] == null ? '' : src[p.k]
+    })
+  }
+  const renderSetup = () => {
+    const first = state.days[0].date
+    const last = state.days[state.days.length - 1].date
+    const regTotal = total(state.reg)
+    document.title = state.town ? state.town + ' voter turnout' : 'Voter turnout tracker'
+    $('#title').textContent = state.town ? state.town + ' voter turnout' : 'Voter turnout'
+    $('#subtitle').textContent = `${state.days.length} days of early voting, ${fmtDate(first, true)} through ${fmtDate(last, true)}, plus absentee ballots and Election Day (${fmtDate(state.electionDay.date, true)}), by party enrollment.`
+    $('#synopsis').textContent = [
+      state.town || 'no town name yet',
+      `${fmtDate(first)} – ${fmtDate(last)} (${state.days.length} days)`,
+      `Election Day ${fmtDate(state.electionDay.date)}`,
+      regTotal ? `${fmtN(regTotal)} registered` : 'registered voters not entered'
+    ].join(' · ')
+    if (document.activeElement !== $('#town')) $('#town').value = state.town
+    $('#start').value = first
+    $('#ndays').value = state.days.length
+    $('#eday').value = state.electionDay.date
+    countGrid('#regGrid', 'reg', state.reg)
+    countGrid('#mailedGrid', 'mailed', state.mailed)
+  }
+
+  const renderTable = () => {
+    const today = todayIso()
+    $('#daysTable tbody').innerHTML = entries().map((e) => {
+      const cls = [isSel(e.id) && 'sel', e.data.date === today && 'today', e.kind !== 'day' && 'extra'].filter(Boolean).join(' ')
+      const cells = PARTIES.map((p) =>
+        `<td class="num"><input type="number" min="0" step="1" inputmode="numeric" data-id="${e.id}" data-party="${p.k}" value="${e.data[p.k] == null ? '' : e.data[p.k]}" aria-label="${p.label}, ${esc(e.text)}"></td>`
+      ).join('')
+      return `<tr class="${cls}" data-id="${e.id}">
+        <td class="l"><input type="checkbox" data-sel-id="${e.id}"${isSel(e.id) ? ' checked' : ''} aria-label="Include ${esc(e.text)}"></td>
+        <td class="l day">${e.label}</td>${cells}<td class="tot"></td><td class="cum"></td></tr>`
+    }).join('')
+    updateTotals()
+  }
+
+  const updateTotals = () => {
+    const list = entries()
+    let cum = 0
+    list.forEach((e) => {
+      const rep = hasAny(e.data)
+      const tr = $(`#daysTable tbody tr[data-id="${e.id}"]`)
+      cum += total(e.data)
+      tr.querySelector('.tot').textContent = rep ? fmtN(total(e.data)) : ''
+      tr.querySelector('.cum').textContent = rep ? fmtN(cum) : ''
+      tr.classList.toggle('sel', isSel(e.id))
+      tr.querySelector('input[type=checkbox]').checked = isSel(e.id)
+    })
+    $('#daysTable tfoot').innerHTML = `<tr><th></th><th class="l">All rows</th>${PARTIES.map((p) => `<th class="num">${fmtN(sumBy(list, p))}</th>`).join('')}<th>${fmtN(cum)}</th><th></th></tr>`
+    const all = list.every((e) => isSel(e.id))
+    const none = !list.some((e) => isSel(e.id))
+    $('#selAll').checked = all
+    $('#selAll').indeterminate = !all && !none
+    renderDaily()
+  }
+
+  const niceStep = (raw) => {
+    const p = Math.pow(10, Math.floor(Math.log10(raw)))
+    const f = raw / p
+    return raw <= 0 ? 1 : (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * p
+  }
+  const renderDaily = () => {
+    const list = entries().filter((e) => e.kind === 'day')
+    const W = 720, H = 200, L = 40, R = 8, T = 16, B = 30
+    const pw = W - L - R
+    const ph = H - T - B
+    const max = Math.max(1, ...list.map((e) => total(e.data)))
+    const step = niceStep(max / 4)
+    const ymax = Math.ceil(max / step) * step || step
+    const y = (v) => T + ph - v / ymax * ph
+    const slot = pw / list.length
+    const bw = Math.min(slot * 0.68, 48)
+    const ticks = Array.from({length: Math.round(ymax / step) + 1}, (_, i) => i * step)
+    const grid = ticks.map((v) =>
+      `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L - 6}" y="${y(v) + 3}" text-anchor="end">${fmtN(v)}</text>`
+    ).join('')
+    const bars = list.map((e, j) => {
+      const x0 = L + slot * j
+      const x = x0 + (slot - bw) / 2
+      const t = total(e.data)
+      const detail = PARTIES.map((p) => `${p.short} ${fmtN(e.data[p.k] || 0)}`).join(', ')
+      const title = e.text + (hasAny(e.data) ? ` · ${fmtN(t)} ballots (${detail})` : ' · not reported')
+      let base = 0
+      const segs = PARTIES.map((p) => {
+        const v = e.data[p.k] || 0
+        const seg = v ? `<rect class="seg ${p.k}" x="${x}" y="${y(base + v)}" width="${bw}" height="${y(base) - y(base + v)}"/>` : ''
+        base += v
+        return seg
+      }).join('')
+      return `<g class="bar${isSel(e.id) ? '' : ' off'}" data-sel-id="${e.id}"><title>${esc(title)}</title>
+        <rect class="hit" x="${x0}" y="${T}" width="${slot}" height="${ph + B}"/>${segs}
+        ${t ? `<text x="${x + bw / 2}" y="${y(t) - 4}" text-anchor="middle">${fmtN(t)}</text>` : ''}
+        <text x="${x + bw / 2}" y="${H - 16}" text-anchor="middle">${e.tick}</text>
+        <text class="sub" x="${x + bw / 2}" y="${H - 5}" text-anchor="middle">${e.sub}</text></g>`
+    }).join('')
+    $('#dailyChart').innerHTML = `<g class="grid">${grid}</g><line class="axis" x1="${L}" x2="${W - R}" y1="${y(0)}" y2="${y(0)}"/>${bars}`
+    $('#dailyLegend').innerHTML = PARTIES.map((p) => `<span>${swatch(p)} ${p.label}</span>`).join('') +
+      '<span class="muted">Early voting days only. Click a bar to include or exclude that day; dimmed bars are excluded.</span>'
+  }
+
+  const metrics = () => {
+    const sel = entries().filter((e) => isSel(e.id))
+    const days = sel.filter((e) => e.kind === 'day')
+    const votes = Object.fromEntries(PARTIES.map((p) => [p.k, sumBy(sel, p)]))
+    const reg = Object.fromEntries(PARTIES.map((p) => [p.k, state.reg[p.k] || 0]))
+    const mailed = Object.fromEntries(PARTIES.map((p) => [p.k, state.mailed[p.k] || 0]))
+    return {
+      nSel: sel.length,
+      nRep: sel.filter((e) => hasAny(e.data)).length,
+      nDays: days.length,
+      nDaysRep: days.filter((e) => hasAny(e.data)).length,
+      dayTotal: days.reduce((s, e) => s + total(e.data), 0),
+      abs: sel.some((e) => e.kind === 'abs'),
+      ed: sel.some((e) => e.kind === 'ed'),
+      votes, total: total(votes),
+      reg, regTotal: total(reg),
+      mailed, mailedTotal: total(mailed),
+      absTotal: total(state.absentee),
+      first: days.length ? days[0].data.date : null,
+      last: days.length ? days[days.length - 1].data.date : null,
+      dayNums: days.map((e) => e.n)
+    }
+  }
+  const runs = (nums) => nums.reduce((acc, n) => {
+    const last = acc[acc.length - 1]
+    return last && n === last[1] + 1 ? [...acc.slice(0, -1), [last[0], n]] : [...acc, [n, n]]
+  }, []).map(([a, b]) => a === b ? String(a) : `${a}–${b}`).join(', ')
+  const rangeLabel = (m) => !m.nSel ? 'nothing selected' : [
+    m.nDays === state.days.length ? `all ${m.nDays} early voting days`
+      : m.nDays ? `early voting ${m.nDays === 1 ? 'day' : 'days'} ${runs(m.dayNums)}` : '',
+    m.abs && 'absentee ballots',
+    m.ed && 'Election Day'
+  ].filter(Boolean).join(' + ')
+  const dateSpan = (m) => m.nDays ? fmtDate(m.first) + (m.first !== m.last ? ' to ' + fmtDate(m.last) : '') : ''
+
+  const tile = (v, k, n = '') => `<div class="tile"><div class="v">${v}</div><div class="k">${k}</div><div class="n">${n}</div></div>`
+  const barRow = (label, vals, tot) => {
+    const segs = !tot ? '<div class="seg none">no data</div>' : PARTIES.map((p) => {
+      const f = vals[p.k] / tot
+      return f ? `<div class="seg ${p.k}" style="--f:${f}" title="${p.label}: ${fmtN(vals[p.k])} (${pct(f)})">${f >= 0.09 ? pct(f) : ''}</div>` : ''
+    }).join('')
+    return `<div class="barrow"><div class="lbl">${label}${tot ? ` <span class="muted">(${fmtN(tot)})</span>` : ''}</div><div class="bar">${segs}</div></div>`
+  }
+  const partyRow = (m, p) => {
+    const vs = m.total && m.regTotal ? (m.votes[p.k] / m.total - m.reg[p.k] / m.regTotal) * 100 : null
+    return `<tr><td class="l">${swatch(p)} ${p.label}</td>
+      <td>${state.reg[p.k] == null ? '—' : fmtN(m.reg[p.k])}</td>
+      <td>${ratio(m.reg[p.k], m.regTotal)}</td>
+      <td>${fmtN(m.votes[p.k])}</td>
+      <td>${ratio(m.votes[p.k], m.total)}</td>
+      <td>${ratio(m.votes[p.k], m.reg[p.k])}</td>
+      <td class="diff ${vs > 0 ? 'pos' : vs < 0 ? 'neg' : ''}">${vs == null ? '—' : signed(vs)}</td></tr>`
+  }
+  const absRow = (m, p) => {
+    const a = state.absentee
+    return `<tr><td class="l">${swatch(p)} ${p.label}</td>
+      <td>${state.mailed[p.k] == null ? '—' : fmtN(m.mailed[p.k])}</td>
+      <td>${a[p.k] == null ? '—' : fmtN(a[p.k])}</td>
+      <td>${ratio(a[p.k] || 0, m.mailed[p.k])}</td>
+      <td>${ratio(a[p.k] || 0, m.absTotal)}</td></tr>`
+  }
+  const renderReport = () => {
+    const m = metrics()
+    const partial = m.nDays && m.nDays < state.days.length
+    $('#reportScope').textContent = `(${rangeLabel(m)}${partial ? ', ' + dateSpan(m) : ''})`
+    $('#tiles').innerHTML = [
+      tile(fmtN(m.total), 'ballots cast', m.nSel ? `${m.nRep} of ${m.nSel} selected rows reported` : 'select some rows'),
+      tile(ratio(m.total, m.regTotal), 'turnout', m.regTotal ? `of ${fmtN(m.regTotal)} registered voters` : 'enter registered voters above'),
+      m.nDays && tile(m.nDaysRep ? fmtN(Math.round(m.dayTotal / m.nDaysRep)) : '—', 'ballots per early voting day',
+        m.nDaysRep ? `average over ${m.nDaysRep} reported ${m.nDaysRep === 1 ? 'day' : 'days'}` : 'no selected day reported yet'),
+      m.mailedTotal && tile(ratio(m.absTotal, m.mailedTotal), 'absentee ballots returned',
+        `${fmtN(m.absTotal)} of ${fmtN(m.mailedTotal)} mailed${m.abs ? '' : ' (not in totals)'}`)
+    ].filter(Boolean).join('')
+    $('#shareBars').innerHTML = barRow('Ballots cast', m.votes, m.total) + barRow('Registered voters', m.reg, m.regTotal)
+    $('#shareLegend').innerHTML = PARTIES.map((p) =>
+      `<span>${swatch(p)} ${p.label} ${ratio(m.votes[p.k], m.total)} of ballots · ${ratio(m.reg[p.k], m.regTotal)} of electorate</span>`
+    ).join('')
+    $('#partyTable tbody').innerHTML = PARTIES.map((p) => partyRow(m, p)).join('') +
+      `<tr><th class="l">All voters</th><th>${m.regTotal ? fmtN(m.regTotal) : '—'}</th><th>${m.regTotal ? '100%' : '—'}</th><th>${fmtN(m.total)}</th><th>${m.total ? '100%' : '—'}</th><th>${ratio(m.total, m.regTotal)}</th><th></th></tr>`
+
+    const showAbs = m.mailedTotal > 0 || hasAny(state.absentee)
+    $('#absReport').hidden = !showAbs
+    if (showAbs) {
+      $('#absTable tbody').innerHTML = PARTIES.map((p) => absRow(m, p)).join('') +
+        `<tr><th class="l">All</th><th>${m.mailedTotal ? fmtN(m.mailedTotal) : '—'}</th><th>${fmtN(m.absTotal)}</th><th>${ratio(m.absTotal, m.mailedTotal)}</th><th>${m.absTotal ? '100%' : '—'}</th></tr>`
+      $('#absNote').textContent = m.abs
+        ? 'Returned absentee ballots are included in the ballot totals above.'
+        : 'The absentee row is not selected, so returned absentee ballots are not included in the ballot totals above.'
+    }
+  }
+  const renderAll = () => {
+    renderSetup()
+    renderTable()
+    renderReport()
+  }
+
+  const summaryText = () => {
+    const m = metrics()
+    const span = dateSpan(m)
+    const partyLine = (p) => `  ${p.label}: ${fmtN(m.votes[p.k])}` +
+      (m.total ? ` (${ratio(m.votes[p.k], m.total)} of ballots` : '') +
+      (m.reg[p.k] ? `; ${ratio(m.votes[p.k], m.reg[p.k])} turnout of ${fmtN(m.reg[p.k])} registered, ${ratio(m.reg[p.k], m.regTotal)} of electorate)` : (m.total ? ')' : ''))
+    return [
+      `${state.town} turnout, ${rangeLabel(m)}${span ? ` (${span})` : ''}:`,
+      `  ${fmtN(m.total)} ballots cast` +
+        (m.regTotal ? `, ${ratio(m.total, m.regTotal)} of ${fmtN(m.regTotal)} registered voters` : '') +
+        (m.nRep < m.nSel ? ` (${m.nRep} of ${m.nSel} selected rows reported)` : ''),
+      ...PARTIES.map(partyLine),
+      m.mailedTotal && `  Absentee ballots: ${fmtN(m.absTotal)} returned of ${fmtN(m.mailedTotal)} mailed (${ratio(m.absTotal, m.mailedTotal)})${m.abs ? '' : ', not included above'}`
+    ].filter(Boolean).join('\n')
+  }
+
+  let statusTimer
+  const setStatus = (msg) => {
+    $('#status').textContent = msg
+    clearTimeout(statusTimer)
+    statusTimer = setTimeout(() => { $('#status').textContent = '' }, 6000)
+  }
+  const download = (name, text, type) => {
+    const url = URL.createObjectURL(new Blob([text], {type: type + ';charset=utf-8'}))
+    const a = document.createElement('a')
+    a.href = url
+    a.download = name
+    document.body.appendChild(a)
+    a.click()
+    setTimeout(() => {
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+    }, 500)
+  }
+  const pageWith = (st) => SOURCE
+    .replace(/<html lang="en"[^>]*>/, '<html lang="en">')
+    .replace(/(<script id="data" type="text\/csv">)[\s\S]*?(<\/script>)/, (_, open, close) => open + '\n' + toCSV(st) + close)
+  const emptyState = () => ({
+    ...defaultState(),
+    town: '',
+    days: state.days.map((d) => blank(d.date)),
+    electionDay: blank(state.electionDay.date)
+  })
+  const fileName = (ext) => `turnout-${slug(state.town)}-${todayIso()}.${ext}`
+
+  /* ---------- state changes ---------- */
+  const rebuildDays = (start, n) => {
+    state.days = Array.from({length: n}, (_, i) => ({...(state.days[i] || blank()), date: addDays(start, i)}))
+    touch()
+    renderAll()
+  }
+  const setSelection = (mode) => {
+    selected = Object.fromEntries(entries().map((e) => [e.id,
+      mode === 'all' ? true : mode === 'none' ? false : mode === 'early' ? e.kind === 'day' : hasAny(e.data)]))
+    updateTotals()
+    renderReport()
+  }
+  const toggleRow = (id, on) => {
+    selected[id] = on
+    updateTotals()
+    renderReport()
+  }
+  const replaceState = (next, msg) => {
+    state = next
+    selected = {}
+    renderAll()
+    setStatus(msg)
+  }
+  const importCSV = (file) => {
+    const reader = new FileReader()
+    reader.onload = () => {
+      const st = stateFromCSV(reader.result)
+      if (!st) return setStatus('That file is not a CSV exported from this page.')
+      if (!window.confirm(`Replace the current data for ${state.town} with the data in ${file.name}?`)) return
+      state = st
+      touch()
+      replaceState(st, `Imported ${file.name}.`)
+    }
+    reader.readAsText(file)
+  }
+  const clearData = () => {
+    if (!window.confirm(`Clear all counts and totals saved for ${state.town} in this browser? Download a copy first if you want to keep them.`)) return
+    removeLS(state.town)
+    replaceState({...emptyState(), town: state.town}, 'Cleared.')
+  }
+  const copySummary = () => {
+    const text = summaryText()
+    const fallback = () => window.prompt('Copy this summary:', text)
+    navigator.clipboard && navigator.clipboard.writeText
+      ? navigator.clipboard.writeText(text).then(() => setStatus('Summary copied to the clipboard.'), fallback)
+      : fallback()
+  }
+
+  /* ---------- events ---------- */
+  const bind = () => {
+    $('#themeBtn').addEventListener('click', toggleTheme)
+    $('#town').addEventListener('input', (e) => {
+      const v = e.currentTarget.value.replace(/[<>]/g, '').trim()
+      if (!v || v === state.town) return
+      removeLS(state.town)
+      state.town = v
+      touch()
+      renderSetup()
+    })
+    $('#start').addEventListener('change', (e) => validDate(e.currentTarget.value) && rebuildDays(e.currentTarget.value, state.days.length))
+    $('#ndays').addEventListener('change', (e) =>
+      rebuildDays(state.days[0].date, Math.max(1, Math.min(31, Math.round(Number(e.currentTarget.value)) || state.days.length))))
+    $('#eday').addEventListener('change', (e) => {
+      if (!validDate(e.currentTarget.value)) return
+      state.electionDay.date = e.currentTarget.value
+      touch()
+      renderAll()
+    })
+    $('#setup').addEventListener('input', (e) => {
+      const reg = e.target.getAttribute('data-reg')
+      const mailed = e.target.getAttribute('data-mailed')
+      if (!reg && !mailed) return
+      reg ? (state.reg[reg] = num(e.target.value)) : (state.mailed[mailed] = num(e.target.value))
+      touch()
+      renderReport()
+    })
+    $('#daysTable').addEventListener('input', (e) => {
+      const id = e.target.getAttribute('data-id')
+      const party = e.target.getAttribute('data-party')
+      if (!id || !party) return
+      dataFor(id)[party] = num(e.target.value)
+      touch()
+      updateTotals()
+      renderReport()
+    })
+    $('#daysTable').addEventListener('change', (e) => {
+      const id = e.target.getAttribute('data-sel-id')
+      e.target.type === 'checkbox' && id && toggleRow(id, e.target.checked)
+    })
+    $('#selAll').addEventListener('change', (e) => setSelection(e.currentTarget.checked ? 'all' : 'none'))
+    $$('button[data-sel]').forEach((b) => b.addEventListener('click', (e) => setSelection(e.currentTarget.getAttribute('data-sel'))))
+    $('#dailyChart').addEventListener('click', (e) => {
+      const g = e.target.closest('g.bar')
+      g && toggleRow(g.getAttribute('data-sel-id'), !isSel(g.getAttribute('data-sel-id')))
+    })
+    $('#copySummary').addEventListener('click', copySummary)
+    $('#dlHtml').addEventListener('click', () => {
+      download(fileName('html'), pageWith(state), 'text/html')
+      setStatus('Downloaded a copy of this page with the current data embedded.')
+    })
+    $('#dlEmpty').addEventListener('click', () => {
+      download('turnout-tracker.html', pageWith(emptyState()), 'text/html')
+      setStatus('Downloaded an empty copy: same dates, no town, counts, or voter totals.')
+    })
+    $('#dlCsv').addEventListener('click', () => download(fileName('csv'), toCSV(state), 'text/csv'))
+    $('#importBtn').addEventListener('click', () => {
+      $('#importFile').value = ''
+      $('#importFile').click()
+    })
+    $('#importFile').addEventListener('change', (e) => e.currentTarget.files[0] && importCSV(e.currentTarget.files[0]))
+    $('#resetBtn').addEventListener('click', clearData)
+  }
+
+  /* ---------- init ---------- */
+  const init = () => {
+    const embedded = stateFromCSV(($('#data').textContent || '').trim())
+    // A file with no town name (an empty copy, or the bare page) belongs to whichever town this browser last worked on.
+    const local = loadLS(embedded && embedded.town ? embedded.town : (lsGet(LAST_TOWN_KEY) || DEFAULT_TOWN))
+    const conflict = embedded && !isEmpty(embedded) && local && toCSV(local) !== toCSV(embedded)
+    const fileNewer = conflict && (embedded.saved || '') >= (local.saved || '')
+    state = conflict ? (fileNewer ? embedded : local) : (local || embedded || defaultState())
+    if (conflict) {
+      alt = fileNewer ? local : embedded
+      altSource = fileNewer ? 'browser' : 'file'
+      $('#banner').innerHTML = (fileNewer
+        ? `Showing the data embedded in this file (saved ${fmtSaved(embedded.saved)}), which is newer than the copy saved in this browser (${fmtSaved(local.saved)}). `
+        : `Showing the data saved in this browser (${fmtSaved(local.saved)}), which is newer than the data embedded in this file (${fmtSaved(embedded.saved)}). `) +
+        `<button type="button" class="link" id="useAlt">Use the ${altSource} copy instead</button>`
+      $('#banner').hidden = false
+      $('#useAlt').addEventListener('click', () => {
+        $('#banner').hidden = true
+        replaceState(alt, `Switched to the ${altSource} copy.`)
+        alt = null
+        saveLS()
+      })
+    }
+    $('#setup').open = !setupComplete(state)
+    renderThemeBtn()
+    bind()
+    renderAll()
+  }
+
+  init()
+})()
+</script></body></html>
