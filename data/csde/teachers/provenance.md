@@ -64,7 +64,16 @@ Established 2026-10-23 by profiling the whole file; details and counts are in
   2002 and outside CT public schools is not represented.
 - Multi-assignment teacher-years are common (41,305 of 509,428) and 3,617
   teacher-years sum to more than 1.0 FTE.
-- FOY 2014 has about 4% fewer unique teachers than any later year.
+- FOY 2014 has about 4% fewer unique teachers than any later year. EdSight's
+  published 2014-15 teacher FTE is normal, so the shortfall is in this
+  extract rather than in the underlying collection.
+- Cross-checked against EdSight's FTE Staffing report
+  (`npm run fetch:edsight-staffing`, categories "General Education - Teachers
+  and Instructors" plus "Special Education - Teachers and Instructors"): the
+  uncapped statewide FTE ties within 0.1% for 2016 through 2023 and within
+  0.5% in every year but 2014; the district-year ratio has median 1.000 with
+  quartiles 0.995 to 1.000. EdSight does not cap a teacher's FTE at 1.0. The
+  current table is in `sanity.md`.
 
 
 ## Open with CSDE

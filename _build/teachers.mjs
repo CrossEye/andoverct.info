@@ -51,7 +51,7 @@
  * Other scripts can `import { loadTeacherYears } from "./teachers.mjs"` to get
  * the collapsed teacher-year records without re-implementing the rules.
  */
-import { readFileSync, writeFileSync, readdirSync } from "node:fs"
+import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs"
 import { join } from "node:path"
 import ExcelJS from "exceljs"
 import { parseCsv, toCsv, entityType, isTownDistrict, writeRecordsJson } from "./edsight-client.mjs"
@@ -315,6 +315,7 @@ const aggregate = (group, tys, foy, { firstFoy, lastFoy }) => {
     entityType: group.entityType,
     teachers: n,
     fte: round(fte, 2),
+    fteUncapped: round(sum(tys.map((t) => t.fteRaw)), 2),
     fteCapped: tys.filter((t) => t.fteCapped).length,
     specialEd: tys.filter((t) => t.sspType === "SE").length,
     medianExp: quantile(exps, 0.5),
@@ -395,7 +396,7 @@ const TY_FIELDS = [
   "gapYearsSoFar", "prevDistrict", "nextDistrict",
 ]
 const DY_FIELDS = [
-  "foy", "schoolYear", "districtCode", "district", "entityType", "teachers", "fte", "fteCapped",
+  "foy", "schoolYear", "districtCode", "district", "entityType", "teachers", "fte", "fteUncapped", "fteCapped",
   "specialEd", "medianExp", "medianExact", "p25Exp", "p75Exp", "meanExpCapped", "meanExpCensored",
   ...BINS.map((b) => `exp${b.key}`), ...BINS.map((b) => `share${b.key}`), ...BINS.map((b) => `fteShare${b.key}`),
   ...Object.values(LANE_KEYS), ...Object.values(LANE_KEYS).map((k) => `${k}Share`),
@@ -447,6 +448,54 @@ const writeXlsx = async (districtYears, foys, file) => {
   await wb.xlsx.writeFile(file)
 }
 
+// ------------------------------------------------------- EdSight cross-check
+
+/*
+ * EdSight's published FTE Staffing report (npm run fetch:edsight-staffing) is
+ * the independent check on the CSDE pull. Its "General Education - Teachers
+ * and Instructors" and "Special Education - Teachers and Instructors"
+ * categories are the published counterpart of the panel's GET + SE scope.
+ * The export carries names, not codes, so the join is by district name; names
+ * that match nothing are listed so a rename cannot hide a gap.
+ */
+const EDSIGHT_STAFFING = join(ROOT, "data/edsight/fte-staffing/fte-staffing.csv")
+const EDSIGHT_TEACHER_CATEGORIES = new Set([
+  "General Education - Teachers and Instructors",
+  "Special Education - Teachers and Instructors",
+])
+
+const loadEdsightTeacherFte = () => {
+  if (!existsSync(EDSIGHT_STAFFING)) return null
+  const rows = parseCsv(readFileSync(EDSIGHT_STAFFING, "utf8"))
+  const [header, ...body] = rows
+  const col = (name) => header.indexOf(name)
+  const [iYear, iLevel, iDistrict, iCategory, iFte] = ["year", "level", "district", "category", "fte"].map(col)
+  // Map "name|foy" → published teacher FTE; the statewide row is keyed by STATE.district.
+  return body
+    .filter((r) => r.length > 1 && EDSIGHT_TEACHER_CATEGORIES.has(r[iCategory]))
+    .reduce((m, r) => {
+      const foy = Number(r[iYear].slice(0, 4))
+      const name = r[iLevel] === "state" ? STATE.district : r[iDistrict]
+      const k = `${name}|${foy}`
+      return m.set(k, (m.get(k) ?? 0) + (Number(r[iFte]) || 0))
+    }, new Map())
+}
+
+const crossCheck = (districtYears) => {
+  const published = loadEdsightTeacherFte()
+  if (!published) return null
+  const rows = districtYears
+    .filter((r) => r.districtCode !== TOWNS.districtCode)
+    .map((r) => {
+      const pub = published.get(`${r.district}|${r.foy}`)
+      return { ...r, published: round(pub, 2) ?? null, ratio: pub ? round(r.fte / pub) : null, ratioUncapped: pub ? round(r.fteUncapped / pub) : null }
+    })
+  const unmatched = [...new Set(rows.filter((r) => r.published == null).map((r) => r.district))].sort()
+  const matched = rows.filter((r) => r.published != null && r.districtCode !== STATE.districtCode)
+  const ratios = sorted(matched.map((r) => r.ratio))
+  return { rows, unmatched, matched, ratios }
+}
+
 // ------------------------------------------------------------------ sanity
 
 const table = (header, rows) => {
@@ -455,7 +504,50 @@ const table = (header, rows) => {
   return [line(header), `| ${widths.map((w) => "-".repeat(w)).join(" | ")} |`, ...rows.map(line)].join("\n")
 }
 
-const sanityReport = ({ file, header, records, teacherYears, checks, districtYears, foys, maxExp }) => {
+const crossCheckSection = (check, foys) => {
+  if (!check) return `## EdSight cross-check
+
+Not run: data/edsight/fte-staffing/fte-staffing.csv is absent. Run
+\`npm run fetch:edsight-staffing\` (or \`-- --offline\`) and rebuild.`
+  const { rows, unmatched, matched, ratios } = check
+  const state = rows.filter((r) => r.districtCode === STATE.districtCode)
+  const andover = rows.filter((r) => r.districtCode === ANDOVER)
+  const within = (lo, hi) => matched.filter((r) => r.ratio >= lo && r.ratio <= hi).length
+  const outliers = matched
+    .filter((r) => r.ratio < 0.9 || r.ratio > 1.1)
+    .sort((a, b) => Math.abs(b.ratio - 1) - Math.abs(a.ratio - 1))
+    .slice(0, 25)
+  return `## EdSight cross-check
+
+Panel FTE (capped at 1.0 per teacher) against the FTE Staffing report's
+general-education plus special-education teachers, joined by district name.
+Ratio = panel ÷ published.
+
+### Statewide
+
+${table(["FOY", "Panel teachers", "Panel FTE", "Panel FTE (uncapped)", "Published FTE", "Ratio", "Ratio (uncapped)"],
+  state.map((r) => [r.foy, fmt(r.teachers), fmt(r.fte), fmt(r.fteUncapped), fmt(r.published), r.ratio ?? "", r.ratioUncapped ?? ""]))}
+
+### District-years
+
+- Matched: ${fmt(matched.length)} district-years across ${fmt(new Set(matched.map((r) => r.district)).size)} districts
+- Ratio median ${quantile(ratios, 0.5)}, quartiles ${quantile(ratios, 0.25)} to ${quantile(ratios, 0.75)}
+- Within ±5%: ${fmt(within(0.95, 1.05))}; within ±10%: ${fmt(within(0.9, 1.1))}; outside ±10%: ${fmt(matched.length - within(0.9, 1.1))}
+- Panel districts with no published match (${unmatched.length}): ${unmatched.length ? unmatched.join("; ") : "none"}
+
+### Largest disagreements (outside ±10%)
+
+${outliers.length ? table(["District", "FOY", "Panel FTE", "Published", "Ratio"],
+  outliers.map((r) => [r.district, r.foy, r.fte, r.published, r.ratio])) : "none"}
+
+### Andover
+
+${table(["FOY", "Panel teachers", "Panel FTE", "Published FTE", "Ratio"],
+  andover.map((r) => [r.foy, r.teachers, r.fte, r.published ?? "", r.ratio ?? ""]))}
+`
+}
+
+const sanityReport = ({ file, header, records, teacherYears, checks, districtYears, foys, maxExp, check }) => {
   const byFoyRows = counter(records, (r) => r.foy)
   const tyByFoy = counter(teacherYears, (t) => t.foy)
   const rowsPerTy = counter(teacherYears, (t) => t.assignments)
@@ -582,7 +674,9 @@ ${table(["FOY", "Teachers", "Median", "Mean (cap 13)", "0–3", "4–7", "8–12
 
 ${table(["FOY", "Teachers", "FTE", "Median", "0–3", "4–7", "8–12", "13+", "New", "Left after", "Shift (yrs)"],
   andover.map((r) => [r.foy, r.teachers, r.fte, r.medianExp, r.exp0to3, r.exp4to7, r.exp8to12, r.exp13plus, r.newToDistrict ?? "", r.leftDistrict ?? "", r.w1FromPrior ?? ""]))}
-`
+
+
+${crossCheckSection(check, foys)}`
 }
 
 // -------------------------------------------------------------------- main
@@ -610,7 +704,8 @@ const main = async () => {
     districtYears
   )
   await writeXlsx(districtYears, foys, join(DIR, "district-years.xlsx"))
-  writeFileSync(join(DIR, "sanity.md"), sanityReport({ file, header, records, teacherYears, checks, districtYears, foys, maxExp }))
+  const check = crossCheck(districtYears)
+  writeFileSync(join(DIR, "sanity.md"), sanityReport({ file, header, records, teacherYears, checks, districtYears, foys, maxExp, check }))
 
   console.log(`${fmt(records.length)} rows → ${fmt(teacherYears.length)} teacher-years → ${fmt(districtYears.length)} district-years in ${((Date.now() - t0) / 1000).toFixed(1)}s`)
   console.log(`wrote teacher-years.csv, district-years.{csv,json,xlsx}, sanity.md in ${DIR}`)

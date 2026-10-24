@@ -235,3 +235,81 @@ experience capped at 13, in years. Mean is of capped experience.
 | 2023 | 22       | 20.3 | 15.5   | 4   | 2   | 2    | 14  | 1   | 1          | 0.409       |
 | 2024 | 24       | 22.3 | 14     | 5   | 4   | 2    | 13  | 3   | 1          | 0.92        |
 | 2025 | 27       | 25.8 | 12     | 8   | 2   | 4    | 13  | 4   |            | 0.644       |
+
+
+## EdSight cross-check
+
+Panel FTE (capped at 1.0 per teacher) against the FTE Staffing report's
+general-education plus special-education teachers, joined by district name.
+Ratio = panel ÷ published.
+
+### Statewide
+
+| FOY  | Panel teachers | Panel FTE | Panel FTE (uncapped) | Published FTE | Ratio | Ratio (uncapped) |
+| ---- | -------------- | --------- | -------------------- | ------------- | ----- | ---------------- |
+| 2014 | 40,859         | 40,053.26 | 40,169.54            | 42,084.7      | 0.952 | 0.954            |
+| 2015 | 42,736         | 41,844.78 | 41,899.12            | 42,230        | 0.991 | 0.992            |
+| 2016 | 42,860         | 42,032.39 | 42,162.24            | 42,161.3      | 0.997 | 1                |
+| 2017 | 42,577         | 41,782.76 | 41,851.86            | 41,847.9      | 0.998 | 1                |
+| 2018 | 42,429         | 41,667.36 | 41,760.82            | 41,755.9      | 0.998 | 1                |
+| 2019 | 42,375         | 41,626.34 | 41,695.16            | 41,688.7      | 0.999 | 1                |
+| 2020 | 42,449         | 41,714.58 | 41,806.16            | 41,790.9      | 0.998 | 1                |
+| 2021 | 42,828         | 42,192.85 | 42,289.24            | 42,279.3      | 0.998 | 1                |
+| 2022 | 42,793         | 42,105.65 | 42,192.53            | 42,181.7      | 0.998 | 1                |
+| 2023 | 42,777         | 42,119.24 | 42,266.39            | 42,254.9      | 0.997 | 1                |
+| 2024 | 42,441         | 41,826.39 | 41,943.37            | 42,025.8      | 0.995 | 0.998            |
+| 2025 | 42,304         | 41,706.71 | 41,786.17            | 41,890.9      | 0.996 | 0.997            |
+
+### District-years
+
+- Matched: 2,436 district-years across 210 districts
+- Ratio median 1, quartiles 0.995 to 1
+- Within ±5%: 2,290; within ±10%: 2,391; outside ±10%: 45
+- Panel districts with no published match (0): none
+
+### Largest disagreements (outside ±10%)
+
+| District                                           | FOY  | Panel FTE | Published | Ratio |
+| -------------------------------------------------- | ---- | --------- | --------- | ----- |
+| Elm City Montessori School District                | 2019 | 5         | 10.4      | 0.481 |
+| Goodwin University Educational Services (GUES)     | 2024 | 94.6      | 193.2     | 0.49  |
+| Department of Mental Health and Addiction Services | 2025 | 1         | 2         | 0.5   |
+| Goodwin University Educational Services (GUES)     | 2025 | 113.2     | 226.4     | 0.5   |
+| Colebrook School District                          | 2025 | 9.8       | 18        | 0.544 |
+| Scotland School District                           | 2014 | 9.5       | 14.1      | 0.674 |
+| Elm City Montessori School District                | 2015 | 5         | 7         | 0.714 |
+| Stamford Academy District                          | 2014 | 10        | 13.5      | 0.741 |
+| Norfolk School District                            | 2014 | 8.7       | 11.4      | 0.763 |
+| Elm City Montessori School District                | 2018 | 5         | 6.4       | 0.781 |
+| Jumoke Academy District                            | 2014 | 34.4      | 43.4      | 0.793 |
+| Norfolk School District                            | 2024 | 4         | 5         | 0.8   |
+| Hampton School District                            | 2014 | 9.8       | 12.2      | 0.803 |
+| Booker T. Washington Academy District              | 2014 | 7.5       | 9.3       | 0.806 |
+| Elm City Montessori School District                | 2020 | 10        | 12.4      | 0.806 |
+| Willington School District                         | 2014 | 35.6      | 43.6      | 0.817 |
+| Common Ground High School District                 | 2014 | 13.8      | 16.8      | 0.821 |
+| Path Academy District                              | 2015 | 5         | 6         | 0.833 |
+| Putnam School District                             | 2014 | 83.36     | 99.4      | 0.839 |
+| Integrated Day Charter School District             | 2014 | 16        | 19        | 0.842 |
+| Elm City Montessori School District                | 2021 | 11.25     | 13.3      | 0.846 |
+| Norfolk School District                            | 2023 | 6         | 7         | 0.857 |
+| Trailblazers Academy District                      | 2014 | 12        | 14        | 0.857 |
+| Union School District                              | 2014 | 7.5       | 8.7       | 0.862 |
+| Willington School District                         | 2015 | 37.6      | 43.6      | 0.862 |
+
+### Andover
+
+| FOY  | Panel teachers | Panel FTE | Published FTE | Ratio |
+| ---- | -------------- | --------- | ------------- | ----- |
+| 2014 | 22             | 21.2      | 22.7          | 0.934 |
+| 2015 | 26             | 24.8      | 25.8          | 0.961 |
+| 2016 | 22             | 20.8      | 20.8          | 1     |
+| 2017 | 23             | 21.8      | 21.8          | 1     |
+| 2018 | 22             | 20.9      | 20.9          | 1     |
+| 2019 | 21             | 19.3      | 19.3          | 1     |
+| 2020 | 22             | 20.3      | 20.3          | 1     |
+| 2021 | 22             | 20.3      | 20.3          | 1     |
+| 2022 | 21             | 19.8      | 19.8          | 1     |
+| 2023 | 22             | 20.3      | 20.3          | 1     |
+| 2024 | 24             | 22.3      | 22.3          | 1     |
+| 2025 | 27             | 25.8      | 25.8          | 1     |
