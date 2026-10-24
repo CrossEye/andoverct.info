@@ -28,12 +28,16 @@
  *     2002-03 through 2014-15 and is capped at 13, so FOY 2014 is already in
  *     it and is not counted again (PRE_PANEL_INCLUDES_2014; pending CSDE).
  *     Gap years earn nothing. The result is "years in CT public schools since
- *     2002", a floor on real experience, maxing out at 24 in FOY 2025.
+ *     2002", a floor on real experience, maxing out at 24 in FOY 2025. The
+ *     count includes the current year, as Years_2002to2014 does (no teacher
+ *     present in 2014 has a 0), so a first-year teacher is 1 and the value
+ *     lines up with salary-step numbering: step 13 is the thirteenth year.
+ *     The bins therefore start at 1; a 0 cannot occur under this rule.
  *   - That cap left-censors the senior end: 39% of the 2014 teachers sit at
  *     exactly 13 and could really have anything from 13 to 40 years. Any
  *     threshold at or below 13 years is still exact in every year, because
  *     censoring only blurs values above it, so the bins stop at "13 or more"
- *     (0–3, 4–7, 8–12, 13+), the year-over-year shape shift is measured on
+ *     (1–3, 4–7, 8–12, 13+), the year-over-year shape shift is measured on
  *     experience capped at 13 (CENSOR), and the uncapped mean is reported
  *     only as a censored figure. Medians are exact whenever they fall below
  *     13 + (FOY − 2014), which they do throughout.
@@ -88,7 +92,7 @@ const DEGREE_RANK = ["No BA/BS", "Associate", "Bachelor's", "Master's", "Sixth Y
 // proxy for "at or near the top of the schedule".
 const CENSOR = 13
 const BINS = [
-  { key: "0to3", label: "0–3", min: 0, max: 3 },
+  { key: "1to3", label: "1–3", min: 0, max: 3 },
   { key: "4to7", label: "4–7", min: 4, max: 7 },
   { key: "8to12", label: "8–12", min: 8, max: 12 },
   { key: "13plus", label: "13 or more", min: 13, max: Infinity },
@@ -413,7 +417,7 @@ const writeXlsx = async (districtYears, foys, file) => {
     ["Teachers", (r) => r.teachers],
     ["FTE", (r) => r.fte],
     ["Median experience", (r) => r.medianExp],
-    ["Share 0-3 years", (r) => r.share0to3],
+    ["Share 1-3 years", (r) => r.share1to3],
     ["Share 13 or more", (r) => r.share13plus],
     ["Retention rate", (r) => r.retentionRate],
     ["Shift from prior year", (r) => r.w1FromPrior],
@@ -711,14 +715,14 @@ Unclassified ("other"): ${others.length ? others.map((t) => `${t.district} (${t.
 Shift is the earth-mover distance between consecutive years' distributions of
 experience capped at ${CENSOR}, in years. Mean is of capped experience.
 
-${table(["FOY", "Teachers", "Students", "Per 100", "Median", "Mean (cap 13)", "0–3", "4–7", "8–12", "13+", "Retention", "Shift (yrs)"],
-  state.map((r) => [r.foy, fmt(r.teachers), fmt(r.enrollment), r.teachersPer100 ?? "", r.medianExp, r.meanExpCapped, pct(r.share0to3), pct(r.share4to7), pct(r.share8to12), pct(r.share13plus), pct(r.retentionRate), r.w1FromPrior ?? ""]))}
+${table(["FOY", "Teachers", "Students", "Per 100", "Median", "Mean (cap 13)", "1–3", "4–7", "8–12", "13+", "Retention", "Shift (yrs)"],
+  state.map((r) => [r.foy, fmt(r.teachers), fmt(r.enrollment), r.teachersPer100 ?? "", r.medianExp, r.meanExpCapped, pct(r.share1to3), pct(r.share4to7), pct(r.share8to12), pct(r.share13plus), pct(r.retentionRate), r.w1FromPrior ?? ""]))}
 
 
 ## Andover (${ANDOVER})
 
-${table(["FOY", "Teachers", "FTE", "Students", "Per 100", "Median", "0–3", "4–7", "8–12", "13+", "New", "Left after", "Shift (yrs)"],
-  andover.map((r) => [r.foy, r.teachers, r.fte, r.enrollment ?? "", r.teachersPer100 ?? "", r.medianExp, r.exp0to3, r.exp4to7, r.exp8to12, r.exp13plus, r.newToDistrict ?? "", r.leftDistrict ?? "", r.w1FromPrior ?? ""]))}
+${table(["FOY", "Teachers", "FTE", "Students", "Per 100", "Median", "1–3", "4–7", "8–12", "13+", "New", "Left after", "Shift (yrs)"],
+  andover.map((r) => [r.foy, r.teachers, r.fte, r.enrollment ?? "", r.teachersPer100 ?? "", r.medianExp, r.exp1to3, r.exp4to7, r.exp8to12, r.exp13plus, r.newToDistrict ?? "", r.leftDistrict ?? "", r.w1FromPrior ?? ""]))}
 
 
 ${crossCheckSection(check, foys)}`

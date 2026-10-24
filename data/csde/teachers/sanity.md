@@ -203,7 +203,7 @@ Unclassified ("other"): Shared Services (2230061).
 Shift is the earth-mover distance between consecutive years' distributions of
 experience capped at 13, in years. Mean is of capped experience.
 
-| FOY  | Teachers | Students | Per 100 | Median | Mean (cap 13) | 0–3   | 4–7   | 8–12  | 13+   | Retention | Shift (yrs) |
+| FOY  | Teachers | Students | Per 100 | Median | Mean (cap 13) | 1–3   | 4–7   | 8–12  | 13+   | Retention | Shift (yrs) |
 | ---- | -------- | -------- | ------- | ------ | ------------- | ----- | ----- | ----- | ----- | --------- | ----------- |
 | 2014 | 40,859   | 546,349  | 7.33    | 11     | 9.22          | 16.3% | 15.6% | 29.2% | 38.8% | 96.0%     |             |
 | 2015 | 42,736   | 541,815  | 7.72    | 11     | 9.36          | 16.2% | 15.2% | 24.3% | 44.3% | 92.5%     | 0.171       |
@@ -221,7 +221,7 @@ experience capped at 13, in years. Mean is of capped experience.
 
 ## Andover (0010011)
 
-| FOY  | Teachers | FTE  | Students | Per 100 | Median | 0–3 | 4–7 | 8–12 | 13+ | New | Left after | Shift (yrs) |
+| FOY  | Teachers | FTE  | Students | Per 100 | Median | 1–3 | 4–7 | 8–12 | 13+ | New | Left after | Shift (yrs) |
 | ---- | -------- | ---- | -------- | ------- | ------ | --- | --- | ---- | --- | --- | ---------- | ----------- |
 | 2014 | 22       | 21.2 | 275      | 7.71    | 12     | 2   | 2   | 8    | 10  |     | 0          |             |
 | 2015 | 26       | 24.8 | 250      | 9.92    | 12.5   | 2   | 3   | 8    | 13  | 4   | 5          | 0.413       |
