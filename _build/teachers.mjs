@@ -401,6 +401,7 @@ const DY_FIELDS = [
   ...BINS.map((b) => `exp${b.key}`), ...BINS.map((b) => `share${b.key}`), ...BINS.map((b) => `fteShare${b.key}`),
   ...Object.values(LANE_KEYS), ...Object.values(LANE_KEYS).map((k) => `${k}Share`),
   "newToDistrict", "newToPanel", "leftDistrict", "leftPanel", "retentionRate", "medianChange", "w1FromPrior",
+  "enrollment", "teachersPer100",
 ]
 
 const writeXlsx = async (districtYears, foys, file) => {
@@ -416,6 +417,8 @@ const writeXlsx = async (districtYears, foys, file) => {
     ["Share 13 or more", (r) => r.share13plus],
     ["Retention rate", (r) => r.retentionRate],
     ["Shift from prior year", (r) => r.w1FromPrior],
+    ["Enrollment", (r) => r.enrollment],
+    ["Teachers per 100 students", (r) => r.teachersPer100],
   ]
   const districts = [...new Map(districtYears.map((r) => [r.districtCode, r])).values()]
   wideSheets.forEach(([name, pick]) => {
@@ -446,6 +449,48 @@ const writeXlsx = async (districtYears, foys, file) => {
   districtYears.forEach((r) => all.addRow(r))
 
   await wb.xlsx.writeFile(file)
+}
+
+// ------------------------------------------------------------- enrollment
+
+/*
+ * October 1 enrollment from npm run fetch:edsight-enrollment, keyed by district
+ * code and FOY, as the denominator for teachers per 100 students. The statewide
+ * row comes from EdSight's own total; the town-district aggregate is the sum of
+ * local + regional districts, which counts each student once because regional
+ * districts are separate LEAs from their member towns.
+ */
+const EDSIGHT_ENROLLMENT = join(ROOT, "data/edsight/enrollment/enrollment.csv")
+
+const loadEnrollment = () => {
+  if (!existsSync(EDSIGHT_ENROLLMENT)) return null
+  const [header, ...body] = parseCsv(readFileSync(EDSIGHT_ENROLLMENT, "utf8"))
+  const col = (name) => header.indexOf(name)
+  const [iYear, iLevel, iCode, iType, iEnr] = ["year", "level", "districtCode", "entityType", "enrollment"].map(col)
+  const m = new Map()
+  const add = (key, n) => m.set(key, (m.get(key) ?? 0) + n)
+  body
+    .filter((r) => r.length > 1 && r[iEnr] !== "")
+    .forEach((r) => {
+      const foy = Number(r[iYear].slice(0, 4))
+      const n = Number(r[iEnr])
+      if (r[iLevel] === "state") add(`${STATE.districtCode}|${foy}`, n)
+      else {
+        add(`${r[iCode]}|${foy}`, n)
+        if (isTownDistrict(r[iType])) add(`${TOWNS.districtCode}|${foy}`, n)
+      }
+    })
+  return m
+}
+
+const attachEnrollment = (districtYears) => {
+  const enrollment = loadEnrollment()
+  districtYears.forEach((r) => {
+    const n = enrollment?.get(`${r.districtCode}|${r.foy}`) ?? null
+    r.enrollment = n
+    r.teachersPer100 = n ? round((100 * r.fte) / n, 2) : null
+  })
+  return enrollment != null
 }
 
 // ------------------------------------------------------- EdSight cross-check
@@ -666,14 +711,14 @@ Unclassified ("other"): ${others.length ? others.map((t) => `${t.district} (${t.
 Shift is the earth-mover distance between consecutive years' distributions of
 experience capped at ${CENSOR}, in years. Mean is of capped experience.
 
-${table(["FOY", "Teachers", "Median", "Mean (cap 13)", "0–3", "4–7", "8–12", "13+", "Retention", "Shift (yrs)"],
-  state.map((r) => [r.foy, fmt(r.teachers), r.medianExp, r.meanExpCapped, pct(r.share0to3), pct(r.share4to7), pct(r.share8to12), pct(r.share13plus), pct(r.retentionRate), r.w1FromPrior ?? ""]))}
+${table(["FOY", "Teachers", "Students", "Per 100", "Median", "Mean (cap 13)", "0–3", "4–7", "8–12", "13+", "Retention", "Shift (yrs)"],
+  state.map((r) => [r.foy, fmt(r.teachers), fmt(r.enrollment), r.teachersPer100 ?? "", r.medianExp, r.meanExpCapped, pct(r.share0to3), pct(r.share4to7), pct(r.share8to12), pct(r.share13plus), pct(r.retentionRate), r.w1FromPrior ?? ""]))}
 
 
 ## Andover (${ANDOVER})
 
-${table(["FOY", "Teachers", "FTE", "Median", "0–3", "4–7", "8–12", "13+", "New", "Left after", "Shift (yrs)"],
-  andover.map((r) => [r.foy, r.teachers, r.fte, r.medianExp, r.exp0to3, r.exp4to7, r.exp8to12, r.exp13plus, r.newToDistrict ?? "", r.leftDistrict ?? "", r.w1FromPrior ?? ""]))}
+${table(["FOY", "Teachers", "FTE", "Students", "Per 100", "Median", "0–3", "4–7", "8–12", "13+", "New", "Left after", "Shift (yrs)"],
+  andover.map((r) => [r.foy, r.teachers, r.fte, r.enrollment ?? "", r.teachersPer100 ?? "", r.medianExp, r.exp0to3, r.exp4to7, r.exp8to12, r.exp13plus, r.newToDistrict ?? "", r.leftDistrict ?? "", r.w1FromPrior ?? ""]))}
 
 
 ${crossCheckSection(check, foys)}`
@@ -703,6 +748,8 @@ const main = async () => {
     },
     districtYears
   )
+  const hasEnrollment = attachEnrollment(districtYears)
+  if (!hasEnrollment) console.warn("enrollment not attached: run npm run fetch:edsight-enrollment")
   await writeXlsx(districtYears, foys, join(DIR, "district-years.xlsx"))
   const check = crossCheck(districtYears)
   writeFileSync(join(DIR, "sanity.md"), sanityReport({ file, header, records, teacherYears, checks, districtYears, foys, maxExp, check }))
