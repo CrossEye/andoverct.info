@@ -57,3 +57,14 @@ Thumbs.db
 /data/edsight/*/*.json
 /data/edsight/*/*.xlsx
 !/data/edsight/*/raw/
+
+# CSDE teacher-level staffing panel (data/csde/teachers/). The raw CSV is one row
+# per teacher per assignment per year with a stable dummy ID; in a 22-teacher
+# district that is a person, so it is never committed and never deployed. The
+# tidy teacher-year table rebuilt from it is teacher-level too. Only the
+# district-year aggregates are safe to publish, and those are reshaped from the
+# raw in seconds (npm run build:teachers). provenance.md IS committed.
+/data/csde/teachers/raw/
+/data/csde/teachers/*.csv
+/data/csde/teachers/*.json
+/data/csde/teachers/*.xlsx
