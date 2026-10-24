@@ -29,6 +29,7 @@ import { readFileSync, writeFileSync } from "node:fs"
 import { join } from "node:path"
 import { loadTeacherYears } from "./teachers.mjs"
 import { parseCsv, isTownDistrict } from "./edsight-client.mjs"
+import { C, esc, el, text, r1, column, legend, table, emphasisLines, barChart, overlayColumns, pct, fmt, median, shares, pageShell } from "./teachers-charts.mjs"
 
 const ROOT = join(import.meta.dirname, "..")
 const DIR = join(ROOT, "data/csde/teachers")
@@ -45,14 +46,6 @@ const BINS = [
   { key: "13plus", label: "13+", min: 13, max: Infinity },
 ]
 const binIndex = (exp) => BINS.findIndex((b) => exp >= b.min && exp <= b.max)
-
-// Validated 2026-10-24 with dataviz/scripts/validate_palette.js on #FBF8F1:
-// ordinal ramp passes all four checks; gold vs navy ΔE 30 under CVD.
-const C = {
-  surface: "#FBF8F1", ink: "#2b2b2b", sub: "#6a6453", grid: "#E3DDCE", axis: "#5a5446",
-  ramp: ["#9db3cf", "#6687ad", "#3a5a84", "#13305a"],
-  bar: "#3a5a84", accent: "#9a6f08", navy: "#13305a", dim: "#c7c1b2", predicted: "#9db3cf",
-}
 
 // ------------------------------------------------------------------ data
 
@@ -90,33 +83,8 @@ const binCounts = (exps) => {
   exps.forEach((e) => { b[binIndex(e)] += 1 })
   return b
 }
-const shares = (counts) => {
-  const n = counts.reduce((a, c) => a + c, 0)
-  return counts.map((c) => (n ? c / n : 0))
-}
-const median = (xs) => {
-  const s = [...xs].sort((a, b) => a - b)
-  const m = Math.floor(s.length / 2)
-  return s.length ? (s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2) : null
-}
-const pct = (x, d = 0) => `${(100 * x).toFixed(d)}%`
-const fmt = (n) => n.toLocaleString("en-US")
 
 // ------------------------------------------------------------------ svg
-
-const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;")
-const el = (tag, attrs, inner = "") =>
-  `<${tag}${Object.entries(attrs).map(([k, v]) => (v == null ? "" : ` ${k}="${esc(v)}"`)).join("")}>${inner}</${tag}>`
-const text = (x, y, s, attrs = {}) => el("text", { x, y, fill: C.axis, "font-size": 11, ...attrs }, esc(s))
-const r1 = (x) => Math.round(x * 10) / 10
-
-// A column with a 4px rounded cap and a square baseline, per the mark spec.
-const column = (x, yTop, w, h, fill, title) => {
-  if (h <= 0) return ""
-  const r = Math.min(4, h, w / 2)
-  const d = `M${r1(x)},${r1(yTop + h)} V${r1(yTop + r)} Q${r1(x)},${r1(yTop)} ${r1(x + r)},${r1(yTop)} H${r1(x + w - r)} Q${r1(x + w)},${r1(yTop)} ${r1(x + w)},${r1(yTop + r)} V${r1(yTop + h)} Z`
-  return el("path", { d, fill }, title ? el("title", {}, esc(title)) : "")
-}
 
 /*
  * One histogram panel: twelve columns for years 1..12, shares on a fixed y
@@ -190,64 +158,6 @@ const stackChart = ({ series, w = 720, h = 260, labelEvery = 1 }) => {
     text(pad.l - 6, pad.t + ph - v * ph + 4, pct(v), { "text-anchor": "end", "font-size": 10 }))
   return el("svg", { viewBox: `0 0 ${w} ${h}`, width: w, height: h, role: "img", "aria-label": "share of teachers by experience bin, by year" }, yTicks.join("") + cols)
 }
-
-const legend = (labels, colors) =>
-  `<div class="legend">${labels.map((l, i) => `<span><i style="background:${colors[i]}"></i>${esc(l)}</span>`).join("")}</div>`
-
-/*
- * Emphasis line chart: many series in the de-emphasis gray, one in the accent,
- * one reference (the peer median) in navy, direct-labeled at the right edge.
- */
-const emphasisLines = ({ lines, accentKey, refKey, w = 720, h = 300, yMax = 1, yFmt = pct }) => {
-  const pad = { l: 44, r: 96, t: 16, b: 28 }
-  const pw = w - pad.l - pad.r
-  const ph = h - pad.t - pad.b
-  const x = (foy) => pad.l + ((foy - FIRST) / (LAST - FIRST)) * pw
-  const y = (v) => pad.t + ph - (v / yMax) * ph
-  const path = (pts) => pts.filter(([, v]) => v != null).map(([f, v], i) => `${i ? "L" : "M"}${r1(x(f))},${r1(y(v))}`).join(" ")
-  const ordered = [...lines.filter((l) => l.key !== accentKey && l.key !== refKey), ...lines.filter((l) => l.key === refKey), ...lines.filter((l) => l.key === accentKey)]
-  const paths = ordered
-    .map((l) => {
-      const isAccent = l.key === accentKey
-      const isRef = l.key === refKey
-      const stroke = isAccent ? C.accent : isRef ? C.navy : C.dim
-      const end = l.points.filter(([, v]) => v != null).at(-1)
-      const labelled = isAccent || isRef || lines.length <= 4
-      const label = labelled && end ? text(x(end[0]) + 8, y(end[1]) + 4, `${l.label} ${yFmt(end[1])}`, { fill: C.ink, "font-size": 11 }) : ""
-      return el("path", { d: path(l.points), fill: "none", stroke, "stroke-width": isAccent || isRef ? 2.5 : 1.25, "stroke-linejoin": "round", "stroke-linecap": "round", opacity: isAccent || isRef ? 1 : 0.8 },
-        el("title", {}, esc(l.label))) + label
-    })
-    .join("")
-  const yTicks = [0, 0.25, 0.5, 0.75, 1].map((v) =>
-    el("line", { x1: pad.l, x2: w - pad.r, y1: r1(y(v * yMax)), y2: r1(y(v * yMax)), stroke: C.grid, "stroke-width": 1 }) +
-    text(pad.l - 6, y(v * yMax) + 4, yFmt(v * yMax), { "text-anchor": "end", "font-size": 10 }))
-  const xTicks = foys.filter((f) => f % 2 === 1).map((f) => text(x(f), h - 8, String(f), { "text-anchor": "middle" }))
-  return el("svg", { viewBox: `0 0 ${w} ${h}`, width: w, height: h, role: "img" }, yTicks.join("") + paths + xTicks.join(""))
-}
-
-const barChart = ({ rows, w = 720, h = 240, yMax, yFmt = pct, color = C.bar }) => {
-  const pad = { l: 44, r: 16, t: 16, b: 28 }
-  const pw = w - pad.l - pad.r
-  const ph = h - pad.t - pad.b
-  const slot = pw / rows.length
-  const bw = Math.min(24, slot - 6)
-  const cols = rows
-    .map(({ label, value, title }, i) => {
-      const bh = (value / yMax) * ph
-      const x = pad.l + i * slot + (slot - bw) / 2
-      return column(x, pad.t + ph - bh, bw, bh, color, title) + text(x + bw / 2, h - 8, label, { "text-anchor": "middle", "font-size": 10 })
-    })
-    .join("")
-  const ticks = [0, 0.25, 0.5, 0.75, 1].map((v) =>
-    el("line", { x1: pad.l, x2: w - pad.r, y1: r1(pad.t + ph - v * ph), y2: r1(pad.t + ph - v * ph), stroke: C.grid, "stroke-width": 1 }) +
-    text(pad.l - 6, pad.t + ph - v * ph + 4, yFmt(v * yMax), { "text-anchor": "end", "font-size": 10 }))
-  return el("svg", { viewBox: `0 0 ${w} ${h}`, width: w, height: h, role: "img" }, ticks.join("") + cols)
-}
-
-const table = (header, rows) =>
-  `<details><summary>Table</summary><table><thead><tr>${header.map((h) => `<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${rows
-    .map((r) => `<tr>${r.map((c) => `<td>${esc(c)}</td>`).join("")}</tr>`)
-    .join("")}</tbody></table></details>`
 
 // ------------------------------------------------------------ analyses
 
@@ -388,26 +298,10 @@ const survival = LEVELS.map((k) => {
 // Scale the histogram panels to the tallest 1..12 bar, not the censored 13+ pile.
 const yMaxHist = Math.max(...[...townsHist.values(), ...glasHist.values()].flatMap((h) => shares(h).slice(0, CENSOR - 1))) * 1.1
 
-const html = `<!doctype html>
-<html lang="en"><head><meta charset="utf-8">
-<title>Teacher experience: exploration</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-  :root { --surface: ${C.surface}; --ink: ${C.ink}; --sub: ${C.sub}; --grid: ${C.grid}; }
-  body { background: var(--surface); color: var(--ink); font: 15px/1.5 system-ui, sans-serif; margin: 0; padding: 24px 16px 64px; }
-  main { max-width: 760px; margin: 0 auto; }
-  h1 { font-size: 24px; margin: 0 0 4px; } h2 { font-size: 18px; margin: 40px 0 6px; } p { margin: 6px 0 12px; color: var(--sub); }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px 12px; }
-  svg { display: block; max-width: 100%; height: auto; }
-  .legend { display: flex; gap: 16px; font-size: 12px; color: var(--sub); margin: 6px 0; flex-wrap: wrap; }
-  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -2px; }
-  details { margin: 6px 0 0; font-size: 13px; } summary { cursor: pointer; color: var(--sub); }
-  table { border-collapse: collapse; margin-top: 6px; font-variant-numeric: tabular-nums; } th, td { padding: 2px 8px; text-align: right; border-bottom: 1px solid var(--grid); } th:first-child, td:first-child { text-align: left; }
-  .note { font-size: 13px; }
-</style></head><body><main>
-<h1>Teacher experience across Connecticut districts, ${FIRST}–${LAST}</h1>
-<p class="note">Exploratory, not for publication. Experience is years in CT public schools since 2002, capped at 13 (the field CSDE supplied caps pre-2014 service there). Head counts, one record per teacher per year. Hover any mark for its value; each chart has a table.</p>
-
+const html = pageShell({
+  title: `Teacher experience across Connecticut districts, ${FIRST}–${LAST}`,
+  intro: `Exploratory, not for publication. Experience is years in CT public schools since 2002, counted from 1 in the first year and capped at 13 (the field CSDE supplied caps pre-2014 service there). Head counts, one record per teacher per year. Hover any mark for its value; each chart has a table.`,
+  body: `
 <h2>1. Shape by year: all town districts</h2>
 <p>Share of teachers at each year of experience, years 1 through 12. The censored 13+ group (half of all teachers) is the figure in each panel header rather than a bar, so the shape of the first twelve years stays visible.</p>
 ${smallMultiples(townsHist, { yMax: yMaxHist })}
@@ -423,7 +317,7 @@ ${legend(BINS.map((b) => `${b.label} years`), C.ramp)}
 ${stackChart({ series: andoverSeries })}
 ${table(["FOY", "Teachers", ...BINS.map((b) => b.label), "Median"], andoverRows.map((r) => [r.foy, r.teachers, ...BINS.map((b) => r[`exp${b.key}`]), r.medianExp]))}
 <p>Median years of experience, Andover against Glastonbury and all town districts.</p>
-${emphasisLines({ lines: [...medianLines([{ code: ANDOVER, label: "Andover" }, { code: GLASTONBURY, label: "Glastonbury" }]), { key: "towns", label: "Town districts", points: foys.map((y) => [y, districtYears.find((r) => r.districtCode === "towns" && r.foy === y)?.medianExp ?? null]) }], accentKey: ANDOVER, refKey: "towns", yMax: 20, yFmt: (v) => `${v} yrs`, h: 240 })}
+${emphasisLines({ xDomain: [FIRST, LAST], xTicks: foys.filter((f) => f % 2 === 1), lines: [...medianLines([{ code: ANDOVER, label: "Andover" }, { code: GLASTONBURY, label: "Glastonbury" }]), { key: "towns", label: "Town districts", points: foys.map((y) => [y, districtYears.find((r) => r.districtCode === "towns" && r.foy === y)?.medianExp ?? null]) }], accentKey: ANDOVER, refKey: "towns", yMax: 20, yFmt: (v) => `${v} yrs`, h: 240 })}
 
 <h2>3. The ten-year test</h2>
 <p>Take every teacher on the ${FIRST} roster, add ten years, and let nobody leave or arrive. That is the model behind "in ten years they will all be at the top step." Compare with who was actually teaching in ${FIRST + 10}.</p>
@@ -434,57 +328,28 @@ ${table(["Group", `${FIRST} roster`, "Predicted 13+ share", `Actual ${FIRST + 10
 
 <h2>4. Andover among its 45 peers</h2>
 <p>Share of teachers at 13 or more years, every elementary-only peer district in gray, Andover in gold, the peer median in navy.</p>
-${emphasisLines({ lines: [...peerLines, peerMedianLine, townsLine], accentKey: ANDOVER, refKey: "peer-median" })}
+${emphasisLines({ xDomain: [FIRST, LAST], xTicks: foys.filter((f) => f % 2 === 1), lines: [...peerLines, peerMedianLine, townsLine], accentKey: ANDOVER, refKey: "peer-median" })}
 ${table(["District", `13+ share ${FIRST + 1}`, `13+ share ${LAST}`, "Change"], peerDrift.map((d) => [d.label, pct(d.from), pct(d.to), `${d.change >= 0 ? "+" : ""}${(100 * d.change).toFixed(0)} pts`]))}
 
 <h2>5. The mechanism: who leaves, who arrives</h2>
 <p>Town districts, pooled over ${FIRST + 1}–${LAST - 1}. Annual share of teachers at each experience level who are not in any CT public school the next fall (left the panel) or not in the same district (left the district, including moves).</p>
 ${legend(["Left the district (incl. moves)", "Left CT public schools"], [C.ramp[0], C.bar])}
-${el("svg", { viewBox: "0 0 720 240", width: 720, height: 240, role: "img" }, (() => {
-  const pad = { l: 44, r: 16, t: 16, b: 28 }
-  const pw = 720 - pad.l - pad.r
-  const ph = 240 - pad.t - pad.b
-  const yMax = 0.3
-  const slot = pw / exitByExp.length
-  const bw = Math.min(24, slot - 8)
-  return [0, 0.1, 0.2, 0.3].map((v) => el("line", { x1: pad.l, x2: 720 - pad.r, y1: r1(pad.t + ph - (v / yMax) * ph), y2: r1(pad.t + ph - (v / yMax) * ph), stroke: C.grid }) + text(pad.l - 6, pad.t + ph - (v / yMax) * ph + 4, pct(v), { "text-anchor": "end", "font-size": 10 })).join("") +
-    exitByExp.map((e, i) => {
-      const x = pad.l + i * slot + (slot - bw) / 2
-      const hD = (e.leftDistrict / yMax) * ph
-      const hP = (e.leftPanel / yMax) * ph
-      return column(x, pad.t + ph - hD, bw, hD, C.ramp[0], `${expLabel(e.k)} years: ${pct(e.leftDistrict, 1)} left the district (n = ${fmt(e.n)})`) +
-        column(x, pad.t + ph - hP, bw, hP, C.bar, `${expLabel(e.k)} years: ${pct(e.leftPanel, 1)} left CT public schools (n = ${fmt(e.n)})`) +
-        text(x + bw / 2, 232, expLabel(e.k), { "text-anchor": "middle", "font-size": 10 })
-    }).join("")
-})())}
+${overlayColumns({ rows: exitByExp.map((e) => ({ label: expLabel(e.k), back: e.leftDistrict, front: e.leftPanel, n: e.n })), yMax: 0.3, yTicks: [0, 0.1, 0.2, 0.3], backTitle: (r) => `${r.label} years: ${pct(r.back, 1)} left the district (n = ${fmt(r.n)})`, frontTitle: (r) => `${r.label} years: ${pct(r.front, 1)} left CT public schools (n = ${fmt(r.n)})` })}
 ${table(["Years", "Teacher-years", "Left district", "Left CT public"], exitByExp.map((e) => [expLabel(e.k), fmt(e.n), pct(e.leftDistrict, 1), pct(e.leftPanel, 1)]))}
 
 <p>Experience of teachers new to CT public schools in a given fall (${fmt(entrants.length)} entrants), and of teachers who moved in from another CT district (${fmt(movers.length)} movers).</p>
 ${legend(["New to CT public schools", "Moved from another district"], [C.bar, C.ramp[0]])}
-<div class="grid" style="grid-template-columns: 1fr 1fr">
+<div class="pair">
 ${barChart({ rows: entrantHist.map((c, i) => ({ label: expLabel(i + 1), value: c / entrants.length, title: `${expLabel(i + 1)} years: ${fmt(c)} entrants` })), w: 360, h: 200, yMax: 0.8 })}
 ${barChart({ rows: moverHist.map((c, i) => ({ label: expLabel(i + 1), value: c / movers.length, title: `${expLabel(i + 1)} years: ${fmt(c)} movers` })), w: 360, h: 200, yMax: 0.8, color: C.ramp[0] })}
 </div>
 
 <p>Of the teachers in town districts in ${FIRST + 1}, the share still teaching in CT public schools in ${LAST}, and still in the same district, by their experience in ${FIRST + 1}.</p>
 ${legend([`Still in CT public schools ${LAST}`, "Still in the same district"], [C.ramp[0], C.bar])}
-${el("svg", { viewBox: "0 0 720 240", width: 720, height: 240, role: "img" }, (() => {
-  const pad = { l: 44, r: 16, t: 16, b: 28 }
-  const pw = 720 - pad.l - pad.r
-  const ph = 240 - pad.t - pad.b
-  const slot = pw / survival.length
-  const bw = Math.min(24, slot - 8)
-  return [0, 0.25, 0.5, 0.75, 1].map((v) => el("line", { x1: pad.l, x2: 720 - pad.r, y1: r1(pad.t + ph - v * ph), y2: r1(pad.t + ph - v * ph), stroke: C.grid }) + text(pad.l - 6, pad.t + ph - v * ph + 4, pct(v), { "text-anchor": "end", "font-size": 10 })).join("") +
-    survival.map((s, i) => {
-      const x = pad.l + i * slot + (slot - bw) / 2
-      return column(x, pad.t + ph - s.inPanel * ph, bw, s.inPanel * ph, C.ramp[0], `${expLabel(s.k)} years in ${FIRST + 1}: ${pct(s.inPanel)} still in CT public schools (n = ${fmt(s.n)})`) +
-        column(x, pad.t + ph - s.inDistrict * ph, bw, s.inDistrict * ph, C.bar, `${expLabel(s.k)} years in ${FIRST + 1}: ${pct(s.inDistrict)} still in the same district`) +
-        text(x + bw / 2, 232, expLabel(s.k), { "text-anchor": "middle", "font-size": 10 })
-    }).join("")
-})())}
+${overlayColumns({ rows: survival.map((s) => ({ label: expLabel(s.k), back: s.inPanel, front: s.inDistrict, n: s.n })), yMax: 1, yTicks: [0, 0.25, 0.5, 0.75, 1], backTitle: (r) => `${r.label} years in ${FIRST + 1}: ${pct(r.back)} still in CT public schools (n = ${fmt(r.n)})`, frontTitle: (r) => `${r.label} years in ${FIRST + 1}: ${pct(r.front)} still in the same district` })}
 ${table([`Years in ${FIRST + 1}`, "Teachers", `In CT public ${LAST}`, "Same district"], survival.map((s) => [expLabel(s.k), fmt(s.n), pct(s.inPanel), pct(s.inDistrict)]))}
-</main></body></html>
-`
+`,
+})
 
 writeFileSync(OUT, html)
 
