@@ -734,6 +734,7 @@ const main = async () => {
   const t0 = Date.now()
   const { records, file, header, teacherYears, checks } = loadTeacherYears()
   const { districtYears, foys, maxExp } = buildDistrictYears(teacherYears)
+  if (!attachEnrollment(districtYears)) console.warn("enrollment not attached: run npm run fetch:edsight-enrollment")
 
   writeFileSync(join(DIR, "teacher-years.csv"), toCsv([TY_FIELDS, ...teacherYears.map((t) => TY_FIELDS.map((f) => t[f] ?? ""))]))
   writeFileSync(join(DIR, "district-years.csv"), toCsv([DY_FIELDS, ...districtYears.map((r) => DY_FIELDS.map((f) => r[f] ?? ""))]))
@@ -752,8 +753,6 @@ const main = async () => {
     },
     districtYears
   )
-  const hasEnrollment = attachEnrollment(districtYears)
-  if (!hasEnrollment) console.warn("enrollment not attached: run npm run fetch:edsight-enrollment")
   await writeXlsx(districtYears, foys, join(DIR, "district-years.xlsx"))
   const check = crossCheck(districtYears)
   writeFileSync(join(DIR, "sanity.md"), sanityReport({ file, header, records, teacherYears, checks, districtYears, foys, maxExp, check }))
