@@ -379,6 +379,9 @@ function priv_serve_content($sub, $rest, $meta = array()) {
         'svg'  => 'image/svg+xml', 'png' => 'image/png', 'jpg' => 'image/jpeg',
         'jpeg' => 'image/jpeg', 'gif' => 'image/gif', 'webp' => 'image/webp',
         'pdf'  => 'application/pdf', 'ico' => 'image/x-icon',
+        'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'zip'  => 'application/zip',
         'woff' => 'font/woff', 'woff2' => 'font/woff2',
     );
     $type = isset($mimes[$ext]) ? $mimes[$ext] : 'application/octet-stream';
