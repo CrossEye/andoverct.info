@@ -450,6 +450,24 @@ def main():
                                   lambda v: f'{v:.0f}%', lambda v: f'{v:.0f}', SRC_PI_HN, xd=xd_hn, yd=yd_hn)
         files[tag] = svg
 
+    # Growth now exists for both years, so it gets the same two-year treatment as
+    # the subjects: one shared scale across the pair, and a need scatter for the
+    # new year, where Andover's distance above the line is the whole point.
+    year_pair('growth', 'Academic growth', 'growth-pair',
+              'Average share of each student’s own growth target achieved. Same scale in both years.',
+              SRC_NGA, 'Average % of growth target achieved')
+    hns_g = [r['hn'] for r in cur + prev if r['hn'] is not None]
+    gs = [r['growth'] for r in cur + prev if r['growth'] is not None]
+    xd_g = (min(hns_g) - 3, max(hns_g) + 3)
+    yd_g = (min(gs) - 3, max(gs) + 5)
+    for yr, rows_ in ((PREV, prev), (CUR, cur)):
+        svg, _, _ = scatter_chart(rows_, state[yr], 'hn', 'growth',
+                                  f'Growth and student need, {yr}',
+                                  'Growth tracks student need far less closely than the index does. Same scale in both years.',
+                                  'High-needs share of students', 'Average % of growth target achieved',
+                                  lambda v: f'{v:.0f}%', lambda v: f'{v:.0f}', SRC_G_HN, xd=xd_g, yd=yd_g)
+        files[f'growth-highneeds-{yr}'] = svg
+
     # the 2024-25 six-chart set (two of them are the headline charts above)
     svg, _ = strip_chart(prev, state[PREV]['growth'], 'growth', f'Academic growth, {PREV}',
                          'Average share of each student\u2019s individual growth target achieved.',
@@ -466,11 +484,6 @@ def main():
                               'Total per-pupil spending', 'Average % of growth target achieved',
                               lambda v: f'${v:,.0f}', lambda v: f'{v:.0f}', SRC_G_PPE)
     files['growth-spending-2024-25'] = svg
-    svg, _, _ = scatter_chart(prev, state[PREV], 'hn', 'growth', f'Growth and student need, {PREV}',
-                              'Growth tracks student need far less closely than the combined index does.',
-                              'High-needs share of students', 'Average % of growth target achieved',
-                              lambda v: f'{v:.0f}%', lambda v: f'{v:.0f}', SRC_G_HN)
-    files['growth-highneeds-2024-25'] = svg
 
     for name, svg in files.items():
         with open(os.path.join(out_dir, name + '.svg'), 'w', encoding='utf-8') as f:

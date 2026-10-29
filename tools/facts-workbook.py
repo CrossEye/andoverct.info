@@ -222,8 +222,9 @@ def main():
          '2019-20 or 2020-21 (Connecticut held a federal accountability waiver for the pandemic years).')
     line('2. Next Generation Accountability',
          'The state accountability system: twelve indicators, of which indicator 2 is academic growth. '
-         'RELEASED AROUND NOVEMBER following the school year, so the most recent available is 2024-25 and '
-         '2025-26 growth is not yet published. Years available: 2014-15 to 2024-25, same pandemic gap.')
+         'RELEASED AROUND NOVEMBER following the school year; 2025-26 landed at the end of October 2026. '
+         'Years available: 2014-15 to 2025-26, same pandemic gap. The growth figures here match the separate '
+         'Smarter Balanced Growth report exactly, which is the cross-check that the two agree.')
     line('3. Per Pupil Expenditures by Function (District)',
          'District spending per pupil, split across eleven functions plus a total. Reported by districts through '
          'the Education Financial System; the state notes the data is NOT FULLY AUDITED and audits may change it. '
@@ -393,6 +394,30 @@ def main():
     S_ELA, S_M, S_C, S_E = stats['ela'], stats['math'], stats['level'], stats['eq']
     pg_ela, pg_m = prior_best_gain('ela'), prior_best_gain('math')
     pr_prev, pr_cur = peer_rank(PREV), peer_rank(CUR)
+    def growth_residual(y):
+        g = [r for r in rows.values() if r['year'] == y and not r['state']
+             and r.get('growth') is not None and r.get('hn') is not None]
+        n = len(g)
+        mx = sum(r['hn'] for r in g) / n
+        my = sum(r['growth'] for r in g) / n
+        sxx = sum((r['hn'] - mx) ** 2 for r in g)
+        b = sum((r['hn'] - mx) * (r['growth'] - my) for r in g) / sxx
+        a = my - b * mx
+        res = {r['district']: r['growth'] - (a + b * r['hn']) for r in g}
+        return res, competition_rank(res[ME], list(res.values())), n
+
+    _gr, grank, gn = growth_residual(CUR)
+    gres = _gr[ME]
+    # The index is scored out of a different total in districts with different
+    # grade spans, so an overall rank is soft. Report the like-for-like ones too.
+    _idx = [r for r in rows.values() if r['year'] == CUR and not r['state'] and r['acct'].get('index') is not None]
+    _me = next(r for r in _idx if r['district'] == ME)
+    ir_all = competition_rank(_me['acct']['index'], [r['acct']['index'] for r in _idx]); n_all = len(_idx)
+    _k6 = [r for r in _idx if r['span'] == _me['span']]
+    ir_k6 = competition_rank(_me['acct']['index'], [r['acct']['index'] for r in _k6]); n_k6 = len(_k6)
+    _pts = [r for r in _idx if r['acct'].get('possible') == _me['acct'].get('possible')]
+    ir_pts = competition_rank(_me['acct']['index'], [r['acct']['index'] for r in _pts]); n_pts = len(_pts)
+
     CH = 'Change 24-25 to 25-26'
     AC = 'Andover and Connecticut'
     DY = 'Districts 2024-25 / 2025-26'
@@ -437,8 +462,14 @@ def main():
         ('Year-to-year swing in the combined index (s.d.)',
          f"{swing_sd(0, 200):.2f} under 200 tested vs {swing_sd(600, 10 ** 9):.2f} at 600+", CH),
         ('OTHER MEASURES', '', ''),
-        ('Andover academic growth, 2024-25', round(a_prev['growth'], 1), 'Districts 2024-25'),
-        ('Connecticut academic growth, 2024-25', round(s_prev['growth'], 1), AC),
+        ('Andover academic growth, 2024-25 to 2025-26', f"{a_prev['growth']:.1f} to {a_cur['growth']:.1f}", AC),
+        ('Connecticut academic growth, same years', f"{s_prev['growth']:.1f} to {s_cur['growth']:.1f}", AC),
+        ('Andover growth residual, need-adjusted, 2025-26', f"{gres:+.1f}", 'Growth residual by year'),
+        ('Rank of that residual among town districts', f'{grank} of {gn}', 'Growth residual by year'),
+        ('Andover accountability index, 2025-26', f"{a_cur['acct']['index']:.1f}% of {a_cur['acct']['possible']:.0f} points", AC),
+        ('Connecticut accountability index, 2025-26', f"{s_cur['acct']['index']:.1f}%", AC),
+        ('Andover academic-only index, 2025-26', f"{a_cur['acct']['academic']:.1f}% (state {s_cur['acct']['academic']:.1f}%)", AC),
+        ('Index rank: overall / K-6 only / same points total', f'{ir_all} of {n_all} / {ir_k6} of {n_k6} / {ir_pts} of {n_pts}', AC),
         ('Andover per-pupil spending, 2024-25', round(a_prev['ppe']), 'Spending by function 2024-25'),
         ('Connecticut per-pupil spending, 2024-25', round(s_prev['ppe']), 'Spending by function 2024-25'),
         ('Andover students tested, 2025-26', int(a_cur['n']), 'Districts 2025-26'),
@@ -532,7 +563,23 @@ def main():
           fmts={i: N1 for i in (3, 4, 5, 7, 8, 9, 11, 12, 14, 16, 17)})
 
     # ---------------------------------------------------------------- trends
+    # growth residual per year, so the rank above can be checked
+    for y in years:
+        g = [r for r in rows.values() if r['year'] == y and not r['state']
+             and r.get('growth') is not None and r.get('hn') is not None]
+        if len(g) < 30:
+            continue
+        n = len(g)
+        mx = sum(r['hn'] for r in g) / n
+        my = sum(r['growth'] for r in g) / n
+        sxx = sum((r['hn'] - mx) ** 2 for r in g)
+        b = sum((r['hn'] - mx) * (r['growth'] - my) for r in g) / sxx
+        a = my - b * mx
+        for r in g:
+            r['growthResidual'] = r['growth'] - (a + b * r['hn'])
+
     for key, label, fmt in (('ela', 'ELA by year', N1), ('math', 'Math by year', N1),
+                            ('growthResidual', 'Growth residual by year', N1),
                             ('level', 'Combined index by year', N1), ('growth', 'Growth by year', N1),
                             ('hn', 'High needs by year', PC), ('residual', 'Residual by year', N1)):
         ys = [y for y in years if any(rows.get((d, y), {}).get(key) is not None for d in districts)]

@@ -1,16 +1,16 @@
 ---
 id: andover-numbers-2026
 title: The Largest **One-Year *Gain*** in the State
-subtitle: "Andover Elementary School's 2025-26 results in English and in math each rose by more than any other town district's in Connecticut. The gains are real, they survive the adjustment that usually explains these things away, and they are one year in a school of about a hundred tested students. Here is the whole picture, including the parts that complicate it."
+subtitle: "Andover Elementary School's 2025-26 results in English and in math each rose by more than any other town district's in Connecticut, and on academic growth adjusted for student need no district in the state did better. The gains are real, they survive the adjustment that usually explains these things away, and they are one year in a school of about a hundred tested students. Here is the whole picture, including the parts that complicate it."
 date: 2026-09-18
-description: "Andover posted the largest one-year gain of any Connecticut town district in both English language arts (+6.1) and mathematics (+6.8) on the state's 2025-26 performance index. What the numbers measure, what survives adjustment for student need, and what is still to come in November."
+description: "Andover posted the largest one-year gain of any Connecticut town district in both English language arts (+6.1) and mathematics (+6.8) on the state's 2025-26 performance index, and on academic growth adjusted for student need no district in the state did better. What the numbers measure, what survives adjustment, and the caveats that go with a district of 109 students."
 page_title: "The Largest One-Year Gain in the State — the facts about Andover's 2025-26 results"
 cta:
-  heading: "More to come in November"
+  heading: "The full picture, now complete"
   body: |
-    Connecticut's Next Generation Accountability release, which sets this year's growth
-    alongside attendance, fitness and the rest of its twelve indicators, is published
-    around November. A fuller district-by-district report will follow here when it lands.
+    Connecticut's Next Generation Accountability release landed at the end of October,
+    and this page now carries it. Every figure is in the workbook, with the sheet each
+    one can be checked against.
 colophon: |
   Compiled by Scott Sauyet, Andover, from Connecticut State Department of Education public data. Posted at andoverct.info/the-facts. This page is part of an ongoing series; new editions appear at the same URL as the local conversation evolves. Earlier editions remain accessible at their permanent URLs (use the menu to navigate).
 ---
@@ -42,8 +42,7 @@ Everything below comes from the Connecticut State Department of Education's publ
 EdSight system, released in late August. Every figure is also published here as a
 spreadsheet &mdash; [the full workbook](andover-edsight-data.xlsx) carries the
 district-by-district data behind this page, and names the sheet each figure can be
-checked against. (The 2025-26 growth figures below were published after it was last
-built, and will be added on its next refresh.)
+checked against.
 
 
 What the state publishes
@@ -204,8 +203,8 @@ its demographics predict, and that one more year of data will say much more than
 this one does.
 
 
-The fairer measure, and what is still to come
----------------------------------------------
+The fairer measure
+------------------
 
 *Growth is the measure that best isolates what a school contributes. On it, Andover's
 year is more remarkable than the headline suggests.*
@@ -228,7 +227,7 @@ its accountability system. On that second measure:
 
 <div class="data-section" markdown="1">
 
-- **85.0** — Andover, 2025-26, averaged across English and math
+- **84.9** — Andover, 2025-26, averaged across English and math
 - **60.1** — Connecticut, 2025-26
 - **69.5 and 61.4** — the same two figures a year earlier
 
@@ -237,21 +236,83 @@ edged down.
 
 </div>
 
-This is arguably the more impressive half of Andover's year, and it is the half least
-explained by who its students are.
+![Academic growth for every Connecticut town district, 2024-25.](growth-pair-2024-25.svg)
 
-One caution on timing. These growth figures are published now, with the assessment
-results. What arrives around November is the **Next Generation Accountability**
-release, which packages growth as one indicator among twelve and adds the rest:
-chronic absenteeism, physical fitness, and, for districts that have them, graduation
-and college-and-career measures. That is the release this page will return to.
+![The same chart for 2025-26, on the same scale. Andover sits alone at the right-hand end of the distribution, at 84.9 against the state's 60.1.](growth-pair-2025-26.svg)
+
+This is the more impressive half of Andover's year, and it is the half least explained
+by who its students are.
+
+
+First in the state, once need is accounted for
+----------------------------------------------
+
+*On growth, adjusted for student need, no district in Connecticut did better. That
+sentence needs its caveats, and they follow immediately.*
+
+Earlier on this page, adjusting for high-needs share was the test that cut Andover's
+headline down to size. Applied to growth, it does the opposite.
+
+![Growth against high-needs share for every Connecticut town district, 2025-26. Andover sits far above the fitted line.](growth-highneeds-2025-26.svg)
+
+<div class="data-section" markdown="1">
+
+- **+20.7** — how far above its predicted growth Andover landed
+- **1st of 160** — where that places it among town districts
+
+</div>
+
+Now the caveats, because a number like that invites more weight than it can carry.
+
+**Growth is volatile in a district this small.** About 109 students sit these tests.
+Andover's own record shows how far that can swing: it was 1st in the state on this
+measure in 2017-18, 2nd in 2022-23, and **134th of 163 in 2021-22**. A district that
+can finish near the bottom and at the top within four years is a district whose
+single-year figure should be read with caution, in either direction.
+
+**One year is not a trend**, and this is one year.
+
+**The ranking is of districts, not of schools.** It compares Andover Elementary's
+grades 4 through 8 &mdash; in practice grades 4 through 6 &mdash; with other districts'
+equivalent grades. It says nothing about any high school, including the one Andover
+students go on to.
+
+What survives all of that is still worth saying plainly. Andover has now posted a
+positive need-adjusted growth residual in every year of the record except one, and
+2025-26 is the largest of them.
+
+
+What the rest of the accountability release says
+------------------------------------------------
+
+*Growth is one of twelve indicators. The rest arrived with it at the end of October.*
+
+<div class="data-section" markdown="1">
+
+- **88.0%** — Andover's accountability index, of the 800 points it is scored out of
+- **72.2%** — Connecticut
+- **4.3%** — Andover's chronic absenteeism, against 16.4% statewide
+
+</div>
+
+Stripping out the indicators that are not academic &mdash; attendance, physical fitness
+and the rest &mdash; Andover scores 87.0% against the state's 64.8%.
+
+A word on where that places Andover, because the obvious phrasing would be wrong.
+Andover is third of 165 town districts on the index. But districts are not scored out
+of the same total: inapplicable indicators are dropped, so Andover is marked out of 800
+points and a K-12 district out of 1,450. Comparing those percentages directly is not
+like for like. Among the nineteen K-6 districts Andover is second, and the one above it
+is scored out of just 50 points, which makes its percentage an artifact rather than a
+result. Among the nine districts scored out of the same 800 points, Andover is first.
+That last comparison is the defensible one.
 
 
 The rest of the picture, 2024-25
 --------------------------------
 
-*The six charts below are the full comparison set for the most recent year in
-which every measure exists.*
+*Spending is now the only measure that stops at 2024-25, so the six charts below
+stay on that year.*
 
 Two of them repeat measures from above, at that year, so the set can be read on its
 own. Where a chart shows performance across all three subjects, it uses the combined
@@ -338,12 +399,15 @@ its demographics predict.
 Sources
 -------
 
+- **The version first published.** This page was updated on October 29, 2026, when
+  Connecticut released its accountability data. The
+  [original September 18 version](/the-facts/andover-numbers-2026-v1/) is kept
+  unchanged for the record.
 - **The underlying data.** [Download the workbook](andover-edsight-data.xlsx)
   (Excel). It opens on a documented cover page explaining each EdSight dataset used,
   what the measures mean and how they are defined, who is included, and the cautions
   that go with them. A "key figures" sheet lists every number cited on this page
-  against the sheet it can be verified on, except the 2025-26 growth figures, which the
-  state published after the workbook was last built. The rest is the data itself: every town
+  against the sheet it can be verified on. The rest is the data itself: every town
   district in 2024-25 and 2025-26 by subject, the year-over-year change by subject,
   ten years of the performance index, nine of academic growth, spending by function,
   and the peer group.
