@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Letters to the Editor: The 2026 Race for the 55th House District</title>
+<meta name="description" content="Every letter to the editor the Rivereast News Bulletin printed on the 2026 race for Connecticut's 55th House District (Ellen Paul vs. Steve Weir), {{FIRST_DATE}} through {{LAST_DATE}}: {{N_LETTERS}} letters, filterable by argument, issue, bill, writer and side, each linked to the original page.">
+<style>
+  /* bluegold site palette (mirrors _build/themes/bluegold.css), plus the side
+     colors and the cream "paper" surface this page keeps for itself. Dark gold
+     #8a6d2a is used where small text needs an accent. */
+  :root {
+    --bg: #f4f6f9;
+    --bg-page: #ffffff;
+    --bg-soft: #eef4fb;
+    --rule: #e3e8ef;
+    --ink: #19222e;
+    --ink-soft: #2b3744;
+    --ink-mute: #5b6775;
+    --ink-faint: #8a94a1;
+    --accent: #e8a800;
+    --accent-dark: #8a6d2a;
+    --accent-2: #0f2a4a;
+    --banner-bg: linear-gradient(180deg, #0f2a4a, #143862);
+    --banner-ink: #dde8f5;
+    --link: #245c95;
+    --link-hover: #1c4e80;
+    --focus: #2f6db5;
+    --good: #2e7d52;
+    --good-bg: #e5f3ea;
+    /* sides */
+    --paul: #2f6db5;
+    --paul-bg: #e4eefb;
+    --paul-tint: #f3f7fd;
+    --weir: #b5462f;
+    --weir-bg: #fbe9e3;
+    --weir-tint: #fdf4f2;
+    /* the printed-page imitation on the letter view */
+    --paper-bg: #fdfcf7;
+    --paper-rule: #e7e2d4;
+    --paper-ink: #111111;
+    --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-display: Georgia, "Times New Roman", serif;
+    /* Wider than the 860px report measure: this page is one big table. */
+    --measure: 1200px;
+    --gutter: 30px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+  }
+  a { color: var(--link); }
+  a:hover { color: var(--link-hover); }
+  [hidden] { display: none !important; }
+  button { font: inherit; color: inherit; }
+  :is(button, a, input, select):focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  /* Page banner + breadcrumbs — same chrome classes as _build/base.css. */
+  .page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: 3px solid var(--accent);
+    padding: 14px 0;
+    font-family: var(--font-display);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+  }
+  .page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .page-banner .crumbs a { color: var(--accent); text-decoration: none; }
+  .page-banner .crumbs a:hover { color: #fff; text-decoration: underline; }
+  .page-banner .crumbs .sep { color: var(--banner-ink); opacity: 0.5; margin: 0 0.45em; }
+  .page-banner .crumbs .current { color: #fff; }
+
+  .container {
+    /* width:100% as well as the max-width: body is a column flex container
+       (footer css) and an auto-margined item without a definite width shrinks
+       to fit, which on a phone lets the nowrap paper banner blow it out. */
+    width: 100%;
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0 0 12px;
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 0.35em;
+  }
+  .lede { max-width: 78ch; margin: 0 0 0.8em; }
+  .disclosure {
+    max-width: 78ch; margin: 0 0 1.6em; padding: 0.6em 0.9em;
+    font-size: 13.5px; color: var(--ink-soft);
+    background: var(--bg-soft); border-left: 3px solid var(--accent); border-radius: 0 4px 4px 0;
+  }
+
+  /* ---- Filters ---- */
+  .filters { margin: 0 0 1.2em; }
+  .filters-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6em 1em; margin-bottom: 0.7em; }
+  .search { position: relative; flex: 1 1 18em; max-width: 28em; }
+  .search input {
+    width: 100%; padding: 0.5em 0.75em 0.5em 2.1em;
+    font: inherit; color: var(--ink); background: var(--bg-page);
+    border: 1px solid var(--rule); border-radius: 6px;
+  }
+  .search input:focus { border-color: var(--focus); }
+  .search::before {
+    content: "⌕"; position: absolute; left: 0.7em; top: 50%; transform: translateY(-50%);
+    color: var(--ink-mute); font-size: 1.1em; pointer-events: none;
+  }
+  .seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+  .seg-btn {
+    background: var(--bg-page); border: 0; border-left: 1px solid var(--rule);
+    padding: 0.45em 0.9em; cursor: pointer; font-size: 13.5px; color: var(--ink-soft);
+  }
+  .seg-btn:first-child { border-left: 0; }
+  .seg-btn:hover { background: var(--bg-soft); }
+  .seg-btn.on { background: var(--accent-2); color: #fff; }
+  .seg-btn.on[data-side="Paul"] { background: var(--paul); }
+  .seg-btn.on[data-side="Weir"] { background: var(--weir); }
+  .seg-btn .n { opacity: 0.7; font-size: 0.9em; margin-left: 0.25em; }
+  .clear {
+    background: none; border: 1px solid var(--rule); border-radius: 6px;
+    padding: 0.4em 0.8em; cursor: pointer; font-size: 13px; color: var(--ink-mute);
+  }
+  .clear:hover { color: var(--ink); background: var(--bg-soft); }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.4em; margin-bottom: 0.7em; }
+  .chip {
+    background: var(--bg-page); border: 1px solid var(--rule); border-radius: 999px;
+    padding: 0.2em 0.75em; cursor: pointer; font-size: 13px; color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .chip:hover { background: var(--bg-soft); border-color: var(--ink-faint); }
+  .chip[aria-pressed="true"] { background: var(--accent-2); border-color: var(--accent-2); color: #fff; }
+  .chip .n { color: var(--ink-faint); font-size: 0.9em; margin-left: 0.2em; }
+  .chip[aria-pressed="true"] .n { color: var(--accent); }
+  .selects { display: flex; flex-wrap: wrap; gap: 0.6em 1em; }
+  .selects label { font-size: 13px; color: var(--ink-mute); display: inline-flex; align-items: center; gap: 0.4em; }
+  .selects select {
+    font: inherit; font-size: 13.5px; color: var(--ink); background: var(--bg-page);
+    border: 1px solid var(--rule); border-radius: 6px; padding: 0.35em 0.5em; max-width: 20em;
+  }
+
+  /* ---- Scope heading (edition / page views) and the count line ---- */
+  .scope {
+    font-family: var(--font-display); font-size: 20px; line-height: 1.3; color: var(--ink);
+    margin: 0.4em 0 0.2em; padding-bottom: 0.3em; border-bottom: 1px solid var(--rule);
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3em 1em;
+  }
+  .scope .scope-n { font-family: var(--font-sans); font-size: 13.5px; color: var(--ink-mute); }
+  .scope .scope-pdf { font-family: var(--font-sans); font-size: 13.5px; margin-left: auto; }
+  .count { color: var(--ink-mute); font-size: 13.5px; margin: 0.4em 0 0.6em; }
+  .empty { color: var(--ink-mute); padding: 1.5em 0; }
+  .loading { color: var(--ink-mute); }
+
+  /* ---- Table ---- */
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { padding: 0.5em 0.6em; border-bottom: 1px solid var(--rule); vertical-align: top; text-align: left; }
+  th {
+    background: var(--bg-soft);
+    color: var(--accent-2);
+    font-family: var(--font-display);
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    white-space: nowrap;
+  }
+  th button {
+    background: none; border: 0; padding: 0; cursor: pointer;
+    font: inherit; color: inherit;
+  }
+  th button::after { content: "↕"; opacity: 0.35; margin-left: 0.35em; font-size: 0.85em; }
+  th.on button::after { opacity: 1; color: var(--accent-dark); }
+  th.on[data-dir="asc"] button::after { content: "↑"; }
+  th.on[data-dir="desc"] button::after { content: "↓"; }
+  td.c-date, td.c-page { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  td.c-date a, td.c-page a { color: var(--ink-mute); text-decoration: none; }
+  td.c-date a:hover, td.c-page a:hover { color: var(--link); text-decoration: underline; }
+  td.c-page { text-align: right; }
+  th.c-page { text-align: right; }
+  td.c-title a { font-weight: 600; text-decoration: none; }
+  td.c-title a:hover { text-decoration: underline; }
+  td.c-writer { min-width: 11em; }
+  td.c-writer .town { display: block; font-size: 12px; color: var(--ink-mute); }
+  td.c-tags { max-width: 26em; }
+  table.hide-date .c-date, table.hide-page .c-page { display: none; }
+  /* Row tint by side, if wanted — the rows already carry .paul / .weir:
+     tr.letter.paul { background: var(--paul-tint); }
+     tr.letter.weir { background: var(--weir-tint); }                      */
+
+  /* ---- Pills ---- */
+  .pill {
+    display: inline-block; font-size: 11.5px; line-height: 1.4;
+    padding: 1px 8px; margin: 1px 4px 1px 0; border-radius: 999px;
+    background: var(--bg-soft); color: var(--accent-2); border: 1px solid var(--rule);
+    text-decoration: none; white-space: nowrap;
+  }
+  .pill:hover { border-color: var(--accent-2); color: var(--accent-2); }
+  .pill.issue { background: var(--bg-page); border-style: dashed; color: var(--ink-soft); }
+  .pill.bill { background: var(--bg-page); color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .side {
+    display: inline-block; font-size: 11.5px; font-weight: 600; line-height: 1.4;
+    padding: 1px 8px; border-radius: 4px; text-decoration: none; white-space: nowrap;
+  }
+  .side-paul { background: var(--paul-bg); color: var(--paul); }
+  .side-weir { background: var(--weir-bg); color: var(--weir); }
+  .side:hover { outline: 1px solid currentColor; }
+
+  /* ---- Letter view ---- */
+  .back { font-size: 13.5px; margin: 0 0 1em; }
+  .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6em; margin: 0 0 1em; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.4em; cursor: pointer;
+    font-size: 13px; font-weight: 600; padding: 0.5em 0.85em; border-radius: 6px;
+    border: 1px solid var(--rule); background: var(--bg-page); color: var(--link); text-decoration: none;
+  }
+  .btn:hover { background: var(--bg-soft); }
+  .btn-primary { background: var(--accent-2); color: #fff; border-color: var(--accent-2); }
+  .btn-primary:hover { background: var(--link-hover); color: #fff; }
+  .btn.is-copied { background: var(--good-bg); color: var(--good); border-color: var(--good); }
+  .meta { font-size: 13.5px; color: var(--ink-mute); margin: 0 0 0.5em; }
+  .meta .side { margin-right: 0.4em; vertical-align: 1px; }
+  .pills { margin: 0 0 1.2em; line-height: 1.9; }
+  .pills .label { font-size: 12px; color: var(--ink-faint); margin-right: 0.3em; }
+  .paper {
+    background: var(--paper-bg);
+    color: var(--paper-ink);
+    font-family: var(--font-display);
+    border: 1px solid var(--paper-rule);
+    border-radius: 4px;
+    box-shadow: 0 6px 22px rgba(15, 42, 74, 0.12);
+    padding: clamp(1.1rem, 3.5vw, 2.6rem);
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .paper-banner {
+    border-top: 2px solid var(--paper-ink); border-bottom: 2px solid var(--paper-ink);
+    padding: 0.3rem 0; margin-bottom: 1.4rem;
+    text-align: center; font-weight: 700; font-style: italic;
+    font-size: clamp(0.78rem, 2.2vw, 1rem); letter-spacing: 0.01em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .paper-headline {
+    text-align: center; font-weight: 700;
+    font-size: clamp(1.25rem, 3.6vw, 1.7rem);
+    margin: 0 0 1rem; line-height: 1.2;
+  }
+  .paper-body { font-size: 1.02rem; line-height: 1.5; }
+  @media (min-width: 620px) { .paper-body { column-count: 2; column-gap: 2rem; } }
+  .paper-salutation { font-weight: 700; margin: 0 0 0.6rem; }
+  .paper-p { margin: 0; text-align: justify; text-indent: 1.4em; hyphens: auto; }
+  .paper-p.first { text-indent: 0; }
+  .paper-tail { break-inside: avoid; margin-top: 1rem; }
+  .paper-closing, .paper-signer { margin: 0; text-align: right; font-weight: 700; }
+  .paper-note { font-style: italic; font-size: 0.92rem; margin: 0.5rem 0 0; text-align: left; }
+  .refs { max-width: 820px; margin: 1.6em auto 0; font-size: 14px; }
+  .refs h3 { font-family: var(--font-display); font-size: 15px; margin: 0 0 0.3em; color: var(--accent-2); }
+  .refs ul { margin: 0; padding-left: 1.2em; }
+  .refs li { margin: 0.2em 0; }
+  .refs .ref-meta { color: var(--ink-mute); font-size: 13px; }
+  .pn { max-width: 820px; margin: 1.6em auto 0; display: flex; justify-content: space-between; gap: 1em; font-size: 13.5px; }
+  .pn a { text-decoration: none; }
+  .pn a:hover { text-decoration: underline; }
+  .pn .pn-next { text-align: right; margin-left: auto; }
+  .pn .pn-meta { display: block; color: var(--ink-mute); font-size: 12px; }
+
+  /* ---- Narrow screens: the table becomes a stack of cards ---- */
+  @media (max-width: 720px) {
+    :root { --gutter: 16px; }
+    .container { padding-top: 24px; }
+    table, thead, tbody, tr, td { display: block; }
+    thead { display: none; }
+    tr.letter {
+      border: 1px solid var(--rule); border-radius: 6px;
+      padding: 0.6em 0.8em; margin: 0.6em 0; background: var(--bg-page);
+    }
+    td { border: 0; padding: 0.1em 0; }
+    td.c-date, td.c-page { display: inline-block; font-size: 12.5px; margin-right: 0.5em; }
+    td.c-page::before { content: "p."; color: var(--ink-mute); }
+    td.c-page { text-align: left; }
+    td.c-side { display: inline-block; float: right; margin-top: -1.9em; }
+    td.c-writer .town { display: inline; }
+    td.c-writer .town::before { content: " · "; }
+    td.c-tags { max-width: none; margin-top: 0.3em; }
+    table.hide-date .c-date, table.hide-page .c-page { display: none; }
+    .scope .scope-pdf { margin-left: 0; }
+  }
+
+  /* @footer-css:start — generated from _build/footer.css; do not edit here, run: npm run sync:footer-css */
+.page-note {
+  /* Declared here, not inherited: this block is dropped into arbitrary
+     stylesheets and not all of them carry a global border-box reset (404.html
+     does not), and without it the 512px cap applies to the content box and the
+     wrap widens by the padding. */
+  box-sizing: border-box;
+  /* max-width + horizontal padding are px (not rem/ch) so a page's root
+     font-size can't rescale the wrap — the line breaks are identical everywhere. */
+  max-width: 512px;
+  margin: 3rem auto 2.5rem;
+  padding: 1.75rem 20px 0;
+  border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  font-style: italic;
+  text-align: center;
+  color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+}
+/* a[href] rather than a bare `a`: see the note on the bar's link rule below. */
+.page-note a[href] { color: inherit; }
+
+.site-footer {
+  background: var(--banner-bg, linear-gradient(180deg, #0f2a4a, #143862));
+  border-top: var(--banner-border, 3px solid #e8a800);
+  color: var(--banner-ink, #dde8f5);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.site-footer-inner {
+  /* Declared here, not inherited: this block is dropped into arbitrary
+     stylesheets and not all of them carry a global border-box reset (404.html
+     does not), and without it the 512px cap applies to the content box and the
+     wrap widens by the padding. */
+  box-sizing: border-box;
+  max-width: 512px;
+  margin: 0 auto;
+  /* Horizontal padding is a LITERAL, like the wrap width above: with
+     box-sizing:border-box the text column is 512px minus this padding, so a
+     per-surface var here (--gutter is 30px on reports, 24px via style.css,
+     20px elsewhere) silently re-wraps the footer differently on every
+     surface. That is the drift this whole file exists to prevent. */
+  padding: 1.15rem 20px;
+  text-align: center;
+}
+.site-footer strong { color: var(--crumb-current, #ffffff); font-weight: 600; }
+/* Two classes deep on purpose. A host stylesheet's own link rule reaches (0,1,2)
+   easily -- style.css carries `body.bluegold a`, which the video transcript
+   pages opt into -- and that outranks a flat `.site-footer a` (0,1,1) whatever
+   the source order, repainting the footer's email link in the page's link
+   colour instead of the banner gold. Routing through the inner wrapper puts
+   these at (0,2,1), above any `body.<class> a`. */
+.site-footer .site-footer-inner a {
+  color: var(--crumb-link, #e8a800);
+  border-bottom: 1px solid transparent;
+  text-decoration: none;
+}
+.site-footer .site-footer-inner a:hover {
+  color: var(--crumb-link-hover, #ffffff);
+  border-bottom-color: currentColor;
+}
+
+/* Sticking: body becomes a column flex container and the bar takes
+   margin-top:auto, which absorbs only space that is genuinely free. So the bar
+   sits at the viewport bottom on a page shorter than the viewport, and simply
+   follows the content on a longer one — it never reserves scrolling space.
+   Screen only; print keeps plain block flow. */
+@media screen {
+  body {
+    min-height: 100vh;
+    min-height: 100svh;   /* excludes mobile browser chrome where supported */
+    display: flex;
+    flex-direction: column;
+  }
+  .site-footer { margin-top: auto; }
+}
+
+@media print {
+  /* On paper the split is undone: no full-bleed colour, and the note and the
+     identity close back up into the single quiet block the PDFs had before. */
+  .site-footer {
+    background: none;
+    border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+    color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+  }
+  /* The note immediately above already drew that rule — a second one here
+     would stack two hairlines a few points apart. */
+  .page-note + .site-footer { border-top: none; }
+  .site-footer-inner { max-width: 512px; padding: 0; }
+  .page-note { margin-bottom: 0.6rem; }
+  .site-footer strong { color: var(--ink-soft, inherit); }
+  .site-footer .site-footer-inner a { color: inherit; }
+}
+/* @footer-css:end */
+</style>
+</head>
+<body>
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs" id="crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/reports/">Reports</a><span class="sep">›</span><a href="/reports/55th/">55th District</a><span class="sep">›</span><span class="current">Letters</span>
+  </nav>
+</div>
+<div class="container">
+  <section id="index">
+    <h1>Letters to the Editor: The 2026 Race for the 55th</h1>
+    <p class="lede">
+      Every letter to the editor the <em>Rivereast News Bulletin</em> printed about the 2026
+      contest for Connecticut&rsquo;s 55th House District, between Democrat Ellen Paul and
+      Republican State Rep. Steve Weir, from {{FIRST_DATE}} through {{LAST_DATE}}:
+      {{N_LETTERS}} letters in {{N_EDITIONS}} weekly editions, {{N_PAUL}} on the Paul side and
+      {{N_WEIR}} on the Weir side. A letter&rsquo;s side is whom it helps: Paul means it supports
+      Ellen Paul or criticizes Steve Weir, and Weir the reverse. Each letter appears as the paper
+      printed it and links to the original page in the paper&rsquo;s online archive. The tags say
+      what a letter argues, not whether it is right; filter by them, by the issues a letter touches,
+      by the bills it names, or by writer.
+    </p>
+    <p class="disclosure">
+      <strong>About the compiler.</strong> I am Scott Sauyet. I co-chair the Andover Democratic
+      Town Committee, I support Ellen Paul, and I wrote {{N_SCOTT}} of these letters. The library
+      includes every letter on either side, reproduced as printed, without correction or reply.
+      Where letters disagree with each other about a figure, both stand as written.
+    </p>
+
+    <div class="filters">
+      <div class="filters-row">
+        <div class="search"><input type="search" id="q" placeholder="Search headlines, writers, text&hellip;" autocomplete="off" spellcheck="false" aria-label="Search letters"></div>
+        <div class="seg" role="group" aria-label="Side">
+          <button type="button" class="seg-btn on" data-side="">All</button>
+          <button type="button" class="seg-btn" data-side="Paul" title="Supports Paul and/or criticizes Weir">Paul <span class="n">{{N_PAUL}}</span></button>
+          <button type="button" class="seg-btn" data-side="Weir" title="Supports Weir and/or criticizes Paul">Weir <span class="n">{{N_WEIR}}</span></button>
+        </div>
+        <button type="button" class="clear" id="clear" hidden>Clear filters</button>
+      </div>
+      <div class="chips" role="group" aria-label="Arguments">
+          {{CHIPS}}
+      </div>
+      <div class="selects">
+        <label>Issue
+          <select id="f-issue" aria-label="Issue">
+            <option value="">Any</option>
+            {{ISSUE_OPTIONS}}
+          </select>
+        </label>
+        <label>Writer
+          <select id="f-writer" aria-label="Writer">
+            <option value="">Anyone</option>
+            {{WRITER_OPTIONS}}
+          </select>
+        </label>
+        <label>Bill
+          <select id="f-bill" aria-label="Bill">
+            <option value="">Any</option>
+            {{BILL_OPTIONS}}
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <div id="scope"></div>
+    <p class="count" id="count">{{N_LETTERS}} letters</p>
+    <table id="letters">
+      <thead>
+        <tr>
+          <th class="c-date on" data-sort="date" data-dir="desc" aria-sort="descending"><button type="button">Date</button></th>
+          <th class="c-page" data-sort="page"><button type="button">Page</button></th>
+          <th class="c-title" data-sort="title"><button type="button">Title</button></th>
+          <th class="c-writer" data-sort="writer"><button type="button">Writer</button></th>
+          <th class="c-tags">Tags</th>
+          <th class="c-side" data-sort="side"><button type="button">Side</button></th>
+        </tr>
+      </thead>
+      <tbody>{{ROWS}}
+      </tbody>
+    </table>
+    <p class="empty" id="empty" hidden>No letters match these filters.</p>
+  </section>
+  <section id="letter" hidden></section>
+</div>
+{{FOOTER}}
+<script id="page-meta" type="application/json">{{PAGE_META}}</script>
+<script>
+(() => {
+  const META = JSON.parse(document.getElementById("page-meta").textContent)
+  const $ = (sel, root = document) => root.querySelector(sel)
+  const $$ = (sel, root = document) => [...root.querySelectorAll(sel)]
+  const esc = (s) => String(s ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;")
+
+  const index = $("#index")
+  const letterView = $("#letter")
+  const table = $("#letters")
+  const tbody = $("tbody", table)
+  const rows = $$("tr.letter", tbody)
+  const total = rows.length
+  const crumbsEl = $("#crumbs")
+  const BASE_TITLE = document.title
+
+  // ---- breadcrumbs -------------------------------------------------------
+  const SEP = '<span class="sep">›</span>'
+  const BASE_TRAIL = [
+    { label: "Home", href: "/" },
+    { label: "Reports", href: "/reports/" },
+    { label: "55th District", href: "/reports/55th/" },
+  ]
+  const crumbsHtml = (trail) => trail
+    .map((c) => (c.href
+      ? `<a href="${esc(c.href)}">${esc(c.label)}</a>`
+      : `<span class="current">${esc(c.label)}</span>`))
+    .join(SEP)
+  const setCrumbs = (tail) => { crumbsEl.innerHTML = crumbsHtml([...BASE_TRAIL, ...tail]) }
+
+  // ---- the data file, fetched in the background --------------------------
+  // The table is already in the page; letters.json adds the letter bodies (for
+  // the letter view and full-text search) and the reply links.
+  let letters = null
+  let byId = null
+  let byPath = null
+  let loadError = null
+  const bodyText = new Map()
+  fetch("letters.json")
+    .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
+    .then((d) => {
+      letters = d.letters
+      byId = new Map(letters.map((l) => [l.id, l]))
+      byPath = new Map(letters.map((l) => [l.path, l]))
+      letters.forEach((l) => bodyText.set(l.path, l.paragraphs.join(" ").toLowerCase()))
+      render()
+    })
+    .catch((err) => { loadError = err; render() })
+
+  // ---- state <-> hash ------------------------------------------------------
+  // #/<edition>/p<N>/<slug>?side=Paul&tag=Libraries&tag=Results&issue=…&bill=…&writer=…&sort=…&dir=…
+  // Filters live in the hash so a filtered view can be shared; search text does not.
+  const DEFAULT_DIR = { date: "desc", page: "asc", title: "asc", writer: "asc", side: "asc" }
+  const decode = (s) => { try { return decodeURIComponent(s) } catch { return s } }
+  const parseHash = () => {
+    const h = location.hash.replace(/^#\/?/, "")
+    const qAt = h.indexOf("?")
+    const pathPart = qAt < 0 ? h : h.slice(0, qAt)
+    const params = new URLSearchParams(qAt < 0 ? "" : h.slice(qAt + 1))
+    const [ed, pseg, slug] = pathPart.split("/").filter(Boolean).map(decode)
+    const edition = META.editions[ed] ? ed : null
+    const page = edition && /^p\d+$/.test(pseg || "") ? pseg.slice(1) : null
+    const sort = Object.hasOwn(DEFAULT_DIR, params.get("sort") || "") ? params.get("sort") : "date"
+    return {
+      edition,
+      page,
+      slug: page && slug ? slug : null,
+      side: ["Paul", "Weir"].includes(params.get("side")) ? params.get("side") : null,
+      tags: params.getAll("tag").filter((t) => Object.hasOwn(META.tags, t)),
+      issue: params.get("issue") || null,
+      bill: params.get("bill") || null,
+      writer: params.get("writer") || null,
+      sort,
+      dir: ["asc", "desc"].includes(params.get("dir")) ? params.get("dir") : DEFAULT_DIR[sort],
+    }
+  }
+  const buildHash = (s) => {
+    const path = [s.edition, s.page && `p${s.page}`, s.slug].filter(Boolean).join("/")
+    const p = new URLSearchParams()
+    if (s.side) p.set("side", s.side)
+    s.tags.forEach((t) => p.append("tag", t))
+    if (s.issue) p.set("issue", s.issue)
+    if (s.bill) p.set("bill", s.bill)
+    if (s.writer) p.set("writer", s.writer)
+    if (s.sort !== "date") p.set("sort", s.sort)
+    if (s.dir !== DEFAULT_DIR[s.sort]) p.set("dir", s.dir)
+    const qs = p.toString()
+    return `#/${path}${qs ? `?${qs}` : ""}`
+  }
+  let state = parseHash()
+  let q = ""
+  const hasFilters = (s) => Boolean(s.side || s.tags.length || s.issue || s.bill || s.writer)
+  // Filter and sort changes replace the current history entry: Back should
+  // leave the page, not undo the filters one by one.
+  const setState = (patch) => {
+    state = { ...state, ...patch }
+    history.replaceState(null, "", buildHash(state))
+    render()
+  }
+
+  // ---- filtering and sorting ---------------------------------------------
+  const listHas = (r, key, v) => r.dataset[key].split("|").includes(v)
+  const terms = () => q.toLowerCase().split(/\s+/).filter(Boolean)
+  const searchHit = (r, ts) => {
+    const hay = `${r.dataset.hay} ${bodyText.get(r.dataset.path) || ""}`
+    return ts.every((t) => hay.includes(t))
+  }
+  const matches = (r, ts) => {
+    const d = r.dataset
+    return (!state.edition || d.edition === state.edition)
+      && (!state.page || d.page === state.page)
+      && (!state.side || d.side === state.side)
+      && (!state.tags.length || state.tags.some((t) => listHas(r, "tags", t)))
+      && (!state.issue || listHas(r, "issues", state.issue))
+      && (!state.bill || listHas(r, "bills", state.bill))
+      && (!state.writer || d.writer === state.writer)
+      && (!ts.length || searchHit(r, ts))
+  }
+  const cmp = (a, b) => (a < b ? -1 : a > b ? 1 : 0)
+  const sign = (dir) => (dir === "desc" ? -1 : 1)
+  // Within an edition the paper's own order (page, then position) always holds.
+  const dateOrder = (dir) => (a, b) =>
+    sign(dir) * cmp(a.dataset.edition, b.dataset.edition)
+    || (+a.dataset.page - +b.dataset.page)
+    || (+a.dataset.n - +b.dataset.n)
+  const ORDER = {
+    date: dateOrder,
+    page: (dir) => (a, b) => sign(dir) * (+a.dataset.page - +b.dataset.page) || dateOrder("desc")(a, b),
+    title: (dir) => (a, b) => sign(dir) * cmp(a.dataset.headline, b.dataset.headline) || dateOrder("desc")(a, b),
+    writer: (dir) => (a, b) =>
+      sign(dir) * (cmp(a.dataset.sort, b.dataset.sort) || cmp(a.dataset.writer, b.dataset.writer))
+      || dateOrder("desc")(a, b),
+    side: (dir) => (a, b) => sign(dir) * cmp(a.dataset.side, b.dataset.side) || dateOrder("desc")(a, b),
+  }
+
+  // ---- index view ----------------------------------------------------------
+  const scopeHtml = () => {
+    if (!state.edition) return ""
+    const ed = META.editions[state.edition]
+    const pdf = ed.archive ? `${ed.archive}${state.page ? `#page=${state.page}` : ""}` : null
+    const label = state.page ? `${ed.dateLong}, page ${state.page}` : ed.dateLong
+    return `<h2 class="scope">${esc(label)}`
+      + (state.page ? "" : `<span class="scope-n">${ed.n} letter${ed.n === 1 ? "" : "s"}</span>`)
+      + (pdf ? `<a class="scope-pdf" href="${esc(pdf)}" target="_blank" rel="noopener">${state.page ? "This page" : "Full issue"} (PDF) ↗</a>` : "")
+      + "</h2>"
+  }
+  const reflectControls = () => {
+    $$(".chip").forEach((c) => c.setAttribute("aria-pressed", String(state.tags.includes(c.dataset.tag))))
+    $$(".seg-btn").forEach((b) => b.classList.toggle("on", (state.side || "") === b.dataset.side))
+    const setSelect = (id, v) => {
+      const el = $(id)
+      el.value = v || ""
+      if (el.value !== (v || "")) el.value = ""
+    }
+    setSelect("#f-issue", state.issue)
+    setSelect("#f-writer", state.writer)
+    setSelect("#f-bill", state.bill)
+    $("#clear").hidden = !(hasFilters(state) || q)
+    $$("th[data-sort]").forEach((th) => {
+      const on = th.dataset.sort === state.sort
+      th.classList.toggle("on", on)
+      if (on) {
+        th.dataset.dir = state.dir
+        th.setAttribute("aria-sort", state.dir === "desc" ? "descending" : "ascending")
+      } else {
+        delete th.dataset.dir
+        th.removeAttribute("aria-sort")
+      }
+    })
+  }
+  const renderIndex = () => {
+    letterView.hidden = true
+    index.hidden = false
+    table.classList.toggle("hide-date", Boolean(state.edition))
+    table.classList.toggle("hide-page", Boolean(state.page))
+    const ts = terms()
+    const order = ORDER[state.sort](state.dir)
+    const sorted = [...rows].sort(order)
+    sorted.forEach((r) => {
+      r.hidden = !matches(r, ts)
+      tbody.appendChild(r)
+    })
+    const shown = sorted.filter((r) => !r.hidden).length
+    const filtered = hasFilters(state) || ts.length || state.edition
+    $("#count").textContent = filtered
+      ? `${shown} of ${total} letters${ts.length && !letters && !loadError ? " (full text still loading)" : ""}`
+      : `${total} letters`
+    $("#empty").hidden = shown > 0
+    table.hidden = shown === 0
+    $("#scope").innerHTML = scopeHtml()
+    reflectControls()
+    const trail = state.edition
+      ? [{ label: "Letters", href: "#/" }, state.page
+        ? [{ label: state.edition, href: `#/${state.edition}` }, { label: `p${state.page}` }]
+        : [{ label: state.edition }]].flat()
+      : [{ label: "Letters" }]
+    setCrumbs(trail)
+    document.title = state.edition
+      ? `${META.editions[state.edition].dateLong}${state.page ? `, page ${state.page}` : ""} · ${BASE_TITLE}`
+      : BASE_TITLE
+  }
+
+  // ---- letter view ---------------------------------------------------------
+  const sideHtml = (side) =>
+    `<a class="side side-${side.toLowerCase()}" href="#/?side=${side}">${side}</a>`
+  const pillsHtml = (label, cls, key, xs) => (xs.length
+    ? `<span class="label">${label}</span>` + xs.map((x) =>
+      `<a class="pill ${cls}" href="#/?${key}=${encodeURIComponent(x)}" title="${esc(META.tags[x] || "")}">${esc(x)}</a>`).join("") + " "
+    : "")
+  const refHtml = (x) =>
+    `<li><a href="#/${esc(x.path)}">${esc(x.headline)}</a> <span class="ref-meta">${esc(x.signer)}, ${esc(x.dateLong)}</span></li>`
+  const refsHtml = (heading, xs) => (xs.length
+    ? `<section class="refs"><h3>${heading}</h3><ul>${xs.map(refHtml).join("")}</ul></section>`
+    : "")
+  const pnLink = (x, cls, arrow) => (x
+    ? `<a class="${cls}" href="#/${esc(x.path)}">${arrow === "prev" ? "← " : ""}${esc(x.headline)}${arrow === "next" ? " →" : ""}<span class="pn-meta">${esc(x.signer)} · p. ${x.page}</span></a>`
+    : "<span></span>")
+  const paperHtml = (l) => {
+    const banner = Array(7).fill("Reader Forum").join("&ensp;&bull;&ensp;")
+    const paras = l.paragraphs.map((p, i) => `<p class="paper-p${i === 0 ? " first" : ""}">${esc(p)}</p>`).join("")
+    const tail = [
+      l.closing ? `<p class="paper-closing">${esc(l.closing)}</p>` : "",
+      `<p class="paper-signer">${esc(l.signer)}${l.signerTown ? ` &ndash; ${esc(l.signerTown)}` : ""}</p>`,
+      l.note ? `<p class="paper-note">Note: ${esc(l.note)}</p>` : "",
+    ].join("")
+    return `<article class="paper">
+      <div class="paper-banner">${banner}</div>
+      <h2 class="paper-headline">${esc(l.headline)}</h2>
+      <div class="paper-body">
+        ${l.salutation ? `<p class="paper-salutation">${esc(l.salutation)}</p>` : ""}
+        ${paras}
+        <div class="paper-tail">${tail}</div>
+      </div>
+    </article>`
+  }
+  const renderLetter = () => {
+    index.hidden = true
+    letterView.hidden = false
+    const path = `${state.edition}/p${state.page}/${state.slug}`
+    const back = `<p class="back"><a href="#/${state.edition}">← ${esc(META.editions[state.edition].dateLong)}</a> · <a href="#/">All letters</a></p>`
+    if (!letters) {
+      letterView.innerHTML = back + (loadError
+        ? `<p class="empty">Could not load the letters (${esc(loadError.message)}). The index above still works; try reloading.</p>`
+        : '<p class="loading">Loading the letter…</p>')
+      setCrumbs([{ label: "Letters", href: "#/" }, { label: state.edition, href: `#/${state.edition}` }, { label: `p${state.page}`, href: `#/${state.edition}/p${state.page}` }, { label: "…" }])
+      return
+    }
+    const l = byPath.get(path)
+    if (!l) {
+      letterView.innerHTML = `${back}<p class="empty">There is no letter at this address.</p>`
+      setCrumbs([{ label: "Letters", href: "#/" }, { label: "Not found" }])
+      document.title = `Not found · ${BASE_TITLE}`
+      return
+    }
+    const inEdition = letters.filter((x) => x.edition === l.edition)
+    const i = inEdition.indexOf(l)
+    const byWriter = letters.filter((x) => x.signer === l.signer).length
+    const pages = [l.page, ...(l.jumpPages || [])].join(", ")
+    const writer = byWriter > 1
+      ? `<a href="#/?writer=${encodeURIComponent(l.signer)}" title="${byWriter} letters by this writer">${esc(l.signer)}</a>`
+      : esc(l.signer)
+    letterView.innerHTML = `
+      ${back}
+      <div class="bar">
+        <a class="btn btn-primary" href="${esc(l.pageUrl)}" target="_blank" rel="noopener">View original page (PDF) ↗</a>
+        <button type="button" class="btn" data-copy="${esc(l.id)}">Copy text</button>
+      </div>
+      <p class="meta">${sideHtml(l.side)} ${writer}${l.signerTown ? `, ${esc(l.signerTown)}` : ""} · ${esc(l.dateLong)} · page${l.jumpPages && l.jumpPages.length ? "s" : ""} ${pages} · <em>Rivereast News Bulletin</em></p>
+      <p class="pills">${pillsHtml("Argues", "", "tag", l.tags)}${pillsHtml("Issues", "issue", "issue", l.issues)}${pillsHtml("Bills", "bill", "bill", l.bills)}</p>
+      ${paperHtml(l)}
+      ${refsHtml("Responds to", l.respondsTo.map((id) => byId.get(id)).filter(Boolean))}
+      ${refsHtml("Answered by", letters.filter((x) => x.respondsTo.includes(l.id)))}
+      <nav class="pn" aria-label="Other letters in this edition">${pnLink(inEdition[i - 1], "pn-prev", "prev")}${pnLink(inEdition[i + 1], "pn-next", "next")}</nav>`
+    setCrumbs([
+      { label: "Letters", href: "#/" },
+      { label: l.edition, href: `#/${l.edition}` },
+      { label: `p${l.page}`, href: `#/${l.edition}/p${l.page}` },
+      { label: l.headline },
+    ])
+    document.title = `${l.headline} · ${BASE_TITLE}`
+  }
+
+  const copyText = (l) => [
+    l.headline,
+    `${l.signer}${l.signerTown ? `, ${l.signerTown}` : ""}`,
+    `Rivereast News Bulletin, ${l.dateLong}, p. ${l.page}`,
+    l.pageUrl,
+  ].join("\n") + "\n\n" + [l.salutation, ...l.paragraphs, l.closing, l.signer].filter(Boolean).join("\n\n")
+
+  // ---- routing ---------------------------------------------------------------
+  const render = () => (state.slug ? renderLetter() : renderIndex())
+  const route = () => {
+    const was = state.slug
+    state = parseHash()
+    render()
+    if (state.slug || was) window.scrollTo(0, 0)
+  }
+  window.addEventListener("hashchange", route)
+
+  // ---- events ----------------------------------------------------------------
+  const toggleTag = (tag) => setState({
+    tags: state.tags.includes(tag) ? state.tags.filter((t) => t !== tag) : [...state.tags, tag],
+  })
+  document.addEventListener("click", (e) => {
+    const chip = e.target.closest(".chip")
+    if (chip) return toggleTag(chip.dataset.tag)
+    const seg = e.target.closest(".seg-btn")
+    if (seg) return setState({ side: seg.dataset.side || null })
+    if (e.target.closest("#clear")) {
+      q = ""
+      $("#q").value = ""
+      return setState({ side: null, tags: [], issue: null, bill: null, writer: null })
+    }
+    const th = e.target.closest("th[data-sort]")
+    if (th) {
+      const key = th.dataset.sort
+      const dir = key === state.sort ? (state.dir === "asc" ? "desc" : "asc") : DEFAULT_DIR[key]
+      return setState({ sort: key, dir })
+    }
+    // A pill inside the table narrows the current view instead of jumping to a
+    // fresh one; the same pill on a letter page is a plain link.
+    const pill = e.target.closest("tbody a.pill[data-tag]")
+    if (pill) { e.preventDefault(); return toggleTag(pill.dataset.tag) }
+    const sideLink = e.target.closest("tbody a.side[data-side]")
+    if (sideLink) { e.preventDefault(); return setState({ side: sideLink.dataset.side }) }
+    const copy = e.target.closest("[data-copy]")
+    if (copy && byId) {
+      const l = byId.get(copy.dataset.copy)
+      navigator.clipboard.writeText(copyText(l)).then(() => {
+        const prev = copy.textContent
+        copy.textContent = "Copied ✓"
+        copy.classList.add("is-copied")
+        setTimeout(() => { copy.textContent = prev; copy.classList.remove("is-copied") }, 1800)
+      }).catch(() => { copy.textContent = "Press Ctrl+C" })
+    }
+  })
+  $("#q").addEventListener("input", (e) => {
+    q = e.target.value
+    if (!state.slug) renderIndex()
+  })
+  const onSelect = (id, key) => $(id).addEventListener("change", (e) => setState({ [key]: e.target.value || null }))
+  onSelect("#f-issue", "issue")
+  onSelect("#f-writer", "writer")
+  onSelect("#f-bill", "bill")
+
+  render()
+})()
+</script>
+</body>
+</html>

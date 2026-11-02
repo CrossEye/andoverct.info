@@ -42,6 +42,7 @@ Run all of these from the repo root.
 | `npm run rebuild:town-charter` | Rebuild the town-charter pages                                 |
 | `npm run rebuild:links`        | Rebuild the link-registry pages from `links/_src/*.yaml`       |
 | `npm run rebuild:private`      | Rebuild the private reports                                    |
+| `npm run rebuild:clippings`    | Rebuild the 55th letters-to-the-editor library from its letters.json |
 | `npm run rebuild:all`          | Reports + the-facts + town-charter + links + private (the fast, local builds) |
 | `npm run rebuild:videos`       | Fetch/render new **YouTube** meeting transcripts               |
 | `npm run rebuild:videos:boe`   | Transcribe missing **BOE (Zoom)** meetings via Deepgram        |
