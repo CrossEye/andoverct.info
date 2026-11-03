@@ -11,6 +11,7 @@ result.
 | Path                                                           | What it is                                                                                 | Built by                                                             |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------- |
 | `index.html`, `style.css`, `idx.php`, `favicon.*`, `.htaccess` | Top-level hub chrome                                                                       | hand-authored                                                        |
+| `site-map.html`                                                | Printable site map — every home-page link with a readable URL and a QR code                | `_build/site-map.mjs` (registries → HTML)                            |
 | `the-facts/`                                                   | Newspaper-style "the facts" editions                                                       | `the-facts/_build/render.js` (Markdown → HTML)                       |
 | `reports/`                                                     | Long-form civic/analytical reports                                                         | `_build/report.mjs` (Markdown → HTML + PDF)                          |
 | `opinion/`                                                     | Opinion pieces — argued and signed, facts still sourced ([registry](opinion/opinion.json)) | `_build/report.mjs` with `kind: opinion` in the front matter         |
@@ -41,6 +42,7 @@ Run all of these from the repo root.
 | `npm run rebuild:the-facts`    | Rebuild every "the facts" edition                              |
 | `npm run rebuild:town-charter` | Rebuild the town-charter pages                                 |
 | `npm run rebuild:links`        | Rebuild the link-registry pages from `links/_src/*.yaml`       |
+| `npm run rebuild:site-map`     | Rebuild the printable site map (`/site-map.html`) with QR codes |
 | `npm run rebuild:private`      | Rebuild the private reports                                    |
 | `npm run rebuild:clippings`    | Rebuild the 55th letters-to-the-editor library from its letters.json |
 | `npm run rebuild:all`          | Reports + the-facts + town-charter + links + private (the fast, local builds) |

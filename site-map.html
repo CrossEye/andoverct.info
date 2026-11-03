@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>Site Map — andoverct.info</title>
+    <meta name="description" content="A printable map of andoverct.info: every section, report, edition, guide and resource linked from the home page, with readable URLs and QR codes.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <style>
+    /* ——— Site map: shared tokens, its own layout ——— */
+    body.site-map .page { max-width: 64rem; padding-top: 2.5rem; }
+
+    .sm-mast { display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: start; }
+    .sm-mast .qr { width: 7.5rem; }
+    .sm-mast .title { margin-bottom: 0.25rem; }
+    .sm-mast .url { font-size: 1rem; }
+    .sm-mast .lede { margin-top: 0.75rem; }
+    .print-hint {
+      font-family: var(--sans); font-size: 0.85rem; color: var(--ink-mute);
+      margin: 1.25rem 0 0; padding: 0.6rem 0.9rem;
+      border: 1px solid var(--rule); border-radius: 8px; background: var(--bg-card);
+    }
+    .print-btn {
+      font: inherit; font-weight: 600; color: var(--ink); background: var(--accent-bg);
+      border: 1px solid var(--rule); border-radius: 999px; padding: 0.15rem 0.8rem;
+      margin: 0 0.35rem; cursor: pointer;
+    }
+    .print-btn:hover { border-color: var(--accent); }
+
+    .qr { flex: 0 0 auto; background: var(--bg-card); }
+    .qr svg { display: block; width: 100%; height: auto; }
+
+    /* Readable URLs — sans, slightly spaced, broken only at slashes */
+    .url, .url-inline {
+      font-family: var(--sans); font-size: 0.8rem; letter-spacing: 0.01em;
+      color: var(--ink-mute); overflow-wrap: break-word;
+    }
+    .url { display: block; border-bottom: none; margin: 0.15rem 0 0; }
+    .url:hover { color: var(--accent); }
+    .url-inline { font-weight: 400; margin-left: 0.6em; }
+
+    .sm-section { margin: 3rem 0 0; break-inside: auto; }
+    .sm-head {
+      display: flex; gap: 1.25rem; align-items: flex-start;
+      padding-bottom: 1rem; border-bottom: 2px solid var(--accent);
+      break-inside: avoid; break-after: avoid;
+    }
+    .sm-head .qr { width: 6rem; }
+    .sm-head .section-label { margin: 0 0 0.25rem; }
+    .sm-head h2 {
+      font-family: var(--serif); font-weight: 600; font-size: 1.6rem; line-height: 1.2;
+      margin: 0; color: var(--ink);
+    }
+    .sm-head .blurb { color: var(--ink-soft); font-size: 0.95rem; margin: 0.6rem 0 0; }
+
+    .sm-group { margin-top: 1.5rem; }
+    .sm-group > .group-label {
+      margin: 0 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--rule);
+      break-after: avoid;
+    }
+    .sm-group > .group-label a { color: var(--ink); border-bottom: none; }
+
+    .sm-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr));
+      gap: 0.85rem; margin: 1rem 0 0;
+    }
+    .sm-card {
+      display: flex; gap: 0.9rem; align-items: flex-start;
+      background: var(--bg-card); border: 1px solid var(--rule); border-radius: 12px;
+      padding: 0.9rem 1rem;
+      break-inside: avoid; page-break-inside: avoid;
+    }
+    .sm-card .qr { width: 5.5rem; }
+    .sm-card .body { min-width: 0; }
+    .sm-card .meta {
+      font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.07em;
+      text-transform: uppercase; color: var(--ink-mute); margin: 0 0 0.3rem;
+    }
+    .sm-card .meta .dot { margin: 0 0.4em; opacity: 0.5; }
+    .sm-card .meta .flag { color: var(--accent); font-weight: 600; }
+    .sm-card h3 {
+      font-family: var(--serif); font-weight: 600; font-size: 1.05rem; line-height: 1.28;
+      margin: 0; color: var(--ink);
+    }
+    .sm-card h3 a { color: var(--ink); border-bottom: none; }
+    .sm-card h3 a:hover { color: var(--accent); }
+    .sm-card .sub { font-style: italic; color: var(--ink-soft); font-size: 0.9rem; margin: 0.1rem 0 0; }
+    .sm-card .desc {
+      color: var(--ink-soft); font-size: 0.86rem; line-height: 1.45; margin: 0.45rem 0 0;
+      display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+    }
+
+    .sm-list { margin: 1rem 0 0; }
+    .sm-list .list-label {
+      font-family: var(--sans); font-size: 0.75rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--ink-mute); font-weight: 500;
+      margin: 0 0 0.5rem; break-after: avoid;
+    }
+    .sm-list .rows {
+      list-style: none; margin: 0; padding: 0;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr));
+      gap: 0.5rem 1.25rem;
+    }
+    .sm-row {
+      display: flex; gap: 0.7rem; align-items: flex-start;
+      padding: 0.45rem 0; border-top: 1px solid var(--rule-soft);
+      break-inside: avoid; page-break-inside: avoid;
+    }
+    .sm-row .qr { width: 3.25rem; }
+    .sm-row .body { min-width: 0; }
+    .sm-row .row-title { margin: 0; font-weight: 600; font-size: 0.95rem; line-height: 1.3; }
+    .sm-row .row-title a { color: var(--ink); border-bottom: none; }
+    .sm-row .row-title a:hover { color: var(--accent); }
+    .sm-row .row-title .n { color: var(--ink-mute); font-weight: 400; font-family: var(--sans); font-size: 0.85em; }
+    .sm-row .url { font-size: 0.74rem; margin-top: 0.05rem; }
+    .sm-row .gloss { color: var(--ink-soft); font-size: 0.8rem; line-height: 1.4; margin: 0.2rem 0 0; }
+
+    @media (max-width: 560px) {
+      .sm-mast { grid-template-columns: 1fr; }
+      .sm-mast .qr { width: 6rem; }
+    }
+
+    @media print {
+      @page { size: letter; margin: 0.6in 0.6in 0.7in; }
+      html { font-size: 11pt; }
+      body.site-map { background: none; color: var(--ink); }
+      body.site-map .page { max-width: none; padding: 0; }
+      body.site-map a { color: inherit; border-bottom: none; }
+      .print-hint { display: none; }
+
+      .sm-mast { grid-template-columns: 1fr auto; }
+      .sm-mast .qr { width: 1.3in; }
+      h1.title { font-size: 22pt; }
+      .lede { font-size: 10pt; }
+
+      .sm-section { margin-top: 0.35in; }
+      .sm-head { gap: 0.2in; padding-bottom: 0.12in; border-bottom-width: 1.5pt; }
+      .sm-head .qr { width: 1in; }
+      .sm-head h2 { font-size: 15pt; }
+      .sm-head .blurb { font-size: 9pt; }
+
+      .sm-grid, .sm-list .rows { grid-template-columns: 1fr 1fr; gap: 0.12in 0.18in; }
+      .sm-card { border-radius: 4pt; padding: 0.12in 0.14in; gap: 0.14in; background: none; }
+      .sm-card .qr { width: 0.95in; }
+      .sm-card h3 { font-size: 10.5pt; }
+      .sm-card .desc { font-size: 8pt; line-height: 1.35; -webkit-line-clamp: 4; }
+      .sm-card .meta { font-size: 6.5pt; }
+      .sm-card .sub { font-size: 8.5pt; }
+      .url { font-size: 8pt; color: var(--ink-soft); }
+      .url-inline { font-size: 8pt; }
+
+      .sm-row { padding: 0.06in 0; gap: 0.1in; }
+      .sm-row .qr { width: 0.6in; }
+      .sm-row .row-title { font-size: 9pt; }
+      .sm-row .url { font-size: 7.5pt; }
+      .sm-row .gloss { font-size: 7.5pt; }
+
+      .qr { background: none; }
+      .site-footer { margin-top: 0.3in; font-size: 7.5pt; }
+    }
+    </style>
+  </head>
+
+  <body class="bluegold site-map">
+    <main class="page">
+      <header class="sm-mast">
+        <div class="body">
+          <p class="eyebrow">Town of Andover, Connecticut</p>
+          <h1 class="title">Site Map</h1>
+          <a class="url" href="https://andoverct.info/">andoverct.info</a>
+          <p class="lede">Everything linked from the Resources &amp; Reports home page, in the same order, with a QR code and a readable address for each. Scan a code with a phone camera, or type the address into a browser.</p>
+          <p class="print-hint">Print this page for a handout <button type="button" class="print-btn" onclick="window.print()">Print</button> Cards are kept whole across page breaks.</p>
+        </div>
+        <div class="qr"><svg role="img" aria-label="QR code for andoverct.info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h25v25H0z"/><path stroke="#000000" d="M0 0.5h7m2 0h2m1 0h2m4 0h7M0 1.5h1m5 0h1m6 0h3m2 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h1m6 0h2m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h4m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m3 0h2m2 0h1m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m1 0h1m1 0h1m2 0h2m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h2m2 0h1M0 8.5h1m1 0h5m3 0h1m1 0h4m2 0h5M0 9.5h2m1 0h1m1 0h1m1 0h5m1 0h1m2 0h1m2 0h1m3 0h1M1 10.5h1m1 0h1m2 0h3m2 0h5m1 0h1m1 0h1m1 0h1m1 0h2M1 11.5h2m2 0h1m2 0h4m12 0h1M1 12.5h1m2 0h3m1 0h1m1 0h9m1 0h1m1 0h3M0 13.5h1m1 0h1m4 0h2m7 0h1m2 0h1m1 0h1m1 0h1M0 14.5h1m1 0h2m1 0h2m3 0h12m1 0h2M0 15.5h1m1 0h3m2 0h1m2 0h2m3 0h2m1 0h3m3 0h1M0 16.5h1m2 0h1m1 0h4m1 0h2m1 0h8m1 0h1M8 17.5h1m1 0h1m1 0h2m1 0h2m3 0h2M0 18.5h7m3 0h1m2 0h2m1 0h1m1 0h1m1 0h1m1 0h3M0 19.5h1m5 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m3 0h2m1 0h1M0 20.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m1 0h6m1 0h3M0 21.5h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m1 0h4m1 0h5M0 22.5h1m1 0h3m1 0h1m1 0h7m6 0h2m1 0h1M0 23.5h1m5 0h1m4 0h1m2 0h1m1 0h2m1 0h3m2 0h1M0 24.5h7m1 0h1m1 0h3m4 0h1m1 0h6"/></svg>
+</div>
+      </header>
+
+<section class="sm-section" id="sec-facts">
+<header class="sm-head">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/the-facts" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h29v29H0z"/><path stroke="#000000" d="M0 0.5h7m4 0h5m2 0h1m1 0h1m1 0h7M0 1.5h1m5 0h1m1 0h1m2 0h2m2 0h1m1 0h1m2 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h2m1 0h1m1 0h2m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m5 0h4m3 0h2m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m5 0h3m1 0h1m5 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h1m1 0h2m4 0h3M0 8.5h1m5 0h1m1 0h1m2 0h1m2 0h2m1 0h1m3 0h2m2 0h3M0 9.5h6m4 0h3m1 0h1m2 0h3m1 0h1m1 0h2m1 0h2M3 10.5h1m1 0h3m3 0h1m6 0h1m4 0h1M0 11.5h2m1 0h2m2 0h3m1 0h1m2 0h3m1 0h3m1 0h2m1 0h1M1 12.5h4m1 0h1m1 0h3m2 0h2m1 0h1m3 0h1m1 0h2m4 0h1M0 13.5h1m1 0h1m1 0h2m1 0h1m1 0h1m3 0h2m3 0h3m1 0h3m2 0h2M3 14.5h2m1 0h1m5 0h5m3 0h1m3 0h3M0 15.5h1m2 0h1m4 0h2m1 0h1m1 0h3m4 0h5m1 0h1m1 0h1M0 16.5h2m1 0h2m1 0h2m1 0h2m1 0h1m1 0h1m2 0h3m5 0h2M0 17.5h1m2 0h1m4 0h2m1 0h1m3 0h1m1 0h8m1 0h3M0 18.5h3m1 0h1m1 0h2m2 0h1m1 0h4m1 0h1m1 0h5m1 0h1m2 0h1M0 19.5h1m1 0h3m2 0h3m1 0h1m2 0h2m3 0h2m1 0h2M0 20.5h1m1 0h1m1 0h7m4 0h3m1 0h6m1 0h3M8 21.5h2m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m3 0h2M0 22.5h7m2 0h2m1 0h4m1 0h1m1 0h2m1 0h1m1 0h3M0 23.5h1m5 0h1m3 0h1m2 0h1m2 0h1m1 0h1m1 0h1m3 0h1m2 0h1M0 24.5h1m1 0h3m1 0h1m2 0h3m1 0h1m1 0h1m3 0h7m1 0h2M0 25.5h1m1 0h3m1 0h1m3 0h1m1 0h2m1 0h2m1 0h1m2 0h1m3 0h2m1 0h1M0 26.5h1m1 0h3m1 0h1m3 0h4m1 0h2m1 0h2m1 0h7M0 27.5h1m5 0h1m3 0h4m1 0h2m2 0h1m2 0h5m1 0h1M0 28.5h7m1 0h2m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="section-label">§ I · The Facts</p>
+<h2>Setting the record straight</h2>
+<a class="url" href="https://andoverct.info/the-facts/">andoverct.info/<wbr>the-facts</a>
+<p class="blurb">Issue-by-issue responses to specific mailers, flyers, or public claims about Andover town business — each edition weighs one piece of public communication against the underlying records.</p>
+</div>
+</header>
+<div class="sm-grid">
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/the-facts" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h29v29H0z"/><path stroke="#000000" d="M0 0.5h7m4 0h5m2 0h1m1 0h1m1 0h7M0 1.5h1m5 0h1m1 0h1m2 0h2m2 0h1m1 0h1m2 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h2m1 0h1m1 0h2m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m5 0h4m3 0h2m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m5 0h3m1 0h1m5 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h1m1 0h2m4 0h3M0 8.5h1m5 0h1m1 0h1m2 0h1m2 0h2m1 0h1m3 0h2m2 0h3M0 9.5h6m4 0h3m1 0h1m2 0h3m1 0h1m1 0h2m1 0h2M3 10.5h1m1 0h3m3 0h1m6 0h1m4 0h1M0 11.5h2m1 0h2m2 0h3m1 0h1m2 0h3m1 0h3m1 0h2m1 0h1M1 12.5h4m1 0h1m1 0h3m2 0h2m1 0h1m3 0h1m1 0h2m4 0h1M0 13.5h1m1 0h1m1 0h2m1 0h1m1 0h1m3 0h2m3 0h3m1 0h3m2 0h2M3 14.5h2m1 0h1m5 0h5m3 0h1m3 0h3M0 15.5h1m2 0h1m4 0h2m1 0h1m1 0h3m4 0h5m1 0h1m1 0h1M0 16.5h2m1 0h2m1 0h2m1 0h2m1 0h1m1 0h1m2 0h3m5 0h2M0 17.5h1m2 0h1m4 0h2m1 0h1m3 0h1m1 0h8m1 0h3M0 18.5h3m1 0h1m1 0h2m2 0h1m1 0h4m1 0h1m1 0h5m1 0h1m2 0h1M0 19.5h1m1 0h3m2 0h3m1 0h1m2 0h2m3 0h2m1 0h2M0 20.5h1m1 0h1m1 0h7m4 0h3m1 0h6m1 0h3M8 21.5h2m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m3 0h2M0 22.5h7m2 0h2m1 0h4m1 0h1m1 0h2m1 0h1m1 0h3M0 23.5h1m5 0h1m3 0h1m2 0h1m2 0h1m1 0h1m1 0h1m3 0h1m2 0h1M0 24.5h1m1 0h3m1 0h1m2 0h3m1 0h1m1 0h1m3 0h7m1 0h2M0 25.5h1m1 0h3m1 0h1m3 0h1m1 0h2m1 0h2m1 0h1m2 0h1m3 0h2m1 0h1M0 26.5h1m1 0h3m1 0h1m3 0h4m1 0h2m1 0h2m1 0h7M0 27.5h1m5 0h1m3 0h4m1 0h2m2 0h1m2 0h5m1 0h1M0 28.5h7m1 0h2m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta"><span class="flag">Current edition</span> <span class="dot">·</span> September 18, 2026</p>
+<h3><a href="https://andoverct.info/the-facts/">The Largest One-Year Gain in the State</a></h3>
+<p class="sub">First in the state in English, in math, and in need-adjusted growth</p>
+<a class="url" href="https://andoverct.info/the-facts/">andoverct.info/<wbr>the-facts</a>
+<p class="desc">Andover posted the largest one-year gain of any Connecticut town district in both English language arts (+6.1) and mathematics (+6.8) on the state&#39;s 2025-26 performance index, and on academic growth adjusted for student need no district in the state did better. What the numbers measure, what survives adjustment, and the caveats that go with a district of 109 students.</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/the-facts/editions/weir-voted-2026" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m2 0h2m1 0h2m2 0h1m1 0h3m2 0h1m2 0h7M0 1.5h1m5 0h1m5 0h5m1 0h1m2 0h1m2 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h3m2 0h1m1 0h1m2 0h6m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h5m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m1 0h3m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m4 0h1m1 0h3m3 0h2m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h2m4 0h2m4 0h3M0 8.5h1m1 0h5m2 0h3m1 0h3m1 0h2m3 0h1m3 0h5M2 9.5h1m1 0h1m3 0h1m1 0h3m1 0h1m1 0h1m1 0h6m2 0h2m1 0h2m1 0h1M1 10.5h1m3 0h2m2 0h1m1 0h2m2 0h1m1 0h1m7 0h2m1 0h1m1 0h2M2 11.5h1m4 0h1m1 0h2m1 0h1m1 0h1m1 0h1m2 0h3m1 0h1m1 0h2m1 0h5M0 12.5h3m1 0h3m2 0h2m4 0h1m1 0h3m3 0h3m1 0h3m1 0h2M0 13.5h4m4 0h3m1 0h6m1 0h3m1 0h1m2 0h1m2 0h4M2 14.5h2m1 0h2m2 0h1m1 0h1m5 0h1m2 0h1m4 0h2m2 0h3M0 15.5h1m1 0h2m1 0h1m2 0h1m1 0h3m1 0h1m1 0h1m3 0h2m1 0h1m1 0h6M0 16.5h2m4 0h2m1 0h3m1 0h2m2 0h1m4 0h1m1 0h2m1 0h2m3 0h1M1 17.5h3m1 0h1m1 0h1m2 0h1m3 0h1m1 0h1m2 0h2m2 0h1m2 0h2m1 0h2m1 0h1M6 18.5h1m1 0h3m3 0h4m2 0h3m1 0h5m1 0h1M5 19.5h1m1 0h1m1 0h2m1 0h2m1 0h2m4 0h2m3 0h7M0 20.5h1m1 0h2m1 0h2m2 0h2m1 0h1m5 0h2m2 0h1m2 0h1m1 0h3M0 21.5h4m1 0h1m6 0h1m1 0h2m2 0h6m1 0h2m2 0h2m1 0h1M0 22.5h1m1 0h1m1 0h5m4 0h1m1 0h1m11 0h1m2 0h2M0 23.5h1m2 0h3m2 0h2m1 0h1m1 0h1m1 0h2m1 0h1m1 0h4m1 0h1m3 0h2M0 24.5h1m2 0h1m1 0h2m5 0h4m1 0h1m4 0h7m2 0h1M8 25.5h1m1 0h2m1 0h1m4 0h5m1 0h1m3 0h1m1 0h3M0 26.5h7m3 0h1m2 0h1m1 0h2m1 0h1m3 0h3m1 0h1m1 0h1m1 0h2M0 27.5h1m5 0h1m1 0h1m2 0h1m2 0h3m1 0h4m1 0h2m3 0h3M0 28.5h1m1 0h3m1 0h1m1 0h1m1 0h2m2 0h2m3 0h2m1 0h1m1 0h6m1 0h1M0 29.5h1m1 0h3m1 0h1m1 0h1m7 0h6m3 0h1m2 0h1m2 0h2M0 30.5h1m1 0h3m1 0h1m1 0h2m1 0h4m3 0h1m1 0h4m2 0h2m1 0h2M0 31.5h1m5 0h1m2 0h2m4 0h2m1 0h4m6 0h3M0 32.5h7m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1m1 0h1m4 0h4m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">Edition <span class="dot">·</span> July 16, 2026</p>
+<h3><a href="https://andoverct.info/the-facts/editions/weir-voted-2026/">Present, and Accounted For</a></h3>
+<p class="sub">On Rep. Weir&#39;s &quot;100% Voting Record&quot; post</p>
+<a class="url" href="https://andoverct.info/the-facts/editions/weir-voted-2026/">andoverct.info/<wbr>the-facts/<wbr>editions/<wbr>weir-voted-2026</a>
+<p class="desc">Rep. Steve Weir touts a 100% voting record and says he voted with the majority 77 percent of the time. The full roll-call record shows what those numbers actually measure, and where they place him among his colleagues.</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/the-facts/editions/unsustainable-2026" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m9 0h1m1 0h4m1 0h1m2 0h7M0 1.5h1m5 0h1m5 0h1m1 0h5m5 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h3m4 0h1m2 0h6m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m1 0h3m2 0h1m1 0h1m4 0h1m3 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h2m1 0h1m4 0h8m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h2m1 0h1m1 0h1m3 0h1m2 0h3m1 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h3m1 0h1m1 0h3m4 0h3M0 8.5h1m1 0h5m6 0h3m1 0h2m3 0h2m2 0h5M0 9.5h1m2 0h2m2 0h2m4 0h2m1 0h8m2 0h2m1 0h2m1 0h1M0 10.5h9m4 0h3m5 0h2m2 0h2m1 0h1m1 0h2M2 11.5h3m3 0h3m2 0h1m2 0h1m1 0h6m1 0h2m1 0h5M0 12.5h2m1 0h2m1 0h1m1 0h1m1 0h3m1 0h2m1 0h1m1 0h1m2 0h4m1 0h3m1 0h2M0 13.5h1m3 0h2m2 0h3m2 0h1m1 0h9m2 0h1m2 0h4M1 14.5h2m3 0h2m1 0h2m2 0h1m1 0h1m1 0h1m7 0h2m2 0h3M0 15.5h1m1 0h1m1 0h1m2 0h3m2 0h1m2 0h1m3 0h3m3 0h6M1 16.5h2m2 0h3m2 0h2m2 0h2m1 0h1m1 0h1m2 0h1m1 0h2m1 0h2m3 0h1M0 17.5h2m1 0h3m2 0h2m1 0h4m1 0h1m2 0h3m1 0h1m2 0h2m1 0h2m1 0h1M1 18.5h3m2 0h6m1 0h1m1 0h2m3 0h1m3 0h5m1 0h1M1 19.5h1m3 0h1m1 0h1m1 0h1m5 0h2m4 0h2m3 0h7M0 20.5h3m2 0h3m5 0h2m2 0h3m2 0h1m2 0h1m1 0h3M0 21.5h4m5 0h2m1 0h1m2 0h1m2 0h6m1 0h2m2 0h2m1 0h1M0 22.5h1m1 0h1m1 0h1m1 0h3m1 0h4m1 0h2m3 0h1m6 0h1m2 0h2M0 23.5h1m1 0h1m1 0h2m3 0h1m1 0h2m1 0h1m1 0h1m1 0h1m2 0h3m1 0h1m3 0h4M0 24.5h1m1 0h2m1 0h3m2 0h3m1 0h2m1 0h1m1 0h1m2 0h7m2 0h1M8 25.5h2m3 0h2m3 0h5m1 0h1m3 0h1m1 0h3M0 26.5h7m2 0h4m2 0h2m1 0h1m2 0h4m1 0h1m1 0h1m1 0h2M0 27.5h1m5 0h1m1 0h2m4 0h3m1 0h4m1 0h2m3 0h3M0 28.5h1m1 0h3m1 0h1m1 0h2m2 0h8m2 0h1m1 0h6m1 0h1M0 29.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m4 0h1m1 0h3m3 0h1m2 0h1m2 0h2M0 30.5h1m1 0h3m1 0h1m1 0h2m1 0h2m2 0h2m1 0h1m1 0h4m2 0h2m1 0h2M0 31.5h1m5 0h1m2 0h1m1 0h2m3 0h1m1 0h1m2 0h1m6 0h3M0 32.5h7m1 0h2m1 0h2m1 0h2m1 0h1m6 0h4m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">Edition <span class="dot">·</span> June 13, 2026</p>
+<h3><a href="https://andoverct.info/the-facts/editions/unsustainable-2026/">Is the Budget &quot;Unsustainable&quot;?</a></h3>
+<p class="sub">The town&#39;s own record says the opposite</p>
+<a class="url" href="https://andoverct.info/the-facts/editions/unsustainable-2026/">andoverct.info/<wbr>the-facts/<wbr>editions/<wbr>unsustainable-2026</a>
+<p class="desc">Andover&#39;s First Selectman calls the school budget &quot;unsustainable&quot; and urges a NO vote on June 16. The town&#39;s own numbers say the opposite. Here are the facts.</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/the-facts/editions/who-decides-schools-2026" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h37v37H0z"/><path stroke="#000000" d="M0 0.5h7m2 0h1m2 0h3m1 0h1m1 0h1m1 0h1m3 0h1m3 0h1m1 0h7M0 1.5h1m5 0h1m2 0h1m1 0h1m3 0h1m3 0h1m1 0h1m2 0h2m1 0h2m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h1m4 0h3m4 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h2m1 0h1m2 0h1m1 0h3m3 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h2m2 0h3m2 0h1m1 0h2m1 0h1m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h2m1 0h1m2 0h3m1 0h1m1 0h1m1 0h1m1 0h4m2 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h6m1 0h1m3 0h2m5 0h1M0 8.5h1m1 0h5m7 0h2m2 0h5m1 0h4m2 0h5M1 9.5h2m5 0h3m4 0h2m4 0h1m1 0h1m4 0h1m2 0h1m2 0h2M0 10.5h1m1 0h1m3 0h2m3 0h1m1 0h2m5 0h5m1 0h2m2 0h1m3 0h3M0 11.5h2m2 0h2m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h2m4 0h1m1 0h3m1 0h1m2 0h1M1 12.5h2m1 0h1m1 0h2m2 0h1m6 0h1m7 0h1m2 0h3m1 0h5M0 13.5h3m4 0h3m2 0h1m4 0h3m1 0h1m1 0h1m1 0h1m2 0h1m2 0h1M2 14.5h2m1 0h2m3 0h3m1 0h4m2 0h2m4 0h8m1 0h2M0 15.5h1m1 0h1m1 0h2m1 0h1m1 0h2m1 0h3m2 0h3m1 0h3m3 0h6m3 0h1M3 16.5h1m1 0h5m4 0h3m4 0h1m1 0h5m1 0h2m1 0h1m1 0h1M0 17.5h3m1 0h2m1 0h1m1 0h1m2 0h1m2 0h1m1 0h2m1 0h1m1 0h1m2 0h2m1 0h2m1 0h1m2 0h2M0 18.5h1m1 0h1m3 0h1m2 0h1m2 0h1m1 0h3m1 0h2m1 0h2m1 0h6m1 0h1m3 0h2M2 19.5h2m3 0h2m1 0h4m1 0h1m3 0h4m1 0h1m7 0h1m3 0h1M0 20.5h5m1 0h1m2 0h2m3 0h4m1 0h2m1 0h1m1 0h4m1 0h2m1 0h3M0 21.5h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h3m2 0h1m2 0h2m2 0h2m3 0h1m4 0h1M4 22.5h4m1 0h1m1 0h2m1 0h2m2 0h1m3 0h1m2 0h1m1 0h1m2 0h4m1 0h2M0 23.5h1m1 0h2m1 0h1m2 0h1m1 0h2m1 0h2m1 0h1m3 0h1m2 0h1m2 0h1m1 0h2m1 0h2m2 0h1M2 24.5h3m1 0h2m1 0h1m2 0h2m4 0h1m1 0h6m1 0h1m2 0h1m1 0h1m1 0h3M0 25.5h1m1 0h1m6 0h1m1 0h1m1 0h1m1 0h2m4 0h1m2 0h2m2 0h1m2 0h1M0 26.5h1m1 0h2m1 0h2m3 0h1m2 0h1m6 0h1m1 0h1m4 0h7m1 0h2M0 27.5h1m2 0h2m2 0h4m1 0h1m3 0h1m1 0h1m2 0h1m1 0h1m2 0h1m3 0h1m4 0h2M0 28.5h1m2 0h1m2 0h2m6 0h1m2 0h1m2 0h1m1 0h1m1 0h12M8 29.5h1m2 0h1m1 0h2m1 0h6m1 0h1m4 0h1m3 0h2m1 0h1M0 30.5h7m2 0h3m3 0h3m2 0h2m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3M0 31.5h1m5 0h1m1 0h1m1 0h2m4 0h4m1 0h3m4 0h1m3 0h2m1 0h1M0 32.5h1m1 0h3m1 0h1m1 0h1m1 0h2m4 0h1m4 0h1m3 0h1m1 0h6m1 0h2M0 33.5h1m1 0h3m1 0h1m1 0h4m1 0h1m1 0h1m1 0h2m1 0h7m1 0h3m1 0h1m2 0h1M0 34.5h1m1 0h3m1 0h1m1 0h3m1 0h5m1 0h2m1 0h1m3 0h2m1 0h1m7 0h1M0 35.5h1m5 0h1m3 0h1m1 0h2m1 0h1m3 0h5m4 0h2m2 0h1m3 0h1M0 36.5h7m1 0h1m3 0h2m1 0h1m1 0h1m1 0h1m2 0h1m1 0h3m2 0h2m1 0h5"/></svg>
+</div>
+<div class="body">
+<p class="meta">Edition <span class="dot">·</span> June 1, 2026</p>
+<h3><a href="https://andoverct.info/the-facts/editions/who-decides-schools-2026/">Who Decides How the Schools Are Run</a></h3>
+<a class="url" href="https://andoverct.info/the-facts/editions/who-decides-schools-2026/">andoverct.info/<wbr>the-facts/<wbr>editions/<wbr>who-decides-schools-2026</a>
+<p class="desc">Explaining the legal relationship between the Boards of Education and Finance: who does what?</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/the-facts/editions/jeff-misleading-2026" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h37v37H0z"/><path stroke="#000000" d="M0 0.5h7m2 0h3m2 0h2m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m3 0h7M0 1.5h1m5 0h1m3 0h1m1 0h2m1 0h1m3 0h1m1 0h1m3 0h1m1 0h1m2 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h1m7 0h1m2 0h3m2 0h1m1 0h2m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m2 0h2m1 0h3m1 0h1m2 0h1m1 0h4m2 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m4 0h2m3 0h3m2 0h1m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h4m2 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m2 0h1m2 0h1m1 0h1m2 0h2m5 0h1M0 8.5h1m1 0h5m6 0h1m4 0h5m1 0h2m1 0h1m2 0h5M1 9.5h1m1 0h1m4 0h1m6 0h2m4 0h1m4 0h1m4 0h1m3 0h1M0 10.5h1m2 0h2m1 0h7m7 0h5m1 0h3m1 0h1m2 0h4M0 11.5h1m1 0h1m4 0h3m3 0h2m1 0h1m1 0h1m2 0h3m4 0h5m3 0h1M2 12.5h3m1 0h1m2 0h1m1 0h1m1 0h2m2 0h1m5 0h1m1 0h1m1 0h4m1 0h5M0 13.5h1m2 0h2m2 0h1m2 0h2m5 0h3m1 0h1m1 0h1m4 0h1m2 0h1M0 14.5h1m3 0h7m2 0h5m2 0h2m3 0h9m1 0h2M1 15.5h4m3 0h1m2 0h2m1 0h1m2 0h3m1 0h3m2 0h7m2 0h2M1 16.5h1m1 0h1m2 0h2m3 0h1m1 0h4m4 0h1m1 0h1m3 0h1m1 0h2m1 0h1m1 0h3M2 17.5h4m1 0h4m2 0h3m1 0h2m1 0h1m1 0h1m1 0h2m2 0h1m2 0h1m3 0h1M1 18.5h1m1 0h2m1 0h1m3 0h1m1 0h2m1 0h2m1 0h2m1 0h2m2 0h3m1 0h1m1 0h6M2 19.5h1m1 0h2m2 0h1m1 0h4m1 0h1m3 0h4m1 0h1m3 0h1m4 0h1m2 0h1M0 20.5h1m5 0h1m1 0h1m2 0h3m1 0h3m1 0h2m1 0h1m1 0h3m2 0h2m1 0h3M0 21.5h1m6 0h1m4 0h1m3 0h1m2 0h2m2 0h2m3 0h1m4 0h1M0 22.5h2m3 0h2m1 0h1m1 0h1m2 0h3m2 0h1m3 0h1m4 0h1m2 0h4m1 0h2M1 23.5h3m4 0h1m1 0h1m1 0h2m2 0h1m3 0h1m2 0h1m4 0h5M1 24.5h3m2 0h1m2 0h1m3 0h2m3 0h1m1 0h5m1 0h2m1 0h4m1 0h1M0 25.5h2m3 0h1m1 0h2m1 0h2m1 0h4m4 0h1m3 0h1m2 0h1m2 0h1m2 0h1M0 26.5h1m2 0h1m2 0h1m2 0h1m3 0h1m6 0h1m1 0h3m2 0h5m3 0h2M0 27.5h1m4 0h1m1 0h1m8 0h1m1 0h1m2 0h1m1 0h1m2 0h2m2 0h1m1 0h1m2 0h2M0 28.5h1m2 0h1m1 0h3m1 0h3m2 0h1m2 0h1m2 0h1m1 0h5m1 0h7M8 29.5h1m1 0h1m2 0h1m2 0h6m1 0h1m4 0h1m3 0h2M0 30.5h7m4 0h7m2 0h2m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3M0 31.5h1m5 0h1m1 0h1m2 0h1m1 0h1m2 0h4m1 0h3m1 0h1m2 0h1m3 0h2m1 0h1M0 32.5h1m1 0h3m1 0h1m1 0h3m2 0h1m2 0h1m4 0h1m2 0h9m1 0h2M0 33.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m1 0h1m1 0h2m1 0h3m1 0h2m2 0h3m1 0h1m1 0h2M0 34.5h1m1 0h3m1 0h1m1 0h1m2 0h1m3 0h2m1 0h2m1 0h1m2 0h3m1 0h1m7 0h1M0 35.5h1m5 0h1m4 0h1m3 0h1m3 0h4m4 0h4m1 0h1m3 0h1M0 36.5h7m1 0h8m1 0h1m1 0h1m2 0h1m1 0h3m3 0h1m1 0h5"/></svg>
+</div>
+<div class="body">
+<p class="meta">Edition <span class="dot">·</span> May 22, 2026</p>
+<h3><a href="https://andoverct.info/the-facts/editions/jeff-misleading-2026/">Jeff is Misleading Us</a></h3>
+<p class="sub">On the May 26, 2026 AES budget mailer</p>
+<a class="url" href="https://andoverct.info/the-facts/editions/jeff-misleading-2026/">andoverct.info/<wbr>the-facts/<wbr>editions/<wbr>jeff-misleading-2026</a>
+<p class="desc">Andover First Selectman Jeff Maguire mailed an anti-budget flyer to residents urging a NO vote on the May 26, 2026 AES budget referendum. A claim-by-claim walkthrough of what the mailer says against what the public record actually shows, with the mailer reproduced page-by-page alongside the corrections.</p>
+</div>
+</article>
+</div>
+
+</section>
+
+<section class="sm-section" id="sec-reports">
+<header class="sm-head">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reports" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h29v29H0z"/><path stroke="#000000" d="M0 0.5h7m2 0h2m4 0h5m2 0h7M0 1.5h1m5 0h1m2 0h1m1 0h1m5 0h1m2 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m1 0h2m3 0h2m1 0h1m2 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m2 0h5m3 0h2m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m1 0h1m2 0h6m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m4 0h1m1 0h1m2 0h3M0 8.5h1m1 0h5m2 0h4m1 0h2m1 0h1m4 0h5M0 9.5h1m3 0h2m1 0h3m2 0h1m2 0h2m1 0h3m1 0h3m3 0h1M0 10.5h1m2 0h1m2 0h2m2 0h1m12 0h1M1 11.5h2m4 0h1m2 0h1m3 0h1m1 0h1m2 0h5m1 0h1m1 0h1M1 12.5h1m4 0h4m1 0h1m4 0h2m1 0h1m5 0h2M0 13.5h2m1 0h3m4 0h1m2 0h3m3 0h6m3 0h1M1 14.5h3m1 0h3m3 0h1m1 0h4m1 0h1m1 0h1m3 0h3M0 15.5h2m1 0h2m8 0h1m1 0h1m2 0h1m4 0h2m2 0h1M0 16.5h3m2 0h2m2 0h2m3 0h2m1 0h1m1 0h1m5 0h2M0 17.5h6m2 0h1m2 0h1m3 0h6m1 0h3m1 0h1m1 0h1M0 18.5h1m2 0h5m2 0h2m5 0h1m3 0h1m4 0h1M0 19.5h1m2 0h1m3 0h1m1 0h3m2 0h1m1 0h1m2 0h5m3 0h1M0 20.5h1m1 0h1m1 0h1m1 0h1m1 0h3m6 0h1m1 0h6m1 0h3M8 21.5h1m1 0h2m1 0h3m4 0h1m3 0h5M0 22.5h7m5 0h9m1 0h1m1 0h3M0 23.5h1m5 0h1m1 0h2m3 0h1m2 0h1m1 0h1m1 0h1m3 0h1m3 0h1M0 24.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h1m2 0h1m2 0h5m1 0h1m1 0h1M0 25.5h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m11 0h2M0 26.5h1m1 0h3m1 0h1m1 0h2m4 0h3m2 0h1m1 0h7M0 27.5h1m5 0h1m2 0h1m1 0h4m3 0h4m1 0h3m1 0h1M0 28.5h7m1 0h2m2 0h6m1 0h1m2 0h1m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="section-label">§ II · Reports</p>
+<h2>Original analysis</h2>
+<a class="url" href="https://andoverct.info/reports/">andoverct.info/<wbr>reports</a>
+<p class="blurb">Longer, sourced pieces compiled to inform specific budget or policy conversations. Each draws directly on official town, regional, or state documents, and each is footnoted to the source.</p>
+</div>
+</header>
+
+<div class="sm-group">
+<p class="group-label"><a href="https://andoverct.info/reports/budget/">Andover Budget</a> <span class="url-inline">andoverct.info/<wbr>reports/<wbr>budget</span></p>
+<div class="sm-grid">
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reports/budget/2026" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h3m1 0h2m3 0h2m2 0h2m3 0h7M0 1.5h1m5 0h1m1 0h1m1 0h1m1 0h3m3 0h3m3 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h2m1 0h5m4 0h2m1 0h1m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m2 0h1m4 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m1 0h1m4 0h2m4 0h3m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m4 0h3m1 0h2m2 0h1m4 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M13 7.5h1m1 0h2m5 0h2M0 8.5h1m2 0h6m1 0h1m6 0h2m4 0h1m1 0h1m2 0h1m1 0h3M3 9.5h1m1 0h1m1 0h1m1 0h2m1 0h4m1 0h3m1 0h1m1 0h1m4 0h3M2 10.5h1m2 0h2m1 0h1m2 0h3m1 0h1m4 0h1m1 0h2m1 0h2m1 0h5M0 11.5h1m1 0h1m1 0h1m2 0h3m1 0h3m1 0h2m1 0h5m2 0h3m2 0h2M0 12.5h4m1 0h5m1 0h1m1 0h1m1 0h1m1 0h1m3 0h1m2 0h2m6 0h1M0 13.5h2m2 0h2m4 0h1m2 0h2m2 0h4m3 0h1m1 0h1m2 0h2M3 14.5h1m2 0h4m2 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h1m1 0h3m1 0h1M0 15.5h5m2 0h3m1 0h3m2 0h1m3 0h1m1 0h1m2 0h1m2 0h3m1 0h1M2 16.5h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h2m1 0h2m3 0h1m1 0h8M0 17.5h2m1 0h2m3 0h3m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m3 0h1m1 0h1m1 0h3M0 18.5h1m3 0h3m2 0h1m2 0h1m2 0h1m1 0h3m1 0h7m1 0h2m1 0h1M0 19.5h1m3 0h2m1 0h2m2 0h1m3 0h2m2 0h2m1 0h1m3 0h1m1 0h4M0 20.5h7m3 0h1m3 0h1m1 0h1m1 0h1m2 0h2m1 0h2m1 0h1m1 0h1m1 0h1M0 21.5h2m6 0h2m2 0h1m1 0h1m8 0h1m2 0h1m1 0h3M0 22.5h1m3 0h5m2 0h3m4 0h3m3 0h1m1 0h2m3 0h2M0 23.5h1m1 0h3m6 0h3m1 0h1m1 0h4m2 0h1m1 0h1m1 0h2m1 0h2M0 24.5h2m1 0h2m1 0h1m2 0h3m4 0h1m3 0h1m2 0h7m2 0h1M8 25.5h6m1 0h4m2 0h2m1 0h1m3 0h1m1 0h2M0 26.5h7m1 0h1m1 0h1m2 0h5m1 0h1m3 0h2m1 0h1m1 0h1m1 0h1M0 27.5h1m5 0h1m1 0h1m1 0h1m2 0h2m1 0h4m1 0h4m3 0h4M0 28.5h1m1 0h3m1 0h1m1 0h2m1 0h3m1 0h3m1 0h1m1 0h8m2 0h1M0 29.5h1m1 0h3m1 0h1m1 0h1m2 0h2m3 0h3m3 0h2m1 0h1m1 0h1m2 0h1m1 0h1M0 30.5h1m1 0h3m1 0h1m2 0h3m3 0h1m1 0h1m1 0h1m1 0h1m3 0h1m1 0h2m1 0h3M0 31.5h1m5 0h1m3 0h2m1 0h2m4 0h2m3 0h9M0 32.5h7m1 0h2m1 0h2m1 0h2m1 0h1m1 0h1m2 0h4m1 0h3"/></svg>
+</div>
+<div class="body">
+<p class="meta">FY 2026–27 <span class="dot">·</span> Six-year history</p>
+<h3><a href="https://andoverct.info/reports/budget/2026/">Municipal Budget, FY 2020–21 through FY 2026–27</a></h3>
+<a class="url" href="https://andoverct.info/reports/budget/2026/">andoverct.info/<wbr>reports/<wbr>budget/<wbr>2026</a>
+<p class="desc">A side-by-side reading of seven years of Andover budgets — General Government, the Andover Elementary School board budget, and the RHAM regional levy — with comparison against CPI inflation and Social Security COLAs. Includes year-by-year detail through Town Meeting and the May 5 referendum.</p>
+</div>
+</article>
+</div>
+
+</div>
+<div class="sm-group">
+<p class="group-label"><a href="https://andoverct.info/reports/aes/">Andover Elementary</a> <span class="url-inline">andoverct.info/<wbr>reports/<wbr>aes</span></p>
+<div class="sm-grid">
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reports/aes/peer-spending" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m2 0h1m1 0h2m1 0h1m1 0h1m1 0h4m1 0h1m2 0h7M0 1.5h1m5 0h1m2 0h2m4 0h1m2 0h1m2 0h2m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h1m5 0h3m2 0h3m1 0h1m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h5m2 0h1m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h4m2 0h2m1 0h1m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m2 0h3m3 0h1m1 0h1m1 0h2m1 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h2m4 0h1m1 0h1m2 0h5M0 8.5h1m1 0h5m2 0h1m1 0h1m1 0h1m2 0h4m2 0h2m2 0h5M8 9.5h1m1 0h1m1 0h2m2 0h5m1 0h2m2 0h2m1 0h4M0 10.5h1m2 0h1m2 0h4m2 0h4m1 0h1m3 0h1m6 0h1m1 0h2M0 11.5h6m1 0h1m1 0h2m2 0h1m3 0h7m2 0h1m1 0h4M1 12.5h1m1 0h4m2 0h1m1 0h1m2 0h3m2 0h2m1 0h3m3 0h2m1 0h1M0 13.5h1m6 0h2m3 0h2m1 0h1m1 0h2m2 0h1m1 0h1m2 0h1m3 0h3M4 14.5h4m2 0h1m1 0h6m2 0h1m4 0h2m2 0h1m1 0h1M3 15.5h1m1 0h1m1 0h2m1 0h2m1 0h1m1 0h1m5 0h1m3 0h2m3 0h1M2 16.5h6m3 0h2m2 0h3m4 0h1m1 0h2m1 0h2m3 0h1M4 17.5h2m2 0h1m7 0h1m2 0h2m2 0h1m2 0h2m1 0h2m1 0h1M1 18.5h1m2 0h5m4 0h4m1 0h1m1 0h1m1 0h1m1 0h5m1 0h2M0 19.5h1m3 0h1m4 0h1m4 0h1m1 0h1m4 0h1m3 0h1m1 0h5M0 20.5h2m1 0h1m2 0h1m4 0h1m1 0h1m4 0h2m2 0h1m1 0h2m1 0h3M0 21.5h1m8 0h2m1 0h1m2 0h2m3 0h2m1 0h1m1 0h2m2 0h1m2 0h1M0 22.5h1m1 0h1m1 0h3m2 0h2m6 0h3m4 0h1m4 0h1m1 0h1M0 23.5h1m1 0h1m2 0h1m2 0h3m1 0h1m3 0h1m1 0h5m1 0h2m3 0h3M0 24.5h1m2 0h5m2 0h1m3 0h1m2 0h1m1 0h1m2 0h1m1 0h6M8 25.5h1m7 0h7m1 0h1m3 0h1m1 0h1m1 0h1M0 26.5h7m3 0h3m2 0h1m1 0h1m4 0h3m1 0h1m1 0h1m1 0h2M0 27.5h1m5 0h1m1 0h1m1 0h3m2 0h1m1 0h8m3 0h5M0 28.5h1m1 0h3m1 0h1m1 0h1m3 0h5m2 0h1m4 0h6m1 0h2M0 29.5h1m1 0h3m1 0h1m1 0h2m3 0h1m1 0h1m2 0h1m2 0h1m3 0h1m2 0h1m1 0h3M0 30.5h1m1 0h3m1 0h1m1 0h1m6 0h2m3 0h4m2 0h2m2 0h1M0 31.5h1m5 0h1m6 0h3m3 0h3m1 0h1m4 0h3M0 32.5h7m1 0h5m2 0h3m1 0h1m3 0h5m3 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">Andover Elementary <span class="dot">·</span> Peer comparison</p>
+<h3><a href="https://andoverct.info/reports/aes/peer-spending/">Andover&#39;s Per-Pupil Spending in Context</a></h3>
+<a class="url" href="https://andoverct.info/reports/aes/peer-spending/">andoverct.info/<wbr>reports/<wbr>aes/<wbr>peer-spending</a>
+<p class="desc">How Andover Elementary School&#39;s per-pupil spending compares to the 44 other Connecticut public school districts that share its structural profile: small-town, elementary-only districts (K–6 or K–8, enrollment under 2,000) that send middle- and high-school students to a regional district or by tuition contract. Built from the Connecticut State Department of Education&#39;s EdSight Per Pupil Expenditures report for school year 2024–25. Finds AES at the bottom of the rankings on essentially every measure of administrative spending.</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reports/aes/preschool-funding" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m2 0h1m1 0h1m2 0h1m1 0h5m2 0h1m2 0h7M0 1.5h1m5 0h1m3 0h2m3 0h1m1 0h1m3 0h2m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h3m3 0h3m2 0h5m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m1 0h3m2 0h1m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m1 0h2m2 0h6m1 0h1m1 0h2m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h2m1 0h1m1 0h1m3 0h1m2 0h3m1 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h3m1 0h1m1 0h1m2 0h4M0 8.5h1m1 0h5m3 0h4m2 0h3m3 0h2m2 0h5M1 9.5h1m1 0h3m1 0h2m4 0h1m2 0h8m2 0h2m1 0h4M0 10.5h2m4 0h2m5 0h3m1 0h1m4 0h1m5 0h1m1 0h2M0 11.5h2m1 0h2m2 0h2m1 0h2m1 0h1m3 0h5m1 0h1m1 0h2m1 0h4M3 12.5h1m2 0h1m4 0h1m2 0h3m2 0h1m2 0h4m2 0h2m1 0h1M1 13.5h1m1 0h3m1 0h1m2 0h3m2 0h1m1 0h7m2 0h1m3 0h3M0 14.5h2m2 0h1m1 0h2m1 0h2m1 0h1m1 0h4m7 0h2m2 0h1m1 0h1M0 15.5h2m3 0h1m3 0h3m1 0h3m3 0h3m1 0h1m1 0h2m3 0h1M2 16.5h1m3 0h5m1 0h2m1 0h3m1 0h1m2 0h4m1 0h2m3 0h1M2 17.5h1m2 0h1m4 0h1m3 0h1m1 0h1m2 0h3m1 0h1m2 0h2m1 0h2m1 0h1M0 18.5h1m2 0h1m1 0h3m3 0h1m2 0h3m1 0h1m1 0h3m1 0h1m2 0h2m1 0h2M0 19.5h1m2 0h1m1 0h1m1 0h2m1 0h3m1 0h1m1 0h1m4 0h2m2 0h7M1 20.5h8m1 0h1m7 0h2m2 0h1m1 0h2m1 0h3M0 21.5h3m2 0h1m2 0h3m1 0h1m1 0h3m2 0h3m1 0h1m2 0h1m2 0h1m2 0h1M0 22.5h1m1 0h1m1 0h3m2 0h2m1 0h2m3 0h2m1 0h1m6 0h3m1 0h1M0 23.5h1m1 0h4m2 0h2m1 0h2m3 0h1m1 0h1m2 0h3m1 0h1m1 0h1m1 0h3M0 24.5h1m1 0h1m2 0h2m1 0h1m1 0h2m5 0h1m1 0h1m2 0h8m1 0h1M8 25.5h1m1 0h4m2 0h5m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1M0 26.5h7m5 0h4m1 0h1m4 0h3m1 0h1m1 0h1m1 0h2M0 27.5h1m5 0h1m1 0h2m1 0h1m3 0h1m1 0h5m1 0h2m3 0h5M0 28.5h1m1 0h3m1 0h1m1 0h3m4 0h2m2 0h1m2 0h1m1 0h6m1 0h2M0 29.5h1m1 0h3m1 0h1m1 0h1m3 0h4m2 0h4m3 0h1m2 0h1m1 0h3M0 30.5h1m1 0h3m1 0h1m1 0h1m1 0h7m4 0h3m2 0h2m2 0h1M0 31.5h1m5 0h1m4 0h2m2 0h1m4 0h2m4 0h1m1 0h3M0 32.5h7m1 0h1m1 0h1m2 0h5m5 0h2m2 0h1m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">Andover Elementary <span class="dot">·</span> Financial analysis</p>
+<h3><a href="https://andoverct.info/reports/aes/preschool-funding/">AES Preschool — Financial Analysis</a></h3>
+<a class="url" href="https://andoverct.info/reports/aes/preschool-funding/">andoverct.info/<wbr>reports/<wbr>aes/<wbr>preschool-funding</a>
+<p class="desc">Revenue, cost, and net-position figures for the Andover Elementary School preschool program: FY 2024–25 actuals from the audited financial filings, and FY 2025–26 anticipated figures from the Board of Education&#39;s monthly packets. Methodology and known data gaps are described inline.</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reports/aes/data-privacy" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m2 0h2m1 0h3m1 0h6m1 0h1m2 0h7M0 1.5h1m5 0h1m3 0h1m2 0h3m1 0h1m3 0h1m2 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h3m2 0h1m1 0h9m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h3m3 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m1 0h3m2 0h1m1 0h2m2 0h1m1 0h1m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h3m2 0h1m1 0h3m2 0h3m1 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h2m1 0h1m2 0h2m5 0h3M0 8.5h1m1 0h5m3 0h1m2 0h1m1 0h4m3 0h1m3 0h5M0 9.5h1m1 0h1m1 0h2m3 0h4m3 0h1m1 0h6m2 0h2m1 0h4M0 10.5h4m1 0h2m3 0h3m2 0h1m2 0h1m9 0h1m1 0h2M2 11.5h1m4 0h2m1 0h1m1 0h1m1 0h1m4 0h5m1 0h1m2 0h4M6 12.5h2m2 0h2m3 0h1m2 0h2m2 0h2m3 0h3m1 0h1M0 13.5h1m3 0h1m3 0h2m2 0h1m1 0h4m2 0h4m2 0h1m3 0h3M0 14.5h1m1 0h2m1 0h2m5 0h1m4 0h1m1 0h1m5 0h3m1 0h1m1 0h1M0 15.5h2m1 0h2m5 0h1m1 0h2m2 0h1m2 0h3m2 0h3m3 0h1M0 16.5h2m4 0h2m1 0h1m1 0h2m1 0h1m1 0h2m1 0h1m2 0h4m1 0h2m3 0h1M3 17.5h1m3 0h3m1 0h1m2 0h1m1 0h2m1 0h2m2 0h1m2 0h2m1 0h2m1 0h1M0 18.5h5m1 0h1m2 0h4m1 0h4m2 0h2m2 0h5m1 0h2M0 19.5h1m1 0h2m1 0h1m1 0h2m1 0h2m1 0h2m1 0h3m2 0h2m2 0h1m1 0h5M0 20.5h1m1 0h5m3 0h5m1 0h1m2 0h2m3 0h2m2 0h2M0 21.5h1m3 0h2m1 0h4m1 0h1m1 0h2m2 0h1m2 0h1m1 0h1m1 0h2m2 0h1m2 0h1M0 22.5h1m3 0h1m1 0h2m1 0h1m5 0h4m1 0h1m3 0h1m4 0h1m1 0h1M0 23.5h1m3 0h2m1 0h1m1 0h5m1 0h1m2 0h1m2 0h5m1 0h1m1 0h2M0 24.5h1m1 0h1m2 0h6m1 0h1m1 0h2m1 0h1m4 0h1m1 0h5M8 25.5h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1M0 26.5h7m2 0h1m3 0h1m1 0h1m2 0h1m3 0h3m1 0h1m1 0h1m1 0h2M0 27.5h1m5 0h1m1 0h1m2 0h2m2 0h1m3 0h6m3 0h5M0 28.5h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h3m2 0h2m1 0h1m2 0h6m1 0h2M0 29.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h3m3 0h2m3 0h1m2 0h5M0 30.5h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h1m4 0h1m1 0h3m2 0h2m2 0h1M0 31.5h1m5 0h1m2 0h5m2 0h1m2 0h3m1 0h1m4 0h3M0 32.5h7m1 0h3m1 0h3m1 0h2m1 0h1m3 0h2m2 0h1m3 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">Andover Elementary <span class="dot">·</span> Student &amp; staff privacy</p>
+<h3><a href="https://andoverct.info/reports/aes/data-privacy/">When Small Numbers Become Names</a></h3>
+<a class="url" href="https://andoverct.info/reports/aes/data-privacy/">andoverct.info/<wbr>reports/<wbr>aes/<wbr>data-privacy</a>
+<p class="desc">Why the disputed preschool staff-benefit figure cannot be released — and why that refusal is the law rather than a stonewall. Walks through how small-cell aggregation can re-identify individuals, which privacy law applies on the student side (FERPA) and the staff side (Connecticut FOIA), and what each does and does not permit.</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reports/aes/superintendent-pay" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m3 0h5m1 0h5m2 0h1m2 0h7M0 1.5h1m5 0h1m4 0h1m1 0h3m2 0h1m3 0h1m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h1m4 0h1m1 0h2m2 0h3m1 0h1m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h5m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m1 0h2m3 0h1m1 0h5m1 0h1m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m4 0h1m1 0h3m2 0h3m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m2 0h2m1 0h2m5 0h2M0 8.5h1m1 0h5m2 0h1m2 0h2m1 0h4m3 0h1m3 0h5M1 9.5h2m1 0h2m2 0h5m3 0h8m2 0h2m1 0h4M1 10.5h3m1 0h2m1 0h5m2 0h1m1 0h1m3 0h2m2 0h1m2 0h1m1 0h2M1 11.5h1m2 0h1m6 0h2m1 0h1m4 0h3m1 0h1m1 0h1m2 0h4M0 12.5h1m1 0h5m1 0h1m3 0h1m2 0h1m2 0h2m2 0h4m1 0h3m1 0h1M1 13.5h3m4 0h1m5 0h8m1 0h1m1 0h2m3 0h3M0 14.5h1m1 0h1m1 0h4m1 0h1m1 0h1m1 0h2m2 0h1m6 0h4m1 0h1m1 0h1M0 15.5h2m2 0h1m2 0h1m5 0h1m2 0h1m4 0h1m3 0h3m2 0h1M0 16.5h1m4 0h4m1 0h3m3 0h2m4 0h1m1 0h2m1 0h2m3 0h1M0 17.5h1m4 0h1m1 0h2m2 0h2m1 0h1m1 0h2m1 0h3m1 0h1m2 0h2m1 0h2m1 0h1M2 18.5h1m2 0h2m2 0h2m2 0h5m2 0h3m1 0h1m2 0h2m1 0h2M3 19.5h1m3 0h2m2 0h1m2 0h1m1 0h3m2 0h2m3 0h6M0 20.5h3m2 0h2m1 0h1m7 0h1m2 0h2m1 0h1m2 0h1m2 0h2M0 21.5h3m5 0h1m1 0h3m2 0h1m2 0h4m1 0h1m2 0h1m2 0h1m2 0h1M0 22.5h1m1 0h3m1 0h2m1 0h1m1 0h1m1 0h1m1 0h4m1 0h1m3 0h1m4 0h1m1 0h1M0 23.5h1m1 0h4m2 0h2m3 0h3m2 0h1m1 0h4m1 0h1m3 0h2m1 0h1M0 24.5h1m4 0h4m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h8m1 0h1M8 25.5h1m3 0h3m1 0h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1M0 26.5h7m4 0h1m1 0h3m2 0h1m3 0h3m1 0h1m1 0h1m1 0h2M0 27.5h1m5 0h1m1 0h1m1 0h1m2 0h3m3 0h3m1 0h2m3 0h5M0 28.5h1m1 0h3m1 0h1m1 0h2m1 0h3m1 0h1m2 0h2m2 0h1m1 0h6m1 0h2M0 29.5h1m1 0h3m1 0h1m1 0h1m4 0h4m2 0h1m1 0h2m2 0h1m2 0h1m1 0h3M0 30.5h1m1 0h3m1 0h1m1 0h1m1 0h1m10 0h3m2 0h2m1 0h1M0 31.5h1m5 0h1m3 0h1m1 0h1m3 0h1m3 0h2m4 0h1m1 0h3M0 32.5h7m1 0h2m1 0h2m3 0h2m5 0h3m1 0h1m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">Andover Elementary <span class="dot">·</span> Compensation analysis</p>
+<h3><a href="https://andoverct.info/reports/aes/superintendent-pay/">Superintendent Pay in Context</a></h3>
+<a class="url" href="https://andoverct.info/reports/aes/superintendent-pay/">andoverct.info/<wbr>reports/<wbr>aes/<wbr>superintendent-pay</a>
+<p class="desc">Where Andover&#39;s superintendent pay sits among Connecticut&#39;s elementary-only school districts.  We analyze the superintendent contracts from all preK/K through 6/8 districts in the state, to determine how Dr. Bruneau&#39;s compensation compares to her peers.</p>
+</div>
+</article>
+</div>
+
+</div>
+<div class="sm-group">
+<p class="group-label"><a href="https://andoverct.info/reports/rham/">RHAM</a> <span class="url-inline">andoverct.info/<wbr>reports/<wbr>rham</span></p>
+<div class="sm-grid">
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reports/rham/class-size" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m2 0h1m4 0h1m1 0h1m1 0h3m2 0h1m2 0h7M0 1.5h1m5 0h1m2 0h1m1 0h1m3 0h1m2 0h1m5 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h3m2 0h3m1 0h1m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m5 0h1m2 0h1m3 0h1m3 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h3m3 0h4m2 0h2m1 0h1m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m1 0h1m1 0h2m3 0h1m1 0h1m1 0h2m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h3m1 0h1m1 0h1m1 0h1m2 0h4m1 0h1M0 8.5h1m1 0h5m2 0h1m3 0h1m2 0h4m2 0h2m2 0h5M3 9.5h2m2 0h2m2 0h1m1 0h1m2 0h8m2 0h2m1 0h2m1 0h1M0 10.5h1m1 0h5m2 0h3m1 0h3m1 0h1m3 0h2m5 0h1m1 0h2M0 11.5h1m3 0h2m1 0h2m1 0h2m1 0h1m3 0h7m1 0h1m2 0h3M0 12.5h1m1 0h1m3 0h1m2 0h1m1 0h1m2 0h3m2 0h2m2 0h3m1 0h3m2 0h1M1 13.5h1m3 0h1m7 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h2m3 0h3M1 14.5h2m2 0h3m1 0h1m5 0h3m2 0h1m4 0h3m1 0h3M0 15.5h1m1 0h1m2 0h1m4 0h3m1 0h2m5 0h1m1 0h4m1 0h3M5 16.5h5m3 0h1m1 0h3m4 0h1m1 0h2m1 0h2m3 0h1M3 17.5h3m1 0h6m3 0h1m2 0h2m2 0h1m2 0h2m1 0h2m1 0h1M3 18.5h1m2 0h4m3 0h1m1 0h2m1 0h1m1 0h1m1 0h1m1 0h1m2 0h2m1 0h2M0 19.5h1m1 0h1m6 0h2m3 0h1m1 0h1m4 0h2m2 0h6m1 0h1M1 20.5h2m1 0h1m1 0h2m1 0h3m1 0h2m3 0h2m1 0h1m3 0h1m1 0h3M0 21.5h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h2m2 0h2m3 0h2m1 0h1m1 0h2m2 0h1m2 0h1M0 22.5h1m1 0h3m1 0h4m1 0h3m3 0h3m8 0h4M0 23.5h1m2 0h2m4 0h2m1 0h1m1 0h1m1 0h1m1 0h5m2 0h1m1 0h1m2 0h3M0 24.5h1m5 0h7m1 0h1m2 0h1m1 0h1m2 0h7m2 0h2M8 25.5h1m1 0h1m1 0h3m1 0h5m1 0h1m1 0h1m3 0h1m1 0h3M0 26.5h7m3 0h3m1 0h2m1 0h1m4 0h3m1 0h1m1 0h1m1 0h2M0 27.5h1m5 0h1m1 0h2m1 0h1m2 0h2m1 0h4m2 0h2m3 0h5M0 28.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h3m2 0h4m1 0h6m1 0h2M0 29.5h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h2m2 0h1m2 0h1m3 0h1m2 0h2m2 0h1M0 30.5h1m1 0h3m1 0h1m1 0h1m1 0h4m1 0h2m3 0h4m2 0h2m1 0h1M0 31.5h1m5 0h1m2 0h1m1 0h3m1 0h1m5 0h1m6 0h3M0 32.5h7m1 0h2m1 0h1m3 0h3m6 0h4m3 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">RHAM Region 8 <span class="dot">·</span> Budget background</p>
+<h3><a href="https://andoverct.info/reports/rham/class-size/">RHAM Class Size in Context</a></h3>
+<a class="url" href="https://andoverct.info/reports/rham/class-size/">andoverct.info/<wbr>reports/<wbr>rham/<wbr>class-size</a>
+<p class="desc">What RHAM&#39;s class sizes actually are today, measured directly from the master schedule, compared to peer Connecticut secondary regional districts both historically (CT Mirror&#39;s 2012–13 dataset) and today (NCES 2024–25). Examines the gap between RHAM&#39;s enrollment decline and its staffing decline as the source of currently small classes.</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reports/rham/per-pupil" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m2 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h3m2 0h7M0 1.5h1m5 0h1m1 0h1m3 0h1m1 0h2m2 0h2m1 0h3m2 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m3 0h5m2 0h3m2 0h2m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h8m2 0h1m2 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h3m3 0h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m2 0h1m1 0h1m3 0h2m1 0h7m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M9 7.5h2m2 0h3m1 0h3m1 0h3M0 8.5h1m1 0h1m1 0h1m1 0h1m2 0h1m3 0h2m2 0h2m1 0h2m1 0h1m4 0h1m2 0h1M1 9.5h3m5 0h1m1 0h3m2 0h2m2 0h1m1 0h1m1 0h4m3 0h2M1 10.5h2m1 0h4m2 0h1m3 0h1m1 0h1m1 0h1m1 0h2m4 0h2m2 0h3M0 11.5h2m1 0h1m5 0h1m3 0h2m2 0h2m1 0h3m1 0h3m1 0h1m2 0h1M0 12.5h1m3 0h8m2 0h1m1 0h1m1 0h3m1 0h3m1 0h2m1 0h1M0 13.5h2m2 0h1m3 0h4m1 0h4m1 0h4m2 0h3m2 0h1m2 0h1M0 14.5h2m3 0h2m1 0h1m3 0h2m1 0h3m1 0h4m1 0h2m1 0h6M0 15.5h1m2 0h3m1 0h1m2 0h1m1 0h3m1 0h3m1 0h2m1 0h1m2 0h1m4 0h1M0 16.5h3m3 0h1m2 0h3m1 0h1m1 0h1m1 0h1m1 0h3m2 0h3M0 17.5h2m2 0h2m1 0h5m1 0h2m1 0h1m1 0h1m1 0h1m3 0h4m3 0h2M0 18.5h2m1 0h4m1 0h1m1 0h3m1 0h1m2 0h1m3 0h1m2 0h2m4 0h3M0 19.5h2m1 0h2m3 0h1m3 0h3m1 0h1m2 0h1m3 0h2m2 0h2m2 0h2M0 20.5h3m1 0h4m2 0h3m2 0h1m3 0h1m5 0h2m2 0h1m2 0h1M3 21.5h2m2 0h1m1 0h2m2 0h3m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m3 0h3M0 22.5h1m1 0h2m1 0h3m5 0h2m2 0h2m2 0h2m3 0h1m1 0h5M1 23.5h1m3 0h1m1 0h4m1 0h1m1 0h2m1 0h1m1 0h1m1 0h4m2 0h1m1 0h1m1 0h2M0 24.5h1m5 0h4m6 0h2m2 0h2m2 0h5m2 0h1M8 25.5h1m2 0h2m3 0h2m2 0h5m3 0h2m2 0h1M0 26.5h7m2 0h1m3 0h2m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m1 0h1m1 0h3M0 27.5h1m5 0h1m2 0h2m1 0h1m1 0h2m1 0h2m1 0h3m1 0h1m3 0h1m3 0h1M0 28.5h1m1 0h3m1 0h1m1 0h1m7 0h1m1 0h3m1 0h1m1 0h6m1 0h1M0 29.5h1m1 0h3m1 0h1m3 0h3m2 0h10m3 0h1m1 0h3M0 30.5h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h1m1 0h2m2 0h2m2 0h1m4 0h2m2 0h1M0 31.5h1m5 0h1m3 0h3m1 0h1m1 0h3m1 0h2m2 0h2m2 0h1m2 0h1M0 32.5h7m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h6m1 0h1m1 0h2m1 0h2"/></svg>
+</div>
+<div class="body">
+<p class="meta">RHAM Region 8 <span class="dot">·</span> Decade trend</p>
+<h3><a href="https://andoverct.info/reports/rham/per-pupil/">RHAM Per-Pupil Spending in Context</a></h3>
+<a class="url" href="https://andoverct.info/reports/rham/per-pupil/">andoverct.info/<wbr>reports/<wbr>rham/<wbr>per-pupil</a>
+<p class="desc">Eleven years of Net Current Expenditures Per Pupil for RHAM and the seven other Connecticut regional districts that serve only secondary grades, with comparison against CPI-U inflation and the Social Security COLA. The headline +96.6% per-pupil increase over the decade is among the steepest in the peer group, but is overwhelmingly a denominator effect: enrollment fell 36.5% while total operating spending grew slower than inflation. Despite that, RHAM still ranks 6th of 8 on per-pupil spending in 2024–25.</p>
+</div>
+</article>
+</div>
+
+</div>
+<div class="sm-group">
+<p class="group-label"><a href="https://andoverct.info/reports/ahm/">Andover, Hebron &amp; Marlborough</a> <span class="url-inline">andoverct.info/<wbr>reports/<wbr>ahm</span></p>
+<div class="sm-grid">
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reports/ahm/disavowal" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m4 0h2m1 0h1m1 0h1m1 0h3m2 0h1m2 0h7M0 1.5h1m5 0h1m2 0h1m1 0h1m3 0h1m2 0h1m3 0h1m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h3m2 0h5m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h3m1 0h1m2 0h1m2 0h1m2 0h1m2 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h4m2 0h2m1 0h2m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m3 0h2m3 0h1m1 0h1m1 0h2m1 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h2m1 0h1m2 0h1m1 0h1m2 0h4M0 8.5h1m1 0h5m2 0h1m3 0h1m2 0h4m2 0h2m2 0h5M0 9.5h1m3 0h2m4 0h4m2 0h5m1 0h2m2 0h2m1 0h2m1 0h1M2 10.5h1m2 0h2m3 0h6m1 0h1m4 0h1m5 0h1m1 0h2M1 11.5h1m2 0h2m2 0h1m1 0h2m1 0h1m3 0h4m2 0h1m1 0h1m2 0h3M3 12.5h5m2 0h1m1 0h1m1 0h3m2 0h7m1 0h3m2 0h1M1 13.5h1m1 0h1m1 0h1m3 0h4m2 0h1m1 0h2m2 0h1m1 0h1m1 0h2m2 0h1m1 0h2M0 14.5h1m3 0h1m1 0h1m1 0h2m1 0h1m2 0h4m2 0h1m4 0h2m1 0h4M1 15.5h1m3 0h1m3 0h1m2 0h1m2 0h1m5 0h1m2 0h4m2 0h1M1 16.5h1m1 0h4m1 0h2m1 0h1m2 0h4m4 0h1m1 0h2m1 0h2m3 0h1M2 17.5h1m1 0h1m2 0h1m1 0h1m1 0h1m2 0h1m1 0h1m2 0h3m1 0h1m2 0h2m1 0h2m1 0h1M0 18.5h1m2 0h5m1 0h2m1 0h2m1 0h2m1 0h1m1 0h2m2 0h2m1 0h2m1 0h2M0 19.5h1m2 0h2m2 0h3m1 0h2m1 0h1m1 0h1m4 0h2m3 0h6M0 20.5h1m2 0h4m1 0h1m2 0h1m1 0h2m3 0h2m1 0h1m2 0h2m2 0h2M0 21.5h2m1 0h2m3 0h1m1 0h1m3 0h3m3 0h4m2 0h1m2 0h1m2 0h1M0 22.5h1m1 0h1m1 0h1m1 0h1m2 0h1m3 0h1m3 0h3m9 0h1m1 0h1M0 23.5h1m1 0h1m5 0h4m4 0h1m1 0h6m1 0h1m1 0h5M0 24.5h1m2 0h2m1 0h2m3 0h1m1 0h2m2 0h1m1 0h1m2 0h1m1 0h5m2 0h2M8 25.5h4m1 0h2m1 0h5m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1M0 26.5h7m2 0h7m1 0h1m4 0h3m1 0h1m1 0h1m1 0h2M0 27.5h1m5 0h1m1 0h3m2 0h3m1 0h4m2 0h2m3 0h5M0 28.5h1m1 0h3m1 0h1m1 0h1m1 0h2m3 0h2m2 0h4m1 0h6m1 0h2M0 29.5h1m1 0h3m1 0h1m1 0h1m4 0h3m2 0h1m2 0h1m3 0h1m2 0h3m1 0h1M0 30.5h1m1 0h3m1 0h1m1 0h2m2 0h1m2 0h2m3 0h4m2 0h2m2 0h1M0 31.5h1m5 0h1m6 0h3m5 0h1m1 0h1m1 0h2m1 0h3M0 32.5h7m1 0h1m1 0h1m1 0h1m2 0h3m5 0h5m3 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">Governor · Congress 2 · Senate 4 · Senate 19 · House 55 <span class="dot">·</span> September 2026, updated as answers arrive</p>
+<h3><a href="https://andoverct.info/reports/ahm/disavowal/">A Question for Five Candidates</a></h3>
+<a class="url" href="https://andoverct.info/reports/ahm/disavowal/">andoverct.info/<wbr>reports/<wbr>ahm/<wbr>disavowal</a>
+<p class="desc">One question, in the same words, to five Republican candidates on Connecticut ballots this November: will you publicly disavow Donald Trump? This page records who was asked, at what address, and on what date, and publishes every letter and reply in full and unedited, whatever it says. It also reads what the candidates have already said for themselves, namely every Meta political ad their own pages ran, read as text, as on-screen words, and as speech, plus two long-form interviews. The record is updated as answers come in, through Election Day.</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reports/ahm/per-pupil-trends" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m4 0h1m6 0h1m3 0h1m3 0h7M0 1.5h1m5 0h1m1 0h1m1 0h2m1 0h2m2 0h1m4 0h1m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h1m4 0h1m1 0h9m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m1 0h2m8 0h2m2 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m2 0h1m2 0h1m2 0h1m1 0h2m2 0h4m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m2 0h2m1 0h2m2 0h2m2 0h1m1 0h1m1 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h3m3 0h1m4 0h2m1 0h1M0 8.5h1m5 0h1m1 0h2m1 0h3m1 0h5m2 0h2m1 0h2m2 0h3M1 9.5h1m5 0h2m1 0h2m2 0h2m2 0h2m3 0h1m4 0h3M1 10.5h2m1 0h1m1 0h1m1 0h1m2 0h1m3 0h1m2 0h1m2 0h2m2 0h2m1 0h1m1 0h2M0 11.5h2m1 0h3m1 0h1m2 0h3m1 0h2m3 0h2m2 0h1m1 0h1m1 0h4M0 12.5h1m1 0h2m1 0h2m3 0h1m1 0h7m1 0h1m3 0h1m1 0h2m3 0h1M1 13.5h2m2 0h1m1 0h1m2 0h1m2 0h2m1 0h2m1 0h1m2 0h2m1 0h2m2 0h1m1 0h2M1 14.5h1m4 0h1m1 0h2m2 0h2m3 0h1m2 0h1m4 0h7M7 15.5h1m5 0h1m1 0h1m3 0h2m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1M0 16.5h7m1 0h1m1 0h1m1 0h3m1 0h2m4 0h4m1 0h2m3 0h1M0 17.5h1m1 0h1m4 0h1m1 0h3m3 0h3m1 0h2m2 0h1m2 0h1m2 0h2m1 0h1M0 18.5h1m4 0h3m2 0h6m3 0h1m2 0h6m1 0h2m1 0h1M0 19.5h1m1 0h2m1 0h1m3 0h1m2 0h7m9 0h4M0 20.5h1m4 0h4m1 0h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2M0 21.5h2m5 0h1m2 0h3m3 0h1m1 0h2m2 0h2m1 0h1m1 0h3M0 22.5h1m2 0h2m1 0h1m2 0h1m1 0h1m1 0h1m1 0h4m5 0h1m4 0h1m1 0h1M0 23.5h1m2 0h1m1 0h1m1 0h2m3 0h2m4 0h1m1 0h1m1 0h1m1 0h2m1 0h1m1 0h2M0 24.5h4m2 0h1m1 0h2m2 0h5m2 0h2m2 0h6m3 0h1M8 25.5h1m2 0h1m1 0h4m1 0h3m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1M0 26.5h7m2 0h1m1 0h1m3 0h1m2 0h1m2 0h4m1 0h1m1 0h1m1 0h2M0 27.5h1m5 0h1m4 0h1m1 0h1m2 0h1m2 0h1m3 0h2m3 0h4M0 28.5h1m1 0h3m1 0h1m2 0h3m1 0h3m2 0h2m2 0h1m1 0h6m1 0h2M0 29.5h1m1 0h3m1 0h1m3 0h3m3 0h1m2 0h2m4 0h1m1 0h2m1 0h3M0 30.5h1m1 0h3m1 0h1m2 0h2m3 0h1m1 0h2m1 0h3m3 0h1m1 0h6M0 31.5h1m5 0h1m3 0h1m1 0h1m1 0h3m2 0h2m2 0h1m1 0h1m1 0h4M0 32.5h7m1 0h1m1 0h1m5 0h2m1 0h1m3 0h3m1 0h1m3 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">Andover · Hebron · Marlborough · RHAM <span class="dot">·</span> FY 2013–FY 2023</p>
+<h3><a href="https://andoverct.info/reports/ahm/per-pupil-trends/">Spending, Students, and Per-Pupil Costs</a></h3>
+<a class="url" href="https://andoverct.info/reports/ahm/per-pupil-trends/">andoverct.info/<wbr>reports/<wbr>ahm/<wbr>per-pupil-trends</a>
+<p class="desc">Ten years of federal school-finance data (NCES/Census F-33) for Andover, Hebron, Marlborough, and RHAM, with maps and charts for every group examined. Combined spending for the four districts grew 17% over the decade while inflation rose 29.5% — yet per-pupil cost climbed 68%, because enrollment fell 30%. The report widens the lens step by step, from the core towns through three contiguous rings of neighbors to 45 elementary-only peer districts and the state as a whole, showing the same denominator arithmetic at every scale.</p>
+</div>
+</article>
+</div>
+
+</div>
+<div class="sm-group">
+<p class="group-label"><a href="https://andoverct.info/reports/55th/">55th District</a> <span class="url-inline">andoverct.info/<wbr>reports/<wbr>55th</span></p>
+<div class="sm-grid">
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reports/55th/weir-sponsorship" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h1m2 0h1m2 0h1m1 0h5m2 0h1m2 0h7M0 1.5h1m5 0h1m1 0h1m3 0h1m1 0h1m3 0h1m1 0h4m2 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m5 0h3m3 0h1m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m1 0h2m3 0h1m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m2 0h1m2 0h1m3 0h1m2 0h2m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m3 0h1m4 0h5m4 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h5m2 0h4m1 0h1m1 0h1m1 0h1M0 8.5h1m1 0h2m1 0h3m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1m1 0h2m1 0h1m2 0h1m1 0h2M1 9.5h1m1 0h1m1 0h1m1 0h3m3 0h1m2 0h8m2 0h2m1 0h4M0 10.5h5m1 0h3m2 0h3m4 0h1m1 0h2m1 0h2m2 0h3m1 0h2M0 11.5h2m2 0h2m2 0h1m2 0h2m2 0h3m2 0h1m2 0h2m2 0h1m1 0h1M1 12.5h1m4 0h1m1 0h1m2 0h1m2 0h3m2 0h2m1 0h4m1 0h3m1 0h1M0 13.5h5m4 0h1m2 0h1m1 0h1m4 0h1m4 0h2m1 0h1m3 0h1M6 14.5h3m2 0h1m1 0h2m2 0h6m3 0h3M0 15.5h2m1 0h1m1 0h1m1 0h1m1 0h7m5 0h1m2 0h3m2 0h2M0 16.5h1m1 0h2m1 0h2m3 0h2m1 0h2m1 0h1m1 0h6m1 0h2m1 0h3M1 17.5h5m1 0h1m1 0h1m2 0h4m2 0h1m1 0h7m1 0h2m2 0h1M3 18.5h5m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1m1 0h1m2 0h2m1 0h1M0 19.5h1m1 0h1m1 0h2m1 0h1m6 0h5m1 0h1m1 0h3m3 0h1m2 0h2M1 20.5h2m1 0h3m2 0h2m1 0h1m2 0h2m4 0h1m2 0h2m3 0h2M0 21.5h2m1 0h1m3 0h3m2 0h1m2 0h2m2 0h5m2 0h1m5 0h1M3 22.5h2m1 0h3m1 0h6m4 0h2m1 0h2m1 0h4m1 0h2M1 23.5h1m3 0h1m1 0h1m2 0h1m1 0h2m1 0h1m3 0h1m3 0h1m3 0h2M0 24.5h1m4 0h4m1 0h1m6 0h1m1 0h1m2 0h1m1 0h5m2 0h1M8 25.5h1m1 0h1m2 0h4m2 0h1m2 0h3m3 0h2m1 0h1M0 26.5h7m1 0h1m1 0h1m3 0h1m1 0h4m1 0h4m1 0h1m1 0h1m2 0h1M0 27.5h1m5 0h1m1 0h1m1 0h2m1 0h1m1 0h1m1 0h5m1 0h2m3 0h5M0 28.5h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m2 0h13m1 0h2M0 29.5h1m1 0h3m1 0h1m1 0h2m2 0h1m3 0h1m3 0h1m3 0h1m2 0h1m1 0h2m1 0h1M0 30.5h1m1 0h3m1 0h1m1 0h1m1 0h7m3 0h4m2 0h2m1 0h1M0 31.5h1m5 0h1m2 0h1m4 0h1m2 0h4m3 0h2m1 0h2m3 0h1M0 32.5h7m1 0h2m2 0h1m1 0h1m2 0h3m1 0h3m4 0h3"/></svg>
+</div>
+<div class="body">
+<p class="meta">CT 55th House District <span class="dot">·</span> Sponsorship record</p>
+<h3><a href="https://andoverct.info/reports/55th/weir-sponsorship/">Four Years of Bills</a></h3>
+<a class="url" href="https://andoverct.info/reports/55th/weir-sponsorship/">andoverct.info/<wbr>reports/<wbr>55th/<wbr>weir-sponsorship</a>
+<p class="desc">Every one of the 90 bills Rep. Steve Weir (R-55) introduced or cosponsored across his four sessions, 2023 through 2026, with the disposition of each resolved from the Connecticut legislative datasets and confirmed against the chaptered public acts. He put his name at the top of 41 bills and none became law; 24 he filed alone died in committee without a hearing. His name is nonetheless on 33 enacted laws, all as a cosponsor of committee bills. Traces what became of the four district projects behind his 2025 bond bills — the RHAM generator is being built on Hebron town money, not state money — and compares his record with the 125 other House members who served the same four years, his own 2023 freshman class, and the committee ranking members of each term.</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reports/55th/weir-analysis" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m2 0h3m1 0h2m1 0h5m2 0h1m2 0h7M0 1.5h1m5 0h1m3 0h1m2 0h3m1 0h1m3 0h2m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h2m3 0h1m1 0h7m1 0h1m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h3m3 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h3m4 0h1m1 0h2m2 0h3m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h2m1 0h1m1 0h1m1 0h3m2 0h3m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h4m2 0h2m5 0h2m1 0h1M0 8.5h1m1 0h5m3 0h2m1 0h1m1 0h4m3 0h1m3 0h5M2 9.5h2m3 0h2m2 0h1m4 0h1m1 0h3m1 0h2m2 0h2m1 0h4M1 10.5h2m1 0h1m1 0h1m3 0h2m3 0h1m2 0h1m2 0h1m4 0h1m1 0h1m1 0h2M1 11.5h2m5 0h2m2 0h1m1 0h1m4 0h5m1 0h1m2 0h4M1 12.5h2m2 0h2m3 0h1m4 0h1m2 0h2m2 0h4m1 0h3m1 0h1M0 13.5h6m1 0h1m2 0h2m1 0h5m2 0h4m1 0h2m2 0h4M1 14.5h4m1 0h1m1 0h1m5 0h1m2 0h1m1 0h1m4 0h3m3 0h2M2 15.5h3m2 0h1m1 0h1m1 0h4m1 0h1m2 0h3m1 0h1m1 0h2m2 0h2M0 16.5h1m1 0h3m1 0h2m1 0h1m1 0h3m2 0h2m1 0h1m2 0h4m1 0h2m3 0h1M0 17.5h1m1 0h1m2 0h1m1 0h1m1 0h5m2 0h2m1 0h3m1 0h1m2 0h2m1 0h4M0 18.5h7m1 0h4m2 0h4m2 0h1m3 0h1m2 0h2m1 0h1M1 19.5h1m2 0h1m7 0h1m1 0h1m1 0h3m2 0h2m3 0h6M1 20.5h1m1 0h6m1 0h3m3 0h1m2 0h1m2 0h1m1 0h1m2 0h3m1 0h1M0 21.5h1m2 0h1m6 0h1m3 0h2m2 0h1m2 0h1m1 0h1m2 0h1m5 0h1M0 22.5h1m1 0h3m1 0h2m1 0h1m1 0h1m3 0h4m1 0h1m7 0h1m1 0h2M0 23.5h1m4 0h1m2 0h4m1 0h3m2 0h5m1 0h2m4 0h1m1 0h1M0 24.5h1m1 0h6m5 0h3m1 0h1m1 0h1m2 0h1m1 0h5M8 25.5h4m1 0h2m1 0h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h3M0 26.5h7m2 0h1m3 0h3m2 0h1m2 0h1m1 0h2m1 0h1m1 0h1m1 0h1M0 27.5h1m5 0h1m1 0h2m2 0h4m3 0h6m3 0h5M0 28.5h1m1 0h3m1 0h1m1 0h1m1 0h4m1 0h1m2 0h2m2 0h1m1 0h6m1 0h2M0 29.5h1m1 0h3m1 0h1m1 0h2m2 0h5m2 0h1m1 0h2m2 0h1m2 0h2m1 0h2M0 30.5h1m1 0h3m1 0h1m1 0h1m4 0h2m5 0h4m2 0h2m1 0h1M0 31.5h1m5 0h1m3 0h2m1 0h2m1 0h1m2 0h1m1 0h1m3 0h2m1 0h3M0 32.5h7m1 0h1m4 0h2m1 0h2m5 0h3m1 0h1m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">CT 55th House District <span class="dot">·</span> Pattern analysis</p>
+<h3><a href="https://andoverct.info/reports/55th/weir-analysis/">Steve Weir&#39;s Voting Record</a></h3>
+<a class="url" href="https://andoverct.info/reports/55th/weir-analysis/">andoverct.info/<wbr>reports/<wbr>55th/<wbr>weir-analysis</a>
+<p class="desc">A pattern analysis of the 1,351 roll-call votes Rep. Steve Weir (R-55) cast in the Connecticut House from 2023 through 2026, drawn from the General Assembly&#39;s official roll-call records. Covers his rate of agreement with his own caucus, issue-by-issue alignment, and the rare occasions on which he crossed over.</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reports/55th/weir-far-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m2 0h1m4 0h1m1 0h1m1 0h3m2 0h1m2 0h7M0 1.5h1m5 0h1m3 0h1m4 0h1m2 0h1m2 0h2m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h2m4 0h3m2 0h5m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h4m3 0h1m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h4m2 0h5m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m1 0h1m1 0h2m3 0h1m1 0h1m1 0h2m1 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h5m1 0h1m1 0h1m2 0h6M0 8.5h1m1 0h5m2 0h1m1 0h1m1 0h1m2 0h4m2 0h1m3 0h5M0 9.5h1m2 0h1m1 0h1m1 0h1m1 0h1m3 0h1m2 0h8m2 0h2m1 0h4M0 10.5h1m5 0h4m3 0h3m1 0h1m8 0h1m1 0h1m1 0h2M2 11.5h2m5 0h1m3 0h1m3 0h5m1 0h1m1 0h1m2 0h4M0 12.5h3m3 0h3m5 0h3m2 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 13.5h1m4 0h1m1 0h3m2 0h1m2 0h1m1 0h2m2 0h1m1 0h1m1 0h2m2 0h4M0 14.5h4m2 0h3m1 0h1m1 0h2m1 0h3m2 0h1m4 0h2m3 0h2M0 15.5h2m1 0h1m1 0h1m1 0h1m1 0h1m3 0h3m3 0h3m2 0h3m2 0h2M1 16.5h2m2 0h2m4 0h7m1 0h1m2 0h1m1 0h2m1 0h2m3 0h1M2 17.5h3m4 0h2m1 0h3m1 0h1m2 0h2m2 0h1m2 0h2m1 0h4M0 18.5h1m3 0h1m1 0h2m1 0h2m1 0h1m2 0h2m1 0h1m1 0h2m2 0h1m2 0h2m1 0h1M2 19.5h3m2 0h2m2 0h3m2 0h1m4 0h2m3 0h6M2 20.5h1m1 0h5m2 0h4m3 0h2m2 0h1m1 0h1m2 0h3m1 0h1M0 21.5h1m1 0h3m2 0h2m1 0h1m1 0h1m1 0h3m2 0h1m1 0h1m1 0h1m2 0h1m5 0h1M0 22.5h1m3 0h4m1 0h3m5 0h2m5 0h1m3 0h1m1 0h2M0 23.5h1m1 0h1m1 0h2m1 0h4m3 0h1m1 0h1m1 0h1m1 0h4m1 0h1m4 0h3M0 24.5h1m1 0h1m2 0h5m1 0h4m2 0h1m4 0h1m1 0h5M8 25.5h1m2 0h2m3 0h7m1 0h1m3 0h1m1 0h3M0 26.5h7m3 0h3m1 0h2m1 0h1m4 0h3m1 0h1m1 0h1m1 0h1M0 27.5h1m5 0h1m1 0h1m3 0h4m1 0h8m3 0h5M0 28.5h1m1 0h3m1 0h1m1 0h1m5 0h3m2 0h2m1 0h1m1 0h6m1 0h2M0 29.5h1m1 0h3m1 0h1m1 0h1m1 0h3m2 0h1m2 0h4m3 0h1m2 0h2m1 0h2M0 30.5h1m1 0h3m1 0h1m1 0h6m1 0h2m4 0h3m2 0h2m1 0h1M0 31.5h1m5 0h1m2 0h1m3 0h1m1 0h1m5 0h1m3 0h2m1 0h3M0 32.5h7m1 0h1m2 0h1m3 0h3m1 0h1m3 0h3m1 0h1m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">CT 55th House District <span class="dot">·</span> Right-of-caucus votes</p>
+<h3><a href="https://andoverct.info/reports/55th/weir-far-right/">The Bills Even His Own Party Supported</a></h3>
+<a class="url" href="https://andoverct.info/reports/55th/weir-far-right/">andoverct.info/<wbr>reports/<wbr>55th/<wbr>weir-far-right</a>
+<p class="desc">When Rep. Steve Weir (R-55) broke from his own caucus, he almost always broke to the right: 95 roll calls across 94 unique bills where a majority of House Republicans voted yes and he voted no, against just 3 breaks in the other direction. Itemizes those bills, including measures his caucus treated as routine, technical, or bipartisan.</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reports/55th/weir-businesses" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m3 0h1m2 0h2m1 0h5m2 0h1m2 0h7M0 1.5h1m5 0h1m3 0h2m1 0h3m1 0h1m3 0h1m2 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h3m2 0h1m1 0h9m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m1 0h2m2 0h3m5 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h2m1 0h1m3 0h1m1 0h2m2 0h1m1 0h1m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m1 0h1m1 0h2m1 0h3m2 0h3m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h2m2 0h2m3 0h6M0 8.5h1m1 0h5m2 0h1m1 0h3m1 0h5m2 0h1m3 0h5M0 9.5h4m3 0h1m3 0h1m4 0h1m1 0h3m1 0h2m2 0h2m1 0h4M2 10.5h1m1 0h1m1 0h1m1 0h1m2 0h1m3 0h1m2 0h1m3 0h1m3 0h1m1 0h1m1 0h2M1 11.5h1m2 0h1m2 0h1m3 0h2m1 0h1m4 0h3m1 0h1m1 0h1m2 0h4M3 12.5h2m1 0h3m2 0h2m2 0h1m2 0h2m2 0h2m1 0h1m1 0h3m1 0h1M3 13.5h1m3 0h5m1 0h5m1 0h1m1 0h1m1 0h1m1 0h2m2 0h4M1 14.5h2m3 0h1m1 0h2m1 0h3m3 0h1m2 0h1m4 0h2m3 0h2M4 15.5h1m2 0h1m1 0h2m2 0h2m1 0h1m2 0h1m1 0h1m3 0h2m2 0h2M0 16.5h2m1 0h6m1 0h5m1 0h2m4 0h1m1 0h2m1 0h2m3 0h1M0 17.5h1m1 0h3m2 0h1m2 0h2m4 0h2m1 0h3m1 0h1m2 0h2m1 0h4M1 18.5h2m2 0h2m1 0h1m3 0h6m2 0h3m1 0h1m2 0h2m1 0h1M0 19.5h3m2 0h1m3 0h1m2 0h1m1 0h1m1 0h3m2 0h2m3 0h6M1 20.5h1m2 0h1m1 0h3m7 0h1m2 0h2m1 0h1m4 0h3m1 0h1M0 21.5h1m3 0h1m4 0h2m3 0h2m2 0h6m2 0h1m5 0h1M0 22.5h1m3 0h1m1 0h4m3 0h1m1 0h4m1 0h1m3 0h1m3 0h1m1 0h2M0 23.5h1m1 0h1m2 0h1m1 0h3m2 0h2m1 0h1m2 0h1m1 0h6m4 0h1M0 24.5h1m2 0h4m2 0h2m1 0h1m2 0h1m1 0h1m4 0h1m1 0h5m2 0h1M8 25.5h2m1 0h1m1 0h2m1 0h1m1 0h5m1 0h1m3 0h1m1 0h3M0 26.5h7m3 0h2m1 0h1m1 0h1m2 0h1m4 0h2m1 0h1m1 0h1m1 0h1M0 27.5h1m5 0h1m1 0h1m1 0h2m1 0h1m1 0h1m3 0h6m3 0h5M0 28.5h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h1m1 0h1m2 0h2m2 0h1m1 0h6m1 0h2M0 29.5h1m1 0h3m1 0h1m1 0h4m2 0h3m2 0h4m2 0h1m2 0h2m1 0h2M0 30.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m6 0h4m2 0h2m1 0h1M0 31.5h1m5 0h1m2 0h4m1 0h1m1 0h1m2 0h1m1 0h1m3 0h2m1 0h3M0 32.5h7m1 0h1m1 0h2m4 0h2m5 0h3m1 0h1m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">CT 55th House District <span class="dot">·</span> Public-records analysis</p>
+<h3><a href="https://andoverct.info/reports/55th/weir-businesses/">Steve Weir&#39;s Hidden Business: What the Public Record Shows</a></h3>
+<a class="url" href="https://andoverct.info/reports/55th/weir-businesses/">andoverct.info/<wbr>reports/<wbr>55th/<wbr>weir-businesses</a>
+<p class="desc">A public-records analysis of the active business holdings of State Rep. Steve Weir (R-55), built from Connecticut Secretary of State filings, the Glastonbury and Hebron assessor databases, the Connecticut Apartment Association&#39;s own member directory, and contemporaneous reporting from CT Mirror and NBC Connecticut. Identifies seven business entities tied to him personally — including the $1.69M industrial parcel at 60 Village Place in Glastonbury that he himself describes as where he spends most of his time outside the legislature — and traces the May 6, 2026 demise of SB 274, the Concierge Apartments response bill, which never received a House vote after he and other Republicans threatened to run the clock out. Includes a four-session pattern review of his housing votes and a careful assessment of the Connecticut ethics-law question.</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reports/55th/weir-sb1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h2m1 0h3m1 0h2m1 0h1m2 0h1m1 0h1m2 0h7M0 1.5h1m5 0h1m4 0h1m1 0h2m3 0h5m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m2 0h2m3 0h2m1 0h5m2 0h1m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m1 0h2m2 0h3m3 0h3m2 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h3m2 0h1m2 0h2m1 0h1m3 0h2m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h2m4 0h2m1 0h1m2 0h1m1 0h1m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h5m1 0h1m2 0h5m1 0h1M0 8.5h1m3 0h1m1 0h3m5 0h5m1 0h3m2 0h5m2 0h1M0 9.5h6m1 0h2m1 0h3m1 0h5m2 0h3m1 0h1m3 0h2M2 10.5h1m3 0h1m2 0h2m2 0h4m1 0h1m4 0h2m1 0h1m2 0h1m1 0h1M0 11.5h1m4 0h1m2 0h3m1 0h2m2 0h1m2 0h2m1 0h1m1 0h2m5 0h1M0 12.5h1m1 0h2m2 0h1m1 0h1m1 0h1m2 0h1m2 0h1m5 0h2m2 0h1m1 0h2m2 0h1M1 13.5h3m1 0h1m1 0h2m4 0h2m2 0h4m2 0h2m2 0h1m1 0h2M3 14.5h1m1 0h2m2 0h2m3 0h2m2 0h1m1 0h1m1 0h2m1 0h2m1 0h2m1 0h1M0 15.5h2m1 0h2m4 0h3m3 0h4m2 0h2m2 0h2m1 0h1M2 16.5h1m1 0h3m4 0h1m1 0h1m2 0h2m1 0h4m1 0h1m1 0h1m1 0h1m2 0h1M1 17.5h1m1 0h2m3 0h1m2 0h1m3 0h2m6 0h1m1 0h1m3 0h2M0 18.5h1m2 0h1m2 0h2m1 0h3m3 0h1m1 0h1m2 0h4m3 0h1m1 0h1M3 19.5h2m2 0h4m3 0h1m2 0h2m2 0h1m1 0h2m1 0h2m3 0h1M0 20.5h3m1 0h6m1 0h1m1 0h3m2 0h1m1 0h1m3 0h3m1 0h2m2 0h1M0 21.5h6m3 0h5m2 0h1m2 0h1m2 0h2m1 0h1m1 0h1m3 0h1M3 22.5h1m1 0h3m1 0h2m1 0h2m2 0h1m2 0h1m2 0h3m4 0h1m1 0h1M3 23.5h3m1 0h3m2 0h1m4 0h1m1 0h3m3 0h1m2 0h2m1 0h1M0 24.5h2m2 0h1m1 0h4m1 0h1m3 0h1m1 0h1m2 0h3m1 0h5M8 25.5h4m1 0h1m1 0h4m2 0h2m1 0h1m3 0h1m1 0h1M0 26.5h7m1 0h1m4 0h4m1 0h1m5 0h1m1 0h1m1 0h2M0 27.5h1m5 0h1m2 0h1m1 0h2m2 0h2m2 0h2m1 0h1m1 0h1m3 0h1m2 0h2M0 28.5h1m1 0h3m1 0h1m1 0h2m1 0h1m4 0h1m5 0h1m1 0h6M0 29.5h1m1 0h3m1 0h1m2 0h2m3 0h1m3 0h3m5 0h4m1 0h1M0 30.5h1m1 0h3m1 0h1m2 0h3m3 0h1m1 0h2m1 0h2m2 0h1m1 0h3m1 0h1M0 31.5h1m5 0h1m3 0h1m1 0h7m2 0h2m1 0h3M0 32.5h7m1 0h7m1 0h2m1 0h3m1 0h2m1 0h1m2 0h1m2 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">CT 55th House District <span class="dot">·</span> Roll-call analysis</p>
+<h3><a href="https://andoverct.info/reports/55th/weir-sb1/">$630,000 in Town Aid and One Vote Against It</a></h3>
+<a class="url" href="https://andoverct.info/reports/55th/weir-sb1/">andoverct.info/<wbr>reports/<wbr>55th/<wbr>weir-sb1</a>
+<p class="desc">A walkthrough of Rep. Steve Weir&#39;s (R-55) May 2, 2026 vote on SB 1, the FY 2026–27 budget adjustment that directs roughly $270 million in new K-12 and municipal aid to Connecticut towns. Using the Lamont administration&#39;s town-by-town breakdown, the report estimates approximately $630,000 of that aid is headed to the five towns of the 55th. The bill passed 127–21; Weir voted no. Documents that the vote was not party-line — 27 of 48 voting Republicans voted yes — and points readers to Weir&#39;s own statements for the reasoning.</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reports/55th/weir-position" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m3 0h2m1 0h2m1 0h5m2 0h1m2 0h7M0 1.5h1m5 0h1m2 0h2m2 0h3m1 0h1m3 0h1m2 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m1 0h9m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h3m3 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h2m5 0h1m1 0h2m2 0h3m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h2m1 0h1m1 0h1m1 0h3m2 0h3m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h3m1 0h1m1 0h2m5 0h4M0 8.5h1m1 0h5m3 0h1m2 0h1m1 0h4m3 0h1m3 0h5M2 9.5h3m2 0h2m2 0h1m4 0h1m1 0h6m2 0h2m1 0h4M0 10.5h1m1 0h1m1 0h1m1 0h1m3 0h2m3 0h1m2 0h1m2 0h2m3 0h1m1 0h1m1 0h2M1 11.5h2m5 0h1m3 0h1m1 0h1m4 0h3m1 0h1m1 0h1m2 0h4M1 12.5h2m3 0h1m8 0h1m2 0h2m2 0h2m1 0h1m1 0h3m1 0h1M0 13.5h1m2 0h2m2 0h2m2 0h1m1 0h5m2 0h2m1 0h1m1 0h2m2 0h4M1 14.5h1m1 0h2m1 0h2m4 0h1m1 0h1m2 0h1m1 0h1m5 0h2m3 0h2M4 15.5h1m2 0h3m1 0h1m1 0h2m1 0h1m2 0h3m1 0h1m1 0h2m2 0h2M0 16.5h1m2 0h2m1 0h1m2 0h1m1 0h3m2 0h2m1 0h1m2 0h4m1 0h2m3 0h1M2 17.5h1m2 0h1m1 0h1m2 0h3m3 0h2m1 0h2m2 0h1m2 0h2m1 0h4M1 18.5h6m1 0h4m1 0h1m1 0h3m2 0h2m2 0h1m2 0h2m1 0h1M0 19.5h1m3 0h1m4 0h2m1 0h1m1 0h1m1 0h3m2 0h2m3 0h6M0 20.5h2m3 0h3m3 0h1m1 0h1m2 0h1m2 0h1m2 0h1m1 0h1m2 0h3m1 0h1M0 21.5h1m1 0h1m4 0h2m1 0h3m1 0h2m2 0h1m2 0h1m1 0h1m2 0h1m5 0h1M0 22.5h1m1 0h1m1 0h1m1 0h1m2 0h1m2 0h1m2 0h4m1 0h1m3 0h1m3 0h1m1 0h2M0 23.5h1m1 0h1m2 0h1m3 0h7m2 0h5m1 0h2m4 0h1m1 0h1M0 24.5h1m2 0h5m5 0h3m1 0h1m1 0h1m2 0h1m1 0h5M8 25.5h4m2 0h1m1 0h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h3M0 26.5h7m6 0h3m2 0h1m3 0h3m1 0h1m1 0h1m1 0h1M0 27.5h1m5 0h1m1 0h1m3 0h2m1 0h1m3 0h6m3 0h5M0 28.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h2m2 0h2m2 0h1m1 0h6m1 0h2M0 29.5h1m1 0h3m1 0h1m1 0h2m3 0h1m1 0h2m2 0h1m1 0h1m3 0h1m2 0h2m1 0h2M0 30.5h1m1 0h3m1 0h1m1 0h1m2 0h4m6 0h3m2 0h2m1 0h1M0 31.5h1m5 0h1m3 0h1m2 0h2m1 0h1m2 0h3m1 0h1m1 0h2m1 0h3M0 32.5h7m1 0h1m2 0h1m1 0h2m1 0h2m1 0h1m3 0h3m1 0h1m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">CT 55th House District <span class="dot">·</span> Voting-record analysis</p>
+<h3><a href="https://andoverct.info/reports/55th/weir-position/">Where Weir Sits in the House</a></h3>
+<a class="url" href="https://andoverct.info/reports/55th/weir-position/">andoverct.info/<wbr>reports/<wbr>55th/<wbr>weir-position</a>
+<p class="desc">Where Rep. Steve Weir (R-55) falls on the ideological spectrum of the Connecticut House, and how that compares to the partisan lean of the district he represents. Every member is placed on a single liberal-to-conservative scale built from their recorded roll-call votes using W-NOMINATE, a standard spatial method, for the 2025–2026 term and, for comparison, 2023–2024. Each district&#39;s partisan lean is a recency- and turnout-weighted average of its towns&#39; two-party vote for President, U.S. Senate, U.S. House, and Governor across the 2012–2024 general elections. The findings are stable across both of Weir&#39;s terms: he votes among the most conservative members of the House, to the right of his own party&#39;s leader, while the 55th leans Democratic in statewide and federal elections.</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reports/55th/weir-votes" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m7 0h1m1 0h1m1 0h4m1 0h1m2 0h7M0 1.5h1m5 0h1m3 0h2m3 0h1m2 0h1m2 0h2m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h3m2 0h5m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m6 0h1m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h4m2 0h4m2 0h4m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m1 0h1m1 0h2m3 0h1m1 0h1m1 0h2m1 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h4m2 0h1m1 0h1m2 0h4M0 8.5h1m1 0h5m2 0h1m1 0h1m1 0h1m2 0h4m2 0h1m3 0h5M3 9.5h1m3 0h2m2 0h1m1 0h1m2 0h8m2 0h2m1 0h4M0 10.5h4m1 0h2m2 0h3m1 0h3m1 0h1m8 0h1m1 0h1m1 0h2M4 11.5h2m1 0h2m1 0h2m1 0h1m3 0h7m1 0h1m2 0h4M0 12.5h3m3 0h1m1 0h1m2 0h1m2 0h3m2 0h2m2 0h1m1 0h1m1 0h3m1 0h1M1 13.5h2m4 0h1m2 0h1m2 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h2m2 0h4M1 14.5h3m1 0h2m2 0h1m2 0h1m2 0h3m2 0h1m4 0h2m3 0h2M0 15.5h1m4 0h1m2 0h1m1 0h1m3 0h2m5 0h1m1 0h1m1 0h2m2 0h2M5 16.5h5m1 0h1m1 0h1m1 0h3m4 0h4m1 0h2m3 0h1M0 17.5h1m2 0h1m1 0h1m1 0h2m1 0h4m2 0h1m2 0h2m2 0h1m2 0h2m1 0h4M3 18.5h6m4 0h4m1 0h1m1 0h1m1 0h1m1 0h1m2 0h2m1 0h1M0 19.5h1m1 0h1m6 0h2m5 0h1m4 0h2m3 0h6M0 20.5h3m1 0h4m3 0h1m1 0h1m4 0h2m1 0h1m2 0h1m2 0h3m1 0h1M0 21.5h2m1 0h1m1 0h1m2 0h3m1 0h1m2 0h2m3 0h2m1 0h1m2 0h1m5 0h1M0 22.5h1m1 0h1m1 0h1m1 0h4m1 0h1m1 0h1m3 0h3m4 0h1m3 0h1m1 0h2M0 23.5h1m1 0h3m2 0h1m1 0h3m2 0h1m1 0h1m1 0h6m1 0h1m4 0h3M0 24.5h1m1 0h1m3 0h7m1 0h1m2 0h1m1 0h1m2 0h1m1 0h5m2 0h2M8 25.5h3m1 0h3m1 0h5m1 0h1m1 0h1m3 0h1m1 0h3M0 26.5h7m2 0h1m1 0h3m1 0h1m1 0h1m4 0h3m1 0h1m1 0h1m1 0h1M0 27.5h1m5 0h1m1 0h1m2 0h1m2 0h2m1 0h4m2 0h2m3 0h5M0 28.5h1m1 0h3m1 0h1m1 0h5m2 0h2m2 0h4m1 0h6m1 0h2M0 29.5h1m1 0h3m1 0h1m1 0h3m4 0h1m2 0h1m2 0h1m3 0h1m2 0h2m2 0h1M0 30.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m1 0h2m3 0h4m2 0h2m1 0h1M0 31.5h1m5 0h1m2 0h1m2 0h2m1 0h1m5 0h1m1 0h1m1 0h2m1 0h3M0 32.5h7m1 0h2m1 0h1m3 0h3m5 0h3m1 0h1m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">CT 55th House District <span class="dot">·</span> Roll-call record</p>
+<h3><a href="https://andoverct.info/reports/55th/weir-votes/">Steve Weir&#39;s House Floor Votes, 2023–2026</a></h3>
+<a class="url" href="https://andoverct.info/reports/55th/weir-votes/">andoverct.info/<wbr>reports/<wbr>55th/<wbr>weir-votes</a>
+<p class="desc">Every recorded House floor vote Rep. Steve Weir (R-55) cast from 2023 through 2026 — the four regular sessions plus the special sessions of September 2023, June 2024, and November 2025 — compiled directly from the Connecticut General Assembly&#39;s roll-call PDFs and presented as a single sortable table organized by session. Each row links out to the bill&#39;s tracking page, the official roll-call PDF, and (where available) the bill text, and shows both the chamber-wide totals and the party-caucus splits — with rows outlined where Weir voted against the majority of his own caucus. Every row is reconciled against its PDF&#39;s printed totals and cross-checked against the House Journals and CGA bill pages. CSV and JSON downloads of the full dataset are available alongside the HTML.</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reports/55th/clippings" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h1m1 0h2m3 0h4m4 0h1m2 0h7M0 1.5h1m5 0h1m2 0h1m1 0h1m5 0h1m1 0h3m2 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m3 0h1m2 0h1m1 0h1m3 0h3m2 0h1m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h2m1 0h2m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h3m1 0h3m2 0h4m2 0h1m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m2 0h2m1 0h1m1 0h2m1 0h1m2 0h1m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h2m1 0h1m2 0h5m2 0h1m2 0h1M0 8.5h1m3 0h1m1 0h6m2 0h1m1 0h7m2 0h5m2 0h1M1 9.5h1m3 0h1m2 0h1m4 0h4m1 0h1m2 0h3m1 0h1m3 0h2M0 10.5h1m2 0h2m1 0h3m2 0h2m2 0h3m5 0h2m1 0h1m2 0h1m1 0h1M1 11.5h1m1 0h2m2 0h1m1 0h2m3 0h1m1 0h6m2 0h2m5 0h1M0 12.5h2m2 0h1m1 0h1m3 0h2m1 0h2m3 0h1m1 0h1m2 0h2m1 0h1m1 0h2m2 0h1M1 13.5h1m2 0h2m2 0h1m1 0h4m2 0h2m1 0h1m3 0h1m3 0h1m1 0h2M1 14.5h3m2 0h2m1 0h1m1 0h1m1 0h2m1 0h1m1 0h2m2 0h2m1 0h5m1 0h1M0 15.5h2m3 0h1m1 0h2m3 0h1m1 0h1m2 0h6m1 0h3M0 16.5h1m3 0h1m1 0h2m1 0h1m1 0h1m3 0h3m2 0h5m1 0h1m1 0h1m2 0h1M0 17.5h5m2 0h1m2 0h1m1 0h1m2 0h3m3 0h1m1 0h1m1 0h1m3 0h2M0 18.5h1m1 0h1m2 0h2m2 0h2m4 0h1m2 0h1m1 0h1m2 0h1m3 0h1m1 0h1M3 19.5h1m1 0h1m1 0h2m1 0h1m1 0h3m7 0h3m2 0h1m3 0h1M0 20.5h1m1 0h1m2 0h2m2 0h1m1 0h1m2 0h3m5 0h1m1 0h1m1 0h1m1 0h2m2 0h1M0 21.5h1m2 0h3m2 0h1m1 0h1m1 0h2m4 0h3m2 0h1m3 0h1m3 0h1M2 22.5h1m3 0h1m2 0h1m3 0h1m1 0h1m4 0h1m1 0h3m4 0h1m1 0h1M3 23.5h3m3 0h1m1 0h7m3 0h1m1 0h1m1 0h1m1 0h3m2 0h1M0 24.5h3m1 0h1m1 0h5m2 0h1m3 0h1m1 0h10M8 25.5h2m3 0h4m1 0h1m3 0h1m1 0h1m3 0h1m1 0h1M0 26.5h7m1 0h2m1 0h7m3 0h2m1 0h1m1 0h1m1 0h2M0 27.5h1m5 0h1m2 0h2m1 0h10m2 0h1m3 0h1m2 0h2M0 28.5h1m1 0h3m1 0h1m1 0h3m2 0h2m3 0h1m1 0h1m3 0h6M0 29.5h1m1 0h3m1 0h1m2 0h1m1 0h1m4 0h1m2 0h1m2 0h1m3 0h4m1 0h1M0 30.5h1m1 0h3m1 0h1m2 0h6m1 0h4m1 0h1m2 0h1m1 0h3m1 0h1M0 31.5h1m5 0h1m5 0h3m2 0h8M0 32.5h7m1 0h1m2 0h1m3 0h3m2 0h2m1 0h4m5 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">CT 55th House District <span class="dot">·</span> Letters archive</p>
+<h3><a href="https://andoverct.info/reports/55th/clippings/">Letters to the Editor: The 2026 Race for the 55th</a></h3>
+<a class="url" href="https://andoverct.info/reports/55th/clippings/">andoverct.info/<wbr>reports/<wbr>55th/<wbr>clippings</a>
+<p class="desc">Every letter to the editor the Rivereast News Bulletin printed on the 2026 race for the 55th House District between Democrat Ellen Paul and Republican State Rep. Steve Weir, April 10 through October 30, 2026: 179 letters in 24 weekly editions, 102 on the Paul side and 77 on the Weir side. Each letter is reproduced as printed and linked to the original page in the paper’s online archive. The library is filterable and sortable by date, writer, side, the argument each letter makes (character, voting record, legislative process, libraries, party control and others), the issues it touches, and the bills it names, and replies are linked to the letters they answer.</p>
+</div>
+</article>
+</div>
+
+</div>
+<div class="sm-group">
+<p class="group-label"><a href="https://andoverct.info/reports/conn/">Connecticut</a> <span class="url-inline">andoverct.info/<wbr>reports/<wbr>conn</span></p>
+<div class="sm-grid">
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reports/conn/ct-vs-us" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m4 0h2m1 0h1m1 0h1m1 0h3m2 0h1m2 0h7M0 1.5h1m5 0h1m2 0h1m1 0h1m3 0h1m2 0h1m3 0h1m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h5m1 0h3m2 0h5m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m5 0h1m2 0h1m2 0h1m2 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m5 0h4m2 0h2m1 0h2m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m2 0h1m1 0h1m3 0h1m1 0h1m1 0h2m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h2m2 0h1m1 0h1m1 0h1m2 0h6M0 8.5h1m1 0h5m2 0h1m3 0h1m2 0h4m2 0h1m3 0h5M0 9.5h1m4 0h1m4 0h4m2 0h5m1 0h2m2 0h2m1 0h2m1 0h1M1 10.5h2m3 0h1m2 0h7m1 0h1m4 0h1m2 0h2m1 0h1m1 0h2M0 11.5h1m4 0h1m2 0h4m1 0h1m3 0h4m2 0h1m1 0h1m2 0h5M1 12.5h1m3 0h3m2 0h1m3 0h3m2 0h5m1 0h1m1 0h3m1 0h2M1 13.5h2m2 0h1m1 0h6m2 0h1m1 0h2m2 0h1m1 0h1m1 0h3m1 0h1m1 0h2M0 14.5h1m3 0h1m1 0h1m1 0h2m4 0h4m2 0h1m4 0h3m3 0h1M1 15.5h1m3 0h1m2 0h2m1 0h1m3 0h1m5 0h1m3 0h2m2 0h2M1 16.5h1m1 0h4m1 0h2m4 0h4m4 0h1m1 0h2m1 0h2m3 0h1M2 17.5h1m4 0h1m1 0h1m1 0h1m2 0h1m1 0h1m2 0h3m1 0h1m2 0h2m1 0h2m1 0h1M0 18.5h2m1 0h1m2 0h2m1 0h1m2 0h2m1 0h2m1 0h1m1 0h2m2 0h2m1 0h2m1 0h2M1 19.5h1m1 0h2m2 0h8m1 0h1m4 0h2m3 0h7M0 20.5h1m2 0h4m3 0h5m3 0h2m1 0h1m3 0h1m2 0h2M0 21.5h1m3 0h1m6 0h2m1 0h3m3 0h4m1 0h2m2 0h1m2 0h1M0 22.5h1m1 0h3m1 0h2m1 0h1m2 0h2m3 0h3m8 0h1m2 0h1M0 23.5h1m6 0h4m5 0h1m1 0h5m2 0h1m1 0h1m2 0h2M0 24.5h1m1 0h3m1 0h2m3 0h1m1 0h2m2 0h1m1 0h1m2 0h7m2 0h2M8 25.5h1m1 0h2m1 0h2m1 0h5m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1M0 26.5h7m2 0h1m1 0h5m1 0h1m4 0h3m1 0h1m1 0h1m1 0h2M0 27.5h1m5 0h1m1 0h3m3 0h2m1 0h4m2 0h2m3 0h5M0 28.5h1m1 0h3m1 0h1m1 0h1m2 0h2m2 0h2m2 0h4m1 0h6m1 0h2M0 29.5h1m1 0h3m1 0h1m1 0h1m4 0h1m1 0h1m2 0h1m2 0h1m3 0h1m2 0h2m2 0h1M0 30.5h1m1 0h3m1 0h1m1 0h2m1 0h1m3 0h2m3 0h4m2 0h2m1 0h1M0 31.5h1m5 0h1m4 0h5m5 0h1m6 0h3M0 32.5h7m1 0h1m1 0h3m2 0h3m6 0h4m3 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">Connecticut vs. the nation <span class="dot">·</span> 26 indicators</p>
+<h3><a href="https://andoverct.info/reports/conn/ct-vs-us/">The Whole Ledger</a></h3>
+<a class="url" href="https://andoverct.info/reports/conn/ct-vs-us/">andoverct.info/<wbr>reports/<wbr>conn/<wbr>ct-vs-us</a>
+<p class="desc">Connecticut measured against the rest of the country on 26 indicators at roughly 2010, 2019, and the latest available year — the span of unified state government — with every figure traced to a primary source (Census, BEA, BLS, EIA, FBI, NCHS/CDC, NCES and others) and checked against it before publication. The answer is genuinely mixed and the mix has a shape: the clearest gains are fiscal (a rainy day fund rebuilt from zero to its statutory cap, pension funding rising, a credit rating recovered through eight upgrades), the clearest strengths are inherited quality-of-life leads the rest of the country is steadily closing, and the clearest failures are costs and growth — taxes, electricity, housing production, population, and an overdose crisis that flipped Connecticut from better than the nation to worse.</p>
+</div>
+</article>
+</div>
+
+</div>
+</section>
+
+<section class="sm-section" id="sec-legal">
+<header class="sm-head">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/town-charter" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h29v29H0z"/><path stroke="#000000" d="M0 0.5h7m3 0h1m2 0h1m1 0h1m1 0h3m2 0h7M0 1.5h1m5 0h1m2 0h9m2 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m2 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h1m2 0h1m1 0h1m2 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m2 0h2m6 0h2m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m1 0h1m4 0h1m6 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h2m1 0h2m1 0h1m3 0h3M0 8.5h1m1 0h5m2 0h2m4 0h3m4 0h5M0 9.5h1m2 0h1m1 0h1m4 0h1m2 0h2m1 0h5m1 0h3m3 0h1M0 10.5h2m3 0h3m1 0h1m1 0h7m5 0h1M1 11.5h2m4 0h1m1 0h2m1 0h2m1 0h2m2 0h5m1 0h1m1 0h1M1 12.5h3m2 0h1m1 0h2m4 0h2m1 0h1m1 0h1m5 0h2M0 13.5h1m1 0h2m5 0h4m3 0h1m2 0h6m3 0h1M0 14.5h2m2 0h3m2 0h3m3 0h1m1 0h1m2 0h1m3 0h3M0 15.5h2m2 0h2m1 0h3m1 0h1m2 0h3m6 0h2m2 0h1M1 16.5h1m1 0h1m1 0h2m1 0h5m2 0h3m1 0h1m5 0h2M0 17.5h6m3 0h1m1 0h1m1 0h2m1 0h5m1 0h3m1 0h1m1 0h1M0 18.5h1m1 0h2m1 0h2m2 0h1m1 0h5m1 0h1m3 0h1m4 0h1M0 19.5h1m3 0h1m2 0h1m2 0h4m4 0h6m3 0h1M0 20.5h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h11m1 0h3M8 21.5h1m2 0h2m3 0h3m1 0h1m3 0h5M0 22.5h7m2 0h1m1 0h1m3 0h2m2 0h2m1 0h1m1 0h3M0 23.5h1m5 0h1m1 0h1m1 0h2m2 0h2m4 0h1m3 0h1m2 0h1M0 24.5h1m1 0h3m1 0h1m1 0h1m1 0h3m2 0h1m1 0h1m2 0h5m1 0h1M0 25.5h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h2m1 0h1m1 0h1m6 0h4M0 26.5h1m1 0h3m1 0h1m1 0h2m2 0h1m2 0h1m1 0h3m1 0h7M0 27.5h1m5 0h1m2 0h2m1 0h1m1 0h2m3 0h3m1 0h3m1 0h1M0 28.5h7m1 0h1m5 0h1m2 0h1m1 0h1m2 0h1m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="section-label">§ III · Legal Docs</p>
+<h2>Legal Docs</h2>
+<a class="url" href="https://andoverct.info/town-charter/">andoverct.info/<wbr>town-charter</a>
+<p class="blurb">The Town Charter itself — restructured for online reading — alongside topic-by-topic explainers that translate it into ordinary English, with cross-references to Connecticut state law.</p>
+</div>
+</header>
+
+<div class="sm-group">
+<p class="group-label"><a href="https://charter2024.andoverct.info/">The Charter</a> <span class="url-inline">charter2024.andoverct.info</span></p>
+<div class="sm-grid">
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for charter2024.andoverct.info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h29v29H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h1m1 0h6m1 0h2m3 0h7M0 1.5h1m5 0h1m1 0h3m2 0h3m3 0h2m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h1m4 0h2m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m2 0h1m2 0h1m1 0h4m1 0h2m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h3m1 0h2m1 0h1m2 0h2m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m4 0h4m5 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M9 7.5h2m1 0h1m1 0h3m2 0h2M0 8.5h1m2 0h8m1 0h3m1 0h2m1 0h1m1 0h1m2 0h1m1 0h3M2 9.5h3m3 0h3m3 0h3m2 0h1m1 0h1m1 0h2m1 0h2M1 10.5h1m4 0h2m1 0h1m1 0h1m2 0h3m3 0h1m2 0h1m2 0h1M1 11.5h5m4 0h1m1 0h1m1 0h2m1 0h4m1 0h4m2 0h1M0 12.5h3m1 0h4m3 0h1m1 0h2m1 0h1m3 0h1m1 0h1m5 0h1M0 13.5h2m3 0h1m5 0h2m2 0h2m1 0h1m1 0h1m1 0h7M0 14.5h3m1 0h1m1 0h1m1 0h2m4 0h3m2 0h1m2 0h3m1 0h1m1 0h1M3 15.5h1m4 0h2m1 0h5m5 0h2m1 0h1m1 0h1m1 0h1M4 16.5h5m3 0h1m2 0h1m7 0h1m1 0h1M0 17.5h1m1 0h1m1 0h1m2 0h2m1 0h3m2 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h2M0 18.5h2m1 0h4m1 0h2m3 0h4m1 0h8m2 0h1M0 19.5h3m1 0h1m3 0h1m1 0h1m1 0h2m1 0h2m1 0h1m1 0h1m1 0h1m2 0h2M0 20.5h4m1 0h4m4 0h1m2 0h2m1 0h9M8 21.5h3m2 0h1m1 0h1m2 0h3m3 0h2M0 22.5h7m1 0h2m3 0h1m1 0h2m1 0h3m1 0h1m1 0h2M0 23.5h1m5 0h1m1 0h1m1 0h1m1 0h2m2 0h2m2 0h1m3 0h1m2 0h1M0 24.5h1m1 0h3m1 0h1m1 0h1m1 0h4m2 0h1m2 0h7m1 0h2M0 25.5h1m1 0h3m1 0h1m1 0h2m4 0h3m2 0h2m7 0h1M0 26.5h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h3m2 0h1m3 0h2m1 0h3M0 27.5h1m5 0h1m3 0h1m1 0h2m1 0h1m2 0h2m2 0h2m1 0h2m1 0h1M0 28.5h7m1 0h1m1 0h1m2 0h2m3 0h1m1 0h5"/></svg>
+</div>
+<div class="body">
+<p class="meta">Webpage <span class="dot">·</span> Current</p>
+<h3><a href="https://charter2024.andoverct.info/">2024 revision</a></h3>
+<a class="url" href="https://charter2024.andoverct.info/">charter2024.andoverct.info</a>
+<p class="desc">The current Charter, restructured for online reading with cross-linked sections — the source the guides refer back to.</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for charter2022.andoverct.info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h29v29H0z"/><path stroke="#000000" d="M0 0.5h7m3 0h3m2 0h2m1 0h3m1 0h7M0 1.5h1m5 0h1m3 0h3m9 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h1m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m2 0h1m5 0h1m1 0h1m2 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m4 0h3m1 0h4m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h2m1 0h7m2 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h1m1 0h2m2 0h1M0 8.5h1m1 0h5m3 0h1m1 0h1m1 0h1m2 0h1m4 0h5M0 9.5h1m1 0h1m1 0h2m1 0h2m1 0h1m8 0h2m1 0h3m3 0h1M0 10.5h3m3 0h1m1 0h4m3 0h3M0 11.5h1m3 0h2m2 0h1m1 0h3m1 0h1m1 0h1m1 0h4m2 0h2m1 0h1M0 12.5h1m1 0h2m2 0h1m1 0h1m2 0h2m4 0h1m1 0h1m3 0h1m1 0h2M2 13.5h1m2 0h1m1 0h1m1 0h1m1 0h4m1 0h1m1 0h2m1 0h4m3 0h1M0 14.5h1m1 0h1m2 0h5m1 0h5m7 0h4M0 15.5h1m1 0h4m3 0h2m2 0h1m2 0h1m2 0h1m4 0h1m2 0h1M0 16.5h1m2 0h1m1 0h2m2 0h2m1 0h1m1 0h2m1 0h1m2 0h1m4 0h2M0 17.5h2m5 0h2m2 0h1m4 0h1m2 0h1m2 0h3m1 0h1m1 0h1M0 18.5h1m3 0h1m1 0h1m3 0h2m3 0h1m1 0h2m2 0h1m2 0h1m1 0h1M0 19.5h1m1 0h1m2 0h1m1 0h4m3 0h1m1 0h1m1 0h2m1 0h2m4 0h1M0 20.5h1m1 0h2m1 0h2m2 0h1m1 0h2m4 0h1m2 0h5m1 0h3M8 21.5h1m1 0h1m2 0h2m1 0h1m1 0h3m3 0h5M0 22.5h7m4 0h10m1 0h1m1 0h3M0 23.5h1m5 0h1m1 0h1m1 0h1m2 0h1m1 0h1m4 0h1m3 0h1m3 0h1M0 24.5h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h1m2 0h1m2 0h5m1 0h2M0 25.5h1m1 0h3m1 0h1m1 0h2m1 0h3m2 0h1m4 0h1m3 0h4M0 26.5h1m1 0h3m1 0h1m1 0h1m1 0h1m4 0h1m6 0h6M0 27.5h1m5 0h1m2 0h1m3 0h2m1 0h1m1 0h4m1 0h1m1 0h1m1 0h1M0 28.5h7m1 0h3m1 0h1m1 0h1m2 0h2m2 0h2m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">Webpage <span class="dot">·</span> Archived</p>
+<h3><a href="https://charter2022.andoverct.info/">2022 revision</a></h3>
+<a class="url" href="https://charter2022.andoverct.info/">charter2022.andoverct.info</a>
+<p class="desc">The prior Charter, preserved for comparison only — not current, and not reviewed to the same standard.</p>
+</div>
+</article>
+</div>
+
+</div>
+<div class="sm-group">
+<p class="group-label"><a href="https://andoverct.info/town-charter/">Plain-language charter guides</a> <span class="url-inline">andoverct.info/<wbr>town-charter</span></p>
+<div class="sm-grid">
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/town-charter" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h29v29H0z"/><path stroke="#000000" d="M0 0.5h7m3 0h1m2 0h1m1 0h1m1 0h3m2 0h7M0 1.5h1m5 0h1m2 0h9m2 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m2 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h1m2 0h1m1 0h1m2 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m2 0h2m6 0h2m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m1 0h1m4 0h1m6 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h2m1 0h2m1 0h1m3 0h3M0 8.5h1m1 0h5m2 0h2m4 0h3m4 0h5M0 9.5h1m2 0h1m1 0h1m4 0h1m2 0h2m1 0h5m1 0h3m3 0h1M0 10.5h2m3 0h3m1 0h1m1 0h7m5 0h1M1 11.5h2m4 0h1m1 0h2m1 0h2m1 0h2m2 0h5m1 0h1m1 0h1M1 12.5h3m2 0h1m1 0h2m4 0h2m1 0h1m1 0h1m5 0h2M0 13.5h1m1 0h2m5 0h4m3 0h1m2 0h6m3 0h1M0 14.5h2m2 0h3m2 0h3m3 0h1m1 0h1m2 0h1m3 0h3M0 15.5h2m2 0h2m1 0h3m1 0h1m2 0h3m6 0h2m2 0h1M1 16.5h1m1 0h1m1 0h2m1 0h5m2 0h3m1 0h1m5 0h2M0 17.5h6m3 0h1m1 0h1m1 0h2m1 0h5m1 0h3m1 0h1m1 0h1M0 18.5h1m1 0h2m1 0h2m2 0h1m1 0h5m1 0h1m3 0h1m4 0h1M0 19.5h1m3 0h1m2 0h1m2 0h4m4 0h6m3 0h1M0 20.5h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h11m1 0h3M8 21.5h1m2 0h2m3 0h3m1 0h1m3 0h5M0 22.5h7m2 0h1m1 0h1m3 0h2m2 0h2m1 0h1m1 0h3M0 23.5h1m5 0h1m1 0h1m1 0h2m2 0h2m4 0h1m3 0h1m2 0h1M0 24.5h1m1 0h3m1 0h1m1 0h1m1 0h3m2 0h1m1 0h1m2 0h5m1 0h1M0 25.5h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h2m1 0h1m1 0h1m6 0h4M0 26.5h1m1 0h3m1 0h1m1 0h2m2 0h1m2 0h1m1 0h3m1 0h7M0 27.5h1m5 0h1m2 0h2m1 0h1m1 0h2m3 0h3m1 0h3m1 0h1M0 28.5h7m1 0h1m5 0h1m2 0h1m1 0h1m2 0h1m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">Six guides <span class="dot">·</span> Plain English</p>
+<h3><a href="https://andoverct.info/town-charter/">Understanding the Charter</a></h3>
+<a class="url" href="https://andoverct.info/town-charter/">andoverct.info/<wbr>town-charter</a>
+<p class="desc">Topic-by-topic explainers that translate the Charter into ordinary English, organized by the questions residents actually ask.</p>
+</div>
+</article>
+</div>
+<div class="sm-list">
+<p class="list-label">The six guides</p>
+<ol class="rows">
+<li class="sm-row">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/town-charter/budget" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h3m1 0h3m2 0h2m2 0h2m3 0h7M0 1.5h1m5 0h1m1 0h7m1 0h1m1 0h3m3 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m3 0h2m1 0h1m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m2 0h1m4 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h2m1 0h3m1 0h2m4 0h3m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m2 0h1m5 0h2m2 0h1m4 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M9 7.5h8m5 0h2M0 8.5h1m2 0h7m4 0h1m1 0h3m4 0h1m1 0h1m2 0h1m1 0h3M0 9.5h1m1 0h1m1 0h2m3 0h2m1 0h4m1 0h3m1 0h1m1 0h1m4 0h3M1 10.5h3m1 0h3m1 0h1m2 0h2m1 0h2m3 0h1m1 0h2m1 0h2m1 0h5M2 11.5h2m5 0h1m1 0h3m4 0h5m4 0h1m2 0h1M0 12.5h1m1 0h3m1 0h4m3 0h1m3 0h1m3 0h1m2 0h1m1 0h2m4 0h1M0 13.5h1m2 0h1m1 0h1m4 0h1m1 0h1m1 0h1m2 0h4m3 0h2m1 0h1m1 0h2M2 14.5h1m1 0h1m1 0h1m2 0h2m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m3 0h1m1 0h3M0 15.5h1m1 0h2m1 0h1m5 0h2m1 0h1m1 0h1m3 0h1m1 0h2m1 0h1m1 0h4m1 0h1M1 16.5h3m2 0h2m1 0h2m1 0h2m1 0h1m4 0h1m1 0h1m1 0h5M0 17.5h6m1 0h3m1 0h1m1 0h5m1 0h2m1 0h1m3 0h1m1 0h1m1 0h3M1 18.5h1m1 0h1m1 0h4m1 0h1m2 0h1m1 0h5m1 0h4m1 0h2m1 0h2m1 0h1M0 19.5h3m4 0h2m2 0h2m2 0h2m2 0h2m1 0h1m5 0h4M3 20.5h1m2 0h1m4 0h2m3 0h1m1 0h1m2 0h2m1 0h1m4 0h1m1 0h1M0 21.5h4m1 0h1m2 0h1m1 0h1m2 0h2m8 0h2m2 0h2m1 0h1M0 22.5h1m1 0h1m3 0h1m7 0h1m2 0h1m1 0h2m2 0h2m1 0h4m1 0h2M0 23.5h1m1 0h3m2 0h1m5 0h3m1 0h4m2 0h1m1 0h1m2 0h5M0 24.5h2m2 0h1m1 0h2m5 0h2m1 0h1m3 0h1m2 0h7m1 0h1M8 25.5h1m1 0h1m4 0h4m2 0h2m1 0h1m3 0h1m1 0h1M0 26.5h7m1 0h1m3 0h4m1 0h1m1 0h1m3 0h2m1 0h1m1 0h1m1 0h1M0 27.5h1m5 0h1m1 0h1m4 0h1m1 0h1m1 0h3m1 0h4m3 0h5M0 28.5h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1m1 0h8m3 0h1M0 29.5h1m1 0h3m1 0h1m1 0h1m3 0h3m1 0h1m1 0h1m3 0h2m1 0h1m1 0h1m4 0h1M0 30.5h1m1 0h3m1 0h1m2 0h4m1 0h2m3 0h1m1 0h1m3 0h1m1 0h2m2 0h2M0 31.5h1m5 0h1m3 0h5m4 0h2m2 0h1m2 0h7M0 32.5h7m1 0h1m1 0h1m3 0h2m1 0h1m1 0h1m2 0h3m2 0h2"/></svg>
+</div>
+<div class="body">
+<p class="row-title"><span class="n">1.</span> <a href="https://andoverct.info/town-charter/budget/">The Annual Budget Process</a></p>
+<a class="url" href="https://andoverct.info/town-charter/budget/">andoverct.info/<wbr>town-charter/<wbr>budget</a>
+<p class="gloss">October planning through the May referendum; the contested question of BOF authority over the school budget.</p>
+</div>
+</li>
+<li class="sm-row">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/town-charter/town-meetings" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h1m1 0h1m2 0h1m2 0h6m1 0h1m2 0h7M0 1.5h1m5 0h1m1 0h2m3 0h1m2 0h1m1 0h1m1 0h1m1 0h2m2 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m2 0h1m1 0h2m2 0h3m2 0h1m1 0h3m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h3m3 0h1m1 0h1m3 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m2 0h1m3 0h2m5 0h1m3 0h1m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m2 0h2m2 0h1m3 0h4m3 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m2 0h1m2 0h1m2 0h2m1 0h1m1 0h3M0 8.5h1m1 0h2m1 0h3m3 0h1m2 0h1m1 0h2m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h2M1 9.5h2m4 0h2m1 0h1m5 0h1m1 0h3m1 0h2m2 0h2m1 0h2m1 0h1M1 10.5h2m1 0h1m1 0h4m2 0h1m1 0h1m1 0h2m2 0h1m2 0h7m1 0h2M0 11.5h1m1 0h4m2 0h2m2 0h3m3 0h1m1 0h1m2 0h2m1 0h2m1 0h1m1 0h1M1 12.5h1m2 0h1m1 0h1m1 0h2m8 0h2m2 0h4m2 0h2m1 0h1M1 13.5h1m5 0h2m2 0h2m3 0h1m1 0h1m5 0h1m2 0h1m3 0h1M1 14.5h2m3 0h3m1 0h2m1 0h6m2 0h2m1 0h1m1 0h2m1 0h1M0 15.5h2m1 0h1m5 0h1m1 0h4m1 0h1m2 0h3m3 0h2m1 0h3M1 16.5h1m4 0h2m1 0h1m1 0h2m2 0h1m2 0h6m1 0h2m1 0h1m1 0h1M0 17.5h1m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1m2 0h4m1 0h7m1 0h2m2 0h1M0 18.5h1m4 0h4m2 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h5m1 0h2M3 19.5h1m1 0h1m1 0h1m3 0h1m1 0h4m3 0h1m2 0h2m3 0h1M0 20.5h1m2 0h1m1 0h3m1 0h2m4 0h1m2 0h1m2 0h1m3 0h1m3 0h3M0 21.5h6m5 0h3m1 0h1m2 0h1m2 0h1m1 0h1m2 0h1m3 0h1m1 0h1M2 22.5h1m3 0h2m1 0h1m1 0h1m2 0h1m1 0h3m2 0h1m1 0h2m1 0h1m2 0h4M1 23.5h4m3 0h1m1 0h5m1 0h1m3 0h1m3 0h1m2 0h2m2 0h2M0 24.5h1m1 0h1m3 0h1m1 0h2m2 0h4m1 0h1m1 0h1m2 0h7M8 25.5h1m2 0h3m1 0h3m1 0h1m2 0h3m3 0h2m1 0h1M0 26.5h7m1 0h1m1 0h1m1 0h1m6 0h1m1 0h1m1 0h2m1 0h1m1 0h1M0 27.5h1m5 0h1m1 0h2m1 0h1m4 0h1m2 0h6m3 0h4M0 28.5h1m1 0h3m1 0h1m2 0h2m6 0h1m1 0h10m1 0h1m1 0h1M0 29.5h1m1 0h3m1 0h1m1 0h3m2 0h1m3 0h2m5 0h1m2 0h1m1 0h2m1 0h1M0 30.5h1m1 0h3m1 0h1m1 0h2m1 0h1m5 0h1m2 0h4m2 0h2m1 0h1M0 31.5h1m5 0h1m2 0h1m1 0h10m2 0h3m1 0h2m3 0h1M0 32.5h7m1 0h3m3 0h2m1 0h3m1 0h3m4 0h3"/></svg>
+</div>
+<div class="body">
+<p class="row-title"><span class="n">2.</span> <a href="https://andoverct.info/town-charter/town-meetings/">Town Meetings</a></p>
+<a class="url" href="https://andoverct.info/town-charter/town-meetings/">andoverct.info/<wbr>town-charter/<wbr>town-meetings</a>
+<p class="gloss">The three types, what triggers each, quorum, and the subjects that require a Special Town Meeting.</p>
+</div>
+</li>
+<li class="sm-row">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/town-charter/governance" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h2m1 0h1m1 0h4m1 0h1m4 0h1m2 0h7M0 1.5h1m5 0h1m2 0h1m2 0h3m1 0h1m1 0h4m2 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h1m1 0h6m2 0h1m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m1 0h2m2 0h3m5 0h1m2 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h5m3 0h2m1 0h1m3 0h1m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m1 0h6m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h5m4 0h5m2 0h1M0 8.5h1m3 0h1m1 0h4m2 0h1m2 0h1m1 0h2m1 0h4m1 0h5m2 0h1M0 9.5h1m1 0h2m5 0h2m3 0h5m3 0h2m1 0h1m3 0h3M6 10.5h2m4 0h4m2 0h1m2 0h1m1 0h3m3 0h1m1 0h1M4 11.5h2m2 0h1m4 0h1m1 0h1m3 0h3m2 0h1m1 0h1M2 12.5h1m3 0h2m3 0h3m1 0h2m4 0h1m1 0h2m1 0h4m2 0h1M1 13.5h4m2 0h1m2 0h2m1 0h2m2 0h4m2 0h1m1 0h1m1 0h1m1 0h2M2 14.5h3m1 0h1m3 0h3m2 0h1m2 0h1m1 0h1m1 0h5m4 0h1M0 15.5h4m7 0h1m2 0h5m2 0h3m1 0h2M3 16.5h2m1 0h4m1 0h3m3 0h1m1 0h4m1 0h1m1 0h1m1 0h2m1 0h1M2 17.5h2m4 0h2m3 0h3m5 0h1m1 0h1m1 0h1m3 0h2M1 18.5h2m1 0h1m1 0h1m1 0h1m2 0h3m1 0h3m2 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1M1 19.5h1m3 0h1m1 0h3m1 0h3m3 0h2m2 0h1m1 0h3m1 0h1m4 0h1M4 20.5h4m4 0h1m2 0h1m2 0h1m1 0h1m3 0h1m1 0h1m1 0h2m1 0h2M0 21.5h1m1 0h1m1 0h2m2 0h1m2 0h1m2 0h1m1 0h1m2 0h1m3 0h1m3 0h1m2 0h2M2 22.5h3m1 0h1m1 0h1m1 0h1m2 0h1m2 0h4m2 0h2m5 0h3M2 23.5h1m5 0h4m1 0h2m2 0h1m1 0h3m2 0h2m2 0h2m1 0h2M0 24.5h3m1 0h3m1 0h3m2 0h1m1 0h1m1 0h1m2 0h9M8 25.5h1m2 0h3m1 0h4m2 0h2m1 0h1m3 0h1m1 0h1M0 26.5h7m1 0h1m1 0h1m2 0h3m2 0h1m5 0h1m1 0h1m1 0h2m1 0h1M0 27.5h1m5 0h1m3 0h2m1 0h1m5 0h2m1 0h1m1 0h1m3 0h1m2 0h1M0 28.5h1m1 0h3m1 0h1m1 0h2m1 0h2m3 0h1m5 0h1m1 0h6m1 0h2M0 29.5h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h1m2 0h4m5 0h4m1 0h1M0 30.5h1m1 0h3m1 0h1m2 0h1m2 0h1m1 0h2m2 0h1m1 0h2m2 0h1m1 0h3m1 0h1M0 31.5h1m5 0h1m2 0h1m1 0h1m1 0h6m2 0h4M0 32.5h7m1 0h1m3 0h3m1 0h2m1 0h3m1 0h3m6 0h1"/></svg>
+</div>
+<div class="body">
+<p class="row-title"><span class="n">3.</span> <a href="https://andoverct.info/town-charter/governance/">Governance Structure</a></p>
+<a class="url" href="https://andoverct.info/town-charter/governance/">andoverct.info/<wbr>town-charter/<wbr>governance</a>
+<p class="gloss">The council-manager model: authority split among Selectmen, First Selectman, and Town Administrator.</p>
+</div>
+</li>
+<li class="sm-row">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/town-charter/spending" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h1m1 0h5m2 0h2m3 0h1m3 0h7M0 1.5h1m5 0h1m1 0h1m3 0h3m1 0h1m1 0h5m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h2m2 0h3m1 0h1m3 0h2m1 0h1m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h6m1 0h2m4 0h1m2 0h1m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m3 0h1m4 0h2m2 0h1m3 0h1m2 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M10 7.5h1m2 0h4m5 0h2M0 8.5h1m2 0h6m1 0h1m1 0h1m1 0h1m1 0h3m6 0h1m2 0h1m1 0h3M1 9.5h2m1 0h2m2 0h3m1 0h4m1 0h3m1 0h1m1 0h1m4 0h3M0 10.5h1m1 0h3m1 0h3m3 0h2m1 0h2m3 0h1m1 0h2m1 0h2m1 0h5M0 11.5h1m2 0h2m2 0h4m1 0h2m4 0h5m2 0h1m1 0h1m2 0h1M3 12.5h4m1 0h6m3 0h1m3 0h1m2 0h1m1 0h2m4 0h1M2 13.5h1m1 0h1m4 0h1m2 0h1m1 0h1m2 0h4m2 0h1m1 0h1m1 0h1m1 0h2M2 14.5h2m2 0h1m3 0h1m2 0h3m1 0h1m1 0h2m1 0h1m1 0h1m1 0h5M0 15.5h1m1 0h1m2 0h1m4 0h1m1 0h1m1 0h1m1 0h1m3 0h1m1 0h2m1 0h1m2 0h3m1 0h1M2 16.5h2m1 0h2m1 0h1m3 0h4m4 0h1m1 0h1m1 0h5M0 17.5h3m4 0h3m1 0h2m1 0h4m1 0h2m1 0h1m3 0h1m1 0h1m1 0h3M0 18.5h2m2 0h1m1 0h8m1 0h5m1 0h4m2 0h1m1 0h2m1 0h1M7 19.5h2m1 0h3m1 0h3m2 0h2m1 0h1m2 0h1m2 0h4M1 20.5h1m2 0h3m1 0h2m2 0h1m1 0h1m1 0h1m1 0h1m2 0h2m1 0h1m4 0h1m1 0h1M0 21.5h3m1 0h2m3 0h2m2 0h1m9 0h1m3 0h2m1 0h1M0 22.5h1m1 0h2m2 0h3m3 0h3m2 0h1m1 0h2m2 0h1m2 0h1m1 0h2m1 0h2M0 23.5h1m2 0h2m2 0h1m2 0h1m1 0h2m1 0h1m1 0h4m2 0h3m2 0h4M0 24.5h2m2 0h1m1 0h1m2 0h2m1 0h1m3 0h1m3 0h1m3 0h6M8 25.5h1m6 0h4m2 0h2m1 0h1m3 0h1m1 0h1M0 26.5h7m1 0h6m1 0h1m1 0h1m1 0h1m3 0h2m1 0h1m1 0h1m1 0h1M0 27.5h1m5 0h1m1 0h2m1 0h5m1 0h3m1 0h4m3 0h5M0 28.5h1m1 0h3m1 0h1m1 0h1m3 0h1m2 0h3m1 0h1m1 0h8m3 0h1M0 29.5h1m1 0h3m1 0h1m1 0h1m5 0h1m1 0h1m1 0h1m3 0h2m1 0h1m1 0h1m4 0h1M0 30.5h1m1 0h3m1 0h1m3 0h1m4 0h1m3 0h1m1 0h1m3 0h1m1 0h2m2 0h2M0 31.5h1m5 0h1m2 0h4m1 0h1m4 0h2m5 0h7M0 32.5h7m1 0h1m4 0h1m1 0h1m1 0h1m1 0h1m2 0h4m1 0h3"/></svg>
+</div>
+<div class="body">
+<p class="row-title"><span class="n">4.</span> <a href="https://andoverct.info/town-charter/spending/">Spending Beyond the Annual Budget</a></p>
+<a class="url" href="https://andoverct.info/town-charter/spending/">andoverct.info/<wbr>town-charter/<wbr>spending</a>
+<p class="gloss">Supplemental and emergency appropriations, the capital reserve, and the rules around bonds.</p>
+</div>
+</li>
+<li class="sm-row">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/town-charter/appointments" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h1m3 0h1m3 0h1m1 0h4m1 0h1m2 0h7M0 1.5h1m5 0h1m1 0h2m4 0h1m1 0h2m2 0h1m1 0h2m2 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m2 0h1m1 0h6m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m1 0h2m2 0h1m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m2 0h1m3 0h1m2 0h1m1 0h1m5 0h1m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m3 0h1m1 0h2m1 0h4m5 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h3m1 0h6m2 0h3M0 8.5h1m1 0h2m1 0h3m1 0h3m2 0h4m3 0h1m1 0h2m1 0h1m2 0h1m1 0h2M1 9.5h1m1 0h1m4 0h1m2 0h3m2 0h5m1 0h2m2 0h2m1 0h2m1 0h1M0 10.5h2m1 0h2m1 0h1m4 0h1m1 0h1m2 0h1m1 0h1m1 0h5m1 0h4m1 0h2M0 11.5h1m1 0h1m1 0h2m1 0h1m2 0h1m6 0h1m2 0h1m1 0h4m1 0h1m1 0h1m1 0h1M2 12.5h2m2 0h1m1 0h1m1 0h2m2 0h1m1 0h1m2 0h2m1 0h4m2 0h2m1 0h1M1 13.5h1m1 0h2m2 0h2m1 0h1m1 0h1m1 0h1m5 0h1m1 0h1m1 0h1m2 0h1m3 0h1M3 14.5h1m1 0h3m3 0h1m2 0h1m2 0h6m3 0h1m1 0h2M0 15.5h2m1 0h3m1 0h2m1 0h1m2 0h1m1 0h1m5 0h1m3 0h3m1 0h2M0 16.5h3m2 0h3m4 0h2m4 0h1m1 0h4m1 0h2m1 0h1m1 0h1M7 17.5h1m1 0h1m1 0h1m3 0h2m1 0h1m1 0h1m1 0h5m1 0h2m2 0h1M1 18.5h6m1 0h3m4 0h1m2 0h1m1 0h3m1 0h5m1 0h2M3 19.5h1m3 0h1m3 0h2m2 0h4m1 0h1m2 0h3m2 0h1M0 20.5h2m1 0h2m1 0h1m2 0h1m4 0h3m4 0h1m2 0h1m2 0h1m1 0h3M0 21.5h1m1 0h1m1 0h2m1 0h10m3 0h4m2 0h1m3 0h1m1 0h1M2 22.5h1m2 0h2m1 0h3m3 0h2m1 0h5m1 0h1m2 0h2m1 0h4M1 23.5h4m2 0h1m2 0h1m1 0h1m2 0h1m4 0h1m2 0h2m3 0h1M0 24.5h1m1 0h1m3 0h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m2 0h7M8 25.5h3m1 0h5m2 0h1m2 0h3m3 0h2m1 0h1M0 26.5h7m1 0h1m2 0h1m2 0h1m2 0h3m1 0h4m1 0h1m1 0h1M0 27.5h1m5 0h1m1 0h3m2 0h1m2 0h9m3 0h4M0 28.5h1m1 0h3m1 0h1m2 0h1m1 0h3m2 0h6m1 0h6m1 0h1m1 0h1M0 29.5h1m1 0h3m1 0h1m1 0h3m1 0h2m2 0h2m1 0h1m2 0h1m1 0h1m2 0h1m1 0h2m1 0h1M0 30.5h1m1 0h3m1 0h1m1 0h2m2 0h6m2 0h4m2 0h2m1 0h1M0 31.5h1m5 0h1m2 0h2m2 0h2m2 0h3m3 0h2m2 0h2m3 0h1M0 32.5h7m1 0h1m3 0h2m3 0h2m2 0h3m4 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="row-title"><span class="n">5.</span> <a href="https://andoverct.info/town-charter/appointments/">Appointments, Vacancies, and Removals</a></p>
+<a class="url" href="https://andoverct.info/town-charter/appointments/">andoverct.info/<wbr>town-charter/<wbr>appointments</a>
+<p class="gloss">How officials are selected and removed, and the attendance rules that trigger automatic resignation.</p>
+</div>
+</li>
+<li class="sm-row">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/town-charter/elections" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h1m1 0h1m3 0h5m4 0h1m2 0h7M0 1.5h1m5 0h1m2 0h2m1 0h1m3 0h2m1 0h3m2 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m3 0h2m1 0h1m2 0h1m2 0h3m2 0h1m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h5m1 0h2m1 0h2m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h1m2 0h4m2 0h1m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h2m1 0h1m1 0h2m1 0h2m1 0h1m2 0h1m1 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h3m4 0h4m2 0h1m2 0h1M0 8.5h1m3 0h1m1 0h3m1 0h1m1 0h1m4 0h7m1 0h5m2 0h1M3 9.5h1m1 0h1m2 0h4m1 0h4m1 0h1m2 0h3m1 0h1m3 0h3M1 10.5h2m2 0h2m1 0h1m2 0h2m2 0h1m1 0h1m5 0h3m3 0h1m1 0h1M0 11.5h1m2 0h1m8 0h1m1 0h2m1 0h5m2 0h2M1 12.5h2m3 0h1m4 0h1m1 0h3m2 0h1m1 0h1m2 0h2m1 0h1m1 0h2m2 0h1M1 13.5h1m1 0h1m1 0h1m3 0h1m1 0h2m3 0h2m1 0h1m3 0h1m1 0h1m1 0h1m1 0h2M0 14.5h1m2 0h1m2 0h2m3 0h1m1 0h2m1 0h1m1 0h2m2 0h7m2 0h1M2 15.5h1m1 0h2m1 0h1m4 0h1m1 0h1m2 0h6m1 0h3M0 16.5h3m2 0h2m1 0h1m2 0h5m1 0h1m2 0h5m1 0h1m1 0h2m1 0h1M2 17.5h1m2 0h1m1 0h2m2 0h1m1 0h1m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1m3 0h2M3 18.5h5m2 0h1m2 0h1m1 0h2m1 0h1m1 0h1m2 0h1m3 0h1m1 0h1m1 0h1M0 19.5h4m5 0h1m2 0h1m1 0h1m7 0h6m4 0h1M0 20.5h1m1 0h1m3 0h2m1 0h2m1 0h2m1 0h2m5 0h1m1 0h1m1 0h1m1 0h2m1 0h2M0 21.5h1m4 0h1m1 0h1m3 0h2m1 0h1m3 0h3m2 0h1m3 0h1m2 0h2M2 22.5h5m1 0h1m4 0h1m1 0h1m1 0h2m1 0h1m1 0h3m3 0h4M2 23.5h3m3 0h5m1 0h4m3 0h1m1 0h1m1 0h1m2 0h2m2 0h1M0 24.5h4m1 0h2m3 0h1m1 0h2m3 0h1m1 0h10M8 25.5h1m1 0h2m2 0h3m1 0h1m3 0h1m1 0h1m3 0h1m1 0h1M0 26.5h7m1 0h1m1 0h3m2 0h1m1 0h1m3 0h2m1 0h1m1 0h1m1 0h2m1 0h1M0 27.5h1m5 0h1m4 0h1m1 0h2m2 0h5m2 0h1m3 0h1m2 0h1M0 28.5h1m1 0h3m1 0h1m1 0h1m4 0h2m3 0h1m1 0h1m3 0h6m1 0h2M0 29.5h1m1 0h3m1 0h1m3 0h5m1 0h2m1 0h1m2 0h1m3 0h4m1 0h1M0 30.5h1m1 0h3m1 0h1m3 0h2m4 0h1m1 0h2m1 0h1m2 0h1m1 0h3m1 0h1M0 31.5h1m5 0h1m3 0h1m1 0h2m3 0h9M0 32.5h7m1 0h1m2 0h2m2 0h3m2 0h2m1 0h4m5 0h1"/></svg>
+</div>
+<div class="body">
+<p class="row-title"><span class="n">6.</span> <a href="https://andoverct.info/town-charter/elections/">Elections</a></p>
+<a class="url" href="https://andoverct.info/town-charter/elections/">andoverct.info/<wbr>town-charter/<wbr>elections</a>
+<p class="gloss">Which offices are elected, when, and for how long, plus the minority-representation frameworks.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</section>
+
+<section class="sm-section" id="sec-series">
+<header class="sm-head">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/series" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h29v29H0z"/><path stroke="#000000" d="M0 0.5h7m2 0h1m2 0h4m1 0h3m2 0h7M0 1.5h1m5 0h1m5 0h6m2 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h3m2 0h1m1 0h1m3 0h2m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h2m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m2 0h2m2 0h2m2 0h2m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h2m1 0h1m5 0h2m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m3 0h1m1 0h1m1 0h1m2 0h2M0 8.5h1m1 0h5m2 0h2m5 0h2m4 0h5M3 9.5h2m2 0h2m1 0h2m1 0h3m2 0h3m1 0h3m3 0h1M0 10.5h1m1 0h3m1 0h2m1 0h2m2 0h4m6 0h1M0 11.5h1m3 0h1m2 0h1m1 0h2m1 0h2m1 0h1m3 0h5m1 0h1m1 0h1M0 12.5h4m2 0h1m1 0h1m2 0h2m1 0h2m1 0h1m1 0h1m5 0h2M0 13.5h5m4 0h1m1 0h2m2 0h2m2 0h6m3 0h1M1 14.5h4m1 0h4m2 0h1m4 0h2m1 0h1m3 0h3M0 15.5h2m1 0h3m3 0h1m2 0h1m1 0h1m1 0h1m1 0h1m4 0h2m2 0h1M2 16.5h1m2 0h2m1 0h1m2 0h2m3 0h2m1 0h1m5 0h2M0 17.5h2m1 0h2m2 0h3m3 0h3m1 0h4m1 0h3m1 0h1m1 0h1M0 18.5h1m4 0h2m1 0h1m3 0h5m1 0h1m2 0h1m4 0h1M0 19.5h1m1 0h1m1 0h1m6 0h1m1 0h1m1 0h1m3 0h5m3 0h1M0 20.5h1m1 0h1m1 0h4m2 0h1m3 0h2m1 0h1m1 0h6m1 0h3M8 21.5h3m4 0h2m1 0h1m1 0h1m3 0h5M0 22.5h7m12 0h2m1 0h1m1 0h3M0 23.5h1m5 0h1m1 0h2m4 0h1m1 0h1m3 0h1m3 0h1m2 0h2M0 24.5h1m1 0h3m1 0h1m1 0h1m1 0h2m5 0h1m2 0h5m1 0h1m1 0h1M0 25.5h1m1 0h3m1 0h1m1 0h4m2 0h2m9 0h2M0 26.5h1m1 0h3m1 0h1m1 0h2m2 0h2m1 0h5m1 0h7M0 27.5h1m5 0h1m2 0h1m1 0h2m3 0h1m2 0h3m1 0h3m1 0h1M0 28.5h7m1 0h1m2 0h2m4 0h3m2 0h1m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="section-label">§ IV · Series</p>
+<h2>Longer accounts, in parts</h2>
+<a class="url" href="https://andoverct.info/series/">andoverct.info/<wbr>series</a>
+<p class="blurb">Extended pieces published as a sequence and then gathered into one continuous account. Each is drawn entirely from the public record, and every claim is sourced.</p>
+</div>
+</header>
+
+<div class="sm-group">
+<p class="group-label"><a href="https://andoverct.info/series/town-asset/">A Town Asset</a> <span class="url-inline">andoverct.info/<wbr>series/<wbr>town-asset</span></p>
+<div class="sm-grid">
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/series/town-asset" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h29v29H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h3m1 0h1m1 0h1m1 0h4m2 0h7M0 1.5h1m5 0h1m1 0h3m1 0h3m1 0h1m1 0h1m3 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m3 0h5m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m2 0h4m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m3 0h1m4 0h5m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m5 0h1m4 0h1m1 0h1m2 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h3m3 0h4M0 8.5h1m1 0h2m1 0h3m2 0h2m2 0h6m2 0h1m2 0h1m1 0h2M0 9.5h1m2 0h2m2 0h1m1 0h1m2 0h1m5 0h3m1 0h3m3 0h1M0 10.5h1m3 0h1m1 0h2m3 0h2m4 0h2m1 0h2m2 0h1m1 0h2M1 11.5h1m1 0h1m1 0h1m3 0h3m1 0h3m2 0h1m1 0h1m2 0h2m3 0h1M1 12.5h1m4 0h3m3 0h3m2 0h1m1 0h1m5 0h2M1 13.5h1m1 0h2m2 0h1m1 0h1m2 0h1m2 0h5m2 0h1m3 0h3M0 14.5h2m1 0h1m1 0h2m1 0h3m1 0h3m2 0h1m1 0h4m3 0h3M1 15.5h1m1 0h2m2 0h1m1 0h4m3 0h1m1 0h1m4 0h2m2 0h1M0 16.5h4m1 0h2m1 0h4m1 0h2m1 0h1m1 0h4m1 0h3m1 0h1M1 17.5h5m1 0h2m6 0h1m1 0h1m2 0h2m1 0h1m1 0h3M0 18.5h1m2 0h1m1 0h2m1 0h1m1 0h2m1 0h4m1 0h1m2 0h1m4 0h1M2 19.5h2m6 0h1m4 0h5m2 0h1m1 0h1m1 0h1M1 20.5h2m1 0h1m1 0h2m1 0h1m3 0h1m1 0h4m1 0h7M8 21.5h1m1 0h4m2 0h1m1 0h1m1 0h1m3 0h5M0 22.5h7m1 0h3m2 0h1m3 0h4m1 0h1m1 0h2m1 0h1M0 23.5h1m5 0h1m1 0h3m7 0h3m3 0h2m1 0h2M0 24.5h1m1 0h3m1 0h1m2 0h3m2 0h4m2 0h5m1 0h3M0 25.5h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h5m1 0h2m1 0h3m2 0h1M0 26.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m3 0h1m5 0h1m2 0h1m1 0h1M0 27.5h1m5 0h1m2 0h4m3 0h1m2 0h3m1 0h3m1 0h1M0 28.5h7m1 0h2m1 0h1m3 0h1m3 0h5m3 0h1"/></svg>
+</div>
+<div class="body">
+<h3><a href="https://andoverct.info/series/town-asset/">The complete essay</a></h3>
+<a class="url" href="https://andoverct.info/series/town-asset/">andoverct.info/<wbr>series/<wbr>town-asset</a>
+<p class="desc">An account of the First Selectman&#39;s conduct toward the elementary school, drawn entirely from Andover&#39;s own minutes, packets, and meeting recordings — read as one continuous article.</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/series/town-asset/explanation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m2 0h1m7 0h4m2 0h1m2 0h7M0 1.5h1m5 0h1m4 0h2m2 0h3m3 0h2m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h1m4 0h3m1 0h1m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h3m1 0h1m2 0h1m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h2m2 0h8m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m4 0h2m2 0h1m3 0h2m1 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h1m3 0h1m1 0h1m2 0h4m1 0h1M0 8.5h1m1 0h5m2 0h2m1 0h3m1 0h4m2 0h1m3 0h5M0 9.5h2m1 0h3m1 0h2m1 0h1m2 0h2m1 0h8m2 0h2m1 0h2m1 0h1M1 10.5h1m2 0h3m2 0h2m1 0h6m3 0h1m3 0h1m2 0h1m1 0h2M0 11.5h4m3 0h1m1 0h1m1 0h1m1 0h1m1 0h9m1 0h1m2 0h5M0 12.5h1m1 0h1m1 0h3m2 0h2m3 0h3m2 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 13.5h2m1 0h1m3 0h1m3 0h3m1 0h1m1 0h5m1 0h1m1 0h2m2 0h1m1 0h2M0 14.5h1m1 0h1m3 0h4m1 0h1m1 0h5m2 0h1m3 0h3m1 0h1m2 0h1M0 15.5h3m2 0h1m1 0h2m1 0h1m1 0h1m1 0h2m3 0h3m2 0h4m2 0h1M3 16.5h8m1 0h1m2 0h1m1 0h1m1 0h1m2 0h4m1 0h2m3 0h1M0 17.5h1m1 0h1m1 0h1m5 0h3m1 0h1m1 0h1m2 0h2m2 0h1m2 0h2m1 0h4M1 18.5h1m1 0h4m1 0h3m2 0h4m1 0h1m1 0h1m1 0h1m1 0h2m1 0h2m1 0h2M0 19.5h1m1 0h2m3 0h3m2 0h1m1 0h2m5 0h1m5 0h6M0 20.5h4m2 0h2m1 0h6m3 0h2m2 0h1m5 0h2m1 0h2M0 21.5h1m2 0h1m4 0h5m1 0h3m2 0h3m1 0h1m2 0h1m2 0h1m2 0h1M0 22.5h1m1 0h1m1 0h5m3 0h1m1 0h1m2 0h2m1 0h1m7 0h4M0 23.5h1m2 0h2m3 0h2m1 0h4m1 0h1m4 0h2m2 0h1m1 0h1m1 0h3M0 24.5h1m2 0h1m1 0h4m1 0h1m1 0h1m4 0h1m1 0h1m2 0h1m1 0h5m2 0h1M8 25.5h2m2 0h1m1 0h1m1 0h7m1 0h1m3 0h1m1 0h1m1 0h1M0 26.5h7m4 0h1m1 0h3m1 0h1m3 0h1m1 0h2m1 0h1m1 0h1m1 0h2M0 27.5h1m5 0h1m1 0h5m1 0h1m2 0h8m3 0h3M0 28.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h5m2 0h1m2 0h1m1 0h6m1 0h1M0 29.5h1m1 0h3m1 0h1m1 0h1m2 0h1m3 0h1m2 0h5m2 0h1m2 0h1m1 0h3M0 30.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m1 0h2m4 0h3m2 0h2m1 0h2M0 31.5h1m5 0h1m3 0h1m1 0h2m1 0h1m4 0h2m3 0h2m1 0h3M0 32.5h7m1 0h3m3 0h4m5 0h5m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<h3><a href="https://andoverct.info/series/town-asset/explanation/">The Facebook Campaign</a></h3>
+<a class="url" href="https://andoverct.info/series/town-asset/explanation/">andoverct.info/<wbr>series/<wbr>town-asset/<wbr>explanation</a>
+<p class="desc">The Facebook graphics and post text for every part — the cards and captions as they were published.</p>
+</div>
+</article>
+</div>
+<div class="sm-list">
+<p class="list-label">All the sections</p>
+<ol class="rows">
+<li class="sm-row">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/series/town-asset/the-money" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h1m2 0h1m6 0h3m2 0h1m2 0h7M0 1.5h1m5 0h1m1 0h1m2 0h1m2 0h1m1 0h2m2 0h1m1 0h2m2 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m3 0h1m2 0h4m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h3m1 0h1m2 0h1m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m3 0h4m2 0h1m1 0h1m7 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m7 0h5m5 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h3m2 0h5m2 0h3M0 8.5h1m1 0h2m1 0h3m1 0h4m1 0h2m1 0h1m3 0h1m2 0h1m1 0h1m2 0h1m1 0h2M0 9.5h1m2 0h3m1 0h1m1 0h2m2 0h2m1 0h5m1 0h2m2 0h2m1 0h2m1 0h1M2 10.5h2m2 0h1m4 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h8m1 0h2M4 11.5h2m1 0h2m1 0h1m1 0h1m4 0h1m2 0h1m2 0h2m2 0h1m1 0h1m2 0h1M1 12.5h1m2 0h1m1 0h2m2 0h2m2 0h3m2 0h1m2 0h4m1 0h3m1 0h1M0 13.5h5m5 0h2m1 0h2m5 0h1m3 0h2m1 0h1m2 0h2M1 14.5h1m1 0h1m2 0h1m1 0h3m1 0h2m3 0h6m3 0h2m2 0h1M0 15.5h2m1 0h1m1 0h1m1 0h2m2 0h1m2 0h2m3 0h3m2 0h4m2 0h1M0 16.5h2m2 0h6m8 0h5m2 0h2m1 0h3M1 17.5h2m2 0h1m1 0h1m3 0h5m2 0h1m1 0h7m1 0h2m2 0h1M4 18.5h3m1 0h1m1 0h3m2 0h2m1 0h1m1 0h1m1 0h1m1 0h2m1 0h2m1 0h2M0 19.5h1m1 0h1m2 0h1m1 0h1m2 0h2m2 0h1m2 0h2m1 0h1m1 0h3m1 0h1m1 0h1m2 0h1M2 20.5h2m2 0h1m1 0h3m1 0h5m4 0h1m3 0h1m1 0h1m1 0h2m1 0h1M0 21.5h1m3 0h2m1 0h2m1 0h3m1 0h3m2 0h1m1 0h1m1 0h1m2 0h1m2 0h1m2 0h1M2 22.5h1m1 0h1m1 0h1m1 0h2m3 0h1m1 0h1m5 0h1m1 0h1m2 0h3m2 0h2M1 23.5h1m6 0h1m3 0h1m2 0h1m2 0h2m4 0h1m3 0h2m2 0h1M0 24.5h1m2 0h1m1 0h5m1 0h1m1 0h2m2 0h1m1 0h1m2 0h1m1 0h5M8 25.5h4m1 0h1m1 0h2m2 0h1m1 0h4m3 0h2M0 26.5h7m1 0h2m2 0h1m1 0h1m1 0h4m1 0h1m1 0h2m1 0h1m1 0h1M0 27.5h1m5 0h1m1 0h1m1 0h1m2 0h2m2 0h5m1 0h2m3 0h3M0 28.5h1m1 0h3m1 0h1m2 0h6m1 0h4m1 0h8m1 0h3M0 29.5h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1m2 0h1m4 0h1M0 30.5h1m1 0h3m1 0h1m1 0h9m3 0h4m2 0h2m1 0h2M0 31.5h1m5 0h1m3 0h1m3 0h1m2 0h2m5 0h2m1 0h2m3 0h1M0 32.5h7m1 0h1m1 0h1m1 0h1m4 0h3m1 0h3m2 0h1m1 0h3"/></svg>
+</div>
+<div class="body">
+<p class="row-title"><span class="n">1.</span> <a href="https://andoverct.info/series/town-asset/the-money/">The school&#39;s own money</a></p>
+<a class="url" href="https://andoverct.info/series/town-asset/the-money/">andoverct.info/<wbr>series/<wbr>town-asset/<wbr>the-money</a>
+
+</div>
+</li>
+<li class="sm-row">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/series/town-asset/the-line" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m3 0h1m2 0h1m3 0h4m2 0h1m2 0h7M0 1.5h1m5 0h1m3 0h1m1 0h6m3 0h2m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h3m1 0h2m3 0h7m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h3m3 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m3 0h2m1 0h1m1 0h2m2 0h1m1 0h2m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m4 0h5m2 0h3m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h3m3 0h2m5 0h2M0 8.5h1m1 0h5m2 0h2m2 0h6m3 0h1m3 0h5M2 9.5h2m3 0h2m1 0h2m2 0h1m1 0h1m1 0h3m1 0h2m2 0h2m1 0h2m1 0h1M2 10.5h1m1 0h1m1 0h2m3 0h2m2 0h2m1 0h1m2 0h2m2 0h1m2 0h1m1 0h2M0 11.5h1m3 0h2m3 0h1m2 0h1m1 0h3m2 0h3m1 0h1m1 0h1m2 0h5M3 12.5h4m1 0h1m1 0h3m2 0h1m2 0h2m2 0h4m1 0h3m1 0h1M1 13.5h2m2 0h1m1 0h2m5 0h4m2 0h2m1 0h1m1 0h2m2 0h1m1 0h2M3 14.5h1m2 0h1m1 0h1m1 0h1m1 0h3m2 0h1m1 0h1m4 0h3m1 0h1m2 0h1M2 15.5h1m1 0h1m3 0h1m2 0h1m2 0h1m1 0h1m2 0h3m2 0h4m2 0h1M0 16.5h1m1 0h1m2 0h3m1 0h1m2 0h1m4 0h1m1 0h1m2 0h4m1 0h2m3 0h1M2 17.5h1m4 0h1m1 0h2m2 0h1m2 0h2m1 0h2m2 0h1m2 0h2m1 0h4M0 18.5h1m1 0h2m2 0h2m1 0h2m2 0h5m2 0h2m2 0h2m1 0h2m1 0h2M1 19.5h2m7 0h6m1 0h2m2 0h2m4 0h6M0 20.5h2m1 0h1m1 0h3m8 0h1m2 0h1m2 0h1m1 0h1m3 0h2m1 0h2M0 21.5h1m2 0h1m4 0h1m1 0h1m3 0h2m2 0h1m2 0h1m1 0h1m2 0h1m2 0h1m2 0h1M0 22.5h1m2 0h2m1 0h1m3 0h9m1 0h1m3 0h1m3 0h4M0 23.5h1m1 0h2m4 0h4m3 0h1m3 0h4m2 0h1m1 0h1m1 0h2m1 0h1M0 24.5h1m3 0h4m3 0h5m1 0h1m1 0h1m2 0h1m1 0h5M8 25.5h2m3 0h1m2 0h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1M0 26.5h7m2 0h4m1 0h2m2 0h1m3 0h3m1 0h1m1 0h1m1 0h2M0 27.5h1m5 0h1m1 0h1m1 0h1m8 0h3m1 0h2m3 0h3M0 28.5h1m1 0h3m1 0h1m1 0h4m1 0h3m2 0h2m2 0h1m1 0h6m1 0h1M0 29.5h1m1 0h3m1 0h1m1 0h5m1 0h3m2 0h1m1 0h1m3 0h1m2 0h1m1 0h3M0 30.5h1m1 0h3m1 0h1m1 0h1m4 0h1m6 0h4m2 0h2m1 0h2M0 31.5h1m5 0h1m4 0h2m1 0h1m1 0h1m3 0h2m1 0h1m1 0h2m1 0h3M0 32.5h7m1 0h2m4 0h1m1 0h2m5 0h5m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="row-title"><span class="n">2.</span> <a href="https://andoverct.info/series/town-asset/the-line/">The line, drawn and erased</a></p>
+<a class="url" href="https://andoverct.info/series/town-asset/the-line/">andoverct.info/<wbr>series/<wbr>town-asset/<wbr>the-line</a>
+
+</div>
+</li>
+<li class="sm-row">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/series/town-asset/the-senior-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h1m2 0h1m6 0h3m2 0h1m2 0h7M0 1.5h1m5 0h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h1m1 0h2m2 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m2 0h2m2 0h4m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m5 0h1m1 0h1m4 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m3 0h2m1 0h1m2 0h1m2 0h1m2 0h1m3 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m2 0h2m3 0h7m3 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h2m3 0h4m3 0h3M0 8.5h1m1 0h2m1 0h3m2 0h3m1 0h2m1 0h1m3 0h1m2 0h1m1 0h1m2 0h1m1 0h2M2 9.5h4m2 0h2m1 0h1m1 0h2m1 0h1m1 0h6m2 0h2m1 0h2m1 0h1M0 10.5h1m2 0h1m1 0h2m6 0h1m2 0h3m1 0h2m1 0h7m1 0h2M0 11.5h1m1 0h2m1 0h1m2 0h2m1 0h1m6 0h1m1 0h1m2 0h2m2 0h1m1 0h1m2 0h1M4 12.5h1m1 0h1m1 0h1m2 0h1m2 0h2m1 0h1m1 0h1m2 0h4m1 0h3m1 0h1M1 13.5h1m8 0h2m1 0h2m4 0h2m3 0h2m1 0h1m2 0h2M0 14.5h1m1 0h1m3 0h1m2 0h1m1 0h2m1 0h1m2 0h3m1 0h2m3 0h2m2 0h1M1 15.5h1m1 0h1m3 0h1m1 0h5m2 0h1m2 0h1m1 0h1m2 0h4m2 0h1M0 16.5h1m2 0h4m3 0h4m1 0h1m2 0h1m1 0h3m2 0h2m1 0h3M0 17.5h1m7 0h2m1 0h1m1 0h1m1 0h1m1 0h2m1 0h1m1 0h5m1 0h2m2 0h1M0 18.5h5m1 0h1m5 0h2m1 0h3m2 0h3m1 0h2m1 0h2m1 0h2M1 19.5h1m3 0h1m2 0h2m1 0h4m2 0h1m2 0h1m1 0h3m1 0h1m1 0h1m2 0h1M5 20.5h5m1 0h1m1 0h6m1 0h2m3 0h1m1 0h1m1 0h2m1 0h1M0 21.5h1m2 0h3m2 0h1m1 0h3m6 0h3m1 0h1m2 0h1m2 0h1m2 0h1M2 22.5h3m1 0h2m4 0h3m6 0h1m1 0h1m2 0h3m2 0h2M1 23.5h1m1 0h1m1 0h1m2 0h1m4 0h1m1 0h2m1 0h1m1 0h1m3 0h1m3 0h2m2 0h1M0 24.5h1m2 0h2m1 0h1m6 0h3m1 0h1m1 0h1m2 0h1m1 0h5m3 0h1M8 25.5h1m1 0h3m2 0h3m1 0h1m1 0h4m3 0h2M0 26.5h7m1 0h2m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h2m1 0h1m1 0h1M0 27.5h1m5 0h1m1 0h3m7 0h4m1 0h2m3 0h3M0 28.5h1m1 0h3m1 0h1m3 0h1m1 0h1m3 0h1m1 0h11m1 0h3M0 29.5h1m1 0h3m1 0h1m1 0h1m2 0h5m4 0h1m1 0h1m1 0h1m2 0h1m4 0h1M0 30.5h1m1 0h3m1 0h1m1 0h4m3 0h2m3 0h4m2 0h2m1 0h2M0 31.5h1m5 0h1m2 0h1m1 0h1m1 0h1m2 0h3m1 0h1m3 0h2m1 0h2m3 0h1M0 32.5h7m1 0h3m1 0h3m2 0h2m2 0h3m2 0h1m1 0h3"/></svg>
+</div>
+<div class="body">
+<p class="row-title"><span class="n">3.</span> <a href="https://andoverct.info/series/town-asset/the-senior-center/">The first move onto the grounds</a></p>
+<a class="url" href="https://andoverct.info/series/town-asset/the-senior-center/">andoverct.info/<wbr>series/<wbr>town-asset/<wbr>the-senior-center</a>
+
+</div>
+</li>
+<li class="sm-row">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/series/town-asset/the-parking-lot" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m2 0h1m2 0h1m4 0h4m2 0h1m2 0h7M0 1.5h1m5 0h1m3 0h2m3 0h2m4 0h2m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h1m4 0h5m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m3 0h1m2 0h1m1 0h1m4 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h7m1 0h4m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m1 0h1m2 0h2m2 0h1m2 0h3m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h2m1 0h2m1 0h1m1 0h1m2 0h4M0 8.5h1m1 0h5m2 0h1m3 0h2m1 0h3m3 0h1m3 0h5M0 9.5h1m1 0h1m1 0h1m2 0h1m2 0h5m1 0h8m2 0h2m1 0h2m1 0h1M2 10.5h2m2 0h1m1 0h2m1 0h1m1 0h4m4 0h1m3 0h1m2 0h1m1 0h2M1 11.5h2m1 0h2m2 0h1m1 0h4m1 0h2m1 0h4m1 0h1m1 0h1m2 0h5M0 12.5h3m2 0h3m1 0h1m4 0h4m1 0h1m2 0h4m1 0h3m1 0h1M0 13.5h4m4 0h1m2 0h2m2 0h1m1 0h5m1 0h1m1 0h2m2 0h1m1 0h2M0 14.5h1m1 0h2m1 0h2m3 0h1m1 0h2m1 0h3m6 0h3m1 0h1m2 0h1M0 15.5h1m10 0h1m1 0h3m3 0h3m2 0h4m2 0h1M1 16.5h1m1 0h1m2 0h6m3 0h1m1 0h1m1 0h1m2 0h4m1 0h2m3 0h1M0 17.5h3m2 0h1m1 0h1m3 0h1m1 0h2m1 0h2m1 0h3m1 0h1m2 0h2m1 0h4M1 18.5h3m2 0h1m1 0h3m2 0h1m1 0h3m2 0h2m2 0h2m1 0h2m1 0h2M0 19.5h1m3 0h1m2 0h2m1 0h6m5 0h2m4 0h6M0 20.5h5m1 0h3m1 0h2m1 0h1m3 0h1m1 0h1m2 0h1m1 0h1m3 0h2m1 0h2M0 21.5h1m2 0h1m1 0h1m2 0h5m1 0h3m2 0h5m2 0h1m2 0h1m2 0h1M0 22.5h1m3 0h4m1 0h1m1 0h3m3 0h2m1 0h1m3 0h1m3 0h4M0 23.5h1m1 0h2m1 0h1m3 0h4m1 0h1m1 0h1m4 0h2m2 0h1m1 0h1m1 0h3M0 24.5h1m1 0h1m3 0h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h5m3 0h1M8 25.5h7m1 0h1m1 0h5m1 0h1m3 0h1m1 0h1m1 0h1M0 26.5h7m4 0h2m2 0h1m7 0h2m1 0h1m1 0h1m1 0h2M0 27.5h1m5 0h1m1 0h4m2 0h1m3 0h4m1 0h2m3 0h3M0 28.5h1m1 0h3m1 0h1m1 0h2m1 0h3m1 0h1m1 0h3m2 0h1m1 0h6m1 0h1M0 29.5h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m2 0h4m3 0h1m2 0h1m1 0h3M0 30.5h1m1 0h3m1 0h1m1 0h1m4 0h1m1 0h2m3 0h4m2 0h2m1 0h2M0 31.5h1m5 0h1m2 0h1m2 0h2m2 0h1m2 0h1m1 0h1m1 0h1m1 0h2m1 0h3M0 32.5h7m1 0h3m1 0h1m1 0h1m1 0h2m1 0h1m3 0h5m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="row-title"><span class="n">4.</span> <a href="https://andoverct.info/series/town-asset/the-parking-lot/">A permit for its own lot, on its own money</a></p>
+<a class="url" href="https://andoverct.info/series/town-asset/the-parking-lot/">andoverct.info/<wbr>series/<wbr>town-asset/<wbr>the-parking-lot</a>
+
+</div>
+</li>
+<li class="sm-row">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/series/town-asset/the-capital-fund" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h3m2 0h1m3 0h4m2 0h1m2 0h7M0 1.5h1m5 0h1m1 0h1m1 0h1m1 0h2m2 0h3m1 0h1m1 0h2m2 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m2 0h2m4 0h2m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h3m3 0h4m4 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m2 0h6m4 0h2m5 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m7 0h1m2 0h3m4 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h1m1 0h1m4 0h2m3 0h3M0 8.5h1m1 0h2m1 0h3m1 0h1m1 0h2m1 0h1m2 0h1m3 0h1m2 0h1m1 0h1m2 0h1m1 0h2M0 9.5h1m2 0h2m9 0h1m1 0h1m1 0h6m2 0h2m1 0h2m1 0h1M0 10.5h1m1 0h10m2 0h1m1 0h1m1 0h1m1 0h2m1 0h7m1 0h2M1 11.5h2m1 0h1m4 0h6m5 0h1m2 0h2m2 0h1m1 0h1m2 0h1M3 12.5h2m1 0h3m1 0h2m3 0h1m1 0h1m1 0h1m2 0h4m1 0h3m1 0h1M3 13.5h2m2 0h1m1 0h1m6 0h1m1 0h2m4 0h2m1 0h1m2 0h2M4 14.5h1m1 0h1m1 0h3m2 0h1m1 0h8m3 0h2m2 0h1M0 15.5h1m3 0h2m3 0h2m2 0h1m2 0h1m4 0h1m2 0h4m2 0h1M1 16.5h2m3 0h1m2 0h7m2 0h1m1 0h3m2 0h2m1 0h3M3 17.5h3m1 0h3m4 0h2m2 0h1m1 0h1m1 0h5m1 0h2m2 0h1M0 18.5h2m3 0h4m2 0h1m3 0h2m3 0h2m2 0h2m1 0h2m1 0h2M0 19.5h4m3 0h1m1 0h2m1 0h2m3 0h2m1 0h1m1 0h3m1 0h1m1 0h1m2 0h1M1 20.5h2m2 0h3m3 0h1m2 0h5m2 0h1m3 0h1m1 0h1m1 0h2m1 0h1M0 21.5h2m6 0h1m2 0h2m2 0h1m2 0h6m2 0h1m2 0h1m2 0h1M3 22.5h5m2 0h1m1 0h3m1 0h1m3 0h2m1 0h1m2 0h3m2 0h2M1 23.5h2m1 0h2m1 0h2m6 0h1m2 0h3m3 0h1m3 0h2m1 0h2M0 24.5h1m5 0h4m1 0h4m2 0h1m4 0h1m1 0h5m3 0h1M8 25.5h1m2 0h1m1 0h4m2 0h1m2 0h3m3 0h2M0 26.5h7m1 0h2m2 0h3m1 0h4m2 0h3m1 0h1m1 0h1M0 27.5h1m5 0h1m1 0h3m2 0h1m4 0h4m1 0h2m3 0h3M0 28.5h1m1 0h3m1 0h1m2 0h4m1 0h1m3 0h2m1 0h8m1 0h3M0 29.5h1m1 0h3m1 0h1m1 0h5m1 0h3m3 0h1m1 0h1m1 0h1m2 0h1m4 0h1M0 30.5h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h2m4 0h4m2 0h2m1 0h2M0 31.5h1m5 0h1m3 0h1m1 0h3m1 0h3m1 0h1m3 0h2m1 0h2m3 0h1M0 32.5h7m1 0h5m4 0h2m2 0h3m2 0h1m1 0h3"/></svg>
+</div>
+<div class="body">
+<p class="row-title"><span class="n">5.</span> <a href="https://andoverct.info/series/town-asset/the-capital-fund/">The machinery made permanent</a></p>
+<a class="url" href="https://andoverct.info/series/town-asset/the-capital-fund/">andoverct.info/<wbr>series/<wbr>town-asset/<wbr>the-capital-fund</a>
+
+</div>
+</li>
+<li class="sm-row">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/series/town-asset/the-solar-contract" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h4m1 0h1m3 0h4m2 0h1m2 0h7M0 1.5h1m5 0h1m1 0h1m2 0h3m2 0h1m1 0h1m1 0h1m1 0h2m2 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m8 0h2m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h2m1 0h1m4 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m2 0h6m4 0h1m2 0h1m3 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m2 0h2m3 0h1m2 0h4m3 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h3m1 0h1m2 0h6m1 0h3M0 8.5h1m1 0h2m1 0h3m2 0h2m2 0h2m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h2M0 9.5h2m1 0h1m4 0h2m4 0h1m1 0h8m2 0h2m1 0h2m1 0h1M1 10.5h7m3 0h1m2 0h1m1 0h1m1 0h1m1 0h2m1 0h7m1 0h2M1 11.5h1m2 0h2m1 0h2m1 0h1m1 0h3m5 0h1m2 0h2m2 0h1m1 0h1m2 0h1M2 12.5h5m1 0h3m4 0h1m1 0h1m1 0h1m2 0h4m1 0h3m1 0h1M0 13.5h4m1 0h1m2 0h1m2 0h2m2 0h1m2 0h2m4 0h2m1 0h1m2 0h2M2 14.5h2m2 0h1m3 0h2m2 0h1m1 0h7m3 0h2m2 0h1M0 15.5h1m1 0h4m2 0h2m1 0h1m1 0h1m1 0h2m3 0h2m2 0h4m2 0h1M2 16.5h1m2 0h2m1 0h1m2 0h3m4 0h5m2 0h2m1 0h3M0 17.5h1m3 0h1m2 0h3m2 0h1m1 0h2m2 0h1m1 0h7m1 0h2m2 0h1M0 18.5h2m1 0h1m2 0h3m3 0h5m3 0h1m1 0h1m1 0h2m1 0h2m1 0h2M0 19.5h1m2 0h3m1 0h1m1 0h2m1 0h2m3 0h1m2 0h1m1 0h3m1 0h1m1 0h1m2 0h1M0 20.5h3m2 0h4m1 0h1m1 0h1m2 0h1m1 0h2m2 0h1m3 0h1m1 0h1m1 0h2m1 0h1M0 21.5h1m1 0h1m1 0h1m4 0h1m1 0h2m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m2 0h1m2 0h1m2 0h1M2 22.5h7m1 0h1m3 0h1m1 0h1m3 0h2m1 0h1m2 0h3m2 0h2M1 23.5h1m1 0h3m4 0h2m2 0h3m1 0h1m5 0h1m3 0h2m1 0h1M0 24.5h1m5 0h3m1 0h2m3 0h1m1 0h1m4 0h1m1 0h5m2 0h2M8 25.5h4m1 0h5m1 0h1m1 0h4m3 0h2M0 26.5h7m1 0h6m2 0h2m1 0h1m3 0h2m1 0h1m1 0h1M0 27.5h1m5 0h1m1 0h1m1 0h3m5 0h4m1 0h2m3 0h3M0 28.5h1m1 0h3m1 0h1m2 0h3m1 0h1m4 0h2m1 0h8m1 0h3M0 29.5h1m1 0h3m1 0h1m1 0h2m1 0h3m1 0h1m4 0h1m1 0h1m1 0h1m2 0h1m4 0h1M0 30.5h1m1 0h3m1 0h1m1 0h2m1 0h1m3 0h2m3 0h4m2 0h2m1 0h2M0 31.5h1m5 0h1m2 0h2m1 0h1m1 0h1m2 0h2m1 0h1m3 0h2m1 0h2m3 0h1M0 32.5h7m1 0h2m1 0h4m2 0h3m1 0h3m2 0h1m1 0h3"/></svg>
+</div>
+<div class="body">
+<p class="row-title"><span class="n">6.</span> <a href="https://andoverct.info/series/town-asset/the-solar-contract/">The town joins a contract it was not part of</a></p>
+<a class="url" href="https://andoverct.info/series/town-asset/the-solar-contract/">andoverct.info/<wbr>series/<wbr>town-asset/<wbr>the-solar-contract</a>
+
+</div>
+</li>
+<li class="sm-row">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/series/town-asset/the-bathrooms" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h1m2 0h5m1 0h2m2 0h1m1 0h1m2 0h7M0 1.5h1m5 0h1m2 0h6m1 0h1m2 0h2m1 0h1m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m2 0h3m2 0h1m1 0h6m2 0h1m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m1 0h2m2 0h2m1 0h1m4 0h1m2 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h2m2 0h1m3 0h2m5 0h2m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h5m2 0h1m1 0h1m1 0h1m2 0h1m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h1m3 0h1m2 0h5m1 0h2M0 8.5h1m3 0h1m1 0h3m1 0h1m1 0h1m2 0h4m1 0h3m2 0h5m2 0h1M2 9.5h2m3 0h2m3 0h1m2 0h2m1 0h1m3 0h2m1 0h1m3 0h3M0 10.5h1m2 0h2m1 0h1m4 0h5m6 0h4m3 0h1m1 0h1M1 11.5h3m6 0h1m1 0h2m1 0h1m1 0h6m1 0h2m5 0h2M1 12.5h2m1 0h3m1 0h1m1 0h2m1 0h1m2 0h3m1 0h5m1 0h1m1 0h2m2 0h1M0 13.5h2m1 0h1m1 0h1m1 0h2m1 0h5m2 0h2m4 0h1m3 0h1m1 0h1M0 14.5h3m3 0h1m1 0h3m2 0h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h2m2 0h3M0 15.5h1m1 0h1m1 0h1m2 0h4m1 0h1m2 0h9m1 0h5M2 16.5h2m1 0h3m2 0h1m1 0h1m4 0h1m2 0h5m1 0h1m1 0h1m2 0h1M0 17.5h3m1 0h2m1 0h1m3 0h1m1 0h5m5 0h1m1 0h1m3 0h2M1 18.5h1m1 0h1m1 0h2m2 0h3m1 0h1m1 0h1m2 0h1m1 0h4m1 0h1m1 0h1m1 0h1m1 0h1M0 19.5h2m2 0h2m3 0h1m2 0h1m1 0h5m2 0h1m1 0h2m2 0h1m3 0h2M0 20.5h3m1 0h1m1 0h2m1 0h3m1 0h1m1 0h1m2 0h1m1 0h3m1 0h6M0 21.5h2m1 0h3m2 0h3m2 0h2m1 0h1m1 0h1m3 0h2m1 0h1m1 0h1m1 0h1m1 0h1M2 22.5h2m2 0h2m2 0h2m2 0h1m1 0h1m5 0h2m7 0h1M4 23.5h2m1 0h1m1 0h2m2 0h1m3 0h3m1 0h1m1 0h3m1 0h2m2 0h2M0 24.5h2m1 0h6m2 0h1m2 0h2m1 0h1m1 0h4m1 0h5m3 0h1M8 25.5h2m1 0h1m3 0h4m3 0h1m1 0h1m3 0h1m1 0h2M0 26.5h7m1 0h1m1 0h1m1 0h5m1 0h1m2 0h1m2 0h1m1 0h1m1 0h2m1 0h1M0 27.5h1m5 0h1m3 0h2m1 0h1m2 0h1m2 0h4m1 0h1m3 0h1M0 28.5h1m1 0h3m1 0h1m1 0h1m3 0h1m3 0h1m4 0h2m1 0h6m2 0h1M0 29.5h1m1 0h3m1 0h1m3 0h2m2 0h1m3 0h1m7 0h3m1 0h1M0 30.5h1m1 0h3m1 0h1m2 0h3m3 0h1m1 0h2m2 0h1m2 0h1m1 0h3M0 31.5h1m5 0h1m2 0h1m2 0h7m2 0h2m1 0h3M0 32.5h7m1 0h2m1 0h3m2 0h2m2 0h2m1 0h2m4 0h1m2 0h1"/></svg>
+</div>
+<div class="body">
+<p class="row-title"><span class="n">7.</span> <a href="https://andoverct.info/series/town-asset/the-bathrooms/">The fair point</a></p>
+<a class="url" href="https://andoverct.info/series/town-asset/the-bathrooms/">andoverct.info/<wbr>series/<wbr>town-asset/<wbr>the-bathrooms</a>
+
+</div>
+</li>
+<li class="sm-row">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/series/town-asset/every-table" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m10 0h5m1 0h1m2 0h7M0 1.5h1m5 0h1m3 0h3m2 0h3m6 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h1m4 0h3m1 0h1m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m5 0h1m2 0h1m3 0h1m3 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h2m1 0h9m1 0h3m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m4 0h2m2 0h1m2 0h3m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h2m2 0h1m1 0h1m3 0h3M0 8.5h1m1 0h5m2 0h2m1 0h3m1 0h3m3 0h1m3 0h5M1 9.5h1m1 0h1m1 0h1m1 0h4m2 0h2m1 0h5m1 0h2m2 0h2m1 0h2m1 0h1M0 10.5h1m3 0h1m1 0h1m5 0h6m3 0h1m3 0h1m2 0h1m1 0h2M0 11.5h1m1 0h3m2 0h1m2 0h2m1 0h1m1 0h9m1 0h1m2 0h5M1 12.5h6m2 0h2m3 0h3m2 0h1m3 0h3m1 0h3m1 0h1M0 13.5h1m1 0h2m1 0h1m5 0h3m1 0h1m1 0h5m1 0h1m1 0h2m2 0h1m1 0h2M0 14.5h1m2 0h1m2 0h1m1 0h2m2 0h6m6 0h3m1 0h1m2 0h1M0 15.5h2m3 0h1m2 0h1m1 0h2m2 0h2m4 0h2m1 0h1m1 0h3m2 0h1M3 16.5h10m2 0h1m1 0h1m1 0h1m2 0h1m1 0h2m1 0h2m3 0h1M0 17.5h1m1 0h1m1 0h1m4 0h4m1 0h1m1 0h1m2 0h2m2 0h1m2 0h2m1 0h4M3 18.5h4m1 0h3m4 0h2m1 0h1m1 0h3m1 0h2m1 0h2m1 0h2M2 19.5h2m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m5 0h2m4 0h6M2 20.5h6m2 0h5m3 0h2m2 0h1m5 0h2m1 0h2M0 21.5h2m3 0h1m1 0h1m1 0h1m5 0h2m2 0h5m2 0h1m2 0h1m2 0h1M0 22.5h1m1 0h1m1 0h5m2 0h1m2 0h1m2 0h2m9 0h4M0 23.5h1m2 0h2m2 0h1m1 0h1m2 0h3m1 0h1m2 0h1m1 0h2m2 0h1m1 0h1m1 0h3M0 24.5h1m1 0h2m1 0h4m1 0h3m4 0h1m4 0h1m1 0h5m2 0h1M8 25.5h1m3 0h3m1 0h7m1 0h1m3 0h1m1 0h1m1 0h1M0 26.5h7m2 0h3m3 0h1m1 0h1m3 0h4m1 0h1m1 0h1m1 0h2M0 27.5h1m5 0h1m1 0h2m1 0h2m1 0h1m2 0h5m1 0h2m3 0h3M0 28.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m2 0h1m2 0h1m1 0h6m1 0h1M0 29.5h1m1 0h3m1 0h1m1 0h1m1 0h2m3 0h1m2 0h4m3 0h1m2 0h1m1 0h3M0 30.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m1 0h2m3 0h4m2 0h2m1 0h2M0 31.5h1m5 0h1m3 0h2m1 0h1m1 0h1m5 0h1m3 0h2m1 0h3M0 32.5h7m1 0h4m2 0h4m5 0h5m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="row-title"><span class="n">8.</span> <a href="https://andoverct.info/series/town-asset/every-table/">The seat he did not take, until he did</a></p>
+<a class="url" href="https://andoverct.info/series/town-asset/every-table/">andoverct.info/<wbr>series/<wbr>town-asset/<wbr>every-table</a>
+
+</div>
+</li>
+<li class="sm-row">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/series/town-asset/the-superintendent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m3 0h2m1 0h1m4 0h3m2 0h1m2 0h7M0 1.5h1m5 0h1m6 0h4m4 0h2m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h3m1 0h2m4 0h6m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h2m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m1 0h1m1 0h8m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m4 0h5m3 0h2m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h1m3 0h1m1 0h1m2 0h4M0 8.5h1m1 0h5m2 0h1m1 0h4m1 0h4m2 0h1m3 0h5M1 9.5h1m1 0h2m3 0h1m5 0h1m1 0h1m1 0h6m2 0h2m1 0h2m1 0h1M1 10.5h1m3 0h4m3 0h1m2 0h2m8 0h1m2 0h1m1 0h2M3 11.5h1m4 0h3m3 0h3m2 0h5m1 0h1m2 0h5M0 12.5h1m1 0h3m1 0h1m1 0h2m2 0h1m2 0h1m1 0h1m1 0h1m2 0h4m1 0h3m1 0h1M3 13.5h1m1 0h1m1 0h5m2 0h1m2 0h7m1 0h2m2 0h1m1 0h2M0 14.5h2m2 0h1m1 0h2m1 0h1m2 0h4m1 0h1m2 0h1m3 0h3m1 0h1m2 0h1M0 15.5h1m1 0h4m3 0h1m1 0h3m1 0h2m4 0h1m2 0h4m2 0h1M0 16.5h1m2 0h1m2 0h2m1 0h1m1 0h1m1 0h3m1 0h1m1 0h1m2 0h4m1 0h2m3 0h1M1 17.5h1m1 0h2m3 0h1m1 0h1m2 0h2m1 0h2m1 0h3m1 0h1m2 0h2m1 0h4M3 18.5h1m2 0h4m2 0h2m1 0h3m2 0h3m1 0h2m1 0h2m1 0h2M1 19.5h2m1 0h1m2 0h2m2 0h1m1 0h1m1 0h1m2 0h1m2 0h2m4 0h6M1 20.5h2m2 0h2m6 0h2m1 0h2m1 0h1m2 0h1m1 0h1m3 0h2m1 0h2M0 21.5h1m1 0h3m4 0h4m3 0h1m1 0h6m2 0h1m2 0h1m2 0h1M0 22.5h1m3 0h1m1 0h2m1 0h2m4 0h1m1 0h2m5 0h1m3 0h4M0 23.5h1m1 0h1m2 0h1m1 0h1m1 0h1m2 0h3m1 0h1m2 0h1m1 0h2m2 0h1m1 0h1m1 0h2M0 24.5h1m1 0h1m3 0h1m1 0h1m1 0h2m5 0h1m4 0h1m1 0h5m2 0h2M8 25.5h1m1 0h1m1 0h2m2 0h1m1 0h5m1 0h1m3 0h1m1 0h1m1 0h1M0 26.5h7m3 0h2m2 0h2m5 0h1m1 0h2m1 0h1m1 0h1m1 0h2M0 27.5h1m5 0h1m1 0h1m2 0h4m3 0h4m1 0h2m3 0h3M0 28.5h1m1 0h3m1 0h1m1 0h2m2 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h6m1 0h1M0 29.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h4m3 0h1m2 0h1m1 0h3M0 30.5h1m1 0h3m1 0h1m1 0h2m2 0h1m2 0h2m3 0h4m2 0h2m1 0h2M0 31.5h1m5 0h1m3 0h2m3 0h2m3 0h2m1 0h1m1 0h2m1 0h3M0 32.5h7m1 0h1m1 0h2m2 0h4m5 0h5m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="row-title"><span class="n">9.</span> <a href="https://andoverct.info/series/town-asset/the-superintendent/">The contract, and the law firm</a></p>
+<a class="url" href="https://andoverct.info/series/town-asset/the-superintendent/">andoverct.info/<wbr>series/<wbr>town-asset/<wbr>the-superintendent</a>
+
+</div>
+</li>
+<li class="sm-row">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/series/town-asset/the-preschool" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h1m2 0h2m4 0h4m2 0h1m2 0h7M0 1.5h1m5 0h1m1 0h2m4 0h1m1 0h1m1 0h1m1 0h1m1 0h2m2 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m3 0h1m2 0h4m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m5 0h1m1 0h1m4 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m2 0h1m3 0h1m2 0h1m2 0h1m2 0h1m3 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m2 0h1m2 0h1m1 0h7m3 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h2m2 0h1m2 0h5m2 0h3M0 8.5h1m1 0h2m1 0h3m6 0h2m1 0h1m3 0h1m2 0h1m1 0h1m2 0h1m1 0h2M0 9.5h2m2 0h1m4 0h1m2 0h3m1 0h8m2 0h2m1 0h2m1 0h1M0 10.5h1m1 0h1m3 0h1m1 0h6m2 0h3m1 0h1m2 0h7m1 0h2M2 11.5h1m1 0h1m2 0h1m2 0h3m7 0h1m1 0h3m2 0h1m1 0h1m2 0h1M0 12.5h1m3 0h1m1 0h3m1 0h2m2 0h6m2 0h4m1 0h3m1 0h1M5 13.5h1m5 0h2m1 0h1m4 0h1m2 0h1m1 0h2m1 0h1m2 0h2M0 14.5h1m1 0h1m2 0h3m2 0h3m4 0h3m1 0h2m3 0h2m2 0h1M2 15.5h1m2 0h1m1 0h3m5 0h1m5 0h1m2 0h4m2 0h1M0 16.5h4m2 0h1m3 0h1m2 0h1m4 0h5m2 0h2m1 0h3M0 17.5h2m2 0h2m1 0h2m1 0h3m2 0h1m1 0h2m1 0h1m1 0h5m1 0h2m2 0h1M3 18.5h1m2 0h1m3 0h1m1 0h1m1 0h4m2 0h1m3 0h2m1 0h2m1 0h2M0 19.5h4m4 0h1m1 0h1m1 0h2m3 0h2m1 0h1m2 0h2m1 0h1m1 0h1m2 0h1M1 20.5h1m1 0h5m1 0h1m1 0h2m1 0h3m4 0h1m3 0h1m1 0h1m1 0h2m1 0h1M0 21.5h1m1 0h1m1 0h1m9 0h3m1 0h4m1 0h1m2 0h1m2 0h1m2 0h1M4 22.5h1m1 0h2m1 0h1m1 0h2m2 0h1m5 0h1m1 0h1m2 0h3m2 0h2M1 23.5h2m1 0h1m2 0h1m2 0h1m4 0h1m2 0h1m5 0h1m3 0h2m2 0h1M0 24.5h1m3 0h3m2 0h1m1 0h1m1 0h1m3 0h1m4 0h1m1 0h5m2 0h1M8 25.5h1m3 0h2m1 0h2m2 0h1m2 0h3m3 0h2M0 26.5h7m1 0h2m1 0h4m1 0h4m3 0h2m1 0h1m1 0h1M0 27.5h1m5 0h1m1 0h2m2 0h3m2 0h8m3 0h3M0 28.5h1m1 0h3m1 0h1m2 0h5m2 0h13m1 0h3M0 29.5h1m1 0h3m1 0h1m1 0h1m1 0h2m2 0h1m1 0h1m3 0h1m3 0h1m2 0h1m4 0h1M0 30.5h1m1 0h3m1 0h1m1 0h2m1 0h1m3 0h2m3 0h4m2 0h2m1 0h2M0 31.5h1m5 0h1m3 0h2m1 0h1m3 0h4m3 0h2m1 0h2m3 0h1M0 32.5h7m1 0h3m2 0h2m2 0h3m1 0h3m2 0h1m1 0h3"/></svg>
+</div>
+<div class="body">
+<p class="row-title"><span class="n">10.</span> <a href="https://andoverct.info/series/town-asset/the-preschool/">A question answered, and asked again</a></p>
+<a class="url" href="https://andoverct.info/series/town-asset/the-preschool/">andoverct.info/<wbr>series/<wbr>town-asset/<wbr>the-preschool</a>
+
+</div>
+</li>
+<li class="sm-row">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/series/town-asset/the-mailers" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h1m8 0h4m2 0h1m2 0h7M0 1.5h1m5 0h1m1 0h3m3 0h1m1 0h1m1 0h1m1 0h1m1 0h2m2 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m3 0h1m2 0h4m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h3m4 0h1m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m5 0h2m2 0h1m2 0h2m5 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m2 0h2m1 0h1m1 0h7m3 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h4m3 0h6m1 0h3M0 8.5h1m1 0h2m1 0h3m6 0h2m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h2M1 9.5h1m1 0h3m1 0h4m2 0h2m1 0h5m1 0h2m2 0h2m1 0h2m1 0h1M0 10.5h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h1m2 0h1m1 0h1m1 0h1m1 0h8m1 0h2M2 11.5h1m6 0h4m4 0h1m2 0h1m2 0h2m2 0h1m1 0h1m2 0h1M0 12.5h3m1 0h3m7 0h3m2 0h2m1 0h4m1 0h3m1 0h1M3 13.5h1m1 0h1m1 0h1m1 0h1m3 0h2m4 0h1m4 0h2m1 0h1m2 0h2M1 14.5h4m1 0h3m1 0h1m1 0h1m1 0h1m2 0h3m1 0h2m3 0h2m2 0h1M0 15.5h2m1 0h1m1 0h1m1 0h1m2 0h2m2 0h2m3 0h1m1 0h1m2 0h4m2 0h1M0 16.5h1m1 0h1m1 0h1m1 0h2m2 0h2m2 0h1m3 0h1m1 0h3m2 0h2m1 0h3M1 17.5h4m2 0h1m1 0h1m1 0h1m1 0h3m2 0h1m1 0h1m1 0h5m1 0h2m2 0h1M0 18.5h1m2 0h1m2 0h1m1 0h1m6 0h2m1 0h1m1 0h2m2 0h2m1 0h2m1 0h2M1 19.5h1m2 0h2m1 0h1m1 0h1m1 0h1m2 0h1m2 0h2m1 0h1m1 0h3m1 0h1m1 0h1m2 0h1M2 20.5h5m1 0h1m2 0h1m3 0h2m3 0h2m3 0h1m1 0h1m1 0h2m1 0h1M0 21.5h4m1 0h1m2 0h2m4 0h3m2 0h3m1 0h1m2 0h1m2 0h1m2 0h1M2 22.5h1m1 0h1m1 0h1m2 0h1m5 0h1m5 0h1m1 0h1m2 0h3m2 0h2M1 23.5h1m1 0h1m3 0h2m1 0h3m1 0h2m2 0h3m3 0h1m3 0h2M0 24.5h1m2 0h1m1 0h4m1 0h1m1 0h1m4 0h1m4 0h1m1 0h5m2 0h1M8 25.5h1m2 0h1m3 0h2m2 0h1m1 0h4m3 0h2M0 26.5h7m1 0h1m2 0h3m2 0h4m2 0h3m1 0h1m1 0h1M0 27.5h1m5 0h1m1 0h1m2 0h2m1 0h1m2 0h8m3 0h3M0 28.5h1m1 0h3m1 0h1m3 0h3m3 0h13m1 0h3M0 29.5h1m1 0h3m1 0h1m1 0h2m3 0h2m1 0h1m3 0h1m1 0h1m1 0h1m2 0h1m4 0h1M0 30.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m1 0h2m4 0h3m2 0h2m1 0h2M0 31.5h1m5 0h1m2 0h2m2 0h2m2 0h2m5 0h2m1 0h2m3 0h1M0 32.5h7m1 0h1m2 0h4m2 0h2m2 0h3m2 0h1m1 0h3"/></svg>
+</div>
+<div class="body">
+<p class="row-title"><span class="n">11.</span> <a href="https://andoverct.info/series/town-asset/the-mailers/">Paying to defeat the budget he was there to help create</a></p>
+<a class="url" href="https://andoverct.info/series/town-asset/the-mailers/">andoverct.info/<wbr>series/<wbr>town-asset/<wbr>the-mailers</a>
+
+</div>
+</li>
+<li class="sm-row">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/series/town-asset/where-is-the-vote" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m1 0h2m1 0h1m6 0h4m1 0h1m2 0h7M0 1.5h1m5 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h2m1 0h1m2 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m3 0h1m2 0h4m1 0h1m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m5 0h1m1 0h2m3 0h1m3 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m3 0h2m1 0h1m2 0h1m2 0h1m4 0h1m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m2 0h4m1 0h6m4 0h1m1 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h1m1 0h1m2 0h4m1 0h1m1 0h3M0 8.5h1m1 0h2m1 0h3m2 0h1m1 0h1m1 0h2m1 0h1m3 0h1m2 0h1m1 0h1m2 0h1m1 0h2M2 9.5h2m1 0h1m2 0h1m2 0h1m1 0h2m1 0h8m2 0h2m1 0h2m1 0h1M0 10.5h1m2 0h4m2 0h1m3 0h1m2 0h3m1 0h1m1 0h8m1 0h2M2 11.5h4m2 0h1m2 0h1m6 0h1m1 0h1m2 0h2m2 0h1m1 0h1m2 0h1M6 12.5h1m1 0h2m1 0h2m1 0h2m1 0h1m1 0h1m3 0h3m1 0h3m1 0h1M2 13.5h1m8 0h1m1 0h2m3 0h2m4 0h2m1 0h1m2 0h2M0 14.5h1m1 0h1m3 0h1m2 0h1m1 0h2m1 0h1m2 0h3m1 0h2m3 0h2m2 0h1M1 15.5h1m5 0h1m1 0h5m2 0h1m3 0h2m2 0h4m2 0h1M0 16.5h1m2 0h5m2 0h1m1 0h2m1 0h1m2 0h1m1 0h3m2 0h2m1 0h3M4 17.5h1m3 0h2m1 0h1m1 0h1m1 0h1m2 0h1m1 0h7m1 0h2m2 0h1M0 18.5h1m1 0h2m1 0h2m2 0h1m2 0h1m2 0h3m2 0h3m1 0h2m1 0h2m1 0h2M0 19.5h2m2 0h2m2 0h1m1 0h5m2 0h1m2 0h1m1 0h3m1 0h1m1 0h1m2 0h1M0 20.5h2m3 0h3m3 0h1m1 0h1m1 0h4m1 0h2m3 0h1m1 0h1m1 0h2m1 0h1M0 21.5h1m3 0h1m2 0h1m2 0h1m7 0h4m1 0h1m2 0h1m2 0h1m2 0h1M4 22.5h1m1 0h1m1 0h1m2 0h4m1 0h1m4 0h1m1 0h2m1 0h3m2 0h2M1 23.5h1m1 0h1m1 0h1m5 0h1m1 0h1m4 0h3m2 0h2m3 0h2m2 0h1M0 24.5h1m1 0h3m1 0h2m5 0h3m1 0h1m1 0h1m2 0h1m1 0h5m3 0h1M8 25.5h1m1 0h3m2 0h2m2 0h1m1 0h4m3 0h2M0 26.5h7m1 0h1m1 0h2m1 0h1m2 0h4m2 0h3m1 0h1m1 0h1M0 27.5h1m5 0h1m1 0h1m1 0h1m2 0h2m4 0h6m3 0h3M0 28.5h1m1 0h3m1 0h1m2 0h2m1 0h1m5 0h11m1 0h3M0 29.5h1m1 0h3m1 0h1m1 0h1m2 0h5m2 0h1m5 0h1m2 0h1m4 0h1M0 30.5h1m1 0h3m1 0h1m1 0h3m4 0h1m4 0h4m2 0h2m1 0h2M0 31.5h1m5 0h1m2 0h1m1 0h1m1 0h1m2 0h5m3 0h2m1 0h2m3 0h1M0 32.5h7m1 0h3m1 0h3m2 0h3m1 0h3m2 0h1m1 0h3"/></svg>
+</div>
+<div class="body">
+<p class="row-title"><span class="n">12.</span> <a href="https://andoverct.info/series/town-asset/where-is-the-vote/">Where is the vote?</a></p>
+<a class="url" href="https://andoverct.info/series/town-asset/where-is-the-vote/">andoverct.info/<wbr>series/<wbr>town-asset/<wbr>where-is-the-vote</a>
+
+</div>
+</li>
+<li class="sm-row">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/series/town-asset/the-pattern" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m10 0h4m2 0h1m2 0h7M0 1.5h1m5 0h1m2 0h4m2 0h3m3 0h2m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h1m4 0h5m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m1 0h1m4 0h1m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h4m1 0h7m1 0h4m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m4 0h2m2 0h1m3 0h2m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h2m2 0h1m1 0h1m2 0h4M0 8.5h1m1 0h5m2 0h6m1 0h4m2 0h1m3 0h5M1 9.5h1m1 0h1m1 0h1m1 0h4m2 0h2m1 0h8m2 0h2m1 0h2m1 0h1M4 10.5h3m2 0h1m2 0h6m3 0h1m3 0h1m2 0h1m1 0h2M0 11.5h5m2 0h1m1 0h3m1 0h1m1 0h7m1 0h1m1 0h1m2 0h5M1 12.5h2m1 0h1m1 0h1m1 0h3m3 0h3m2 0h1m2 0h4m1 0h3m1 0h1M0 13.5h1m2 0h1m1 0h1m1 0h1m5 0h1m1 0h1m1 0h5m1 0h1m1 0h2m2 0h1m1 0h2M0 14.5h1m5 0h1m1 0h2m2 0h6m6 0h3m1 0h1m2 0h1M0 15.5h4m1 0h1m4 0h1m1 0h1m1 0h2m3 0h1m1 0h1m2 0h4m2 0h1M2 16.5h9m1 0h1m2 0h1m1 0h1m4 0h4m1 0h2m3 0h1M2 17.5h1m6 0h4m1 0h1m1 0h1m2 0h3m1 0h1m2 0h2m1 0h4M0 18.5h2m1 0h1m2 0h1m1 0h1m1 0h1m3 0h3m1 0h1m1 0h2m2 0h2m1 0h2m1 0h2M1 19.5h5m1 0h4m1 0h1m1 0h2m5 0h2m4 0h6M1 20.5h2m3 0h2m2 0h4m4 0h3m1 0h1m1 0h1m3 0h2m1 0h2M0 21.5h1m1 0h1m2 0h1m3 0h2m4 0h2m2 0h5m2 0h1m2 0h1m2 0h1M0 22.5h1m1 0h5m5 0h1m1 0h1m2 0h2m1 0h1m3 0h1m3 0h4M0 23.5h1m2 0h2m2 0h1m1 0h1m1 0h1m1 0h2m1 0h1m3 0h3m2 0h1m1 0h1m1 0h3M0 24.5h1m2 0h1m1 0h2m1 0h1m1 0h1m1 0h1m4 0h1m4 0h1m1 0h5m2 0h1M8 25.5h2m2 0h1m1 0h1m1 0h7m1 0h1m3 0h1m1 0h1m1 0h1M0 26.5h7m2 0h3m2 0h2m1 0h1m3 0h4m1 0h1m1 0h1m1 0h2M0 27.5h1m5 0h1m1 0h1m2 0h2m1 0h1m2 0h5m1 0h2m3 0h3M0 28.5h1m1 0h3m1 0h1m1 0h1m3 0h1m2 0h2m2 0h1m2 0h1m1 0h6m1 0h1M0 29.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h2m2 0h5m2 0h1m2 0h1m1 0h3M0 30.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m1 0h2m4 0h3m2 0h2m1 0h2M0 31.5h1m5 0h1m3 0h4m1 0h1m4 0h2m1 0h1m1 0h2m1 0h3M0 32.5h7m1 0h4m2 0h4m5 0h5m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="row-title"><span class="n">13.</span> <a href="https://andoverct.info/series/town-asset/the-pattern/">The pattern</a></p>
+<a class="url" href="https://andoverct.info/series/town-asset/the-pattern/">andoverct.info/<wbr>series/<wbr>town-asset/<wbr>the-pattern</a>
+
+</div>
+</li>
+</ol>
+</div>
+</div>
+</section>
+
+<section class="sm-section" id="sec-opinion">
+<header class="sm-head">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/opinion" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h29v29H0z"/><path stroke="#000000" d="M0 0.5h7m3 0h3m2 0h5m2 0h7M0 1.5h1m5 0h1m10 0h1m2 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h3m1 0h1m3 0h2m1 0h1m2 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h3m1 0h4m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m3 0h6m4 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h2m2 0h2m1 0h1m3 0h2M0 8.5h1m1 0h5m2 0h3m2 0h2m1 0h1m4 0h5M2 9.5h2m3 0h1m2 0h2m3 0h2m2 0h2m1 0h3m3 0h1M3 10.5h2m1 0h1m2 0h1m2 0h1m5 0h1m4 0h1M0 11.5h1m1 0h2m1 0h1m1 0h1m1 0h4m1 0h1m1 0h1m1 0h6m1 0h1m1 0h1M0 12.5h2m2 0h1m1 0h1m1 0h3m5 0h2m1 0h1m5 0h2M0 13.5h4m1 0h1m1 0h1m2 0h6m1 0h8m3 0h1M0 14.5h4m1 0h2m1 0h3m1 0h5m1 0h1m1 0h1m3 0h3M0 15.5h4m5 0h2m2 0h1m1 0h1m7 0h2m2 0h1M1 16.5h1m1 0h2m1 0h2m6 0h2m1 0h1m1 0h1m5 0h2M0 17.5h2m1 0h1m1 0h1m3 0h1m1 0h2m2 0h6m1 0h3m1 0h1m1 0h1M0 18.5h1m2 0h2m1 0h1m5 0h1m4 0h1m3 0h1m4 0h1M0 19.5h1m1 0h1m1 0h2m2 0h5m1 0h1m1 0h1m1 0h6m3 0h1M0 20.5h1m1 0h2m2 0h1m1 0h1m1 0h1m6 0h1m1 0h6m1 0h3M8 21.5h8m1 0h2m1 0h1m3 0h5M0 22.5h7m3 0h2m1 0h4m1 0h3m1 0h1m1 0h3M0 23.5h1m5 0h1m1 0h6m2 0h1m3 0h1m3 0h1m3 0h1M0 24.5h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h1m2 0h1m2 0h5m1 0h1m1 0h1M0 25.5h1m1 0h3m1 0h1m1 0h3m2 0h1m3 0h2m6 0h2M0 26.5h1m1 0h3m1 0h1m1 0h4m1 0h3m1 0h1m1 0h1m1 0h7M0 27.5h1m5 0h1m2 0h3m2 0h1m1 0h1m2 0h3m1 0h3m1 0h1M0 28.5h7m1 0h2m1 0h1m1 0h1m3 0h1m1 0h1m2 0h1m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="section-label">§ V · Opinion</p>
+<h2>Argued, not reported</h2>
+<a class="url" href="https://andoverct.info/opinion/">andoverct.info/<wbr>opinion</a>
+<p class="blurb">Pieces that take a side. Unlike everything else on this site, these argue a position and say so up front, under the author&#39;s name and affiliations. The facts in them are still drawn from the public record and sourced at the end.</p>
+</div>
+</header>
+<div class="sm-grid">
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/opinion/votes-are-the-job" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M0 0.5h7m3 0h1m1 0h1m3 0h1m1 0h3m2 0h1m2 0h7M0 1.5h1m5 0h1m2 0h3m3 0h2m1 0h1m2 0h2m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1m2 0h5m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m3 0h1m5 0h1m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h4m1 0h5m2 0h2m1 0h2m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m2 0h4m2 0h1m1 0h1m1 0h2m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h3m5 0h1m2 0h4M0 8.5h1m1 0h5m3 0h1m2 0h1m3 0h3m2 0h1m3 0h5M1 9.5h1m2 0h1m2 0h1m1 0h1m2 0h2m2 0h5m1 0h2m2 0h2m1 0h4M0 10.5h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h6m10 0h1m1 0h2M1 11.5h1m3 0h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h5m1 0h1m2 0h1m1 0h5M0 12.5h1m2 0h4m2 0h1m4 0h1m1 0h1m2 0h2m1 0h4m2 0h2m1 0h2M2 13.5h3m4 0h3m3 0h1m1 0h2m2 0h1m1 0h1m2 0h1m2 0h4M0 14.5h1m2 0h2m1 0h4m3 0h5m2 0h1m3 0h3m3 0h2M0 15.5h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h3m5 0h1m2 0h4m1 0h2M0 16.5h1m3 0h3m1 0h2m2 0h2m1 0h1m1 0h1m4 0h4m1 0h2m3 0h1M0 17.5h1m8 0h2m1 0h2m2 0h1m1 0h3m2 0h1m2 0h2m1 0h2m1 0h1M0 18.5h1m5 0h2m2 0h2m1 0h3m2 0h1m1 0h1m1 0h1m1 0h2m1 0h2m1 0h2M1 19.5h2m2 0h1m2 0h1m2 0h1m1 0h2m1 0h1m4 0h2m2 0h1m1 0h4m1 0h1M1 20.5h3m1 0h3m1 0h1m2 0h1m1 0h1m3 0h2m2 0h1m1 0h1m2 0h3m1 0h1M0 21.5h1m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1m3 0h3m2 0h2m1 0h1m2 0h1m2 0h2m1 0h1M0 22.5h1m3 0h3m1 0h1m3 0h2m3 0h1m1 0h1m4 0h1m4 0h3M0 23.5h1m3 0h1m2 0h4m5 0h1m2 0h4m2 0h1m2 0h4M0 24.5h1m1 0h1m3 0h4m7 0h1m1 0h1m2 0h1m1 0h6M8 25.5h2m2 0h1m3 0h2m1 0h4m1 0h1m3 0h1m1 0h3M0 26.5h7m2 0h1m4 0h4m5 0h2m1 0h1m1 0h1m1 0h2M0 27.5h1m5 0h1m1 0h2m1 0h1m1 0h3m1 0h5m1 0h2m3 0h5M0 28.5h1m1 0h3m1 0h1m1 0h1m1 0h3m3 0h1m2 0h1m4 0h6m1 0h2M0 29.5h1m1 0h3m1 0h1m1 0h2m2 0h4m2 0h1m2 0h1m3 0h1m2 0h1m1 0h3M0 30.5h1m1 0h3m1 0h1m1 0h1m1 0h4m1 0h2m1 0h1m1 0h4m2 0h2m1 0h1M0 31.5h1m5 0h1m2 0h1m1 0h1m1 0h1m1 0h1m2 0h4m1 0h1m1 0h2m1 0h1m1 0h1M0 32.5h7m1 0h1m4 0h3m1 0h1m1 0h1m3 0h3m1 0h1m3 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">CT 55th House District <span class="dot">·</span> October 2026</p>
+<h3><a href="https://andoverct.info/opinion/votes-are-the-job/">The Votes Are the Job</a></h3>
+<a class="url" href="https://andoverct.info/opinion/votes-are-the-job/">andoverct.info/<wbr>opinion/<wbr>votes-are-the-job</a>
+<p class="desc">Why it is fair, and necessary, for Ellen Paul&#39;s campaign to make this race about Rep. Steve Weir&#39;s record. An incumbent starts with the title on the ballot, a caucus web page, and state-paid newsletters; what he carries that a challenger does not is two terms of recorded votes. Asking voters to read them is not a smear, it is the job review. Written by the co-chair of the Andover Democratic Town Committee, who says so up front, with every figure sourced to the official roll calls.</p>
+</div>
+</article>
+</div>
+
+</section>
+
+<section class="sm-section" id="sec-other">
+<header class="sm-head">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reference" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h29v29H0z"/><path stroke="#000000" d="M0 0.5h7m2 0h1m5 0h5m2 0h7M0 1.5h1m5 0h1m2 0h1m2 0h1m4 0h1m2 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h3m3 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h4m4 0h2m1 0h1m2 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h3m3 0h2m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h2m2 0h7m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m2 0h1m1 0h1m1 0h1m2 0h3M0 8.5h1m1 0h5m2 0h3m2 0h2m1 0h1m4 0h5M0 9.5h6m5 0h1m3 0h2m1 0h3m1 0h3m3 0h1M0 10.5h2m4 0h1m1 0h1m1 0h2m11 0h1M1 11.5h2m2 0h1m2 0h1m1 0h3m1 0h1m1 0h1m2 0h5m1 0h1m1 0h1M1 12.5h1m4 0h1m1 0h1m2 0h2m4 0h1m1 0h1m5 0h2M2 13.5h1m1 0h2m3 0h1m1 0h5m2 0h7m3 0h1M0 14.5h1m1 0h1m1 0h1m1 0h5m1 0h6m2 0h1m3 0h3M2 15.5h1m2 0h1m4 0h2m1 0h1m2 0h1m1 0h1m4 0h2m2 0h1M0 16.5h2m1 0h1m2 0h2m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m5 0h2M0 17.5h3m2 0h1m1 0h1m2 0h3m5 0h3m1 0h3m1 0h1m1 0h1M0 18.5h1m3 0h4m1 0h4m2 0h2m4 0h1m4 0h1M0 19.5h1m2 0h1m3 0h3m4 0h3m2 0h5m3 0h1M0 20.5h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h6m1 0h3M8 21.5h2m1 0h1m1 0h2m1 0h1m3 0h1m3 0h5M0 22.5h7m4 0h1m1 0h8m1 0h1m1 0h3M0 23.5h1m5 0h1m1 0h4m1 0h1m4 0h1m1 0h1m3 0h1M0 24.5h1m1 0h3m1 0h1m1 0h4m2 0h2m1 0h1m2 0h5m1 0h2M0 25.5h1m1 0h3m1 0h1m1 0h6m2 0h1m1 0h1m6 0h4M0 26.5h1m1 0h3m1 0h1m1 0h2m1 0h1m3 0h1m3 0h1m1 0h7M0 27.5h1m5 0h1m2 0h1m2 0h2m2 0h1m2 0h3m1 0h3m1 0h1M0 28.5h7m1 0h1m3 0h2m3 0h1m1 0h1m2 0h1m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="section-label">§ VI · Other</p>
+<h2>Reference material</h2>
+<a class="url" href="https://andoverct.info/reference/">andoverct.info/<wbr>reference</a>
+<p class="blurb">Longstanding reference works and archives that don&#39;t fit the report or charter-guide format but are part of the same project.</p>
+</div>
+</header>
+<div class="sm-grid">
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reference/video" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h29v29H0z"/><path stroke="#000000" d="M0 0.5h7m4 0h2m3 0h4m2 0h7M0 1.5h1m5 0h1m3 0h3m1 0h2m1 0h1m2 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m2 0h2m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m3 0h3m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m3 0h7m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h1m1 0h1m1 0h2m2 0h3M0 8.5h1m1 0h5m2 0h1m3 0h1m3 0h1m4 0h5M4 9.5h1m6 0h1m1 0h1m2 0h1m1 0h3m1 0h3m3 0h1M1 10.5h6m2 0h3m1 0h3m7 0h1M1 11.5h1m2 0h2m1 0h2m1 0h1m3 0h1m1 0h1m2 0h5m1 0h1m1 0h1M2 12.5h2m2 0h7m2 0h3m1 0h1m5 0h2M0 13.5h1m1 0h2m1 0h1m1 0h2m2 0h3m2 0h1m1 0h7m3 0h1M0 14.5h1m1 0h1m1 0h4m5 0h5m2 0h1m3 0h3M0 15.5h4m1 0h1m5 0h1m1 0h1m2 0h1m1 0h1m4 0h2m2 0h1M4 16.5h3m2 0h3m2 0h1m2 0h1m1 0h1m5 0h2M0 17.5h2m1 0h3m1 0h1m1 0h2m7 0h3m1 0h3m1 0h1m1 0h1M0 18.5h1m1 0h1m1 0h3m1 0h2m1 0h1m3 0h2m4 0h1m4 0h1M0 19.5h1m3 0h1m2 0h2m1 0h1m3 0h3m2 0h5m3 0h1M0 20.5h1m1 0h1m1 0h4m3 0h2m2 0h1m1 0h1m1 0h6m1 0h3M8 21.5h2m1 0h4m1 0h1m3 0h1m3 0h5M0 22.5h7m3 0h11m1 0h1m1 0h3M0 23.5h1m5 0h1m1 0h2m2 0h2m4 0h1m1 0h1m3 0h1m3 0h1M0 24.5h1m1 0h3m1 0h1m1 0h4m2 0h2m1 0h1m2 0h5m1 0h1M0 25.5h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m2 0h1m1 0h1m6 0h4M0 26.5h1m1 0h3m1 0h1m1 0h5m2 0h1m3 0h1m1 0h7M0 27.5h1m5 0h1m2 0h2m1 0h3m1 0h1m2 0h3m1 0h3m1 0h1M0 28.5h7m1 0h1m2 0h2m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">Archive <span class="dot">·</span> Public meetings</p>
+<h3><a href="https://andoverct.info/reference/video/">Meeting Video Archive</a></h3>
+<a class="url" href="https://andoverct.info/reference/video/">andoverct.info/<wbr>reference/<wbr>video</a>
+<p class="desc">Recordings of Selectmen, Board of Finance, Board of Education and other public meetings — indexed by date and body, most with searchable, timestamped transcripts.</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for andoverct.info/reference/tools" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h29v29H0z"/><path stroke="#000000" d="M0 0.5h7m2 0h1m1 0h3m2 0h4m2 0h7M0 1.5h1m5 0h1m2 0h2m3 0h4m2 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h3m1 0h1m3 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m3 0h2m2 0h1m1 0h1m2 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h2m4 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m3 0h2m1 0h4m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m5 0h1m1 0h1m1 0h3M0 8.5h1m1 0h5m2 0h1m2 0h2m3 0h1m4 0h5M7 9.5h1m4 0h2m2 0h1m1 0h3m1 0h3m3 0h1M0 10.5h1m1 0h3m1 0h1m4 0h5m7 0h1M2 11.5h1m2 0h1m3 0h1m4 0h3m2 0h5m1 0h1m1 0h1M5 12.5h4m1 0h1m4 0h3m1 0h1m5 0h2M0 13.5h2m6 0h1m1 0h2m1 0h1m2 0h1m1 0h7m3 0h1M2 14.5h1m3 0h5m1 0h6m2 0h1m3 0h3M1 15.5h1m1 0h1m1 0h1m1 0h2m4 0h1m2 0h1m1 0h1m4 0h2m2 0h1M0 16.5h1m2 0h1m1 0h2m1 0h1m2 0h2m1 0h1m2 0h1m1 0h1m5 0h2M0 17.5h2m2 0h1m2 0h1m1 0h2m1 0h1m5 0h3m1 0h3m1 0h1m1 0h1M0 18.5h1m3 0h3m2 0h3m3 0h2m4 0h1m4 0h1M0 19.5h1m2 0h3m1 0h2m5 0h3m2 0h5m3 0h1M0 20.5h1m2 0h1m2 0h1m2 0h1m2 0h1m2 0h1m1 0h1m1 0h6m1 0h3M8 21.5h2m2 0h3m1 0h1m3 0h1m3 0h5M0 22.5h7m3 0h2m1 0h8m1 0h1m1 0h3M0 23.5h1m5 0h1m1 0h2m1 0h3m4 0h1m1 0h1m3 0h1m3 0h1M0 24.5h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h2m1 0h1m2 0h5m1 0h1M0 25.5h1m1 0h3m1 0h1m1 0h2m6 0h1m1 0h1m6 0h4M0 26.5h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m3 0h1m1 0h7M0 27.5h1m5 0h1m2 0h1m1 0h2m3 0h1m2 0h3m1 0h3m1 0h1M0 28.5h7m1 0h2m1 0h1m2 0h1m2 0h1m1 0h1m2 0h1m1 0h1m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">Utilities <span class="dot">·</span> Spreadsheets &amp; data</p>
+<h3><a href="https://andoverct.info/reference/tools/">Tools</a></h3>
+<a class="url" href="https://andoverct.info/reference/tools/">andoverct.info/<wbr>reference/<wbr>tools</a>
+<p class="desc">Small utilities and machine-readable data files. First up: the town budget, hand-rebuilt from its published PDF into a working spreadsheet you can sort and total.</p>
+</div>
+</article>
+<article class="sm-card">
+<div class="qr"><svg role="img" aria-label="QR code for flyer.andoverct.info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h29v29H0z"/><path stroke="#000000" d="M0 0.5h7m3 0h2m3 0h2m2 0h2m1 0h7M0 1.5h1m5 0h1m3 0h3m7 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h4m2 0h1m1 0h1m1 0h2m2 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m6 0h3m3 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h3m1 0h4m1 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h1m4 0h5m4 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m1 0h1m1 0h2m1 0h1m2 0h2M0 8.5h1m1 0h5m3 0h1m3 0h2m1 0h1m2 0h1m1 0h5M0 9.5h2m3 0h1m2 0h2m5 0h6m1 0h3m3 0h1M3 10.5h4m1 0h3m1 0h1m5 0h1m1 0h2m1 0h2M0 11.5h3m1 0h2m1 0h2m3 0h1m1 0h1m1 0h1m3 0h6m1 0h1M5 12.5h2m1 0h3m5 0h2m3 0h1m3 0h2M0 13.5h2m2 0h1m2 0h1m1 0h2m1 0h4m1 0h8m3 0h1M2 14.5h3m1 0h1m1 0h1m2 0h7m4 0h5M1 15.5h5m1 0h1m2 0h1m2 0h1m1 0h1m2 0h5m4 0h1M2 16.5h1m1 0h1m1 0h1m2 0h4m1 0h2m1 0h1m2 0h1m2 0h1m1 0h2M0 17.5h5m3 0h2m1 0h2m2 0h2m1 0h7m1 0h1m1 0h1M0 18.5h1m1 0h1m1 0h4m1 0h1m7 0h1m2 0h2m2 0h1m1 0h1M0 19.5h1m1 0h1m1 0h2m1 0h2m1 0h2m2 0h1m1 0h1m1 0h3m2 0h1m3 0h1M0 20.5h1m1 0h3m1 0h3m1 0h1m1 0h1m3 0h2m1 0h6m1 0h3M8 21.5h3m2 0h3m1 0h2m1 0h1m3 0h5M0 22.5h7m2 0h1m2 0h6m1 0h2m1 0h1m1 0h3M0 23.5h1m5 0h1m1 0h2m3 0h1m1 0h1m3 0h2m3 0h1M0 24.5h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h2m1 0h2m1 0h5m1 0h1m1 0h1M0 25.5h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m1 0h4m6 0h2M0 26.5h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h7M0 27.5h1m5 0h1m2 0h1m1 0h4m1 0h1m3 0h1m1 0h1m2 0h1m1 0h1M0 28.5h7m1 0h2m2 0h1m5 0h2m1 0h4m1 0h1"/></svg>
+</div>
+<div class="body">
+<p class="meta">TiddlyWiki <span class="dot">·</span> Rebuttal</p>
+<h3><a href="https://flyer.andoverct.info/">The Andover Flyer — Annotated</a></h3>
+<a class="url" href="https://flyer.andoverct.info/">flyer.andoverct.info</a>
+<p class="desc">A structured response to the anonymous May 2025 budget flyer — reproduced page-by-page, with the claims walked through against the records that contradict them.</p>
+</div>
+</article>
+</div>
+
+</section>
+
+    </main>
+<footer class="site-footer">
+<div class="site-footer-inner"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</div>
+</footer>
+  </body>
+</html>
