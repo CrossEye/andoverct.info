@@ -119,10 +119,11 @@ be fully responsive to the request.
 What it would look like
 -----------------------
 
-The sample workbook re-presents the Board's own FY 2026-27 budget export of
-June 2, 2026 with the ECS split added. Its FY 2026-27 column uses the FY 2025-26
-adopted school budgets as the basis, which is what the rule would have used had
-it been in force this year:
+The model workbook re-presents the Board's own FY 2026-27 budget export of
+June 2, 2026 with the ECS split added, formatted and paginated as the budget
+book itself might be. Its FY 2026-27 column uses the FY 2025-26 adopted school
+budgets as the basis, which is what the rule would have used had it been in
+force this year:
 
 | FY 2026-27                      | Gross       | ECS allocated | Net local cost |
 | ------------------------------- | ----------: | ------------: | -------------: |
@@ -141,7 +142,9 @@ The workbook's NetLocal sheet goes one step further and nets the town side too,
 against its own fees, state aid and investment interest. That answers the
 "one-sided" objection below: for FY 2026-27 the town side drops by about
 $467,000 and the school side by $2.08 million, and the total to be raised by
-taxes reconciles to the mill-rate sheet to the dollar.
+taxes reconciles to the mill-rate sheet to the dollar. The FY 2026-27 ECS figure
+includes the $80,192 education share of the state's $97,943 SB1 supplemental
+grant; the municipal share sits on the town side.
 
 
 
@@ -168,24 +171,29 @@ Objections the letter anticipates
 The documents
 -------------
 
-All files are alongside this page. The workbooks were generated rather than
-saved from Excel, so a viewer that does not recalculate formulas (some phone
-previews) may show blanks where Excel shows figures. Open them in Excel or
-LibreOffice.
+All files are alongside this page.
 
 - [**The letter** (Word, July 20, 2026)](bof-ecs-letter.docx) — as sent to the
   chair and members of the Board of Finance, copied to the town administrator,
   the chairs of the Andover and RHAM boards of education, and the Board of
   Selectmen.
-- [**Budget with the ECS split** (Excel)](andover-budget-fy27-ecs-split.xlsx) —
-  the June 2 budget export with the allocation rows added. Three sheets:
-  *Budget* (the full account listing, with "less: ECS allocated to …" rows
-  under each school appropriation and the allocation basis at rows 53-58),
-  *MillRate* (the Board's levy calculation plus a net-local-cost-by-entity
-  block) and *NetLocal* (the fully symmetric presentation with a
-  reconciliation to the levy).
+- [**Model budget with the ECS split** (Excel)](andover-budget-fy27-ecs-split-clean.xlsx) —
+  the June 2 budget export with the allocation rows added, laid out for print:
+  landscape, one page wide, repeated column headings, and a page break at each
+  department. This is the version to share. Three sheets: *Budget* (the full
+  account listing, with "less: ECS allocated to …" rows under each school
+  appropriation and the allocation basis at rows 59-64), *MillRate* (the
+  Board's levy calculation plus a net-local-cost-by-entity block) and
+  *NetLocal* (the fully symmetric presentation with a reconciliation to the
+  levy).
 - [**Budget as presented today** (Excel)](andover-budget-fy27-baseline.xlsx) —
-  the same June 2 export without the split, for side-by-side comparison.
+  the same June 2 export without the split, for side-by-side comparison. This
+  file and the working version below were generated rather than saved from
+  Excel, so a viewer that does not recalculate formulas (some phone previews)
+  may show blanks where Excel shows figures.
+- [**Working version of the split** (Excel)](andover-budget-fy27-ecs-split.xlsx) —
+  the July 19 workbook the letter was drafted against. Same figures and
+  formulas as the model, without the print layout. Kept for the record.
 - [**CSDE ECS entitlements by district** (Excel)](csde-ecs-alliance-nonalliance.xlsx) —
   the state's breakout of ECS between Alliance and non-Alliance portions for
   every district, 2011 through the preliminary 2026-27 figures. Supporting
