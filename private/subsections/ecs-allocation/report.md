@@ -179,12 +179,15 @@ All files are alongside this page.
   Selectmen.
 - [**Model budget with the ECS split** (Excel)](andover-budget-fy27-ecs-split-clean.xlsx) —
   the June 2 budget export with the allocation rows added, laid out for print:
-  landscape, one page wide, repeated column headings, and a page break at each
-  department. This is the version to share. Three sheets: *Budget* (the full
-  account listing, with "less: ECS allocated to …" rows under each school
-  appropriation and the allocation basis at rows 59-64), *MillRate* (the
-  Board's levy calculation plus a net-local-cost-by-entity block) and
-  *NetLocal* (the fully symmetric presentation with a reconciliation to the
+  US Letter landscape, one page wide, repeated column headings, a page break at
+  each department, and numbered page footers. The finance office's memos sit
+  as keyed footnotes beneath the block they belong to (A1, A2 … per block),
+  with only the key in the Note column. This is the version to share. Three
+  sheets: *Budget* (the full account listing, with "less: ECS allocated to …"
+  rows under each school appropriation and the allocation basis at rows
+  61-66), *MillRate* (the Board's levy calculation and the budget-by-entity
+  table) and *NetLocal* (the fully symmetric presentation, both school and
+  town sides net of their own non-tax revenue, with a reconciliation to the
   levy).
 - [**Budget as presented today** (Excel)](andover-budget-fy27-baseline.xlsx) —
   the same June 2 export without the split, for side-by-side comparison. This
