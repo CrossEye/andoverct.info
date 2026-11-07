@@ -92,6 +92,18 @@ const opinionListHtml = (heading) => {
   return `<section class="group">\n${entries}\n      </section>`
 }
 
+// A short list of pages elsewhere on the site that a reader of this index would
+// want, when a section's subject has a piece under another root (a proposal
+// about the budget lives under Opinion). Rendered after the section's own
+// entries and visibly set apart, so it never passes as one of them.
+const relatedHtml = (r) => {
+  if (!r) return ""
+  const items = r.items.map((x) =>
+    `<li><a href="${escapeHtml(x.href)}">${escapeHtml(x.title)}</a>${x.gloss ? `<span class="g">${escapeHtml(x.gloss)}</span>` : ""}</li>`
+  ).join("\n")
+  return `<aside class="related"><p class="related-label">${escapeHtml(r.label)}</p>\n<ul>${items}</ul></aside>`
+}
+
 const listHtml = (list) => {
   if (list.kind === "section") {
     return sectionListHtml(list.section, list.heading || "h3")
@@ -358,7 +370,7 @@ ${headerParts.join("\n")}
       <hr class="rule">
 
       ${listHtml(node.list)}
-
+${node.related ? `\n      ${relatedHtml(node.related)}\n` : ""}
       ${pageNoteHtml(node.footerNote)}
     </main>
 ${siteFooterBarHtml(node.footerVariant)}
