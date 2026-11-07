@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<title>ECS Allocation in the Andover Budget — PRIVATE · Andover, CT</title>
+<title>Making the ECS Grant Visible in the Andover Budget · Proposal · Andover, CT</title>
 <style>/* Default civic-report theme.
  *
  * A theme is just this set of CSS custom properties. To experiment, copy this
@@ -588,47 +588,76 @@ h3 .conf-mark {
     margin-right: 4px;
 }
 
+/* Opinion pieces — loaded by the engine when a report's front matter carries
+ * `kind: opinion` or `kind: proposal`, which also puts data-kind="<kind>" on
+ * <body>; both kinds share this one skin and differ only in label. The chrome
+ * that says "andoverct.info" (banner, crumbs, footer bar) is left alone; what
+ * changes are the cues a newspaper uses to mark its op-ed page: an OPINION
+ * eyebrow over the title, serif body text, warm paper, a narrower column, and
+ * a standing note at the end. The paper colours come from the theme's
+ * --opinion-* tokens (themes/bluegold.css overrides the pass-through defaults
+ * in themes/default.css), so this file carries no colour literals. */
 
-.page-banner.private-banner {
-  background: #7a1420;
-  color: #f6e9e6;
-  border-bottom: 3px solid #4a0c14;
+body[data-kind="opinion"],
+body[data-kind="proposal"] {
+  --bg:         var(--opinion-bg);
+  --bg-page:    var(--opinion-bg-page);
+  --bg-soft:    var(--opinion-bg-soft);
+  --rule:       var(--opinion-rule);
+  /* Serif body: base.css sets body text in --font-serif, which bluegold fills
+     with a sans stack. An essay reads as an essay in a serif. */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --measure:    760px;
 }
-.page-banner.private-banner .crumbs .sep { color: #f6e9e6; opacity: .55; }
-.page-banner.private-banner .crumbs .current { color: #fff; }
-.private-badge {
-  display: inline-block; background: #fff; color: #7a1420;
-  font-weight: 700; letter-spacing: .12em; padding: 2px 9px;
-  border-radius: 4px; margin-right: .35em;
+
+/* The label that does the work: small, spaced capitals over the title, on a
+   short gold rule, so the page says what it is before the first sentence. */
+.opinion-eyebrow {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 9.5pt;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  margin: 0 0 12px 0;
+  padding-bottom: 5px;
+  border-bottom: 3px solid var(--accent);
 }
-.private-note { font-weight: 600; opacity: .92; }
-/* The footer bar is a bookend to the banner, so on a private page it is red at
-   both ends rather than red on top and site-navy underneath. */
-.site-footer {
-  background: #7a1420;
-  border-top: 3px solid #4a0c14;
-  color: #f6e9e6;
+
+/* Standing note after the body, the way a paper runs a line under every
+   op-ed: who wrote it, what kind of piece it is, where corrections go. */
+.opinion-note {
+  margin: 48px 0 0 0;
+  padding-top: 18px;
+  border-top: 3px solid var(--accent);
+  font-size: 10.5pt;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--ink-soft);
 }
-.site-footer strong { color: #fff; }
-.site-footer a { color: #f6e9e6; }
-.site-footer a:hover { color: #fff; }
+.opinion-note strong { font-style: normal; }
 </style>
 </head>
-<body>
-<div class="page-banner private-banner">
+<body data-kind="proposal">
+<div class="page-banner">
   <nav class="page-banner-inner crumbs">
-    <span class="private-badge">🔒 PRIVATE</span><span class="private-note">Not for public distribution</span><span class="sep">›</span><span class="current">Making the ECS Grant Visible in the Andover Budget</span>
+    <a href="/">Home</a><span class="sep">›</span><a href="/opinion/">Opinion</a><span class="sep">›</span><span class="current">Making the ECS Grant Visible in the Andover Budget</span>
   </nav>
 </div>
 <div class="container">
+<p class="opinion-eyebrow">Proposal</p>
 <h1 class="report-title">Making the ECS Grant Visible in the Andover Budget</h1>
-<p class="report-subtitle">Andover, CT · Board of Finance · A presentation question for the FY 2027-28 cycle</p>
-<p class="report-attribution">Letter and worked examples by Scott Sauyet, July 2026 · Shared selectively</p>
+<p class="report-subtitle">A letter to the Board of Finance, with worked examples, asking that the state's Education Cost Sharing grant be shown against the two school budgets voters approve</p>
+<p class="report-attribution">A proposal by Scott Sauyet · <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Co-chair, Andover Democratic Town Committee · Not an official document</p>
 <hr class="report-header-rule">
 <p class="methodology-header">A July 2026 letter asking the Board of Finance to allocate the state&#8217;s
 Education Cost Sharing grant between the two school appropriations and show
 that allocation on the budget documents voters see, together with the sample
-spreadsheets that demonstrate the presentation.</p>
+spreadsheets that demonstrate the presentation. This is a proposal, not one of
+the reports elsewhere on this site: it recommends a change in practice and
+argues for it. The figures are the Board&#8217;s own, and every document the argument
+rests on is linked below.</p>
 <p class="section-label">Summary</p>
 <h2 id="the-argument-in-one-paragraph">The argument in one paragraph<a class="header-anchor" href="#the-argument-in-one-paragraph" aria-label="Link to this section">¶</a></h2>
 <p>Andover receives about $2.08 million a year from the state in Education Cost
@@ -803,11 +832,16 @@ data; Andover is entirely non-Alliance.</li>
 <p>The letter was sent on July 20, 2026. It asks the Board to place ECS allocation
 practice on an upcoming agenda, and offers a five-minute presentation and a
 comparison table of alternative methodologies if the Board wants one.</p>
+<p>The letter and the workbooks circulated privately through the summer and
+autumn. They were published here in November 2026 so that anyone following the
+FY 2027-28 budget cycle can read the proposal and check the figures for
+themselves. This section will be updated as the Board takes the question up.</p>
 
+<div class="opinion-note"><strong>About this piece.</strong> This is a proposal: it recommends a change in how the town does something and argues for it. The reports elsewhere on andoverct.info describe; they do not recommend. The views are the author's own. The facts are drawn from the public record and sourced above, and corrections are welcome at <a href="mailto:scott@sauyet.com">scott@sauyet.com</a>.</div>
 </div>
-<p class="page-note">Private material — please don't forward or republish.</p>
+<p class="page-note">Letter sent July 20, 2026; published here November 2026 · A proposal, not a data report · Budget figures are from the Board of Finance's June 2, 2026 budget export; the letter and workbooks are linked under The documents.</p>
 <footer class="site-footer">
-<div class="site-footer-inner"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</div>
+<div class="site-footer-inner"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · A proposal, argued rather than reported · Not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee · Corrections welcome</div>
 </footer>
 <script>
 ;(() => {

@@ -1,10 +1,14 @@
 ---
-private: true
-pageTitle: "ECS Allocation in the Andover Budget — PRIVATE · Andover, CT"
+kind: proposal
+publicUrl: 'http://andoverct.info/opinion/ecs-in-the-budget/'
+pageTitle: 'Making the ECS Grant Visible in the Andover Budget · Proposal · Andover, CT'
 title: Making the ECS Grant Visible in the Andover Budget
-subtitle: "Andover, CT · Board of Finance · A presentation question for the FY 2027-28 cycle"
-attribution: "Letter and worked examples by Scott Sauyet, July 2026 · Shared selectively"
-footerNote: "Private material — please don't forward or republish."
+subtitle: "A letter to the Board of Finance, with worked examples, asking that the state's Education Cost Sharing grant be shown against the two school budgets voters approve"
+attribution: 'A proposal by Scott Sauyet · <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Co-chair, Andover Democratic Town Committee · Not an official document'
+footerNote: 'Letter sent July 20, 2026; published here November 2026 · A proposal, not a data report · Budget figures are from the Board of Finance''s June 2, 2026 budget export; the letter and workbooks are linked under The documents.'
+pdf:
+  author: Personal work of Scott Sauyet · scott@sauyet.com
+  footer: andoverct.info/opinion/ecs-in-the-budget/
 sectionLabels:
   - ["in one paragraph", "Summary"]
   - ["what the town does today", "Today"]
@@ -22,7 +26,10 @@ Making the ECS Grant Visible in the Andover Budget
 *A July 2026 letter asking the Board of Finance to allocate the state's
 Education Cost Sharing grant between the two school appropriations and show
 that allocation on the budget documents voters see, together with the sample
-spreadsheets that demonstrate the presentation.*
+spreadsheets that demonstrate the presentation. This is a proposal, not one of
+the reports elsewhere on this site: it recommends a change in practice and
+argues for it. The figures are the Board's own, and every document the argument
+rests on is linked below.*
 
 
 
@@ -210,3 +217,8 @@ Status
 The letter was sent on July 20, 2026. It asks the Board to place ECS allocation
 practice on an upcoming agenda, and offers a five-minute presentation and a
 comparison table of alternative methodologies if the Board wants one.
+
+The letter and the workbooks circulated privately through the summer and
+autumn. They were published here in November 2026 so that anyone following the
+FY 2027-28 budget cycle can read the proposal and check the figures for
+themselves. This section will be updated as the Board takes the question up.

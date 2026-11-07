@@ -39,6 +39,15 @@ RewriteRule ^ https://andoverct.info%{REQUEST_URI}/ [R=301,L]
 # Re-declare the doc-root idx helper (enabling RewriteEngine stops inheritance).
 RewriteRule ^(.*/)?idx/?$ /idx.php?dir=private/$1 [L,QSA]
 
+# The ECS allocation material went public in November 2026 at
+# /opinion/ecs-in-the-budget/; anyone holding the old private link lands there.
+# Two copies for the same reason as the fbclid rules at the root: the live host
+# needs an absolute https target, the plain-http dev box must not be forced.
+RewriteCond %{HTTP_HOST} ^andoverct\.info$ [NC]
+RewriteRule ^ecs-allocation(/.*)?$ https://andoverct.info/opinion/ecs-in-the-budget/ [R=301,L]
+# htaccess-check: allow-relative
+RewriteRule ^ecs-allocation(/.*)?$ /opinion/ecs-in-the-budget/ [R=301,L]
+
 # Route every clean URL (not a real file/dir) through the gate. Real files
 # (_gate.php runs directly; content files hit the deny above) are left alone.
 RewriteCond %{REQUEST_FILENAME} !-f
