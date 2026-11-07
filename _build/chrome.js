@@ -93,10 +93,20 @@ const siteFooterBarHtml = (variant) => {
     + "</footer>"
 }
 
-// The standing note under every opinion piece (footer.json `opinionNote`), the
-// way a paper runs a line under each op-ed; a piece may supply its own text.
-const opinionNoteHtml = (note) => {
-  return `<div class="opinion-note">${note || FOOTER.opinionNote}</div>`
+// The op-ed family: the kinds a piece under /opinion/ can carry (front-matter
+// `kind:`). The label is both the eyebrow the engine prints over the title and
+// the chip the indexes put in front of the piece's own meta, so a proposal is
+// marked the same way wherever it appears. A plain opinion piece gets no chip;
+// the section it sits in already says so.
+const KIND_LABELS = { opinion: "Opinion", proposal: "Proposal" }
+const pieceMeta = (p) =>
+  p.kind && p.kind !== "opinion" ? [KIND_LABELS[p.kind] || p.kind, ...(p.meta || [])] : p.meta || []
+
+// The standing note under every opinion piece (footer.json `opinionNote`, or
+// `<kind>Note` for the other kinds), the way a paper runs a line under each
+// op-ed; a piece may supply its own text.
+const opinionNoteHtml = (note, kind) => {
+  return `<div class="opinion-note">${note || (kind && FOOTER[kind + "Note"]) || FOOTER.opinionNote}</div>`
 }
 
 /*
@@ -213,7 +223,7 @@ const scrollspyScript = () => {
 
 module.exports = {
   escapeHtml, SEP, crumbs, banner,
-  pageNoteHtml, siteFooterBarHtml, opinionNoteHtml,
+  pageNoteHtml, siteFooterBarHtml, opinionNoteHtml, KIND_LABELS, pieceMeta,
   permalinkScript, lightboxScript, scrollspyScript,
   footer: FOOTER,
 }

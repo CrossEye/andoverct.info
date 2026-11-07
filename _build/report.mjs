@@ -38,6 +38,11 @@
  *                            (override with opinionNote:), the `opinion`
  *                            footer variant, and _build/opinion.css with
  *                            data-kind="opinion" on <body>
+ *   kind: proposal        -> same chrome as an opinion piece, labelled
+ *                            PROPOSAL, with footer.json's `proposal` footer
+ *                            variant and `proposalNote` end note; for a piece
+ *                            that recommends a change in practice rather
+ *                            than arguing a position. Also under /opinion/.
  *   correspondence: <dir> -> living-ledger reports: rebuilds the evidence tree
  *                            under <dir> and exposes it to the
  *                            <% correspondence ... %> directives, so the
@@ -60,8 +65,8 @@ import matter from "gray-matter"
 import { buildContractsBundle } from "./contracts.mjs"
 import { buildScatterPlot } from "./scatter.mjs"
 import {
-  escapeHtml, pageNoteHtml, siteFooterBarHtml, opinionNoteHtml, crumbs as buildCrumbs, banner as pageBanner, SEP,
-  permalinkScript, lightboxScript,
+  escapeHtml, pageNoteHtml, siteFooterBarHtml, opinionNoteHtml, KIND_LABELS, crumbs as buildCrumbs,
+  banner as pageBanner, SEP, permalinkScript, lightboxScript,
 } from "./chrome.js"
 import { buildResearchPages } from "./research.mjs"
 import { buildSubpages } from "./subpage.mjs"
@@ -527,12 +532,15 @@ const buildHtml = async (mdText, meta, { forPdf, extraCss, plugin, themeCss, bre
         meta.pdf.footer.replaceAll("{asof}", asOf || "")
       )
     : ""
-  const isOpinion = meta.kind === "opinion"
+  // The op-ed family (kind: opinion | proposal) shares one set of chrome; the
+  // kind decides only the label, the end note and the footer variant.
+  const kindLabel = KIND_LABELS[meta.kind]
+  const isOpEd = Boolean(kindLabel)
   const draftCss = meta.draft ? "\n" + DRAFT_CSS : ""
   const privateCss = isPrivate ? "\n" + PRIVATE_CSS : ""
-  const opinionCss = isOpinion ? "\n" + OPINION_CSS : ""
+  const opinionCss = isOpEd ? "\n" + OPINION_CSS : ""
   const bodyAttr =
-    (meta.draft ? ' data-draft="true"' : "") + (isOpinion ? ' data-kind="opinion"' : "")
+    (meta.draft ? ' data-draft="true"' : "") + (isOpEd ? ` data-kind="${meta.kind}"` : "")
   const css =
     themeCss + "\n" + BASE_CSS + (forPdf ? printCss : "") + draftCss + privateCss + opinionCss +
     (extraCss ? "\n" + extraCss : "")
@@ -540,11 +548,11 @@ const buildHtml = async (mdText, meta, { forPdf, extraCss, plugin, themeCss, bre
   // An opinion piece is labelled by the chrome, not by its prose: the eyebrow
   // above the title and the standing note after the body are the same on every
   // piece, so no author can forget to say what kind of page this is.
-  const endNote = isOpinion ? "\n" + opinionNoteHtml(meta.opinionNote) : ""
-  const footerBar = siteFooterBarHtml(isOpinion ? "opinion" : undefined)
+  const endNote = isOpEd ? "\n" + opinionNoteHtml(meta.opinionNote, meta.kind) : ""
+  const footerBar = siteFooterBarHtml(isOpEd ? meta.kind : undefined)
 
   const titleBlock =
-    (isOpinion ? '<p class="opinion-eyebrow">Opinion</p>\n' : "") +
+    (isOpEd ? `<p class="opinion-eyebrow">${kindLabel}</p>\n` : "") +
     `<h1 class="report-title">${meta.title}</h1>\n` +
     (meta.subtitle ? `<p class="report-subtitle">${meta.subtitle}</p>\n` : "") +
     (meta.attribution ? `<p class="report-attribution">${meta.attribution}</p>\n` : "") +

@@ -589,7 +589,8 @@ h3 .conf-mark {
 }
 
 /* Opinion pieces — loaded by the engine when a report's front matter carries
- * `kind: opinion`, which also puts data-kind="opinion" on <body>. The chrome
+ * `kind: opinion` or `kind: proposal`, which also puts data-kind="<kind>" on
+ * <body>; both kinds share this one skin and differ only in label. The chrome
  * that says "andoverct.info" (banner, crumbs, footer bar) is left alone; what
  * changes are the cues a newspaper uses to mark its op-ed page: an OPINION
  * eyebrow over the title, serif body text, warm paper, a narrower column, and
@@ -597,7 +598,8 @@ h3 .conf-mark {
  * --opinion-* tokens (themes/bluegold.css overrides the pass-through defaults
  * in themes/default.css), so this file carries no colour literals. */
 
-body[data-kind="opinion"] {
+body[data-kind="opinion"],
+body[data-kind="proposal"] {
   --bg:         var(--opinion-bg);
   --bg-page:    var(--opinion-bg-page);
   --bg-soft:    var(--opinion-bg-soft);

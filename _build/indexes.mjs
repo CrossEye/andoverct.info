@@ -17,7 +17,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs"
 import { join, dirname } from "node:path"
 import {
-  escapeHtml, crumbs as buildCrumbs, pageNoteHtml, siteFooterBarHtml, scrollspyScript,
+  escapeHtml, crumbs as buildCrumbs, pageNoteHtml, siteFooterBarHtml, scrollspyScript, pieceMeta,
 } from "./chrome.js"
 
 const HERE = import.meta.dirname
@@ -87,7 +87,7 @@ const featuredGroupHtml = (groupHeading, heading) => {
 // The /opinion/ landing: every piece in the registry, newest first.
 const opinionListHtml = (heading) => {
   const entries = opinionPieces()
-    .map((p) => entryHtml({ url: p.url, title: p.title, meta: p.meta || [], paras: p.summary ? [p.summary] : [] }, heading))
+    .map((p) => entryHtml({ url: p.url, title: p.title, meta: pieceMeta(p), paras: p.summary ? [p.summary] : [] }, heading))
     .join("\n")
   return `<section class="group">\n${entries}\n      </section>`
 }
@@ -240,7 +240,7 @@ const factsCards = () => {
 // Opinion: one card per piece, newest first.
 const opinionCards = () => {
   const cards = opinionPieces()
-    .map((p) => cardHtml({ meta: p.meta || [], title: p.title, href: p.url, desc: p.summary || "" }))
+    .map((p) => cardHtml({ meta: pieceMeta(p), title: p.title, href: p.url, desc: p.summary || "" }))
     .join("\n")
   return `<div class="cardgrid">${cards}</div>`
 }

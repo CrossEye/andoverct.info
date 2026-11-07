@@ -19,7 +19,7 @@
 import { readFileSync, writeFileSync } from "node:fs"
 import { join } from "node:path"
 import QRCode from "qrcode"
-import { escapeHtml, siteFooterBarHtml } from "./chrome.js"
+import { escapeHtml, siteFooterBarHtml, pieceMeta } from "./chrome.js"
 
 const HERE = import.meta.dirname
 const ROOT = join(HERE, "..")
@@ -85,7 +85,7 @@ const reportGroups = () =>
 const opinionEntries = () =>
   OPINION.pieces
     .filter((p) => !p.hidden)
-    .map((p) => ({ meta: p.meta || [], title: p.title, href: p.url, desc: p.summary || "" }))
+    .map((p) => ({ meta: pieceMeta(p), title: p.title, href: p.url, desc: p.summary || "" }))
 
 // Normalise a home-page section into { cards, groups } where every group is
 // { label, href, items, disclose }.
