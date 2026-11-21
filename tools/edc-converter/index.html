@@ -969,7 +969,7 @@ const FORMATS = {
     render: (frame, view, opts) => renderPaged(frame, view, opts, 'letter'),
     primary: 'Print or save as PDF', secondary: 'Download as HTML',
     status: (r) => plural(r.pages, 'page'),
-    hint: () => 'In the print window, set the destination to Save as PDF. Paper size and margins are already set by the page.',
+    hint: () => 'The document opens in a new tab with the print window. Set the destination to Save as PDF. Paper size and margins are already set.',
   },
   booklet: {
     render: (frame, view, opts) => renderPaged(frame, view, opts, 'booklet'),
@@ -977,7 +977,7 @@ const FORMATS = {
     status: (r) => (r.sheets ? `${plural(r.pages, 'page')} on ${plural(r.sheets, 'sheet')}` : plural(r.pages, 'page'))
       + (r.notesPages ? `, ${r.notesPages} of them for notes` : ''),
     hint: (opts) => opts.arrangement === 'spreads'
-      ? 'Print on Letter paper, double-sided, flipped on the short edge, at 100% scale. Fold the stack in half and staple the spine. The page count is always a multiple of four; nudge the text size to use up spare pages.'
+      ? 'The document opens in a new tab with the print window. Print on Letter paper, double-sided, flipped on the short edge, at 100% scale. Fold the stack in half and staple the spine. The page count is always a multiple of four; nudge the text size to use up spare pages.'
       : 'Half-letter pages in reading order, for sharing on screen.',
   },
 };
@@ -1079,21 +1079,36 @@ const save = (name, text) => {
   setTimeout(() => URL.revokeObjectURL(link.href), 2000);
 };
 
-const downloadHtml = () => {
+// The document in the preview, as a file that stands on its own.
+const standaloneHtml = () => {
   const { doc, view, format } = state.result;
-  if (format === 'web') return save(`${fileStem(view)}.html`, webDocument(view));
-  doc.documentElement.style.removeProperty('--z');       // the saved copy opens at full size
+  if (format === 'web') return webDocument(view);
+  doc.documentElement.style.removeProperty('--z');       // the copy opens at full size
   const html = '<!doctype html>\n' + doc.documentElement.outerHTML;
   fitPreview();
-  save(`${fileStem(view)}-${format}.html`, html);
+  return html;
 };
 
+const downloadHtml = () => {
+  const { view, format } = state.result;
+  save(`${fileStem(view)}${format === 'web' ? '' : '-' + format}.html`, standaloneHtml());
+};
+
+// Printing happens in a tab of its own: the standalone document, plus two lines that open the
+// print window and close the tab afterwards. Printing the preview frame directly is not reliable
+// everywhere (Brave was seen printing an out-of-date copy of it), and a top-level page is.
+const PRINT_SCRIPT = `<script>
+  window.addEventListener('afterprint', function () { window.close(); });
+  window.addEventListener('load', function () { document.fonts.ready.then(function () { window.print(); }); });
+<\/script>`;
+
 const print = () => {
-  const { doc } = state.result;
-  const title = document.title;
-  document.title = doc.title;                             // browsers offer this as the PDF's file name
-  frame.contentWindow.addEventListener('afterprint', () => { document.title = title; }, { once: true });
-  frame.contentWindow.focus();
+  const html = standaloneHtml().replace(/<\/body>\s*<\/html>\s*$/, PRINT_SCRIPT + '</body></html>');
+  const url = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+  const tab = window.open(url, '_blank');
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+  if (tab) return;
+  frame.contentWindow.focus();                            // pop-ups are blocked: print the preview frame instead
   frame.contentWindow.print();
 };
 
