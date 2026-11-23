@@ -76,11 +76,28 @@ Established 2026-10-23 by profiling the whole file; details and counts are in
   current table is in `sanity.md`.
 
 
-## Open with CSDE
+## Confirmed with CSDE
 
-Two emails to David Alexandro, 2026-10-23, ask for: the pull's scope
-definition and job-code list; the query; the counting rules behind
-`Years_2002to2014` and whether FOY 2014 is inside it; the meaning of a missing
-year; whether `HighestDegree` is a snapshot and whether a per-year value
-exists; and the cause of the smaller 2014 count. Until answered, every
-field-definition statement in the analysis is marked pending CSDE confirmation.
+Two emails to David Alexandro on 2026-10-23 and a follow-up on 2026-11-21 asked
+about the field definitions. His reply of 2026-11-23 confirmed the two that
+matter for the figures:
+
+- `HighestDegree` is the highest degree *currently* reported for each
+  educator, pulled once and joined onto every year. CSDE does not always
+  receive degree updates promptly, so no per-year value exists. Degree
+  composition can be reported for the latest year only; lane change over time
+  cannot be measured from this file.
+- `Years_2002to2014` counts school years taught in CT public schools from
+  2002-03 through 2014-15 inclusive, capped at 13. CSDE certified-staff
+  reporting begins with 2002-03, so a 13 often means service before 2002 as
+  well; FTE and staffing status before 2002-03 are not available. Every
+  experience figure built from the file is therefore a floor.
+
+He also pointed to CSDE's Educator Attrition report on EdSight as related
+published work (CSDE has not analysed attrition by career stage), and offered
+to review the methodology section before publication.
+
+Still unasked or unanswered, none of which changes a figure: the pull's scope
+definition and job-code list; the saved query text; the meaning of a missing
+year for a teacher who later returns; and the cause of the smaller FOY 2014
+count. These go in the methodology-review exchange.
