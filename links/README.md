@@ -57,17 +57,43 @@ date: 2026-03-04
 archived: https://web.archive.org/web/2026/https://example.org/boe/budget-2026-27.pdf
 ```
 
-| Key           | Required | Rules                                                                                     |
-| ------------- | -------- | ----------------------------------------------------------------------------------------- |
-| `id`          | yes      | must equal the filename stem                                                               |
-| `title`       | yes      | non-empty string; becomes the card's link text and the page's `og:title`                   |
-| `description` | yes      | non-empty string; shown on the card and used as `og:description`                           |
-| `url`         | yes      | the source itself — `http(s)://…` (external, marked ↗) or `/…` (internal, root-relative)   |
-| `image`       | no       | `og:image` for the share preview — `/…` or `http(s)://…`; falls back to the site default   |
-| `date`        | no       | `YYYY-MM-DD` — when the source was published or retrieved; shown on the card               |
-| `archived`    | no       | `http(s)://…` link to an archived copy (e.g. Wayback Machine); shown as "archived copy"    |
+| Key           | Required | Rules                                                                                                           |
+| ------------- | -------- | --------------------------------------------------------------------------------------------------------------- |
+| `id`          | yes      | must equal the filename stem                                                                                    |
+| `title`       | yes      | non-empty string; becomes the card's link text and the page's `og:title`                                        |
+| `description` | yes      | non-empty Markdown string; rendered on the card, and as plain text for `og:description`                         |
+| `url`         | yes      | the source itself — `http(s)://…` (external, marked ↗) or `/…` (internal, root-relative)                        |
+| `image`       | no       | `og:image` for the share preview (PNG or JPEG; not SVG) — `/…` or `http(s)://…`; falls back to the site default |
+| `date`        | no       | `YYYY-MM-DD` — when the source was published or retrieved; shown on the card                                    |
+| `archived`    | no       | `http(s)://…` link to an archived copy (e.g. Wayback Machine); shown as "archived copy"                         |
 
 No other keys are allowed.
+
+### Markdown in descriptions
+
+Doc and group descriptions are Markdown: `*italic*`, `**bold**`, `[links](/…)`,
+bare URLs (made clickable), paragraphs, and images, which render inside the
+card:
+
+```yaml
+description: |-
+  A graph of how AES growth compares to other districts in the state.
+  *Sneak peek*: it's alone at the top.
+
+  ![AES Academic Growth, 2025-26](/reports/aes/test-results-2025-26/growth-pair-2025-26.svg)
+```
+
+- **Use `|-`, not `>-`, for anything with more than one paragraph.** A `>`
+  folded block turns a blank line into a single newline, which Markdown does
+  not treat as a paragraph break, so an image or a second paragraph runs into
+  the first. `>-` is still fine for a single plain paragraph.
+- **Quote or block a description that starts with `*`.** A bare
+  `description: *Note*: …` is a YAML alias, and the build fails.
+- **Strikethrough is off.** Descriptions mark approximate timestamps as
+  `~1:47:30`, and GFM would strike out the text between any two of them.
+- **The share preview is plain text.** `og:description` is the same Markdown
+  with the formatting removed. Images contribute nothing to it; use `image:`
+  for the preview picture.
 
 ## Authoring a list (collection)
 

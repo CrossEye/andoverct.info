@@ -26,6 +26,9 @@
  * Every referenced doc must exist; any validation failure is a build error,
  * and all errors across all files are reported before exiting.
  *
+ * Descriptions (doc and group) are Markdown, rendered on the page; the
+ * og:description share text is the same Markdown reduced to plain text.
+ *
  * Body hrefs stay root-relative (a local test vhost sees its own copies);
  * only og:url / og:image / rel=canonical are absolutized, using the
  * "siteOrigin" value from _build/report.config.json.
@@ -42,10 +45,35 @@ import {
 import { join, resolve, relative, sep } from "node:path"
 import { pathToFileURL } from "node:url"
 import { load as parseYaml } from "js-yaml"
+import { Marked } from "marked"
 import {
   escapeHtml, pageNoteHtml, siteFooterBarHtml, crumbs as buildCrumbs, banner as pageBanner,
   footer as FOOTER,
 } from "./chrome.js"
+
+// A private Marked instance: importers (the town-asset renderer) configure the
+// shared `marked` singleton with their own extensions, and registry output must
+// not depend on which script happened to load this module.
+//
+// GFM strikethrough is switched off: descriptions mark approximate video
+// timestamps as "~1:47:30", and GFM reads any pair of single tildes as a
+// strikethrough, striking out the text between two timestamps.
+const md = new Marked({ gfm: true })
+md.use({ tokenizer: { del: () => undefined } })
+
+// Description Markdown -> block HTML for the page.
+const descHtml = (text) => md.parse(text).trim()
+
+// Description Markdown -> plain text for og:description: rendered, tags
+// dropped, marked's entity escapes undone (ogHead re-escapes), whitespace
+// collapsed. An embedded image contributes nothing to the share text.
+const ENTITIES = { "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&#39;": "'" }
+const descText = (text) =>
+  descHtml(text)
+    .replace(/<[^>]+>/g, "")
+    .replace(/&(?:amp|lt|gt|quot|#39);/g, (e) => ENTITIES[e])
+    .replace(/\s+/g, " ")
+    .trim()
 
 const HERE = import.meta.dirname
 const ROOT = resolve(HERE, "..")
@@ -88,6 +116,13 @@ export const LINKS_CSS = `
     font-size: 10.5pt;
     color: var(--ink-soft);
 }
+.link-card-desc p,
+.link-group-desc p,
+.report-subtitle p { margin: 0 0 8px 0; }
+.link-card-desc > :last-child,
+.link-group-desc > :last-child,
+.report-subtitle > :last-child { margin-bottom: 0; }
+.link-card-desc img { display: block; margin: 10px 0 0 0; }
 .link-card-meta {
     font-family: var(--font-sans);
     margin: 8px 0 0 0;
@@ -401,7 +436,7 @@ export const leafCardHtml = (doc, withFragment) => {
     : ""
   return `<div class="link-card"${idAttr}>
   <div class="link-card-title"><a href="${escapeHtml(doc.url)}">${escapeHtml(doc.title)}</a>${mark}</div>
-  <p class="link-card-desc">${escapeHtml(doc.description)}</p>${metaLineHtml(doc)}
+  <div class="link-card-desc">${descHtml(doc.description)}</div>${metaLineHtml(doc)}
 </div>`
 }
 
@@ -411,7 +446,7 @@ export const listRefCardHtml = (doc, withFragment) => {
   const idAttr = withFragment ? ` id="link-${doc.id}"` : ""
   return `<div class="link-card"${idAttr}>
   <div class="link-card-title"><a href="/links/${doc.id}/">${escapeHtml(doc.title)}</a></div>
-  <p class="link-card-desc">${escapeHtml(doc.description)}</p>
+  <div class="link-card-desc">${descHtml(doc.description)}</div>
 </div>`
 }
 
@@ -424,7 +459,7 @@ export const renderLeafPage = (doc, ctx) => {
       og: ogHead(
         {
           title: doc.title,
-          description: doc.description,
+          description: descText(doc.description),
           path: `/links/${doc.id}/`,
           image: doc.image,
         },
@@ -441,11 +476,11 @@ export const renderListPage = (doc, docs, ctx) => {
   const seen = new Set()
   let body =
     `<h1 class="report-title">${escapeHtml(doc.title)}</h1>\n` +
-    `<p class="report-subtitle">${escapeHtml(doc.description)}</p>\n` +
+    `<div class="report-subtitle">${descHtml(doc.description)}</div>\n` +
     `<hr class="report-header-rule">\n`
   doc.groups.forEach((g) => {
     if (g.title) body += `<h2>${escapeHtml(g.title)}</h2>\n`
-    if (g.description) body += `<p class="link-group-desc">${escapeHtml(g.description)}</p>\n`
+    if (g.description) body += `<div class="link-group-desc">${descHtml(g.description)}</div>\n`
     g.links.forEach((ref) => {
       const target = docs.get(ref)
       const withFragment = !seen.has(ref)
@@ -462,7 +497,7 @@ export const renderListPage = (doc, docs, ctx) => {
       og: ogHead(
         {
           title: doc.title,
-          description: doc.description,
+          description: descText(doc.description),
           path: `/links/${doc.id}/`,
           image: doc.image,
         },
