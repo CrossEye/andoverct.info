@@ -23,6 +23,12 @@
  * > report.config.json {"theme":...} > "default". A non-default theme is
  * layered on top of default.css, so it only needs to list what it changes.
  *
+ * Body markup the engine recognises without any front matter:
+ *   <div class="data-section" markdown="1"> -> a shaded stat panel; a list of
+ *                            "**figure** — label" bullets inside it becomes
+ *                            headline stat lines (see statPanels). Same markup
+ *                            as the-facts, so editions convert unchanged.
+ *
  * Optional per-report hooks (named in front matter):
  *   callouts: true        -> wraps "➤ Update" paragraphs in .update-callout
  *   draft: true           -> injects _build/draft.css and adds data-draft="true"
@@ -321,6 +327,38 @@ const updateCallouts = (htmlBody) => {
   )
 }
 
+// Stat panels — the same authoring markup the-facts uses:
+//
+//   <div class="data-section" markdown="1">
+//
+//   - **+6.1** — Andover's one-year change in English
+//   - **1st of 164** — where that gain ranks
+//
+//   Optional prose before or after the list.
+//
+//   </div>
+//
+// The div becomes a shaded panel. A list inside it whose every item has the
+// shape "**figure** — label" (em dash, en dash or hyphen) is recast as stat
+// lines; a list with any other item is left as an ordinary list, so a mixed
+// list never silently loses its bullets. Triggered by the markup alone, so a
+// report that never uses the div is unaffected.
+const STAT_ITEM_RE = /^<strong>([\s\S]+?)<\/strong>\s*[—–-]\s*([\s\S]+)$/
+const unwrapLooseItem = (li) => li.trim().replace(/^<p>([\s\S]*)<\/p>$/, "$1").trim()
+const statLines = (ulInner) => {
+  const matches = [...ulInner.matchAll(/<li>([\s\S]*?)<\/li>/g)]
+    .map(([, li]) => unwrapLooseItem(li).match(STAT_ITEM_RE))
+  return matches.length && matches.every(Boolean)
+    ? matches.map(([, figure, label]) =>
+        `<p class="stat"><span class="stat-figure">${figure.trim()}</span> ` +
+        `<span class="stat-label">${label.trim()}</span></p>`).join("\n")
+    : null
+}
+const statPanels = (htmlBody) =>
+  htmlBody.replace(/<div class="data-section">([\s\S]*?)<\/div>/g, (m, inner) =>
+    `<div class="data-section">${inner.replace(/<ul>([\s\S]*?)<\/ul>/g,
+      (ul, ulInner) => statLines(ulInner) ?? ul)}</div>`)
+
 // Restore math typography the markdown leaves as ASCII for clean reading.
 const restoreTypography = (htmlBody) => {
   htmlBody = htmlBody.replace(
@@ -492,6 +530,7 @@ const buildHtml = async (mdText, meta, { forPdf, extraCss, plugin, themeCss, bre
   rest = addSectionLabels(rest, meta.sectionLabels || [])
   rest = addPartBreakClass(rest)
   rest = keepIntroWithTable(rest)
+  rest = statPanels(rest)
   rest = alignNumericColumns(rest)
   if (plugin && typeof plugin.transform === "function") {
     rest = await plugin.transform(rest, { meta, forPdf })

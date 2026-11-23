@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>The Largest One-Year Gain in the State — Town of Andover, CT</title>
+<style>/* Default civic-report theme.
+ *
+ * A theme is just this set of CSS custom properties. To experiment, copy this
+ * file to _build/themes/<name>.css, change what you like, and point at it from
+ * _build/report.config.json ({"theme":"<name>"}) for all reports, or from a
+ * single report's front matter (theme: <name>). A non-default theme is layered
+ * ON TOP of this one, so it only needs to list the variables it changes.
+ *
+ * Scope: colors, fonts, and small size/width/gap tweaks — not layout changes.
+ */
+:root {
+  /* ---- Palette ---- */
+  --bg:             #fafaf7;   /* page background */
+  --bg-page:        #ffffff;   /* the white content card */
+  --bg-soft:        #f5f3ed;   /* callouts, table headers, inline code */
+  --ink:            #1a1a1a;   /* body text, main headings */
+  --ink-soft:       #333333;   /* blockquote / methodology text */
+  --ink-mute:       #5a5a5a;   /* subtitle, card descriptions */
+  --ink-faint:      #888888;   /* attribution, footer, captions */
+  --rule:           #e0ddd5;   /* hairline borders */
+  --accent:         #b8a878;   /* gold accent rules */
+  --accent-2:       #2c3e50;   /* slate: h3, table-header & code text */
+  --banner-bg:      #2c3e50;   /* top banner background */
+  --banner-ink:     #ecf0f1;   /* top banner text */
+  --crumb-link:       #b9c4cf; /* breadcrumb links in the banner */
+  --crumb-link-hover: #ffffff;
+  --crumb-current:    #ffffff; /* deepest crumb (current page), not a link */
+  --link:           #1a5490;
+  --link-hover:     #0d3a6b;
+  --link-underline: #c5d3e2;
+  --anchor:         #b8b3a4;   /* the ¶ header anchor */
+  --anchor-hover:   #6c7480;
+  --confirm:        #5a8a5a;   /* green ✓ confirmation mark */
+  --confirm-strong: #2e7d32;
+
+  /* ---- Opinion pages (front-matter `kind: opinion`) ----
+     Paper tokens that _build/opinion.css swaps in for the ordinary --bg family.
+     The default theme passes its own paper through unchanged; a skin that wants
+     its op-ed page on different stock (bluegold: cream) overrides these. */
+  --opinion-bg:       var(--bg);
+  --opinion-bg-page:  var(--bg-page);
+  --opinion-bg-soft:  var(--bg-soft);
+  --opinion-rule:     var(--rule);
+
+  /* ---- Fonts ---- */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:  "SF Mono", Monaco, Menlo, Consolas, monospace;
+
+  /* ---- Sizes (small tweaks only; no layout restructuring) ---- */
+  --base-size:  11pt;    /* body text */
+  --measure:    780px;   /* content column width */
+  --gutter:     30px;    /* horizontal padding / banner & footer gaps */
+  --title-size: 28pt;
+  --h2-size:    18pt;
+  --h3-size:    13pt;
+}
+
+/* bluegold — mirrors the light-mode look of the 55th campaign site
+ * (C:\Users\scott\Dev\Andover\55th, e.g. localhost:8080/reports): cool
+ * blue-gray paper, a dark navy banner with a gold underline, navy serif
+ * headings over a sans body, gold accent rules, and blue links.
+ *
+ * Note the deliberate font swap: base.css uses --font-serif for body text and
+ * --font-sans for headings/labels, so to match the campaign look (sans body,
+ * serif display) we put the SANS stack in --font-serif and the SERIF stack in
+ * --font-sans.
+ *
+ * Layered on default.css. Uses --banner-border (in base.css) for the gold rule
+ * under the banner. */
+:root {
+  /* Palette */
+  --bg:             #f4f6f9;
+  --bg-page:        #ffffff;
+  --bg-soft:        #eef4fb;   /* blue-050 tint for callouts / table headers */
+  --rule:           #e3e8ef;   /* hairlines */
+  --ink:            #19222e;
+  --ink-soft:       #2b3744;
+  --ink-mute:       #5b6775;
+  --ink-faint:      #8a94a1;
+  --accent:         #e8a800;   /* signature gold rules */
+  --accent-2:       #0f2a4a;   /* blue-900: headings, table-header & code text */
+  --banner-bg:      linear-gradient(180deg, #0f2a4a, #143862);
+  --banner-border:  3px solid #e8a800;
+  --banner-ink:     #dde8f5;   /* blue-100 */
+  --crumb-link:       #e8a800; /* gold breadcrumb links */
+  --crumb-link-hover: #ffffff; /* hover to white + underline */
+  --crumb-current:    #ffffff; /* current page, not a link */
+  --link:           #245c95;   /* blue-600 */
+  --link-hover:     #1c4e80;   /* blue-700 */
+  --link-underline: #cfe0f2;
+  --confirm:        #2f8f5b;
+  --confirm-strong: #1f7d49;
+
+  /* Opinion pages: warm cream stock under the same navy-and-gold banner, so an
+     op-ed reads as this site's editorial page rather than another report. */
+  --opinion-bg:       #f6f2ea;
+  --opinion-bg-page:  #fffdf8;
+  --opinion-bg-soft:  #f3ecdf;
+  --opinion-rule:     #e6dfd2;
+
+  /* Type: sans body + serif display headings (see note above) */
+  --font-serif: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans:  Georgia, "Times New Roman", serif;
+
+  --measure: 860px;
+}
+
+/* Structural base styles for civic reports — theme-independent.
+ * Colors, fonts, and sizes come from the active theme (CSS custom properties
+ * in _build/themes/<name>.css), which is loaded BEFORE this file. */
+
+/* ---- Reset & base ---- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-serif);
+    font-size: var(--base-size);
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Layout ---- */
+.page-banner {
+    background: var(--banner-bg);
+    color: var(--banner-ink);
+    border-bottom: var(--banner-border, none);
+    padding: 14px 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.04em;
+}
+.page-banner-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.page-banner a { color: inherit; text-decoration: none; }
+.page-banner a:hover { text-decoration: underline; }
+
+/* ---- Breadcrumb (in the banner) ---- */
+.page-banner .crumbs a {
+    color: var(--crumb-link, var(--banner-ink));
+    border-bottom: none;
+}
+.page-banner .crumbs a:hover {
+    color: var(--crumb-link-hover, #fff);
+    text-decoration: underline;
+}
+.page-banner .crumbs .sep {
+    color: var(--banner-ink);
+    opacity: 0.5;
+    margin: 0 0.45em;
+}
+.page-banner .crumbs .current {
+    color: var(--crumb-current, #fff);
+}
+
+.container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 40px var(--gutter) 60px;
+    background: var(--bg-page);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* ---- Images / figures ---- */
+/* Scale charts and figures to the column (and the printed page box) rather
+   than overflowing at their intrinsic pixel/point size. */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+}
+
+/* ---- Lightbox (screen only; overlay is built at runtime by the viewer
+   script, so it never appears in the PDF). Click a chart to enlarge it. ---- */
+.container img { cursor: zoom-in; }
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vmin;
+    background: rgba(0, 0, 0, 0.85);
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+.lightbox-overlay.open { opacity: 1; }
+.lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    margin: 0;
+    cursor: zoom-out;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+    background: #fff;
+}
+
+/* ---- Title block ---- */
+.report-title {
+    font-family: var(--font-sans);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+.report-subtitle {
+    font-family: var(--font-sans);
+    font-size: 13pt;
+    color: var(--ink-mute);
+    margin: 0 0 8px 0;
+    font-weight: 400;
+}
+.report-attribution {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    color: var(--ink-faint);
+    margin: 0 0 24px 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+.report-attribution a {
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+}
+.report-attribution a:hover {
+    color: var(--link);
+    border-bottom-color: var(--link);
+}
+.report-header-rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0 0 24px 0;
+}
+.methodology-header {
+    font-style: italic;
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 0 0 36px 0;
+    line-height: 1.55;
+}
+
+/* ---- Section labels (small uppercase tags above h2) ---- */
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 36px 0 4px 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+/* ---- Headings ---- */
+h2 {
+    font-family: var(--font-sans);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: var(--ink);
+    line-height: 1.25;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+h3 {
+    font-family: var(--font-sans);
+    font-size: var(--h3-size);
+    font-weight: 600;
+    margin: 28px 0 10px 0;
+    color: var(--accent-2);
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+    scroll-margin-top: 16px;
+}
+
+/* ---- Header anchor links (HTML only; hidden in print) ---- */
+.header-anchor {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0 0.2em;
+    color: var(--anchor);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    font-weight: 400;
+    font-size: 0.85em;
+    vertical-align: baseline;
+    cursor: pointer;
+    user-select: none;
+}
+h2:hover .header-anchor,
+h3:hover .header-anchor,
+.header-anchor:focus {
+    opacity: 1;
+}
+.header-anchor:hover {
+    color: var(--anchor-hover);
+}
+.header-anchor.copied {
+    color: var(--confirm-strong);
+    opacity: 1;
+}
+.header-anchor.copied::after {
+    content: " copied";
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--confirm-strong);
+}
+@media print {
+    .header-anchor {
+        display: none;
+    }
+}
+
+/* ---- Body text ---- */
+p {
+    margin: 0 0 14px 0;
+    orphans: 3;
+    widows: 3;
+}
+p.intro-table {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+strong { font-weight: 700; color: var(--ink); }
+em { font-style: italic; }
+
+/* ---- Links ---- */
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-underline);
+    overflow-wrap: break-word;
+}
+a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* ---- Lists ---- */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+li {
+    margin: 0 0 6px 0;
+    line-height: 1.55;
+}
+
+/* ---- Tables ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-before: avoid;
+    break-before: avoid;
+}
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 9.5pt;
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--accent);
+}
+tbody tr:hover { background: var(--bg); }
+
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+tbody tr:last-child td {
+    border-bottom: 2px solid var(--accent);
+}
+
+/* ---- Blockquotes (source notes, verbatim quotes) ---- */
+blockquote {
+    margin: 14px 0 18px 0;
+    padding: 14px 20px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    font-size: 10.5pt;
+    color: var(--ink-soft);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+blockquote p { margin: 0 0 8px 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote ol, blockquote ul {
+    margin: 8px 0;
+}
+
+/* ---- Stat panels (<div class="data-section" markdown="1">; see statPanels
+   in report.mjs). Navy rule rather than the blockquote's gold, so a panel of
+   headline figures never reads as a quotation. ---- */
+.data-section {
+    margin: 16px 0 22px 0;
+    padding: 16px 22px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent-2);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.data-section .stat {
+    margin: 6px 0 4px 0;
+    line-height: 1.35;
+}
+.data-section .stat-figure {
+    font-family: var(--font-sans);
+    font-size: 1.6em;
+    font-weight: 700;
+    color: var(--accent-2);
+    font-variant-numeric: tabular-nums;
+    margin-right: 0.35em;
+}
+.data-section .stat-label {
+    color: var(--ink-soft);
+}
+.data-section > p:not(.stat) {
+    margin: 10px 0 0 0;
+}
+.data-section > :first-child { margin-top: 0; }
+.data-section > :last-child { margin-bottom: 0; }
+
+/* ---- HR ---- */
+hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+}
+
+/* ---- Inline code ---- */
+code {
+    font-family: var(--font-mono);
+    font-size: 9.5pt;
+    background: var(--bg-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: var(--accent-2);
+    overflow-wrap: break-word;
+}
+
+/* ---- Other Formats footer ---- */
+.formats-section {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+}
+.format-cards {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.format-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.format-cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media screen and (max-width: 700px) {
+    .format-cards.cols-3,
+    .format-cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+.format-card {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    padding: 14px;
+    text-align: left;
+    border-radius: 4px;
+    page-break-inside: avoid;
+}
+.format-card-icon { font-size: 18pt; margin-bottom: 4px; }
+.format-card-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+}
+.format-card-desc { font-size: 9pt; color: var(--ink-mute); line-height: 1.4; }
+.format-card a { display: block; }
+
+/* ---- Footer ----
+   Two parts: .footer-id is the site-wide identity/disclaimer line, identical
+   on every page; .footer-note is the optional per-page line (sources, method,
+   "not a lawyer"). See siteFooterHtml() in _build/links.mjs. */
+/* @footer-css:start — generated from _build/footer.css; do not edit here, run: npm run sync:footer-css */
+.page-note {
+  /* Declared here, not inherited: this block is dropped into arbitrary
+     stylesheets and not all of them carry a global border-box reset (404.html
+     does not), and without it the 512px cap applies to the content box and the
+     wrap widens by the padding. */
+  box-sizing: border-box;
+  /* max-width + horizontal padding are px (not rem/ch) so a page's root
+     font-size can't rescale the wrap — the line breaks are identical everywhere. */
+  max-width: 512px;
+  margin: 3rem auto 2.5rem;
+  padding: 1.75rem 20px 0;
+  border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  font-style: italic;
+  text-align: center;
+  color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+}
+/* a[href] rather than a bare `a`: see the note on the bar's link rule below. */
+.page-note a[href] { color: inherit; }
+
+.site-footer {
+  background: var(--banner-bg, linear-gradient(180deg, #0f2a4a, #143862));
+  border-top: var(--banner-border, 3px solid #e8a800);
+  color: var(--banner-ink, #dde8f5);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.site-footer-inner {
+  /* Declared here, not inherited: this block is dropped into arbitrary
+     stylesheets and not all of them carry a global border-box reset (404.html
+     does not), and without it the 512px cap applies to the content box and the
+     wrap widens by the padding. */
+  box-sizing: border-box;
+  max-width: 512px;
+  margin: 0 auto;
+  /* Horizontal padding is a LITERAL, like the wrap width above: with
+     box-sizing:border-box the text column is 512px minus this padding, so a
+     per-surface var here (--gutter is 30px on reports, 24px via style.css,
+     20px elsewhere) silently re-wraps the footer differently on every
+     surface. That is the drift this whole file exists to prevent. */
+  padding: 1.15rem 20px;
+  text-align: center;
+}
+.site-footer strong { color: var(--crumb-current, #ffffff); font-weight: 600; }
+/* Two classes deep on purpose. A host stylesheet's own link rule reaches (0,1,2)
+   easily -- style.css carries `body.bluegold a`, which the video transcript
+   pages opt into -- and that outranks a flat `.site-footer a` (0,1,1) whatever
+   the source order, repainting the footer's email link in the page's link
+   colour instead of the banner gold. Routing through the inner wrapper puts
+   these at (0,2,1), above any `body.<class> a`. */
+.site-footer .site-footer-inner a {
+  color: var(--crumb-link, #e8a800);
+  border-bottom: 1px solid transparent;
+  text-decoration: none;
+}
+.site-footer .site-footer-inner a:hover {
+  color: var(--crumb-link-hover, #ffffff);
+  border-bottom-color: currentColor;
+}
+
+/* Sticking: body becomes a column flex container and the bar takes
+   margin-top:auto, which absorbs only space that is genuinely free. So the bar
+   sits at the viewport bottom on a page shorter than the viewport, and simply
+   follows the content on a longer one — it never reserves scrolling space.
+   Screen only; print keeps plain block flow. */
+@media screen {
+  body {
+    min-height: 100vh;
+    min-height: 100svh;   /* excludes mobile browser chrome where supported */
+    display: flex;
+    flex-direction: column;
+  }
+  .site-footer { margin-top: auto; }
+}
+
+@media print {
+  /* On paper the split is undone: no full-bleed colour, and the note and the
+     identity close back up into the single quiet block the PDFs had before. */
+  .site-footer {
+    background: none;
+    border-top: 1px solid var(--rule, rgba(0, 0, 0, 0.14));
+    color: var(--ink-mute, var(--ink-faint, var(--faint, #6b7280)));
+  }
+  /* The note immediately above already drew that rule — a second one here
+     would stack two hairlines a few points apart. */
+  .page-note + .site-footer { border-top: none; }
+  .site-footer-inner { max-width: 512px; padding: 0; }
+  .page-note { margin-bottom: 0.6rem; }
+  .site-footer strong { color: var(--ink-soft, inherit); }
+  .site-footer .site-footer-inner a { color: inherit; }
+}
+/* @footer-css:end */
+
+/* ---- Confirmation glyphs ---- */
+h3 .conf-mark {
+    color: var(--confirm);
+    font-size: 11pt;
+    margin-right: 4px;
+}
+</style>
+</head>
+<body>
+<div class="page-banner">
+  <nav class="page-banner-inner crumbs">
+    <a href="/">Home</a><span class="sep">›</span><a href="/reports/">Reports</a><span class="sep">›</span><a href="/reports/aes/">Andover Elementary</a><span class="sep">›</span><span class="current">The Largest One-Year Gain in the State</span>
+  </nav>
+</div>
+<div class="container">
+<h1 class="report-title">The Largest One-Year Gain in the State</h1>
+<p class="report-subtitle">Andover Elementary School · Connecticut assessment and accountability results · School year 2025–26</p>
+<p class="report-attribution">A personal report by Scott Sauyet · <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Not an official town document</p>
+<hr class="report-header-rule">
+<p class="methodology-header">All figures are from the Connecticut State Department of Education&#8217;s public
+EdSight system: the Performance Index (released late August 2026), Next
+Generation Accountability (released late October 2026), and Per Pupil
+Expenditures by Function. Comparisons cover Connecticut&#8217;s local and regional town
+districts (165 in 2024-25, 164 in 2025-26); charter districts, regional
+educational service centers, the technical high schools and state-agency schools
+are excluded. English and mathematics figures are exactly as the state publishes
+them. The combined performance index is this report&#8217;s own calculation, weighting
+the three subject indices by the number of students tested; the equal-weight
+alternative is reported alongside it. Need-adjusted figures are residuals from a
+statewide regression on high-needs share. Spending data stop at 2024-25. The one
+figure that cannot be checked against public data, the high-needs achievement
+gap, is identified as such where it appears.</p>
+<p>The Rivereast News Bulletin reported the results on September 18, under the headline
+&#8220;Andover Elementary Celebrates Increase in Test Scores.&#8221; The article followed Principal
+Taylor Parker&#8217;s presentation to the Board of Education on September 9, and she did not
+undersell it:</p>
+<blockquote>
+<p>I&#8217;m so excited. Thank you for letting me share in celebrations, because we
+definitely have a lot to celebrate.</p>
+<p><em>— Taylor Parker, AES principal, Board of Education meeting, Sept. 9, 2026</em></p>
+</blockquote>
+<p>Every figure in that article checks out. We compared each one against the state&#8217;s own
+published data &mdash; the proficiency rates, the growth figures, the statewide
+averages and the index scores &mdash; and they match. What follows is not a
+correction. It is the context a single school&#8217;s announcement is not in a position to
+supply: where those numbers put Andover among Connecticut&#8217;s 164 town districts, which
+of them carry the most weight, and which should be held lightly.</p>
+<p>The underlying numbers are public, and they are worth setting out in full, because
+a result this good invites two opposite mistakes. One is to wave it away as noise
+or as a demographic accident. The other is to treat a single year as proof of
+something permanent. Neither is right, and the data is detailed enough to say so
+precisely.</p>
+<p>Everything below comes from the Connecticut State Department of Education&#8217;s public
+EdSight system: the assessment results released in late August, and the
+accountability results released at the end of October. Every figure is also published here as a
+spreadsheet &mdash; <a href="andover-edsight-data.xlsx">the full workbook</a> carries the
+district-by-district data behind this report, and names the sheet each figure can be
+checked against.</p>
+<p class="section-label">The results</p>
+<h2 id="what-the-state-publishes">What the state publishes<a class="header-anchor" href="#what-the-state-publishes" aria-label="Link to this section">¶</a></h2>
+<p><em>Connecticut scores every district on a 0-100 performance index, separately for
+each subject. Andover&#8217;s rose 6.1 points in English and 6.8 in math.</em></p>
+<p>The performance index is the state&#8217;s summary of how students did on the annual
+assessments &mdash; Smarter Balanced in English and math, the NGSS science test &mdash;
+placed on a common 0-100 scale so districts can be compared. The state publishes it
+<strong>subject by subject</strong>; it does not publish a single combined figure. Connecticut&#8217;s
+stated target is 75 in each subject. A year ago Andover was below it in both
+English and math. It is now above it in both.</p>
+<p><img src="ela-2024-25.svg" alt="English language arts performance index for every Connecticut town district, 2024-25. Andover is at 73.1, the state at 64.7."></p>
+<p><img src="ela-2025-26.svg" alt="English language arts, 2025-26, on the same scale. Andover has moved to 79.2 while the state has barely moved, at 65.0."></p>
+<p><img src="math-2024-25.svg" alt="Mathematics performance index for every Connecticut town district, 2024-25. Andover is at 68.7, the state at 61.1."></p>
+<p><img src="math-2025-26.svg" alt="Mathematics, 2025-26, on the same scale. Andover has moved to 75.5, the state to 61.7."></p>
+<p>Each pair is drawn on one scale, so the movement between years is directly
+comparable. Across the state, the English index went from 64.7 to 65.0 and the math
+index from 61.1 to 61.7.</p>
+<div class="data-section">
+
+<p class="stat"><span class="stat-figure">+6.1</span> <span class="stat-label">Andover&#8217;s one-year change in English language arts, from 73.1 to 79.2</span></p>
+<p class="stat"><span class="stat-figure">+6.8</span> <span class="stat-label">Andover&#8217;s one-year change in mathematics, from 68.7 to 75.5</span></p>
+<p class="stat"><span class="stat-figure">1st of 164</span> <span class="stat-label">where each of those gains ranks among town districts</span></p>
+<p class="stat"><span class="stat-figure">+0.1 and +0.4</span> <span class="stat-label">the median change across town districts, English and math</span></p>
+<p>Neither is a close call. In English, the next largest gain was 4.5 points; in math,
+5.6. Six districts gained three points or more in English and ten in math. Just over
+half of all districts improved at all: 55 percent in English, 59 percent in math.</p>
+</div>
+
+<p><img src="change-ela-2025-26.svg" alt="Change in the English language arts index between 2024-25 and 2025-26 for all 164 Connecticut town districts, ranked. Andover&#39;s +6.1 is the largest gain."></p>
+<p><img src="change-math-2025-26.svg" alt="Change in the mathematics index between 2024-25 and 2025-26 for all 164 Connecticut town districts, ranked. Andover&#39;s +6.8 is the largest gain."></p>
+<p>Among the state&#8217;s town districts, Andover moved from tied for 55th to 15th in
+English, and from tied for 67th to 23rd in math.</p>
+<p>In Andover&#8217;s own record, neither subject has moved this far in a single year. The
+previous largest one-year gain was 3.8 points in English, between 2021-22 and
+2022-23, and 1.1 points in math.</p>
+<p>It is worth being exact about one thing the charts do not say. These are Andover&#8217;s
+<strong>largest one-year gains</strong>, and its best results <strong>since 2018-19</strong> &mdash; but not
+its best ever. Andover scored 81.0 in English and 76.5 in math in 2018-19, before
+the pandemic. What 2025-26 represents is most of the way back to where Andover was
+before COVID.</p>
+<p class="section-label">Science</p>
+<h2 id="the-third-subject-and-the-combined-figure">The third subject, and the combined figure<a class="header-anchor" href="#the-third-subject-and-the-combined-figure" aria-label="Link to this section">¶</a></h2>
+<p><em>Science fell. How you combine the three subjects changes the ranking, so here it is
+every way.</em></p>
+<div class="data-section">
+
+<p class="stat"><span class="stat-figure">&minus;3.3</span> <span class="stat-label">science, from 76.5 to 73.2, now just below the state&#8217;s target of 75</span></p>
+</div>
+
+<p>Science is tested only in grades 5, 8 and 11, so in Andover it rests on roughly two
+dozen students in a single grade &mdash; small enough that a few children moving a
+band or two will swing it several points. It is the least stable of the three
+figures in either direction, and it should not carry much weight on its own. It is
+included here because leaving it out would be selective reporting of exactly the
+kind this report sets out to avoid.</p>
+<p>Because EdSight does not publish a single figure across subjects, any combined number
+is a choice someone has made. The one used in the rest of this report is ours: the
+three subject indices <strong>weighted by the number of students who sat each test</strong>. That
+keeps science, which only three grades take, from counting as a full third of the
+result. By that measure Andover rose from 71.5 to 76.9, also the largest gain in the
+state.</p>
+<p>Weight the three subjects equally instead, and the answer changes. Andover&#8217;s
+combined gain becomes 3.2 points, and it ranks <strong>sixth</strong> among the 156 districts
+reporting all three &mdash; because the one subject that fell is given the same
+weight as the two that rose. That is a legitimate way to look at it, and it is why
+the headline claim on this report rests on the subjects themselves: first in the
+state in English, and first in the state in math.</p>
+<p><img src="change-2025-26.svg" alt="Change in the combined performance index between 2024-25 and 2025-26, weighted by students tested, for all 164 town districts. Andover&#39;s +5.5 ranks first; weighted equally it would rank sixth."></p>
+<p class="section-label">Student need</p>
+<h2 id="the-test-that-usually-explains-these-things-away">The test that usually explains these things away<a class="header-anchor" href="#the-test-that-usually-explains-these-things-away" aria-label="Link to this section">¶</a></h2>
+<p><em>District test scores mostly measure which students a district serves. Andover&#8217;s
+gain survives that adjustment.</em></p>
+<p>This is the single most important thing to understand about school test data, and
+it is the reason a result like Andover&#8217;s deserves scrutiny before celebration.</p>
+<p>Across Connecticut, the strongest predictor of a district&#8217;s results is not its
+spending, its size, or its leadership. It is the share of its students who are
+classified as high needs &mdash; eligible for free or reduced-price meals, an English
+learner, or a student with a disability. On the combined index, that one variable
+explains about three quarters of the difference between districts.</p>
+<p><img src="highneeds-2024-25.svg" alt="Combined performance index against high-needs share for every Connecticut town district, 2024-25. The relationship is strongly negative, with r equal to minus 0.873."></p>
+<p><img src="highneeds-2025-26.svg" alt="The same chart for 2025-26. The relationship is essentially unchanged, with r equal to minus 0.878, and Andover has moved up relative to the line."></p>
+<p>The relationship is almost exactly as strong in the new year as the old one:
+r&nbsp;=&nbsp;&minus;0.873 in 2024-25, &minus;0.878 in 2025-26. Every ten
+percentage points of additional high-needs enrollment is associated with roughly
+four and a half fewer index points.</p>
+<p>So the fair question is not &#8220;did Andover&#8217;s score go up&#8221; but &#8220;did it go up by more
+than the change in its students would predict.&#8221; Andover&#8217;s high-needs share did
+fall, from 38.3 percent to 35.8 percent. That accounts for part of the gain &mdash;
+but only part.</p>
+<div class="data-section">
+
+<p class="stat"><span class="stat-figure">+5.5</span> <span class="stat-label">Andover&#8217;s raw gain on the combined index</span></p>
+<p class="stat"><span class="stat-figure">+4.1</span> <span class="stat-label">the gain that remains after adjusting for the change in student need</span></p>
+<p class="stat"><span class="stat-figure">+1.0 &rarr; +5.1</span> <span class="stat-label">Andover&#8217;s position relative to what its demographics predict</span></p>
+<p>Measured against the statewide pattern, Andover went from performing about as
+expected to performing five points better than expected &mdash; the district&#8217;s
+strongest showing on that measure since 2018-19.</p>
+</div>
+
+<p>On the combined index, Andover&#8217;s rank among the state&#8217;s town districts moved from
+61st of 165 to 22nd of 164. Within its own comparison group of small districts
+without a high school, from 22nd of 45 to 9th of 44.</p>
+<p class="section-label">Caveats</p>
+<h2 id="what-one-year-can-and-cannot-tell-you">What one year can and cannot tell you<a class="header-anchor" href="#what-one-year-can-and-cannot-tell-you" aria-label="Link to this section">¶</a></h2>
+<p><em>About a hundred students sit these tests. That cuts both ways.</em></p>
+<p>Andover Elementary tested 109 students in 2025-26. In a district that size, each
+child is worth roughly a full percentage point of any subgroup figure, and
+year-to-year results are genuinely volatile: on the combined index, districts testing
+fewer than 200 students swing about two and a half times as much from year to year
+as districts testing 600 or more.</p>
+<p>That volatility is exactly why Andover&#8217;s result is notable rather than routine
+&mdash; its gains are the largest in the state in both English and math, including
+against the small districts where large swings are most common. But it is also why
+a single year should not be read as a trend. The honest statement is that Andover
+has had an excellent year, on top of a long record of performing at or above what
+its demographics predict, and that one more year of data will say much more than
+this one does.</p>
+<p class="section-label">Growth</p>
+<h2 id="the-fairer-measure">The fairer measure<a class="header-anchor" href="#the-fairer-measure" aria-label="Link to this section">¶</a></h2>
+<p><em>Growth is the measure that best isolates what a school contributes. On it, Andover&#8217;s
+year is more remarkable than the headline suggests.</em></p>
+<p>The performance index measures where students are. It does not measure how far
+they moved, and because it tracks so closely with student need, it is a limited
+tool for judging a school&#8217;s own contribution.</p>
+<p>Connecticut publishes a better measure: academic growth, which matches each
+individual student to their own prior-year score and asks what share of their
+personal growth target they achieved. It is far less determined by demographics
+&mdash; student need explains about a quarter of the variation in growth, against
+three quarters for the combined index &mdash; which makes it the fairer measure of a
+district&#8217;s work.</p>
+<p>Connecticut reports growth two ways. The <strong>growth rate</strong> is the share of students who
+met their target &mdash; the figures Parker gave the board. The <strong>average percentage of
+target achieved</strong> counts partial progress too, and it is the version the state uses in
+its accountability system. On that second measure:</p>
+<div class="data-section">
+
+<p class="stat"><span class="stat-figure">84.9</span> <span class="stat-label">Andover, 2025-26, averaged across English and math</span></p>
+<p class="stat"><span class="stat-figure">60.1</span> <span class="stat-label">Connecticut, 2025-26</span></p>
+<p class="stat"><span class="stat-figure">69.5 and 61.4</span> <span class="stat-label">the same two figures a year earlier</span></p>
+<p>Andover went from eight points above the state to twenty-five, while the state itself
+edged down.</p>
+</div>
+
+<p><img src="growth-pair-2024-25.svg" alt="Academic growth for every Connecticut town district, 2024-25."></p>
+<p><img src="growth-pair-2025-26.svg" alt="The same chart for 2025-26, on the same scale. Andover sits alone at the right-hand end of the distribution, at 84.9 against the state&#39;s 60.1."></p>
+<p>This is the more impressive half of Andover&#8217;s year, and it is the half least explained
+by who its students are.</p>
+<p class="section-label">Adjusted growth</p>
+<h2 id="first-in-the-state-once-need-is-accounted-for">First in the state, once need is accounted for<a class="header-anchor" href="#first-in-the-state-once-need-is-accounted-for" aria-label="Link to this section">¶</a></h2>
+<p><em>On growth, adjusted for student need, no district in Connecticut did better. That
+sentence needs its caveats, and they follow immediately.</em></p>
+<p>Earlier in this report, adjusting for high-needs share was the test that cut Andover&#8217;s
+headline down to size. Applied to growth, it does the opposite.</p>
+<p><img src="growth-highneeds-2025-26.svg" alt="Growth against high-needs share for every Connecticut town district, 2025-26. Andover sits far above the fitted line."></p>
+<div class="data-section">
+
+<p class="stat"><span class="stat-figure">+20.7</span> <span class="stat-label">how far above its predicted growth Andover landed</span></p>
+<p class="stat"><span class="stat-figure">1st of 160</span> <span class="stat-label">where that places it among town districts</span></p>
+</div>
+
+<p>Now the caveats, because a number like that invites more weight than it can carry.</p>
+<p><strong>Growth is volatile in a district this small.</strong> About 109 students sit these tests.
+Andover&#8217;s own record shows how far that can swing: it was 1st in the state on this
+measure in 2017-18, 2nd in 2022-23, and <strong>134th of 163 in 2021-22</strong>. A district that
+can finish near the bottom and at the top within four years is a district whose
+single-year figure should be read with caution, in either direction.</p>
+<p><strong>One year is not a trend</strong>, and this is one year.</p>
+<p><strong>The ranking is of districts, not of schools.</strong> It compares Andover Elementary&#8217;s
+grades 4 through 8 &mdash; in practice grades 4 through 6 &mdash; with other districts&#8217;
+equivalent grades. It says nothing about any high school, including the one Andover
+students go on to.</p>
+<p>What survives all of that is still worth saying plainly. Andover has now posted a
+positive need-adjusted growth residual in every year of the record except one, and
+2025-26 is the largest of them.</p>
+<p class="section-label">Accountability</p>
+<h2 id="what-the-rest-of-the-accountability-release-says">What the rest of the accountability release says<a class="header-anchor" href="#what-the-rest-of-the-accountability-release-says" aria-label="Link to this section">¶</a></h2>
+<p><em>Growth is one of twelve indicators. The rest arrived with it at the end of October.</em></p>
+<div class="data-section">
+
+<p class="stat"><span class="stat-figure">88.0%</span> <span class="stat-label">Andover&#8217;s accountability index, of the 800 points it is scored out of</span></p>
+<p class="stat"><span class="stat-figure">72.2%</span> <span class="stat-label">Connecticut</span></p>
+<p class="stat"><span class="stat-figure">4.3%</span> <span class="stat-label">Andover&#8217;s chronic absenteeism, against 16.4% statewide</span></p>
+</div>
+
+<p>Stripping out the indicators that are not academic &mdash; attendance, physical fitness
+and the rest &mdash; Andover scores 87.0% against the state&#8217;s 64.8%.</p>
+<p>A word on where that places Andover, because the obvious phrasing would be wrong.
+Andover is third of 165 town districts on the index. But districts are not scored out
+of the same total: inapplicable indicators are dropped, so Andover is marked out of 800
+points and a K-12 district out of 1,450. Comparing those percentages directly is not
+like for like. Among the nineteen K-6 districts Andover is second, and the one above it
+is scored out of just 50 points, which makes its percentage an artifact rather than a
+result. Among the nine districts scored out of the same 800 points, Andover is first.
+That last comparison is the defensible one.</p>
+<p class="section-label">Spending</p>
+<h2 id="the-rest-of-the-picture-2024-25">The rest of the picture, 2024-25<a class="header-anchor" href="#the-rest-of-the-picture-2024-25" aria-label="Link to this section">¶</a></h2>
+<p><em>Spending is now the only measure that stops at 2024-25, so the six charts below
+stay on that year.</em></p>
+<p>Two of them repeat measures from above, at that year, so the set can be read on its
+own. Where a chart shows performance across all three subjects, it uses the combined
+index described above.</p>
+<p><img src="index-2024-25.svg" alt="Combined performance index for every Connecticut town district, 2024-25."></p>
+<p><img src="growth-2024-25.svg" alt="Academic growth for every Connecticut town district, 2024-25. Andover is at 69.5, the state at 61.4."></p>
+<p><img src="level-spending-2024-25.svg" alt="Combined performance index against total per-pupil spending, 2024-25. The relationship is weak, with r equal to plus 0.268."></p>
+<p><img src="growth-spending-2024-25.svg" alt="Academic growth against total per-pupil spending, 2024-25. The relationship is weak, with r equal to plus 0.287."></p>
+<p><img src="highneeds-2024-25.svg" alt="Combined performance index against high-needs share, 2024-25."></p>
+<p><img src="growth-highneeds-2024-25.svg" alt="Academic growth against high-needs share, 2024-25. The relationship is much weaker than for the combined index."></p>
+<p>Two things stand out in that set, and both are worth stating plainly because they
+cut against arguments made in every direction locally.</p>
+<p>The first is that per-pupil spending barely relates to results at all. Across the
+state&#8217;s town districts, spending explains something like seven percent of the
+difference in the combined index and eight percent in growth &mdash; and once
+student need and grade span are accounted for, no statistically detectable amount.
+That is not evidence that money does not matter. It is evidence that what varies
+between Connecticut towns is mostly district size and geography, not educational
+effort, and that test scores cannot settle a budget argument in either direction.</p>
+<p>The second is that growth tracks student need far less closely than the combined
+index does. That is the case for treating growth, rather than the index, as the
+better guide to what a school itself contributes.</p>
+<p class="section-label">The school's account</p>
+<h2 id="what-the-school-said-and-what-the-numbers-add">What the school said, and what the numbers add<a class="header-anchor" href="#what-the-school-said-and-what-the-numbers-add" aria-label="Link to this section">¶</a></h2>
+<p><em>The article&#8217;s figures are accurate. Three of its themes are worth extending.</em></p>
+<p><strong>On growth.</strong> Parker drew the distinction that matters most in this data, and drew
+it correctly:</p>
+<blockquote>
+<p>Every student gets a target, whether you score a one or a four. So even students
+performing above grade level have a target score.</p>
+<p><em>— Taylor Parker, Board of Education meeting, Sept. 9, 2026</em></p>
+</blockquote>
+<p>That is exactly why growth is the fairer measure. Achievement scores largely track
+which students a district serves; growth asks how far each student moved from their
+own starting point, and is far less determined by demographics. The figures she gave
+the board &mdash; 68.7 percent of students meeting their ELA target, 67.5 percent in
+math, against 44.4 and 41.1 a year earlier &mdash; are the state&#8217;s published growth
+rates, and they are correct.</p>
+<p><strong>On the achievement gap.</strong> The article reports that the gap between high-needs
+students and their classmates narrowed in both subjects, from 20.7 points to 14.5.</p>
+<blockquote>
+<p>We want all students growing.</p>
+<p><em>— Taylor Parker, Board of Education meeting, Sept. 9, 2026</em></p>
+</blockquote>
+<p>This is the one figure on which we can offer no independent check. Andover&#8217;s
+high-needs subgroup is small enough that the state suppresses its results publicly
+to protect student confidentiality, so the underlying numbers are not in EdSight.
+The claim comes from the district&#8217;s own data, and should be read as such &mdash; not
+because there is reason to doubt it, but because it cannot be verified the way
+everything else here can.</p>
+<p><strong>On not over-reading one year.</strong> The article closes on a note of caution that this
+report would make anyway, and it is to the school&#8217;s credit that it came from the
+school:</p>
+<blockquote>
+<p>It is not a one-shot deal. We can&#8217;t just say we had one good year.</p>
+<p><em>— Taylor Parker, Board of Education meeting, Sept. 9, 2026</em></p>
+</blockquote>
+<p>About 110 students sit these tests. That is small enough that a strong cohort moves
+the whole district figure, in either direction. The case for taking this year
+seriously is not the size of the jump on its own; it is that the jump survives
+adjustment for student need, that it holds in both subjects independently, and that
+it sits on a decade in which Andover has almost always performed at or above what
+its demographics predict.</p>
+<p class="section-label">Documentation</p>
+<h2 id="sources">Sources<a class="header-anchor" href="#sources" aria-label="Link to this section">¶</a></h2>
+<ul>
+<li><strong>Publication history.</strong> This analysis was first published on September 18,
+2026, as an edition of <em>the facts</em> on this site, and
+updated on October 29, 2026, when Connecticut released its accountability data.
+The <a href="/the-facts/andover-numbers-2026-v1/">original September 18 version</a> is kept
+unchanged for the record.</li>
+<li><strong>The underlying data.</strong> <a href="andover-edsight-data.xlsx">Download the workbook</a>
+(Excel). It opens on a documented cover page explaining each EdSight dataset used,
+what the measures mean and how they are defined, who is included, and the cautions
+that go with them. A &#8220;key figures&#8221; sheet lists every number cited in this report
+against the sheet it can be verified on. The rest is the data itself: every town
+district in 2024-25 and 2025-26 by subject, the year-over-year change by subject,
+ten years of the performance index, nine of academic growth, spending by function,
+and the peer group.</li>
+<li><strong>Connecticut State Department of Education, EdSight.</strong> All figures are from the
+public EdSight system: the <strong>Performance Index</strong> report (school, district and
+state indices by subject and student group), <strong>Next Generation Accountability</strong>
+(academic growth, indicator 2), and <strong>Per Pupil Expenditures by Function
+(District)</strong>. Performance index results are released in late August each year;
+accountability results around the following November.</li>
+<li><strong>Coverage.</strong> Comparisons cover Connecticut&#8217;s 165 local and regional town
+districts (164 in 2025-26). Charter districts, the regional educational service
+centers, the technical high school system and state-agency schools are excluded
+throughout: they serve different populations under different rules, and the
+service centers in particular sit at the top of every per-pupil spending
+ranking.</li>
+<li><strong>Performance index.</strong> EdSight publishes the index separately for English
+language arts, mathematics and science; the English and math figures on this report
+are exactly as published. The <strong>combined index</strong> is this report&#8217;s own calculation:
+the three subject indices weighted by the number of students who sat each, so
+science &mdash; tested only in grades 5, 8 and 11 &mdash; is not given a third of
+the weight. Weighted equally instead, Andover&#8217;s 2025-26 combined gain is 3.2
+points and ranks sixth of 156, rather than 5.5 points and first; both versions are
+in the workbook.</li>
+<li><strong>Academic growth.</strong> The average share of each student&#8217;s individual growth target
+achieved, English and mathematics, grades 4 through 8, matched to that student&#8217;s
+own prior-year score. Not the share of students meeting their target, which
+Connecticut reports separately and does not use for accountability.</li>
+<li><strong>High needs.</strong> Eligible for free or reduced-price meals, an English learner, or
+a student with a disability. The Connecticut figure shown on the charts is the
+statewide student share, which sits well to the right of most towns because
+high-need students are concentrated in the cities.</li>
+<li><strong>Peer group.</strong> The same 45-district set used in this site&#8217;s earlier report on
+<a href="/reports/aes/peer-spending/">peer spending</a>: districts that run only
+elementary grades and send older students elsewhere for high school. Norwich meets that structural test but was excluded
+from the analysis there, for the reasons set out in that report &mdash; it is a
+city district several times the size of any other member. It is excluded here on
+the same basis. Norwich appears in that report&#8217;s published comparison data, so
+readers who want to include it can.</li>
+<li><strong>Spending.</strong> Reported by districts to the state and not fully audited; the
+state notes that audits may change the figures. Excludes debt, capital beyond
+equipment, adult education, community services, non-local food service and state
+teacher retirement contributions, so it will not match a town&#8217;s appropriated
+school budget.</li>
+</ul>
+
+<p class="section-label">Download</p>
+<h2 id="other-formats">Other Formats<a class="header-anchor" href="#other-formats" aria-label="Link to this section">¶</a></h2>
+<p>This report is available in four formats, all located alongside this page:</p>
+
+<div class="format-cards cols-4">
+  <div class="format-card">
+    <div class="format-card-icon">🌐</div>
+    <div class="format-card-title"><a href="./">HTML</a></div>
+    <div class="format-card-desc">Interactive version with zoomable charts; best for on-screen reading and sharing.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📄</div>
+    <div class="format-card-title"><a href="test-results-2025-26.md">Markdown</a></div>
+    <div class="format-card-desc">Plain-text version; readable in any editor, ideal for copying into other documents.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📑</div>
+    <div class="format-card-title"><a href="test-results-2025-26.pdf">PDF</a></div>
+    <div class="format-card-desc">Print-ready version with every chart and the full source notes.</div>
+  </div>
+  <div class="format-card">
+    <div class="format-card-icon">📊</div>
+    <div class="format-card-title"><a href="andover-edsight-data.xlsx">Data (Excel)</a></div>
+    <div class="format-card-desc">The workbook behind every figure: a documented cover page, a key-figures sheet naming where each number can be checked, and the district-by-district data.</div>
+  </div>
+</div>
+
+</div>
+<p class="page-note">First published September 18, 2026; updated October 29, 2026 with the state accountability release · Data from CT EdSight (Connecticut State Department of Education).</p>
+<footer class="site-footer">
+<div class="site-footer-inner"><strong>Personal work of Scott Sauyet</strong> <a href="mailto:scott@sauyet.com">scott@sauyet.com</a> · Independent civic reference, not official communication of the Town of Andover, Region 8 (RHAM), or any party or town committee, and not legal advice · Corrections welcome</div>
+</footer>
+<script>
+;(() => {
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('.header-anchor')
+    const id = anchor && anchor.parentElement.id
+    if (!id || !navigator.clipboard?.writeText) return
+    const url = window.location.origin + window.location.pathname + '#' + id
+    navigator.clipboard.writeText(url)
+      .then(() => {
+        anchor.classList.add('copied')
+        setTimeout(() => anchor.classList.remove('copied'), 1400)
+      })
+      .catch(() => {})
+  })
+})()
+</script>
+<script>
+;(() => {
+  const imgs = [...document.querySelectorAll('.container img')]
+  if (!imgs.length) return
+
+  let overlay = null
+
+  const onKey = (e) => e.key === 'Escape' && close()
+
+  const close = () => {
+    if (!overlay) return
+    const gone = overlay
+    overlay = null
+    gone.classList.remove('open')
+    document.removeEventListener('keydown', onKey)
+    setTimeout(() => gone.parentNode && gone.parentNode.removeChild(gone), 200)
+  }
+
+  const open = (src, alt) => {
+    overlay = document.createElement('div')
+    overlay.className = 'lightbox-overlay'
+    const big = document.createElement('img')
+    big.src = src
+    big.alt = alt || ''
+    overlay.appendChild(big)
+    overlay.addEventListener('click', close)
+    document.body.appendChild(overlay)
+    void overlay.offsetWidth // force reflow so the fade-in transition runs
+    overlay.classList.add('open')
+    document.addEventListener('keydown', onKey)
+  }
+
+  imgs.forEach((img) =>
+    img.addEventListener('click', () => open(img.currentSrc || img.src, img.alt)))
+})()
+</script>
+</body>
+</html>
