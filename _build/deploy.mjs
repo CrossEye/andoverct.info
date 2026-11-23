@@ -25,6 +25,10 @@
  * uncommitted work-in-progress — never something to publish silently. Commit
  * the files, or pass --allow-untracked to publish them deliberately.
  *
+ * Stale-build warning: a link-registry source (links/_src/<id>.yaml) edited
+ * after its page was last built is flagged, so a forgotten
+ * `npm run rebuild:links` shows up in the dry run rather than on the site.
+ *
  * The FTP password is read from $FTP_PASSWORD (or a gitignored .env at the repo
  * root: FTP_PASSWORD=...). Host/port/user/web-root are non-secret and live in
  * the manifest. .deploy-state.json is committed so any machine shares the same
@@ -235,6 +239,35 @@ if (removed.length) {
 }
 
 console.log(`\n  total to upload: ${upload.length} file(s), ${fmtBytes(totalBytes)}\n`)
+
+// ---------------------------------------------------------------------------
+// Stale-build warning: the link registry is a build step that is easy to
+// forget. A links/_src/<id>.yaml newer than its links/<id>/index.html (or with
+// no built page at all) means `npm run rebuild:links` has not run since the
+// edit, so the page about to be published is the old one. Warns only — a real
+// deploy still proceeds, since publishing everything else may be the point.
+// mtime-based, so a fresh clone can flag pages spuriously; a rebuild clears it.
+// ---------------------------------------------------------------------------
+const staleLinkSources = () => {
+  const srcDir = join(ROOT, "links", "_src")
+  if (!existsSync(srcDir)) return []
+  return readdirSync(srcDir)
+    .filter((f) => f.endsWith(".yaml"))
+    .filter((f) => {
+      const out = join(ROOT, "links", f.slice(0, -".yaml".length), "index.html")
+      return !existsSync(out) || statSync(join(srcDir, f)).mtimeMs > statSync(out).mtimeMs
+    })
+}
+
+{
+  const stale = staleLinkSources()
+  if (stale.length) {
+    console.log(`  ! ${stale.length} link source(s) edited since the last \`npm run rebuild:links\`:`)
+    for (const f of (VERBOSE ? stale : stale.slice(0, 12))) console.log(`      ~  links/_src/${f}`)
+    if (!VERBOSE && stale.length > 12) console.log(`      … and ${stale.length - 12} more (use --verbose)`)
+    console.log(`  ! their published pages would be out of date — run \`npm run rebuild:links\` first.\n`)
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Git guard: refuse to publish (or seed) files git does not track. Gitignored
