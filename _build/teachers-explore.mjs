@@ -37,6 +37,7 @@ const OUT = join(DIR, "explore.html")
 const PEERS_CSV = join(ROOT, "reports/aes/peer-spending/peer_comparison_2024-25.csv")
 
 const CENSOR = 13
+const TOP_STEP = 10 // AEA contract 2025-2029, Appendix B: ten steps, one per year
 const ANDOVER = "0010011"
 const GLASTONBURY = "0540011"
 const BINS = [
@@ -185,12 +186,15 @@ const counterfactual = (label, tys) => {
   const actual = tys.filter((t) => t.foy === FIRST + 10)
   const ids = new Set(actual.map((t) => t.teacherId))
   const stillThere = roster.filter((t) => ids.has(t.teacherId)).length
+  const atTop = (xs) => (xs.length ? xs.filter((e) => e >= TOP_STEP).length / xs.length : null)
   return {
     label,
     n2014: roster.length,
     n2024: actual.length,
     predicted: binCounts(aged),
     actual: binCounts(actual.map((t) => t.expCapped)),
+    predictedTop: atTop(aged),
+    actualTop: atTop(actual.map((t) => t.expCapped)),
     stillThere,
     stillShare: roster.length ? stillThere / roster.length : null,
   }
@@ -205,7 +209,7 @@ const cfRows = [
 const cfChart = (rows) => {
   const w = 720
   const h = 60 + rows.length * 72
-  const pad = { l: 230, r: 60, t: 24 }
+  const pad = { l: 230, r: 92, t: 24 }
   const pw = w - pad.l - pad.r
   const barH = 20
   const gap = 2
@@ -231,15 +235,15 @@ const cfChart = (rows) => {
         text(pad.l - 10, y0 + 14, row.label, { "text-anchor": "end", fill: C.ink, "font-weight": 600 }) +
         text(pad.l - 10, y0 + 36, `if no one had left since ${FIRST} (n = ${fmt(row.n2014)})`, { "text-anchor": "end", "font-size": 10 }) +
         stack(row.predicted, y0 + 24, "Aged 2014 roster") +
-        text(w - pad.r + 6, y0 + 38, pct(pShare), { fill: C.ink }) +
+        text(w - pad.r + 6, y0 + 38, `${pct(pShare)} · ${pct(row.predictedTop, 0)}`, { fill: C.ink }) +
         text(pad.l - 10, y0 + 60, `actual ${FIRST + 10} (n = ${fmt(row.n2024)})`, { "text-anchor": "end", "font-size": 10 }) +
         stack(row.actual, y0 + 48, `Actual ${FIRST + 10}`) +
-        text(w - pad.r + 6, y0 + 62, pct(aShare), { fill: C.ink })
+        text(w - pad.r + 6, y0 + 62, `${pct(aShare)} · ${pct(row.actualTop, 0)}`, { fill: C.ink })
       )
     })
     .join("")
   return el("svg", { viewBox: `0 0 ${w} ${h}`, width: w, height: h, role: "img" },
-    text(pad.l, 12, "share of teachers by experience bin", { "font-size": 10 }) + text(w - pad.r + 6, 12, "13+", { "font-size": 10 }) + body)
+    text(pad.l, 12, "share of teachers by experience bin", { "font-size": 10 }) + text(w - pad.r + 6, 12, "13+ · 10+", { "font-size": 10 }) + body)
 }
 
 // 4. Peers
@@ -315,16 +319,16 @@ ${histTable(glasHist)}
 <p>Four bins rather than a histogram: with 21–27 teachers, single-year cells are people.</p>
 ${legend(BINS.map((b) => `${b.label} years`), C.ramp)}
 ${stackChart({ series: andoverSeries })}
-${table(["FOY", "Teachers", ...BINS.map((b) => b.label), "Median"], andoverRows.map((r) => [r.foy, r.teachers, ...BINS.map((b) => r[`exp${b.key}`]), r.medianExp]))}
+${table(["FOY", "Teachers", ...BINS.map((b) => b.label), "10+", "Median"], andoverRows.map((r) => [r.foy, r.teachers, ...BINS.map((b) => r[`exp${b.key}`]), r.exp10plus, r.medianExp]))}
 <p>Median years of experience, Andover against Glastonbury and all town districts.</p>
 ${emphasisLines({ xDomain: [FIRST, LAST], xTicks: foys.filter((f) => f % 2 === 1), lines: [...medianLines([{ code: ANDOVER, label: "Andover" }, { code: GLASTONBURY, label: "Glastonbury" }]), { key: "towns", label: "Town districts", points: foys.map((y) => [y, districtYears.find((r) => r.districtCode === "towns" && r.foy === y)?.medianExp ?? null]) }], accentKey: ANDOVER, refKey: "towns", yMax: 20, yFmt: (v) => `${v} yrs`, h: 240 })}
 
 <h2>3. The ten-year test</h2>
-<p>Take every teacher on the ${FIRST} roster, add ten years, and let nobody leave or arrive. That is the model behind "in ten years they will all be at the top step." Compare with who was actually teaching in ${FIRST + 10}.</p>
+<p>Take every teacher on the ${FIRST} roster, add ten years, and let nobody leave or arrive. That is the model behind "in ten years they will all be at the top step." Compare with who was actually teaching in ${FIRST + 10}. The Andover schedule has ten steps, so the top step is ${TOP_STEP} years; at that threshold the model predicts 100% by construction, since everyone on the ${FIRST} roster has at least one year. The second figure beside each bar is the share at ${TOP_STEP} or more.</p>
 ${legend(BINS.map((b) => `${b.label} years`), C.ramp)}
 ${cfChart(cfRows)}
-${table(["Group", `${FIRST} roster`, "Predicted 13+ share", `Actual ${FIRST + 10} teachers`, "Actual 13+ share", `Of the ${FIRST} roster still there in ${FIRST + 10}`],
-  cfRows.map((r) => [r.label, fmt(r.n2014), pct(shares(r.predicted)[3]), fmt(r.n2024), pct(shares(r.actual)[3]), `${fmt(r.stillThere)} (${pct(r.stillShare)})`]))}
+${table(["Group", `${FIRST} roster`, "Predicted 10+", "Predicted 13+", `Actual ${FIRST + 10} teachers`, "Actual 10+", "Actual 13+", `Of the ${FIRST} roster still there in ${FIRST + 10}`],
+  cfRows.map((r) => [r.label, fmt(r.n2014), pct(r.predictedTop, 0), pct(shares(r.predicted)[3]), fmt(r.n2024), pct(r.actualTop), pct(shares(r.actual)[3]), `${fmt(r.stillThere)} (${pct(r.stillShare)})`]))}
 
 <h2>4. Andover among its 45 peers</h2>
 <p>Share of teachers at 13 or more years, every elementary-only peer district in gray, Andover in gold, the peer median in navy.</p>
@@ -356,7 +360,7 @@ writeFileSync(OUT, html)
 // Console digest of the numbers the plan wants to carry forward.
 console.log(`peers matched: ${peerCodes.length} of ${peerNames.length}`)
 cfRows.forEach((r) =>
-  console.log(`${r.label}: ${FIRST} n=${r.n2014}, predicted 13+ ${pct(shares(r.predicted)[3])}, actual ${FIRST + 10} 13+ ${pct(shares(r.actual)[3])} (n=${r.n2024}), still there ${r.stillThere} (${pct(r.stillShare)})`))
+  console.log(`${r.label}: ${FIRST} n=${r.n2014}, predicted 10+ ${pct(r.predictedTop, 0)} / 13+ ${pct(shares(r.predicted)[3])}, actual ${FIRST + 10} 10+ ${pct(r.actualTop)} / 13+ ${pct(shares(r.actual)[3])} (n=${r.n2024}), still there ${r.stillThere} (${pct(r.stillShare)})`))
 console.log(`peer 13+ share ${FIRST + 1} → ${LAST}: median change ${(100 * median(peerDrift.map((d) => d.change))).toFixed(1)} pts; range ${(100 * peerDrift[0].change).toFixed(0)} to ${(100 * peerDrift.at(-1).change).toFixed(0)}`)
 console.log(`exit rates (left CT) by experience: ${exitByExp.map((e) => `${expLabel(e.k)}:${pct(e.leftPanel, 1)}`).join(" ")}`)
 console.log(`10-yr survival in CT by 2015 experience: ${survival.map((s) => `${expLabel(s.k)}:${pct(s.inPanel)}`).join(" ")}`)

@@ -40,6 +40,7 @@ const PEERS_CSV = join(ROOT, "reports/aes/peer-spending/peer_comparison_2024-25.
 const PI_CSV = join(ROOT, "data/edsight/performance-index/performance-index.csv")
 
 const CENSOR = 13
+const TOP_STEP = 10 // AEA contract 2025-2029, Appendix B: ten steps, one per year
 const ANDOVER = "0010011"
 const GLASTONBURY = "0540011"
 const MIN_TEACHERS = 10
@@ -148,17 +149,17 @@ const pts = (v) => `${v >= 0 ? "+" : ""}${(100 * v).toFixed(0)} pts`
 
 const in2014 = new Set(teacherYears.filter((t) => t.foy === FIRST).map((t) => t.teacherId))
 const altExperience = (t) => t.experience + (in2014.has(t.teacherId) ? 1 : 0) // 2014 outside the pre-panel count
-const tenYear = (tys, base, { exp = (t) => t.experience, weight = () => 1 }) => {
+const tenYear = (tys, base, { exp = (t) => t.experience, weight = () => 1, at = CENSOR }) => {
   const roster = tys.filter((t) => t.foy === base)
   const actual = tys.filter((t) => t.foy === base + 10)
-  const share13 = (xs, e) => {
+  const shareAt = (xs, e) => {
     const tot = xs.reduce((a, t) => a + weight(t), 0)
-    return tot ? xs.filter((t) => e(t) >= CENSOR).reduce((a, t) => a + weight(t), 0) / tot : null
+    return tot ? xs.filter((t) => e(t) >= at).reduce((a, t) => a + weight(t), 0) / tot : null
   }
   return {
     n: roster.length,
-    predicted: share13(roster, (t) => Math.min(exp(t) + 10, CENSOR)),
-    actual: share13(actual, exp),
+    predicted: shareAt(roster, (t) => Math.min(exp(t) + 10, CENSOR)),
+    actual: shareAt(actual, exp),
   }
 }
 const groups = [
@@ -173,6 +174,9 @@ const variants = [
   [`${FIRST}→${FIRST + 10}, 2014 outside the pre-panel count`, FIRST, { exp: altExperience }],
   [`${FIRST}→${FIRST + 10}, FTE-weighted`, FIRST, { weight: (t) => t.fte }],
   [`${START}→${START + 10}, FTE-weighted`, START, { weight: (t) => t.fte }],
+  [`${FIRST}→${FIRST + 10}, at the top step (${TOP_STEP}+ years)`, FIRST, { at: TOP_STEP }],
+  [`${START}→${START + 10}, at the top step (${TOP_STEP}+ years)`, START, { at: TOP_STEP }],
+  [`${FIRST}→${FIRST + 10}, at the top step, FTE-weighted`, FIRST, { at: TOP_STEP, weight: (t) => t.fte }],
 ]
 const robust = variants.map(([label, base, opts]) => ({ label, cells: groups.map(([, tys]) => tenYear(tys, base, opts)) }))
 
@@ -242,7 +246,7 @@ ${scatter({ points: districts.map((d) => ({ key: d.code, label: d.label, x: d.si
 </div>
 
 <h2>2. Does the ten-year test survive its assumptions?</h2>
-<p>Predicted share at 13 or more years if nobody had left or arrived, against the actual share ten years later, under each variant.</p>
+<p>Predicted share at 13 or more years if nobody had left or arrived, against the actual share ten years later, under each variant. The last three rows use the Andover schedule's own threshold: ten steps, so the top step is ${TOP_STEP} years, and the no-churn prediction is 100% by construction.</p>
 ${table(["Variant", ...groups.map(([g]) => g)],
   robust.map((v) => [v.label, ...v.cells.map((c) => `${pct(c.predicted)} → ${pct(c.actual)}`)]), { open: true })}
 <p class="note">Read each cell as predicted → actual. The alternative counting rule adds a year to everyone present in 2014, which can only raise the prediction. FTE weighting counts part-time teachers by their FTE.</p>

@@ -87,10 +87,13 @@ const LANE_KEYS = {
 const DEGREE_RANK = ["No BA/BS", "Associate", "Bachelor's", "Master's", "Sixth Year", "PhD/EdD"]
 
 // Years_2002to2014 tops out at 13, so 13 is the highest threshold that is
-// observed exactly in every year of the panel. It is also about where CT
-// salary schedules reach their top step, which makes "13 or more" the natural
-// proxy for "at or near the top of the schedule".
+// observed exactly in every year of the panel, and "13 or more" is the top
+// bin. The Andover schedule (AEA contract 2025-2029, Appendix B) has ten
+// steps advanced one per year, so "top step" is ten years of credited
+// service; the share at TOP_STEP or more is carried as its own field. Any
+// threshold at or below CENSOR is exact, so it needs no extra assumption.
 const CENSOR = 13
+const TOP_STEP = 10
 const BINS = [
   { key: "1to3", label: "1–3", min: 0, max: 3 },
   { key: "4to7", label: "4–7", min: 4, max: 7 },
@@ -343,6 +346,10 @@ const aggregate = (group, tys, foy, { firstFoy, lastFoy }) => {
     row[`share${b.key}`] = round((binCounts.get(b.key) ?? 0) / n)
     row[`fteShare${b.key}`] = round((binFte.get(b.key) ?? 0) / fte)
   })
+  const atTop = tys.filter((t) => t.experience >= TOP_STEP)
+  row.exp10plus = atTop.length
+  row.share10plus = round(atTop.length / n)
+  row.fteShare10plus = round(sum(atTop.map((t) => t.fte)) / fte)
   Object.entries(LANE_KEYS).forEach(([lane, key]) => {
     row[key] = lanes.get(lane) ?? 0
     row[`${key}Share`] = round((lanes.get(lane) ?? 0) / n)
@@ -403,6 +410,7 @@ const DY_FIELDS = [
   "foy", "schoolYear", "districtCode", "district", "entityType", "teachers", "fte", "fteUncapped", "fteCapped",
   "specialEd", "medianExp", "medianExact", "p25Exp", "p75Exp", "meanExpCapped", "meanExpCensored",
   ...BINS.map((b) => `exp${b.key}`), ...BINS.map((b) => `share${b.key}`), ...BINS.map((b) => `fteShare${b.key}`),
+  "exp10plus", "share10plus", "fteShare10plus",
   ...Object.values(LANE_KEYS), ...Object.values(LANE_KEYS).map((k) => `${k}Share`),
   "newToDistrict", "newToPanel", "leftDistrict", "leftPanel", "retentionRate", "medianChange", "w1FromPrior",
   "enrollment", "teachersPer100",
@@ -418,6 +426,7 @@ const writeXlsx = async (districtYears, foys, file) => {
     ["FTE", (r) => r.fte],
     ["Median experience", (r) => r.medianExp],
     ["Share 1-3 years", (r) => r.share1to3],
+    ["Share 10 or more", (r) => r.share10plus],
     ["Share 13 or more", (r) => r.share13plus],
     ["Retention rate", (r) => r.retentionRate],
     ["Shift from prior year", (r) => r.w1FromPrior],
@@ -713,16 +722,17 @@ Unclassified ("other"): ${others.length ? others.map((t) => `${t.district} (${t.
 ## Statewide composition
 
 Shift is the earth-mover distance between consecutive years' distributions of
-experience capped at ${CENSOR}, in years. Mean is of capped experience.
+experience capped at ${CENSOR}, in years. Mean is of capped experience. "10+"
+is the share at ${TOP_STEP} or more years, the Andover schedule's top step.
 
-${table(["FOY", "Teachers", "Students", "Per 100", "Median", "Mean (cap 13)", "1–3", "4–7", "8–12", "13+", "Retention", "Shift (yrs)"],
-  state.map((r) => [r.foy, fmt(r.teachers), fmt(r.enrollment), r.teachersPer100 ?? "", r.medianExp, r.meanExpCapped, pct(r.share1to3), pct(r.share4to7), pct(r.share8to12), pct(r.share13plus), pct(r.retentionRate), r.w1FromPrior ?? ""]))}
+${table(["FOY", "Teachers", "Students", "Per 100", "Median", "Mean (cap 13)", "1–3", "4–7", "8–12", "13+", "10+", "Retention", "Shift (yrs)"],
+  state.map((r) => [r.foy, fmt(r.teachers), fmt(r.enrollment), r.teachersPer100 ?? "", r.medianExp, r.meanExpCapped, pct(r.share1to3), pct(r.share4to7), pct(r.share8to12), pct(r.share13plus), pct(r.share10plus), pct(r.retentionRate), r.w1FromPrior ?? ""]))}
 
 
 ## Andover (${ANDOVER})
 
-${table(["FOY", "Teachers", "FTE", "Students", "Per 100", "Median", "1–3", "4–7", "8–12", "13+", "New", "Left after", "Shift (yrs)"],
-  andover.map((r) => [r.foy, r.teachers, r.fte, r.enrollment ?? "", r.teachersPer100 ?? "", r.medianExp, r.exp1to3, r.exp4to7, r.exp8to12, r.exp13plus, r.newToDistrict ?? "", r.leftDistrict ?? "", r.w1FromPrior ?? ""]))}
+${table(["FOY", "Teachers", "FTE", "Students", "Per 100", "Median", "1–3", "4–7", "8–12", "13+", "10+", "New", "Left after", "Shift (yrs)"],
+  andover.map((r) => [r.foy, r.teachers, r.fte, r.enrollment ?? "", r.teachersPer100 ?? "", r.medianExp, r.exp1to3, r.exp4to7, r.exp8to12, r.exp13plus, r.exp10plus, r.newToDistrict ?? "", r.leftDistrict ?? "", r.w1FromPrior ?? ""]))}
 
 
 ${crossCheckSection(check, foys)}`
