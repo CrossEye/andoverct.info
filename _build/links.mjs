@@ -48,7 +48,7 @@ import { load as parseYaml } from "js-yaml"
 import { Marked } from "marked"
 import {
   escapeHtml, pageNoteHtml, siteFooterBarHtml, crumbs as buildCrumbs, banner as pageBanner,
-  footer as FOOTER,
+  footer as FOOTER, lightboxScript,
 } from "./chrome.js"
 
 // A private Marked instance: importers (the town-asset renderer) configure the
@@ -413,6 +413,7 @@ ${body}
 </div>
 ${pageNoteHtml(footerNote)}
 ${siteFooterBarHtml()}
+<script>${lightboxScript()}</script>
 </body>
 </html>`
 }
